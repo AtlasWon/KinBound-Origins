@@ -19,14 +19,27 @@ npm run dist
 ```
 
 That writes `dist/KinBound-Setup-<version>.exe`. Run it once and KinBound lands
-on the desktop and in the Start menu. Update checking stays off until you point
-it at a repository — see [launcher/README.md](launcher/README.md).
+on the desktop and in the Start menu.
 
 To run the launcher straight from source instead:
 
 ```bash
 npm run launcher
 ```
+
+### Shipping an update
+
+```bash
+npm run ship patch
+```
+
+Bumps the version, commits, tags and pushes. GitHub Actions builds the
+installer, runs the suite and publishes the release; every installed launcher
+offers the update on its next start. No token, no local build, nothing to
+remember to publish.
+
+`npm run check-updates` diagnoses the whole chain if an update is not appearing.
+Details in [launcher/README.md](launcher/README.md).
 
 ---
 

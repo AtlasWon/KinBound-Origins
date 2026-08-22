@@ -1,0 +1,14 @@
+# Normalise line endings.
+#
+# Without this, a file written on Windows and regenerated on a Linux CI runner
+# differs by every line, which turns "is the generated manifest current?" into
+# a permanently failing check. Text is stored as LF in the repository and
+# checked out as-is, so tools produce byte-identical output on either platform.
+* text=auto eol=lf
+
+# Binary, never touched.
+*.png binary
+*.ico binary
+*.exe binary
+*.7z binary
+*.avif binary

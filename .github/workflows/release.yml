@@ -1,0 +1,81 @@
+# Build and publish a KinBound release.
+#
+# Triggered by pushing a version tag. GitHub builds the installer on a clean
+# Windows runner and publishes the release itself, which removes every manual
+# step that used to sit between "I want to ship this" and "players can get it":
+# no personal access token, no local build, no draft to remember to publish.
+#
+#   npm run ship patch     bumps, commits, tags and pushes -- that is the whole job
+#
+# The token below is the one GitHub injects automatically. It is scoped to this
+# repository and expires when the job ends, which is strictly safer than a
+# personal token sitting in an environment variable on a desktop.
+
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  # A manual button on the Actions tab, for re-running a failed publish
+  # without having to move the tag.
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing tag to build (e.g. v0.1.1)'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      # The suite is the gate. A release that fails content validation would
+      # ship a map with a broken warp to everyone who presses Update, and the
+      # tests are what catch exactly that.
+      - name: Test
+        run: npm test
+
+      - name: Check the tag matches package.json
+        shell: pwsh
+        run: |
+          $tag = "${{ github.event.inputs.tag || github.ref_name }}" -replace '^v', ''
+          $pkg = (Get-Content package.json | ConvertFrom-Json).version
+          if ($tag -ne $pkg) {
+            Write-Error "Tag v$tag does not match package.json version $pkg. The launcher compares against package.json, so these must agree."
+            exit 1
+          }
+          Write-Output "Releasing v$pkg"
+
+      # Published directly rather than as a draft: pushing a version tag is
+      # already the deliberate act, and a second confirmation step is the thing
+      # people forget.
+      - name: Build and publish
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx electron-builder --win --publish always -c.publish.releaseType=release
+
+      - name: Summary
+        shell: pwsh
+        run: |
+          $v = (Get-Content package.json | ConvertFrom-Json).version
+          Write-Output "## KinBound v$v published" >> $env:GITHUB_STEP_SUMMARY
+          Write-Output "" >> $env:GITHUB_STEP_SUMMARY
+          Write-Output "Every installed launcher will offer this update on its next start." >> $env:GITHUB_STEP_SUMMARY

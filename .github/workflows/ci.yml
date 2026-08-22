@@ -1,0 +1,50 @@
+# Run the suite on every push and pull request.
+#
+# Cheap insurance, and it means the release workflow is almost never where a
+# problem is first discovered -- by the time a version tag is pushed, that
+# commit has already been tested.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # The tests are plain node:test over the compiled output and never launch
+      # Electron, so there is no reason to pull ~100MB of runtime down for them.
+      - name: Install
+        run: npm ci
+        env:
+          ELECTRON_SKIP_BINARY_DOWNLOAD: 1
+
+      - name: Type-check and test
+        run: npm test
+
+      - name: Validate maps
+        run: node tools/validate-maps.js
+
+      # The manifest is generated from what is on disk. If it is stale the game
+      # silently stops loading whichever file was added, which is a miserable
+      # thing to debug at runtime.
+      - name: Check the content manifest is current
+        run: |
+          node tools/build-manifest.js
+          if ! git diff --quiet data/manifest.json; then
+            echo "::error file=data/manifest.json::Stale manifest. Run 'node tools/build-manifest.js' and commit the result."
+            git diff data/manifest.json
+            exit 1
+          fi

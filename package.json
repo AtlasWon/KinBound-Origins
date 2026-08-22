@@ -20,7 +20,8 @@
     "shortcut": "node tools/make-shortcut.mjs",
     "launcher:quiet": "npm run compile && electron . --mute",
     "smoke": "npm run compile && electron . --smoke",
-    "check-updates": "node tools/check-updates.mjs"
+    "check-updates": "node tools/check-updates.mjs",
+    "ship": "node tools/ship.mjs"
   },
   "devDependencies": {
     "electron": "^33.4.11",

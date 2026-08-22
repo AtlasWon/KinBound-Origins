@@ -105,16 +105,56 @@ $env:GH_TOKEN = "ghp_your_token_here"
 
 ### 4. Cut a release
 
-Bump `version` in `package.json` — this is what the launcher compares against,
-so **an update is only ever offered when this number goes up.** Then:
+```bash
+npm run ship patch
+```
+
+That is the whole job. It bumps the version, commits, tags and pushes; GitHub
+Actions then builds the installer on a clean Windows runner, runs the suite, and
+publishes the release. Every installed launcher offers the update on its next
+start.
+
+| Command | Version |
+|---|---|
+| `npm run ship patch` | 0.1.0 → 0.1.1 — a fix |
+| `npm run ship minor` | 0.1.0 → 0.2.0 — new content |
+| `npm run ship major` | 0.1.0 → 1.0.0 |
+| `npm run ship 0.4.2` | exactly that |
+| `npm run ship patch --dry-run` | says what it would do, changes nothing |
+
+**No token is needed for this.** The workflow uses the one GitHub injects
+automatically, which is scoped to this repository and expires when the job
+ends — strictly safer than a personal token sitting in an environment variable.
+
+Two rules the tooling enforces so you cannot trip over them:
+
+- **The version must go up.** The launcher compares against `package.json`, so a
+  release whose version did not move is invisible — indistinguishable from a
+  broken updater. `ship` refuses to reuse a tag.
+- **The tag must match `package.json`.** The release workflow checks this and
+  fails loudly rather than publishing something mislabelled.
+
+### Releasing by hand
+
+Still supported, for testing without CI:
 
 ```bash
 npm run release
 ```
 
-That compiles, packages, and uploads a **draft** release. Open the repository's
-Releases page and press *Publish release*. Until it is published, no launcher
-will see it.
+This one needs `GH_TOKEN`, builds locally, and uploads a **draft** you have to
+publish yourself. `npm run release -- --dry-run` builds the installer and
+publishes nothing.
+
+### When something does not work
+
+```bash
+npm run check-updates
+```
+
+Walks the whole chain — config, remote, reachability, push state, releases, the
+`latest.yml` manifest, and the installed-versus-released version — and names the
+first broken link.
 
 ---
 
