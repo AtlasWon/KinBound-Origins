@@ -19,6 +19,10 @@ contextBridge.exposeInMainWorld('launcher', {
   downloadUpdate: () => ipcRenderer.invoke('launcher:download-update'),
   installUpdate: () => ipcRenderer.invoke('launcher:install-update'),
 
+  /** Release notes for the Patch Notes tab, fetched in the main process. */
+  getReleaseNotes: (force) => ipcRenderer.invoke('launcher:release-notes', force),
+  markNotesSeen: (version) => ipcRenderer.invoke('launcher:mark-notes-seen', version),
+
   openGameFolder: () => ipcRenderer.invoke('launcher:open-folder'),
   openReleases: (url) => ipcRenderer.invoke('launcher:open-external', url),
 

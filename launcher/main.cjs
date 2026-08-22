@@ -46,6 +46,8 @@ protocol.registerSchemesAsPrivileged([
 let launcherWindow = null;
 let gameWindow = null;
 let updater = null;
+/** When the current game window opened, for the play-time counter. */
+let gameStartedAt = 0;
 
 /**
  * Whether this run should make any sound.
@@ -60,6 +62,18 @@ function isSilentRun() {
     || process.argv.includes('--mute')
     || process.argv.includes('--smoke');
 }
+
+/**
+ * A smoke run is not a second launcher.
+ *
+ * It captures screenshots and quits. Two of those distinctions matter here:
+ * it must not be turned away by the single-instance lock -- which exists so
+ * two *player-facing* launchers cannot fight over an update -- and it must not
+ * steal focus from whatever the person at the keyboard is actually doing.
+ * Being silently killed by a launcher somebody left open is how a broken
+ * screen ships unnoticed.
+ */
+const SMOKE = Boolean(process.env.KINBOUND_SMOKE) || process.argv.includes('--smoke');
 
 /** Everything shipped with the app: index.html, build/js, data. */
 function gameRoot() {
@@ -88,10 +102,12 @@ function registerGameProtocol() {
 
 function createLauncherWindow() {
   launcherWindow = new BrowserWindow({
-    width: 940,
-    height: 600,
-    minWidth: 820,
-    minHeight: 540,
+    // Wide enough that the shelf, the stats row and the buttons all fit on one
+    // line at the minimum size; below that the dock wraps rather than squashes.
+    width: 1160,
+    height: 720,
+    minWidth: 980,
+    minHeight: 640,
     show: false,
     frame: false,
     backgroundColor: '#12151f',
@@ -107,7 +123,10 @@ function createLauncherWindow() {
 
   launcherWindow.removeMenu();
   launcherWindow.loadFile(path.join(__dirname, 'ui', 'index.html'));
-  launcherWindow.once('ready-to-show', () => launcherWindow.show());
+  launcherWindow.once('ready-to-show', () => {
+    if (SMOKE) launcherWindow.showInactive();
+    else launcherWindow.show();
+  });
   launcherWindow.on('closed', () => { launcherWindow = null; });
 }
 
@@ -134,6 +153,7 @@ function createGameWindow() {
   if (gameWindow) { gameWindow.focus(); return; }
 
   const { width, height } = bestGameSize();
+  gameStartedAt = Date.now();
   gameWindow = new BrowserWindow({
     width,
     height,
@@ -159,7 +179,8 @@ function createGameWindow() {
   gameWindow.loadURL(`${GAME_ORIGIN}/index.html${silent ? '?mute=1' : ''}`);
   if (silent) gameWindow.webContents.setAudioMuted(true);
   gameWindow.once('ready-to-show', () => {
-    gameWindow.show();
+    if (SMOKE) gameWindow.showInactive();
+    else gameWindow.show();
     if (launcherWindow) launcherWindow.hide();
   });
 
@@ -172,6 +193,12 @@ function createGameWindow() {
   });
 
   gameWindow.on('closed', () => {
+    if (gameStartedAt) {
+      const record = readPlayRecord();
+      record.seconds = (record.seconds ?? 0) + Math.round((Date.now() - gameStartedAt) / 1000);
+      writePlayRecord(record);
+      gameStartedAt = 0;
+    }
     gameWindow = null;
     if (launcherWindow) {
       launcherWindow.show();
@@ -204,6 +231,145 @@ function writePlayRecord(record) {
   }
 }
 
+/**
+ * How big the install is on disk.
+ *
+ * Measured once and remembered: it does not change while the launcher is open,
+ * and walking a tree on every state request would be a silly thing to do for a
+ * line of text. node_modules and build output are skipped in a dev checkout so
+ * the number means the same thing there as it does in a real install.
+ */
+let installBytes = null;
+const SIZE_SKIP = new Set(['node_modules', '.git', 'dist', '.github']);
+
+function dirSize(root, budget = 20000) {
+  let total = 0;
+  const stack = [root];
+  while (stack.length && budget > 0) {
+    const dir = stack.pop();
+    let entries;
+    try {
+      entries = fs.readdirSync(dir, { withFileTypes: true });
+    } catch {
+      continue;
+    }
+    for (const entry of entries) {
+      if (SIZE_SKIP.has(entry.name)) continue;
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        stack.push(full);
+      } else {
+        budget--;
+        try { total += fs.statSync(full).size; } catch { /* vanished; ignore */ }
+      }
+    }
+  }
+  return total;
+}
+
+function installSize() {
+  if (installBytes !== null) return installBytes;
+  const root = app.isPackaged ? path.dirname(app.getPath('exe')) : app.getAppPath();
+  try {
+    const stat = fs.statSync(root);
+    installBytes = stat.isDirectory() ? dirSize(root) : stat.size;
+  } catch {
+    installBytes = 0;
+  }
+  return installBytes;
+}
+
+/**
+ * Release notes for the Patch Notes tab.
+ *
+ * Fetched here rather than in the page: the launcher UI runs under
+ * default-src 'none' and has no network of its own, which is exactly how a
+ * renderer that displays remote text should be. What crosses the bridge is a
+ * fixed shape with the fields the tab draws, and nothing else.
+ *
+ * When GitHub cannot be reached -- offline, rate limited, no releases yet --
+ * the bundled CHANGELOG.md answers instead, so the tab still says something
+ * true about the version that is actually installed.
+ */
+function localChangelog() {
+  try {
+    const md = fs.readFileSync(path.join(app.getAppPath(), 'CHANGELOG.md'), 'utf8');
+    const sections = [];
+    const heading = /^##\s+v?(\d+\.\d+\.\d+)\s*$/gm;
+    let match;
+    let previous = null;
+    while ((match = heading.exec(md))) {
+      if (previous) previous.end = match.index;
+      previous = { version: match[1], start: match.index + match[0].length, end: undefined };
+      sections.push(previous);
+    }
+    return sections.map((s) => ({
+      version: s.version,
+      name: null,
+      date: null,
+      body: md.slice(s.start, s.end).replace(/^\s*---\s*$/gm, '').trim(),
+      prerelease: false,
+    }));
+  } catch {
+    return [];
+  }
+}
+
+let notesCache = null;
+const NOTES_TTL = 5 * 60 * 1000;
+
+async function fetchReleaseNotes(force) {
+  if (!force && notesCache && Date.now() - notesCache.at < NOTES_TTL) return notesCache.payload;
+
+  const repo = updater && updater.configured ? updater.channelLabel() : null;
+  let payload;
+
+  if (!repo) {
+    payload = { source: 'local', releases: localChangelog(), error: null };
+  } else {
+    try {
+      const res = await net.fetch(
+        'https://api.github.com/repos/' + repo + '/releases?per_page=12',
+        { headers: { Accept: 'application/vnd.github+json', 'User-Agent': 'KinBound-Launcher' } },
+      );
+      if (!res.ok) throw new Error('GitHub returned ' + res.status);
+      // A release published before the notes pipeline existed has an empty body
+      // on GitHub. The changelog inside the package still knows what changed in
+      // those versions, so it fills the gaps rather than leaving a version
+      // heading with nothing under it.
+      const local = new Map(localChangelog().map((r) => [r.version, r.body]));
+
+      const releases = (await res.json())
+        .filter((r) => !r.draft)
+        .map((r) => {
+          const version = String(r.tag_name || '').replace(/^v/, '');
+          const body = String(r.body || '').trim();
+          return {
+            version,
+            name: r.name || null,
+            date: r.published_at || r.created_at || null,
+            body: body || local.get(version) || '',
+            prerelease: Boolean(r.prerelease),
+          };
+        })
+        .filter((r) => /^\d+\.\d+\.\d+/.test(r.version));
+
+      payload = releases.length
+        ? { source: 'github', releases, error: null }
+        : { source: 'local', releases: localChangelog(), error: 'No releases published yet.' };
+    } catch {
+      payload = {
+        source: 'local',
+        releases: localChangelog(),
+        error: 'could not reach GitHub',
+      };
+    }
+  }
+
+  notesCache = { at: Date.now(), payload };
+  return payload;
+}
+
 function registerIpc() {
   ipcMain.handle('launcher:state', () => ({
     version: app.getVersion(),
@@ -211,6 +377,7 @@ function registerIpc() {
     update: updater?.snapshot() ?? { status: 'unconfigured' },
     play: readPlayRecord(),
     gameFolder: gameRoot(),
+    install: { bytes: installSize() },
   }));
 
   ipcMain.handle('launcher:play', () => {
@@ -223,6 +390,17 @@ function registerIpc() {
   ipcMain.handle('launcher:check-update', () => updater?.check(true));
   ipcMain.handle('launcher:download-update', () => updater?.download());
   ipcMain.handle('launcher:install-update', () => updater?.install());
+
+  ipcMain.handle('launcher:release-notes', (_e, force) => fetchReleaseNotes(Boolean(force)));
+
+  ipcMain.handle('launcher:mark-notes-seen', (_e, version) => {
+    // Written to the same file as the play record, not to the page's storage:
+    // a "you have already read this" flag that an update could wipe would go
+    // off again on every release.
+    if (typeof version !== 'string' || !/^\d+\.\d+\.\d+$/.test(version)) return false;
+    writePlayRecord({ ...readPlayRecord(), notesSeen: version });
+    return true;
+  });
 
   ipcMain.handle('launcher:open-folder', () => shell.openPath(gameRoot()));
   ipcMain.handle('launcher:open-external', (_e, url) => {
@@ -282,6 +460,19 @@ async function runSmokeTest() {
       if (launcherWindow) await shoot(launcherWindow, `launcher-02-${state.status}`);
     }
 
+    // Patch Notes. The fetch happens in the main process, so this exercises the
+    // real call as well as the layout -- and prints what came back, because a
+    // tab that quietly falls back to the bundled changelog looks fine in a
+    // screenshot and is not fine.
+    const notes = await fetchReleaseNotes(true);
+    console.log('  release notes: ' + notes.source + ', ' + notes.releases.length + ' entries'
+      + (notes.error ? ' (' + notes.error + ')' : ''));
+    await launcherWindow?.webContents.executeJavaScript("showView('notes')");
+    await settle(450);
+    if (launcherWindow) await shoot(launcherWindow, 'launcher-04-notes');
+    await launcherWindow?.webContents.executeJavaScript("showView('library')");
+    await settle(200);
+
     createGameWindow();
     // Surface anything the game logs, so a broken data path shows up here
     // rather than as a mysteriously blank screenshot.
@@ -329,7 +520,7 @@ async function runSmokeTest() {
 /* ------------------------------------------------------------------ boot */
 
 // One launcher at a time: a second copy would fight the first over the update.
-if (!app.requestSingleInstanceLock()) {
+if (!SMOKE && !app.requestSingleInstanceLock()) {
   app.quit();
 } else {
   app.on('second-instance', () => {
@@ -361,7 +552,7 @@ if (!app.requestSingleInstanceLock()) {
     // Smoke mode: render both windows, capture them, quit. Same idea as the
     // game's ?dev=1 harness -- a way to regression-check the launcher visually
     // without a human at the keyboard. Never runs unless the env var is set.
-    if (process.env.KINBOUND_SMOKE || process.argv.includes('--smoke')) void runSmokeTest();
+    if (SMOKE) void runSmokeTest();
   });
 
   app.on('window-all-closed', () => {

@@ -14,7 +14,7 @@
  */
 
 import { spawnSync } from 'node:child_process';
-import { readFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -58,6 +58,41 @@ console.log(`  mode       ${dryRun ? 'dry run (no publish)'
 const compile = spawnSync('npx', ['tsc'], { cwd: ROOT, stdio: 'inherit', shell: true });
 if (compile.status !== 0) die('TypeScript build failed; nothing was published.');
 
+/**
+ * Release notes come from the matching section of CHANGELOG.md.
+ *
+ * The launcher's Patch Notes tab reads GitHub release bodies, so whatever ends
+ * up here is what players see. Taking it from a file in the repository means
+ * the notes are written and reviewed alongside the change, rather than typed
+ * into a web form at the moment of shipping, when nobody remembers the detail.
+ */
+function releaseNotes() {
+  try {
+    const md = readFileSync(resolve(ROOT, 'CHANGELOG.md'), 'utf8');
+    const heading = new RegExp(`^## v?${pkg.version.replace(/\./g, '\\.')}\\s*$`, 'm');
+    const start = md.search(heading);
+    if (start < 0) return null;
+    const after = md.slice(start);
+    const end = after.indexOf('\n## ', 1);
+    return after.slice(after.indexOf('\n') + 1, end < 0 ? undefined : end)
+      .replace(/^\s*---\s*$/gm, '')
+      .trim();
+  } catch {
+    return null;
+  }
+}
+
+const notes = releaseNotes();
+let notesFile = null;
+if (notes) {
+  mkdirSync(resolve(ROOT, 'dist'), { recursive: true });
+  writeFileSync(resolve(ROOT, 'dist', 'release-notes.md'), notes);
+  notesFile = 'dist/release-notes.md';
+  console.log(`  notes      ${notes.split('\n').length} lines from CHANGELOG.md\n`);
+} else {
+  console.log(`  notes      none - CHANGELOG.md has no "## v${pkg.version}" section\n`);
+}
+
 // Every field of the publish block has to be supplied together. Passing a
 // single `-c.publish.x=y` *replaces* the whole block rather than merging into
 // it, so setting only releaseType leaves a config with no provider and
@@ -71,6 +106,7 @@ const args = [
   `-c.publish.repo=${repo}`,
   `-c.publish.releaseType=${ci ? 'release' : 'draft'}`,
 ];
+if (notesFile) args.push(`-c.releaseInfo.releaseNotesFile=${notesFile}`);
 
 const build = spawnSync('npx', args, { cwd: ROOT, stdio: 'inherit', shell: true });
 if (build.status !== 0) die('electron-builder failed.');

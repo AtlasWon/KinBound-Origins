@@ -41,6 +41,7 @@
     },
     "files": [
       "index.html",
+      "CHANGELOG.md",
       "package.json",
       "launcher/**/*",
       "data/**/*",

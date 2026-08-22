@@ -14,64 +14,121 @@
     <div class="titlebar-drag">
       <span class="mark" aria-hidden="true"></span>
       <span class="wordmark">KINBOUND</span>
-      <span class="edition">Amber Version</span>
+      <span class="edition">Launcher</span>
     </div>
     <div class="window-buttons">
-      <button id="btn-min" class="win-btn" title="Minimise" aria-label="Minimise">&#x2013;</button>
-      <button id="btn-close" class="win-btn danger" title="Close" aria-label="Close">&#x2715;</button>
+      <button id="btn-min" class="win-btn" title="Minimise" aria-label="Minimise">&#xFF0D;</button>
+      <button id="btn-close" class="win-btn danger" title="Close" aria-label="Close">&#xFF38;</button>
     </div>
   </header>
 
-  <main class="shell">
-    <!-- Hero art, drawn to canvas so the launcher ships no image assets. -->
-    <section class="hero">
-      <canvas id="hero-art" width="960" height="400" aria-label="KinBound key art"></canvas>
-      <div class="hero-fade"></div>
-      <div class="hero-copy">
-        <h1>KinBound</h1>
-        <p class="tagline">Every seventy years the Hollow Sea turns over, and the whole of Veldras moves.</p>
-      </div>
-    </section>
+  <div class="shell">
 
-    <!-- Everything actionable lives in one bar along the bottom. -->
-    <section class="dock">
-      <div class="dock-info">
-        <div class="row">
-          <span class="label">Installed</span>
-          <span id="version" class="value">--</span>
-        </div>
-        <div class="row">
-          <span class="label">Last played</span>
-          <span id="last-played" class="value">Never</span>
-        </div>
-        <div class="row">
-          <span class="label">Updates</span>
-          <span id="channel" class="value">Checking...</span>
-        </div>
-      </div>
+    <!-- Navigation. Two views, because two is what there is; a rail of empty
+         placeholder tabs makes a launcher feel unfinished, not spacious. -->
+    <nav class="rail" role="tablist" aria-label="Sections">
+      <button class="rail-btn is-active" data-view="library" role="tab" aria-selected="true">
+        <span class="rail-icon" aria-hidden="true"><span class="glyph-library"></span></span>
+        <span class="rail-label">Library</span>
+      </button>
+      <button class="rail-btn" data-view="notes" role="tab" aria-selected="false">
+        <span class="rail-icon" aria-hidden="true"><span class="glyph-notes"></span></span>
+        <span class="rail-label">Patch Notes</span>
+        <span id="notes-dot" class="rail-dot" hidden></span>
+      </button>
 
-      <div class="dock-actions">
-        <div id="update-panel" class="update-panel" hidden>
-          <div class="update-head">
-            <span id="update-title">Update available</span>
-            <span id="update-version" class="pill"></span>
+      <div class="rail-spacer"></div>
+
+      <div class="rail-foot">
+        <span id="rail-version">--</span>
+        <button id="btn-folder" class="link-btn" title="Open the install folder">Files</button>
+      </div>
+    </nav>
+
+    <!-- ------------------------------------------------------------ library -->
+    <main id="view-library" class="view is-active">
+
+      <!-- The shelf. One entry today, but the shape is the point: a launcher
+           with a list looks like a launcher, and a second title drops in
+           without redesigning anything. -->
+      <aside class="shelf">
+        <div class="shelf-head">
+          <span class="shelf-title">Library</span>
+          <span id="shelf-count" class="shelf-count">1</span>
+        </div>
+        <div id="shelf-list" class="shelf-list" role="listbox" aria-label="Installed games">
+          <button class="game-card is-active" data-game="kinbound" role="option" aria-selected="true">
+            <canvas class="card-art" width="112" height="64" aria-hidden="true"></canvas>
+            <span class="card-text">
+              <span class="card-name">KinBound</span>
+              <span class="card-meta">Amber Version</span>
+            </span>
+            <span id="card-flag" class="card-flag" hidden>NEW</span>
+          </button>
+        </div>
+        <div class="shelf-foot">
+          <span class="shelf-k">Installed</span>
+          <span id="shelf-size" class="shelf-v">--</span>
+        </div>
+      </aside>
+
+      <!-- The detail pane for whatever is selected on the shelf. -->
+      <section class="detail">
+        <section class="hero">
+          <canvas id="hero-art" width="960" height="420" aria-label="KinBound key art"></canvas>
+          <div class="hero-fade"></div>
+          <div class="hero-copy">
+            <h1>KinBound</h1>
+            <p class="tagline">Every seventy years the Hollow Sea turns over, and the whole of Veldras moves.</p>
           </div>
-          <p id="update-notes" class="update-notes"></p>
-          <div id="progress-track" class="progress" hidden><div id="progress-bar"></div></div>
-          <div class="update-buttons">
-            <button id="btn-update" class="btn btn-update">Update</button>
-            <button id="btn-notes" class="btn btn-ghost" hidden>Release notes</button>
-          </div>
-        </div>
+        </section>
 
-        <div class="play-row">
-          <button id="btn-check" class="btn btn-ghost" title="Check for updates">Check for updates</button>
-          <button id="btn-folder" class="btn btn-ghost" title="Open the install folder">Files</button>
-          <button id="btn-play" class="btn btn-play">PLAY</button>
+        <!-- Sits between the art and the dock, and only when there is something to say. -->
+        <section id="update-bar" class="update-bar" hidden>
+          <div class="ub-text">
+            <strong id="ub-title">Update available</strong>
+            <span id="ub-sub"></span>
+          </div>
+          <div id="ub-progress" class="progress" hidden><div id="ub-fill"></div></div>
+          <div class="ub-actions">
+            <button id="btn-ub-notes" class="btn btn-ghost btn-sm" hidden>What's new</button>
+            <button id="btn-update" class="btn btn-update btn-sm">Update</button>
+            <button id="btn-ub-close" class="icon-btn" title="Dismiss" aria-label="Dismiss">&#xFF38;</button>
+          </div>
+        </section>
+
+        <section class="dock">
+          <div class="stats">
+            <div class="stat"><span class="stat-k">Version</span><span id="s-version" class="stat-v">--</span></div>
+            <div class="stat"><span class="stat-k">Play time</span><span id="s-playtime" class="stat-v">--</span></div>
+            <div class="stat"><span class="stat-k">Last played</span><span id="s-last" class="stat-v">Never</span></div>
+            <div class="stat"><span class="stat-k">Updates</span><span id="s-updates" class="stat-v">--</span></div>
+          </div>
+
+          <div class="actions">
+            <button id="btn-check" class="btn btn-ghost" title="Check for updates">Check for updates</button>
+            <button id="btn-play" class="btn btn-play">PLAY</button>
+          </div>
+        </section>
+
+      </section>
+    </main>
+
+    <!-- -------------------------------------------------------- patch notes -->
+    <main id="view-notes" class="view">
+      <header class="view-head">
+        <div>
+          <h2>Patch Notes</h2>
+          <p id="notes-source" class="view-sub">&nbsp;</p>
         </div>
+        <button id="btn-refresh-notes" class="btn btn-ghost btn-sm">Refresh</button>
+      </header>
+      <div id="notes-body" class="notes-body">
+        <p class="muted">Loading...</p>
       </div>
-    </section>
-  </main>
+    </main>
+
+  </div>
 
   <div id="toast" class="toast" hidden></div>
 

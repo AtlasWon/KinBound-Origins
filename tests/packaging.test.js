@@ -51,7 +51,9 @@ test('everything the packaged app loads is listed in build.files', () => {
   // The game is served from inside the asar; anything missing from this list
   // 404s at runtime rather than failing the build.
   const files = pkg.build?.files ?? [];
-  for (const needed of ['index.html', 'launcher/**/*', 'data/**/*']) {
+  // CHANGELOG.md is read at runtime by the Patch Notes tab when GitHub cannot
+  // be reached, so it has to be inside the package like any other asset.
+  for (const needed of ['index.html', 'launcher/**/*', 'data/**/*', 'CHANGELOG.md']) {
     assert.ok(files.includes(needed), `build.files is missing "${needed}"`);
   }
   assert.ok(
