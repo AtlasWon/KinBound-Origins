@@ -188,17 +188,29 @@ function cmp(a, b) {
   return 0;
 }
 
-/** What the installer registered, if this machine has KinBound installed. */
+/**
+ * What the installer registered, if this machine has KinBound installed.
+ *
+ * The whole Uninstall tree is dumped and split into per-key blocks rather than
+ * letting `reg` filter it. `reg query /f KinBound /d` returns only the *lines*
+ * whose data matched -- so DisplayName came back and DisplayVersion, whose data
+ * is just a number, never did. The version was always missing, and the report
+ * said "not installed" for a machine that plainly had it.
+ */
 function installedVersion() {
   if (process.platform !== 'win32') return null;
   try {
     const out = execFileSync('reg', [
-      'query',
-      'HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall',
-      '/s', '/f', 'KinBound', '/d',
-    ]).toString();
-    const m = /DisplayVersion\s+REG_SZ\s+([\d.]+)/.exec(out);
-    return m ? m[1] : null;
+      'query', 'HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall', '/s',
+    ], { maxBuffer: 16 * 1024 * 1024 }).toString();
+
+    // Blocks are separated by the blank line before each key path.
+    for (const block of out.split(/\r?\n\r?\n/)) {
+      if (!/DisplayName\s+REG_SZ\s+.*KinBound/i.test(block)) continue;
+      const m = /DisplayVersion\s+REG_SZ\s+([\d.]+)/.exec(block);
+      if (m) return m[1];
+    }
+    return null;
   } catch {
     return null;
   }
