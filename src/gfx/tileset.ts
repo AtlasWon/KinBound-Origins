@@ -93,11 +93,44 @@ export enum T {
   STOVE,
   WINDOW_IN,
   CIVIC_FLOOR,
+  // Houses, second generation. A town of one roof and one wall reads as one
+  // building stamped out repeatedly, however good that building is.
+  ROOF_SLATE_L,
+  ROOF_SLATE,
+  ROOF_SLATE_R,
+  ROOF_HIP_L,
+  ROOF_HIP,
+  ROOF_HIP_R,
+  ROOF_CHIMNEY,
+  WALL_TIMBER,
+  WALL_BRICK,
+  WINDOW_SHUTTER,
+  WINDOW_BOX,
+  DOOR_PORCH,
+  // Laboratory: wide, flat-topped, glazed. Nothing here is shared with a house.
+  LAB_WALL,
+  LAB_WINDOW,
+  LAB_SIGN,
+  LAB_DOOR_L,
+  LAB_DOOR_R,
+  LAB_ROOF,
+  LAB_VENT,
+  // Interiors.
+  LAB_MACHINE,
+  LAB_CONSOLE,
+  LAB_TANK,
+  WORKBENCH,
+  FLOOR_LAB,
+  SOFA,
+  SHOP_SHELF,
+  // Outdoor dressing.
+  FLOWER_BED,
+  LAMP_POST,
   COUNT,
 }
 
 /** Which colour ramp a roof is painted from. */
-export type RoofHue = 'tan' | 'red' | 'blue';
+export type RoofHue = 'tan' | 'red' | 'blue' | 'slate' | 'moss';
 
 /**
  * Palette.
@@ -190,6 +223,37 @@ export const PAL = {
   blueMid: '#3a79c6',
   blueLight: '#589ade',
   bluePale: '#84bcf0',
+
+  // Slate. Cold and blue-grey, so a slate house next to a terracotta one reads
+  // as a different *material* and not as the same roof with a filter on it.
+  slateDeep: '#2f3a4a',
+  slateDark: '#43526a',
+  slateMid: '#5d7090',
+  slateLight: '#7c8fae',
+  slatePale: '#a3b4cc',
+
+  // Weathered moss green, for the older cottages.
+  mossDeep: '#2e3d24',
+  mossDark: '#445a33',
+  mossMid: '#5e7845',
+  mossLight: '#7d975e',
+  mossPale: '#a2b880',
+
+  // Brick, with a mortar that is pale enough to draw the courses on its own.
+  brickDeep: '#5e2c20',
+  brickDark: '#7c3d2c',
+  brickMid: '#9a5140',
+  brickLight: '#b46a54',
+  brickPale: '#cc8a72',
+  mortar: '#d8cdb8',
+
+  // Painted metal: laboratory casings, shop fittings, lamp columns.
+  steelDeep: '#3d4658',
+  steelDark: '#5c6270',
+  steelMid: '#98a0ae',
+  steelLight: '#c6ccd8',
+  steelPale: '#e8ecf2',
+  panelInk: '#2b3040',
 
   // The white base course both civic buildings stand on.
   trimShade: '#a8adb8',
@@ -454,6 +518,34 @@ export class Tileset {
       case T.STOVE: this.stove(px, fill); break;
       case T.WINDOW_IN: this.interiorWindow(px, fill, rng); break;
       case T.CIVIC_FLOOR: this.civicFloor(px, fill); break;
+      case T.ROOF_SLATE_L: this.shingleRoof(px, fill, 'left', 'slate'); break;
+      case T.ROOF_SLATE: this.shingleRoof(px, fill, 'mid', 'slate'); break;
+      case T.ROOF_SLATE_R: this.shingleRoof(px, fill, 'right', 'slate'); break;
+      case T.ROOF_HIP_L: this.hipRoof(px, fill, 'left', 'moss'); break;
+      case T.ROOF_HIP: this.hipRoof(px, fill, 'mid', 'moss'); break;
+      case T.ROOF_HIP_R: this.hipRoof(px, fill, 'right', 'moss'); break;
+      case T.ROOF_CHIMNEY: this.chimney(px, fill); break;
+      case T.WALL_TIMBER: this.timberWall(px, fill); break;
+      case T.WALL_BRICK: this.brickWall(px, fill); break;
+      case T.WINDOW_SHUTTER: this.shutteredWindow(px, fill); break;
+      case T.WINDOW_BOX: this.windowBox(px, fill); break;
+      case T.DOOR_PORCH: this.porchDoor(px, fill, rng); break;
+      case T.LAB_WALL: this.labWall(px, fill, 'plain'); break;
+      case T.LAB_WINDOW: this.labWall(px, fill, 'window'); break;
+      case T.LAB_SIGN: this.labWall(px, fill, 'sign'); break;
+      case T.LAB_DOOR_L: this.labDoor(px, fill, false); break;
+      case T.LAB_DOOR_R: this.labDoor(px, fill, true); break;
+      case T.LAB_ROOF: this.labRoof(px, fill, false); break;
+      case T.LAB_VENT: this.labRoof(px, fill, true); break;
+      case T.LAB_MACHINE: this.labMachines(px, fill); break;
+      case T.LAB_CONSOLE: this.labConsole(px, fill); break;
+      case T.LAB_TANK: this.specimenTank(px, fill); break;
+      case T.WORKBENCH: this.workbench(px, fill); break;
+      case T.FLOOR_LAB: this.labFloor(px, fill); break;
+      case T.SOFA: this.sofa(px, fill); break;
+      case T.SHOP_SHELF: this.shopShelf(px, fill); break;
+      case T.FLOWER_BED: this.flowerBed(px, fill); break;
+      case T.LAMP_POST: this.lampPost(px); break;
       default: fill('#ff00ff'); break; // loud, so a missing tile is obvious
     }
   }
@@ -1110,6 +1202,8 @@ export class Tileset {
   private roofRamp(hue: RoofHue): [string, string, string, string, string] {
     if (hue === 'red') return [PAL.redDeep, PAL.redDark, PAL.redMid, PAL.redLight, PAL.redPale];
     if (hue === 'blue') return [PAL.blueDeep, PAL.blueDark, PAL.blueMid, PAL.blueLight, PAL.bluePale];
+    if (hue === 'slate') return [PAL.slateDeep, PAL.slateDark, PAL.slateMid, PAL.slateLight, PAL.slatePale];
+    if (hue === 'moss') return [PAL.mossDeep, PAL.mossDark, PAL.mossMid, PAL.mossLight, PAL.mossPale];
     return [PAL.roofDeep, PAL.roofDark, PAL.roofMid, PAL.roofLight, PAL.roofPale];
   }
 
@@ -1269,6 +1363,437 @@ export class Tileset {
     }
   }
 
+
+  /* ------------------------------------------------- houses, second set */
+
+  /**
+   * Shingled roof, in whatever hue is asked for.
+   *
+   * Horizontal courses rather than the terracotta roof's vertical slats. At
+   * sixteen units across, a change of *material* separates two neighbouring
+   * houses far more reliably than a change of tint does: a town where every
+   * roof is the same weave in a different colour still reads as one building
+   * repeated, which is exactly the complaint this set exists to answer.
+   *
+   * The ridge cap is baked into every part, including the ends. Houses here are
+   * two tiles tall -- one roof row, one wall row -- so an edge tile that leaves
+   * its ridge to a separate row above puts a notch in both top corners.
+   */
+  private shingleRoof(
+    px: Px, fill: (c: string) => void,
+    part: 'mid' | 'left' | 'right',
+    hue: RoofHue,
+  ): void {
+    const [deep, dark, mid, light, pale] = this.roofRamp(hue);
+    fill(mid);
+    const P = this.unit(px);
+
+    for (let y = 0; y < TILE_SIZE; y++) {
+      const course = Math.floor(y / 4);
+      const inCourse = y % 4;
+      // Courses break joint every other row, as slate is actually laid.
+      const shift = (course % 2) * 2;
+      for (let x = 0; x < TILE_SIZE; x++) {
+        const n = hash2(Math.floor((x + shift) / 4), course, 131);
+        let c: string = n > 0.7 ? light : n < 0.3 ? dark : mid;
+        if (inCourse === 0) c = c === dark ? mid : light;   // lit head of the slate
+        else if (inCourse === 3) c = deep;                  // shadow under the lip
+        if ((x + shift) % 4 === 0) c = dark;                // joint between slates
+        P(x, y, c);
+      }
+    }
+
+    for (let x = 0; x < TILE_SIZE; x++) {
+      P(x, 0, PAL.outline);
+      P(x, 1, pale);
+      P(x, 2, light);
+      P(x, 14, deep);      // eave
+      P(x, 15, PAL.outline);
+    }
+
+    // Barge boards. The left one faces the light and the right one does not,
+    // which is the whole reason the two ends are separate tiles.
+    if (part === 'left') {
+      for (let y = 0; y < TILE_SIZE; y++) {
+        P(0, y, PAL.outline);
+        P(1, y, deep);
+        P(2, y, pale);
+        P(3, y, light);
+      }
+    }
+    if (part === 'right') {
+      for (let y = 0; y < TILE_SIZE; y++) {
+        P(15, y, PAL.outline);
+        P(14, y, deep);
+        P(13, y, dark);
+      }
+    }
+  }
+
+  /**
+   * Hipped roof end.
+   *
+   * The other roof *shape*, not another colour. On a hip the end wall stops
+   * short and the roof folds in on a diagonal instead of being cut off square
+   * at a gable, so the ridge is shorter than the building. The silhouette of
+   * the tile stays rectangular -- there is a wall underneath it either way --
+   * and the fold is carried entirely by the arris and by the end slope sitting
+   * a step brighter, because it faces the light while the front slope faces
+   * the viewer.
+   */
+  private hipRoof(
+    px: Px, fill: (c: string) => void,
+    part: 'mid' | 'left' | 'right',
+    hue: RoofHue,
+  ): void {
+    this.shingleRoof(px, fill, 'mid', hue);
+    if (part === 'mid') return;
+
+    const [deep, dark, mid, light, pale] = this.roofRamp(hue);
+    const P = this.unit(px);
+    const flip = part === 'right';
+    const at = (x: number, y: number, c: string) => P(flip ? TILE_SIZE - 1 - x : x, y, c);
+
+    // The two hip ends are not the same tile mirrored: the left one turns into
+    // the light and the right one turns away from it, so the west face sits a
+    // step above the front slope and the east face a step below. Painting both
+    // the same is what makes a hipped roof look like a decal.
+    const face = flip ? dark : light;
+    const band = flip ? deep : mid;
+    const shoulder = flip ? mid : pale;
+
+    for (let y = 0; y <= 10; y++) {
+      for (let x = 0; x + y <= 10; x++) {
+        const d = x + y;
+        if (d === 10) { at(x, y, deep); continue; }        // the arris itself
+        if (d === 9) { at(x, y, shoulder); continue; }
+        at(x, y, y % 4 === 3 ? band : face);
+      }
+    }
+    // The eave corner, where the hip runs out to the gutter.
+    for (let y = 10; y <= 14; y++) {
+      at(0, y, PAL.outline);
+      at(1, y, y === 14 ? deep : mid);
+    }
+  }
+
+  /**
+   * A chimney, on the default terracotta ridge.
+   *
+   * Drops straight into a `^` slot in an existing roof row. The cap is drawn
+   * wider than the stack and the shadow falls to the right of it: without both,
+   * this reads as bricks painted on a roof rather than as something standing
+   * on one.
+   */
+  private chimney(px: Px, fill: (c: string) => void): void {
+    this.roof(px, fill, 'peak');
+    const P = this.unit(px);
+
+    for (let y = 3; y <= 11; y++) {
+      const course = Math.floor((y - 3) / 3);
+      const shift = (course % 2) * 2;
+      for (let x = 5; x <= 10; x++) {
+        const joint = (y - 3) % 3 === 2 || (x + shift) % 3 === 0;
+        P(x, y, joint ? PAL.mortar : x < 7 ? PAL.brickLight : x > 8 ? PAL.brickDark : PAL.brickMid);
+      }
+    }
+    for (let x = 4; x <= 11; x++) {
+      P(x, 0, PAL.outline);
+      P(x, 1, PAL.stoneLight);
+      P(x, 2, PAL.stoneDark);
+    }
+    for (let y = 3; y <= 11; y++) { P(4, y, PAL.outline); P(11, y, PAL.outline); }
+    for (let x = 4; x <= 11; x++) P(x, 12, PAL.outline);
+    // Cast shadow, sheared to the right because the light is up and to the left.
+    for (let x = 12; x <= 14; x++) {
+      for (let y = 4 + (x - 12); y <= 12; y++) P(x, y, PAL.roofDeep);
+    }
+  }
+
+  /**
+   * Timber board siding.
+   *
+   * Lapped boards four units deep, each with a lit head and a shadow where the
+   * next board oversails it. The plinth at the foot is stone rather than more
+   * timber: a house whose boards run into the grass looks like it was dropped
+   * there, not built.
+   */
+  private timberWall(px: Px, fill: (c: string) => void): void {
+    fill(PAL.woodMid);
+    const P = this.unit(px);
+    for (let y = 0; y < TILE_SIZE; y++) {
+      const b = y % 4;
+      for (let x = 0; x < TILE_SIZE; x++) {
+        let c: string = b === 0 ? PAL.woodLight : b === 3 ? PAL.woodDark : PAL.woodMid;
+        if ((x * 7 + y * 3) % 16 === 5) c = b === 3 ? PAL.woodMid : PAL.woodPale;
+        P(x, y, c);
+      }
+    }
+    for (let x = 0; x < TILE_SIZE; x++) {
+      P(x, 14, PAL.stoneMid);
+      P(x, 15, PAL.stoneDark);
+    }
+  }
+
+  /** Brick, laid in stretcher bond with mortar pale enough to draw the courses. */
+  private brickWall(px: Px, fill: (c: string) => void): void {
+    fill(PAL.brickMid);
+    const P = this.unit(px);
+    for (let y = 0; y < TILE_SIZE; y++) {
+      const course = Math.floor(y / 4);
+      const shift = (course % 2) * 2;
+      for (let x = 0; x < TILE_SIZE; x++) {
+        if (y % 4 === 3 || (x + shift) % 4 === 3) { P(x, y, PAL.mortar); continue; }
+        const n = hash2(Math.floor((x + shift) / 4), course, 149);
+        let c: string = n > 0.72 ? PAL.brickLight : n < 0.28 ? PAL.brickDark : PAL.brickMid;
+        if (y % 4 === 0) c = PAL.brickPale;                 // lit head of the brick
+        if ((x + shift) % 4 === 2) c = mixDown(c);          // shaded far end
+        P(x, y, c);
+      }
+    }
+    for (let x = 0; x < TILE_SIZE; x++) {
+      P(x, 14, PAL.stoneMid);
+      P(x, 15, PAL.stoneDark);
+    }
+  }
+
+  /** A window with louvred shutters thrown open against the boards. */
+  private shutteredWindow(px: Px, fill: (c: string) => void): void {
+    this.timberWall(px, fill);
+    const P = this.unit(px);
+
+    for (let y = 3; y <= 10; y++) {
+      for (let x = 6; x <= 9; x++) {
+        P(x, y, x + y < 12 ? PAL.glassHi : x + y < 16 ? PAL.glassLight : PAL.glass);
+      }
+    }
+    for (let y = 2; y <= 11; y++) { P(5, y, PAL.trimPale); P(10, y, PAL.trimPale); }
+    for (let x = 5; x <= 10; x++) { P(x, 2, PAL.trimPale); P(x, 11, PAL.trimShade); }
+    for (let y = 3; y <= 10; y++) P(8, y, PAL.trimMid);
+
+    for (const sx of [2, 11]) {
+      for (let y = 2; y <= 11; y++) {
+        for (let x = sx; x <= sx + 2; x++) {
+          const border = y === 2 || y === 11 || x === sx || x === sx + 2;
+          // Louvres, drawn as alternating rows. Anything finer at this size
+          // turns into a grey smear and the shutter stops reading as a shutter.
+          P(x, y, border ? PAL.mossDeep : y % 2 === 0 ? PAL.mossMid : PAL.mossDark);
+        }
+      }
+    }
+    for (let x = 1; x <= 14; x++) { P(x, 12, PAL.woodPale); P(x, 13, PAL.woodDeep); }
+  }
+
+  /** A brick house's window, with a planted box under the sill. */
+  private windowBox(px: Px, fill: (c: string) => void): void {
+    this.brickWall(px, fill);
+    const P = this.unit(px);
+
+    for (let y = 2; y <= 8; y++) {
+      for (let x = 4; x <= 11; x++) {
+        const frame = y === 2 || y === 8 || x === 4 || x === 11;
+        if (frame) { P(x, y, y === 8 ? PAL.trimShade : PAL.trimPale); continue; }
+        P(x, y, x + y < 11 ? PAL.glassHi : x + y < 15 ? PAL.glassLight : PAL.glass);
+      }
+    }
+    for (let x = 5; x <= 10; x++) P(x, 5, PAL.trimMid);
+    for (let y = 3; y <= 7; y++) P(8, y, PAL.trimMid);
+
+    for (let y = 10; y <= 13; y++) {
+      for (let x = 3; x <= 12; x++) {
+        const edge = x === 3 || x === 12 || y === 13;
+        P(x, y, edge ? PAL.woodDeep : y === 10 ? PAL.woodLight : PAL.woodMid);
+      }
+    }
+    // Planting drawn over the sill, so it spills out of the box instead of
+    // sitting politely inside it.
+    const blooms = ['#e8586a', '#f2c44c', '#f0e8d0', '#c47ad8'];
+    for (let i = 0; i < 8; i++) {
+      const bx = 4 + i;
+      P(bx, 9, PAL.leafMid);
+      P(bx, 10, i % 3 === 0 ? PAL.leafDark : PAL.leafDeep);
+      if (i % 2 === 0) P(bx, 8, blooms[(i >> 1) % blooms.length]!);
+    }
+  }
+
+  /**
+   * Front door under a striped awning.
+   *
+   * The awning is the one part of a house front allowed a saturated colour: it
+   * is small, it is up at eye level, and it tells the player which of four
+   * near-identical frontages they were told to knock on.
+   */
+  private porchDoor(px: Px, fill: (c: string) => void, rng: Rng): void {
+    this.wall(px, fill, rng, false);
+    const P = this.unit(px);
+
+    for (let y = 0; y <= 2; y++) {
+      for (let x = 1; x <= 14; x++) {
+        P(x, y, y === 0 ? PAL.outline : x % 4 < 2 ? PAL.redMid : PAL.trimPale);
+      }
+    }
+    // Scalloped hem: only the coloured stripes hang the extra row.
+    for (let x = 1; x <= 14; x++) if (x % 4 < 2) P(x, 3, PAL.redDark);
+    for (let x = 1; x <= 14; x++) P(x, 4, PAL.plasterDark);   // shadow it throws
+
+    for (let y = 5; y <= 13; y++) {
+      for (let x = 4; x <= 11; x++) {
+        const frame = x === 4 || x === 11 || y === 5;
+        P(x, y, frame ? PAL.trimShade : PAL.woodMid);
+      }
+    }
+    for (const [y0, y1] of [[7, 9], [10, 12]] as [number, number][]) {
+      for (let y = y0; y <= y1; y++) {
+        for (let x = 6; x <= 9; x++) {
+          const edge = y === y0 || y === y1 || x === 6 || x === 9;
+          P(x, y, edge ? PAL.woodDeep : PAL.woodLight);
+        }
+      }
+    }
+    P(10, 9, '#e8c24a');
+    P(10, 10, PAL.woodDeep);
+    for (let x = 3; x <= 12; x++) { P(x, 14, PAL.stoneLight); P(x, 15, PAL.stoneDark); }
+  }
+
+  /* -------------------------------------------------------- laboratory */
+
+  /**
+   * Laboratory cladding.
+   *
+   * Flat pale panels with a joint every half tile, a fascia band at the head
+   * and a concrete plinth at the foot. Nothing here is lapped, grained or
+   * weathered: the building has to read as *built by an institution* from the
+   * wall alone, before the player sees the doors or the sign.
+   */
+  private labWall(px: Px, fill: (c: string) => void, kind: 'plain' | 'window' | 'sign'): void {
+    fill(PAL.trimLight);
+    const P = this.unit(px);
+    for (let y = 0; y < TILE_SIZE; y++) {
+      for (let x = 0; x < TILE_SIZE; x++) {
+        let c: string = (x * 7 + y * 5) % 16 === 3 ? PAL.trimPale : PAL.trimLight;
+        if (x % 8 === 0) c = PAL.trimShade;
+        else if (x % 8 === 1) c = PAL.trimPale;
+        P(x, y, c);
+      }
+    }
+    for (let x = 0; x < TILE_SIZE; x++) {
+      P(x, 0, PAL.trimShade);
+      P(x, 1, PAL.trimPale);
+      P(x, 13, PAL.trimShade);
+      P(x, 14, PAL.stoneDark);
+      P(x, 15, PAL.outline);
+    }
+
+    if (kind === 'window') {
+      // Full-height glazing in three lights. Tall and vertical is what makes
+      // this a laboratory window and not a cottage one with the sill raised.
+      for (let y = 2; y <= 12; y++) {
+        for (let x = 2; x <= 13; x++) {
+          const frame = y === 2 || y === 12 || x === 2 || x === 13;
+          if (frame) { P(x, y, y === 12 ? PAL.trimShade : PAL.steelLight); continue; }
+          P(x, y, x + y < 10 ? PAL.glassHi : x + y < 17 ? PAL.glassLight : PAL.glass);
+        }
+      }
+      for (const mx of [6, 10]) for (let y = 3; y <= 11; y++) P(mx, y, PAL.steelLight);
+      for (let x = 3; x <= 12; x++) P(x, 5, PAL.steelLight);   // transom
+      for (let x = 1; x <= 14; x++) P(x, 13, PAL.steelMid);    // sill
+    }
+
+    if (kind === 'sign') {
+      for (let y = 3; y <= 10; y++) {
+        for (let x = 1; x <= 14; x++) {
+          const border = y === 3 || y === 10 || x === 1 || x === 14;
+          P(x, y, border ? PAL.outline : PAL.slateDark);
+        }
+      }
+      for (let x = 2; x <= 13; x++) P(x, 4, PAL.slateMid);
+      // Two bars of lettering, which is all that is legible at this size and
+      // more honest than pretending a word will resolve.
+      for (let x = 3; x <= 12; x++) P(x, 6, PAL.trimPale);
+      for (let x = 3; x <= 9; x++) P(x, 8, PAL.trimPale);
+      for (let x = 1; x <= 14; x++) P(x, 11, PAL.trimShade);
+    }
+  }
+
+  /**
+   * One leaf of the entrance.
+   *
+   * Two of these side by side, `q` then `u`, make a doorway twice the width of
+   * any house door. That width is doing most of the work: a single-tile front
+   * door on a wide pale building still reads as somebody's home.
+   */
+  private labDoor(px: Px, fill: (c: string) => void, right: boolean): void {
+    this.labWall(px, fill, 'plain');
+    const P = this.unit(px);
+    const at = (x: number, y: number, c: string) => P(right ? TILE_SIZE - 1 - x : x, y, c);
+
+    for (let x = 0; x < TILE_SIZE; x++) {
+      P(x, 2, PAL.outline);
+      P(x, 3, PAL.steelLight);
+      P(x, 4, PAL.steelMid);
+    }
+    // Glass shaded in absolute coordinates: both leaves are lit from the same
+    // corner, so this must not be mirrored along with the frame.
+    for (let y = 5; y <= 13; y++) {
+      for (let x = 0; x < TILE_SIZE; x++) {
+        P(x, y, x + y < 12 ? PAL.glassHi : x + y < 20 ? PAL.glassLight : PAL.glass);
+      }
+    }
+    for (let y = 5; y <= 13; y++) {
+      at(0, y, PAL.outline);       // outer jamb
+      at(1, y, PAL.steelLight);
+      at(15, y, PAL.steelMid);     // meeting stile, at the seam between the pair
+    }
+    for (let x = 1; x <= 14; x++) at(x, 8, PAL.steelLight);   // push bar
+    for (let x = 0; x < TILE_SIZE; x++) {
+      P(x, 14, PAL.steelMid);
+      P(x, 15, PAL.steelDeep);
+    }
+  }
+
+  /**
+   * Flat roof.
+   *
+   * A parapet at the back, a sheet deck with broad seams, and a fascia lip at
+   * the front. The parapet is what sells it: a pitched roof flattened out just
+   * looks like a house squashed, whereas a deck you can see the edge of reads
+   * as a building with plant on top of it.
+   */
+  private labRoof(px: Px, fill: (c: string) => void, vent: boolean): void {
+    fill(PAL.stoneMid);
+    const P = this.unit(px);
+    for (let y = 0; y < TILE_SIZE; y++) {
+      for (let x = 0; x < TILE_SIZE; x++) {
+        P(x, y, (x * 3 + y * 7) % 16 === 5 ? PAL.stoneLight : PAL.stoneMid);
+      }
+    }
+    for (let y = 4; y < 13; y += 4) for (let x = 0; x < TILE_SIZE; x++) P(x, y, PAL.stoneDark);
+    for (let x = 0; x < TILE_SIZE; x++) {
+      P(x, 0, PAL.outline);
+      P(x, 1, PAL.trimPale);
+      P(x, 2, PAL.trimMid);
+      P(x, 3, PAL.stoneDeep);      // shadow the parapet drops on the deck
+      P(x, 13, PAL.trimMid);
+      P(x, 14, PAL.stoneDark);
+      P(x, 15, PAL.outline);
+    }
+
+    if (vent) {
+      // Air handling unit. One louvred box is worth more to a roofline than
+      // any amount of texture on the deck.
+      for (let y = 4; y <= 12; y++) {
+        for (let x = 3; x <= 11; x++) {
+          const edge = x === 3 || x === 11 || y === 4 || y === 12;
+          P(x, y, edge ? PAL.outline : y <= 6 ? PAL.steelLight : PAL.steelMid);
+        }
+      }
+      for (let x = 4; x <= 10; x++) P(x, 5, PAL.steelPale);
+      for (let x = 5; x <= 9; x++) P(x, 7, PAL.steelDark);
+      for (const ly of [8, 10]) for (let x = 5; x <= 9; x++) P(x, ly, PAL.steelDeep);
+      for (let y = 2; y <= 4; y++) { P(12, y, PAL.steelMid); P(13, y, PAL.steelDark); }
+      for (let y = 6; y <= 12; y++) { P(12, y, PAL.stoneDeep); P(13, y, PAL.stoneDark); }
+    }
+  }
 
   /* ----------------------------------------------------------- interior */
 
@@ -1679,6 +2204,290 @@ export class Tileset {
       P(i, 1, '#fbfcfe');
       P(i, 9, '#fbfcfe');
     }
+  }
+
+  /* ------------------------------------------------- laboratory fittings */
+
+  /**
+   * A bank of machines along a wall.
+   *
+   * Drawn full width with everything on an eight-unit repeat, so a run of them
+   * reads as one continuous installation rather than as cabinets parked side by
+   * side. The lit indicator band gets the row nearest eye level and nothing
+   * else on the tile competes with it: those lamps are the only part a player
+   * glancing at the room will actually register.
+   */
+  private labMachines(px: Px, fill: (c: string) => void): void {
+    fill(PAL.steelMid);
+    const P = this.unit(px);
+    for (let y = 0; y < TILE_SIZE; y++) {
+      for (let x = 0; x < TILE_SIZE; x++) {
+        P(x, y, x % 8 === 0 ? PAL.steelDark : x % 8 === 1 ? PAL.steelLight : PAL.steelMid);
+      }
+    }
+    for (let x = 0; x < TILE_SIZE; x++) {
+      P(x, 0, PAL.outline);
+      P(x, 1, PAL.steelPale);
+      P(x, 2, PAL.steelDark);
+    }
+    for (let y = 3; y <= 6; y++) for (let x = 0; x < TILE_SIZE; x++) P(x, y, PAL.panelInk);
+    const lamps = ['#7cf08a', '#f2d45c', '#ff7a6a', '#6cc8f0'];
+    for (let i = 0; i < 8; i++) {
+      const c = lamps[i % lamps.length]!;
+      P(1 + i * 2, 4, c);
+      P(1 + i * 2, 5, mixDown(c));
+    }
+    // Readout glass, with the trace kept to one bright row.
+    for (let y = 8; y <= 10; y++) for (let x = 0; x < TILE_SIZE; x++) P(x, y, PAL.steelDeep);
+    for (let x = 0; x < TILE_SIZE; x++) if (x % 8 < 5) P(x, 9, '#8fd8f0');
+    for (let y = 12; y <= 13; y++) {
+      for (let x = 0; x < TILE_SIZE; x++) P(x, y, x % 4 === 0 ? PAL.steelDark : PAL.steelMid);
+    }
+    for (let x = 0; x < TILE_SIZE; x++) { P(x, 14, PAL.steelDark); P(x, 15, PAL.outline); }
+  }
+
+  /** A console with a screen: one object, outlined, standing on the floor. */
+  private labConsole(px: Px, fill: (c: string) => void): void {
+    this.civicFloor(px, fill);
+    const P = this.unit(px);
+    for (let y = 2; y <= 14; y++) {
+      for (let x = 1; x <= 14; x++) {
+        const edge = x === 1 || x === 14 || y === 2 || y === 14;
+        P(x, y, edge ? PAL.outline : x < 4 ? PAL.steelLight : x > 11 ? PAL.steelDark : PAL.steelMid);
+      }
+    }
+    for (let y = 4; y <= 9; y++) {
+      for (let x = 3; x <= 12; x++) {
+        const bezel = y === 4 || y === 9 || x === 3 || x === 12;
+        P(x, y, bezel ? PAL.panelInk : '#16465e');
+      }
+    }
+    for (let x = 4; x <= 11; x++) P(x, 5, '#2f7a96');
+    // A trace across the screen. A blank screen reads as a cupboard door.
+    const trace = [7, 6, 7, 8, 6, 5, 7, 8];
+    for (let i = 0; i < 8; i++) P(4 + i, trace[i]!, '#7cf0d8');
+    for (let x = 3; x <= 12; x++) { P(x, 11, PAL.steelPale); P(x, 12, PAL.steelDark); }
+    for (let x = 3; x <= 12; x += 2) P(x, 11, PAL.steelDark);
+    for (let x = 2; x <= 14; x++) P(x, 15, 'rgba(40,44,56,0.28)');
+  }
+
+  /**
+   * Specimen tank.
+   *
+   * There is something in it. An empty cylinder of green water reads as a
+   * fridge with the door off; the silhouette and two lit eyes are what make
+   * the room a laboratory that keeps living things.
+   */
+  private specimenTank(px: Px, fill: (c: string) => void): void {
+    this.civicFloor(px, fill);
+    const P = this.unit(px);
+    for (let y = 12; y <= 14; y++) {
+      for (let x = 2; x <= 13; x++) {
+        P(x, y, y === 12 ? PAL.steelLight : y === 13 ? PAL.steelMid : PAL.steelDark);
+      }
+    }
+    for (let y = 2; y <= 12; y++) {
+      for (let x = 4; x <= 11; x++) {
+        P(x, y, x <= 5 ? '#a8ecdc' : x >= 10 ? '#2f8878' : '#5fc4ae');
+      }
+    }
+    for (let y = 6; y <= 10; y++) {
+      for (let x = 6; x <= 9; x++) {
+        if ((y === 6 || y === 10) && (x === 6 || x === 9)) continue;
+        P(x, y, '#2a3a44');
+      }
+    }
+    P(7, 7, '#8fe8ff'); P(9, 7, '#8fe8ff');
+    P(5, 9, '#dffaf2'); P(6, 4, '#dffaf2'); P(10, 6, '#dffaf2');
+    for (let x = 3; x <= 12; x++) { P(x, 1, PAL.outline); P(x, 2, PAL.steelPale); P(x, 3, PAL.steelMid); }
+    for (let x = 4; x <= 11; x++) { P(x, 11, PAL.steelMid); P(x, 12, PAL.steelDark); }
+    for (let y = 2; y <= 12; y++) { P(3, y, PAL.outline); P(12, y, PAL.outline); }
+    for (let x = 2; x <= 13; x++) P(x, 15, 'rgba(40,44,56,0.28)');
+  }
+
+  /** A run of bench: cupboards under, worktop over, glassware standing on it. */
+  private workbench(px: Px, fill: (c: string) => void): void {
+    fill(PAL.plasterPale);
+    const P = this.unit(px);
+    for (let y = 0; y < TILE_SIZE; y++) for (let x = 0; x < TILE_SIZE; x++) P(x, y, PAL.plasterPale);
+    for (let y = 6; y <= 14; y++) {
+      for (let x = 0; x < TILE_SIZE; x++) {
+        P(x, y, x % 8 === 0 ? PAL.steelDark : x % 8 === 1 ? PAL.steelLight : PAL.steelMid);
+      }
+    }
+    for (let x = 0; x < TILE_SIZE; x++) {
+      P(x, 4, PAL.steelPale);
+      P(x, 5, PAL.steelLight);
+      P(x, 6, PAL.steelDeep);      // shadow under the front lip of the top
+      P(x, 15, PAL.outline);
+    }
+    for (let x = 2; x <= 5; x++) P(x, 10, PAL.steelDark);
+    for (let x = 10; x <= 13; x++) P(x, 10, PAL.steelDark);
+    // A flask, a microscope and a stack of paper. Three distinct shapes beat
+    // any amount of clutter: clutter at this size is just noise on the top.
+    for (let y = 1; y <= 3; y++) {
+      for (let x = 2; x <= 4; x++) P(x, y, y === 1 ? '#dff2fa' : x === 2 ? '#8fd8b0' : '#4fa878');
+    }
+    P(3, 0, '#dff2fa');
+    for (let y = 0; y <= 3; y++) P(11, y, PAL.steelDeep);
+    P(10, 0, PAL.steelDeep); P(10, 1, '#6c7690');
+    for (let x = 9; x <= 12; x++) P(x, 3, PAL.panelInk);
+    for (let x = 6; x <= 8; x++) { P(x, 2, PAL.plasterPale); P(x, 3, PAL.steelLight); }
+  }
+
+  /**
+   * Laboratory floor, with a cable run taped across it.
+   *
+   * The cable is drawn dead straight and unbroken. Anything wavy at sixteen
+   * units across stops being a cable and becomes lint on the floor.
+   */
+  private labFloor(px: Px, fill: (c: string) => void): void {
+    fill('#e2e8e6');
+    const P = this.unit(px);
+    for (let y = 0; y < TILE_SIZE; y++) {
+      for (let x = 0; x < TILE_SIZE; x++) P(x, y, (x < 8) === (y < 8) ? '#e2e8e6' : '#d6dedb');
+    }
+    for (let i = 0; i < TILE_SIZE; i++) {
+      P(i, 0, '#c3ccc9'); P(0, i, '#c3ccc9');
+      P(i, 8, '#c3ccc9'); P(8, i, '#c3ccc9');
+    }
+    for (let x = 0; x < TILE_SIZE; x++) {
+      P(x, 10, '#6c7690');
+      P(x, 11, PAL.steelDeep);
+      P(x, 12, PAL.panelInk);
+      P(x, 13, '#8f9aa8');
+    }
+    for (let x = 2; x < TILE_SIZE; x += 8) {
+      for (let y = 9; y <= 13; y++) { P(x, y, PAL.steelMid); P(x + 1, y, PAL.steelDark); }
+    }
+  }
+
+  /* --------------------------------------------- more house and shop kit */
+
+  /** Two-seat sofa, seen from the front, to face the television across a rug. */
+  private sofa(px: Px, fill: (c: string) => void): void {
+    fill(PAL.woodPale);
+    const P = this.unit(px);
+    for (let y = 0; y < TILE_SIZE; y++) for (let x = 0; x < TILE_SIZE; x++) P(x, y, PAL.woodPale);
+
+    const deep = '#2f5658', mid = '#4f7f80', light = '#6a9d9c', pale = '#8bb9b6';
+    for (let y = 2; y <= 8; y++) for (let x = 1; x <= 14; x++) P(x, y, y <= 3 ? light : mid);
+    for (let x = 1; x <= 14; x++) P(x, 2, pale);
+    for (let y = 5; y <= 13; y++) {
+      P(1, y, pale); P(2, y, light);
+      P(13, y, mid); P(14, y, deep);
+    }
+    for (let y = 9; y <= 12; y++) for (let x = 3; x <= 12; x++) P(x, y, y === 9 ? light : mid);
+    // The seam between the two cushions, run right up the back: without it this
+    // is an armchair the width of a sofa.
+    for (let y = 2; y <= 12; y++) P(8, y, deep);
+    for (let x = 3; x <= 12; x++) P(x, 13, deep);
+    for (let y = 1; y <= 14; y++) { P(0, y, PAL.outline); P(15, y, PAL.outline); }
+    for (let x = 0; x < TILE_SIZE; x++) { P(x, 1, PAL.outline); P(x, 14, PAL.outline); }
+    for (let x = 1; x <= 14; x++) P(x, 15, 'rgba(40,30,24,0.25)');
+  }
+
+  /**
+   * Shop shelving, stocked.
+   *
+   * Steel uprights on the tile edge and boards running the full width, so a row
+   * of these fuses into one gondola. The goods are blocks of flat colour with a
+   * lit top: at this size a "product" is a coloured rectangle, and pretending
+   * otherwise just makes the shelf muddy.
+   */
+  private shopShelf(px: Px, fill: (c: string) => void): void {
+    fill(PAL.plasterMid);
+    const P = this.unit(px);
+    for (let y = 0; y < TILE_SIZE; y++) for (let x = 0; x < TILE_SIZE; x++) P(x, y, PAL.plasterMid);
+
+    const goods = ['#d8564a', '#4f8fd8', '#f2c44c', '#6ac48a', '#c47ad8', '#e8834a'];
+    for (let s = 0; s < 3; s++) {
+      const board = 4 + s * 5;
+      let x = 2;
+      let i = s * 3;
+      while (x < TILE_SIZE) {
+        const w = 2 + (i % 2);
+        const h = 2 + (i % 3);
+        const c = goods[(i + s) % goods.length]!;
+        for (let k = 0; k < w && x + k < TILE_SIZE; k++) {
+          for (let y = Math.max(0, board - h); y < board; y++) {
+            P(x + k, y, y === board - h ? PAL.plasterPale : k === w - 1 ? mixDown(c) : c);
+          }
+        }
+        x += w + 1;
+        i++;
+      }
+      for (let bx = 0; bx < TILE_SIZE; bx++) {
+        P(bx, board, PAL.stoneDeep);
+        if (board + 1 < TILE_SIZE) P(bx, board + 1, PAL.stoneLight);
+      }
+    }
+    for (let y = 0; y < TILE_SIZE; y++) { P(0, y, PAL.outline); P(1, y, PAL.stoneLight); }
+  }
+
+  /* ----------------------------------------------------- town dressing */
+
+  /**
+   * A planted bed.
+   *
+   * Kerbed front and back only, so a row of them joins into one long border.
+   * The blooms sit on a wrapping lattice rather than being scattered: planting
+   * in rows reads as a garden, and the same flowers thrown at random read as
+   * litter.
+   */
+  private flowerBed(px: Px, fill: (c: string) => void): void {
+    fill(PAL.dirtDark);
+    const P = this.unit(px);
+    for (let y = 0; y < TILE_SIZE; y++) {
+      for (let x = 0; x < TILE_SIZE; x++) {
+        const d = (x * 5 + y * 3) % 16;
+        P(x, y, d === 2 ? PAL.dirtMid : d === 9 ? PAL.dirtDeep : PAL.dirtDark);
+      }
+    }
+    const blooms = ['#e8586a', '#f2c44c', '#f0e8d0', '#c47ad8'];
+    for (let i = 0; i < 8; i++) {
+      const row = i >> 2;
+      const fx = 1 + (i % 4) * 4 + row;
+      const fy = 4 + row * 5;
+      const c = blooms[(i + row) % blooms.length]!;
+      P(fx - 1, fy + 1, PAL.leafDark); P(fx, fy + 1, PAL.leafMid); P(fx + 1, fy + 1, PAL.leafDark);
+      P(fx, fy + 2, PAL.leafDeep);
+      P(fx - 1, fy, mixDown(c)); P(fx, fy, c); P(fx + 1, fy, mixDown(c));
+      P(fx, fy - 1, c);
+    }
+    for (let x = 0; x < TILE_SIZE; x++) {
+      P(x, 0, PAL.stoneLight); P(x, 1, PAL.stoneDark);
+      P(x, 14, PAL.stoneMid); P(x, 15, PAL.outline);
+    }
+  }
+
+  /**
+   * Street lamp.
+   *
+   * Left transparent everywhere it is not the lamp. Overlay cells are drawn on
+   * top of the ground layer and the atlas starts empty, so anything this never
+   * paints keeps whatever is underneath -- which is the only way one lamp tile
+   * can stand on turf, path and paving alike.
+   */
+  private lampPost(px: Px): void {
+    const P = this.unit(px);
+
+    for (let y = 2; y <= 6; y++) {
+      for (let x = 4; x <= 11; x++) {
+        const frame = x === 4 || x === 11 || y === 2 || y === 6;
+        P(x, y, frame ? PAL.outline : y <= 3 ? '#fff2c0' : '#f6cf72');
+      }
+    }
+    for (let y = 3; y <= 5; y++) P(8, y, '#e0a848');
+    for (let x = 3; x <= 12; x++) { P(x, 1, PAL.stoneDark); P(x, 2, PAL.outline); }
+    P(7, 0, PAL.stoneLight); P(8, 0, PAL.stoneDark);
+
+    for (let y = 7; y <= 13; y++) { P(7, y, PAL.stoneLight); P(8, y, PAL.stoneDeep); }
+    for (let x = 6; x <= 9; x++) { P(x, 13, PAL.stoneMid); P(x, 14, PAL.stoneDark); }
+    for (let x = 5; x <= 10; x++) P(x, 15, PAL.outline);
+    for (let y = 7; y <= 12; y++) { P(6, y, PAL.outline); P(9, y, PAL.outline); }
+    P(5, 13, PAL.outline); P(10, 13, PAL.outline);
+    P(5, 14, PAL.outline); P(10, 14, PAL.outline);
   }
 
   private bookshelf(px: Px, fill: (c: string) => void): void {

@@ -100,6 +100,7 @@ type Anim =
   | { kind: 'faint'; side: SideId; frames: number; t: number }
   | { kind: 'sendOut'; side: SideId; frames: number; t: number }
   | { kind: 'withdraw'; side: SideId; frames: number; t: number }
+  | { kind: 'windup'; side: SideId; self: boolean; frames: number; t: number }
   | { kind: 'moveFx'; side: SideId; anim: string; type: TypeId; frames: number; t: number }
   | { kind: 'vessel'; shakes: number; caught: boolean; frames: number; t: number }
   | { kind: 'exp'; kin: Kin; from: number; to: number; frames: number; t: number }
@@ -110,6 +111,33 @@ type Anim =
 
 type Phase =
   | 'anim' | 'menu' | 'moves' | 'party' | 'bag' | 'forcedSwitch' | 'finished';
+
+/** Per-side presentation state, independent of the simulation. */
+interface SideView {
+  /** The kin this side is currently *drawing*, which lags the engine's
+   *  active kin by exactly one send-out animation. */
+  kin: Kin | null;
+  /** Fractional on purpose. The meter takes a fraction, so a bar fed from a
+   *  whole-HP value steps once per point of damage -- on a thirty HP rookie
+   *  that is five buffer pixels a jump, which is a stutter, not a drain. */
+  displayHp: number;
+  offsetX: number;
+  offsetY: number;
+  alpha: number;
+  flash: number;
+  visible: boolean;
+  /** Staging offset, positive toward the opponent, with its spring state. */
+  dash: number;
+  dashV: number;
+  dashTo: number;
+  /** Breathing clock. Only runs while this side is actually stood there. */
+  idleT: number;
+}
+
+const NEW_VIEW = (): SideView => ({
+  kin: null, displayHp: 0, offsetX: 0, offsetY: 0, alpha: 1, flash: 0, visible: true,
+  dash: 0, dashV: 0, dashTo: 0, idleT: 0,
+});
 
 export interface BattleSceneOptions {
   state: GameState;
@@ -148,20 +176,9 @@ export class BattleScene implements Scene {
   private partyMenu = new ListMenu<number>([], 6);
   private bagMenu = new ListMenu<string>([], 5);
 
-  /** Per-side presentation state, independent of the simulation. */
-  private view: Record<SideId, {
-    /** The kin this side is currently *drawing*, which lags the engine's
-     *  active kin by exactly one send-out animation. */
-    kin: Kin | null;
-    displayHp: number;
-    offsetX: number;
-    offsetY: number;
-    alpha: number;
-    flash: number;
-    visible: boolean;
-  }> = {
-    player: { kin: null, displayHp: 0, offsetX: 0, offsetY: 0, alpha: 1, flash: 0, visible: true },
-    foe: { kin: null, displayHp: 0, offsetX: 0, offsetY: 0, alpha: 1, flash: 0, visible: true },
+  private view: Record<SideId, SideView> = {
+    player: NEW_VIEW(),
+    foe: NEW_VIEW(),
   };
 
   private displayExp = 0;
@@ -236,12 +253,22 @@ export class BattleScene implements Scene {
     return Math.max(1, Math.round(n * scale));
   }
 
+  /**
+   * A line of dialogue and the beat it is held for once it has finished
+   * revealing. The hold is authored as time *after* the last character lands,
+   * not as a budget the reveal eats into.
+   */
+  private pushText(text: string, game: Game | undefined, hold = 30): void {
+    this.queue.push({ kind: 'text', text, hold: 'time', frames: this.frames(hold, game) });
+  }
+
   /** Turn engine events into presentation steps. */
   private enqueue(events: BattleEvent[], game?: Game): void {
-    for (const e of events) {
+    for (let i = 0; i < events.length; i++) {
+      const e = events[i];
       switch (e.t) {
         case 'message':
-          this.queue.push({ kind: 'text', text: e.text, hold: 'time', frames: this.frames(54, game) });
+          this.pushText(e.text, game);
           break;
         case 'sfx':
           this.queue.push({ kind: 'sfx', id: e.id });
@@ -252,7 +279,21 @@ export class BattleScene implements Scene {
         case 'withdraw':
           this.queue.push({ kind: 'withdraw', side: e.side, frames: this.frames(14, game), t: 0 });
           break;
-        case 'useMove':
+        case 'useMove': {
+          // The engine emits useMove *before* the line announcing it, so played
+          // back in order the sprite lunged while the text was still typing. A
+          // turn only reads as a sequence if the name lands first, so the
+          // announcement is lifted out of the event list here and the whole
+          // performance queued behind it: name, beat, wind-up, move.
+          const next = events[i + 1];
+          if (next && next.t === 'message') { this.pushText(next.text, game, 38); i++; }
+          this.queue.push({ kind: 'wait', frames: this.frames(9, game), t: 0 });
+          if (game?.settings.battleAnimations !== false) {
+            this.queue.push({
+              kind: 'windup', side: e.side, self: fxTargetsSelf(e.move.animation),
+              frames: this.frames(12, game), t: 0,
+            });
+          }
           this.queue.push({
             kind: 'moveFx', side: e.side, anim: e.move.animation,
             type: e.move.type, frames: this.frames(46, game), t: 0,
@@ -262,6 +303,7 @@ export class BattleScene implements Scene {
           // the turn reads as one blur.
           this.queue.push({ kind: 'wait', frames: this.frames(10, game), t: 0 });
           break;
+        }
         case 'damage': {
           this.queue.push({ kind: 'flash', side: e.side, frames: this.frames(14, game), t: 0, effectiveness: e.effectiveness });
           this.queue.push({ kind: 'wait', frames: this.frames(8, game), t: 0 });
@@ -324,6 +366,8 @@ export class BattleScene implements Scene {
     for (const side of ['player', 'foe'] as SideId[]) {
       const v = this.view[side];
       if (v.flash > 0) v.flash--;
+      this.stageStep(v, game.settings.battleAnimations);
+      if (this.breathing(side, game)) v.idleT++;
     }
 
     if (this.current || this.queue.length > 0) {
@@ -380,6 +424,54 @@ export class BattleScene implements Scene {
     this.lowHpTimer = 34;
   }
 
+  /**
+   * Attack staging.
+   *
+   * Wind-up, drive and recoil are one spring per side rather than three
+   * scripted offsets, because the interesting part is the overshoot: letting
+   * the target snap back to zero after a lunge produces the recoil for free,
+   * and a defender shoved backwards settles instead of teleporting home.
+   * Positive is toward the opponent, whichever side that is.
+   *
+   * It is deliberately under-damped but short: two or three frames of
+   * overshoot reads as weight, ten reads as rubber.
+   */
+  private stageStep(v: SideView, animations: boolean): void {
+    if (!animations) { v.dash = 0; v.dashV = 0; v.dashTo = 0; return; }
+    v.dashV += (v.dashTo - v.dash) * 0.34;
+    v.dashV *= 0.66;
+    v.dash += v.dashV;
+    if (Math.abs(v.dash - v.dashTo) < 0.04 && Math.abs(v.dashV) < 0.04) {
+      v.dash = v.dashTo;
+      v.dashV = 0;
+    }
+  }
+
+  /**
+   * Whether a side should be breathing this frame.
+   *
+   * A kin that is falling, being recalled, arriving, or already at zero is not
+   * idling, and neither is anything during hit-stop -- which is free, because
+   * update() has already returned by the time this is reached. Freezing the
+   * clock rather than the pose means the breath resumes where it left off
+   * instead of snapping back to the top of the cycle.
+   */
+  private breathing(side: SideId, game: Game): boolean {
+    if (!game.settings.battleAnimations) return false;
+    const v = this.view[side];
+    if (!v.visible || v.alpha < 1 || !v.kin || v.kin.currentHp <= 0) return false;
+    const a = this.current;
+    if (a && (a.kind === 'faint' || a.kind === 'withdraw' || a.kind === 'sendOut') && a.side === side) {
+      return false;
+    }
+    return true;
+  }
+
+  /** One press means "get on with it", whatever beat is currently on screen. */
+  private skip(game: Game): boolean {
+    return game.input.pressed('confirm') || game.input.mouse.leftPressed;
+  }
+
   private advanceAnimation(game: Game): void {
     if (!this.current) {
       this.current = this.queue.shift() ?? null;
@@ -387,6 +479,7 @@ export class BattleScene implements Scene {
       this.onAnimStart(this.current, game);
     }
     const a = this.current;
+    const skip = this.skip(game);
 
     switch (a.kind) {
       case 'text': {
@@ -399,9 +492,13 @@ export class BattleScene implements Scene {
           }
         }
         const done = this.revealed >= this.message.length;
-        a.frames--;
+        // The hold only starts once the last character is on screen. Counting
+        // it down during the reveal meant a long line on slow text had nothing
+        // left of its hold by the time it finished, so "X used Y!" was still
+        // being read as the sprite lunged.
+        if (done) a.frames--;
         // Confirm skips the reveal, then skips the hold.
-        if (game.input.pressed('confirm') || game.input.mouse.leftPressed) {
+        if (skip) {
           if (!done) this.revealed = this.message.length;
           else a.frames = 0;
         }
@@ -417,21 +514,37 @@ export class BattleScene implements Scene {
           break;
         }
         const p = Math.min(1, a.t / a.frames);
-        this.view[a.side].displayHp = Math.round(a.from + (a.to - a.from) * p);
-        if (a.t >= a.frames) { this.view[a.side].displayHp = a.to; this.current = null; }
+        // Smoothstep. A linear drain starts and stops dead, which reads as a
+        // progress bar filling; easing in and out reads as something leaving.
+        // The value stays fractional -- renderInfo rounds it for the readout
+        // and feeds the raw number to the meter.
+        const e = p * p * (3 - 2 * p);
+        this.view[a.side].displayHp = a.from + (a.to - a.from) * e;
+        if (a.t >= a.frames || skip) { this.view[a.side].displayHp = a.to; this.current = null; }
         break;
       }
       case 'exp': {
         a.t++;
         const p = Math.min(1, a.t / a.frames);
         this.displayExp = Math.round(a.from + (a.to - a.from) * p);
-        if (a.t >= a.frames) { this.displayExp = a.to; this.current = null; }
+        if (a.t >= a.frames || skip) { this.displayExp = a.to; this.current = null; }
         break;
       }
       case 'flash': {
         a.t++;
         this.view[a.side].flash = a.t % 6 < 3 ? 1 : 0;
-        if (a.t >= a.frames) { this.view[a.side].flash = 0; this.current = null; }
+        if (a.t >= a.frames || skip) {
+          this.view[a.side].flash = 0;
+          // Release the flinch: the spring carries the defender back and
+          // settles it, so the recovery is not a snap.
+          this.view[a.side].dashTo = 0;
+          this.current = null;
+        }
+        break;
+      }
+      case 'windup': {
+        a.t++;
+        if (a.t >= a.frames || skip) this.current = null;
         break;
       }
       case 'shake': {
@@ -476,10 +589,20 @@ export class BattleScene implements Scene {
         break;
       case 'moveFx': {
         a.t++;
-        if (a.t === 1 && game.settings.battleAnimations) this.startFx(a.side, a.anim, a.type);
+        if (a.t === 1) {
+          if (game.settings.battleAnimations) this.startFx(a.side, a.anim, a.type);
+          // Drive forward out of the wind-up. Modest on purpose: the punch
+          // archetypes add their own lunge on top of this one.
+          this.view[a.side].dashTo = fxTargetsSelf(a.anim) ? 0 : 3.5;
+        }
+        // Release partway through, so the recoil is finishing while the effect
+        // is still on screen rather than after everything has gone quiet.
+        if (a.t === Math.max(2, Math.round(a.frames * 0.4))) this.view[a.side].dashTo = 0;
         // Hold until the performance is done, but never past the budget: a
         // player on fast battles has told us they do not want to wait.
-        if (a.t >= a.frames || (!this.fx.busy && a.t > 6)) {
+        if (a.t >= a.frames || (!this.fx.busy && a.t > 6) || skip) {
+          if (skip) this.fx.clear();
+          this.view[a.side].dashTo = 0;
           this.current = null;
           this.fxSide = null;
         }
@@ -493,12 +616,12 @@ export class BattleScene implements Scene {
       }
       case 'weather': {
         a.t++;
-        if (a.t >= a.frames) this.current = null;
+        if (a.t >= a.frames || skip) this.current = null;
         break;
       }
       case 'wait': {
         a.t++;
-        if (a.t >= a.frames) this.current = null;
+        if (a.t >= a.frames || skip) this.current = null;
         break;
       }
       case 'end': {
@@ -518,6 +641,9 @@ export class BattleScene implements Scene {
         const v = this.view[a.side];
         v.kin = kin;
         v.displayHp = kin.currentHp;
+        // A fresh kin arrives square on its pad and takes its first breath
+        // there, rather than inheriting whatever the last one was mid-flinch.
+        v.dash = 0; v.dashV = 0; v.dashTo = 0; v.idleT = 0;
         if (a.side === 'player') this.displayExp = kin.exp;
         audio.playSfx('send_out');
         if (kin) audio.playCry(kin.species);
@@ -531,6 +657,16 @@ export class BattleScene implements Scene {
         break;
       case 'flash':
         audio.playSfx(a.effectiveness > 1 ? 'hit_super' : a.effectiveness < 1 ? 'hit_weak' : 'hit');
+        // Give ground. A defender that takes a hit without moving is the main
+        // reason a trade of blows used to read as two sprites flickering at
+        // each other; a super-effective hit shoves it further.
+        this.view[a.side].dashTo = a.effectiveness > 1 ? -5 : a.effectiveness < 1 ? -2.2 : -3.4;
+        break;
+      case 'windup':
+        // Anticipation. The move's own effect takes over the frame it starts,
+        // so this is only the pull back in front of it -- a self-targeting move
+        // braces rather than winding up at nobody.
+        this.view[a.side].dashTo = a.self ? -1.4 : -3.2;
         break;
       case 'faint':
         audio.playSfx('faint');
@@ -548,7 +684,15 @@ export class BattleScene implements Scene {
       this.revealed = textDelayFrames(game.settings.textSpeed) === 0 ? a.text.length : 0;
       this.revealTimer = 0;
     }
-    if (a.kind === 'hp' && a.from < 0) a.from = this.view[a.side].displayHp;
+    if (a.kind === 'hp') {
+      if (a.from < 0) a.from = this.view[a.side].displayHp;
+      // A scratch and a near-KO should not take the same time to drain. The
+      // authored length is the one a full bar gets; anything less is scaled
+      // down against it, so chip damage never holds the turn up and a big hit
+      // still gets to be slow on purpose.
+      const share = Math.min(1, Math.abs(a.from - a.to) / Math.max(1, a.kin.maxHp));
+      a.frames = Math.max(6, Math.round(a.frames * (0.35 + 0.75 * share)));
+    }
     if (a.kind === 'exp' && a.from < 0) a.from = this.displayExp;
     if (a.kind === 'sendOut' && a.side === 'foe') {
       this.opts.state.markSeen(this.battle.foe.active.species);
@@ -830,6 +974,25 @@ export class BattleScene implements Scene {
     }
   }
 
+  /**
+   * Idle breathing.
+   *
+   * A creature standing perfectly still is what makes a battle screen look
+   * like a screenshot of itself. This returns whole design pixels rather than a
+   * float: the sprite rises one pixel at the top of the breath, sits neutral
+   * through the middle, and compresses one pixel at the bottom. That is the
+   * entire range the grid allows and about as much as the era ever used -- any
+   * more and it stops reading as breathing and starts reading as floating.
+   *
+   * The two sides run a little over half a cycle apart so they never pulse
+   * together, which would read as one shared heartbeat rather than two animals.
+   */
+  private breath(side: SideId): { lift: number; squash: number } {
+    const v = this.view[side];
+    const p = Math.sin(v.idleT / 22 + (side === 'foe' ? Math.PI * 1.15 : 0));
+    return { lift: p > 0.55 ? -1 : 0, squash: p < -0.6 ? 1 : 0 };
+  }
+
   private renderKin(r: Renderer, side: SideId): void {
     const v = this.view[side];
     if (!v.visible) return;
@@ -839,20 +1002,49 @@ export class BattleScene implements Scene {
     const back = side === 'player';
     const sprite = back ? backSprite(kin.species) : frontSprite(kin.species);
     const pos = back ? PLAYER_SPRITE : FOE_SPRITE;
-    // A slow idle bob keeps the field from feeling like a still image.
-    const bob = Math.round(Math.sin(this.ticks / 26 + (side === 'foe' ? 1.5 : 0)) * 1);
-    // The attacker leans into its own move.
-    const lunge = this.fxSide === side ? Math.round(this.fx.lunge * this.fx.lungeSide) : 0;
+    const face = back ? 1 : -1;
 
-    const x = pos.x + v.offsetX + lunge;
-    const y = pos.y + v.offsetY + bob;
+    // Staging and the effect's own lunge are both measured toward the opponent,
+    // so they add. The ceiling is the biggest lunge any archetype asks for on
+    // its own, so a heavy punch still travels its full authored distance and
+    // the step forward underneath it cannot push the sprite off its pad.
+    const fxLunge = this.fxSide === side ? this.fx.lunge : 0;
+    const dash = Math.max(-7, Math.min(13, v.dash + fxLunge));
+
+    const br = this.breath(side);
+    // Rounded to whole logical units, always: r.image snaps to the buffer, so a
+    // fractional position would land the sprite's pixels on the odd row and
+    // undo the whole 2x2 design grid.
+    const x = Math.round(pos.x + v.offsetX + dash * face);
+    const y = Math.round(pos.y + v.offsetY + br.lift);
     const size = SPRITE_SIZE;
-    r.image(sprite, x, y, 0, 0, size, size, false, false, v.alpha);
+
+    /*
+     * Squashing without scaling.
+     *
+     * Nothing in this game is ever resampled -- a sprite drawn at 63/64 height
+     * would land half its rows off the design grid and read as blur. So the
+     * compressed pose is two blits instead: the top of the sprite is dropped a
+     * pixel onto the bottom and the single source row at the seam is simply not
+     * drawn. The silhouette loses exactly one design pixel of height, the feet
+     * stay planted, and every pixel that survives is still where the grid says.
+     */
+    const cut = Math.round(size * 0.62 / DETAIL) * DETAIL;
+    const blit = (img: CanvasImageSource, alpha: number) => {
+      if (br.squash === 0) {
+        r.image(img, x, y, 0, 0, size, size, false, false, alpha);
+        return;
+      }
+      r.image(img, x, y + 1, 0, 0, size, cut - DETAIL, false, false, alpha);
+      r.image(img, x, y + cut / DETAIL, 0, cut, size, size - cut, false, false, alpha);
+    };
+
+    blit(sprite, v.alpha);
 
     if (v.flash > 0) {
       // A white silhouette over the sprite: the era's standard hit tell, and
       // far more readable than a translucent box.
-      r.image(whiteSprite(kin.species, back), x, y, 0, 0, size, size, false, false, 0.75);
+      blit(whiteSprite(kin.species, back), 0.75);
     }
   }
 
@@ -941,12 +1133,17 @@ export class BattleScene implements Scene {
     const barX = left + 14;
     const barW = box.w - (barX - box.x) - 7;
     r.text('HP', left, barY - 1, { color: UI.inkSoft });
+    // The raw fraction goes to the meter, which fills at buffer resolution, so
+    // the bar slides across half-units instead of stepping one HP at a time.
+    // The readout is the same number rounded, so the digits fall in step with
+    // the bar rather than running their own clock.
     const frac = v.displayHp / Math.max(1, kin.maxHp);
+    const shown = Math.max(0, Math.round(v.displayHp));
     const color = frac > 0.5 ? UI.hpGood : frac > 0.2 ? UI.hpWarn : UI.hpBad;
     r.meter(barX, barY, barW, 6, frac, color, UI.hpBack, UI.frame);
 
     if (side === 'player') {
-      r.text(`${Math.max(0, v.displayHp)}/${kin.maxHp}`, box.x + box.w - 7, barY + 8, {
+      r.text(`${shown}/${kin.maxHp}`, box.x + box.w - 7, barY + 8, {
         color: UI.ink, align: 'right',
       });
       // Experience runs along the very bottom edge, full width, so it never

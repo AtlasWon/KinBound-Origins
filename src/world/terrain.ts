@@ -99,6 +99,55 @@ export const TERRAIN: Record<string, TerrainDef> = {
   'Q': { ground: T.STOVE, collision: 1, tag: 'floor' },
   'U': { ground: T.WINDOW_IN, collision: 1, tag: 'floor' },
   'F': { ground: T.CIVIC_FLOOR, collision: 0, tag: 'floor', step: 'stone' },
+
+  // --- Second house set. ----------------------------------------------
+  // These are meant to be mixed: a roof hue, a wall material and a window
+  // belong to a house, not to each other, and four frontages built from
+  // different combinations is what stops a street reading as one house
+  // stamped out six times.
+  //
+  // Slate gable, drawn like '[ ^ ]': the end tiles carry their own ridge cap,
+  // so a one-row roof has no notch in either top corner.
+  '<': { ground: T.ROOF_SLATE_L, collision: 1, tag: 'floor' },
+  '%': { ground: T.ROOF_SLATE, collision: 1, tag: 'floor' },
+  '>': { ground: T.ROOF_SLATE_R, collision: 1, tag: 'floor' },
+  // Moss hipped roof: the other roof *shape*, ends folded in on a diagonal.
+  '(': { ground: T.ROOF_HIP_L, collision: 1, tag: 'floor' },
+  '&': { ground: T.ROOF_HIP, collision: 1, tag: 'floor' },
+  ')': { ground: T.ROOF_HIP_R, collision: 1, tag: 'floor' },
+  // Chimney on the default terracotta ridge; drops into a '^' slot.
+  'j': { ground: T.ROOF_CHIMNEY, collision: 1, tag: 'floor' },
+  'H': { ground: T.WALL_TIMBER, collision: 1, tag: 'floor' },
+  'M': { ground: T.WALL_BRICK, collision: 1, tag: 'floor' },
+  'Z': { ground: T.WINDOW_SHUTTER, collision: 1, tag: 'floor' },
+  'd': { ground: T.WINDOW_BOX, collision: 1, tag: 'floor' },
+  'i': { ground: T.DOOR_PORCH, collision: 0, tag: 'floor', step: 'stone' },
+
+  // --- Laboratory. Wide, flat-topped, glazed; shares nothing with a house.
+  'l': { ground: T.LAB_WALL, collision: 1, tag: 'floor' },
+  'n': { ground: T.LAB_WINDOW, collision: 1, tag: 'floor' },
+  'z': { ground: T.LAB_SIGN, collision: 1, tag: 'floor' },
+  // 'q' and 'u' are the two leaves of one double door and only work as a pair.
+  'q': { ground: T.LAB_DOOR_L, collision: 0, tag: 'floor', step: 'stone' },
+  'u': { ground: T.LAB_DOOR_R, collision: 0, tag: 'floor', step: 'stone' },
+  'v': { ground: T.LAB_ROOF, collision: 1, tag: 'floor' },
+  'y': { ground: T.LAB_VENT, collision: 1, tag: 'floor' },
+
+  // --- Laboratory interior. -------------------------------------------
+  '+': { ground: T.LAB_MACHINE, collision: 1, tag: 'floor' },
+  '?': { ground: T.LAB_CONSOLE, collision: 1, tag: 'floor' },
+  '@': { ground: T.LAB_TANK, collision: 1, tag: 'floor' },
+  '$': { ground: T.WORKBENCH, collision: 1, tag: 'floor' },
+  ':': { ground: T.FLOOR_LAB, collision: 0, tag: 'floor', step: 'stone' },
+
+  // --- More house and shop furniture. ---------------------------------
+  '/': { ground: T.SOFA, collision: 1, tag: 'floor' },
+  ';': { ground: T.SHOP_SHELF, collision: 1, tag: 'floor' },
+
+  // --- Town dressing. 'Y' is an overlay with a transparent background, so
+  // the turf under the lamp is the same turf as the tile beside it. ------
+  'a': { ground: T.FLOWER_BED, collision: 1, tag: 'grass' },
+  'Y': { ground: T.GRASS, over: T.LAMP_POST, collision: 1, tag: 'grass' },
 };
 
 export function terrainFor(ch: string): TerrainDef {

@@ -38,6 +38,6 @@ d.key('Enter', 10);                       // FIGHT
 await shot('bt-03-moves', 6);
 d.key('Enter', 4);                        // first move
 // Photograph the turn as it plays, without pressing anything.
-for (let i = 0; i < 18; i++) await shot('bt-04-turn-' + String(i).padStart(2,'0'), 5);
+for (let i = 0; i < 26; i++) await shot('bt-04-turn-' + String(i).padStart(2,'0'), 10);
 out.push('phase:' + top().phase);
 return { out, ticks: d.game.ticks };

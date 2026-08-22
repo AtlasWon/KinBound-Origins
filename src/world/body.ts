@@ -20,6 +20,7 @@ import {
   type CharDir, type CharAppearance,
 } from '../gfx/charsprite.js';
 import { DETAIL, type Renderer } from '../engine/renderer.js';
+import { idleBob, idlePhase, worldPaused } from './actor.js';
 import type { Direction } from '../data/schema.js';
 
 /** Feet box. Narrower than a tile so doorways and gaps feel generous. */
@@ -32,6 +33,15 @@ export const RUN_SPEED = 2.05;
 const STRIDE = 6;
 
 const DIAGONAL = Math.SQRT1_2;
+
+/**
+ * Where the player sits in the breath cycle.
+ *
+ * A fixed key, not the spawn tile the NPCs use: the player is the one
+ * character who moves between maps, and re-seeding on every warp would leave
+ * them breathing to a different clock in every room.
+ */
+const PLAYER_IDLE_PHASE = idlePhase('player');
 
 export type SolidTest = (tileX: number, tileY: number, from: Direction) => boolean;
 
@@ -54,6 +64,9 @@ export class PlayerBody {
   /** Distance walked, which drives the animation rather than a timer. */
   private travelled = 0;
   private movingNow = false;
+
+  /** When `update` last ran, so a paused world can be told from a still one. */
+  private updatedAt = performance.now();
 
   /** Ledge hop / scripted walk, both of which take control briefly. */
   private hop: { fromX: number; fromY: number; toX: number; toY: number; t: number; frames: number } | null = null;
@@ -149,6 +162,8 @@ export class PlayerBody {
    * tile blocks movement arriving from a given direction.
    */
   update(inputX: number, inputY: number, running: boolean, solid: SolidTest): void {
+    this.updatedAt = performance.now();
+
     if (this.hop) {
       this.hop.t++;
       const p = Math.min(1, this.hop.t / this.hop.frames);
@@ -272,14 +287,32 @@ export class PlayerBody {
 
   /* ------------------------------------------------------------- render */
 
+  /**
+   * Breathing rather than walking.
+   *
+   * The overworld stops updating the body while a dialogue box or a menu is
+   * open, which leaves `movingNow` stuck at whatever it was on the frame the
+   * box opened -- and walking into someone and pressing confirm is the *usual*
+   * way to start a conversation, so that stuck value is almost always true.
+   * Noticing the world has gone quiet is what stops the player standing frozen
+   * mid-stride for the length of the scene. A hop or a scripted walk still owns
+   * the body when everything else pauses, so neither counts as standing.
+   */
+  private get standing(): boolean {
+    if (this.busy) return false;
+    return !this.movingNow || worldPaused(this.updatedAt);
+  }
+
   get animStep(): number {
-    if (!this.moving) return 0;
+    if (this.standing) return 0;
     return Math.floor(this.travelled / STRIDE) % CharSheet.CYCLE.length;
   }
 
   render(r: Renderer, opts: { hideLegs?: boolean; alpha?: number } = {}): void {
     if (!this.visible) return;
-    const src = this.sheet.src(this.facing as CharDir, this.animStep);
+    const standing = this.standing;
+    const src = this.sheet.src(this.facing as CharDir, standing ? 0 : this.animStep);
+    const bob = standing ? idleBob(PLAYER_IDLE_PHASE) : 0;
 
     // Everything is placed in buffer pixels: the body carries a float position,
     // and rounding once here is what keeps the sprite from shimmering as it
@@ -287,16 +320,22 @@ export class PlayerBody {
     const groundX = r.worldPX(this.centerX);
     const groundY = r.worldPY(this.footY + 1);
     const dx = groundX - CHAR_W / 2;
-    const dy = groundY - CHAR_H - this.liftHeight * DETAIL;
+    const dy = groundY - CHAR_H - this.liftHeight * DETAIL - bob;
 
     // Contact shadow stays on the ground while the body arcs over a ledge,
-    // which is the only thing that makes the hop read as height.
+    // which is the only thing that makes the hop read as height -- and it is
+    // left out of the idle bob for exactly the same reason: a shadow pinned to
+    // the ground under a lifting body is what turns the bob into a breath.
     if (!opts.hideLegs) {
       const lift = this.liftHeight;
       r.ellipsePixel(groundX, groundY - 2, 9 - lift * 0.2, 3.2, `rgba(16,20,28,${0.34 - lift * 0.012})`);
     }
 
-    const h = opts.hideLegs ? CHAR_H - 12 : CHAR_H;
+    // The tall-grass cut is pulled back down by the bob so the grass line stays
+    // put; letting it ride up with the body reads as climbing out of the grass
+    // rather than breathing in it.
+    let h = opts.hideLegs ? CHAR_H - 12 : CHAR_H;
+    if (opts.hideLegs) h -= bob;
 
     const c = r.bctx;
     c.save();

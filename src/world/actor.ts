@@ -13,7 +13,7 @@
 
 import { TILE_SIZE } from '../gfx/tileset.js';
 import { CharSheet, getCharSheet, CHAR_H, CHAR_W, type CharDir } from '../gfx/charsprite.js';
-import type { Renderer } from '../engine/renderer.js';
+import { DETAIL, type Renderer } from '../engine/renderer.js';
 import type { Direction } from '../data/schema.js';
 
 export const WALK_FRAMES = 14;
@@ -32,6 +32,64 @@ export const DIR_VEC: Record<Direction, { x: number; y: number }> = {
 export const OPPOSITE: Record<Direction, Direction> = {
   up: 'down', down: 'up', left: 'right', right: 'left',
 };
+
+/* ---------------------------------------------------------------- idling */
+
+/** Length of one breath. Slow enough to read as calm, not as a heartbeat. */
+export const IDLE_PERIOD_MS = 1500;
+
+/**
+ * A world that has not ticked for this long has been paused -- a dialogue box,
+ * a menu, a fade. Comfortably longer than the gap between two simulation ticks
+ * even on a fast display, comfortably shorter than a conversation.
+ */
+const PAUSE_MS = 120;
+
+/**
+ * A character's phase within the breath, 0..1.
+ *
+ * Hashed from something the character always has rather than drawn from the
+ * RNG. A crowd has to look unsynchronised, but it also has to breathe the same
+ * way every time you walk into the room; a random phase makes every visit to a
+ * scene subtly different and every screenshot impossible to reproduce.
+ */
+export function idlePhase(key: string): number {
+  // FNV-1a rather than a running sum: the keys here are near-identical short
+  // strings ("girl@12,7" next to "girl@13,7"), and a sum leaves neighbours a
+  // hair apart, which is the one arrangement where a crowd still pulses
+  // together.
+  let h = 0x811c9dc5;
+  for (let i = 0; i < key.length; i++) {
+    h ^= key.charCodeAt(i);
+    h = Math.imul(h, 0x01000193);
+  }
+  return ((h >>> 0) % 997) / 997;
+}
+
+/**
+ * Vertical lift of a standing sprite, in buffer pixels.
+ *
+ * One authoring pixel -- DETAIL buffer pixels -- and never anything finer:
+ * half a design pixel does not read as a breath, it reads as the sprite
+ * failing to hold still. It steps rather than eases for the same reason, since
+ * there is nowhere between the two positions to be.
+ *
+ * Read off the wall clock instead of a tick counter because the overworld
+ * stops updating characters the moment a dialogue box opens, and someone who
+ * turns to stone as soon as you speak to them is worse than someone who never
+ * breathed in the first place.
+ */
+export function idleBob(phase: number): number {
+  const t = (performance.now() / IDLE_PERIOD_MS + phase) % 1;
+  // Lifted for rather less than half the cycle. The long beat at the bottom is
+  // what makes it read as drawing a breath rather than as hovering.
+  return Math.sin(t * Math.PI * 2) > 0.35 ? DETAIL : 0;
+}
+
+/** True once the world has stopped ticking, given when it last did. */
+export function worldPaused(lastTickAt: number): boolean {
+  return performance.now() - lastTickAt > PAUSE_MS;
+}
 
 export class Actor {
   tileX: number;
@@ -63,6 +121,16 @@ export class Actor {
   visible = true;
   sheet: CharSheet;
 
+  /**
+   * Where this actor sits in the breath cycle. Seeded from the tile it spawned
+   * on, which is unique on a map and identical on every run, and kept across a
+   * `setSprite` so a character that changes clothes does not skip a beat.
+   */
+  private readonly idleSeed: number;
+
+  /** When `update` last ran, so a paused world can be told from a still one. */
+  private updatedAt = performance.now();
+
   constructor(public spriteId: string, x: number, y: number, facing: Direction = 'down') {
     this.tileX = x;
     this.tileY = y;
@@ -70,6 +138,7 @@ export class Actor {
     this.targetY = y;
     this.facing = facing;
     this.sheet = getCharSheet(spriteId);
+    this.idleSeed = idlePhase(`${spriteId}@${x},${y}`);
   }
 
   setSprite(spriteId: string): void {
@@ -99,6 +168,8 @@ export class Actor {
 
   /** Advance one simulation tick. Returns true on the tick a step completes. */
   update(): boolean {
+    this.updatedAt = performance.now();
+
     if (!this.moving) {
       this.idleFrames++;
       // Settle onto the neutral frame after a short beat, not instantly: an
@@ -153,25 +224,51 @@ export class Actor {
   /** Sort key so actors lower on the screen draw in front. */
   get depth(): number { return this.pixelY; }
 
+  /**
+   * Breathing rather than walking.
+   *
+   * An actor frozen part-way through a step because the world stopped ticking
+   * counts as standing too: nothing is going to move it until the box closes,
+   * and a statue holding a stride pose for the length of a conversation is the
+   * exact thing the idle exists to get rid of. A ledge hop is never standing --
+   * it owns the sprite's height on its own.
+   */
+  private get standing(): boolean {
+    if (this.hopping) return false;
+    return !this.moving || worldPaused(this.updatedAt);
+  }
+
   render(r: Renderer, opts: { hideLegs?: boolean; alpha?: number } = {}): void {
     if (!this.visible) return;
-    const src = this.sheet.src(this.facing as CharDir, this.animStep);
+    const standing = this.standing;
+    // The neutral frame is forced only for an actor caught mid-step by a pause.
+    // While the world is running, update()'s short settle window owns the frame:
+    // snapping to neutral the instant a step lands is what made stop-start
+    // walking look jittery.
+    const src = this.sheet.src(this.facing as CharDir, standing && this.moving ? 0 : this.animStep);
+    const bob = standing ? idleBob(this.idleSeed) : 0;
 
     // Positioned in buffer pixels so sprites share the tile grid exactly.
     const groundX = r.worldPX(this.pixelX + TILE_SIZE / 2);
     const groundY = r.worldPY(this.pixelY + TILE_SIZE);
     const dx = groundX - CHAR_W / 2;
-    const dy = groundY - CHAR_H - Math.round(this.hopHeight * 2);
+    const dy = groundY - CHAR_H - Math.round(this.hopHeight * 2) - bob;
 
     // Contact shadow: without it a sprite reads as floating, and it is the only
-    // cue that says how high a hop actually is.
+    // cue that says how high a hop actually is. It is deliberately not given the
+    // idle bob -- a shadow pinned to the ground while the body lifts is the
+    // whole reason the bob reads as a breath and not as the sprite sliding.
     if (!opts.hideLegs) {
       const lift = Math.max(0, this.hopHeight);
       r.ellipsePixel(groundX, groundY - 2, 9 - lift * 0.2, 3.2, `rgba(16,20,28,${0.34 - lift * 0.012})`);
     }
 
     // Standing in tall grass hides the legs, which is what sells "waist-deep".
-    const h = opts.hideLegs ? CHAR_H - 12 : CHAR_H;
+    // The cut is pulled back down by the bob so the grass line stays put: let it
+    // ride up with the body and the character looks like they are climbing out
+    // of the grass once a second instead of breathing in it.
+    let h = opts.hideLegs ? CHAR_H - 12 : CHAR_H;
+    if (opts.hideLegs) h -= bob;
 
     const c = r.bctx;
     c.save();

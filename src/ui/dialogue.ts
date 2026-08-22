@@ -11,9 +11,10 @@
  *  - **Punctuation pauses.** A comma costs a few extra frames and a full stop
  *    costs more. Without them every line arrives at one flat rate and reads
  *    like a stock ticker; with them the same words get phrasing for free.
- *  - **Per-speaker voice.** The blip pitch is derived from the speaker's name,
- *    so every character keeps one voice across the whole game at no authoring
- *    cost.
+ *  - **Per-speaker voice.** The blip timbre and pitch are derived from the
+ *    speaker's name, so every character keeps one voice across the whole game
+ *    at no authoring cost -- and within that voice the pitch moves slightly
+ *    from letter to letter, because a fixed blip is a metronome.
  *  - **A nameplate that belongs to someone.** The plate takes a colour from the
  *    same hash, so the player learns who is talking before reading the name.
  */
@@ -40,6 +41,30 @@ const PUNCT_HOLD: Record<string, number> = {
 const PLATE_COLORS = [
   '#c8543f', '#3f7a5c', '#3f6ab0', '#a8683c', '#8a5aa8', '#2f8090', '#b0503c', '#4a6ab8',
 ];
+
+/** Blip timbres, picked by the same hash that picks the plate colour. */
+const VOICES = ['talk', 'talk_low', 'talk_high', 'talk_soft'];
+
+/**
+ * Cents added to the blip pitch, stepped once per blip so a run of syllables
+ * moves instead of sitting on one note. Deliberately kept under a semitone:
+ * any wider and the box stops inflecting and starts playing a tune.
+ */
+const INFLECT = [0, 26, -18, 40, -8, 14, -30, 32];
+
+/** Cents the pitch falls per blip as a sentence runs on, and how far it falls. */
+const DECLINE = 8;
+const DECLINE_BLIPS = 7;
+
+/**
+ * Frames between voice blips.
+ *
+ * Spaced in time rather than in letters, because the reveal rate is a setting:
+ * a blip every third letter is a pleasant patter at normal speed and a buzz at
+ * fast, where the letters arrive four times quicker. Converting to a letter
+ * count against the current delay keeps one cadence at every text speed.
+ */
+const BLIP_FRAMES = 5;
 
 export interface DialogueOptions {
   /** Speaker name shown in a tab above the box. */
@@ -71,6 +96,12 @@ export class DialogueScene implements Scene {
   private choiceIndex = 0;
   /** Reveal index of the last voice blip, so the rhythm stays even. */
   private blipAt = 0;
+  /** Blips so far on this page; walks the inflection table. */
+  private blips = 0;
+  /** Blips since the last full stop; drives the pitch fall across a sentence. */
+  private phrase = 0;
+  /** The speaker's timbre and base pitch, resolved from the name once. */
+  private voice?: { id: string; pitch: number };
   /** Counts the box sliding up on open. */
   private open = 0;
   private ticks = 0;
@@ -103,6 +134,10 @@ export class DialogueScene implements Scene {
     this.revealed = textDelayFrames(game.settings.textSpeed) === 0 ? Infinity : 0;
     this.timer = 0;
     this.blipAt = 0;
+    // A new page is a new breath: both the inflection walk and the pitch fall
+    // start over rather than carrying on down from where the last page ended.
+    this.blips = 0;
+    this.phrase = 0;
   }
 
   private get pageText(): string {
@@ -149,7 +184,7 @@ export class DialogueScene implements Scene {
       if (this.page < this.pages.length - 1) {
         this.page++;
         this.resetPage(game);
-        audio.playSfx('page_turn', { volume: 0.6 });
+        audio.playSfx('page_turn', { volume: 0.8 });
         return;
       }
       if (this.opts.choices && this.opts.choices.length > 0) {
@@ -198,10 +233,38 @@ export class DialogueScene implements Scene {
   }
 
   /**
+   * The speaker's fixed voice: which of the four timbres, and how far off the
+   * written pitch it sits. Taken from the name, so a character sounds the same
+   * in every scene they turn up in without anyone authoring it.
+   */
+  private speakerVoice(): { id: string; pitch: number } {
+    if (this.voice) return this.voice;
+    const who = this.opts.who;
+    // A box with no nameplate is the game narrating rather than a person in the
+    // room, so it gets the plain voice at its written pitch instead of being
+    // assigned a character's.
+    if (!who) return (this.voice = { id: 'talk', pitch: 1 });
+    const h = speakerHash(who);
+    return (this.voice = {
+      id: VOICES[h % VOICES.length]!,
+      pitch: Math.pow(2, (((h >> 3) % 7) - 3) / 12),
+    });
+  }
+
+  /**
    * A voice blip every few characters. Every character is too busy and every
-   * word is too sparse; a blip every third letter is what reads as speech.
-   * Punctuation is worth breaking the rhythm for -- an exclamation gets a
-   * raised blip, which costs nothing and gives lines their delivery.
+   * word is too sparse; roughly one blip every five frames is what reads as
+   * speech.
+   *
+   * Three things keep that from being a metronome. Blips are pulled onto the
+   * first letter of a word and accented there, because that is where a spoken
+   * stress lands. The pitch walks a small table so no two in a row match. And
+   * it drifts downward as a sentence runs on, resetting at the full stop --
+   * speech really does this, and its absence is most of why an untreated text
+   * box sounds like a typewriter.
+   *
+   * Called rather than `audio.playVoice` because the pitch is now two things
+   * multiplied together, and only the box knows the second one.
    */
   private blip(delay: number): void {
     if (delay === 0) return;
@@ -210,10 +273,49 @@ export class DialogueScene implements Scene {
     if (i < 0) return;
     const ch = text[i] ?? '';
     if (ch === ' ') return;
-    if (ch === '!' || ch === '?') { audio.playVoice(this.opts.who, true); this.blipAt = this.revealed; return; }
-    if (this.revealed - this.blipAt < 3) return;
+
+    // Delivery. A shout is a shout; a question lifts instead of being yelled,
+    // which is the whole difference between "you did WHAT" and someone asking.
+    if (ch === '!' || ch === '?') {
+      audio.playSfx(ch === '!' ? 'talk_shout' : 'talk_ask', { pitch: this.speakerVoice().pitch });
+      this.blipAt = this.revealed;
+      this.phrase = 0;
+      return;
+    }
+    // The rest of the punctuation is silent -- it is already being held on, and
+    // a blip on the held frame lands on top of the pause it is meant to create.
+    if (PUNCT_HOLD[ch] !== undefined) {
+      if (ch === '.') this.phrase = 0;
+      return;
+    }
+
+    // Go quiet on the letter before an exclamation. The mark is one frame away
+    // and speaks for it; two attacks that close read as a stumble, and the gap
+    // is what makes the shout land.
+    const next = text[i + 1];
+    if (next === '!' || next === '?') return;
+
+    // A word opening is allowed to come one letter early, so short words each
+    // get their own blip instead of being swallowed by an even count. The very
+    // first letter of a page always speaks -- waiting out a gap there is a box
+    // that opens its mouth late.
+    const step = Math.ceil(BLIP_FRAMES / delay);
+    const onset = i === 0 || text[i - 1] === ' ';
+    const gap = onset ? Math.max(1, step - 1) : step;
+    if (this.blipAt > 0 && this.revealed - this.blipAt < gap) return;
     this.blipAt = this.revealed;
-    audio.playVoice(this.opts.who);
+
+    const v = this.speakerVoice();
+    const cents = INFLECT[this.blips % INFLECT.length]!
+      + (onset ? 22 : 0)
+      - Math.min(this.phrase, DECLINE_BLIPS) * DECLINE;
+    this.blips++;
+    this.phrase++;
+    audio.playSfx(v.id, {
+      pitch: v.pitch * Math.pow(2, cents / 1200),
+      // Word openings carry the stress and the letters after them lean back.
+      volume: onset ? 1 : 0.82,
+    });
   }
 
   private finish(game: Game, choice: number): void {
