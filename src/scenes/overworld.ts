@@ -9,7 +9,7 @@
 
 import type { Game } from '../core/game.js';
 import type { Scene } from '../core/scene.js';
-import { Renderer, SCREEN_H, SCREEN_W } from '../engine/renderer.js';
+import { DETAIL, Renderer, SCREEN_H, SCREEN_W } from '../engine/renderer.js';
 import { T, TILE_PX, TILE_SIZE, Tileset } from '../gfx/tileset.js';
 import { TileMap, type AsciiMapFile } from '../world/tilemap.js';
 import { Actor, DIR_VEC, WALK_FRAMES } from '../world/actor.js';
@@ -1091,8 +1091,16 @@ export class OverworldScene implements Scene {
   /* -------------------------------------------------------------- render */
 
   render(game: Game, r: Renderer): void {
-    r.camX = Math.round(this.camTargetX);
-    r.camY = Math.round(this.camTargetY);
+    // Rounded to buffer pixels, not logical ones.
+    //
+    // The world is blitted at camX * DETAIL, so a camera snapped to whole
+    // logical units can only ever move the map in two-pixel jumps, while the
+    // player -- drawn from a float position -- slides one pixel at a time
+    // between them. Walking straight that reads as a slight stutter; walking
+    // diagonally, where both axes are beating against each other at 0.81 of a
+    // pixel per frame, it reads as the screen shaking.
+    r.camX = Math.round(this.camTargetX * DETAIL) / DETAIL;
+    r.camY = Math.round(this.camTargetY * DETAIL) / DETAIL;
     r.clear(this.map?.indoor ? '#181420' : '#0e1420');
 
     if (!this.map) return;
@@ -1117,18 +1125,34 @@ export class OverworldScene implements Scene {
         });
       },
     });
-    drawables.sort((a, b) => a.depth - b.depth);
-    for (const d of drawables) d.draw();
-
     for (const b of this.boulders) {
-      const src = this.tileset.src(T.BOULDER_FREE);
-      const bx = r.worldPX(b.x * TILE_SIZE + b.offX);
-      const by = r.worldPY(b.y * TILE_SIZE + b.offY);
-      r.ellipsePixel(bx + TILE_PX / 2, by + TILE_PX - 5, 11, 3.5, 'rgba(16,20,28,0.3)');
-      r.bctx.drawImage(this.tileset.canvas, src.x, src.y, TILE_PX, TILE_PX, bx, by, TILE_PX, TILE_PX);
+      drawables.push({
+        depth: b.y * TILE_SIZE + b.offY,
+        draw: () => {
+          const src = this.tileset.src(T.BOULDER_FREE);
+          const bx = r.worldPX(b.x * TILE_SIZE + b.offX);
+          const by = r.worldPY(b.y * TILE_SIZE + b.offY);
+          r.ellipsePixel(bx + TILE_PX / 2, by + TILE_PX - 5, 11, 3.5, 'rgba(16,20,28,0.3)');
+          r.bctx.drawImage(this.tileset.canvas, src.x, src.y, TILE_PX, TILE_PX, bx, by, TILE_PX, TILE_PX);
+        },
+      });
     }
 
-    this.map.renderOverlay(r, this.tileset);
+    // Overlay tiles join the same sort, one drawable per row. A signpost a row
+    // above the player is behind them; a tree a row below is in front. Drawing
+    // the layer in one go afterwards is what made walking up to a sign delete
+    // the top half of the player.
+    const rows = this.map.visibleRows(r);
+    for (let ty = rows.first; ty <= rows.last; ty++) {
+      const row = ty;
+      drawables.push({
+        depth: row * TILE_SIZE,
+        draw: () => this.map.renderOverlayRow(r, this.tileset, row),
+      });
+    }
+
+    drawables.sort((a, b) => a.depth - b.depth);
+    for (const d of drawables) d.draw();
 
     if (this.alert) {
       const alert = this.alert;

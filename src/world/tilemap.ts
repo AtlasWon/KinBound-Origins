@@ -144,23 +144,31 @@ export class TileMap {
   /* ------------------------------------------------------------ drawing */
 
   private drawLayer(r: Renderer, tiles: Uint16Array, tileset: Tileset): void {
-    const t0x = Math.max(0, Math.floor(r.camX / TILE_SIZE));
-    const t0y = Math.max(0, Math.floor(r.camY / TILE_SIZE));
-    const t1x = Math.min(this.width - 1, Math.floor((r.camX + 240) / TILE_SIZE));
-    const t1y = Math.min(this.height - 1, Math.floor((r.camY + 160) / TILE_SIZE));
+    const rows = this.visibleRows(r);
+    for (let ty = rows.first; ty <= rows.last; ty++) this.drawRow(r, tiles, tileset, ty);
+  }
 
-    for (let ty = t0y; ty <= t1y; ty++) {
-      for (let tx = t0x; tx <= t1x; tx++) {
-        const id = tiles[this.index(tx, ty)]!;
-        if (id === 0) continue;
-        const s = tileset.srcFor(id, tx, ty);
-        r.bctx.drawImage(
-          tileset.canvas, s.x, s.y, TILE_PX, TILE_PX,
-          tx * TILE_PX - r.camPX, ty * TILE_PX - r.camPY,
-          TILE_PX, TILE_PX,
-        );
-      }
+  private drawRow(r: Renderer, tiles: Uint16Array, tileset: Tileset, ty: number): void {
+    const t0x = Math.max(0, Math.floor(r.camX / TILE_SIZE));
+    const t1x = Math.min(this.width - 1, Math.floor((r.camX + 240) / TILE_SIZE));
+    for (let tx = t0x; tx <= t1x; tx++) {
+      const id = tiles[this.index(tx, ty)]!;
+      if (id === 0) continue;
+      const s = tileset.srcFor(id, tx, ty);
+      r.bctx.drawImage(
+        tileset.canvas, s.x, s.y, TILE_PX, TILE_PX,
+        tx * TILE_PX - r.camPX, ty * TILE_PX - r.camPY,
+        TILE_PX, TILE_PX,
+      );
     }
+  }
+
+  /** Rows of the map currently on screen. */
+  visibleRows(r: Renderer): { first: number; last: number } {
+    return {
+      first: Math.max(0, Math.floor(r.camY / TILE_SIZE)),
+      last: Math.min(this.height - 1, Math.floor((r.camY + 160) / TILE_SIZE)),
+    };
   }
 
   /** Base terrain, drawn under everything. */
@@ -169,11 +177,18 @@ export class TileMap {
   }
 
   /**
-   * Overlays. Tiles whose row is at or above the actor are drawn before actors;
-   * the rest are drawn after, which is what puts a player *behind* a tree top.
-   * Split by row rather than per-tile keeps the sort stable and cheap.
+   * One row of the overlay layer.
+   *
+   * Handed out a row at a time so the caller can interleave them with the
+   * actors standing between them. Drawing the whole layer last -- which is
+   * what this used to do -- means every tall object eats the head of whoever
+   * is standing in front of it: walk up to a signpost and the top half of you
+   * disappears into it.
+   *
+   * Sorting by row rather than by tile keeps it cheap, and a row is the right
+   * granularity anyway: two things on the same row cannot overlap.
    */
-  renderOverlay(r: Renderer, tileset: Tileset): void {
-    this.drawLayer(r, this.over, tileset);
+  renderOverlayRow(r: Renderer, tileset: Tileset, ty: number): void {
+    this.drawRow(r, this.over, tileset, ty);
   }
 }

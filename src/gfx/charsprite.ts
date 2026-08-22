@@ -192,13 +192,19 @@ export class CharSheet {
       x >= 0 && y >= 0 && x < CHAR_W && y < CHAR_H && d[(y * CHAR_W + x) * 4 + 3]! > 0;
 
     const [r, g, b] = hexRgb(this.pal.outline);
+    // Walked a block at a time, so the border is one authoring pixel thick
+    // rather than a hairline round a chunky silhouette.
     const edges: number[] = [];
-    for (let y = 0; y < CHAR_H; y++) {
-      for (let x = 0; x < CHAR_W; x++) {
+    for (let y = 0; y < CHAR_H; y += DETAIL) {
+      for (let x = 0; x < CHAR_W; x += DETAIL) {
         if (solid(x, y)) continue;
-        if (solid(x - 1, y) || solid(x + 1, y) || solid(x, y - 1) || solid(x, y + 1)
-          || solid(x - 1, y - 1) || solid(x + 1, y - 1) || solid(x - 1, y + 1) || solid(x + 1, y + 1)) {
-          edges.push((y * CHAR_W + x) * 4);
+        const near = solid(x - DETAIL, y) || solid(x + DETAIL, y)
+          || solid(x, y - DETAIL) || solid(x, y + DETAIL)
+          || solid(x - DETAIL, y - DETAIL) || solid(x + DETAIL, y - DETAIL)
+          || solid(x - DETAIL, y + DETAIL) || solid(x + DETAIL, y + DETAIL);
+        if (!near) continue;
+        for (let dy = 0; dy < DETAIL; dy++) {
+          for (let dx = 0; dx < DETAIL; dx++) edges.push(((y + dy) * CHAR_W + (x + dx)) * 4);
         }
       }
     }
@@ -208,284 +214,275 @@ export class CharSheet {
     ctx.putImageData(img, 0, 0);
   }
 
+  /**
+   * One frame, drawn on the 16x24 authoring grid.
+   *
+   * Every coordinate here is an authoring pixel, not a buffer pixel: `set`
+   * paints a 2x2 block. That is the whole reason this reads as pixel art --
+   * the proportions are the era's too, with a head nearly half the height of
+   * the character, two-pixel eyes and a four-frame walk that actually swaps
+   * the legs over rather than jiggling them.
+   *
+   * Vertical layout, in units:
+   *   1..4   hair crown        11..16  torso
+   *   5..10  face              17..20  legs
+   *                            21..22  feet   (23 is left for the outline)
+   */
   private draw(ctx: Ctx, dir: CharDir, frame: number): void {
     const p = this.pal;
-    const px = (x: number, y: number, c: string) => {
-      if (x < 1 || y < 1 || x >= CHAR_W - 1 || y >= CHAR_H - 1) return;
+    const U = DETAIL;
+
+    const set = (x: number, y: number, c: string) => {
+      if (x < 0 || y < 0 || x >= CHAR_LW || y >= CHAR_LH) return;
       ctx.fillStyle = c;
-      ctx.fillRect(x, y, 1, 1);
+      ctx.fillRect(x * U, y * U, U, U);
     };
     const box = (x0: number, y0: number, x1: number, y1: number, c: string) => {
-      for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) px(x, y, c);
+      for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) set(x, y, c);
     };
-    /** Filled ellipse, the workhorse for heads and limbs. */
-    const ell = (cx: number, cy: number, rx: number, ry: number, c: string) => {
-      for (let y = -ry; y <= ry; y++) {
-        for (let x = -rx; x <= rx; x++) {
-          if ((x * x) / (rx * rx) + (y * y) / (ry * ry) <= 1.02) px(cx + x, cy + y, c);
-        }
+    const wipe = (x0: number, y0: number, x1: number, y1: number) => {
+      for (let y = y0; y <= y1; y++) {
+        for (let x = x0; x <= x1; x++) ctx.clearRect(x * U, y * U, U, U);
       }
     };
 
-    // Passing frames lift the whole body a pixel, which is most of what sells a
-    // walk at this size.
-    const bob = frame === 0 ? 0 : -1;
     const profile = dir === 'left' || dir === 'right';
     const slim = p.build === 'slim';
-    const headCy = (HEAD_TOP + HEAD_BOT) / 2 + bob;
-    const headRx = profile ? 8 : 9;
-    const headCx = profile ? CX - 1 : CX;
-    const eye = p.eye ?? '#8fb8d8';
     const style: HairStyle = p.hairStyle ?? 'short';
+    const eye = p.eye ?? '#5f9fd8';
     const jacket = p.jacket;
     const jacketShade = p.jacketShade ?? (jacket ? darken(jacket, 0.28) : undefined);
     const jacketStyle: JacketStyle = p.jacketStyle ?? 'open';
-    /** Sleeves take the jacket colour unless it is a vest. */
     const sleeve = jacket && jacketStyle !== 'vest' ? jacket : p.top;
     const sleeveShade = jacket && jacketStyle !== 'vest' ? jacketShade! : p.topShade;
 
+    /* Walk cycle. Frame 0 stands; 1 and 2 are the two contact poses, and the
+       whole upper body lifts a pixel on both -- which is most of what makes a
+       four-frame walk read as walking. */
+    const stepDir = frame === 0 ? 0 : frame === 1 ? 1 : -1;
+    const bob = frame === 0 ? 0 : -1;
+
+    const HEAD_L = 4, HEAD_R = 11;
+    const bodyL = slim ? 5 : 4;
+    const bodyR = slim ? 10 : 11;
+    const TORSO_Y = 11 + bob;
+    const HIP_Y = 16 + bob;
+
     /* ------------------------------------------------------------- legs */
-    // Drawn first so the tunic hem overlaps them.
-    const stride = frame === 0 ? 0 : frame === 1 ? 1 : -1;
-    const legTop = HIP - 2;
+    const legColour = (back: boolean) => (back ? p.legsShade : p.legs);
+
     if (profile) {
-      // One leg forward, one trailing; the forward foot lands flat.
-      const fwd = stride * 4;
-      const back = -stride * 4;
-      box(CX - 4 + back, legTop, CX + 1 + back, FOOT - 3, p.legsShade);
-      box(CX - 5 + back, FOOT - 3, CX + 2 + back, FOOT, p.shoes);
-      box(CX - 4 + fwd, legTop, CX + 1 + fwd, FOOT - 3, p.legs);
-      box(CX - 5 + fwd, FOOT - 3, CX + 2 + fwd, FOOT, p.shoes);
+      // Scissoring: one leg forward, one trailing, both planted at the ankle.
+      const lead = stepDir * 2;
+      const trail = -stepDir * 2;
+      box(6 + trail, 17, 8 + trail, 20, p.legsShade);
+      box(5 + trail, 21, 8 + trail, 22, darken(p.shoes, 0.2));
+      box(6 + lead, 17, 8 + lead, 20, p.legs);
+      box(6 + lead, 20, 8 + lead, 20, p.legsShade);
+      box(5 + lead, 21, 8 + lead, 22, p.shoes);
+      box(5 + lead, 21, 8 + lead, 21, lighten(p.shoes, 0.28));
     } else {
-      // Front and back views read the stride as one foot lifted.
-      const liftL = stride > 0 ? 2 : 0;
-      const liftR = stride < 0 ? 2 : 0;
-      const legHalf = slim ? 6 : 7;
-      box(CX - legHalf, legTop, CX - 1, FOOT - 3 - liftL, p.legs);
-      box(CX + 1, legTop, CX + legHalf, FOOT - 3 - liftR, p.legsShade);
-      box(CX - legHalf - 1, FOOT - 3 - liftL, CX - 1, FOOT - liftL, p.shoes);
-      box(CX + 1, FOOT - 3 - liftR, CX + legHalf + 1, FOOT - liftR, p.shoes);
-      // Inner shadow separates the two legs.
-      for (let y = legTop; y <= FOOT - 4; y++) px(CX, y, p.legsShade);
+      // Front and back read the stride as one foot lifted clear of the ground.
+      const liftL = stepDir > 0 ? 1 : 0;
+      const liftR = stepDir < 0 ? 1 : 0;
+      box(5, 17, 7, 20 - liftL, legColour(dir === 'up'));
+      box(8, 17, 10, 20 - liftR, legColour(dir !== 'up'));
+      box(5, 20 - liftL, 7, 20 - liftL, p.legsShade);
+      box(8, 20 - liftR, 10, 20 - liftR, p.legsShade);
+      box(4, 21 - liftL, 7, 22 - liftL, p.shoes);
+      box(8, 21 - liftR, 11, 22 - liftR, darken(p.shoes, 0.18));
+      // A lit top edge on each shoe, or the feet merge into the trousers.
+      box(4, 21 - liftL, 7, 21 - liftL, lighten(p.shoes, 0.28));
+      box(8, 21 - liftR, 11, 21 - liftR, lighten(p.shoes, 0.16));
+      // A seam between the legs, so they are two rather than one slab.
+      box(7, 17, 7, 20 - Math.max(liftL, liftR), darken(p.legsShade, 0.25));
     }
 
     /* ------------------------------------------------------------ torso */
-    const shoulderY = SHOULDER + bob;
-    const torsoHalf = profile ? (slim ? 4 : 5) : (slim ? 6 : 7);
-    box(CX - torsoHalf, shoulderY, CX + torsoHalf, HIP, p.top);
-    // Light from the upper left: a lit band down the left, shade down the right.
-    box(CX - torsoHalf, shoulderY, CX - torsoHalf + 2, HIP, lighten(p.top, 0.16));
-    box(CX + torsoHalf - 2, shoulderY, CX + torsoHalf, HIP, p.topShade);
-    // Hem shadow.
-    box(CX - torsoHalf, HIP - 1, CX + torsoHalf, HIP, p.topShade);
-    // Shoulders rounded off so the silhouette is not a slab.
-    px(CX - torsoHalf, shoulderY, 'rgba(0,0,0,0)');
-    px(CX + torsoHalf, shoulderY, 'rgba(0,0,0,0)');
+    box(bodyL, TORSO_Y, bodyR, HIP_Y, p.top);
+    box(bodyL, TORSO_Y, bodyL + 1, HIP_Y, lighten(p.top, 0.14));
+    box(bodyR - 1, TORSO_Y, bodyR, HIP_Y, p.topShade);
+    box(bodyL, HIP_Y, bodyR, HIP_Y, p.topShade);
+    // Rounded shoulders: a square torso reads as a box with a head on it.
+    wipe(bodyL, TORSO_Y, bodyL, TORSO_Y);
+    wipe(bodyR, TORSO_Y, bodyR, TORSO_Y);
 
     if (dir === 'down') {
-      // Collar and a centre seam.
-      box(CX - 3, shoulderY, CX + 3, shoulderY + 1, lighten(p.top, 0.3));
-      for (let y = shoulderY + 2; y <= HIP - 2; y++) px(CX, y, p.topShade);
-      // Belt.
-      box(CX - torsoHalf, HIP - 4, CX + torsoHalf, HIP - 3, darken(p.legsShade, 0.15));
-      box(CX - 1, HIP - 4, CX + 1, HIP - 3, '#d8b05a');
+      box(6, TORSO_Y, 9, TORSO_Y, lighten(p.top, 0.28));      // collar
+      box(7, TORSO_Y + 1, 8, HIP_Y - 1, p.topShade);          // centre seam
+      box(bodyL, HIP_Y - 1, bodyR, HIP_Y - 1, darken(p.legsShade, 0.1));
+      box(7, HIP_Y - 1, 8, HIP_Y - 1, '#d8b05a');             // belt buckle
     } else if (dir === 'up') {
-      box(CX - torsoHalf, HIP - 4, CX + torsoHalf, HIP - 3, darken(p.legsShade, 0.15));
+      box(bodyL, HIP_Y - 1, bodyR, HIP_Y - 1, darken(p.legsShade, 0.1));
     } else {
-      // Profile: a shoulder highlight facing forward.
-      box(CX - torsoHalf, shoulderY, CX - torsoHalf + 1, shoulderY + 4, lighten(p.top, 0.24));
+      box(bodyL, TORSO_Y, bodyL, TORSO_Y + 2, lighten(p.top, 0.22));
     }
 
     /* ----------------------------------------------------------- jacket */
     if (jacket) {
       const js = jacketShade!;
       if (dir === 'up') {
-        // From behind a jacket is simply the back of a jacket.
-        box(CX - torsoHalf, shoulderY, CX + torsoHalf, HIP - 1, jacket);
-        box(CX + torsoHalf - 2, shoulderY, CX + torsoHalf, HIP - 1, js);
-        box(CX - torsoHalf, HIP - 2, CX + torsoHalf, HIP - 1, js);
+        box(bodyL, TORSO_Y, bodyR, HIP_Y, jacket);
+        box(bodyR - 1, TORSO_Y, bodyR, HIP_Y, js);
+        box(bodyL, HIP_Y, bodyR, HIP_Y, js);
+        wipe(bodyL, TORSO_Y, bodyL, TORSO_Y);
+        wipe(bodyR, TORSO_Y, bodyR, TORSO_Y);
       } else if (profile) {
-        box(CX - torsoHalf, shoulderY, CX + torsoHalf - 2, HIP - 1, jacket);
-        box(CX - torsoHalf, shoulderY, CX - torsoHalf + 1, HIP - 1, lighten(jacket, 0.18));
-        box(CX + torsoHalf - 3, shoulderY, CX + torsoHalf - 2, HIP - 1, js);
+        box(bodyL, TORSO_Y, bodyR - 1, HIP_Y, jacket);
+        box(bodyL, TORSO_Y, bodyL, HIP_Y, lighten(jacket, 0.16));
+        box(bodyR - 1, TORSO_Y, bodyR - 1, HIP_Y, js);
+        wipe(bodyL, TORSO_Y, bodyL, TORSO_Y);
       } else {
-        // Open at the front: two panels with the shirt showing between them.
-        box(CX - torsoHalf, shoulderY, CX - torsoHalf + 3, HIP - 1, jacket);
-        box(CX + torsoHalf - 3, shoulderY, CX + torsoHalf, HIP - 1, jacket);
-        box(CX - torsoHalf, shoulderY, CX - torsoHalf + 1, HIP - 1, lighten(jacket, 0.18));
-        box(CX + torsoHalf - 1, shoulderY, CX + torsoHalf, HIP - 1, js);
-        // Collar folded back over the shoulders.
-        box(CX - torsoHalf + 3, shoulderY, CX - 2, shoulderY + 2, js);
-        box(CX + 2, shoulderY, CX + torsoHalf - 3, shoulderY + 2, js);
-        box(CX - torsoHalf, HIP - 2, CX - torsoHalf + 3, HIP - 1, js);
-        box(CX + torsoHalf - 3, HIP - 2, CX + torsoHalf, HIP - 1, js);
+        // Open at the front, with the shirt showing between the panels.
+        box(bodyL, TORSO_Y, bodyL + 1, HIP_Y, jacket);
+        box(bodyR - 1, TORSO_Y, bodyR, HIP_Y, jacket);
+        box(bodyL, TORSO_Y + 1, bodyL, HIP_Y, lighten(jacket, 0.16));
+        box(bodyR, TORSO_Y + 1, bodyR, HIP_Y, js);
+        box(bodyL + 2, TORSO_Y, bodyL + 2, TORSO_Y + 1, js);
+        box(bodyR - 2, TORSO_Y, bodyR - 2, TORSO_Y + 1, js);
+        wipe(bodyL, TORSO_Y, bodyL, TORSO_Y);
+        wipe(bodyR, TORSO_Y, bodyR, TORSO_Y);
       }
       if (jacketStyle === 'hoodie') {
-        // A hood bunched behind the neck, which is most of what says "hoodie"
-        // from the front and all of it from behind.
-        const hy = shoulderY - 1;
-        ell(CX, hy + 1, torsoHalf - 1, 3, js);
-        ell(CX, hy, torsoHalf - 2, 2, jacket);
-        if (dir === 'up') ell(CX, hy + 3, torsoHalf - 1, 4, js);
+        box(bodyL + 1, TORSO_Y - 1, bodyR - 1, TORSO_Y - 1, js);
+        if (dir === 'up') box(bodyL + 1, TORSO_Y, bodyR - 1, TORSO_Y + 1, js);
       }
     }
 
     /* ------------------------------------------------------------- arms */
-    // Arms swing opposite the legs.
-    const swing = -stride;
+    const swing = -stepDir;
     if (profile) {
-      const ay = shoulderY + 2 + Math.max(0, swing);
-      box(CX - 5, ay, CX - 2, ay + 7, sleeveShade);
-      ell(CX - 4, ay + 8, 2, 2, p.skin);
-      px(CX - 5, ay + 8, p.skinShade);
+      const ay = TORSO_Y + 1 + Math.max(0, swing);
+      box(3, ay, 4, ay + 3, sleeveShade);
+      box(3, ay + 4, 4, ay + 4, p.skin);
     } else {
-      const lY = shoulderY + 2 - swing;
-      const rY = shoulderY + 2 + swing;
-      box(CX - torsoHalf - 3, lY, CX - torsoHalf - 1, lY + 7, lighten(sleeve, 0.1));
-      box(CX + torsoHalf + 1, rY, CX + torsoHalf + 3, rY + 7, sleeveShade);
-      ell(CX - torsoHalf - 2, lY + 9, 2, 2, p.skin);
-      ell(CX + torsoHalf + 2, rY + 9, 2, 2, p.skinShade);
+      const lY = TORSO_Y + 1 - Math.max(0, swing);
+      const rY = TORSO_Y + 1 + Math.max(0, -swing);
+      box(bodyL - 2, lY, bodyL - 1, lY + 3, lighten(sleeve, 0.08));
+      box(bodyR + 1, rY, bodyR + 2, rY + 3, sleeveShade);
+      box(bodyL - 2, lY + 4, bodyL - 1, lY + 4, p.skin);
+      box(bodyR + 1, rY + 4, bodyR + 2, rY + 4, p.skinShade);
     }
 
     /* ------------------------------------------------------------- head */
-    ell(headCx, headCy, headRx, 9, p.skin);
-    // Jaw shadow and a cheek highlight.
-    ell(headCx, headCy + 4, headRx - 1, 5, p.skinShade);
-    ell(headCx, headCy + 1, headRx - 1, 7, p.skin);
-    ell(headCx - 3, headCy - 2, 3, 3, lighten(p.skin, 0.12));
+    const FACE_Y0 = 5 + bob;
+    const FACE_Y1 = 10 + bob;
+    box(HEAD_L, FACE_Y0, HEAD_R, FACE_Y1, p.skin);
+    box(HEAD_L, FACE_Y1, HEAD_R, FACE_Y1, p.skinShade);
+    // Corners knocked off, top and bottom, so the head is a head.
+    wipe(HEAD_L, FACE_Y0, HEAD_L, FACE_Y0);
+    wipe(HEAD_R, FACE_Y0, HEAD_R, FACE_Y0);
+    wipe(HEAD_L, FACE_Y1, HEAD_L, FACE_Y1);
+    wipe(HEAD_R, FACE_Y1, HEAD_R, FACE_Y1);
     // Neck.
-    box(CX - 3, HEAD_BOT + bob - 2, CX + 2, shoulderY, p.skinShade);
+    box(6, FACE_Y1, 9, TORSO_Y - 1, p.skinShade);
 
     /* ------------------------------------------------------------- hair */
-    const hairTop = headCy - 10;
-    const back = profile ? 1 : 0;   // in profile the back of the head is +x
-
-    /** The dome on top of the head. */
-    const crown = (rise = 0) => {
-      const top = hairTop - rise;
-      const span = headCy - 1 - top;
-      for (let y = top; y <= headCy - 1; y++) {
-        const t = (y - top) / span;
-        const half = Math.round((headRx + (rise > 0 ? 1 : 0)) * Math.sqrt(Math.max(0, 1 - (1 - t) ** 2)) + 1);
-        box(headCx - half, y, headCx + half, y, p.hair);
-      }
+    const HAIR_Y0 = 1 + bob;
+    /** @param sideTo how far down the side of the face the hair reaches. */
+    const crown = (sideTo = FACE_Y0, top = HAIR_Y0) => {
+      box(HEAD_L, top + 1, HEAD_R, FACE_Y0 + 1, p.hair);
+      box(HEAD_L + 1, top, HEAD_R - 1, top, p.hair);
+      box(HEAD_L - 1, top + 2, HEAD_L - 1, sideTo, p.hair);
+      box(HEAD_R + 1, top + 2, HEAD_R + 1, sideTo, p.hair);
+      // A lit patch up on the left, which is where the light is in every other
+      // sprite in the game.
+      box(HEAD_L + 1, top + 1, HEAD_L + 2, top + 2, lighten(p.hair, 0.22));
     };
-
-    /** Jagged fringe edge, rather than a flat line across the brow. */
     const fringe = () => {
-      for (let x = -headRx; x <= headRx; x++) {
-        const dip = 1 + ((x + 9) % 3 === 0 ? 1 : 0);
-        for (let k = 0; k < dip; k++) px(headCx + x, headCy - 1 + k, p.hairShade);
-      }
+      box(HEAD_L, FACE_Y0 + 1, HEAD_R, FACE_Y0 + 1, p.hairShade);
+      set(HEAD_L + 2, FACE_Y0 + 2, p.hairShade);
     };
-
-    /** Hair hanging past the jaw. In profile only the back side has length. */
-    const sides = (len: number, width = 2) => {
-      const run = (sign: number) => {
-        for (let k = 0; k < width; k++) {
-          const x = headCx + sign * (headRx - k);
-          box(x, headCy - 4, x, headCy + len, k === 0 ? p.hairShade : p.hair);
-        }
-      };
-      if (!profile) { run(-1); run(1); } else run(back === 1 ? 1 : -1);
+    /** Hair hanging past the jaw; in profile only down the back of the head. */
+    const sides = (to: number) => {
+      if (!profile) {
+        box(HEAD_L - 1, FACE_Y0 + 1, HEAD_L, to, p.hairShade);
+        box(HEAD_R, FACE_Y0 + 1, HEAD_R + 1, to, p.hairShade);
+      } else {
+        box(HEAD_R, FACE_Y0 + 1, HEAD_R + 1, to, p.hairShade);
+      }
     };
 
     if (dir === 'up') {
-      // Back of the head: hair all the way down to the collar.
-      ell(headCx, headCy, headRx, 9, p.hair);
-      ell(headCx, headCy + 3, headRx, 6, p.hairShade);
-      ell(headCx - 3, headCy - 3, 4, 4, lighten(p.hair, 0.22));
-      box(headCx - 3, headCy + 7, headCx + 3, headCy + 9, p.hairShade);
+      box(HEAD_L, HAIR_Y0 + 1, HEAD_R, FACE_Y1, p.hair);
+      box(HEAD_L + 1, HAIR_Y0, HEAD_R - 1, HAIR_Y0, p.hair);
+      box(HEAD_L - 1, HAIR_Y0 + 2, HEAD_L - 1, FACE_Y1 - 1, p.hair);
+      box(HEAD_R + 1, HAIR_Y0 + 2, HEAD_R + 1, FACE_Y1 - 1, p.hair);
+      box(HEAD_L, FACE_Y1 - 1, HEAD_R, FACE_Y1, p.hairShade);
+      box(HEAD_L + 1, HAIR_Y0 + 1, HEAD_L + 2, HAIR_Y0 + 2, lighten(p.hair, 0.2));
     } else {
-      crown(style === 'spiky' || style === 'curls' ? 1 : 0);
+      // Long styles keep their length; the short ones stop at the ear.
+      const longish = style === 'bob' || style === 'long' || style === 'curls'
+        || style === 'ponytail';
+      crown(longish ? FACE_Y0 + 2 : FACE_Y0);
       fringe();
-      // Sideburns down past the ear -- in profile only on the back of the head,
-      // where there is a head to have hair on.
-      if (!profile) {
-        box(headCx - headRx, headCy - 3, headCx - headRx + 1, headCy + 3, p.hairShade);
-      }
-      box(headCx + headRx - 1, headCy - 3, headCx + headRx, headCy + 3, p.hairShade);
-      ell(headCx - 4, headCy - 6, 4, 3, lighten(p.hair, 0.24));
+      if (profile) box(HEAD_R + 1, FACE_Y0 + 1, HEAD_R + 1, FACE_Y0 + 3, p.hairShade);
     }
 
     switch (style) {
       case 'swept':
-        // A lock combed across the brow, climbing as it goes.
         if (dir !== 'up') {
-          for (let x = -headRx; x <= 3; x++) {
-            const y = headCy - 1 - Math.floor((x + headRx) / 5);
-            box(headCx + x, y, headCx + x, headCy - 1, p.hair);
-            px(headCx + x, y, lighten(p.hair, 0.2));
-          }
+          box(HEAD_L, FACE_Y0 + 1, HEAD_L + 4, FACE_Y0 + 1, p.hair);
+          box(HEAD_L, FACE_Y0 + 2, HEAD_L + 1, FACE_Y0 + 2, p.hair);
+          set(HEAD_L + 2, FACE_Y0 + 2, lighten(p.hair, 0.2));
         }
         break;
 
       case 'spiky':
-        // Five spikes off the crown, tallest in the middle.
-        for (let i = 0; i < 5; i++) {
-          const sx = headCx - 6 + i * 3;
-          const tall = 3 + (i === 2 ? 2 : i === 1 || i === 3 ? 1 : 0);
-          for (let k = 0; k < tall; k++) {
-            const w = Math.max(0, 1 - Math.floor(k / 2));
-            box(sx - w, hairTop - 1 - k, sx + w, hairTop - 1 - k, k > tall - 2 ? p.hairShade : p.hair);
-          }
+        for (let i = 0; i < 4; i++) {
+          const sx = HEAD_L + 1 + i * 2;
+          set(sx, HAIR_Y0 - 1, p.hair);
+          set(sx, HAIR_Y0, p.hair);
         }
+        set(HEAD_L, HAIR_Y0, p.hairShade);
+        set(HEAD_R, HAIR_Y0, p.hairShade);
         break;
 
       case 'bob':
-        sides(6, 3);
-        if (dir === 'up') box(headCx - headRx, headCy + 6, headCx + headRx, headCy + 8, p.hairShade);
+        sides(FACE_Y1);
+        if (dir === 'up') box(HEAD_L - 1, FACE_Y1, HEAD_R + 1, FACE_Y1, p.hairShade);
         break;
 
       case 'long':
-        sides(13, 3);
+        sides(HIP_Y - 2);
         if (dir === 'up') {
-          box(headCx - 5, headCy + 7, headCx + 5, shoulderY + 9, p.hair);
-          box(headCx + 2, headCy + 7, headCx + 5, shoulderY + 9, p.hairShade);
-          box(headCx - 5, shoulderY + 8, headCx + 5, shoulderY + 9, p.hairShade);
+          box(HEAD_L, FACE_Y1, HEAD_R, HIP_Y - 2, p.hair);
+          box(HEAD_R - 1, FACE_Y1, HEAD_R, HIP_Y - 2, p.hairShade);
+          box(HEAD_L, HIP_Y - 2, HEAD_R, HIP_Y - 2, p.hairShade);
         }
         break;
 
       case 'ponytail':
         if (dir === 'up') {
-          box(headCx - 2, headCy + 6, headCx + 2, shoulderY + 7, p.hair);
-          box(headCx + 1, headCy + 6, headCx + 2, shoulderY + 7, p.hairShade);
-          box(headCx - 2, headCy + 5, headCx + 2, headCy + 6, darken(p.hair, 0.35));
+          box(7, FACE_Y1, 8, HIP_Y - 3, p.hair);
+          set(8, FACE_Y1, p.hairShade);
+          box(6, FACE_Y1 - 1, 9, FACE_Y1 - 1, darken(p.hair, 0.3));
         } else if (profile) {
-          // Swept back and down behind the head.
-          for (let i = 0; i < 10; i++) {
-            const x = headCx + headRx + 1 + Math.floor(i / 3);
-            const y = headCy - 4 + i;
-            box(x, y, x + 1, y, i > 6 ? p.hairShade : p.hair);
-          }
-          box(headCx + headRx - 1, headCy - 5, headCx + headRx + 1, headCy - 4, darken(p.hair, 0.35));
+          box(HEAD_R + 1, FACE_Y0, HEAD_R + 2, FACE_Y0 + 3, p.hair);
+          box(HEAD_R + 2, FACE_Y0 + 3, HEAD_R + 2, FACE_Y0 + 5, p.hairShade);
+          box(HEAD_R, FACE_Y0 - 1, HEAD_R + 1, FACE_Y0 - 1, darken(p.hair, 0.3));
         } else {
-          // From the front it is a bump either side of the head.
-          box(headCx - headRx - 1, headCy - 4, headCx - headRx, headCy - 1, p.hairShade);
-          box(headCx + headRx, headCy - 4, headCx + headRx + 1, headCy - 1, p.hairShade);
+          box(HEAD_L - 1, FACE_Y0, HEAD_L - 1, FACE_Y0 + 2, p.hairShade);
+          box(HEAD_R + 1, FACE_Y0, HEAD_R + 1, FACE_Y0 + 2, p.hairShade);
         }
         break;
 
       case 'bun':
         if (dir === 'up') {
-          ell(headCx, headCy - 5, 4, 4, p.hair);
-          ell(headCx - 1, headCy - 6, 2, 2, lighten(p.hair, 0.22));
+          box(6, HAIR_Y0 + 1, 9, HAIR_Y0 + 3, p.hair);
+          box(6, HAIR_Y0 + 1, 7, HAIR_Y0 + 1, lighten(p.hair, 0.22));
         } else {
-          ell(headCx, hairTop - 1, 4, 3, p.hair);
-          ell(headCx - 1, hairTop - 2, 2, 1, lighten(p.hair, 0.22));
-          box(headCx - 3, hairTop, headCx + 3, hairTop + 1, p.hairShade);
+          box(6, HAIR_Y0 - 1, 9, HAIR_Y0 + 1, p.hair);
+          box(6, HAIR_Y0 - 1, 7, HAIR_Y0 - 1, lighten(p.hair, 0.22));
+          box(6, HAIR_Y0 + 1, 9, HAIR_Y0 + 1, p.hairShade);
         }
         break;
 
       case 'curls':
-        // Bumps around the outline, which is all a curl is at this size.
-        for (let i = 0; i < 7; i++) {
-          const a = Math.PI + (i / 6) * Math.PI;
-          const cx2 = headCx + Math.round(Math.cos(a) * (headRx + 1));
-          const cy2 = headCy - 1 + Math.round(Math.sin(a) * 9);
-          ell(cx2, cy2, 2, 2, i % 2 ? p.hair : p.hairShade);
-        }
-        sides(3, 3);
+        box(HEAD_L - 1, HAIR_Y0, HEAD_R + 1, HAIR_Y0 + 1, p.hair);
+        for (let x = HEAD_L - 1; x <= HEAD_R + 1; x += 2) set(x, HAIR_Y0 - 1, p.hair);
+        for (let x = HEAD_L; x <= HEAD_R; x += 2) set(x, HAIR_Y0, p.hairShade);
+        sides(FACE_Y0 + 4);
         break;
 
       default:
@@ -494,51 +491,42 @@ export class CharSheet {
 
     /* -------------------------------------------------------------- hat */
     if (p.hat) {
-      const hatShade = p.hatShade ?? darken(p.hat, 0.22);
+      const hatShade = p.hatShade ?? darken(p.hat, 0.24);
       const shape: HatStyle = p.hatStyle ?? 'cap';
+      const brow = FACE_Y0 + 1;
 
       if (shape === 'band' || shape === 'bandana') {
-        // Worn on the hair rather than over it, so the style still reads.
-        const y = shape === 'band' ? headCy - 6 : headCy - 4;
-        box(headCx - headRx - 1, y, headCx + headRx + 1, y + 1, p.hat);
-        box(headCx - headRx - 1, y + 1, headCx + headRx + 1, y + 1, hatShade);
+        const y = shape === 'band' ? FACE_Y0 : FACE_Y0 + 1;
+        box(HEAD_L - 1, y, HEAD_R + 1, y, p.hat);
         if (shape === 'bandana') {
-          box(headCx - headRx - 1, y + 2, headCx - headRx + 1, y + 3, p.hat);
-          if (dir !== 'up') px(headCx - headRx - 2, y + 3, hatShade);
-          // Knot tails trailing off the side.
-          box(headCx - headRx - 3, y + 1, headCx - headRx - 2, y + 2, hatShade);
+          box(HEAD_L - 1, y - 1, HEAD_R + 1, y - 1, p.hat);
+          box(HEAD_L - 1, y, HEAD_R + 1, y, hatShade);
+          box(HEAD_L - 2, y, HEAD_L - 1, y + 1, hatShade);
         }
       } else {
-        // Dome.
-        const domeTop = shape === 'beanie' ? headCy - 13 : headCy - 12;
-        for (let y = domeTop; y <= headCy - 2; y++) {
-          const t = (y - domeTop) / (headCy - 2 - domeTop);
-          const half = Math.round((headRx + 1) * Math.sqrt(Math.max(0, 1 - (1 - t) ** 2)));
-          box(headCx - half, y, headCx + half, y, y < headCy - 7 ? p.hat : hatShade);
-        }
-        ell(headCx - 3, headCy - 9, 4, 2, lighten(p.hat, 0.2));
+        const top = shape === 'beanie' ? HAIR_Y0 - 1 : HAIR_Y0;
+        box(HEAD_L, top + 1, HEAD_R, brow - 1, p.hat);
+        box(HEAD_L + 1, top, HEAD_R - 1, top, p.hat);
+        box(HEAD_L - 1, top + 2, HEAD_L - 1, brow - 1, p.hat);
+        box(HEAD_R + 1, top + 2, HEAD_R + 1, brow - 1, hatShade);
+        box(HEAD_L + 1, top + 1, HEAD_L + 2, top + 1, lighten(p.hat, 0.22));
 
         if (shape === 'beanie') {
-          // Folded brim and a bobble.
-          box(headCx - headRx - 1, headCy - 5, headCx + headRx + 1, headCy - 2, lighten(p.hat, 0.12));
-          box(headCx - headRx - 1, headCy - 3, headCx + headRx + 1, headCy - 2, hatShade);
-          ell(headCx, domeTop - 1, 2, 2, lighten(p.hat, 0.24));
+          box(HEAD_L - 1, brow - 1, HEAD_R + 1, brow - 1, lighten(p.hat, 0.12));
+          box(HEAD_L - 1, brow, HEAD_R + 1, brow, hatShade);
+          box(7, top - 1, 8, top - 1, lighten(p.hat, 0.3));
         } else if (shape === 'sunhat') {
-          // A brim all the way round, wider than the shoulders.
-          box(headCx - headRx - 5, headCy - 3, headCx + headRx + 5, headCy - 2, p.hat);
-          box(headCx - headRx - 5, headCy - 2, headCx + headRx + 5, headCy - 1, hatShade);
-          box(headCx - headRx - 2, headCy - 4, headCx + headRx + 2, headCy - 4, darken(hatShade, 0.2));
+          box(HEAD_L - 3, brow - 1, HEAD_R + 3, brow - 1, p.hat);
+          box(HEAD_L - 3, brow, HEAD_R + 3, brow, hatShade);
         } else {
-          // Cap: a band, and a brim that points where the character is facing.
-          box(headCx - headRx - 1, headCy - 3, headCx + headRx + 1, headCy - 2, darken(hatShade, 0.25));
+          box(HEAD_L - 1, brow - 1, HEAD_R + 1, brow - 1, darken(hatShade, 0.2));
           if (dir === 'down') {
-            box(headCx - headRx - 2, headCy - 2, headCx + headRx + 2, headCy - 1, hatShade);
-            box(headCx - headRx - 1, headCy - 1, headCx + headRx + 1, headCy, darken(hatShade, 0.3));
+            box(HEAD_L - 1, brow, HEAD_R + 1, brow, hatShade);
           } else if (profile) {
-            box(headCx - headRx - 5, headCy - 3, headCx - headRx + 2, headCy - 2, hatShade);
-            box(headCx - headRx - 5, headCy - 2, headCx - headRx + 2, headCy - 1, darken(hatShade, 0.3));
+            box(HEAD_L - 3, brow - 1, HEAD_L + 2, brow - 1, hatShade);
+            box(HEAD_L - 3, brow, HEAD_L + 2, brow, darken(hatShade, 0.25));
           } else {
-            box(headCx - headRx - 1, headCy - 3, headCx + headRx + 1, headCy - 2, hatShade);
+            box(HEAD_L, brow, HEAD_R, brow, hatShade);
           }
         }
       }
@@ -546,88 +534,69 @@ export class CharSheet {
 
     /* ------------------------------------------------------------- face */
     if (dir === 'down') {
-      // Whites first, then pupils, so the eyes read at a glance.
-      box(headCx - 6, headCy + 1, headCx - 3, headCy + 3, '#f4f0e8');
-      box(headCx + 3, headCy + 1, headCx + 6, headCy + 3, '#f4f0e8');
-      box(headCx - 5, headCy + 1, headCx - 4, headCy + 3, eye);
-      box(headCx + 4, headCy + 1, headCx + 5, headCy + 3, eye);
-      // Pupil and a catchlight, which is what makes the eye look wet.
-      box(headCx - 5, headCy + 2, headCx - 4, headCy + 3, darken(eye, 0.55));
-      box(headCx + 4, headCy + 2, headCx + 5, headCy + 3, darken(eye, 0.55));
-      px(headCx - 5, headCy + 1, lighten(eye, 0.4));
-      px(headCx + 4, headCy + 1, lighten(eye, 0.4));
-      // Brows.
-      box(headCx - 6, headCy - 1, headCx - 3, headCy - 1, p.hairShade);
-      box(headCx + 3, headCy - 1, headCx + 6, headCy - 1, p.hairShade);
-      // Mouth and a hint of a nose.
-      px(headCx, headCy + 4, p.skinShade);
-      box(headCx - 2, headCy + 6, headCx + 1, headCy + 6, darken(p.skinShade, 0.3));
+      const eyeY = FACE_Y0 + 2;
+      box(5, eyeY - 1, 6, eyeY - 1, p.hairShade);      // brows
+      box(9, eyeY - 1, 10, eyeY - 1, p.hairShade);
+      box(5, eyeY, 6, eyeY + 1, '#f8f4ec');            // whites
+      box(9, eyeY, 10, eyeY + 1, '#f8f4ec');
+      box(5, eyeY + 1, 6, eyeY + 1, eye);              // iris
+      box(9, eyeY + 1, 10, eyeY + 1, eye);
+      set(6, eyeY + 1, darken(eye, 0.5));              // pupil
+      set(9, eyeY + 1, darken(eye, 0.5));
+      set(7, eyeY + 2, p.skinShade);                   // nose
+      box(7, FACE_Y1 - 1, 8, FACE_Y1 - 1, darken(p.skinShade, 0.25));
     } else if (profile) {
-      box(headCx - 3, headCy + 1, headCx - 1, headCy + 3, '#f4f0e8');
-      box(headCx - 3, headCy + 1, headCx - 2, headCy + 3, eye);
-      box(headCx - 3, headCy + 2, headCx - 2, headCy + 3, darken(eye, 0.55));
-      px(headCx - 3, headCy + 1, lighten(eye, 0.4));
-      box(headCx - 4, headCy - 1, headCx - 1, headCy - 1, p.hairShade);
-      // Nose bump on the leading edge.
-      px(headCx - headRx + 1, headCy + 2, p.skin);
-      px(headCx - headRx, headCy + 3, p.skinShade);
-      box(headCx - 4, headCy + 6, headCx - 2, headCy + 6, darken(p.skinShade, 0.3));
+      const eyeY = FACE_Y0 + 2;
+      box(5, eyeY - 1, 6, eyeY - 1, p.hairShade);
+      box(5, eyeY, 6, eyeY + 1, '#f8f4ec');
+      box(5, eyeY + 1, 6, eyeY + 1, eye);
+      set(5, eyeY + 1, darken(eye, 0.5));
+      set(HEAD_L - 1, eyeY + 1, p.skin);               // nose on the leading edge
+      set(HEAD_L - 1, eyeY + 2, p.skinShade);
+      box(5, FACE_Y1 - 1, 6, FACE_Y1 - 1, darken(p.skinShade, 0.25));
     }
 
     /* ---------------------------------------------------------- glasses */
     if (p.glasses && dir !== 'up') {
-      const frame = p.glasses === 'shades' ? '#22242c' : p.glasses === 'round' ? '#c8a44a' : '#3a3f4c';
+      const frameC = p.glasses === 'shades' ? '#22242c'
+        : p.glasses === 'round' ? '#c8a44a' : '#3a3f4c';
       const lens = p.glasses === 'shades' ? '#161820' : null;
+      const eyeY = FACE_Y0 + 2;
       if (dir === 'down') {
-        for (const side of [-1, 1]) {
-          const x0 = side < 0 ? headCx - 7 : headCx + 2;
-          if (lens) box(x0 + 1, headCy + 1, x0 + 4, headCy + 3, lens);
-          box(x0, headCy, x0 + 5, headCy, frame);
-          box(x0, headCy + 4, x0 + 5, headCy + 4, frame);
-          box(x0, headCy, x0, headCy + 4, frame);
-          box(x0 + 5, headCy, x0 + 5, headCy + 4, frame);
+        for (const x0 of [4, 9]) {
+          if (lens) box(x0 + 1, eyeY, x0 + 2, eyeY + 1, lens);
+          box(x0, eyeY - 1, x0 + 3, eyeY - 1, frameC);
+          box(x0, eyeY + 2, x0 + 3, eyeY + 2, frameC);
+          box(x0, eyeY, x0, eyeY + 1, frameC);
+          box(x0 + 3, eyeY, x0 + 3, eyeY + 1, frameC);
         }
-        // Bridge, and arms running back towards the ears.
-        box(headCx - 2, headCy + 1, headCx + 1, headCy + 1, frame);
-        px(headCx - 8, headCy + 1, frame);
-        px(headCx + 7, headCy + 1, frame);
-        if (p.glasses !== 'shades') px(headCx - 6, headCy + 1, lighten(frame, 0.5));
+        box(7, eyeY, 8, eyeY, frameC);
       } else {
-        const x0 = headCx - 5;
-        if (lens) box(x0 + 1, headCy + 1, x0 + 3, headCy + 3, lens);
-        box(x0, headCy, x0 + 4, headCy, frame);
-        box(x0, headCy + 4, x0 + 4, headCy + 4, frame);
-        box(x0, headCy, x0, headCy + 4, frame);
-        box(x0 + 4, headCy, x0 + 4, headCy + 4, frame);
-        box(x0 + 5, headCy + 1, headCx + 4, headCy + 1, frame);
+        if (lens) box(5, eyeY, 6, eyeY + 1, lens);
+        box(4, eyeY - 1, 7, eyeY - 1, frameC);
+        box(4, eyeY + 2, 7, eyeY + 2, frameC);
+        box(4, eyeY, 4, eyeY + 1, frameC);
+        box(7, eyeY, 9, eyeY, frameC);
       }
     }
 
     /* ------------------------------------------------------------- pack */
-    // Drawn last, over the jacket: a bag goes on top of the coat. From behind
-    // it is the whole bag; from any other angle it is the strap across the
-    // chest, which is what says it is there at all.
+    // Drawn last, over the jacket: a bag goes on top of the coat.
     if (p.pack) {
-      const strap = darken(p.pack, 0.15);
+      const strap = darken(p.pack, 0.2);
       if (dir === 'up') {
-        box(CX - 5, shoulderY + 2, CX + 5, HIP - 5, p.pack);
-        box(CX - 5, shoulderY + 2, CX - 3, HIP - 5, lighten(p.pack, 0.18));
-        box(CX + 3, shoulderY + 2, CX + 5, HIP - 5, darken(p.pack, 0.2));
-        box(CX - 5, HIP - 6, CX + 5, HIP - 5, darken(p.pack, 0.3));
-        px(CX, shoulderY + 4, darken(p.pack, 0.35));
-        // Straps over each shoulder, so it is being carried rather than floating.
-        box(CX - 6, shoulderY, CX - 5, shoulderY + 3, strap);
-        box(CX + 5, shoulderY, CX + 6, shoulderY + 3, strap);
+        box(bodyL + 1, TORSO_Y + 1, bodyR - 1, HIP_Y - 1, p.pack);
+        box(bodyL + 1, TORSO_Y + 1, bodyL + 1, HIP_Y - 1, lighten(p.pack, 0.18));
+        box(bodyR - 1, TORSO_Y + 1, bodyR - 1, HIP_Y - 1, darken(p.pack, 0.18));
+        box(bodyL + 1, HIP_Y - 1, bodyR - 1, HIP_Y - 1, darken(p.pack, 0.3));
+        box(bodyL, TORSO_Y, bodyL, TORSO_Y + 1, strap);
+        box(bodyR, TORSO_Y, bodyR, TORSO_Y + 1, strap);
       } else if (dir === 'down') {
-        for (let i = 0; i < 9; i++) {
-          box(CX - 6 + i, shoulderY + 1 + i, CX - 5 + i, shoulderY + 2 + i, strap);
-        }
+        for (let i = 0; i < 4; i++) set(bodyL + 1 + i, TORSO_Y + 1 + i, strap);
       } else {
-        // In profile the bag itself clears the back of the torso.
-        box(CX + torsoHalf - 1, shoulderY + 2, CX + torsoHalf + 2, HIP - 4, p.pack);
-        box(CX + torsoHalf + 1, shoulderY + 2, CX + torsoHalf + 2, HIP - 4, darken(p.pack, 0.2));
-        box(CX - torsoHalf, shoulderY + 1, CX - torsoHalf + 1, HIP - 3, strap);
-        box(CX - torsoHalf, shoulderY + 1, CX + torsoHalf - 3, shoulderY + 2, strap);
+        box(bodyR - 1, TORSO_Y + 1, bodyR + 1, HIP_Y - 1, p.pack);
+        box(bodyR + 1, TORSO_Y + 1, bodyR + 1, HIP_Y - 1, darken(p.pack, 0.2));
+        box(bodyL, TORSO_Y + 1, bodyL, HIP_Y - 2, strap);
       }
     }
   }

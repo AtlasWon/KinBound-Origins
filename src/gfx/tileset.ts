@@ -342,10 +342,24 @@ export class Tileset {
   private build(rng: Rng): void {
     const paint = (cell: number, id: number, variant: number) => {
       const { x: ox, y: oy } = this.src(cell);
+      /**
+       * One pixel of the *authoring* grid, which is half the buffer's.
+       *
+       * The reference hardware drew a 16x16 tile at one pixel per unit. We
+       * render at twice that density, and drawing tiles at full buffer
+       * resolution is exactly what made the world look smooth and modern
+       * rather than like the era it is quoting: fine noise where there should
+       * be blocks, hairlines where there should be edges.
+       *
+       * Snapping every write to a 2x2 block puts the art back on the GBA's
+       * grid while keeping the crisp integer scaling. Nothing else about the
+       * tile code has to change -- last write still wins, so outlines drawn
+       * after fills still land on top.
+       */
       const px: Px = (x, y, color) => {
         if (x < 0 || y < 0 || x >= TILE_PX || y >= TILE_PX) return;
         this.ctx.fillStyle = color;
-        this.ctx.fillRect(ox + x, oy + y, 1, 1);
+        this.ctx.fillRect(ox + x - (x % DETAIL), oy + y - (y % DETAIL), DETAIL, DETAIL);
       };
       const fill = (color: string) => {
         this.ctx.fillStyle = color;
