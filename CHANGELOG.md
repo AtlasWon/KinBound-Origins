@@ -8,6 +8,54 @@ Add a new `## vX.Y.Z` heading above the others before running `npm run ship`.
 
 ---
 
+## v0.4.0
+
+### The world
+- **Towns are towns now.** Buildings sit along the roads instead of marooned in
+  fields, and no two look alike -- slate, hipped and terracotta roofs over
+  timber, brick and plaster walls, with shuttered windows, flower boxes and
+  porch awnings. Marrow Hollow finally has the six houses its signpost has
+  always claimed, plus a well, a fenced pond, flower beds and lamp posts.
+- **The laboratory is a laboratory.** Wide, low, flat-decked, with a roof vent,
+  full-height glazing and a double glass door -- and inside, machine banks with
+  lit panels, a console, specimen tanks, workbenches and a cable run.
+- **Every room was rebuilt.** Nineteen interiors, no two houses laid out the
+  same, one of them still half unpacked because the writing says that family
+  moved in three months ago. Waystation keepers and shop clerks stand in a gap
+  in the counter, so you face the person you are talking to.
+
+### The creatures
+- Real modelling: bands with visible steps, core shadows, occlusion where a
+  limb meets a body, and a separate ramp per material so a pale belly stays
+  pale in shadow.
+- Anatomy — feet with toes and claws, muzzles, jaw lines, limb joints, tail
+  segments, fin and wing struts.
+- Type character: flame kin carry tongues with hot cores, tide kin have fins
+  and gills, verdant leaf blades, stone facets, iron rivets.
+- Several species were being quietly beheaded by the old sprite bounds. They
+  fit now.
+
+### Battles
+- The turn reads in order: the move is named and held, the attacker winds up
+  and strikes, the hit lands, and only then does the bar drain -- eased, and
+  with the number counting down in step with it.
+- **Moves are performances.** Every element has a wind-up, a travel and an
+  arrival of its own: a flamethrower is a stream of fireballs with smoke coming
+  off them, lightning re-forks every frame, frost assembles in the air and
+  shatters, the ground splits toward you and throws rubble.
+- Sprites breathe between turns and flinch when hit.
+
+### Elsewhere
+- The **opening cinematic** was re-cut: six shots with three layers of parallax
+  each, camera moves, a storm at sea, and a title card at the end. Its music is
+  twice as long and has surf under it.
+- **Nobody stands still.** Every character in the world breathes, on their own
+  phase, and keeps breathing while you talk to them.
+- **Dialogue sounds like speech**: the blips are three times louder, layered,
+  pitched per speaker, and inflected from letter to letter.
+
+---
+
 ## v0.3.1
 
 ### Changed
