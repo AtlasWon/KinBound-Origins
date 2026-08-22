@@ -64,13 +64,19 @@ jobs:
           }
           Write-Output "Releasing v$pkg"
 
-      # Published directly rather than as a draft: pushing a version tag is
-      # already the deliberate act, and a second confirmation step is the thing
-      # people forget.
+      # Goes through the same script used to release by hand, so there is one
+      # code path and one source of truth for the repository -- launcher/
+      # config.json, which is also the file the launcher itself reads. --ci
+      # publishes outright instead of leaving a draft.
+      #
+      # Invoking electron-builder directly here was a mistake worth recording:
+      # a lone `-c.publish.releaseType=release` *replaces* the publish block
+      # rather than merging into it, leaving a config with no provider that
+      # electron-builder rejects before it builds anything.
       - name: Build and publish
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx electron-builder --win --publish always -c.publish.releaseType=release
+        run: node tools/release.mjs --ci
 
       - name: Summary
         shell: pwsh

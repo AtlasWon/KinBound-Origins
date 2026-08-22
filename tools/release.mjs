@@ -21,6 +21,15 @@ import { fileURLToPath } from 'node:url';
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const dryRun = process.argv.includes('--dry-run');
 
+/**
+ * In CI the release is published outright rather than left as a draft.
+ *
+ * Pushing a version tag is already the deliberate act; a second confirmation
+ * step is the one people forget. Run by hand, it still produces a draft, so
+ * a local build cannot accidentally ship to everyone.
+ */
+const ci = process.argv.includes('--ci');
+
 const die = (msg) => { console.error(`\nrelease: ${msg}\n`); process.exit(1); };
 
 const pkg = JSON.parse(readFileSync(resolve(ROOT, 'package.json'), 'utf8'));
@@ -42,12 +51,17 @@ if (!dryRun && !process.env.GH_TOKEN) {
 console.log(`\nKinBound release`);
 console.log(`  version    v${pkg.version}`);
 console.log(`  repository ${owner}/${repo}`);
-console.log(`  mode       ${dryRun ? 'dry run (no publish)' : 'publish'}\n`);
+console.log(`  mode       ${dryRun ? 'dry run (no publish)'
+  : ci ? 'publish, live' : 'publish, as a draft'}\n`);
 
 // Compile first: the packaged app ships build/js, not src.
 const compile = spawnSync('npx', ['tsc'], { cwd: ROOT, stdio: 'inherit', shell: true });
 if (compile.status !== 0) die('TypeScript build failed; nothing was published.');
 
+// Every field of the publish block has to be supplied together. Passing a
+// single `-c.publish.x=y` *replaces* the whole block rather than merging into
+// it, so setting only releaseType leaves a config with no provider and
+// electron-builder refuses it before building anything.
 const args = [
   'electron-builder',
   '--win',
@@ -55,6 +69,7 @@ const args = [
   '-c.publish.provider=github',
   `-c.publish.owner=${owner}`,
   `-c.publish.repo=${repo}`,
+  `-c.publish.releaseType=${ci ? 'release' : 'draft'}`,
 ];
 
 const build = spawnSync('npx', args, { cwd: ROOT, stdio: 'inherit', shell: true });
@@ -63,6 +78,9 @@ if (build.status !== 0) die('electron-builder failed.');
 console.log('\nDone.');
 if (dryRun) {
   console.log(`  Installer written to dist/KinBound-Setup-${pkg.version}.exe`);
+} else if (ci) {
+  console.log(`  Published v${pkg.version} on ${owner}/${repo}.`);
+  console.log('  Every installed launcher will offer it on its next start.');
 } else {
   console.log(`  Published as a draft release on ${owner}/${repo}.`);
   console.log('  Open the repo\'s Releases page and press Publish release.');
