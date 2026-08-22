@@ -11,7 +11,7 @@
     "compile": "tsc",
     "watch": "tsc --watch",
     "build": "node tools/build.js",
-    "test": "tsc && node --test \"tests/**/*.test.js\"",
+    "test": "tsc && node --test",
     "validate": "node tools/validate-data.js",
     "icon": "node tools/make-icon.mjs",
     "launcher": "npm run compile && electron .",
