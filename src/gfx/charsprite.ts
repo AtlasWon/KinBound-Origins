@@ -35,6 +35,7 @@ export type CharDir = (typeof DIRS)[number];
 export type HairStyle = 'short' | 'swept' | 'spiky' | 'bob' | 'long' | 'ponytail' | 'bun' | 'curls';
 export type HatStyle = 'cap' | 'beanie' | 'bandana' | 'sunhat' | 'band';
 export type JacketStyle = 'open' | 'hoodie' | 'vest';
+export type GlassesStyle = 'round' | 'square' | 'shades';
 
 export interface CharPalette {
   skin: string;
@@ -64,6 +65,8 @@ export interface CharPalette {
   jacketStyle?: JacketStyle;
   /** Shoulder width and waist. */
   build?: 'broad' | 'slim';
+  /** Eyewear, drawn over the face. */
+  glasses?: GlassesStyle;
 }
 
 export const DEFAULT_PALETTES: Record<string, CharPalette> = {
@@ -288,13 +291,6 @@ export class CharSheet {
       box(CX - 1, HIP - 4, CX + 1, HIP - 3, '#d8b05a');
     } else if (dir === 'up') {
       box(CX - torsoHalf, HIP - 4, CX + torsoHalf, HIP - 3, darken(p.legsShade, 0.15));
-      if (p.pack) {
-        box(CX - 5, shoulderY + 2, CX + 5, HIP - 5, p.pack);
-        box(CX - 5, shoulderY + 2, CX - 3, HIP - 5, lighten(p.pack, 0.18));
-        box(CX + 3, shoulderY + 2, CX + 5, HIP - 5, darken(p.pack, 0.2));
-        box(CX - 5, HIP - 6, CX + 5, HIP - 5, darken(p.pack, 0.3));
-        px(CX, shoulderY + 4, darken(p.pack, 0.35));
-      }
     } else {
       // Profile: a shoulder highlight facing forward.
       box(CX - torsoHalf, shoulderY, CX - torsoHalf + 1, shoulderY + 4, lighten(p.top, 0.24));
@@ -577,6 +573,63 @@ export class CharSheet {
       px(headCx - headRx, headCy + 3, p.skinShade);
       box(headCx - 4, headCy + 6, headCx - 2, headCy + 6, darken(p.skinShade, 0.3));
     }
+
+    /* ---------------------------------------------------------- glasses */
+    if (p.glasses && dir !== 'up') {
+      const frame = p.glasses === 'shades' ? '#22242c' : p.glasses === 'round' ? '#c8a44a' : '#3a3f4c';
+      const lens = p.glasses === 'shades' ? '#161820' : null;
+      if (dir === 'down') {
+        for (const side of [-1, 1]) {
+          const x0 = side < 0 ? headCx - 7 : headCx + 2;
+          if (lens) box(x0 + 1, headCy + 1, x0 + 4, headCy + 3, lens);
+          box(x0, headCy, x0 + 5, headCy, frame);
+          box(x0, headCy + 4, x0 + 5, headCy + 4, frame);
+          box(x0, headCy, x0, headCy + 4, frame);
+          box(x0 + 5, headCy, x0 + 5, headCy + 4, frame);
+        }
+        // Bridge, and arms running back towards the ears.
+        box(headCx - 2, headCy + 1, headCx + 1, headCy + 1, frame);
+        px(headCx - 8, headCy + 1, frame);
+        px(headCx + 7, headCy + 1, frame);
+        if (p.glasses !== 'shades') px(headCx - 6, headCy + 1, lighten(frame, 0.5));
+      } else {
+        const x0 = headCx - 5;
+        if (lens) box(x0 + 1, headCy + 1, x0 + 3, headCy + 3, lens);
+        box(x0, headCy, x0 + 4, headCy, frame);
+        box(x0, headCy + 4, x0 + 4, headCy + 4, frame);
+        box(x0, headCy, x0, headCy + 4, frame);
+        box(x0 + 4, headCy, x0 + 4, headCy + 4, frame);
+        box(x0 + 5, headCy + 1, headCx + 4, headCy + 1, frame);
+      }
+    }
+
+    /* ------------------------------------------------------------- pack */
+    // Drawn last, over the jacket: a bag goes on top of the coat. From behind
+    // it is the whole bag; from any other angle it is the strap across the
+    // chest, which is what says it is there at all.
+    if (p.pack) {
+      const strap = darken(p.pack, 0.15);
+      if (dir === 'up') {
+        box(CX - 5, shoulderY + 2, CX + 5, HIP - 5, p.pack);
+        box(CX - 5, shoulderY + 2, CX - 3, HIP - 5, lighten(p.pack, 0.18));
+        box(CX + 3, shoulderY + 2, CX + 5, HIP - 5, darken(p.pack, 0.2));
+        box(CX - 5, HIP - 6, CX + 5, HIP - 5, darken(p.pack, 0.3));
+        px(CX, shoulderY + 4, darken(p.pack, 0.35));
+        // Straps over each shoulder, so it is being carried rather than floating.
+        box(CX - 6, shoulderY, CX - 5, shoulderY + 3, strap);
+        box(CX + 5, shoulderY, CX + 6, shoulderY + 3, strap);
+      } else if (dir === 'down') {
+        for (let i = 0; i < 9; i++) {
+          box(CX - 6 + i, shoulderY + 1 + i, CX - 5 + i, shoulderY + 2 + i, strap);
+        }
+      } else {
+        // In profile the bag itself clears the back of the torso.
+        box(CX + torsoHalf - 1, shoulderY + 2, CX + torsoHalf + 2, HIP - 4, p.pack);
+        box(CX + torsoHalf + 1, shoulderY + 2, CX + torsoHalf + 2, HIP - 4, darken(p.pack, 0.2));
+        box(CX - torsoHalf, shoulderY + 1, CX - torsoHalf + 1, HIP - 3, strap);
+        box(CX - torsoHalf, shoulderY + 1, CX + torsoHalf - 3, shoulderY + 2, strap);
+      }
+    }
   }
 }
 
@@ -707,6 +760,23 @@ export const JACKET_STYLES: { name: string; style: JacketStyle | null }[] = [
   { name: 'Vest', style: 'vest' },
 ];
 
+export const GLASSES_STYLES: { name: string; style: GlassesStyle | null }[] = [
+  { name: 'None', style: null },
+  { name: 'Round', style: 'round' },
+  { name: 'Square', style: 'square' },
+  { name: 'Shades', style: 'shades' },
+];
+
+/** The pack is worn on the back and shows as a strap from the front. */
+export const PACK_COLOURS: Swatch[] = [
+  { name: 'None', c: '#000000' },
+  { name: 'Leather', c: '#6a5a3a' },
+  { name: 'Canvas', c: '#8a7a58' },
+  { name: 'Rust', c: '#8a4a30' },
+  { name: 'Fern', c: '#3f6a4c' },
+  { name: 'Slate', c: '#4a4f60' },
+];
+
 export const BUILDS: { name: string; build: 'broad' | 'slim' }[] = [
   { name: 'Boy', build: 'broad' },
   { name: 'Girl', build: 'slim' },
@@ -728,6 +798,8 @@ export interface CharAppearance {
   shirt: number;
   trousers: number;
   shoes: number;
+  glasses: number;
+  pack: number;
 }
 
 export const DEFAULT_APPEARANCE: CharAppearance = {
@@ -743,6 +815,8 @@ export const DEFAULT_APPEARANCE: CharAppearance = {
   shirt: 0,
   trousers: 0,
   shoes: 0,
+  glasses: 0,
+  pack: 1,
 };
 
 /** Clamped lookup: a save written against an older table never crashes. */
@@ -772,6 +846,12 @@ export function appearancePalette(raw: Partial<CharAppearance> | undefined): Cha
     legs: legs.c, legsShade: legs.shade ?? darken(legs.c, 0.28),
     shoes: pick(SHOE_COLOURS, a.shoes).c,
     outline: '#1a1a22',
+    ...(pick(GLASSES_STYLES, a.glasses).style
+      ? { glasses: pick(GLASSES_STYLES, a.glasses).style! }
+      : {}),
+    ...(a.pack % PACK_COLOURS.length !== 0
+      ? { pack: pick(PACK_COLOURS, a.pack).c }
+      : {}),
     eye: pick(EYE_COLOURS, a.eyes).c,
     hairStyle: pick(HAIR_STYLES, a.hairStyle).style,
     build: pick(BUILDS, a.build).build,
@@ -802,6 +882,7 @@ export function getAppearanceSheet(raw: Partial<CharAppearance> | undefined): Ch
   const key = 'a:' + [
     a.build, a.skin, a.hairStyle, a.hairColour, a.eyes,
     a.hat, a.hatColour, a.jacket, a.jacketColour, a.shirt, a.trousers, a.shoes,
+    a.glasses, a.pack,
   ].join(',');
   const cached = sheetCache.get(key);
   if (cached) return cached;

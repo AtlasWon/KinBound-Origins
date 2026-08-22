@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -79,4 +79,33 @@ test('the tracks the maps ask for all exist', () => {
   const needed = ['town_hollow', 'town_indoor', 'station', 'route_west',
     'battle_wild', 'battle_trainer', 'victory', 'title_theme'];
   for (const id of needed) assert.ok(ids.has(id), `missing track "${id}"`);
+});
+
+test('every track a scene asks for actually exists', () => {
+  // A typo here is silent: playMusic on an unknown id simply plays nothing, and
+  // the first person to notice is a player wondering why the intro is quiet.
+  const ids = new Set(TRACKS.map((t) => t.id));
+  const dir = resolve(ROOT, 'src');
+  const asked = new Set();
+
+  const walk = (path) => {
+    for (const entry of readdirSync(path, { withFileTypes: true })) {
+      const full = resolve(path, entry.name);
+      if (entry.isDirectory()) { walk(full); continue; }
+      if (!entry.name.endsWith('.ts')) continue;
+      const text = readFileSync(full, 'utf8');
+      // Scanned by hand rather than by regex: the call is a fixed string and
+      // this cannot be got wrong by an escape.
+      for (const piece of text.split("playMusic('").slice(1)) {
+        const id = piece.slice(0, piece.indexOf("'"));
+        if (id) asked.add(id);
+      }
+    }
+  };
+  walk(dir);
+
+  assert.ok(asked.size > 0, 'found no playMusic calls at all, which cannot be right');
+  for (const id of asked) {
+    assert.ok(ids.has(id), `a scene plays "${id}", which is not in tracks.json`);
+  }
 });

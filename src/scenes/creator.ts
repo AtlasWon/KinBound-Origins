@@ -22,6 +22,7 @@ import type { GameState } from '../systems/state.js';
 import {
   BUILDS, SKIN_TONES, HAIR_STYLES, HAIR_COLOURS, EYE_COLOURS,
   HAT_STYLES, JACKET_STYLES, CLOTH_COLOURS, TROUSER_COLOURS, SHOE_COLOURS,
+  GLASSES_STYLES, PACK_COLOURS,
   getAppearanceSheet, CHAR_W, CHAR_H, DIRS,
   type CharAppearance, type CharDir,
 } from '../gfx/charsprite.js';
@@ -95,6 +96,8 @@ export class CreatorScene implements Scene {
       { label: 'Shirt', key: 'shirt', list: CLOTH_COLOURS },
       { label: 'Trousers', key: 'trousers', list: TROUSER_COLOURS },
       { label: 'Shoes', key: 'shoes', list: SHOE_COLOURS },
+      { label: 'Glasses', key: 'glasses', list: GLASSES_STYLES },
+      { label: 'Pack', key: 'pack', list: PACK_COLOURS },
       { label: 'Name', action: 'name' },
       { label: 'Begin', action: 'begin' },
     );

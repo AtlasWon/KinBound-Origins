@@ -24,13 +24,22 @@ Add a new `## vX.Y.Z` heading above the others before running `npm run ship`.
 - New key art: the Hollow Sea at dusk, with the Bastion light and the Warden.
 
 ### Game
-- A **cinematic opening** now plays the first time you start a new journey: the
-  Hollow Sea at dawn, and the kin that live around it.
-- **Character creation** — body, skin, hair style and colour, eyes, hat, jacket,
-  shirt and trousers, with a live preview of the walk cycle.
-- Your character now appears as you built them everywhere in the world and in
-  every cutscene.
-- NPCs address you by the name you chose.
+- A **cinematic opening** plays the first time you start a new journey: dawn
+  over the Hollow Sea, the herds crossing the plains, the deep with something
+  very large moving through it, and one house on the north shore with a light
+  on. New music written for it, and skippable from the first frame.
+- **Character creation.** Body, skin tone, eight hair styles in twelve colours,
+  eye colour, six kinds of headwear, jackets and hoodies, shirt, trousers,
+  shoes, glasses and a pack — all previewed on a character who walks and turns
+  while you choose.
+- Your name goes in the same screen, and **NPCs use it** from your mother's
+  first line onwards.
+- Your character appears as you built them everywhere: the world, the cutscenes,
+  all four directions.
+
+### Fixed
+- The side-facing character sprite had its eye and nose drawn on the back of its
+  head. It now faces the way it is walking.
 
 ---
 
