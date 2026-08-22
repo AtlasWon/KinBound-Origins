@@ -79,9 +79,17 @@ function render(state) {
   } else if (s === 'checking') {
     ui.channel.textContent = 'Checking...';
     ui.channel.className = 'value';
-  } else if (s === 'up-to-date' || s === 'idle') {
+  } else if (s === 'up-to-date') {
     ui.channel.textContent = 'Up to date';
     ui.channel.className = 'value good';
+  } else if (s === 'idle') {
+    // Deliberately *not* "Up to date". The startup check is silent and falls
+    // back to idle when it cannot reach GitHub, so claiming to be current here
+    // would show a confident green tick to somebody who is offline, or whose
+    // repository has no releases yet -- the two cases where they most need to
+    // know the check did not happen.
+    ui.channel.textContent = 'Not checked';
+    ui.channel.className = 'value';
   } else if (s === 'error') {
     ui.channel.textContent = 'Check failed';
     ui.channel.className = 'value warn';

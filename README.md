@@ -198,6 +198,25 @@ tw.probe()                  // scene, map, position, dialogue page
 
 `F1` toggles the debug overlay: FPS, tick cost, scene stack, collision boxes and encounter zones.
 
+### Silence
+
+**The harness is muted by default.** `?dev=1` starts with audio switched off for
+the whole session — the `AudioContext` is never created, so nothing is scheduled
+and no hardware is touched. Automated runs open the game repeatedly, and having
+that start music over whatever you are already listening to is hostile.
+
+| URL / flag | Sound |
+|---|---|
+| `?dev=1` | off |
+| `?dev=1&sound=1` | on |
+| `?mute=1` | off, harness or not |
+| `npm run launcher` | on |
+| `npm run launcher:quiet` | off |
+| `npm run smoke` | off, and the renderer is muted too |
+
+`npm run smoke` reports `audioOff` in its probe and prints a warning if a run
+was not silent, so this cannot regress quietly.
+
 ### Tests
 
 `npm test` runs the suite headlessly (109 tests). It covers:

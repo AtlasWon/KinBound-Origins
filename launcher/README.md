@@ -24,7 +24,21 @@ launcher/
 | `npm run release` | Build **and** publish the release to GitHub |
 | `npm run release -- --dry-run` | Full release build, published nowhere |
 | `npm run icon` | Regenerate `launcher/icon.png` |
-| `KINBOUND_SMOKE=1 npx electron .` | Render every screen, capture, quit |
+| `npm run launcher:quiet` | Open the launcher with the game muted |
+| `npm run smoke` | Render every screen, capture, quit — silent |
+
+### Silence
+
+`--mute` (or `KINBOUND_MUTE=1`) and `--smoke` both run the game with **no
+sound at all**. Two independent mechanisms, because getting this wrong plays
+music over whatever the person at the keyboard is listening to:
+
+- the page is loaded with `?mute=1`, so the game never creates an `AudioContext`;
+- the renderer is muted at the Chromium level with `setAudioMuted`, so neither
+  a bug nor a stray `Audio` element can get through.
+
+The smoke probe reports `audioOff` and prints a warning if a run was not
+silent.
 
 ---
 
