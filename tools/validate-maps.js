@@ -8,7 +8,7 @@ const MAPDIR = join(ROOT, 'data', 'maps');
 
 // Kept in step with TERRAIN in src/world/terrain.ts by hand; a character that
 // is legal there and missing here fails the map rather than the tileset.
-const LEGEND = new Set([...' .,*"-=~WsTtoO#wR[]^D|_!CcLfrIKSpBXx1234567890GghmbekAEVPJNQU']);
+const LEGEND = new Set([...' .,*"-=~WsTtoO#wR[]^D|_!CcLfrIKSpBXx1234567890GghmbekAEVPJNQUF']);
 
 let problems = 0;
 const ids = new Set();

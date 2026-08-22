@@ -8,6 +8,17 @@ Add a new `## vX.Y.Z` heading above the others before running `npm run ship`.
 
 ---
 
+## v0.3.1
+
+### Changed
+- Waystations and provisioners have **hard tiled floors** now, where houses have
+  boards. You can tell which kind of room you are in before you have read a
+  word of it.
+- The waystation keeper introduces herself, asks before she takes your kin, and
+  uses your name.
+
+---
+
 ## v0.3.0
 
 ### The world looks like the era it is quoting

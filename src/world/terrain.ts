@@ -98,6 +98,7 @@ export const TERRAIN: Record<string, TerrainDef> = {
   'N': { ground: T.SINK, collision: 1, tag: 'floor' },
   'Q': { ground: T.STOVE, collision: 1, tag: 'floor' },
   'U': { ground: T.WINDOW_IN, collision: 1, tag: 'floor' },
+  'F': { ground: T.CIVIC_FLOOR, collision: 0, tag: 'floor', step: 'stone' },
 };
 
 export function terrainFor(ch: string): TerrainDef {

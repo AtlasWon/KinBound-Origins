@@ -92,6 +92,7 @@ export enum T {
   SINK,
   STOVE,
   WINDOW_IN,
+  CIVIC_FLOOR,
   COUNT,
 }
 
@@ -452,6 +453,7 @@ export class Tileset {
       case T.SINK: this.sink(px, fill); break;
       case T.STOVE: this.stove(px, fill); break;
       case T.WINDOW_IN: this.interiorWindow(px, fill, rng); break;
+      case T.CIVIC_FLOOR: this.civicFloor(px, fill); break;
       default: fill('#ff00ff'); break; // loud, so a missing tile is obvious
     }
   }
@@ -1649,6 +1651,33 @@ export class Tileset {
     for (let y = 1; y <= 9; y++) {
       P(2, y, '#b8607a'); P(3, y === 1 ? y : y, y === 1 ? '#b8607a' : PAL.trimPale);
       P(13, y, '#96485f');
+    }
+  }
+
+  /**
+   * Waystation floor: pale tiles, laid square.
+   *
+   * Every public building in the reference art has a hard, light floor and
+   * every house has boards. It is the fastest way to tell a player which kind
+   * of room they have walked into, before they have read a word.
+   */
+  private civicFloor(px: Px, fill: (c: string) => void): void {
+    fill(PAL.plasterPale);
+    const P = this.unit(px);
+    for (let y = 0; y < TILE_SIZE; y++) {
+      for (let x = 0; x < TILE_SIZE; x++) {
+        const half = (x < 8) === (y < 8);
+        P(x, y, half ? PAL.plasterPale : '#eef1f6');
+      }
+    }
+    // Grout, and a highlight along the top of each tile.
+    for (let i = 0; i < TILE_SIZE; i++) {
+      P(i, 0, '#cfd3dc');
+      P(0, i, '#cfd3dc');
+      P(i, 8, '#cfd3dc');
+      P(8, i, '#cfd3dc');
+      P(i, 1, '#fbfcfe');
+      P(i, 9, '#fbfcfe');
     }
   }
 

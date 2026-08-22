@@ -7,14 +7,14 @@
   "indoor": true,
   "rows": [
     "IIIIIIIIIIIIII",
-    "IffffffffffffI",
-    "IfKKKKKKfffffI",
-    "IffffffffffffI",
-    "IffffffffffffI",
-    "IfrrffffffrrfI",
-    "IfrrffffffrrfI",
-    "IffffffffffffI",
-    "IfffffDffffffI",
+    "IFFFFFFFFFFFFI",
+    "IFKKKKKKFFFFFI",
+    "IFFFFFFFFFFFFI",
+    "IFFFFFFFFFFFFI",
+    "IFrrFFFFFFrrFI",
+    "IFrrFFFFFFrrFI",
+    "IFFFFFFFFFFFFI",
+    "IFFFFFDFFFFFFI",
     "IIIIIIIIIIIIII"
   ],
   "warps": [
