@@ -19,7 +19,8 @@
     "release": "node tools/release.mjs",
     "shortcut": "node tools/make-shortcut.mjs",
     "launcher:quiet": "npm run compile && electron . --mute",
-    "smoke": "npm run compile && electron . --smoke"
+    "smoke": "npm run compile && electron . --smoke",
+    "check-updates": "node tools/check-updates.mjs"
   },
   "devDependencies": {
     "electron": "^33.4.11",
