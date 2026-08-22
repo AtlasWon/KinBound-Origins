@@ -5,13 +5,13 @@
   "battleBackdrop": "indoor",
   "indoor": true,
   "rows": [
-    "IIIIIIIIIIII",
-    "IffffffffffI",
-    "IfKKffffrrfI",
-    "IfffffffrrfI",
-    "IffffffffffI",
-    "IffffffffffI",
-    "IfffffDffffI",
+    "IIUIIIIIIUII",
+    "IkkkkfffNQJI",
+    "IfffffffKKKI",
+    "IkffffffffPI",
+    "IkfffAAff/fI",
+    "IfrrfEEffrfI",
+    "IPffffDffVfI",
     "IIIIIIIIIIII"
   ],
   "warps": [
@@ -38,5 +38,36 @@
       "script": "km_house_a"
     }
   ],
-  "objects": []
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 1,
+      "text": [
+        "A whole wall of books, and not one of them new.",
+        "Mountain routes, mostly. Passes, weather, where",
+        "the snow sits late and where it does not sit at all."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 2,
+      "text": [
+        "The counter. A pot of something long-simmered,",
+        "and enough bowls out for guests who have not",
+        "arrived yet but always do."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 4,
+      "text": [
+        "A shelf of walking staves and worn boots by size.",
+        "Anyone who comes down off the pass cold is",
+        "kitted out here before they are asked their name."
+      ]
+    }
+  ]
 }

@@ -99,9 +99,11 @@ clearDialogue();
 out.push('after-intro:' + top().name);
 
 // Down the stairs and across to mother, who now knows the player's name.
-d.walk('right', 8);
-d.walk('down', 2);
-await d.loadWait(900);
+// Routed rather than walked in a straight line: the bedroom has furniture in
+// it now, and a hard-coded walk drives into the bookcase.
+stepTo(10, 3);
+d.hold('KeyS', 14);
+await d.loadWait(1100);
 out.push('map:' + d.probe().map + ' at ' + d.probe().pos);
 await shoot('open-14-downstairs', 20);
 

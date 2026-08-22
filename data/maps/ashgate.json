@@ -9,31 +9,31 @@
     "x": 22,
     "y": 23
   },
-  "_legend": "Waystation west, Provisioner east, two houses south, north gate not yet open.",
+  "_legend": "Gate piers north. Waystation west of the crossroads, Provisioner east, four houses and the fenced pond south.",
   "rows": [
-    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
     "TTTTTTTTTTTTTT--TTTTTTTTTTTTTT",
-    "TT.tt.........--.........tt.TT",
-    "TT.tt.........--.........tt.TT",
-    "TT.144443.....--....699998..TT",
-    "TT.122523.....--....677078..TT",
-    "TT.GGhgGG!....--....GGmgGG..TT",
-    "TT.-----......--.....----...TT",
-    "TT............--............TT",
-    "TT.-------------------------TT",
+    "TTTTTTTTTTT<%>--<%>TTTTTTTTTTT",
+    "TTTTTTTTTTTGGG--GGGTTTTTTTTTTT",
+    "TT.tt......,.!--..,.....tt..TT",
+    "TT.144443....,--,...699998..TT",
+    "TT.122523....,--,...677078..TT",
+    "TT.GGhgGG!a...--..a!GGmgGG..TT",
+    "TT.------..,..--..,.------..TT",
+    "TT.Y..........--.........Y..TT",
+    "TT--------------------------TT",
     "TT...........o--o...........TT",
-    "TT..~~~~......--.......tt...TT",
-    "TT..~~~~......--.......tt...TT",
-    "TT..~~~~......--............TT",
-    "TT.[^^].___...--...___.[^^].TT",
-    "TT.#wD#.___...--...___.#wD#.TT",
-    "TT............--............TT",
-    "TT..**........--........**..TT",
-    "TT............--............TT",
-    "TT.....tt.....--.....tt.....TT",
-    "TT............--............TT",
-    "TT.....!......--......!.....TT",
-    "TT............--............TT",
+    "TT..[^j^].,...--.....<%%>...TT",
+    "TT..#www#.....--.....MddM...TT",
+    "TT..a---......--.....a--a...TT",
+    "TT.<%%%>......--.......(&&&)TT",
+    "TT.HZiZH......--.......MdidMTT",
+    "TT.a-----.....--.......a---aTT",
+    "TT_______.....--............TT",
+    "TT|~~~~~|!....--.....tt.....TT",
+    "TT|~~~~~|.,...--............TT",
+    "TT|~~~~~|.....--............TT",
+    "TT_______.....--............TT",
+    "TT........!...--......!.....TT",
     "TTTTTTTTTTTTTT--TTTTTTTTTTTTTT"
   ],
   "warps": [
@@ -149,9 +149,9 @@
     {
       "id": "ashgate_elder",
       "sprite": "elder",
-      "x": 9,
-      "y": 11,
-      "facing": "right",
+      "x": 10,
+      "y": 17,
+      "facing": "left",
       "movement": {
         "kind": "lookAround"
       },
@@ -160,8 +160,8 @@
     {
       "id": "ashgate_fisher",
       "sprite": "fisher",
-      "x": 8,
-      "y": 12,
+      "x": 9,
+      "y": 19,
       "facing": "left",
       "movement": {
         "kind": "static"
@@ -197,8 +197,8 @@
   "objects": [
     {
       "kind": "sign",
-      "x": 7,
-      "y": 21,
+      "x": 10,
+      "y": 22,
       "text": [
         "ASHGATE",
         "Waystation west. Provisioner east.",
@@ -208,7 +208,7 @@
     {
       "kind": "sign",
       "x": 22,
-      "y": 21,
+      "y": 22,
       "text": [
         "Route 1 south to Marrow Hollow.",
         "Somebody has scratched under it: AND NOWHERE ELSE, LATELY."
@@ -225,15 +225,15 @@
     {
       "kind": "sign",
       "x": 19,
-      "y": 5,
+      "y": 6,
       "text": [
         "PROVISIONER - if we have it, you can have it."
       ]
     },
     {
       "kind": "sign",
-      "x": 8,
-      "y": 13,
+      "x": 9,
+      "y": 18,
       "text": [
         "POND - no swimming, no fishing, no exceptions.",
         "All three rules are ignored daily."
@@ -241,8 +241,8 @@
     },
     {
       "kind": "item",
-      "x": 4,
-      "y": 2,
+      "x": 2,
+      "y": 4,
       "item": "strong_potion",
       "quantity": 1,
       "flag": "item_ag_potion"
@@ -262,6 +262,15 @@
       "item": "tonic_berry",
       "quantity": 2,
       "flag": "item_ag_berry"
+    },
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 3,
+      "text": [
+        "THE NORTH GATE",
+        "Closed by order of the Stillwater Concord. Survey in progress."
+      ]
     }
   ]
 }

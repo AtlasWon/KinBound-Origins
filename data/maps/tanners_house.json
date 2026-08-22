@@ -5,13 +5,13 @@
   "battleBackdrop": "indoor",
   "indoor": true,
   "rows": [
-    "IIIIIIIIIIII",
-    "IffffffffffI",
-    "IfKKffffrrfI",
-    "IfffffffrrfI",
-    "IffffffffffI",
-    "IffffffffffI",
-    "IfffffDffffI",
+    "IIIIUIIIIUII",
+    "IfNQJffffkkI",
+    "IfKKKfffffPI",
+    "If/ffffAAffI",
+    "IfrrfffEEffI",
+    "IfVffffffkfI",
+    "IPffffDffffI",
     "IIIIIIIIIIII"
   ],
   "warps": [
@@ -38,5 +38,36 @@
       "script": "tr_house"
     }
   ],
-  "objects": []
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 2,
+      "text": [
+        "The kitchen bench. Everything on it is scrubbed",
+        "raw, because of what the rest of the house smells of.",
+        "The tannery is only two doors down."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 1,
+      "text": [
+        "A shelf of pattern books and offcuts.",
+        "Somebody here is teaching themselves to make",
+        "boots, and is on their fourth left foot."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 5,
+      "text": [
+        "A crate of hides waiting to go back to the yard.",
+        "A note on top, in a child's hand: NOT FURNITURE.",
+        "Underneath, in an adult's hand: IT IS NOW."
+      ]
+    }
+  ]
 }

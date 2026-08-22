@@ -6,16 +6,16 @@
   "battleBackdrop": "indoor",
   "indoor": true,
   "rows": [
-    "IIIIIIIIIIIIIIII",
-    "IffffffffffffffI",
-    "IfKKKKfffffffffI",
-    "IffffffffffffffI",
-    "IffffrrrrrrffffI",
-    "IffffrrrrrrffffI",
-    "IffffrrrrrrffffI",
-    "IffffffffffffffI",
-    "IfKKffffffffKKfI",
-    "IffffffDfffffffI",
+    "IIIIUIIIIIIUIIII",
+    "I++++?@@$$$$$kkI",
+    "I::::::::::::::I",
+    "IFFFFFFFFFFFFFFI",
+    "IkFFFAAAAFFFFFPI",
+    "IkFFFEFFEFFFFFFI",
+    "IFFFFFFFFFFFFFFI",
+    "IFrrrFFFFFFF$$$I",
+    "IF/rrFFFFFFF$FFI",
+    "IFFFFFFFDFFFFFFI",
     "IIIIIIIIIIIIIIII"
   ],
   "warps": [
@@ -44,12 +44,52 @@
   "objects": [
     {
       "kind": "sign",
-      "x": 2,
-      "y": 2,
+      "x": 14,
+      "y": 1,
       "text": [
         "A wall of pinned charts. Arrows sweep",
         "across the Hollow Sea in one long curl.",
         "Someone has written: 'IT IS EARLY.'"
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 1,
+      "text": [
+        "A bank of humming machines. Rows of lamps",
+        "count something you cannot see.",
+        "A strip of tape reads: DO NOT UNPLUG. EVER."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 6,
+      "y": 1,
+      "text": [
+        "A specimen tank, lit from beneath.",
+        "Something small turns over inside and",
+        "looks at you until you look away first."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 7,
+      "text": [
+        "The aide's bench. Flasks, a microscope,",
+        "and four months of water samples in a rack,",
+        "each one labelled with a place further inland."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 5,
+      "y": 4,
+      "text": [
+        "The centre table. A padded case sits open on it,",
+        "shaped for three, and three sets of field notes",
+        "wait beside it in Dr. Vess's cramped hand."
       ]
     }
   ]

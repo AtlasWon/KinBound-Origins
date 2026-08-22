@@ -5,13 +5,13 @@
   "battleBackdrop": "indoor",
   "indoor": true,
   "rows": [
-    "IIIIIIIIIIII",
-    "IffffffffffI",
-    "IfKKffffrrfI",
-    "IfffffffrrfI",
-    "IffffffffffI",
-    "IffffffffffI",
-    "IfffffDffffI",
+    "IIUIIIIIUIII",
+    "INQJffffffkI",
+    "IKKfffffffkI",
+    "IfAAffffffPI",
+    "IfEEffff/ffI",
+    "IfffffffrffI",
+    "IPffffDfVffI",
     "IIIIIIIIIIII"
   ],
   "warps": [
@@ -38,5 +38,34 @@
       "script": "ag_house_a"
     }
   ],
-  "objects": []
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 2,
+      "text": [
+        "A bookcase, alphabetised.",
+        "Every spine is squared to the shelf edge.",
+        "Somebody in this house needs things to line up."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 2,
+      "text": [
+        "The kitchen counter, wiped down and bare.",
+        "One pot on the stove, lid on, still warm."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 6,
+      "text": [
+        "The television, off, with the dust cloth folded on top.",
+        "It is only ever on for the tide report."
+      ]
+    }
+  ]
 }

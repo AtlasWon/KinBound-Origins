@@ -10,29 +10,29 @@
     "y": 30
   },
   "encounterTable": "marrow_hollow",
-  "_legend": "T tree  C cliff face  c cliff top  . grass  , tuft  * flowers  \" tall grass  - path  = stone  ! sign  [ ^ ] R roof  # wall  w window  D door",
+  "_legend": "Terracotta gable + chimney = the player house. Slate + timber = the Ashe house. Vess works out of the flat-roofed laboratory on the east side of the crossroads.",
   "rows": [
-    "TTTTTTTTTTTTTT\"\"TTTTTTTTTTTTTT",
     "TTTTTTTTTTTTTT--TTTTTTTTTTTTTT",
-    "CCCTTTTTTTTTTT--TTTTTTTTTTTTTT",
-    "CCc..........,--,..........TTT",
-    "CCc...*.......--.....*...TTTTT",
-    "CCc.[^^]......--...[^^^^]TTTTT",
-    "CCc.#wD#......--...#wwDw#TTTTT",
-    "CCc...........--.........TTTTT",
-    "CCc..........!--.........TTTTT",
-    "CCc.---------------------TTTTT",
-    "CCc...........--.........TTTTT",
-    "CCc...........--..==.....TTTTT",
-    "CCc...........--..==.....TTTTT",
-    "CCc.[^^]......--.........TTTTT",
-    "CCc.#wD#......--.........TTTTT",
-    "CCc...........--.........TTTTT",
-    "CCc...........--.........TTTTT",
-    "CCc\"\"\"\"\"\"\"....--.........TTTTT",
-    "CCc\"\"\"\"\"\"\"....--....,,...TTTTT",
-    "CCc\"\"\"\"\"\"\"....--.........TTTTT",
-    "CCc...........--.........TTTTT",
+    "TTTTTTTTTTTTT,--,TTTTTTTTTTTTT",
+    "CCTTTTTTTTTTT.--.TTTTTTTTTTTTT",
+    "CCc.,.*..(&&&)--.TTTTTTTTTTTTT",
+    "CCc..,...MdMdM--.TTTTTTTTTTTTT",
+    "CCc[^j^].a,a,a--.TvvyvvvvvvvTT",
+    "CCc#wwD#......--..lnnzquznnlTT",
+    "CCc.a--a..,..!--.!.=======.TTT",
+    "CCc.----------------------.TTT",
+    "CCc------------------------TTT",
+    "CCc<%%>.Y.,.,.--.......,...TTT",
+    "CCcMddM.......--.(&&&).,...TTT",
+    "CCc.aa....===,--.HZZZH.....TTT",
+    "CCc.<%%%>.=O=!--.a---a.[^^]TTT",
+    "CCc.HZiZH.===.--.......MZZMTTT",
+    "CCc.-----.....--...Y...a--aTTT",
+    "CCc------------------------TTT",
+    "CCc\"\"\"\"\"\"\".,..--.....!_____TTT",
+    "CCc\"\"\"\"\"\"\"....--..,...|~~~|TTT",
+    "CCc\"\"\"\"\"\"\".,..--......|~~~|TTT",
+    "CCc...........--......_____TTT",
     "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT"
   ],
   "warps": [
@@ -86,8 +86,8 @@
     {
       "id": "hollow_villager",
       "sprite": "villager_f",
-      "x": 17,
-      "y": 11,
+      "x": 13,
+      "y": 14,
       "facing": "left",
       "movement": {
         "kind": "lookAround"
@@ -136,7 +136,7 @@
     {
       "kind": "sign",
       "x": 13,
-      "y": 8,
+      "y": 7,
       "text": [
         "MARROW HOLLOW",
         "Six houses, one well, and the last",
@@ -145,8 +145,8 @@
     },
     {
       "kind": "sign",
-      "x": 18,
-      "y": 11,
+      "x": 13,
+      "y": 13,
       "text": [
         "The well runs dry every Turning.",
         "It has not run dry in sixty years."
@@ -167,6 +167,24 @@
       "item": "field_vessel",
       "quantity": 2,
       "flag": "item_mh_hidden"
+    },
+    {
+      "kind": "sign",
+      "x": 17,
+      "y": 7,
+      "text": [
+        "VESS FIELD LABORATORY",
+        "Ring the bell. Do not open the tanks. In that order."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 21,
+      "y": 17,
+      "text": [
+        "THE HOLLOW POND",
+        "Fenced after the Turning of ’51. Nobody will say what came out of it."
+      ]
     }
   ]
 }

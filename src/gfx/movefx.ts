@@ -797,8 +797,10 @@ export class MoveFx {
   private flame(from: FxPoint, to: FxPoint, c: string, k: number, anim: string): void {
     const core = '#fff6d2';
     const hot = lighten(c, 0.45);
-    const cool = darken(c, 0.5);
-    const soot = darken(c, 0.8);
+    const cool = c;
+    // Smoke is grey, not a dark version of the flame. Tinting it with the type
+    // colour is what turned the trail into more brown fire.
+    const soot = '#6a5c55';
     // Fire leaves the mouth, not the middle of the sprite.
     const mouth = { x: from.x + (to.x - from.x) * 0.14, y: from.y - 2 };
     const dist = Math.hypot(to.x - mouth.x, to.y - mouth.y) || 1;
@@ -836,8 +838,8 @@ export class MoveFx {
             // Every third frame, not every frame: the stream is already dense
             // and a puff per fireball per frame buries the target sprite.
             trail: {
-              every: 3, kind: 'smoke', size: 2.6 * k, life: 12,
-              c0: soot, c1: darken(c, 0.92), add: false, rise: -0.4,
+              every: 4, kind: 'smoke', size: 2.4 * k, life: 11,
+              c0: soot, c1: '#3f3733', add: false, rise: -0.4,
             },
           };
         });

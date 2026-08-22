@@ -5,14 +5,14 @@
   "battleBackdrop": "indoor",
   "indoor": true,
   "rows": [
-    "IIIIIIIIIIIIII",
-    "IFFFFFFFFFFFFI",
-    "IFKKKKKKFFFFFI",
-    "IFFFFFFFFFFFFI",
-    "IFFFFFFFFFFFFI",
-    "IFrrFFFFFFrrFI",
+    "IIIUIIIIIIUIII",
+    "I+++++kkF?FFkI",
+    "IPKKFKKKFFFFFI",
     "IFFFFFFFFFFFFI",
     "IFFFFFFFFFFFFI",
+    "IF/rr/FF/rr/FI",
+    "IFFrrFFFFrrFFI",
+    "IPFFFFFFFFFFPI",
     "IFFFFFDFFFFFFI",
     "IIIIIIIIIIIIII"
   ],
@@ -62,5 +62,35 @@
       "script": "bw_sailor"
     }
   ],
-  "objects": []
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 1,
+      "text": [
+        "A brass terminal. THE ROOST, stencilled on the side.",
+        "Kin you cannot carry wait here."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 1,
+      "text": [
+        "Tide tables, harbour notices, and three crew lists",
+        "with names crossed off and written in again.",
+        "Nobody is sailing the same water twice this season."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 2,
+      "text": [
+        "Over the counter, the restorative bank, lamps in green.",
+        "Somebody has wedged a folded chart under one leg",
+        "to keep it level on a floor that salt has warped."
+      ]
+    }
+  ]
 }

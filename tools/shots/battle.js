@@ -36,7 +36,10 @@ await shot('bt-02-menu', 6);
 d.game.settings.battleSpeed = 'classic';  // a stored setting must not decide the shot
 d.key('Enter', 10);                       // FIGHT
 await shot('bt-03-moves', 6);
-d.key('Enter', 4);                        // first move
+// Down to the elemental move: Strike is a plain hit and shows none of the
+// per-type effect work.
+d.key('KeyS', 4); d.key('KeyS', 4);
+d.key('Enter', 4);
 // Photograph the turn as it plays, without pressing anything.
 for (let i = 0; i < 26; i++) await shot('bt-04-turn-' + String(i).padStart(2,'0'), 10);
 out.push('phase:' + top().phase);

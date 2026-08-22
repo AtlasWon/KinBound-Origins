@@ -6,13 +6,13 @@
   "battleBackdrop": "indoor",
   "indoor": true,
   "rows": [
-    "IIIIwwIIwwII",
+    "IIUUIIIIUUII",
     "IbfffffffkkI",
-    "IefffffffffI",
-    "IffffffffPfI",
-    "IfKKffffffSI",
-    "IffffffrrffI",
-    "IffffffrrffI",
+    "IefffffffPkI",
+    "IffffffffffI",
+    "IfKKEfffffSI",
+    "IfffffrrffPI",
+    "IffffVrrfffI",
     "IIIIIIIIIIII"
   ],
   "warps": [
@@ -45,6 +45,24 @@
       "text": [
         "Shelves of your father's field journals, carried the whole way here.",
         "Every one of them ends the same way: I will finish this next season."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "Your bed. Made, for once, because you did not sleep in it much.",
+        "You have been awake since the sky went grey."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 5,
+      "y": 6,
+      "text": [
+        "A small television on a crate, and a rug you brought from the old house.",
+        "It is the only corner of this room that still smells like home."
       ]
     }
   ]

@@ -5,13 +5,13 @@
   "battleBackdrop": "indoor",
   "indoor": true,
   "rows": [
-    "IIIIIIIIIIII",
-    "IfNQJffffkSI",
-    "IfKKUffffkfI",
-    "IffrEArrfVfI",
-    "IffrrrrrfffI",
-    "IffffffffPfI",
-    "IfffffDffffI",
+    "IIIUIIIIUIII",
+    "INQJfffffkSI",
+    "IKKffffffkfI",
+    "IfAAfff/fffI",
+    "IfEEfffrfffI",
+    "IffffffVffPI",
+    "IPffffDffffI",
     "IIIIIIIIIIII"
   ],
   "warps": [
@@ -55,6 +55,35 @@
       "text": [
         "Half the crates are still packed.",
         "You are not sure you want to unpack them."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 2,
+      "text": [
+        "The stove is still strapped into its crate.",
+        "Three months, and nobody has said out loud",
+        "that it might not be worth unbolting."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 2,
+      "text": [
+        "A bookcase with two shelves filled and four bare.",
+        "The filled ones are all your father's."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 5,
+      "text": [
+        "The television. Coast weather, on a loop.",
+        "The presenter keeps saying 'unseasonal' like",
+        "it is a word that explains anything."
       ]
     }
   ]

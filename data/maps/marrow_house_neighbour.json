@@ -5,13 +5,13 @@
   "battleBackdrop": "indoor",
   "indoor": true,
   "rows": [
-    "IIIIIIIIIIII",
-    "IffffffffffI",
-    "IfrrffffKKfI",
-    "IfrrfffffffI",
-    "IffffffffffI",
-    "IffffffffffI",
-    "IfffffDffffI",
+    "IIUIIIIUIIII",
+    "IkkffffJQNkI",
+    "IkfffffKKkPI",
+    "IkfffffKf/fI",
+    "IfrrfAAffrfI",
+    "IffffEEffVfI",
+    "IPffffDffffI",
     "IIIIIIIIIIII"
   ],
   "warps": [
@@ -37,5 +37,36 @@
       "script": "mh_ollet_child"
     }
   ],
-  "objects": []
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 3,
+      "text": [
+        "Shelves of ledgers, every spine dated.",
+        "The Ollets have kept books in this house",
+        "since before there was a road to it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 2,
+      "text": [
+        "A kitchen counter worn pale in one spot",
+        "where somebody has stood and chopped",
+        "at the same board for thirty years."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 5,
+      "text": [
+        "The television is on with the sound off.",
+        "A coast survey boat, filmed from the air,",
+        "circling water that is the wrong colour."
+      ]
+    }
+  ]
 }

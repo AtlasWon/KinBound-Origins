@@ -5,13 +5,13 @@
   "battleBackdrop": "indoor",
   "indoor": true,
   "rows": [
-    "IIIIIIIIIIII",
-    "IffffffffffI",
-    "IfKKffffrrfI",
-    "IfffffffrrfI",
-    "IffffffffffI",
-    "IffffffffffI",
-    "IfffffDffffI",
+    "IIIIUIIIUIII",
+    "IbfffffNQJfI",
+    "IefffffKKKfI",
+    "IPfffffffPfI",
+    "IffrrAAffffI",
+    "IffrrEEffkfI",
+    "IfffffDffPfI",
     "IIIIIIIIIIII"
   ],
   "warps": [
@@ -38,5 +38,36 @@
       "script": "bw_house"
     }
   ],
-  "objects": []
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "A bed pushed hard against the wall, in the same",
+        "room as the stove. One room is all this house has,",
+        "and it has held four generations of it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 2,
+      "text": [
+        "The counter. A gutting knife, a whetstone,",
+        "and a line of hooks with nothing hanging on them.",
+        "The nothing is the part that worries them."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 5,
+      "text": [
+        "A shelf of tide tables going back nineteen years.",
+        "The last four months have been written in by hand,",
+        "because the printed ones stopped being right."
+      ]
+    }
+  ]
 }

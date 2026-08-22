@@ -14,22 +14,22 @@
     "TT............--............TT",
     "TT...144443...--...699998...TT",
     "TT...122523...--...677078...TT",
-    "TT...GGhgGG...--...GGmgGG...TT",
+    "TT.a.GGhgGG!..--..!GGmgGG.a.TT",
     "TT...------...--...------...TT",
-    "TT............--............TT",
+    "TT..Y.........--.........Y..TT",
     "TT--------------------------TT",
-    "TT............--............TT",
-    "TT~~~~~~......--.....[^^]...TT",
-    "TT~~~~~~......--.....#wD#...TT",
-    "TT~~~~~~~.....--............TT",
-    "TT~~~~~~~.....--............TT",
-    "TT~~~~~~~~....--....!.......TT",
-    "TT~~~~~~~~....--............TT",
-    "TT~~~~~~~~sssBBBBsss........TT",
-    "TTWWWWWWWWWWWBBBBWWW........TT",
-    "TTWWWWWWWWWWWBBBBWWWssss....TT",
-    "TTWWWWWWWWWWWB[]BWWWWWWWWWWWTT",
-    "TTWWWWWWWWWWWB#DBWWWWWWWWWWWTT",
+    "TT..,.........--............TT",
+    "TT~~~~~~s.....--....(&&&)...TT",
+    "TT~~~~~~s.....--....MddiM...TT",
+    "TT~~~~~~s.....--....a---a...TT",
+    "TT~~~~~~s.....--............TT",
+    "TT~~~~~~s.....--....!..[^^].TT",
+    "TT~~~~~~s....!--.......#ww#.TT",
+    "TTsspsssssspssBBsspsssssspssTT",
+    "TT~~~~~~WWWWWWBBWWWWWWWWWWWWTT",
+    "TT~~~~WWWWWBBBBBBBBWWWWWWWWWTT",
+    "TT~~~WWWWWWB<%%>BBBWWWWWWWWWTT",
+    "TTWWWWWWWWWBGGGgBBBWWWWWWWWWTT",
     "TTWWWWWWWWWWWWWWWWWWWWWWWWWWTT",
     "TTWWWWWWWWWWWWWWWWWWWWWWWWWWTT"
   ],
@@ -115,8 +115,8 @@
     {
       "id": "bw_child",
       "sprite": "kid",
-      "x": 20,
-      "y": 13,
+      "x": 18,
+      "y": 12,
       "facing": "left",
       "movement": {
         "kind": "wander",
@@ -138,8 +138,8 @@
     {
       "id": "bw_surveyor",
       "sprite": "concord",
-      "x": 22,
-      "y": 17,
+      "x": 17,
+      "y": 15,
       "facing": "left",
       "movement": {
         "kind": "static"
@@ -150,7 +150,7 @@
   "objects": [
     {
       "kind": "sign",
-      "x": 19,
+      "x": 20,
       "y": 13,
       "text": [
         "BRACKWATER",
@@ -160,7 +160,7 @@
     {
       "kind": "sign",
       "x": 13,
-      "y": 15,
+      "y": 14,
       "text": [
         "THE PIER",
         "Keeper Mabry Sull. Bring something that does not mind getting wet."
@@ -176,11 +176,30 @@
     },
     {
       "kind": "hiddenItem",
-      "x": 4,
-      "y": 12,
+      "x": 8,
+      "y": 13,
       "item": "dusk_vessel",
       "quantity": 1,
       "flag": "item_bw_hidden"
+    },
+    {
+      "kind": "sign",
+      "x": 11,
+      "y": 4,
+      "text": [
+        "WAYSTATION",
+        "Beds are dry. That is the whole boast."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18,
+      "y": 4,
+      "text": [
+        "PROVISIONER",
+        "Oilskin, line, hooks, and one shelf of things for Kin."
+      ]
     }
-  ]
+  ],
+  "_legend": "Waystation and Provisioner on the landward street. Tidal flats west, deep water east, and the plank pier running south to the Bastion."
 }

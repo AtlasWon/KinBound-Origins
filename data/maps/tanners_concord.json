@@ -5,14 +5,14 @@
   "battleBackdrop": "indoor",
   "indoor": true,
   "rows": [
-    "IIIIIIIIIIIIII",
+    "IIIUIIIIIIUIII",
+    "IkkkKKK?KKkkkI",
+    "IKKfKKKKkKfKPI",
     "IffffffffffffI",
-    "IfKKKKfffKKKfI",
-    "IffffffffffffI",
-    "IffffffffffffI",
-    "IfrrrrffrrrrfI",
-    "IffffffffffffI",
-    "IffffffffffffI",
+    "IffffAAAAffffI",
+    "IfrrrEEEErrrfI",
+    "IkffffffffffPI",
+    "Iff/ffff/fffkI",
     "IfffffDffffffI",
     "IIIIIIIIIIIIII"
   ],
@@ -72,6 +72,36 @@
         "A wall of soundings. Depth, bearing, date.",
         "Every reading from the last four months is circled in red.",
         "The circles are not near the coast. They are all under the land."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 6,
+      "y": 4,
+      "text": [
+        "The long table, and a chart of Veldras big enough to need it.",
+        "Pins in it by the hundred, and a length of string run",
+        "from the Hollow Sea inland, further than the string was cut for."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 6,
+      "text": [
+        "Bound survey volumes, one per year, back sixty years.",
+        "The spine of this year's is uncreased.",
+        "Nobody has had time to read what they are writing."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 7,
+      "text": [
+        "A rack of coats on pegs, all Concord grey, all wet.",
+        "Whoever wore them came in off the road tonight",
+        "and has not been given leave to go home."
       ]
     }
   ]

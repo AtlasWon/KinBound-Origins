@@ -1734,20 +1734,27 @@ export class Tileset {
     }
     // Glass shaded in absolute coordinates: both leaves are lit from the same
     // corner, so this must not be mirrored along with the frame.
+    // Warm light from inside, which is what tells a player this pane is the way
+    // in and the identical panes either side of it are not.
     for (let y = 5; y <= 13; y++) {
       for (let x = 0; x < TILE_SIZE; x++) {
-        P(x, y, x + y < 12 ? PAL.glassHi : x + y < 20 ? PAL.glassLight : PAL.glass);
+        P(x, y, x + y < 12 ? '#f6e4bc' : x + y < 20 ? '#e3c48d' : '#c9a469');
       }
     }
     for (let y = 5; y <= 13; y++) {
-      at(0, y, PAL.outline);       // outer jamb
-      at(1, y, PAL.steelLight);
-      at(15, y, PAL.steelMid);     // meeting stile, at the seam between the pair
+      at(0, y, PAL.outline);       // outer jamb, heavy
+      at(1, y, PAL.outline);
+      at(2, y, PAL.steelLight);
+      at(15, y, PAL.outline);      // meeting stile, at the seam between the pair
+      at(14, y, PAL.steelMid);
     }
-    for (let x = 1; x <= 14; x++) at(x, 8, PAL.steelLight);   // push bar
+    for (let x = 2; x <= 15; x++) { at(x, 8, PAL.steelLight); at(x, 9, PAL.steelDeep); }
+    at(4, 8, '#ffffff');
     for (let x = 0; x < TILE_SIZE; x++) {
-      P(x, 14, PAL.steelMid);
-      P(x, 15, PAL.steelDeep);
+      P(x, 14, PAL.steelDeep);
+      // A mat on the threshold. Two rows of something that is not glass, right
+      // where a player's feet arrive.
+      P(x, 15, x % 3 === 0 ? '#6a5f52' : '#877a6a');
     }
   }
 
@@ -2365,26 +2372,47 @@ export class Tileset {
   /* --------------------------------------------- more house and shop kit */
 
   /** Two-seat sofa, seen from the front, to face the television across a rug. */
+  /**
+   * Sofa.
+   *
+   * The shape has to do the work. A padded rectangle with a border round it is
+   * a window -- which is exactly what the first version of this read as in a
+   * room that also had windows in it. So: arms standing proud at the sides, a
+   * back above them, and the seat sitting lower and lighter between the two,
+   * with a hard shadow where the back meets it.
+   */
   private sofa(px: Px, fill: (c: string) => void): void {
     fill(PAL.woodPale);
     const P = this.unit(px);
     for (let y = 0; y < TILE_SIZE; y++) for (let x = 0; x < TILE_SIZE; x++) P(x, y, PAL.woodPale);
 
-    const deep = '#2f5658', mid = '#4f7f80', light = '#6a9d9c', pale = '#8bb9b6';
-    for (let y = 2; y <= 8; y++) for (let x = 1; x <= 14; x++) P(x, y, y <= 3 ? light : mid);
-    for (let x = 1; x <= 14; x++) P(x, 2, pale);
-    for (let y = 5; y <= 13; y++) {
-      P(1, y, pale); P(2, y, light);
-      P(13, y, mid); P(14, y, deep);
+    const deep = '#2a4f51';
+    const mid = '#48787a';
+    const light = '#6fa3a1';
+    const pale = '#93c2bd';
+
+    // Back, set between the arms and darker than everything in front of it.
+    for (let x = 3; x <= 12; x++) P(x, 1, PAL.outline);
+    for (let y = 2; y <= 7; y++) for (let x = 3; x <= 12; x++) P(x, y, mid);
+    for (let x = 3; x <= 12; x++) P(x, 2, light);
+    for (let y = 2; y <= 7; y++) P(8, y, deep);
+
+    // Arms: two lumps standing proud at the sides, a full tone lighter.
+    for (let x = 1; x <= 2; x++) P(x, 3, PAL.outline);
+    for (let x = 13; x <= 14; x++) P(x, 3, PAL.outline);
+    for (let y = 4; y <= 12; y++) {
+      P(0, y, PAL.outline); P(1, y, pale); P(2, y, light);
+      P(13, y, mid); P(14, y, deep); P(15, y, PAL.outline);
     }
-    for (let y = 9; y <= 12; y++) for (let x = 3; x <= 12; x++) P(x, y, y === 9 ? light : mid);
-    // The seam between the two cushions, run right up the back: without it this
-    // is an armchair the width of a sofa.
-    for (let y = 2; y <= 12; y++) P(8, y, deep);
-    for (let x = 3; x <= 12; x++) P(x, 13, deep);
-    for (let y = 1; y <= 14; y++) { P(0, y, PAL.outline); P(15, y, PAL.outline); }
-    for (let x = 0; x < TILE_SIZE; x++) { P(x, 1, PAL.outline); P(x, 14, PAL.outline); }
-    for (let x = 1; x <= 14; x++) P(x, 15, 'rgba(40,30,24,0.25)');
+
+    // Seat, lower and lighter, under a hard shadow from the back.
+    for (let x = 3; x <= 12; x++) P(x, 8, deep);
+    for (let y = 9; y <= 12; y++) for (let x = 3; x <= 12; x++) P(x, y, light);
+    for (let x = 3; x <= 12; x++) P(x, 9, pale);
+    for (let y = 9; y <= 12; y++) P(8, y, mid);
+
+    for (let x = 1; x <= 14; x++) { P(x, 13, deep); P(x, 14, PAL.outline); }
+    for (let x = 2; x <= 13; x++) P(x, 15, 'rgba(40,30,24,0.25)');
   }
 
   /**

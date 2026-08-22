@@ -13,23 +13,23 @@
     "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
     "TT...144443.......699998....TT",
     "TT...122523.......677078....TT",
-    "TT...GGhgGG.......GGmgGG....TT",
-    "TT...------.......------....TT",
-    "TT..........................TT",
-    "TT..........................TT",
-    "------------------------------",
-    "------------------------------",
-    "TT..........................TT",
-    "TT......o............o......TT",
-    "TT..........................TT",
-    "-------------....-------------",
-    "-------------....-------------",
-    "TT..........................TT",
-    "TT...[^^]............[^^]...TT",
-    "TT..!#wD#............#wD#...TT",
-    "TT..........................TT",
-    "TT.....!..............!.....TT",
-    "TT..........................TT",
+    "TT...GGhgGG.!....!GGmgGG....TT",
+    "TT.a.------...--..------.a..TT",
+    "TT.<%%>.......--.....(&&)...TT",
+    "TT.MddM.......--.....HZZH...TT",
+    "TT--------------------------TT",
+    "TT--------------------------TT",
+    "TTY.[^j]......--....[^^]...YTT",
+    "TT..#ww#......--....MddM....TT",
+    "TT..a--a......--....a--a....TT",
+    "--------------------------OOTT",
+    "--------------------------OOTT",
+    "TT..,.........--.........,..TT",
+    "TT...<%%>.....--.....(&&)...TT",
+    "TT.!.GGgG.....--.....MdiM...TT",
+    "TT..a---a.....--....a---a...TT",
+    "TT.....!......--......!.....TT",
+    "TT.....,......--......,.....TT",
     "TTTTTTTTTTTTTT--TTTTTTTTTTTTTT"
   ],
   "warps": [
@@ -134,9 +134,9 @@
     {
       "id": "tr_clerk",
       "sprite": "concord",
-      "x": 8,
-      "y": 15,
-      "facing": "down",
+      "x": 9,
+      "y": 16,
+      "facing": "left",
       "movement": {
         "kind": "static"
       },
@@ -188,22 +188,22 @@
     {
       "kind": "sign",
       "x": 12,
-      "y": 4,
+      "y": 3,
       "text": [
         "WAYSTATION"
       ]
     },
     {
       "kind": "sign",
-      "x": 20,
-      "y": 4,
+      "x": 17,
+      "y": 3,
       "text": [
         "PROVISIONER - largest stock this side of Vantry."
       ]
     },
     {
       "kind": "sign",
-      "x": 4,
+      "x": 3,
       "y": 16,
       "text": [
         "STILLWATER CONCORD - REGIONAL SURVEY OFFICE"
@@ -225,5 +225,6 @@
       "quantity": 1,
       "flag": "item_tr_hidden"
     }
-  ]
+  ],
+  "_legend": "Waystation and Provisioner on the north square, the Concord survey office and a house on the south street, the east road closed by fallen stone."
 }

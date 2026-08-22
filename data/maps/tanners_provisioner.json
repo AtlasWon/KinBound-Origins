@@ -5,15 +5,15 @@
   "battleBackdrop": "indoor",
   "indoor": true,
   "rows": [
-    "IIIIIIIIIIIIII",
+    "IIIUIIIIIIUIII",
+    "I;;;;;;;;;;;;I",
+    "IPKKKFKKKKFFFI",
     "IFFFFFFFFFFFFI",
-    "IFKKKKKKKKKKFI",
+    "IF;;FFFF;;FFFI",
+    "IFFFFFFFF;FFFI",
+    "IF;;FFFFFF;;FI",
     "IFFFFFFFFFFFFI",
-    "IFFFFFFFFFFFFI",
-    "IFFFFFFFFFFFFI",
-    "IFFFFFFFFFFFFI",
-    "IFFFFFFFFFFFFI",
-    "IFFFFFDFFFFFFI",
+    "IPFFFFDFFFFFPI",
     "IIIIIIIIIIIIII"
   ],
   "warps": [
@@ -51,5 +51,46 @@
       "script": "tr_shop_hand"
     }
   ],
-  "objects": []
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 3,
+      "y": 4,
+      "text": [
+        "The biggest stock in Veldras, and the shop knows it.",
+        "Vessels four grades deep, in a rack with the prices",
+        "chalked on and re-chalked twice this month."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 4,
+      "text": [
+        "Tonics and revives, restocked from a crate that is",
+        "still half full on the floor beside the shelf.",
+        "The hand keeps meaning to get to it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 6,
+      "text": [
+        "Leatherwork, because of course it is. Packs, straps,",
+        "harness, and boot soles stacked like plates.",
+        "The smell gets into your clothes and travels with you."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 2,
+      "text": [
+        "The display case runs the whole length of the counter.",
+        "Behind the glass, one shelf is empty and roped off,",
+        "with a card that reads WHEN THE CONCORD SAYS SO."
+      ]
+    }
+  ]
 }

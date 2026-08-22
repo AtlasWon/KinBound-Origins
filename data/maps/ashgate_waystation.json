@@ -6,13 +6,13 @@
   "battleBackdrop": "indoor",
   "indoor": true,
   "rows": [
-    "IIIIIIIIIIIIII",
+    "IIIUIIIIIIUIII",
+    "I+++++kkF?FFFI",
+    "IPKKFKKKFFFFFI",
     "IFFFFFFFFFFFFI",
-    "IFKKKKKKFFFFFI",
     "IFFFFFFFFFFFFI",
-    "IFFFFFFFFFFFFI",
-    "IFrrFFFFFFrrFI",
-    "IFrrFFFFFFrrFI",
+    "IF/rr/FF/rr/FI",
+    "IFFrrFFFFrrFPI",
     "IFFFFFFFFFFFFI",
     "IFFFFFDFFFFFFI",
     "IIIIIIIIIIIIII"
@@ -66,11 +66,31 @@
   "objects": [
     {
       "kind": "sign",
-      "x": 10,
-      "y": 2,
+      "x": 9,
+      "y": 1,
       "text": [
         "A brass terminal. THE ROOST, stencilled on the side.",
         "Kin you cannot carry wait here."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 11,
+      "y": 0,
+      "text": [
+        "The noticeboard. Route 1 washout, cleared. Lost coat.",
+        "A card from the Concord asking anyone who sees kin",
+        "moving inland in numbers to report it. It is not new."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 2,
+      "text": [
+        "Over the counter, the restorative bank, lamps in green.",
+        "Ashgate's is the oldest still running in Veldras",
+        "and the keeper will tell you so, unprompted."
       ]
     }
   ]

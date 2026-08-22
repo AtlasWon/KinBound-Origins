@@ -5,13 +5,13 @@
   "battleBackdrop": "indoor",
   "indoor": true,
   "rows": [
-    "IIIIIIIIIIII",
-    "IffffffffffI",
-    "IfKKffffrrfI",
-    "IfffffffrrfI",
-    "IffffffffffI",
-    "IffffffffffI",
-    "IfffffDffffI",
+    "IIIUIIIUIIII",
+    "IKKKffffJQNI",
+    "IffffffffKKI",
+    "IPfffff/fffI",
+    "IffffffrfffI",
+    "IfAAfffVffkI",
+    "IfEEffDfffPI",
     "IIIIIIIIIIII"
   ],
   "warps": [
@@ -38,5 +38,35 @@
       "script": "km_house_b"
     }
   ],
-  "objects": []
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 1,
+      "text": [
+        "A long workbench under the window. Fleece, a comb,",
+        "and a spindle left mid-draft, as though whoever was",
+        "working here meant to be gone a moment."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 2,
+      "text": [
+        "The kitchen end, squeezed into what is left of the room.",
+        "The loom got the window. The cooking got the corner."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 5,
+      "text": [
+        "Bolts of finished cloth, stacked to the ceiling.",
+        "Grey, grey, grey, and one impossible orange",
+        "that nobody in Kellowmere will buy."
+      ]
+    }
+  ]
 }

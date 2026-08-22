@@ -5,13 +5,13 @@
   "battleBackdrop": "indoor",
   "indoor": true,
   "rows": [
-    "IIIIIIIIIIII",
-    "IffffffffffI",
-    "IfKKffffrrfI",
-    "IfffffffrrfI",
-    "IffffffffffI",
-    "IffffffffffI",
-    "IfffffDffffI",
+    "IIIUIIIUIIII",
+    "IkkkfffJQNfI",
+    "IkfffffKKKfI",
+    "I/fffffffPfI",
+    "IrfffAAffffI",
+    "IVfffEEfrrfI",
+    "IPffffDfffkI",
     "IIIIIIIIIIII"
   ],
   "warps": [
@@ -38,5 +38,35 @@
       "script": "ag_house_b"
     }
   ],
-  "objects": []
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 1,
+      "text": [
+        "Three bookcases for one small room, and still",
+        "there are books stacked on the floor beside them.",
+        "The stacks have their own stacks."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 2,
+      "text": [
+        "The kitchen. Every surface is in use and none of it",
+        "is in use for cooking. Seed trays, jars, cuttings,",
+        "and one very put-upon kettle."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 6,
+      "text": [
+        "A shelf of jars, each with a label and a date.",
+        "PICKLED. PICKLED. PICKLED. DO NOT OPEN."
+      ]
+    }
+  ]
 }

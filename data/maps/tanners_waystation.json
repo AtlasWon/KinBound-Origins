@@ -5,14 +5,14 @@
   "battleBackdrop": "indoor",
   "indoor": true,
   "rows": [
-    "IIIIIIIIIIIIII",
-    "IFFFFFFFFFFFFI",
-    "IFKKKKKKFFFFFI",
-    "IFFFFFFFFFFFFI",
-    "IFFFFFFFFFFFFI",
-    "IFrrFFFFFFrrFI",
+    "IIIUIIIIIIUIII",
+    "I+++++kkF?FFFI",
+    "IPKKFKKKFFFFkI",
     "IFFFFFFFFFFFFI",
     "IFFFFFFFFFFFFI",
+    "IF/rrFFFF/rrFI",
+    "IFFrrFF/FFrrFI",
+    "IPFFFFFFFFFFPI",
     "IFFFFFDFFFFFFI",
     "IIIIIIIIIIIIII"
   ],
@@ -62,5 +62,35 @@
       "script": "tr_rester"
     }
   ],
-  "objects": []
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 1,
+      "text": [
+        "A brass terminal. THE ROOST, stencilled on the side.",
+        "Kin you cannot carry wait here."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 2,
+      "text": [
+        "A rack of Concord bulletins, three deep.",
+        "Half of them are survey requests. The other half",
+        "are the same survey request, reissued and underlined."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 2,
+      "text": [
+        "Over the counter, the restorative bank, lamps in green.",
+        "This one runs day and night. Tanner's Rest is where",
+        "everyone stops before they try the road east."
+      ]
+    }
+  ]
 }

@@ -6,13 +6,13 @@
   "battleBackdrop": "indoor",
   "indoor": true,
   "rows": [
-    "IIIIIIIIIIII",
+    "IIUIIIIIUIII",
+    "I;;;;;;;;;;I",
+    "IPKKKFKKKFPI",
     "IFFFFFFFFFFI",
-    "IFKKKKKKKKFI",
+    "IF;;;FFF;;FI",
     "IFFFFFFFFFFI",
-    "IFFFFFFFFFFI",
-    "IFFFFFFFFFFI",
-    "IFFFFFDFFFFI",
+    "IPFFFFDFF;;I",
     "IIIIIIIIIIII"
   ],
   "warps": [
@@ -39,5 +39,35 @@
       "script": "kellowmere_shop"
     }
   ],
-  "objects": []
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 4,
+      "text": [
+        "Cold-weather stock. Oiled cloth, hand warmers,",
+        "and lamp wicks sold by the yard off a spool.",
+        "Kellowmere buys for the pass, not for the town."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 4,
+      "text": [
+        "Vessels and tonics, one shelf each, and a hand-lettered",
+        "card underneath: TWO PER CUSTOMER UNTIL THE ROAD CLEARS."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 6,
+      "text": [
+        "A shelf of things left behind by people who came down",
+        "off the mountain lighter than they went up.",
+        "The owner will not sell them. He is waiting."
+      ]
+    }
+  ]
 }

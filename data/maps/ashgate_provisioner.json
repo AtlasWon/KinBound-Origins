@@ -6,13 +6,13 @@
   "battleBackdrop": "indoor",
   "indoor": true,
   "rows": [
-    "IIIIIIIIIIII",
+    "IIIUIIIIUIII",
+    "I;;;;;;;;;;I",
+    "IPKKKFKKKFFI",
     "IFFFFFFFFFFI",
-    "IFKKKKKKKKFI",
+    "IF;;FFFF;;FI",
     "IFFFFFFFFFFI",
-    "IFFFFFFFFFFI",
-    "IFFFFFFFFFFI",
-    "IFFFFFDFFFFI",
+    "IPFFFFDFFFPI",
     "IIIIIIIIIIII"
   ],
   "warps": [
@@ -39,5 +39,36 @@
       "script": "ashgate_shop"
     }
   ],
-  "objects": []
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 3,
+      "y": 4,
+      "text": [
+        "Vessels, by the crate. The label says FIELD GRADE,",
+        "which means the seams are stitched twice and the",
+        "price is stitched up along with them."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 4,
+      "text": [
+        "Rope, lamp oil, dried rations, boot wax.",
+        "Everything a person needs to walk north and",
+        "nothing at all for coming back the other way."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 2,
+      "text": [
+        "The display case. Tonics laid out on green cloth,",
+        "each with a little card giving the berry it came from.",
+        "The card for the top shelf just says ASK."
+      ]
+    }
+  ]
 }

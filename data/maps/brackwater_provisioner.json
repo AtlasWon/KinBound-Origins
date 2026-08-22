@@ -5,15 +5,15 @@
   "battleBackdrop": "indoor",
   "indoor": true,
   "rows": [
-    "IIIIIIIIIIIIII",
+    "IIIUIIIIIIUIII",
+    "I;;;;;;;;;;;;I",
+    "IPKKKFKKKKFFFI",
     "IFFFFFFFFFFFFI",
-    "IFKKKKKKKKKKFI",
+    "IF;;FFFF;;FFFI",
     "IFFFFFFFFFFFFI",
+    "IF;;FFFFFF;;FI",
     "IFFFFFFFFFFFFI",
-    "IFFFFFFFFFFFFI",
-    "IFFFFFFFFFFFFI",
-    "IFFFFFFFFFFFFI",
-    "IFFFFFDFFFFFFI",
+    "IPFFFFDFFFFFPI",
     "IIIIIIIIIIIIII"
   ],
   "warps": [
@@ -40,5 +40,46 @@
       "script": "brackwater_shop"
     }
   ],
-  "objects": []
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 3,
+      "y": 4,
+      "text": [
+        "Ship's stores, sold to landsmen at landsman prices.",
+        "Twine, hooks, tar, and a barrel of ship's biscuit",
+        "that has outlasted two owners of this shop."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 4,
+      "text": [
+        "Vessels stacked in a rope cradle so they do not roll.",
+        "The wall behind them is still salt-stained from the",
+        "spring the harbour came up over the sill."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 6,
+      "text": [
+        "Lamp oil, in every size of can.",
+        "Brackwater burns a great deal of lamp oil.",
+        "The fog does not care what hour it is."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 2,
+      "text": [
+        "The display case, glass gone soft and wavy with age.",
+        "Tonics inside, arranged by colour rather than by use,",
+        "which the clerk insists is a system."
+      ]
+    }
+  ]
 }
