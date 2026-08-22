@@ -37,12 +37,19 @@ const SWIMMERS = ['rilltail', 'brookmaw', 'shalefin', 'currentail', 'pinchel', '
 /** Scaled (and optionally flattened) copies of the kin icons, built once. */
 const scaledCache = new Map<string, HTMLCanvasElement>();
 
-function kin(id: string, size: number, tint: string | null = null, turn = 0): HTMLCanvasElement {
-  const key = `${id}:${size}:${tint ?? ''}:${turn}`;
+function kin(
+  id: string, size: number, tint: string | null = null, turn = 0, squash = 0,
+): HTMLCanvasElement {
+  // Squash is quantised: a creature that changes shape by a fraction of a pixel
+  // every frame just shimmers, and every distinct value costs a cached canvas.
+  const step = Math.round(squash * 6);
+  const key = `${id}:${size}:${tint ?? ''}:${turn}:${step}`;
   const hit = scaledCache.get(key);
   if (hit) return hit;
 
   const src = iconSprite(id);
+  const h = Math.max(4, Math.round(size * (1 + step / 24)));
+  const w = Math.max(4, Math.round(size * (1 - step / 48)));
   const cv = document.createElement('canvas');
   cv.width = size;
   cv.height = size;
@@ -55,7 +62,8 @@ function kin(id: string, size: number, tint: string | null = null, turn = 0): HT
     c.rotate(turn);
     c.translate(-size / 2, -size / 2);
   }
-  c.drawImage(src, 0, 0, src.width, src.height, 0, 0, size, size);
+  // Drawn bottom-aligned, so a squashed creature keeps its feet on the ground.
+  c.drawImage(src, 0, 0, src.width, src.height, (size - w) / 2, size - h, w, h);
   c.setTransform(1, 0, 0, 1, 0, 0);
   if (tint) {
     // Flatten to a silhouette: distance reads as shape, not detail.
@@ -137,19 +145,22 @@ function shotSea(r: Renderer, t: number, p: number): void {
   // Three depths of flock: far silhouettes, mid, then one bird close enough to
   // have colour. Depth is the whole trick -- one layer would read as clip art.
   const seeds = series(18, 4242);
+  // Each bird beats its own wings at its own rate; a flock in lockstep reads as
+  // one object with copies of itself stuck to it.
+  const beat = (i: number, rate: number) => Math.sin(t * rate + i * 2.1) * 0.7;
   for (let i = 0; i < 6; i++) {
-    const s = kin(FLYERS[i % FLYERS.length]!, 12, '#22304e');
+    const s = kin(FLYERS[i % FLYERS.length]!, 12, '#22304e', 0, beat(i, 0.34));
     const x = ((t * 0.35 + seeds[i]! * 300) % (SCREEN_W + 40)) - 20;
     const y = 16 + seeds[i + 6]! * 34 + Math.sin(t * 0.05 + i) * 2;
     r.image(s, x, y);
   }
   for (let i = 0; i < 4; i++) {
-    const s = kin(FLYERS[(i + 2) % FLYERS.length]!, 22, '#33456e');
+    const s = kin(FLYERS[(i + 2) % FLYERS.length]!, 22, '#33456e', 0, beat(i, 0.28));
     const x = ((t * 0.7 + seeds[i + 12]! * 320) % (SCREEN_W + 60)) - 30;
     const y = 24 + seeds[i + 3]! * 26 + Math.sin(t * 0.07 + i * 2) * 3;
     r.image(s, x, y);
   }
-  const lead = kin('kestrelle', 44);
+  const lead = kin('kestrelle', 44, null, 0, Math.sin(t * 0.22) * 0.8);
   const lx = ((t * 1.1) % (SCREEN_W + 90)) - 45;
   r.image(lead, lx, 34 + Math.sin(t * 0.06) * 5);
 }
@@ -228,10 +239,16 @@ function shotPlains(r: Renderer, t: number, p: number): void {
       const id = RUNNERS[(lane * 2 + i) % RUNNERS.length]!;
       const speed = 0.55 + lane * 0.35;
       const x = ((t * speed + seeds[lane * 3 + i]! * 340) % (SCREEN_W + 80)) - 40;
-      const gallop = Math.abs(Math.sin(t * 0.24 + i * 1.9 + lane));
+      // A bound: the body rises and stretches on the push, lands and squashes
+      // on the contact. Sliding a static sprite sideways is what made the old
+      // version look like the kin were being dragged across the screen.
+      const phase = t * 0.24 + i * 1.9 + lane;
+      const gallop = Math.abs(Math.sin(phase));
+      const rise = Math.sin(phase) > 0 ? gallop * 4 : 0;
+      const squash = Math.cos(phase) * 0.5 - 0.2;
       r.ellipsePixel((x + half) * DETAIL, feet * DETAIL,
-        half * DETAIL * 0.8, 2 * DETAIL, 'rgba(40,70,40,0.22)');
-      r.image(kin(id, size), x, feet - half * 2 - gallop * 3);
+        half * DETAIL * (0.9 - gallop * 0.25), 2 * DETAIL, 'rgba(40,70,40,0.22)');
+      r.image(kin(id, size, null, 0, squash), x, feet - half * 2 - rise);
       // Dust kicked up on the down-beat, trailing behind.
       if (gallop > 0.75) {
         r.rect(x - 2, feet - 1, 4, 1, 'rgba(220,230,200,0.45)');
@@ -297,7 +314,9 @@ function shotDeep(r: Renderer, t: number, p: number): void {
     const x = dir > 0 ? raw - 35 : SCREEN_W + 35 - raw;
     const y = 22 + seeds[i + 7]! * 92 + Math.sin(t * 0.045 + i * 1.4) * 5;
     const lean = (0.22 + Math.sin(t * 0.05 + i) * 0.06) * dir;
-    r.image(kin(id, size, i < 3 ? '#0b2138' : null, lean), x, y, 0, 0, undefined, undefined, dir < 0);
+    const beat = Math.sin(t * 0.11 + i * 1.7) * 0.45;
+    r.image(kin(id, size, i < 3 ? '#0b2138' : null, lean, beat),
+      x, y, 0, 0, undefined, undefined, dir < 0);
   }
 }
 

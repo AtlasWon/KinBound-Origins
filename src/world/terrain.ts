@@ -90,6 +90,14 @@ export const TERRAIN: Record<string, TerrainDef> = {
   'b': { ground: T.BED_HEAD, collision: 1, tag: 'floor' },
   'e': { ground: T.BED_FOOT, collision: 1, tag: 'floor' },
   'k': { ground: T.BOOKSHELF, collision: 1, tag: 'floor' },
+  'A': { ground: T.TABLE, collision: 1, tag: 'floor' },
+  'E': { ground: T.CHAIR, collision: 1, tag: 'floor' },
+  'V': { ground: T.TELEVISION, collision: 1, tag: 'floor' },
+  'P': { ground: T.PLANT, collision: 1, tag: 'floor' },
+  'J': { ground: T.FRIDGE, collision: 1, tag: 'floor' },
+  'N': { ground: T.SINK, collision: 1, tag: 'floor' },
+  'Q': { ground: T.STOVE, collision: 1, tag: 'floor' },
+  'U': { ground: T.WINDOW_IN, collision: 1, tag: 'floor' },
 };
 
 export function terrainFor(ch: string): TerrainDef {

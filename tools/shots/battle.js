@@ -33,10 +33,11 @@ await shot('bt-01-intro', 60);
 // Skip the send-out chatter until the menu is up.
 for (let i = 0; i < 20 && !(top().phase === 'menu'); i++) d.key('Enter', 12);
 await shot('bt-02-menu', 6);
+d.game.settings.battleSpeed = 'classic';  // a stored setting must not decide the shot
 d.key('Enter', 10);                       // FIGHT
 await shot('bt-03-moves', 6);
 d.key('Enter', 4);                        // first move
 // Photograph the turn as it plays, without pressing anything.
-for (let i = 0; i < 8; i++) await shot('bt-04-turn-' + i, 14);
+for (let i = 0; i < 18; i++) await shot('bt-04-turn-' + String(i).padStart(2,'0'), 5);
 out.push('phase:' + top().phase);
 return { out, ticks: d.game.ticks };

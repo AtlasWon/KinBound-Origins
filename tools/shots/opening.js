@@ -6,15 +6,20 @@ const out = [];
 const shoot = async (name, ticks) => { out.push(name); return d.shoot(name, ticks); };
 const top = () => d.game.scenes.top;
 
-/** Nudge the player onto an exact tile; walk() only gets close. */
+/** Nudge the player onto an exact tile; walk() only gets close, and furniture
+ *  means the direct line is often blocked, so it alternates axes when stuck. */
 const stepTo = (tx, ty) => {
-  for (let i = 0; i < 16; i++) {
+  let stuck = 0;
+  for (let i = 0; i < 40; i++) {
     const [x, y] = d.probe().pos.split(',').map(Number);
     if (x === tx && y === ty) return true;
-    if (x < tx) d.hold('KeyD', 12);
-    else if (x > tx) d.hold('KeyA', 12);
-    else if (y < ty) d.hold('KeyS', 12);
-    else d.hold('KeyW', 12);
+    const dx = tx - x;
+    const dy = ty - y;
+    const goX = (stuck % 2 === 0 && dx !== 0) || dy === 0;
+    d.hold(goX ? (dx > 0 ? 'KeyD' : 'KeyA') : (dy > 0 ? 'KeyS' : 'KeyW'), 12);
+    const [nx, ny] = d.probe().pos.split(',').map(Number);
+    if (nx === x && ny === y) stuck++;
+    else stuck = 0;
   }
   return false;
 };
@@ -100,8 +105,8 @@ await d.loadWait(900);
 out.push('map:' + d.probe().map + ' at ' + d.probe().pos);
 await shoot('open-14-downstairs', 20);
 
-out.push('reached:' + stepTo(5, 3));
-d.key('KeyS', 3);            // mother stands one tile below
+out.push('reached:' + stepTo(5, 5));
+d.key('KeyW', 3);            // mother stands one tile above
 out.push('at:' + d.probe().pos + ' facing ' + d.probe().facing);
 d.key('Enter', 24);
 await shoot('open-15-mother', 10);

@@ -84,6 +84,14 @@ export enum T {
   BED_HEAD,
   BED_FOOT,
   BOOKSHELF,
+  TABLE,
+  CHAIR,
+  TELEVISION,
+  PLANT,
+  FRIDGE,
+  SINK,
+  STOVE,
+  WINDOW_IN,
   COUNT,
 }
 
@@ -436,6 +444,14 @@ export class Tileset {
       case T.BED_HEAD: this.bed(px, fill, true); break;
       case T.BED_FOOT: this.bed(px, fill, false); break;
       case T.BOOKSHELF: this.bookshelf(px, fill); break;
+      case T.TABLE: this.table(px, fill); break;
+      case T.CHAIR: this.chair(px, fill); break;
+      case T.TELEVISION: this.television(px, fill); break;
+      case T.PLANT: this.plant(px, fill); break;
+      case T.FRIDGE: this.fridge(px, fill); break;
+      case T.SINK: this.sink(px, fill); break;
+      case T.STOVE: this.stove(px, fill); break;
+      case T.WINDOW_IN: this.interiorWindow(px, fill, rng); break;
       default: fill('#ff00ff'); break; // loud, so a missing tile is obvious
     }
   }
@@ -1274,9 +1290,12 @@ export class Tileset {
         // A little grain, always along the board rather than across it.
         P(x, y, (x * 5 + board * 7) % 11 === 0 ? PAL.woodPale : base);
       }
-      // Board ends, staggered so the joins do not line up down the room.
-      const joint = (board % 2 === 0 ? 5 : 11);
-      if (y % 4 !== 3) P(joint, y, PAL.woodDark);
+      // A soft highlight along the top of each board, and nothing across it:
+      // vertical joins at this size read as mortar, and a floor made of bricks
+      // is indistinguishable from the wall behind it.
+      if (y % 4 === 0) {
+        for (let x = 0; x < TILE_SIZE; x++) P(x, y, PAL.plasterPale);
+      }
     }
     void rng;
   }
@@ -1296,16 +1315,13 @@ export class Tileset {
         else if ((x + y) % 8 === 4) P(x, y, '#5e2f36');
       }
     }
-    // A stripe pair inset from the edge, which is what makes it read as woven.
-    for (let i = 0; i < TILE_SIZE; i++) {
-      P(i, 1, '#5e2f36');
-      P(i, TILE_SIZE - 2, '#5e2f36');
-      P(1, i, '#5e2f36');
-      P(TILE_SIZE - 2, i, '#5e2f36');
-      P(i, 0, '#a35c64');
-      P(i, TILE_SIZE - 1, '#a35c64');
-      P(0, i, '#a35c64');
-      P(TILE_SIZE - 1, i, '#a35c64');
+    // No border on the tile itself. A mat is several of these side by side, and
+    // a border drawn per tile turns one rug into a grid of doormats. The weave
+    // carries across the seam instead, so the whole thing reads as one piece.
+    for (let i = 0; i < TILE_SIZE; i += 4) {
+      for (let x = 0; x < TILE_SIZE; x++) {
+        if ((x + i) % 8 < 4) P(x, i, '#5e2f36');
+      }
     }
   }
 
@@ -1320,9 +1336,9 @@ export class Tileset {
     const P = this.unit(px);
     for (let y = 0; y < TILE_SIZE; y++) {
       for (let x = 0; x < TILE_SIZE; x++) {
-        if (y >= 11) P(x, y, PAL.woodMid);                       // panelling
-        else if ((x + y * 2) % 8 === 0) P(x, y, PAL.plasterPale); // paper motif
-        else if ((x * 3 + y) % 13 === 0) P(x, y, PAL.plasterDark);
+        if (y >= 11) P(x, y, PAL.woodDark);                        // panelling
+        else if ((x + y * 2) % 8 === 0) P(x, y, PAL.plasterPale);  // paper motif
+        else if ((x * 3 + y) % 13 === 0) P(x, y, PAL.plasterMid);
       }
     }
     for (let x = 0; x < TILE_SIZE; x++) {
@@ -1332,7 +1348,7 @@ export class Tileset {
     }
     // Vertical joints in the panelling.
     for (let x = 3; x < TILE_SIZE; x += 5) {
-      for (let y = 12; y < TILE_SIZE - 1; y++) P(x, y, PAL.woodDark);
+      for (let y = 12; y < TILE_SIZE - 1; y++) P(x, y, PAL.woodDeep);
     }
     void rng;
   }
@@ -1465,6 +1481,177 @@ export class Tileset {
   }
 
   /** A shelf of books: the cheapest way to make a room look lived in. */
+  /* --------------------------------------------------- house furniture */
+
+  /**
+   * Dining table.
+   *
+   * Drawn as a top with a lit edge and two legs under it. Furniture in the
+   * reference art is always *lit from the same corner as everything else*,
+   * which is what stops a room reading as a collection of stickers.
+   */
+  private table(px: Px, fill: (c: string) => void): void {
+    fill(PAL.woodPale);
+    const P = this.unit(px);
+    for (let y = 0; y < TILE_SIZE; y++) {
+      for (let x = 0; x < TILE_SIZE; x++) P(x, y, PAL.woodPale);
+    }
+    // Top.
+    for (let y = 2; y <= 10; y++) {
+      for (let x = 1; x <= 14; x++) {
+        const edge = y === 2 || y === 10 || x === 1 || x === 14;
+        P(x, y, edge ? PAL.woodDark : (x + y) % 7 === 0 ? PAL.plasterPale : PAL.woodLight);
+      }
+    }
+    for (let x = 2; x <= 13; x++) P(x, 3, PAL.plasterPale);
+    for (let x = 1; x <= 14; x++) P(x, 11, PAL.woodDeep);
+    // Legs, and the shadow they cast.
+    for (const lx of [3, 11]) {
+      for (let y = 12; y <= 14; y++) { P(lx, y, PAL.woodDark); P(lx + 1, y, PAL.woodDeep); }
+    }
+    for (let x = 2; x <= 13; x++) P(x, 15, 'rgba(40,30,24,0.25)');
+  }
+
+  /** A chair, seen from the front: back, seat, two legs. */
+  private chair(px: Px, fill: (c: string) => void): void {
+    fill(PAL.woodPale);
+    const P = this.unit(px);
+    for (let y = 0; y < TILE_SIZE; y++) for (let x = 0; x < TILE_SIZE; x++) P(x, y, PAL.woodPale);
+    for (let y = 1; y <= 7; y++) {
+      for (let x = 4; x <= 11; x++) {
+        P(x, y, y === 1 || x === 4 || x === 11 ? PAL.woodDeep : PAL.woodMid);
+      }
+    }
+    for (let x = 5; x <= 10; x++) P(x, 2, PAL.woodLight);
+    for (let y = 8; y <= 10; y++) for (let x = 3; x <= 12; x++) P(x, y, y === 8 ? PAL.woodLight : PAL.woodMid);
+    for (let x = 3; x <= 12; x++) P(x, 11, PAL.woodDeep);
+    for (const lx of [4, 11]) for (let y = 12; y <= 14; y++) P(lx, y, PAL.woodDark);
+    for (let x = 3; x <= 12; x++) P(x, 15, 'rgba(40,30,24,0.22)');
+  }
+
+  /** Television on a stand, with the screen catching the window. */
+  private television(px: Px, fill: (c: string) => void): void {
+    fill(PAL.plasterLight);
+    const P = this.unit(px);
+    for (let y = 0; y < TILE_SIZE; y++) for (let x = 0; x < TILE_SIZE; x++) P(x, y, PAL.plasterLight);
+    // Aerials.
+    P(5, 0, '#4a4a58'); P(4, 1, '#4a4a58');
+    P(10, 0, '#4a4a58'); P(11, 1, '#4a4a58');
+    // Casing.
+    for (let y = 2; y <= 11; y++) {
+      for (let x = 2; x <= 13; x++) {
+        const edge = y === 2 || y === 11 || x === 2 || x === 13;
+        P(x, y, edge ? '#2c2c36' : '#41414f');
+      }
+    }
+    // Screen.
+    for (let y = 4; y <= 9; y++) {
+      for (let x = 4; x <= 10; x++) {
+        P(x, y, x + y < 10 ? '#9fc8dc' : x + y < 14 ? '#6f9cba' : '#4f7695');
+      }
+    }
+    P(12, 5, '#c8c8d4'); P(12, 7, '#c8c8d4');
+    // Stand.
+    for (let x = 5; x <= 10; x++) { P(x, 12, '#3a3a46'); P(x, 13, '#2c2c36'); }
+    for (let x = 3; x <= 12; x++) P(x, 14, '#41414f');
+    for (let x = 3; x <= 12; x++) P(x, 15, 'rgba(40,40,50,0.25)');
+  }
+
+  /** Pot plant. Every house in the reference art has one. */
+  private plant(px: Px, fill: (c: string) => void): void {
+    fill(PAL.plasterLight);
+    const P = this.unit(px);
+    for (let y = 0; y < TILE_SIZE; y++) for (let x = 0; x < TILE_SIZE; x++) P(x, y, PAL.plasterLight);
+    // Fronds.
+    const leaf = (x0: number, y0: number, dx: number) => {
+      for (let i = 0; i < 5; i++) {
+        P(x0 + dx * i, y0 - i, i < 2 ? PAL.leafDark : PAL.leafMid);
+        P(x0 + dx * i, y0 - i + 1, PAL.leafDeep);
+      }
+    };
+    leaf(7, 8, -1); leaf(8, 8, 1);
+    for (let i = 0; i < 6; i++) P(7 + (i % 2), 8 - i, i > 3 ? PAL.leafLight : PAL.leafMid);
+    P(6, 2, PAL.leafHi); P(9, 3, PAL.leafHi);
+    // Pot.
+    for (let y = 9; y <= 14; y++) {
+      const inset = y >= 12 ? 1 : 0;
+      for (let x = 4 + inset; x <= 11 - inset; x++) {
+        P(x, y, y === 9 ? '#a05a3a' : x < 6 ? '#b06a44' : x > 9 ? '#7a4028' : '#96543a');
+      }
+    }
+    for (let x = 5; x <= 10; x++) P(x, 15, 'rgba(40,30,24,0.25)');
+  }
+
+  /** Fridge: a tall pale box with a seam and a handle. */
+  private fridge(px: Px, fill: (c: string) => void): void {
+    fill(PAL.plasterLight);
+    const P = this.unit(px);
+    for (let y = 0; y < TILE_SIZE; y++) {
+      for (let x = 0; x < TILE_SIZE; x++) {
+        const inside = x >= 1 && x <= 14 && y >= 1;
+        if (!inside) { P(x, y, PAL.plasterLight); continue; }
+        const edge = x === 1 || x === 14 || y === 1 || y === 15;
+        P(x, y, edge ? '#8f96a4' : x < 4 ? '#e4e8ee' : x > 11 ? '#c3c9d4' : '#d6dbe4');
+      }
+    }
+    for (let x = 2; x <= 13; x++) P(x, 6, '#8f96a4');
+    for (let y = 3; y <= 5; y++) P(12, y, '#8f96a4');
+    for (let y = 8; y <= 11; y++) P(12, y, '#8f96a4');
+  }
+
+  /** Sink: worktop, basin, tap. */
+  private sink(px: Px, fill: (c: string) => void): void {
+    this.counter(px, fill, new Rng('sink'));
+    const P = this.unit(px);
+    for (let y = 2; y <= 8; y++) {
+      for (let x = 3; x <= 12; x++) {
+        const edge = y === 2 || y === 8 || x === 3 || x === 12;
+        P(x, y, edge ? '#77808c' : y < 5 ? '#aab3bf' : '#8e97a4');
+      }
+    }
+    P(7, 5, '#c8ced8'); P(8, 5, '#c8ced8');
+    // Tap.
+    P(7, 1, '#c8ced8'); P(8, 1, '#aab3bf'); P(8, 2, '#c8ced8');
+  }
+
+  /** Stove: four rings and an oven door. */
+  private stove(px: Px, fill: (c: string) => void): void {
+    this.counter(px, fill, new Rng('stove'));
+    const P = this.unit(px);
+    for (let y = 1; y <= 8; y++) {
+      for (let x = 2; x <= 13; x++) {
+        P(x, y, y === 1 || y === 8 || x === 2 || x === 13 ? '#4a4a56' : '#5e5e6c');
+      }
+    }
+    for (const [cx, cy] of [[5, 3], [10, 3], [5, 6], [10, 6]] as [number, number][]) {
+      P(cx, cy, '#2c2c36'); P(cx + 1, cy, '#2c2c36');
+      P(cx, cy + 1, '#2c2c36'); P(cx + 1, cy + 1, '#2c2c36');
+      P(cx, cy, '#3f3f4c');
+    }
+    for (let x = 4; x <= 11; x++) P(x, 11, '#8f96a4');
+  }
+
+  /** Interior window: a frame, glass, and a curtain either side. */
+  private interiorWindow(px: Px, fill: (c: string) => void, rng: Rng): void {
+    this.interiorWall(px, fill, rng);
+    const P = this.unit(px);
+    for (let y = 2; y <= 9; y++) {
+      for (let x = 3; x <= 12; x++) {
+        const frame = y === 2 || y === 9 || x === 3 || x === 12;
+        if (frame) { P(x, y, PAL.trimPale); continue; }
+        P(x, y, x + y < 10 ? PAL.glassHi : x + y < 15 ? PAL.glassLight : PAL.glass);
+      }
+    }
+    for (let x = 4; x <= 11; x++) P(x, 6, PAL.trimMid);
+    for (let y = 3; y <= 8; y++) P(8, y, PAL.trimMid);
+    for (let x = 2; x <= 13; x++) { P(x, 10, PAL.trimPale); P(x, 11, PAL.plasterDark); }
+    // Curtains.
+    for (let y = 1; y <= 9; y++) {
+      P(2, y, '#b8607a'); P(3, y === 1 ? y : y, y === 1 ? '#b8607a' : PAL.trimPale);
+      P(13, y, '#96485f');
+    }
+  }
+
   private bookshelf(px: Px, fill: (c: string) => void): void {
     fill(PAL.woodDark);
     for (let y = 0; y < TILE_PX; y++) {

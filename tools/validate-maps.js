@@ -6,7 +6,9 @@ import { fileURLToPath } from 'node:url';
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const MAPDIR = join(ROOT, 'data', 'maps');
 
-const LEGEND = new Set([...' .,*"-=~WsTtoO#wR[]^D|_!CcLfrIKSpBXx1234567890Gghmbek']);
+// Kept in step with TERRAIN in src/world/terrain.ts by hand; a character that
+// is legal there and missing here fails the map rather than the tileset.
+const LEGEND = new Set([...' .,*"-=~WsTtoO#wR[]^D|_!CcLfrIKSpBXx1234567890GghmbekAEVPJNQU']);
 
 let problems = 0;
 const ids = new Set();

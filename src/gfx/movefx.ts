@@ -191,38 +191,57 @@ export class MoveFx {
    * *force*, the sparks say *debris*, and the hit-stop says *that hurt*.
    */
   private impactBurst(to: FxPoint, c: string, k: number): void {
-    this.hitStop = Math.round(3 + 2 * k);
-    this.shakeAmp = Math.max(this.shakeAmp, 4.5 * k);
-    this.flash = Math.max(this.flash, 0.30);
-    this.flashColor = lighten(c, 0.75);
+    this.hitStop = Math.round(4 + 3 * k);
+    this.shakeAmp = Math.max(this.shakeAmp, 6 * k);
+    // The field flash carries the move's colour rather than washing white. A
+    // white flash on every hit makes fire, water and thunder land identically,
+    // which is most of why the effects did not read as different moves.
+    this.flash = Math.max(this.flash, 0.42);
+    this.flashColor = lighten(c, 0.35);
 
-    this.ring({ x: to.x, y: to.y, r0: 2, r1: 20 * k, squash: 0.9, frames: 7, color: '#ffffff', width: 3 });
-    this.ring({ x: to.x, y: to.y, r0: 4, r1: 34 * k, squash: 0.8, frames: 13, color: lighten(c, 0.5), width: 2 });
+    this.ring({ x: to.x, y: to.y, r0: 2, r1: 22 * k, squash: 0.9, frames: 8, color: '#ffffff', width: 3 });
+    this.ring({ x: to.x, y: to.y, r0: 4, r1: 38 * k, squash: 0.8, frames: 15, color: lighten(c, 0.4), width: 3 });
+    this.ring({ x: to.x, y: to.y, r0: 6, r1: 52 * k, squash: 0.7, frames: 20, color: c, width: 2 });
 
-    // Radial spokes. Four long, four short, so the burst has a star shape
+    // Radial spokes. Long and short alternating, so the burst has a star shape
     // rather than reading as a uniform circle.
-    for (let i = 0; i < 8; i++) {
-      const a = (i / 8) * Math.PI * 2 + 0.19;
-      const len = (i % 2 === 0 ? 30 : 17) * k;
+    for (let i = 0; i < 12; i++) {
+      const a = (i / 12) * Math.PI * 2 + 0.19;
+      const long = i % 2 === 0;
+      const len = (long ? 36 : 20) * k;
       this.slashes.push({
         x: to.x + Math.cos(a) * len * 0.45,
         y: to.y + Math.sin(a) * len * 0.35,
-        angle: a, len, t: 0, frames: 8,
-        color: i % 2 === 0 ? '#ffffff' : lighten(c, 0.55),
-        width: i % 2 === 0 ? 2.4 : 1.6,
+        angle: a, len, t: 0, frames: long ? 11 : 8,
+        color: long ? '#ffffff' : lighten(c, 0.45),
+        width: long ? 2.6 : 1.6,
       });
     }
 
-    this.emit(Math.round(14 * k), () => {
+    this.emit(Math.round(22 * k), () => {
       const a = rand(0, Math.PI * 2);
-      const sp = rand(2.2, 6.4) * k;
+      const sp = rand(2.4, 7.6) * k;
       return {
         x: to.x, y: to.y,
-        vx: Math.cos(a) * sp, vy: Math.sin(a) * sp * 0.7 - 0.8,
-        ay: 0.18, drag: 0.9,
-        life: Math.round(rand(9, 19)), max: 19,
-        size: rand(1, 2.4), kind: 'star',
+        vx: Math.cos(a) * sp, vy: Math.sin(a) * sp * 0.7 - 1.1,
+        ay: 0.2, drag: 0.9,
+        life: Math.round(rand(11, 26)), max: 26,
+        size: rand(1, 3), kind: 'star',
         c0: '#ffffff', c1: c,
+      };
+    });
+    // A second, slower shower in the move's own colour, so the burst has a
+    // colour to it once the white core has gone.
+    this.emit(Math.round(10 * k), () => {
+      const a = rand(0, Math.PI * 2);
+      const sp = rand(1.0, 3.4) * k;
+      return {
+        x: to.x, y: to.y,
+        vx: Math.cos(a) * sp, vy: Math.sin(a) * sp * 0.6 - 0.4,
+        ay: 0.12, drag: 0.93,
+        life: Math.round(rand(16, 32)), max: 32,
+        size: rand(1, 2), kind: 'wisp',
+        c0: lighten(c, 0.4), c1: c,
       };
     });
   }
