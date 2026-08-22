@@ -670,13 +670,13 @@ export const SKIN_TONES: Swatch[] = [
 
 export const HAIR_COLOURS: Swatch[] = [
   { name: 'Black', c: '#26222c', shade: '#141119' },
-  { name: 'Espresso', c: '#3d2a1c', shade: '#241710' },
-  { name: 'Chestnut', c: '#5a3a24', shade: '#3d2614' },
+  { name: 'Cocoa', c: '#3d2a1c', shade: '#241710' },
+  { name: 'Brown', c: '#5a3a24', shade: '#3d2614' },
   { name: 'Auburn', c: '#7a3a26', shade: '#542517' },
   { name: 'Ginger', c: '#c06030', shade: '#8c401e' },
   { name: 'Honey', c: '#c8a04a', shade: '#9a7830' },
   { name: 'Blond', c: '#e8cc84', shade: '#b89a58' },
-  { name: 'Platinum', c: '#e6e2d6', shade: '#b4b0a4' },
+  { name: 'Silver', c: '#e6e2d6', shade: '#b4b0a4' },
   { name: 'Ash', c: '#8e8e9c', shade: '#65656f' },
   { name: 'Sea', c: '#3f8a90', shade: '#2a6066' },
   { name: 'Plum', c: '#7a4a86', shade: '#54305e' },
@@ -710,7 +710,7 @@ export const CLOTH_COLOURS: Swatch[] = [
   { name: 'Plum', c: '#7a4a86', shade: '#54305e' },
   { name: 'Rose', c: '#d07a96', shade: '#a1546e' },
   { name: 'Snow', c: '#e8e8ee', shade: '#b4b4c0' },
-  { name: 'Charcoal', c: '#3a3a44', shade: '#26262e' },
+  { name: 'Coal', c: '#3a3a44', shade: '#26262e' },
 ];
 
 export const TROUSER_COLOURS: Swatch[] = [
@@ -720,7 +720,7 @@ export const TROUSER_COLOURS: Swatch[] = [
   { name: 'Khaki', c: '#9a8a5e', shade: '#6f6342' },
   { name: 'Olive', c: '#5a6440', shade: '#3e462b' },
   { name: 'Brown', c: '#6a5040', shade: '#48362a' },
-  { name: 'Charcoal', c: '#35353e', shade: '#232329' },
+  { name: 'Coal', c: '#35353e', shade: '#232329' },
   { name: 'Rust', c: '#8a4a34', shade: '#603022' },
 ];
 

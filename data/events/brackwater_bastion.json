@@ -111,7 +111,7 @@
                     "kind": "say",
                     "who": "MABRY SULL",
                     "lines": [
-                      "Two things about water, and then you can go.",
+                      "Two things about water, {name}, and then you can go.",
                       "The first: shallow is a road and deep is a wall, and telling them apart is most of seamanship."
                     ]
                   },

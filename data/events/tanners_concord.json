@@ -14,7 +14,7 @@
         "kind": "say",
         "who": "???",
         "lines": [
-          "You are the one filling in a Vellum for Halcyon Vess."
+          "{name}. You are the one filling in a Vellum for Halcyon Vess."
         ]
       },
       {

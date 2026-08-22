@@ -100,7 +100,7 @@
               { "kind": "giveItem", "item": "great_potion", "count": 1 },
               { "kind": "say", "lines": ["Roxen handed over a Great Potion."] },
               { "kind": "say", "who": "ROXEN QUILL", "lines": [
-                "One more thing, and I want you to actually hear it.",
+                "One more thing, {name}, and I want you to actually hear it.",
                 "The Concord surveyed my quarry in the spring. Depth soundings, they said.",
                 "They were not measuring the rock. They were measuring what the rock is sitting on.",
                 "Ask them about it. Watch how fast they stop being friendly."

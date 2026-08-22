@@ -30,7 +30,7 @@
                 "kind": "say",
                 "who": "SURVEYOR",
                 "lines": [
-                  "Ilm radioed down about you. Said you would turn up here eventually.",
+                  "Ilm radioed down about you, {name}. Said you would turn up here eventually.",
                   "Said you were polite about it, which apparently counts for something."
                 ]
               },
