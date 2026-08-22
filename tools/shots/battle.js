@@ -1,0 +1,42 @@
+// Drops straight into a wild battle and photographs a whole turn.
+const d = window.dev;
+const top = () => d.game.scenes.top;
+
+await d.loadWait(1200);
+d.key('Enter', 4); d.key('Enter', 30);
+d.key('Enter', 60);
+for (let i = 0; i < 30; i++) {
+  const rows = top().rows();
+  if ((rows[top().sel] || {}).action === 'begin') break;
+  d.key('KeyS', 2);
+}
+d.key('Enter', 60);
+await d.loadWait(1400);
+for (let i = 0; i < 16 && top().name === 'dialogue'; i++) d.key('Enter', 10);
+
+const kinMod = await import('/build/js/systems/kin.js');
+const battleMod = await import('/build/js/scenes/battle.js');
+const state = top().state;
+state.party.length = 0;
+state.party.push(kinMod.createKin('cinderpaw', 12, d.game.rng, { originalTrainer: 'player' }));
+const foe = [kinMod.createKin('rilltail', 11, d.game.rng)];
+
+d.game.scenes.push(new battleMod.BattleScene({
+  state, playerParty: state.party, foeParty: foe, isWild: true,
+  backdrop: 'grass', onFinish: () => {},
+}));
+d.tick(2);
+const out = [];
+const shot = async (name, ticks) => { out.push(name + '@' + top().name); return d.shoot(name, ticks); };
+
+await shot('bt-01-intro', 60);
+// Skip the send-out chatter until the menu is up.
+for (let i = 0; i < 20 && !(top().phase === 'menu'); i++) d.key('Enter', 12);
+await shot('bt-02-menu', 6);
+d.key('Enter', 10);                       // FIGHT
+await shot('bt-03-moves', 6);
+d.key('Enter', 4);                        // first move
+// Photograph the turn as it plays, without pressing anything.
+for (let i = 0; i < 8; i++) await shot('bt-04-turn-' + i, 14);
+out.push('phase:' + top().phase);
+return { out, ticks: d.game.ticks };

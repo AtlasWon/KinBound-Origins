@@ -255,24 +255,24 @@ function shade(mask: Mask): void {
  * them. Running this before the shading and outline passes is what buys the
  * higher density real detail rather than four times as many big pixels.
  */
+/**
+ * Double the design mask, one cell to a block.
+ *
+ * This used to be a Scale2x pass, which rounds off every diagonal and fills in
+ * the steps. That is the right algorithm for making old art look modern and
+ * exactly the wrong one here: the world around these sprites is drawn one
+ * design pixel to a 2x2 block, and a creature with smoothed edges standing on
+ * blocky ground reads as a sprite from a different game.
+ */
 function upscale(src: Mask): Mask {
   const out = new Mask(src.w * 2, src.h * 2);
   for (let y = 0; y < src.h; y++) {
     for (let x = 0; x < src.w; x++) {
-      const P = src.get(x, y);
-      const A = src.get(x, y - 1);
-      const B = src.get(x + 1, y);
-      const C = src.get(x - 1, y);
-      const D = src.get(x, y + 1);
-      let e0 = P, e1 = P, e2 = P, e3 = P;
-      if (C === A && C !== D && A !== B) e0 = A;
-      if (A === B && A !== C && B !== D) e1 = B;
-      if (D === C && D !== B && C !== A) e2 = C;
-      if (B === D && B !== A && D !== C) e3 = D;
-      out.set(x * 2, y * 2, e0);
-      out.set(x * 2 + 1, y * 2, e1);
-      out.set(x * 2, y * 2 + 1, e2);
-      out.set(x * 2 + 1, y * 2 + 1, e3);
+      const v = src.get(x, y);
+      out.set(x * 2, y * 2, v);
+      out.set(x * 2 + 1, y * 2, v);
+      out.set(x * 2, y * 2 + 1, v);
+      out.set(x * 2 + 1, y * 2 + 1, v);
     }
   }
   return out;
@@ -579,18 +579,24 @@ function outline(mask: Mask): void {
     const v = src[y * mask.w + x]!;
     return v !== EMPTY && v !== OUTLINE;
   };
-  for (let y = 0; y < mask.h; y++) {
-    for (let x = 0; x < mask.w; x++) {
+  // Walked two cells at a time: the mask is block-aligned, so the border has to
+  // be as well or it comes out half a block thick on one side.
+  for (let y = 0; y < mask.h; y += 2) {
+    for (let x = 0; x < mask.w; x += 2) {
       if (solid(x, y)) continue;
       const touching =
-        solid(x - 1, y) || solid(x + 1, y) || solid(x, y - 1) || solid(x, y + 1) ||
-        solid(x - 1, y - 1) || solid(x + 1, y - 1) || solid(x - 1, y + 1) || solid(x + 1, y + 1);
+        solid(x - 2, y) || solid(x + 2, y) || solid(x, y - 2) || solid(x, y + 2) ||
+        solid(x - 2, y - 2) || solid(x + 2, y - 2) || solid(x - 2, y + 2) || solid(x + 2, y + 2);
       if (!touching) continue;
       // The light side of the outline carries some of the body colour, so the
       // silhouette does not read as a uniform marker-pen border.
-      const litSide = solid(x + 1, y) || solid(x, y + 1) || solid(x + 1, y + 1);
-      const darkSide = solid(x - 1, y) || solid(x, y - 1);
-      mask.set(x, y, litSide && !darkSide ? OUTLINE_LIT : OUTLINE);
+      const litSide = solid(x + 2, y) || solid(x, y + 2) || solid(x + 2, y + 2);
+      const darkSide = solid(x - 2, y) || solid(x, y - 2);
+      const v = litSide && !darkSide ? OUTLINE_LIT : OUTLINE;
+      mask.set(x, y, v);
+      mask.set(x + 1, y, v);
+      mask.set(x, y + 1, v);
+      mask.set(x + 1, y + 1, v);
     }
   }
 }

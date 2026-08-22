@@ -35,7 +35,7 @@ export interface Settings {
 
 export const DEFAULT_SETTINGS: Settings = {
   textSpeed: 'normal',
-  battleSpeed: 'brisk',
+  battleSpeed: 'classic',
   battleAnimations: true,
   battleStyle: 'switch',
   autoRun: false,
@@ -94,10 +94,18 @@ export function textDelayFrames(speed: TextSpeed): number {
 }
 
 /** Multiplier applied to every scripted battle pause. */
+/**
+ * How long a battle beat lasts, as a multiple of its authored length.
+ *
+ * 'classic' is the authored timing and the default. The game shipped on
+ * 'brisk', which ran every beat at 60% -- the move, the damage and the menu
+ * all landed on top of each other and a turn was over before you had read what
+ * happened.
+ */
 export function battleSpeedScale(speed: BattleSpeed): number {
   switch (speed) {
     case 'classic': return 1;
-    case 'brisk': return 0.6;
-    case 'fast': return 0.3;
+    case 'brisk': return 0.7;
+    case 'fast': return 0.45;
   }
 }

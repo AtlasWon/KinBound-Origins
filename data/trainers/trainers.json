@@ -9,11 +9,11 @@
     "party": [
       {
         "species": "nibbet",
-        "level": 5
+        "level": 4
       },
       {
-        "species": "pebblet",
-        "level": 6
+        "species": "tuftail",
+        "level": 5
       }
     ],
     "intro": [
@@ -40,7 +40,7 @@
     "party": [
       {
         "species": "pipwing",
-        "level": 6
+        "level": 5
       }
     ],
     "intro": [
@@ -66,10 +66,6 @@
     "ai": "novice",
     "payout": 16,
     "party": [
-      {
-        "species": "nibbet",
-        "level": 4
-      },
       {
         "species": "nibbet",
         "level": 4
@@ -104,11 +100,11 @@
     "party": [
       {
         "species": "rillfry",
-        "level": 7
+        "level": 4
       },
       {
-        "species": "rilltail",
-        "level": 8
+        "species": "nibbet",
+        "level": 6
       }
     ],
     "intro": [
@@ -134,15 +130,11 @@
     "party": [
       {
         "species": "tuftail",
-        "level": 8
-      },
-      {
-        "species": "nettlebug",
         "level": 7
       },
       {
-        "species": "pipwing",
-        "level": 9
+        "species": "nettlebug",
+        "level": 6
       }
     ],
     "intro": [
@@ -168,12 +160,12 @@
     "payout": 44,
     "party": [
       {
-        "species": "fizzlet",
-        "level": 9
+        "species": "nibbet",
+        "level": 8
       },
       {
-        "species": "pebblet",
-        "level": 10
+        "species": "fizzlet",
+        "level": 8
       }
     ],
     "intro": [
@@ -205,11 +197,11 @@
     "party": [
       {
         "species": "nettlebug",
-        "level": 10
+        "level": 9
       },
       {
         "species": "tuftail",
-        "level": 11
+        "level": 10
       }
     ],
     "intro": [
@@ -236,11 +228,11 @@
     "party": [
       {
         "species": "chalkid",
-        "level": 11
+        "level": 10
       },
       {
-        "species": "gravelet",
-        "level": 12
+        "species": "nibbet",
+        "level": 11
       }
     ],
     "intro": [
@@ -266,15 +258,11 @@
     "party": [
       {
         "species": "pipwing",
-        "level": 11
-      },
-      {
-        "species": "nibbet",
-        "level": 11
+        "level": 8
       },
       {
         "species": "tuftail",
-        "level": 13
+        "level": 11
       }
     ],
     "intro": [
@@ -301,11 +289,11 @@
     "party": [
       {
         "species": "gravelet",
-        "level": 12
+        "level": 11
       },
       {
-        "species": "chalkid",
-        "level": 13
+        "species": "tuftail",
+        "level": 12
       }
     ],
     "intro": [
@@ -332,15 +320,15 @@
     "party": [
       {
         "species": "slatewing",
-        "level": 12
+        "level": 11
       },
       {
         "species": "sootmoth",
-        "level": 12
+        "level": 11
       },
       {
         "species": "pipwing",
-        "level": 14
+        "level": 13
       }
     ],
     "intro": [
@@ -367,11 +355,11 @@
     "party": [
       {
         "species": "chalkid",
-        "level": 13
+        "level": 12
       },
       {
-        "species": "gravelet",
-        "level": 14
+        "species": "tuftail",
+        "level": 13
       }
     ],
     "intro": [
@@ -398,15 +386,11 @@
     "party": [
       {
         "species": "nettlebug",
-        "level": 12
+        "level": 11
       },
       {
         "species": "chalkid",
-        "level": 13
-      },
-      {
-        "species": "slatewing",
-        "level": 14
+        "level": 12
       }
     ],
     "intro": [
@@ -433,34 +417,15 @@
     "party": [
       {
         "species": "gravelet",
-        "level": 14,
-        "moves": [
-          "gravelspray",
-          "batter",
-          "quickstep",
-          "fissure_step"
-        ]
+        "level": 13
       },
       {
         "species": "slatewing",
-        "level": 14,
-        "moves": [
-          "shale_edge",
-          "wingbeat",
-          "gustline",
-          "stonefling"
-        ]
+        "level": 13
       },
       {
         "species": "chalkmar",
-        "level": 16,
-        "item": "potion",
-        "moves": [
-          "shale_edge",
-          "plating",
-          "rivet_punch",
-          "gravelspray"
-        ]
+        "level": 15
       }
     ],
     "items": [
@@ -1049,7 +1014,7 @@
     "party": [
       {
         "species": "cinderpaw",
-        "level": 5
+        "level": 4
       }
     ]
   },
@@ -1072,7 +1037,7 @@
     "party": [
       {
         "species": "rilltail",
-        "level": 5
+        "level": 4
       }
     ]
   },
@@ -1095,7 +1060,7 @@
     "party": [
       {
         "species": "sprigling",
-        "level": 5
+        "level": 4
       }
     ]
   }

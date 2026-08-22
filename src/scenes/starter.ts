@@ -94,7 +94,9 @@ export class StarterScene implements Scene {
       'Are you sure?',
     ], (yes) => {
       if (!yes) { this.confirming = false; return; }
-      const kin = createKin(sp.id, 5, game.rng, { originalTrainer: 'player' });
+      // Level six, not five. The first fights were measured at a few percent
+      // with a level-five starter and no second kin to fall back on.
+      const kin = createKin(sp.id, 6, game.rng, { originalTrainer: 'player' });
       kin.metAt = 'vess_station';
       this.state.addKin(kin);
       this.state.setFlag('got_starter');

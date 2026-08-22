@@ -1030,11 +1030,24 @@ export class Battle {
 
   /* -------------------------------------------------------------- faints */
 
+  /**
+   * Announce anything that has just fainted.
+   *
+   * Called after every move and again at the end of the turn, which is why it
+   * has to remember: a kin that faints on the first move of a turn is still
+   * the active kin at the end of it -- replacements happen between turns --
+   * so the second pass used to announce the same faint again and, worse, award
+   * the experience for it a second time.
+   */
+  private announcedFaints = new Set<Kin>();
+
   checkFaints(): void {
     for (const id of ['player', 'foe'] as SideId[]) {
       const side = this.side(id);
       const kin = side.active;
-      if (!kin.fainted) continue;
+      if (!kin.fainted) { this.announcedFaints.delete(kin); continue; }
+      if (this.announcedFaints.has(kin)) continue;
+      this.announcedFaints.add(kin);
       this.emit({ t: 'faint', side: id, kin });
       this.msg(`${this.label(id, kin)} fainted!`);
 

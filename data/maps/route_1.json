@@ -110,30 +110,6 @@
       "sightRange": 2
     },
     {
-      "id": "r1_bex",
-      "sprite": "villager_m",
-      "x": 16,
-      "y": 16,
-      "facing": "left",
-      "movement": {
-        "kind": "static"
-      },
-      "trainer": "r1_bex",
-      "sightRange": 3
-    },
-    {
-      "id": "r1_wray",
-      "sprite": "villager_f",
-      "x": 11,
-      "y": 20,
-      "facing": "right",
-      "movement": {
-        "kind": "static"
-      },
-      "trainer": "r1_wray",
-      "sightRange": 4
-    },
-    {
       "id": "r1_madden",
       "sprite": "hiker",
       "x": 18,

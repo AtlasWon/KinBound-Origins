@@ -134,6 +134,8 @@ export class BattleScene implements Scene {
   private battle!: Battle;
   private ai!: TrainerAI;
   private queue: Anim[] = [];
+  /** Whether the beat before the action menu has already been spent. */
+  private menuPause = false;
   private current: Anim | null = null;
   private phase: Phase = 'anim';
 
@@ -239,7 +241,7 @@ export class BattleScene implements Scene {
     for (const e of events) {
       switch (e.t) {
         case 'message':
-          this.queue.push({ kind: 'text', text: e.text, hold: 'time', frames: this.frames(46, game) });
+          this.queue.push({ kind: 'text', text: e.text, hold: 'time', frames: this.frames(54, game) });
           break;
         case 'sfx':
           this.queue.push({ kind: 'sfx', id: e.id });
@@ -253,15 +255,21 @@ export class BattleScene implements Scene {
         case 'useMove':
           this.queue.push({
             kind: 'moveFx', side: e.side, anim: e.move.animation,
-            type: e.move.type, frames: this.frames(34, game), t: 0,
+            type: e.move.type, frames: this.frames(46, game), t: 0,
           });
+          // A beat between the move landing and the damage showing. Without it
+          // the effect, the flash and the bar all happen on the same frame and
+          // the turn reads as one blur.
+          this.queue.push({ kind: 'wait', frames: this.frames(10, game), t: 0 });
           break;
         case 'damage': {
-          this.queue.push({ kind: 'flash', side: e.side, frames: this.frames(12, game), t: 0, effectiveness: e.effectiveness });
+          this.queue.push({ kind: 'flash', side: e.side, frames: this.frames(14, game), t: 0, effectiveness: e.effectiveness });
+          this.queue.push({ kind: 'wait', frames: this.frames(8, game), t: 0 });
           this.queue.push({
             kind: 'hp', side: e.side, kin: e.kin,
-            from: -1, to: e.hpAfter, frames: this.frames(30, game), t: 0,
+            from: -1, to: e.hpAfter, frames: this.frames(38, game), t: 0,
           });
+          this.queue.push({ kind: 'wait', frames: this.frames(12, game), t: 0 });
           break;
         }
         case 'heal': {
@@ -272,7 +280,9 @@ export class BattleScene implements Scene {
           break;
         }
         case 'faint':
-          this.queue.push({ kind: 'faint', side: e.side, frames: this.frames(26, game), t: 0 });
+          this.queue.push({ kind: 'wait', frames: this.frames(10, game), t: 0 });
+          this.queue.push({ kind: 'faint', side: e.side, frames: this.frames(32, game), t: 0 });
+          this.queue.push({ kind: 'wait', frames: this.frames(14, game), t: 0 });
           break;
         case 'throwVessel':
           this.queue.push({
@@ -562,6 +572,16 @@ export class BattleScene implements Scene {
       this.revealed = this.message.length;
       return;
     }
+    // A beat between the last thing that happened and being asked what to do
+    // next. Without it the menu lands on the same frame as the final hit and
+    // the player is choosing before they have read the result.
+    if (!this.menuPause) {
+      this.menuPause = true;
+      this.queue.push({ kind: 'wait', frames: this.frames(20, game), t: 0 });
+      return;
+    }
+    this.menuPause = false;
+
     this.phase = 'menu';
     this.buildActionMenu();
     const name = this.battle.player.active.name;

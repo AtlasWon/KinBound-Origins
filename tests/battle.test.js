@@ -517,3 +517,26 @@ test('a veteran AI switches away from a hopeless matchup', () => {
   }
   assert.ok(switched > 10, `elite AI only switched ${switched}/20 times out of a losing matchup`);
 });
+
+test('a knockout is announced once, and pays experience once', () => {
+  // checkFaints runs after every move and again at the end of the turn, and a
+  // kin that faints mid-turn is still the active kin at the end of it: this
+  // used to announce the same faint twice and award the experience twice with
+  // it.
+  const rng = new Rng('double-faint');
+  const you = createKin('cinderpaw', 30, rng, { originalTrainer: 'player' });
+  const foe = createKin('nibbet', 3, rng);
+
+  const battle = new Battle({
+    playerParty: [you], foeParty: [foe, createKin('nibbet', 3, rng)],
+    isWild: false, seed: 'double-faint',
+  });
+  battle.begin();
+
+  const events = battle.takeTurn({ kind: 'move', index: 0 }, { kind: 'move', index: 0 });
+  const faints = events.filter((e) => e.t === 'faint');
+  const exp = events.filter((e) => e.t === 'expGain');
+
+  assert.equal(faints.length, 1, 'one knockout, one faint event');
+  assert.equal(exp.length, 1, 'one knockout, one payout');
+});

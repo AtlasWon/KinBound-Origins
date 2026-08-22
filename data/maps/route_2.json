@@ -122,18 +122,6 @@
       "sightRange": 3
     },
     {
-      "id": "r2_shale",
-      "sprite": "hiker",
-      "x": 16,
-      "y": 14,
-      "facing": "left",
-      "movement": {
-        "kind": "static"
-      },
-      "trainer": "r2_shale",
-      "sightRange": 4
-    },
-    {
       "id": "r2_wren",
       "sprite": "villager_f",
       "x": 13,
