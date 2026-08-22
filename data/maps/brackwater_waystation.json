@@ -30,7 +30,7 @@
   "npcs": [
     {
       "id": "bw_ways_keeper",
-      "sprite": "villager_f",
+      "sprite": "healer",
       "x": 4,
       "y": 2,
       "facing": "down",
@@ -52,7 +52,7 @@
     },
     {
       "id": "bw_ways_sailor",
-      "sprite": "hiker",
+      "sprite": "sailor",
       "x": 3,
       "y": 5,
       "facing": "right",

@@ -114,7 +114,7 @@
     },
     {
       "id": "bw_child",
-      "sprite": "villager_m",
+      "sprite": "kid",
       "x": 20,
       "y": 13,
       "facing": "left",

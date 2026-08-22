@@ -148,7 +148,7 @@
     },
     {
       "id": "ashgate_elder",
-      "sprite": "villager_f",
+      "sprite": "elder",
       "x": 9,
       "y": 11,
       "facing": "right",
@@ -159,7 +159,7 @@
     },
     {
       "id": "ashgate_fisher",
-      "sprite": "villager_m",
+      "sprite": "fisher",
       "x": 8,
       "y": 12,
       "facing": "left",
@@ -170,7 +170,7 @@
     },
     {
       "id": "ashgate_kid",
-      "sprite": "villager_m",
+      "sprite": "kid",
       "x": 19,
       "y": 17,
       "facing": "left",

@@ -30,7 +30,7 @@
   "npcs": [
     {
       "id": "tr_shopkeeper",
-      "sprite": "villager_m",
+      "sprite": "clerk",
       "x": 5,
       "y": 2,
       "facing": "down",
@@ -41,7 +41,7 @@
     },
     {
       "id": "tr_shop_hand",
-      "sprite": "villager_f",
+      "sprite": "clerk",
       "x": 10,
       "y": 5,
       "facing": "left",

@@ -10,7 +10,7 @@
  */
 
 import { Renderer } from '../engine/renderer.js';
-import { TILE_PX, TILE_SIZE, Tileset } from '../gfx/tileset.js';
+import { T, TILE_PX, TILE_SIZE, Tileset } from '../gfx/tileset.js';
 import { terrainFor, unknownChars, type TerrainDef } from './terrain.js';
 import type {
   CollisionCode, Direction, MapNpc, MapObject, MapWarp, WeatherId,
@@ -105,10 +105,36 @@ export class TileMap {
       }
     }
 
+    this.autoPathEdges();
+
     this.warps = file.warps ?? [];
     this.npcs = file.npcs ?? [];
     this.objects = file.objects ?? [];
     this.connections = file.connections ?? [];
+  }
+
+  /**
+   * Soften every place a path meets grass.
+   *
+   * The reference tilesets never butt two materials together with a straight
+   * cut; there is always a dithered lip on the path side. Doing it here rather
+   * than in the map files means an author draws a road with one character and
+   * still gets the edges -- and it cannot be forgotten, which is exactly what
+   * happened everywhere the edge tiles existed but were never placed.
+   */
+  private autoPathEdges(): void {
+    const grassy = (i: number): boolean => {
+      const g = this.ground[i];
+      return g === T.GRASS || g === T.GRASS_TUFT || g === T.GRASS_FLOWERS || g === T.TALL_GRASS;
+    };
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        const i = this.index(x, y);
+        if (this.ground[i] !== T.PATH) continue;
+        if (y > 0 && grassy(this.index(x, y - 1))) this.ground[i] = T.PATH_EDGE_N;
+        else if (y < this.height - 1 && grassy(this.index(x, y + 1))) this.ground[i] = T.PATH_EDGE_S;
+      }
+    }
   }
 
   inBounds(x: number, y: number): boolean {

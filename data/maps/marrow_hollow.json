@@ -96,7 +96,7 @@
     },
     {
       "id": "hollow_kid",
-      "sprite": "villager_m",
+      "sprite": "kid",
       "x": 11,
       "y": 18,
       "facing": "down",

@@ -31,7 +31,7 @@
   "npcs": [
     {
       "id": "km_ways_keeper",
-      "sprite": "villager_f",
+      "sprite": "healer",
       "x": 4,
       "y": 2,
       "facing": "down",

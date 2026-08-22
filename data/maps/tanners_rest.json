@@ -144,7 +144,7 @@
     },
     {
       "id": "tr_child",
-      "sprite": "villager_m",
+      "sprite": "kid",
       "x": 20,
       "y": 18,
       "facing": "left",

@@ -136,7 +136,7 @@
     },
     {
       "id": "km_child",
-      "sprite": "villager_m",
+      "sprite": "kid",
       "x": 19,
       "y": 17,
       "facing": "left",
@@ -148,7 +148,7 @@
     },
     {
       "id": "km_angler",
-      "sprite": "villager_f",
+      "sprite": "fisher",
       "x": 10,
       "y": 12,
       "facing": "left",

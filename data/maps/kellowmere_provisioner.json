@@ -29,7 +29,7 @@
   "npcs": [
     {
       "id": "km_shopkeeper",
-      "sprite": "villager_m",
+      "sprite": "clerk",
       "x": 5,
       "y": 2,
       "facing": "down",
