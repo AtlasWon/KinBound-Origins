@@ -1,6 +1,6 @@
 {
   "name": "kinbound",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "private": true,
   "description": "KinBound - Amber Version. An original GBA-era monster-catching RPG.",
   "type": "module",
