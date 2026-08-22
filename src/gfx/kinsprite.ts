@@ -662,19 +662,24 @@ function drawEyes(mask: Mask, spots: EyeSpot[], scale: number): void {
   for (const s of spots) {
     const cy = s.y * scale;
     const spread = s.spread * scale;
-    const r = Math.max(2.5, s.size * scale * 0.85);
+    // Eyes carry a creature at this size. The old radius put them at two or
+    // three pixels on a sixty-four pixel sprite, which reads as a bead rather
+    // than as a face -- everything in the reference art has eyes you can see
+    // the expression in from across a battle.
+    const r = Math.max(3.6, s.size * scale * 1.2);
 
     for (const side of [-1, 1]) {
       const ex = s.x * scale + side * spread;
 
       // Socket: a hard rim so the eye separates from any body colour.
-      mask.ellipse(ex, cy, r + 1.2, r * 1.25 + 1.2, OUTLINE);
-      // The eye itself, dark, with a thin lit rim along the bottom.
-      mask.ellipse(ex, cy, r, r * 1.25, EYE_DARK);
-      mask.ellipse(ex, cy + r * 0.45, r * 0.75, r * 0.5, EYE_WHITE);
-      mask.ellipse(ex - side * r * 0.15, cy + r * 0.15, r * 0.8, r * 0.95, EYE_DARK);
+      mask.ellipse(ex, cy, r + 1.4, r * 1.25 + 1.4, OUTLINE);
+      // The eye itself, dark, with a lit rim along the bottom.
+      mask.ellipse(ex, cy, r, r * 1.25, EYE_WHITE);
+      mask.ellipse(ex - side * r * 0.12, cy + r * 0.1, r * 0.78, r * 0.98, EYE_DARK);
+      // A lit crescent under the pupil, which is what makes an eye look wet.
+      mask.ellipse(ex, cy + r * 0.72, r * 0.62, r * 0.34, EYE_WHITE);
       // Glint, up and towards the light.
-      mask.ellipse(ex - r * 0.38, cy - r * 0.45, Math.max(1, r * 0.32), Math.max(1, r * 0.32), EYE_WHITE);
+      mask.ellipse(ex - r * 0.4, cy - r * 0.5, Math.max(1.2, r * 0.36), Math.max(1.2, r * 0.36), EYE_WHITE);
 
       if (s.angry) {
         // A heavy slanted brow: the cheapest way to say predator.

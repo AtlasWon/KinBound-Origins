@@ -8,6 +8,43 @@ Add a new `## vX.Y.Z` heading above the others before running `npm run ship`.
 
 ---
 
+## v0.3.0
+
+### The world looks like the era it is quoting
+- Everything is drawn on the **GBA pixel grid** now. The game was rendering at
+  twice the density of the hardware it takes after, which is why it read as
+  smooth rather than as pixel art. Tiles, characters and creatures all sit on
+  the same grid.
+- **Characters are redrawn from scratch**: a head nearly half the height of the
+  body, two-pixel eyes, and a walk that swaps the legs over instead of
+  jiggling them.
+- Grass is a repeating weave rather than noise, paths are sand with grit, and a
+  road gets its dithered lip against turf automatically.
+- **Houses are furnished** — table, chairs, television, kitchen units, a plant,
+  a rug that reads as one rug rather than a grid of doormats.
+- **Waystation keepers wear red and white and shop staff wear blue**, so you
+  can tell at a glance which counter you are standing at. Kids, elders,
+  fishers and sailors got their own looks too.
+- The kin have eyes you can read across a battle.
+
+### Fixed
+- Walking up to a **signpost** deleted the top half of the player. Tall tiles
+  now sort with the people standing in front of them.
+- The screen **shook when walking diagonally**.
+- Every knockout was announced **twice** and paid experience twice.
+
+### Easier, and better paced
+- The first fights were **unwinnable** -- measured at three wins in a hundred.
+  Early teams were stacked by type, so whichever starter you picked several of
+  the opening fights were hard counters. Teams are spread out, the starter is a
+  level higher, and three trainers are gone from the early routes.
+- Battles are **paced**: the move, the damage and the next menu no longer land
+  on the same frame.
+- Impacts hit harder -- rings, spokes, a coloured flash, and sounds with a body
+  under the crack.
+
+---
+
 ## v0.2.0
 
 ### Launcher
