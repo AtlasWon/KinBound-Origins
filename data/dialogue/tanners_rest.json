@@ -1,0 +1,80 @@
+{
+  "speakers": {
+    "tr_crier": "TOWN CRIER",
+    "tr_drover": "DROVER MASK",
+    "tr_clerk": "CONCORD CLERK",
+    "tr_child": "PIP",
+    "tr_vess_runner": "RUNNER",
+    "tr_ways_rester": "RESTING TRADER",
+    "tr_shop_hand": "SHOP HAND",
+    "tr_concord_clerk": "CLERK OSWIN",
+    "tr_concord_hand": "SURVEY HAND",
+    "tanners_house_resident": "GRAN ELLOWAY"
+  },
+  "entries": {
+    "tr_crier": [
+      "FOUR ROADS! WEST TO THE QUARRY, SOUTH TO THE COAST, NORTH TO NOTHING!",
+      "EAST ROAD STILL CLOSED, THIRTY-ONE YEARS AND COUNTING!",
+      "...Sorry. Force of habit. You get used to shouting."
+    ],
+    "tr_drover": [
+      "Cannot get the herd over the Route 3 bridge. Not one animal.",
+      "Had to walk them the long way round, four days.",
+      "They know something. Animals always know first."
+    ],
+    "tr_clerk": [
+      "Office is open. Ask whatever you like.",
+      "That is not me being generous. It is policy. We have nothing to hide and we are very tired of being asked."
+    ],
+    "tr_child": [
+      "I am going to be a surveyor.",
+      "They get a coat and a brass thing and everyone stops talking when they walk in.",
+      "Mum says that is not a reason. It is a bit of a reason."
+    ],
+    "tr_runner": [
+      {
+        "unlessFlags": [
+          "met_kerrow"
+        ],
+        "lines": [
+          "You are the one Vess sent out? He has been writing to the office here every week.",
+          "They keep the letters. They do not answer them.",
+          "Go in and see. The Director herself came down two days ago."
+        ]
+      },
+      {
+        "ifFlags": [
+          "met_kerrow"
+        ],
+        "lines": [
+          "You met her, then. Everyone says the same thing after.",
+          "That she was reasonable. That is what they always say."
+        ]
+      }
+    ],
+    "tr_rester": [
+      "Walked up from Brackwater. Two days and the whole way the sea was flat.",
+      "Not calm. Flat. There is a difference and you only learn it once."
+    ],
+    "tr_shop_hand": [
+      "Net Vessels are new in. Good for anything that swims.",
+      "Which is most of what you will meet south of here."
+    ],
+    "tr_concord_clerk": [
+      "Survey office. Soundings, bearings, permits.",
+      "No, you may not see the west face readings. Yes, I know that sounds bad.",
+      "It is not bad. It is procedure. Those are different things and I am required to say so."
+    ],
+    "tr_concord_hand": [
+      "Nine sites this season and not one of them near the coast.",
+      "You would think a body that cares about the sea would survey the sea.",
+      "...I have said too much. I say that a lot lately."
+    ],
+    "tr_house": [
+      "Eighty-one years I have lived at this crossroads.",
+      "I remember the last Turning. I was ten. The sea came up the south road as far as the well.",
+      "Everyone talks about stopping it now like it is a simple thing.",
+      "It is not simple. But I will tell you this: nobody who was there thinks it should be allowed to happen twice."
+    ]
+  }
+}

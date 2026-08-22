@@ -1,0 +1,267 @@
+/*
+ * Launcher styling.
+ *
+ * Dark slate with one warm accent, because the game is called Amber Version and
+ * a launcher should look like the thing it launches. The layout is a single
+ * column: art on top, one dock along the bottom holding every control. Anything
+ * a player can press is in that dock, and Play is the only filled button on the
+ * screen -- there is never a question about what the primary action is.
+ */
+
+:root {
+  --bg: #12151f;
+  --panel: #1a1f2e;
+  --panel-hi: #232a3d;
+  --line: #2e3750;
+  --ink: #e8edf8;
+  --ink-dim: #93a0bd;
+  --ink-faint: #64708c;
+  --amber: #f0a94e;
+  --amber-hot: #ffc46e;
+  --amber-deep: #b8722a;
+  --good: #58c47a;
+  --bad: #e2645c;
+  --titlebar: 34px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  overflow: hidden;
+  user-select: none;
+  cursor: default;
+}
+
+/* ------------------------------------------------------------- titlebar */
+
+.titlebar {
+  height: var(--titlebar);
+  display: flex;
+  align-items: stretch;
+  background: #0d1017;
+  border-bottom: 1px solid var(--line);
+}
+
+.titlebar-drag {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding-left: 12px;
+  /* The whole strip drags the window; the buttons opt back out below. */
+  -webkit-app-region: drag;
+}
+
+.mark {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  background: linear-gradient(135deg, var(--amber-hot), var(--amber-deep));
+  box-shadow: 0 0 8px rgba(240, 169, 78, 0.45);
+}
+
+.wordmark { font-weight: 700; letter-spacing: 0.16em; font-size: 12px; }
+.edition { color: var(--ink-faint); font-size: 11px; letter-spacing: 0.08em; }
+
+.window-buttons { display: flex; -webkit-app-region: no-drag; }
+
+.win-btn {
+  width: 44px;
+  border: 0;
+  background: transparent;
+  color: var(--ink-dim);
+  font-size: 13px;
+  cursor: pointer;
+}
+.win-btn:hover { background: #1c2130; color: var(--ink); }
+.win-btn.danger:hover { background: #c0392f; color: #fff; }
+
+/* ----------------------------------------------------------------- shell */
+
+.shell {
+  height: calc(100% - var(--titlebar));
+  display: grid;
+  grid-template-rows: 1fr auto;
+}
+
+/* ------------------------------------------------------------------ hero */
+
+.hero { position: relative; overflow: hidden; background: #0a0d14; }
+
+#hero-art {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  image-rendering: pixelated;
+}
+
+/* Fades the art into the dock so there is no hard seam across the window. */
+.hero-fade {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 62%;
+  background: linear-gradient(to bottom, rgba(18, 21, 31, 0) 0%, rgba(18, 21, 31, 0.86) 72%, var(--bg) 100%);
+  pointer-events: none;
+}
+
+.hero-copy { position: absolute; left: 34px; bottom: 20px; right: 34px; }
+
+.hero-copy h1 {
+  margin: 0 0 6px;
+  font-size: 42px;
+  letter-spacing: 0.06em;
+  background: linear-gradient(180deg, #ffe9b0 0%, #f0a94e 62%, #c9822f 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 3px 0 rgba(0, 0, 0, 0.35);
+}
+
+.tagline {
+  margin: 0;
+  max-width: 640px;
+  color: var(--ink-dim);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* ------------------------------------------------------------------ dock */
+
+.dock {
+  display: grid;
+  grid-template-columns: 210px 1fr;
+  gap: 20px;
+  padding: 16px 24px 20px;
+  background: var(--bg);
+  border-top: 1px solid var(--line);
+}
+
+.dock-info { display: flex; flex-direction: column; gap: 7px; padding-top: 4px; }
+
+.row { display: flex; justify-content: space-between; gap: 10px; font-size: 12px; }
+.label { color: var(--ink-faint); }
+.value { color: var(--ink-dim); font-variant-numeric: tabular-nums; }
+.value.good { color: var(--good); }
+.value.warn { color: var(--amber); }
+
+.dock-actions { display: flex; flex-direction: column; gap: 12px; justify-content: flex-end; }
+
+.play-row { display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
+
+/* --------------------------------------------------------------- buttons */
+
+.btn {
+  border: 0;
+  border-radius: 6px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 0.06s ease, filter 0.12s ease, background 0.12s ease;
+}
+.btn:active { transform: translateY(1px); }
+.btn:disabled { cursor: default; opacity: 0.5; transform: none; }
+
+.btn-play {
+  padding: 13px 52px;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #241703;
+  background: linear-gradient(180deg, var(--amber-hot), var(--amber-deep));
+  box-shadow: 0 3px 0 #7d4a15, 0 8px 22px rgba(240, 169, 78, 0.22);
+}
+.btn-play:hover:not(:disabled) { filter: brightness(1.08); }
+.btn-play:active:not(:disabled) { box-shadow: 0 1px 0 #7d4a15; }
+
+.btn-ghost {
+  padding: 9px 14px;
+  font-size: 12px;
+  color: var(--ink-dim);
+  background: var(--panel);
+  border: 1px solid var(--line);
+}
+.btn-ghost:hover:not(:disabled) { background: var(--panel-hi); color: var(--ink); }
+
+.btn-update {
+  padding: 9px 22px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #06210f;
+  background: linear-gradient(180deg, #6ddb92, #3a9a5c);
+  box-shadow: 0 2px 0 #256b3d;
+}
+.btn-update:hover:not(:disabled) { filter: brightness(1.08); }
+
+/* --------------------------------------------------------- update panel */
+
+.update-panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--amber);
+  border-radius: 7px;
+  padding: 12px 14px;
+}
+.update-panel.ready { border-left-color: var(--good); }
+.update-panel.failed { border-left-color: var(--bad); }
+
+.update-head { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+#update-title { font-size: 13px; font-weight: 600; }
+
+.pill {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--panel-hi);
+  color: var(--amber);
+  font-variant-numeric: tabular-nums;
+}
+
+.update-notes {
+  margin: 0 0 10px;
+  color: var(--ink-dim);
+  font-size: 12px;
+  line-height: 1.5;
+  max-height: 56px;
+  overflow: hidden;
+  white-space: pre-wrap;
+}
+.update-notes:empty { display: none; }
+
+.update-buttons { display: flex; gap: 8px; align-items: center; }
+
+.progress {
+  height: 6px;
+  background: #10141d;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+#progress-bar {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--amber), var(--amber-hot));
+  transition: width 0.15s ease;
+}
+
+/* ----------------------------------------------------------------- toast */
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
+  background: var(--panel-hi);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 12px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}

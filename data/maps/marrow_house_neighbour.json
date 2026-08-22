@@ -1,0 +1,41 @@
+{
+  "id": "marrow_house_neighbour",
+  "name": "Ollet House",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIIIIIIIIII",
+    "IffffffffffI",
+    "IfrrffffKKfI",
+    "IfrrfffffffI",
+    "IffffffffffI",
+    "IffffffffffI",
+    "IfffffDffffI",
+    "IIIIIIIIIIII"
+  ],
+  "warps": [
+    { "x": 6, "y": 6, "toMap": "marrow_hollow", "toX": 6, "toY": 15, "facing": "down", "style": "door" }
+  ],
+  "npcs": [
+    {
+      "id": "ollet",
+      "sprite": "villager_m",
+      "x": 8,
+      "y": 3,
+      "facing": "left",
+      "movement": { "kind": "static" },
+      "script": "mh_ollet"
+    },
+    {
+      "id": "ollet_child",
+      "sprite": "rival",
+      "x": 3,
+      "y": 4,
+      "facing": "right",
+      "movement": { "kind": "lookAround" },
+      "script": "mh_ollet_child"
+    }
+  ],
+  "objects": []
+}

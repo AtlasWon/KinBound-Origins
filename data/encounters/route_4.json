@@ -1,0 +1,137 @@
+{
+  "mapId": "route_4",
+  "methods": {
+    "tallGrass": {
+      "rate": 175,
+      "slots": [
+        {
+          "species": "tuftail",
+          "minLevel": 16,
+          "maxLevel": 19,
+          "weight": 16
+        },
+        {
+          "species": "silthopper",
+          "minLevel": 16,
+          "maxLevel": 19,
+          "weight": 16
+        },
+        {
+          "species": "pipwing",
+          "minLevel": 15,
+          "maxLevel": 18,
+          "weight": 14
+        },
+        {
+          "species": "gravelet",
+          "minLevel": 16,
+          "maxLevel": 19,
+          "weight": 13
+        },
+        {
+          "species": "kestrelle",
+          "minLevel": 17,
+          "maxLevel": 20,
+          "weight": 11
+        },
+        {
+          "species": "spinnet",
+          "minLevel": 16,
+          "maxLevel": 19,
+          "weight": 11
+        },
+        {
+          "species": "gullswift",
+          "minLevel": 17,
+          "maxLevel": 20,
+          "weight": 10
+        },
+        {
+          "species": "mossback",
+          "minLevel": 17,
+          "maxLevel": 20,
+          "weight": 6
+        },
+        {
+          "species": "frostnip",
+          "minLevel": 17,
+          "maxLevel": 20,
+          "weight": 3,
+          "time": [
+            "night"
+          ]
+        }
+      ]
+    },
+    "water": {
+      "rate": 140,
+      "slots": [
+        {
+          "species": "shalefin",
+          "minLevel": 15,
+          "maxLevel": 19,
+          "weight": 40
+        },
+        {
+          "species": "pinchel",
+          "minLevel": 15,
+          "maxLevel": 19,
+          "weight": 30
+        },
+        {
+          "species": "rillfry",
+          "minLevel": 14,
+          "maxLevel": 18,
+          "weight": 20
+        },
+        {
+          "species": "bladderwrack",
+          "minLevel": 17,
+          "maxLevel": 20,
+          "weight": 8
+        },
+        {
+          "species": "brinewisp",
+          "minLevel": 18,
+          "maxLevel": 21,
+          "weight": 2,
+          "time": [
+            "night"
+          ]
+        }
+      ]
+    },
+    "fishOld": {
+      "slots": [
+        {
+          "species": "shalefin",
+          "minLevel": 12,
+          "maxLevel": 18,
+          "weight": 100
+        }
+      ]
+    },
+    "fishGood": {
+      "slots": [
+        {
+          "species": "pinchel",
+          "minLevel": 16,
+          "maxLevel": 22,
+          "weight": 55
+        },
+        {
+          "species": "currentail",
+          "minLevel": 18,
+          "maxLevel": 23,
+          "weight": 30
+        },
+        {
+          "species": "anchorling",
+          "minLevel": 19,
+          "maxLevel": 24,
+          "weight": 15
+        }
+      ]
+    }
+  }
+}

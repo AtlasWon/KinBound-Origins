@@ -1,0 +1,268 @@
+{
+  "id": "kellowmere",
+  "name": "Kellowmere",
+  "displayName": "KELLOWMERE",
+  "music": "town_hollow",
+  "battleBackdrop": "quarry",
+  "indoor": false,
+  "regionPos": {
+    "x": 22,
+    "y": 15
+  },
+  "rows": [
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+    "TTCCCCCCCCCCCCCCCCCCCCCCCCCCTT",
+    "TTccccccccccccccccccccccccccTT",
+    "TT..........................TT",
+    "TT.........[^^^^^^].........TT",
+    "TT.........#wwwDww#.........TT",
+    "TT.........========.........TT",
+    "TT............--............TT",
+    "TT~~~~~~~.....--............TT",
+    "TT~~~~~~~.....--..144443....TT",
+    "TT~~~~~~~.....--..122523....TT",
+    "TT~~~~~~~.....--..GGhgGG....TT",
+    "TT~~~~~~~.....--......TTTTTTTT",
+    "TT~~~~~~~.....--...........TTT",
+    "TT~~~~~~~.....--......TTTTTTTT",
+    "TT............--............TT",
+    "TT----------------------------",
+    "TT......699998--............TT",
+    "TT......677078--............TT",
+    "TT......GGmgGG--............TT",
+    "TT............--............TT",
+    "TT..[^^]......--......[^^]..TT",
+    "TT..#wD#......--......#wD#..TT",
+    "TT............--............TT",
+    "TT.....!......--......!.....TT",
+    "TT............--............TT",
+    "TT............--............TT",
+    "TTTTTTTTTTTTTT--TTTTTTTTTTTTTT"
+  ],
+  "warps": [
+    {
+      "x": 15,
+      "y": 5,
+      "toMap": "kellowmere_bastion",
+      "toX": 7,
+      "toY": 14,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 21,
+      "y": 11,
+      "toMap": "kellowmere_waystation",
+      "toX": 6,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 11,
+      "y": 19,
+      "toMap": "kellowmere_provisioner",
+      "toX": 6,
+      "toY": 6,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 6,
+      "y": 22,
+      "toMap": "kellowmere_house_a",
+      "toX": 6,
+      "toY": 6,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 24,
+      "y": 22,
+      "toMap": "kellowmere_house_b",
+      "toX": 6,
+      "toY": 6,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 14,
+      "y": 27,
+      "toMap": "route_2",
+      "toX": 14,
+      "toY": 1,
+      "facing": "down",
+      "style": "edge"
+    },
+    {
+      "x": 15,
+      "y": 27,
+      "toMap": "route_2",
+      "toX": 15,
+      "toY": 1,
+      "facing": "down",
+      "style": "edge"
+    },
+    {
+      "x": 29,
+      "y": 16,
+      "toMap": "route_3",
+      "toX": 1,
+      "toY": 9,
+      "facing": "right",
+      "style": "edge"
+    },
+    {
+      "x": 28,
+      "y": 16,
+      "toMap": "route_3",
+      "toX": 1,
+      "toY": 10,
+      "facing": "right",
+      "style": "edge"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "km_quarryman",
+      "sprite": "hiker",
+      "x": 10,
+      "y": 7,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "km_quarryman"
+    },
+    {
+      "id": "km_child",
+      "sprite": "villager_m",
+      "x": 19,
+      "y": 17,
+      "facing": "left",
+      "movement": {
+        "kind": "wander",
+        "radius": 2
+      },
+      "script": "km_child"
+    },
+    {
+      "id": "km_angler",
+      "sprite": "villager_f",
+      "x": 10,
+      "y": 12,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "km_angler"
+    },
+    {
+      "id": "km_greeter",
+      "sprite": "villager_f",
+      "x": 16,
+      "y": 24,
+      "facing": "down",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "km_greeter"
+    },
+    {
+      "id": "km_perrin",
+      "sprite": "rival",
+      "x": 12,
+      "y": 16,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "km_perrin",
+      "hiddenIfFlag": "perrin_km_done"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 24,
+      "text": [
+        "KELLOWMERE",
+        "Quarry above, lake below, and one very stubborn Keeper between them."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 22,
+      "y": 24,
+      "text": [
+        "Route 2 south to Ashgate.",
+        "North road closed: quarry face unstable."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 6,
+      "text": [
+        "THE STONE BASTION",
+        "Keeper Roxen Quill. Challengers welcome. Bring patience."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 12,
+      "text": [
+        "The lake never freezes, even in the hard months.",
+        "The quarry hands do not swim in it. Ask them why and they change the subject."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 26,
+      "y": 3,
+      "item": "great_potion",
+      "quantity": 1,
+      "flag": "item_km_ledge"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 5,
+      "y": 3,
+      "item": "deep_vessel",
+      "quantity": 1,
+      "flag": "item_km_hidden"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 25,
+      "y": 26,
+      "item": "rouse",
+      "quantity": 1,
+      "flag": "item_km_hidden2"
+    },
+    {
+      "kind": "pushable",
+      "x": 24,
+      "y": 13
+    },
+    {
+      "kind": "item",
+      "x": 25,
+      "y": 13,
+      "item": "deep_vessel",
+      "quantity": 1,
+      "flag": "item_km_nook"
+    },
+    {
+      "kind": "sign",
+      "x": 21,
+      "y": 12,
+      "text": [
+        "Someone has chalked on the stone: MOVE ME.",
+        "Underneath, in a different hand: WITH WHAT."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<!--
+  The game loads nothing from anywhere but its own origin: every tile, sprite,
+  sound and note is generated at runtime, and the only fetches are the JSON
+  files next to this page. Saying so explicitly costs nothing and means the
+  desktop build is not running an unrestricted page.
+-->
+<meta http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; media-src 'self' blob:; font-src 'self';" />
+<title>KinBound - Amber Version</title>
+<style>
+  html, body {
+    margin: 0; padding: 0; height: 100%; overflow: hidden;
+    background: #05060a; color: #cfd8e8;
+    font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  }
+  #screen {
+    display: block; width: 100vw; height: 100vh;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    cursor: default;
+  }
+  #loading {
+    position: fixed; inset: 0; display: grid; place-items: center;
+    font-size: 13px; letter-spacing: 0.18em; color: #6d7a92;
+  }
+</style>
+</head>
+<body>
+  <canvas id="screen"></canvas>
+  <div id="loading">LOADING KINBOUND...</div>
+  <script type="module" src="./build/js/main.js"></script>
+</body>
+</html>

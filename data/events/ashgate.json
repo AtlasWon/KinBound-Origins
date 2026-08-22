@@ -1,0 +1,138 @@
+[
+  {
+    "id": "ag_gate",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
+          "flag": "gate_north_open"
+        },
+        "then": [
+          {
+            "kind": "say",
+            "who": "SURVEYOR",
+            "lines": [
+              "Road is open. Mind the stakes."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "if",
+            "cond": {
+              "kind": "defeated",
+              "trainer": "concord_surveyor_1"
+            },
+            "then": [
+              {
+                "kind": "say",
+                "who": "SURVEYOR",
+                "lines": [
+                  "Ilm radioed down about you. Said you would turn up here eventually.",
+                  "Said you were polite about it, which apparently counts for something."
+                ]
+              },
+              {
+                "kind": "wait",
+                "frames": 20
+              },
+              {
+                "kind": "say",
+                "who": "SURVEYOR",
+                "lines": [
+                  "Go on. The corridor is measured, the stakes are in. There is nothing to see.",
+                  "That is not me being cagey. There is genuinely nothing to see. That is the problem."
+                ]
+              },
+              {
+                "kind": "setFlag",
+                "flag": "gate_north_open"
+              },
+              {
+                "kind": "sfx",
+                "sound": "confirm"
+              },
+              {
+                "kind": "move",
+                "who": "ashgate_gate_a",
+                "steps": [
+                  "left",
+                  "left"
+                ],
+                "speed": "walk"
+              },
+              {
+                "kind": "move",
+                "who": "ashgate_gate_b",
+                "steps": [
+                  "right",
+                  "right"
+                ],
+                "speed": "walk"
+              },
+              {
+                "kind": "removeNpc",
+                "who": "ashgate_gate_a"
+              },
+              {
+                "kind": "removeNpc",
+                "who": "ashgate_gate_b"
+              },
+              {
+                "kind": "say",
+                "lines": [
+                  "The way north is open."
+                ]
+              }
+            ],
+            "else": [
+              {
+                "kind": "say",
+                "who": "SURVEYOR",
+                "lines": [
+                  "North road is closed. Survey work.",
+                  "It will be open in a week. It has been a week for five weeks."
+                ]
+              },
+              {
+                "kind": "if",
+                "cond": {
+                  "kind": "not",
+                  "of": {
+                    "kind": "flag",
+                    "flag": "ag_gate_asked"
+                  }
+                },
+                "then": [
+                  {
+                    "kind": "setFlag",
+                    "flag": "ag_gate_asked"
+                  },
+                  {
+                    "kind": "say",
+                    "who": "SURVEYOR",
+                    "lines": [
+                      "Look. Between us. We are not surveying the road.",
+                      "We are surveying what is under it.",
+                      "...I did not say that."
+                    ]
+                  },
+                  {
+                    "kind": "say",
+                    "who": "SURVEYOR",
+                    "lines": [
+                      "Take it up with Ilm. She is on the corridor south of here.",
+                      "If you can get past her, I am not going to be the one who stops you."
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

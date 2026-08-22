@@ -1,0 +1,61 @@
+{
+  "id": "marrow_house_player",
+  "name": "Your House",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIIIIIIIIII",
+    "IfffffffffSI",
+    "IfKKffffkkfI",
+    "IfffffffrrfI",
+    "IffffffffffI",
+    "IffffffffffI",
+    "IfffffDffffI",
+    "IIIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 6,
+      "toMap": "marrow_hollow",
+      "toX": 6,
+      "toY": 7,
+      "facing": "down",
+      "style": "door"
+    },
+    {
+      "x": 10,
+      "y": 1,
+      "toMap": "marrow_house_up",
+      "toX": 10,
+      "toY": 4,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "mother",
+      "sprite": "villager_f",
+      "x": 5,
+      "y": 4,
+      "facing": "down",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "mh_mother"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 2,
+      "text": [
+        "Half the crates are still packed.",
+        "You are not sure you want to unpack them."
+      ]
+    }
+  ]
+}

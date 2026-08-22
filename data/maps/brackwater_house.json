@@ -1,0 +1,42 @@
+{
+  "id": "brackwater_house",
+  "name": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIIIIIIIIII",
+    "IffffffffffI",
+    "IfKKffffrrfI",
+    "IfffffffrrfI",
+    "IffffffffffI",
+    "IffffffffffI",
+    "IfffffDffffI",
+    "IIIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 6,
+      "toMap": "brackwater",
+      "toX": 23,
+      "toY": 11,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "brackwater_house_resident",
+      "sprite": "villager_f",
+      "x": 4,
+      "y": 4,
+      "facing": "down",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "bw_house"
+    }
+  ],
+  "objects": []
+}

@@ -1,0 +1,267 @@
+{
+  "id": "ashgate",
+  "name": "Ashgate",
+  "displayName": "ASHGATE",
+  "music": "town_hollow",
+  "battleBackdrop": "highland",
+  "indoor": false,
+  "regionPos": {
+    "x": 22,
+    "y": 23
+  },
+  "_legend": "Waystation west, Provisioner east, two houses south, north gate not yet open.",
+  "rows": [
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+    "TTTTTTTTTTTTTT--TTTTTTTTTTTTTT",
+    "TT.tt.........--.........tt.TT",
+    "TT.tt.........--.........tt.TT",
+    "TT.144443.....--....699998..TT",
+    "TT.122523.....--....677078..TT",
+    "TT.GGhgGG!....--....GGmgGG..TT",
+    "TT.-----......--.....----...TT",
+    "TT............--............TT",
+    "TT.-------------------------TT",
+    "TT...........o--o...........TT",
+    "TT..~~~~......--.......tt...TT",
+    "TT..~~~~......--.......tt...TT",
+    "TT..~~~~......--............TT",
+    "TT.[^^].___...--...___.[^^].TT",
+    "TT.#wD#.___...--...___.#wD#.TT",
+    "TT............--............TT",
+    "TT..**........--........**..TT",
+    "TT............--............TT",
+    "TT.....tt.....--.....tt.....TT",
+    "TT............--............TT",
+    "TT.....!......--......!.....TT",
+    "TT............--............TT",
+    "TTTTTTTTTTTTTT--TTTTTTTTTTTTTT"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 6,
+      "toMap": "ashgate_waystation",
+      "toX": 6,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 23,
+      "y": 6,
+      "toMap": "ashgate_provisioner",
+      "toX": 6,
+      "toY": 6,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 5,
+      "y": 15,
+      "toMap": "ashgate_house_a",
+      "toX": 6,
+      "toY": 6,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 25,
+      "y": 15,
+      "toMap": "ashgate_house_b",
+      "toX": 6,
+      "toY": 6,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 14,
+      "y": 23,
+      "toMap": "route_1",
+      "toX": 14,
+      "toY": 1,
+      "facing": "down",
+      "style": "edge"
+    },
+    {
+      "x": 15,
+      "y": 23,
+      "toMap": "route_1",
+      "toX": 15,
+      "toY": 1,
+      "facing": "down",
+      "style": "edge"
+    },
+    {
+      "x": 14,
+      "y": 1,
+      "toMap": "route_2",
+      "toX": 14,
+      "toY": 32,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 15,
+      "y": 1,
+      "toMap": "route_2",
+      "toX": 15,
+      "toY": 32,
+      "facing": "up",
+      "style": "edge"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "ashgate_gate_a",
+      "sprite": "concord",
+      "x": 14,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ag_gate",
+      "hiddenIfFlag": "gate_north_open"
+    },
+    {
+      "id": "ashgate_gate_b",
+      "sprite": "concord",
+      "x": 15,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ag_gate",
+      "hiddenIfFlag": "gate_north_open"
+    },
+    {
+      "id": "ashgate_surveyor",
+      "sprite": "concord",
+      "x": 11,
+      "y": 4,
+      "facing": "right",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "ag_surveyor"
+    },
+    {
+      "id": "ashgate_elder",
+      "sprite": "villager_f",
+      "x": 9,
+      "y": 11,
+      "facing": "right",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "ag_elder"
+    },
+    {
+      "id": "ashgate_fisher",
+      "sprite": "villager_m",
+      "x": 8,
+      "y": 12,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ag_fisher"
+    },
+    {
+      "id": "ashgate_kid",
+      "sprite": "villager_m",
+      "x": 19,
+      "y": 17,
+      "facing": "left",
+      "movement": {
+        "kind": "wander",
+        "radius": 2
+      },
+      "script": "ag_kid"
+    },
+    {
+      "id": "ashgate_porter",
+      "sprite": "hiker",
+      "x": 20,
+      "y": 8,
+      "facing": "down",
+      "movement": {
+        "kind": "pace",
+        "axis": "x",
+        "distance": 3
+      },
+      "script": "ag_porter"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 21,
+      "text": [
+        "ASHGATE",
+        "Waystation west. Provisioner east.",
+        "The north gate is closed for survey work."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 22,
+      "y": 21,
+      "text": [
+        "Route 1 south to Marrow Hollow.",
+        "Somebody has scratched under it: AND NOWHERE ELSE, LATELY."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 6,
+      "text": [
+        "WAYSTATION - rest here, it costs nothing."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 19,
+      "y": 5,
+      "text": [
+        "PROVISIONER - if we have it, you can have it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 13,
+      "text": [
+        "POND - no swimming, no fishing, no exceptions.",
+        "All three rules are ignored daily."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 4,
+      "y": 2,
+      "item": "strong_potion",
+      "quantity": 1,
+      "flag": "item_ag_potion"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 12,
+      "y": 19,
+      "item": "fine_vessel",
+      "quantity": 1,
+      "flag": "item_ag_hidden"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 26,
+      "y": 3,
+      "item": "tonic_berry",
+      "quantity": 2,
+      "flag": "item_ag_berry"
+    }
+  ]
+}

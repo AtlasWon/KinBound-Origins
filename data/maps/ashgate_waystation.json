@@ -1,0 +1,77 @@
+{
+  "id": "ashgate_waystation",
+  "name": "Waystation",
+  "displayName": "WAYSTATION",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIIIIIIIIIIII",
+    "IffffffffffffI",
+    "IfKKKKKKfffffI",
+    "IffffffffffffI",
+    "IffffffffffffI",
+    "IfrrffffffrrfI",
+    "IfrrffffffrrfI",
+    "IffffffffffffI",
+    "IfffffDffffffI",
+    "IIIIIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 8,
+      "toMap": "ashgate",
+      "toX": 6,
+      "toY": 7,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "ways_keeper",
+      "sprite": "villager_f",
+      "x": 4,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "waystation_heal"
+    },
+    {
+      "id": "ways_roost",
+      "sprite": "professor",
+      "x": 10,
+      "y": 1,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "roost_terminal"
+    },
+    {
+      "id": "ways_traveller",
+      "sprite": "hiker",
+      "x": 3,
+      "y": 6,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ag_traveller"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 2,
+      "text": [
+        "A brass terminal. THE ROOST, stencilled on the side.",
+        "Kin you cannot carry wait here."
+      ]
+    }
+  ]
+}

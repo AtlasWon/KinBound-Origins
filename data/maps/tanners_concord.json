@@ -1,0 +1,78 @@
+{
+  "id": "tanners_concord",
+  "name": "Interior",
+  "music": "concord",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIIIIIIIIIIII",
+    "IffffffffffffI",
+    "IfKKKKfffKKKfI",
+    "IffffffffffffI",
+    "IffffffffffffI",
+    "IfrrrrffrrrrfI",
+    "IffffffffffffI",
+    "IffffffffffffI",
+    "IfffffDffffffI",
+    "IIIIIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 8,
+      "toMap": "tanners_rest",
+      "toX": 7,
+      "toY": 17,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tr_concord_clerk",
+      "sprite": "concord",
+      "x": 3,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tr_concord_clerk"
+    },
+    {
+      "id": "tr_concord_kerrow",
+      "sprite": "concord",
+      "x": 10,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tr_kerrow_first",
+      "hiddenIfFlag": "met_kerrow"
+    },
+    {
+      "id": "tr_concord_hand",
+      "sprite": "concord",
+      "x": 4,
+      "y": 6,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tr_concord_hand"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 2,
+      "text": [
+        "A wall of soundings. Depth, bearing, date.",
+        "Every reading from the last four months is circled in red.",
+        "The circles are not near the coast. They are all under the land."
+      ]
+    }
+  ]
+}

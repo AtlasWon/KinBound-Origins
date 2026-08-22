@@ -1,0 +1,213 @@
+[
+  {
+    "id": "mh_mother",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
+          "flag": "got_starter"
+        },
+        "then": [
+          {
+            "kind": "say",
+            "who": "MOM",
+            "lines": [
+              "Let me look at it. Oh. It is watching me back.",
+              "Take care of each other out there. Both of you, and I mean that in both directions."
+            ]
+          },
+          {
+            "kind": "if",
+            "cond": {
+              "kind": "not",
+              "of": {
+                "kind": "flag",
+                "flag": "mom_rest"
+              }
+            },
+            "then": [
+              {
+                "kind": "setFlag",
+                "flag": "mom_rest"
+              },
+              {
+                "kind": "say",
+                "who": "MOM",
+                "lines": [
+                  "Sit down a minute first. You look like your father used to."
+                ]
+              },
+              {
+                "kind": "healParty"
+              },
+              {
+                "kind": "say",
+                "lines": [
+                  "Your kin were looked after."
+                ]
+              }
+            ],
+            "else": [
+              {
+                "kind": "ask",
+                "lines": [
+                  "Do you want to rest before you go?"
+                ],
+                "yes": [
+                  {
+                    "kind": "fade",
+                    "to": "black",
+                    "frames": 16
+                  },
+                  {
+                    "kind": "healParty"
+                  },
+                  {
+                    "kind": "wait",
+                    "frames": 20
+                  },
+                  {
+                    "kind": "fade",
+                    "to": "clear",
+                    "frames": 16
+                  },
+                  {
+                    "kind": "say",
+                    "who": "MOM",
+                    "lines": [
+                      "Better. Off you go."
+                    ]
+                  }
+                ],
+                "no": [
+                  {
+                    "kind": "say",
+                    "who": "MOM",
+                    "lines": [
+                      "No, of course not. Go."
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "who": "MOM",
+            "lines": [
+              "There you are. Up before me, which has happened exactly twice in your life.",
+              "Both times for the same reason."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "MOM",
+            "lines": [
+              "You have waited years to get your first kin. Since you were seven and you would not stop asking.",
+              "Since your father's journals came back from the coast and he did not.",
+              "Well. Dr. Vess is expecting you, and today you stop waiting."
+            ]
+          },
+          {
+            "kind": "choice",
+            "lines": [
+              "So. Are you ready?"
+            ],
+            "options": [
+              {
+                "label": "I'm ready",
+                "then": [
+                  {
+                    "kind": "say",
+                    "who": "MOM",
+                    "lines": [
+                      "Good. That is the correct answer and I do not believe a word of it.",
+                      "Nobody is ready. You go anyway. That is the whole trick."
+                    ]
+                  }
+                ]
+              },
+              {
+                "label": "I'm nervous",
+                "then": [
+                  {
+                    "kind": "say",
+                    "who": "MOM",
+                    "lines": [
+                      "Good. The ones who are not nervous are the ones who come home in a week.",
+                      "Be nervous, and go anyway."
+                    ]
+                  }
+                ]
+              },
+              {
+                "label": "Breakfast first?",
+                "then": [
+                  {
+                    "kind": "say",
+                    "who": "MOM",
+                    "lines": [
+                      "Absolutely not, the stove is still in a crate.",
+                      "Take these instead and stop looking at me like that."
+                    ]
+                  },
+                  {
+                    "kind": "giveItem",
+                    "item": "tonic_berry",
+                    "count": 2
+                  },
+                  {
+                    "kind": "say",
+                    "lines": [
+                      "You received 2 Tonic Berries."
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "MOM",
+            "lines": [
+              "Here. Your father's. It is out of date and half the coast has moved since, but it is a map."
+            ]
+          },
+          {
+            "kind": "giveItem",
+            "item": "region_map",
+            "count": 1
+          },
+          {
+            "kind": "say",
+            "lines": [
+              "You received the REGION MAP."
+            ]
+          },
+          {
+            "kind": "setFlag",
+            "flag": "mom_sendoff"
+          },
+          {
+            "kind": "setRespawn",
+            "map": "marrow_house_player",
+            "x": 6,
+            "y": 5
+          },
+          {
+            "kind": "say",
+            "who": "MOM",
+            "lines": [
+              "Go on. The station is the big one with the charts in the window.",
+              "And Perrin has been outside since dawn pretending not to wait for you."
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

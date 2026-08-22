@@ -1,0 +1,102 @@
+{
+  "mapId": "route_3",
+  "methods": {
+    "tallGrass": {
+      "rate": 175,
+      "slots": [
+        {
+          "species": "tuftail",
+          "minLevel": 13,
+          "maxLevel": 16,
+          "weight": 18
+        },
+        {
+          "species": "gravelet",
+          "minLevel": 13,
+          "maxLevel": 16,
+          "weight": 16
+        },
+        {
+          "species": "chalkid",
+          "minLevel": 13,
+          "maxLevel": 16,
+          "weight": 15
+        },
+        {
+          "species": "pipwing",
+          "minLevel": 12,
+          "maxLevel": 15,
+          "weight": 12
+        },
+        {
+          "species": "spinnet",
+          "minLevel": 13,
+          "maxLevel": 16,
+          "weight": 12
+        },
+        {
+          "species": "slatewing",
+          "minLevel": 14,
+          "maxLevel": 17,
+          "weight": 10
+        },
+        {
+          "species": "mossback",
+          "minLevel": 15,
+          "maxLevel": 17,
+          "weight": 7
+        },
+        {
+          "species": "frostnip",
+          "minLevel": 14,
+          "maxLevel": 17,
+          "weight": 6,
+          "time": [
+            "morning",
+            "evening",
+            "night"
+          ]
+        },
+        {
+          "species": "emberbore",
+          "minLevel": 15,
+          "maxLevel": 17,
+          "weight": 4
+        }
+      ]
+    },
+    "water": {
+      "rate": 130,
+      "slots": [
+        {
+          "species": "rillfry",
+          "minLevel": 12,
+          "maxLevel": 16,
+          "weight": 55
+        },
+        {
+          "species": "rilltail",
+          "minLevel": 13,
+          "maxLevel": 17,
+          "weight": 35
+        },
+        {
+          "species": "currentail",
+          "minLevel": 16,
+          "maxLevel": 18,
+          "weight": 10
+        }
+      ]
+    },
+    "fishOld": {
+      "slots": [
+        {
+          "species": "rillfry",
+          "minLevel": 10,
+          "maxLevel": 16,
+          "weight": 100
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,202 @@
+[
+  {
+    "id": "mh_perrin_meet",
+    "trigger": "step",
+    "map": "marrow_hollow",
+    "at": [
+      { "x": 6, "y": 8 },
+      { "x": 7, "y": 8 },
+      { "x": 5, "y": 8 }
+    ],
+    "when": {
+      "kind": "all",
+      "of": [
+        { "kind": "flag", "flag": "mom_sendoff" },
+        { "kind": "not", "of": { "kind": "flag", "flag": "met_perrin" } }
+      ]
+    },
+    "onceFlag": "met_perrin",
+    "actions": [
+      { "kind": "sfx", "sound": "spotted" },
+      { "kind": "wait", "frames": 18 },
+      { "kind": "move", "who": "mh_perrin", "steps": ["left", "left", "left"], "speed": "run" },
+      { "kind": "face", "who": "mh_perrin", "dir": "left" },
+      {
+        "kind": "say",
+        "who": "PERRIN",
+        "lines": [
+          "FINALLY. I have been stood in this exact spot since it was dark.",
+          "A woman with a bucket asked me twice if I was lost."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "PERRIN",
+        "lines": [
+          "Vess has three of them down there. Three. On the desk, in the open, like a bowl of apples.",
+          "I have not touched them. I want it on record that I have not touched them."
+        ]
+      },
+      {
+        "kind": "choice",
+        "lines": ["Well? Are you coming or not?"],
+        "options": [
+          {
+            "label": "Let's go",
+            "then": [
+              {
+                "kind": "say",
+                "who": "PERRIN",
+                "lines": ["Yes. Good. Right. Try to keep up."]
+              }
+            ]
+          },
+          {
+            "label": "You go first",
+            "then": [
+              {
+                "kind": "say",
+                "who": "PERRIN",
+                "lines": [
+                  "Absolutely not, it is your day.",
+                  "I have had mine explained to me since I was four. Yours is still yours."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Who are you?",
+            "then": [
+              {
+                "kind": "say",
+                "who": "PERRIN",
+                "lines": [
+                  "Perrin. Ashe. We have been neighbours for three months and I have carried four of your crates.",
+                  "...Unbelievable. Come on."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      { "kind": "move", "who": "mh_perrin", "steps": ["right", "right", "up", "up"], "speed": "run" },
+      { "kind": "removeNpc", "who": "mh_perrin" },
+      {
+        "kind": "say",
+        "lines": ["Perrin is already halfway up the road."]
+      }
+    ]
+  },
+
+  {
+    "id": "mh_perrin_first",
+    "trigger": "step",
+    "map": "marrow_hollow",
+    "at": [
+      { "x": 22, "y": 8 },
+      { "x": 21, "y": 7 },
+      { "x": 23, "y": 7 }
+    ],
+    "when": {
+      "kind": "all",
+      "of": [
+        { "kind": "flag", "flag": "got_starter" },
+        { "kind": "not", "of": { "kind": "flag", "flag": "perrin_first_done" } }
+      ]
+    },
+    "onceFlag": "perrin_first_done",
+    "actions": [
+      { "kind": "sfx", "sound": "spotted" },
+      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "say",
+        "who": "PERRIN",
+        "lines": [
+          "Hey. HEY. Don't you dare walk off up that road yet.",
+          "Vess gave me one too. She picked the one that beats yours, which I am choosing to find funny."
+        ]
+      },
+      {
+        "kind": "choice",
+        "lines": ["One battle. Right here. Before either of us knows what we are doing."],
+        "options": [
+          {
+            "label": "Bring it",
+            "then": [
+              { "kind": "say", "who": "PERRIN", "lines": ["THERE it is."] }
+            ]
+          },
+          {
+            "label": "We just got them",
+            "then": [
+              {
+                "kind": "say",
+                "who": "PERRIN",
+                "lines": [
+                  "Exactly. That is the only moment this is ever going to be fair.",
+                  "In a month you will be insufferable. Fight me now."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "starter_sprigling" },
+        "then": [{ "kind": "battleTrainer", "trainer": "perrin_first_cinderpaw", "onLoss": "continue" }],
+        "else": [
+          {
+            "kind": "if",
+            "cond": { "kind": "flag", "flag": "starter_cinderpaw" },
+            "then": [{ "kind": "battleTrainer", "trainer": "perrin_first_rilltail", "onLoss": "continue" }],
+            "else": [{ "kind": "battleTrainer", "trainer": "perrin_first_sprigling", "onLoss": "continue" }]
+          }
+        ]
+      },
+      {
+        "kind": "if",
+        "cond": { "kind": "var", "var": "last_battle_won", "op": "==", "value": 1 },
+        "then": [
+          {
+            "kind": "say",
+            "who": "PERRIN",
+            "lines": [
+              "Right. Yes. That is what I get for picking on type advantage alone.",
+              "Noted. Written down. Never doing that again."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "who": "PERRIN",
+            "lines": [
+              "Ha! Yes! Sorry. Sorry.",
+              "That was mostly the matchup and we both know it. Get them patched up."
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "PERRIN",
+        "lines": [
+          "Listen, before you go. There were people on the north road last week.",
+          "Grey coats, brass instruments, very polite. Stillwater Concord, the badges said.",
+          "They were not measuring the road. They were kneeling on it, measuring what is underneath."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "PERRIN",
+        "lines": [
+          "My mother keeps a Bastion. She has never once sounded frightened on paper.",
+          "Her last letter asked whether the sea near you had stopped moving too.",
+          "...Go. Fill Vess's book. I will see you at Ashgate."
+        ]
+      },
+      { "kind": "setVar", "var": "act", "value": 1 }
+    ]
+  }
+]

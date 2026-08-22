@@ -1,0 +1,65 @@
+[
+  {
+    "id": "waystation_heal",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "WAYSTATION",
+        "lines": [
+          "Welcome in. Long road?",
+          "Let me take a look at them."
+        ]
+      },
+      {
+        "kind": "setRespawn"
+      },
+      {
+        "kind": "fade",
+        "to": "black",
+        "frames": 18
+      },
+      {
+        "kind": "healParty"
+      },
+      {
+        "kind": "wait",
+        "frames": 24
+      },
+      {
+        "kind": "fade",
+        "to": "clear",
+        "frames": 18
+      },
+      {
+        "kind": "say",
+        "who": "WAYSTATION",
+        "lines": [
+          "All patched up. Try to keep them that way."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "WAYSTATION",
+        "lines": [
+          "If it goes badly out there, you will wake up here."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "roost_terminal",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "lines": [
+          "The Roost terminal hums awake."
+        ]
+      },
+      {
+        "kind": "openStorage"
+      }
+    ]
+  }
+]

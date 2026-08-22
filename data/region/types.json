@@ -1,0 +1,45 @@
+{
+  "$comment": "KinBound type matrix. Authored for this game; balanced by tools/validate-data.js.",
+  "order": [
+    "beast", "flame", "tide", "verdant", "spark", "frost", "brawl", "venom", "terra",
+    "gale", "psyche", "chitin", "stone", "spirit", "iron", "umbral", "radiant"
+  ],
+  "meta": {
+    "beast":   { "name": "Beast",   "color": "#b8b09c", "blurb": "Plain, adaptable, stubbornly ordinary." },
+    "flame":   { "name": "Flame",   "color": "#e0603a", "blurb": "Heat, ash and appetite." },
+    "tide":    { "name": "Tide",    "color": "#3f7fd0", "blurb": "Pressure, patience, undertow." },
+    "verdant": { "name": "Verdant", "color": "#5aa04a", "blurb": "Green things that have learned to push back." },
+    "spark":   { "name": "Spark",   "color": "#e8c53a", "blurb": "Charge looking for a path to ground." },
+    "frost":   { "name": "Frost",   "color": "#8fd4e0", "blurb": "Stillness sharp enough to cut." },
+    "brawl":   { "name": "Brawl",   "color": "#c0562e", "blurb": "Trained force, delivered on purpose." },
+    "venom":   { "name": "Venom",   "color": "#9a58b0", "blurb": "Patience with a chemical edge." },
+    "terra":   { "name": "Terra",   "color": "#c9a24d", "blurb": "The weight underfoot." },
+    "gale":    { "name": "Gale",    "color": "#9ab8e8", "blurb": "Everything that outruns the ground." },
+    "psyche":  { "name": "Psyche",  "color": "#e06a92", "blurb": "Thought applied as leverage." },
+    "chitin":  { "name": "Chitin",  "color": "#8fb03a", "blurb": "Small, numerous, older than all of us." },
+    "stone":   { "name": "Stone",   "color": "#b09a68", "blurb": "Slow to move, slower to forgive." },
+    "spirit":  { "name": "Spirit",  "color": "#6b5a9a", "blurb": "What stays behind, and why." },
+    "iron":    { "name": "Iron",    "color": "#93a3ad", "blurb": "Worked metal, holding a grudge." },
+    "umbral":  { "name": "Umbral",  "color": "#5a5048", "blurb": "The advantage taken in low light." },
+    "radiant": { "name": "Radiant", "color": "#f0d68a", "blurb": "Light that insists on being looked at." }
+  },
+  "chart": {
+    "beast":   { "stone": 0.5, "iron": 0.5, "spirit": 0 },
+    "flame":   { "flame": 0.5, "tide": 0.5, "stone": 0.5, "verdant": 2, "frost": 2, "chitin": 2, "iron": 2 },
+    "tide":    { "tide": 0.5, "verdant": 0.5, "spark": 0.5, "flame": 2, "stone": 2, "terra": 2 },
+    "verdant": { "flame": 0.5, "verdant": 0.5, "venom": 0.5, "gale": 0.5, "chitin": 0.5, "iron": 0.5, "tide": 2, "stone": 2, "terra": 2 },
+    "spark":   { "verdant": 0.5, "spark": 0.5, "stone": 0.5, "tide": 2, "gale": 2, "terra": 0 },
+    "frost":   { "flame": 0.5, "tide": 0.5, "frost": 0.5, "iron": 0.5, "verdant": 2, "terra": 2, "gale": 2, "chitin": 2 },
+    "brawl":   { "venom": 0.5, "gale": 0.5, "psyche": 0.5, "chitin": 0.5, "radiant": 0.5, "beast": 2, "stone": 2, "iron": 2, "frost": 2, "umbral": 2, "spirit": 0 },
+    "venom":   { "venom": 0.5, "stone": 0.5, "terra": 0.5, "spirit": 0.5, "verdant": 2, "radiant": 2, "iron": 0 },
+    "terra":   { "verdant": 0.5, "chitin": 0.5, "flame": 2, "spark": 2, "venom": 2, "stone": 2, "iron": 2, "gale": 0 },
+    "gale":    { "spark": 0.5, "stone": 0.5, "iron": 0.5, "verdant": 2, "brawl": 2, "chitin": 2 },
+    "psyche":  { "psyche": 0.5, "iron": 0.5, "brawl": 2, "venom": 2, "umbral": 0 },
+    "chitin":  { "flame": 0.5, "brawl": 0.5, "venom": 0.5, "gale": 0.5, "spirit": 0.5, "iron": 0.5, "verdant": 2, "psyche": 2, "umbral": 2 },
+    "stone":   { "brawl": 0.5, "terra": 0.5, "iron": 0.5, "flame": 2, "frost": 2, "gale": 2, "chitin": 2 },
+    "spirit":  { "umbral": 0.5, "radiant": 0.5, "psyche": 2, "spirit": 2, "beast": 0 },
+    "iron":    { "flame": 0.5, "tide": 0.5, "spark": 0.5, "iron": 0.5, "stone": 2, "frost": 2, "radiant": 2 },
+    "umbral":  { "brawl": 0.5, "umbral": 0.5, "radiant": 0.5, "psyche": 2, "spirit": 2 },
+    "radiant": { "flame": 0.5, "venom": 0.5, "iron": 0.5, "brawl": 2, "umbral": 2, "spirit": 2 }
+  }
+}

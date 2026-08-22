@@ -1,0 +1,19 @@
+[
+  {
+    "id": "tanners_shop",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "PROVISIONER",
+        "lines": [
+          "Everything from four roads, and half of it useful."
+        ]
+      },
+      {
+        "kind": "openShop",
+        "shop": "tanners_provisioner"
+      }
+    ]
+  }
+]

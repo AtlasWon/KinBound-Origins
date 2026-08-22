@@ -1,0 +1,200 @@
+{
+  "id": "route_4",
+  "name": "Route 4",
+  "displayName": "ROUTE 4",
+  "music": "route_coast",
+  "battleBackdrop": "coast",
+  "indoor": false,
+  "regionPos": {
+    "x": 10,
+    "y": 10
+  },
+  "encounterTable": "route_4",
+  "rows": [
+    "TTTTTTTTTTTTTT--TTTTTTTTTTTTTT",
+    "TT............--............TT",
+    "TT............--........oo..TT",
+    "TT...\"\"\"\"\"\"...--............TT",
+    "TT...\"\"\"\"\"\"...--............TT",
+    "TT...\"\"\"\"\"\"...--............TT",
+    "TT............--............TT",
+    "TTLLLLLLLLLLLL--LLLLLLLLLLLLTT",
+    "TT............--............TT",
+    "TT............--....ssssssssTT",
+    "TT............--...ssssss~~~TT",
+    "TT.....TTTT...--...sssss~~~~TT",
+    "TT.....T~~T...--...ssss~~~~~TT",
+    "TT.....TTTT...--...ssss~~~~~TT",
+    "TT............--...ssss~~~~~TT",
+    "TT............--ssssWWWWWWWWTT",
+    "TT....\"\"\"\"\"\"\"\"--sssWWWWWWWWWTT",
+    "TT....\"\"\"\"\"\"\"\"--sssWWWWWWWWWTT",
+    "TT....\"\"\"\"\"\"\"\"--sssWWWWWWWWWTT",
+    "TT............--sssWWWWWWWWWTT",
+    "TT......oo....--ssssWWWWWWWWTT",
+    "TT............--sssssWWWWWWWTT",
+    "TT............ssssssssWWWWWWTT",
+    "TTssssssssssssssssssssWWWWWWTT",
+    "TTTTTTTTTTTTTT--TTTTTTTTTTTTTT"
+  ],
+  "warps": [
+    {
+      "x": 14,
+      "y": 0,
+      "toMap": "tanners_rest",
+      "toX": 14,
+      "toY": 19,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 15,
+      "y": 0,
+      "toMap": "tanners_rest",
+      "toX": 15,
+      "toY": 19,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 14,
+      "y": 24,
+      "toMap": "brackwater",
+      "toX": 14,
+      "toY": 1,
+      "facing": "down",
+      "style": "edge"
+    },
+    {
+      "x": 15,
+      "y": 24,
+      "toMap": "brackwater",
+      "toX": 15,
+      "toY": 1,
+      "facing": "down",
+      "style": "edge"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "r4_teal",
+      "sprite": "villager_f",
+      "x": 13,
+      "y": 4,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r4_teal",
+      "sightRange": 3
+    },
+    {
+      "id": "r4_gorse",
+      "sprite": "hiker",
+      "x": 16,
+      "y": 9,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r4_gorse",
+      "sightRange": 3
+    },
+    {
+      "id": "r4_nesh",
+      "sprite": "villager_m",
+      "x": 13,
+      "y": 17,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r4_nesh",
+      "sightRange": 4
+    },
+    {
+      "id": "r4_bay",
+      "sprite": "villager_f",
+      "x": 16,
+      "y": 21,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r4_bay",
+      "sightRange": 3
+    },
+    {
+      "id": "r4_watcher",
+      "sprite": "hiker",
+      "x": 20,
+      "y": 23,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r4_watcher"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 1,
+      "text": [
+        "ROUTE 4",
+        "Tanners Rest north. Brackwater south, at the water.",
+        "Below the ledges the ground turns to sand and stays that way."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 19,
+      "y": 15,
+      "text": [
+        "DEEP WATER. NO WADING.",
+        "Under it someone has scratched: NOT THAT YOU COULD."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 8,
+      "y": 4,
+      "item": "great_potion",
+      "quantity": 1,
+      "flag": "item_r4_grass"
+    },
+    {
+      "kind": "item",
+      "x": 22,
+      "y": 10,
+      "item": "net_vessel",
+      "quantity": 3,
+      "flag": "item_r4_sand"
+    },
+    {
+      "kind": "item",
+      "x": 7,
+      "y": 20,
+      "item": "full_heal",
+      "quantity": 1,
+      "flag": "item_r4_rocks"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 6,
+      "y": 18,
+      "item": "deep_vessel",
+      "quantity": 1,
+      "flag": "item_r4_hidden"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 24,
+      "y": 22,
+      "item": "rouse",
+      "quantity": 1,
+      "flag": "item_r4_hidden2"
+    }
+  ]
+}

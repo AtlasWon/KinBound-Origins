@@ -1,0 +1,83 @@
+{
+  "speakers": {
+    "bw_harbourmaster": "HARBOURMASTER OTT",
+    "bw_netter": "NETTER SAEL",
+    "bw_child": "WICK",
+    "bw_greeter": "DOCKHAND",
+    "bw_surveyor": "CONCORD SURVEYOR",
+    "bw_ways_sailor": "OLD SAILOR",
+    "brackwater_house_resident": "WIDOW CARRAN",
+    "bw_shopkeeper": "PROVISIONER"
+  },
+  "entries": {
+    "bw_harbourmaster": [
+      {
+        "unlessFlags": [
+          "seal_2_taken"
+        ],
+        "lines": [
+          "Brackwater. Forty boats, two of them working.",
+          "Not for want of crew. For want of a channel worth taking a boat down.",
+          "Mabry is out on the pier. She has been out on the pier since Tuesday."
+        ]
+      },
+      {
+        "ifFlags": [
+          "seal_2_taken"
+        ],
+        "lines": [
+          "She gave you the Seal. Then I will tell you what I told her.",
+          "The Concord took soundings off my pier for six weeks. Always after dark.",
+          "A survey is a survey. But an honest one does not need the dark."
+        ]
+      }
+    ],
+    "bw_netter": [
+      "Flats are heaving. Everything that lives in deep water has come up onto the mud.",
+      "That is not a good year. That is a run.",
+      "Things run from something."
+    ],
+    "bw_child": [
+      "Dad says the sea is holding its breath.",
+      "I asked what happens when it lets go.",
+      "He did not answer, so I asked louder, and he still did not answer."
+    ],
+    "bw_greeter": [
+      "Waystation west, provisioner east, Bastion at the end of the pier.",
+      "Mind the lanes either side of the hall. The middle is deep and it does not forgive."
+    ],
+    "bw_surveyor": [
+      {
+        "unlessFlags": [
+          "met_kerrow"
+        ],
+        "lines": [
+          "Depth soundings. Standard work.",
+          "No, I cannot tell you the numbers. No, that is not sinister."
+        ]
+      },
+      {
+        "ifFlags": [
+          "met_kerrow"
+        ],
+        "lines": [
+          "You spoke to the Director. Then you have heard it properly and I need not perform.",
+          "I will tell you the part she leaves out because it is not persuasive.",
+          "We do not know what happens to everything that migrates once the current stops.",
+          "We have models. The models disagree with each other."
+        ]
+      }
+    ],
+    "bw_sailor": [
+      "Sixty years I read this channel. Currents, colour, the way the birds sit.",
+      "Now it is flat as a table and I cannot read a table.",
+      "A flat sea is not a calm sea, lad. A flat sea is a held one."
+    ],
+    "bw_house": [
+      "My husband fished the deep channel. Thirty-one years.",
+      "He went out in the spring and the water did not move the boat. Not once, all day.",
+      "He came home and sat down and did not go out again.",
+      "He is not frightened of storms. He is frightened of stillness. So am I."
+    ]
+  }
+}

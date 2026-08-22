@@ -1,0 +1,45 @@
+[
+  {
+    "id": "km_perrin",
+    "trigger": "interact",
+    "when": { "kind": "not", "of": { "kind": "flag", "flag": "perrin_km_done" } },
+    "actions": [
+      { "kind": "if",
+        "cond": { "kind": "flag", "flag": "starter_sprigling" },
+        "then": [{ "kind": "battleTrainer", "trainer": "perrin_km_sprigling" }],
+        "else": [
+          { "kind": "if",
+            "cond": { "kind": "flag", "flag": "starter_cinderpaw" },
+            "then": [{ "kind": "battleTrainer", "trainer": "perrin_km_cinderpaw" }],
+            "else": [{ "kind": "battleTrainer", "trainer": "perrin_km_rilltail" }]
+          }
+        ]
+      },
+      { "kind": "if",
+        "cond": { "kind": "var", "var": "last_battle_won", "op": "==", "value": 1 },
+        "then": [
+          { "kind": "setFlag", "flag": "perrin_km_done" },
+          { "kind": "say", "who": "PERRIN", "lines": [
+            "Two days I waited in this town. Two.",
+            "Here. Take these, I have been carrying them around like an idiot."
+          ]},
+          { "kind": "giveItem", "item": "strong_potion", "count": 2 },
+          { "kind": "say", "lines": ["Perrin handed over 2 Strong Potions."] },
+          { "kind": "say", "who": "PERRIN", "lines": [
+            "My mother keeps the Hallowfen Bastion. Fourth one. Marsh.",
+            "Everyone assumes that means I get an easy run at this.",
+            "It means the opposite and I would rather nobody said it out loud.",
+            "...Go and beat Roxen. I will see you at the coast."
+          ]},
+          { "kind": "move", "who": "km_perrin", "steps": ["down", "down", "down", "down"], "speed": "run" },
+          { "kind": "removeNpc", "who": "km_perrin" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "km_shop_open",
+    "trigger": "call",
+    "actions": [{ "kind": "openShop", "shop": "kellowmere_provisioner" }]
+  }
+]

@@ -1,0 +1,198 @@
+{
+  "id": "route_1",
+  "name": "Route 1",
+  "displayName": "ROUTE 1",
+  "music": "route_west",
+  "battleBackdrop": "highland",
+  "indoor": false,
+  "regionPos": {
+    "x": 22,
+    "y": 27
+  },
+  "encounterTable": "route_1",
+  "_design": "Two grass belts either side of a straight spine, one pond branch west, one hedge branch east to an item, and two ledges that only pay off on the walk home.",
+  "rows": [
+    "TTTTTTTTTTTTTT--TTTTTTTTTTTTTT",
+    "TT..........,.--.,..........TT",
+    "TT............--............TT",
+    "TT...\"\"\"\"\"\"...--............TT",
+    "TT...\"\"\"\"\"\"...--...oo.......TT",
+    "TT...\"\"\"\"\"\"...--............TT",
+    "TT............--............TT",
+    "TTLLLLLLLLLLLL--............TT",
+    "TT............--............TT",
+    "TT.....TTTTTT.--.TTTTT......TT",
+    "TT.....T~~~~T.--.T~~~T......TT",
+    "TT.....T~~~~T.--.T~~~T......TT",
+    "TT.....TTTTTT.--.TTTTT......TT",
+    "TT............--............TT",
+    "TT......\"\"\"\"..--..\"\"\"\"......TT",
+    "TT......\"\"\"\"..--..\"\"\"\"......TT",
+    "TT............--............TT",
+    "TT............---------.....TT",
+    "TT............--......*.....TT",
+    "TT............--............TT",
+    "TT..\"\"\"\"\"\"....--............TT",
+    "TT..\"\"\"\"\"\"....--............TT",
+    "TT..\"\"\"\"\"\"....--............TT",
+    "TT............--............TT",
+    "TT..........LL--LL..........TT",
+    "TT............--............TT",
+    "TT.....oo.....--.....oo.....TT",
+    "TT............--............TT",
+    "TT...\"\"\"\"\"\"\"..--..\"\"\"\"\"\"\"...TT",
+    "TT...\"\"\"\"\"\"\"..--..\"\"\"\"\"\"\"...TT",
+    "TT............--............TT",
+    "TTTTTTTTTTTTTT--TTTTTTTTTTTTTT"
+  ],
+  "warps": [
+    {
+      "x": 14,
+      "y": 31,
+      "toMap": "marrow_hollow",
+      "toX": 14,
+      "toY": 1,
+      "facing": "down",
+      "style": "edge"
+    },
+    {
+      "x": 15,
+      "y": 31,
+      "toMap": "marrow_hollow",
+      "toX": 15,
+      "toY": 1,
+      "facing": "down",
+      "style": "edge"
+    },
+    {
+      "x": 14,
+      "y": 0,
+      "toMap": "ashgate",
+      "toX": 14,
+      "toY": 22,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 15,
+      "y": 0,
+      "toMap": "ashgate",
+      "toX": 15,
+      "toY": 22,
+      "facing": "up",
+      "style": "edge"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "r1_cale",
+      "sprite": "hiker",
+      "x": 13,
+      "y": 6,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r1_cale",
+      "sightRange": 3,
+      "script": "r1_watcher"
+    },
+    {
+      "id": "r1_ottel",
+      "sprite": "villager_m",
+      "x": 13,
+      "y": 13,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r1_ottel",
+      "sightRange": 2
+    },
+    {
+      "id": "r1_bex",
+      "sprite": "villager_m",
+      "x": 16,
+      "y": 16,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r1_bex",
+      "sightRange": 3
+    },
+    {
+      "id": "r1_wray",
+      "sprite": "villager_f",
+      "x": 11,
+      "y": 20,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r1_wray",
+      "sightRange": 4
+    },
+    {
+      "id": "r1_madden",
+      "sprite": "hiker",
+      "x": 18,
+      "y": 26,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r1_madden",
+      "sightRange": 4,
+      "script": "r1_walker"
+    },
+    {
+      "id": "r1_surveyor",
+      "sprite": "concord",
+      "x": 16,
+      "y": 3,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "concord_surveyor_1",
+      "sightRange": 3
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 30,
+      "text": [
+        "ROUTE 1",
+        "Marrow Hollow south. Ashgate north.",
+        "Mind the ledges. They only go one way."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 22,
+      "y": 18,
+      "item": "potion",
+      "quantity": 1,
+      "flag": "item_r1_potion"
+    },
+    {
+      "kind": "item",
+      "x": 20,
+      "y": 4,
+      "item": "field_vessel",
+      "quantity": 3,
+      "flag": "item_r1_vessels"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 8,
+      "y": 10,
+      "item": "tonic_berry",
+      "quantity": 1,
+      "flag": "item_r1_hidden"
+    }
+  ]
+}

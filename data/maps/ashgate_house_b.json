@@ -1,0 +1,42 @@
+{
+  "id": "ashgate_house_b",
+  "name": "House",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIIIIIIIIII",
+    "IffffffffffI",
+    "IfKKffffrrfI",
+    "IfffffffrrfI",
+    "IffffffffffI",
+    "IffffffffffI",
+    "IfffffDffffI",
+    "IIIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 6,
+      "toMap": "ashgate",
+      "toX": 25,
+      "toY": 16,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "ashgate_house_b_resident",
+      "sprite": "villager_f",
+      "x": 4,
+      "y": 4,
+      "facing": "down",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "ag_house_b"
+    }
+  ],
+  "objects": []
+}

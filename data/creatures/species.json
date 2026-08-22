@@ -1,0 +1,4211 @@
+[
+  {
+    "num": 1,
+    "id": "sprigling",
+    "name": "Sprigling",
+    "types": [
+      "verdant"
+    ],
+    "base": {
+      "hp": 50,
+      "atk": 48,
+      "def": 58,
+      "spa": 50,
+      "spd": 60,
+      "spe": 38
+    },
+    "abilities": [
+      "deeproot"
+    ],
+    "hiddenAbility": "thornskin",
+    "growthRate": "mediumSlow",
+    "catchRate": 45,
+    "baseExp": 62,
+    "evYield": {
+      "def": 1
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "field",
+      "flora"
+    ],
+    "hatchCycles": 20,
+    "baseFriendship": 70,
+    "height": 0.4,
+    "weight": 7.2,
+    "category": "the Hedge Sprout",
+    "vellumEntry": "It plants both feet and refuses to be moved. Hollow children use them to hold gates shut.",
+    "habitat": "highland hedgerow",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "strike"
+      },
+      {
+        "level": 1,
+        "move": "brace"
+      },
+      {
+        "level": 5,
+        "move": "vinewhip"
+      },
+      {
+        "level": 9,
+        "move": "seedshot"
+      },
+      {
+        "level": 13,
+        "move": "rootdrink"
+      },
+      {
+        "level": 17,
+        "move": "thornrake"
+      },
+      {
+        "level": 21,
+        "move": "sporecloud"
+      },
+      {
+        "level": 26,
+        "move": "bloomburst"
+      },
+      {
+        "level": 31,
+        "move": "bulwark"
+      },
+      {
+        "level": 36,
+        "move": "recover"
+      }
+    ],
+    "evolutions": [
+      {
+        "to": "bramblehusk",
+        "method": {
+          "kind": "level",
+          "level": 16
+        }
+      }
+    ],
+    "design": {
+      "silhouette": "squat four-legged bud with a heavy leaf collar",
+      "palette": [
+        "#4f8a45",
+        "#3a6b34",
+        "#8fc36a",
+        "#c9d98a",
+        "#2a4a26"
+      ],
+      "role": "wall",
+      "plan": "quadruped",
+      "scale": 0.35
+    }
+  },
+  {
+    "num": 2,
+    "id": "bramblehusk",
+    "name": "Bramblehusk",
+    "types": [
+      "verdant"
+    ],
+    "base": {
+      "hp": 65,
+      "atk": 64,
+      "def": 78,
+      "spa": 68,
+      "spd": 78,
+      "spe": 47
+    },
+    "abilities": [
+      "deeproot"
+    ],
+    "hiddenAbility": "thornskin",
+    "growthRate": "mediumSlow",
+    "catchRate": 45,
+    "baseExp": 142,
+    "evYield": {
+      "def": 2
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "field",
+      "flora"
+    ],
+    "hatchCycles": 20,
+    "baseFriendship": 70,
+    "height": 0.9,
+    "weight": 31.5,
+    "category": "the Bramble Bearer",
+    "vellumEntry": "The husk on its back is last season's growth, kept deliberately. It never sheds anything it can still use.",
+    "habitat": "highland hedgerow",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "strike"
+      },
+      {
+        "level": 1,
+        "move": "brace"
+      },
+      {
+        "level": 1,
+        "move": "vinewhip"
+      },
+      {
+        "level": 9,
+        "move": "seedshot"
+      },
+      {
+        "level": 14,
+        "move": "rootdrink"
+      },
+      {
+        "level": 19,
+        "move": "thornrake"
+      },
+      {
+        "level": 24,
+        "move": "sporecloud"
+      },
+      {
+        "level": 30,
+        "move": "bloomburst"
+      },
+      {
+        "level": 36,
+        "move": "bulwark"
+      },
+      {
+        "level": 42,
+        "move": "recover"
+      }
+    ],
+    "evolutions": [
+      {
+        "to": "thornmarch",
+        "method": {
+          "kind": "level",
+          "level": 34
+        }
+      }
+    ],
+    "design": {
+      "silhouette": "hunched quadruped under a woven thorn shell",
+      "palette": [
+        "#4f8a45",
+        "#356030",
+        "#8fc36a",
+        "#a8863f",
+        "#22401f"
+      ],
+      "role": "wall",
+      "plan": "quadruped",
+      "scale": 0.55
+    }
+  },
+  {
+    "num": 3,
+    "id": "thornmarch",
+    "name": "Thornmarch",
+    "types": [
+      "verdant",
+      "stone"
+    ],
+    "base": {
+      "hp": 85,
+      "atk": 92,
+      "def": 108,
+      "spa": 78,
+      "spd": 95,
+      "spe": 52
+    },
+    "abilities": [
+      "deeproot",
+      "stonebound"
+    ],
+    "hiddenAbility": "thornskin",
+    "growthRate": "mediumSlow",
+    "catchRate": 45,
+    "baseExp": 245,
+    "evYield": {
+      "def": 3
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "field",
+      "flora"
+    ],
+    "hatchCycles": 20,
+    "baseFriendship": 70,
+    "height": 1.8,
+    "weight": 186,
+    "category": "the Standing Hedge",
+    "vellumEntry": "Old ones root in place for a season and come back up as part of the wall. Farmers build around them.",
+    "habitat": "highland hedgerow",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "thornrake"
+      },
+      {
+        "level": 1,
+        "move": "brace"
+      },
+      {
+        "level": 1,
+        "move": "stonefling"
+      },
+      {
+        "level": 24,
+        "move": "sporecloud"
+      },
+      {
+        "level": 30,
+        "move": "bloomburst"
+      },
+      {
+        "level": 34,
+        "move": "shale_edge"
+      },
+      {
+        "level": 40,
+        "move": "bulwark"
+      },
+      {
+        "level": 46,
+        "move": "recover"
+      },
+      {
+        "level": 52,
+        "move": "quarryfall"
+      }
+    ],
+    "design": {
+      "silhouette": "broad-shouldered walker plated in mossed slabs",
+      "palette": [
+        "#4f7a42",
+        "#2f5030",
+        "#8a9a6a",
+        "#9a9088",
+        "#1e3320"
+      ],
+      "role": "wall",
+      "plan": "brute",
+      "scale": 0.85
+    }
+  },
+  {
+    "num": 4,
+    "id": "cinderpaw",
+    "name": "Cinderpaw",
+    "types": [
+      "flame"
+    ],
+    "base": {
+      "hp": 42,
+      "atk": 58,
+      "def": 42,
+      "spa": 50,
+      "spd": 42,
+      "spe": 70
+    },
+    "abilities": [
+      "kindling"
+    ],
+    "hiddenAbility": "shortfuse",
+    "growthRate": "mediumSlow",
+    "catchRate": 45,
+    "baseExp": 62,
+    "evYield": {
+      "spe": 1
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "field"
+    ],
+    "hatchCycles": 20,
+    "baseFriendship": 70,
+    "height": 0.5,
+    "weight": 9.1,
+    "category": "the Ember Cub",
+    "vellumEntry": "It sleeps in cold ash and wakes up warm. Nobody has satisfactorily explained where the heat comes from.",
+    "habitat": "highland scrub",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "strike"
+      },
+      {
+        "level": 1,
+        "move": "howl"
+      },
+      {
+        "level": 5,
+        "move": "ember_spit"
+      },
+      {
+        "level": 9,
+        "move": "quickstep"
+      },
+      {
+        "level": 13,
+        "move": "cinderlash"
+      },
+      {
+        "level": 17,
+        "move": "batter"
+      },
+      {
+        "level": 22,
+        "move": "kilnburst"
+      },
+      {
+        "level": 27,
+        "move": "square_up"
+      },
+      {
+        "level": 33,
+        "move": "heat_haze"
+      },
+      {
+        "level": 39,
+        "move": "pyre_dive"
+      }
+    ],
+    "evolutions": [
+      {
+        "to": "blazelynx",
+        "method": {
+          "kind": "level",
+          "level": 16
+        }
+      }
+    ],
+    "design": {
+      "silhouette": "lean short-legged cub with an oversized tufted tail",
+      "palette": [
+        "#e0703a",
+        "#b04a26",
+        "#f2b45a",
+        "#3a2018",
+        "#ffe0a0"
+      ],
+      "role": "sweeper",
+      "plan": "quadruped",
+      "scale": 0.35
+    }
+  },
+  {
+    "num": 5,
+    "id": "blazelynx",
+    "name": "Blazelynx",
+    "types": [
+      "flame"
+    ],
+    "base": {
+      "hp": 58,
+      "atk": 78,
+      "def": 56,
+      "spa": 66,
+      "spd": 56,
+      "spe": 92
+    },
+    "abilities": [
+      "kindling"
+    ],
+    "hiddenAbility": "shortfuse",
+    "growthRate": "mediumSlow",
+    "catchRate": 45,
+    "baseExp": 142,
+    "evYield": {
+      "spe": 2
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "field"
+    ],
+    "hatchCycles": 20,
+    "baseFriendship": 70,
+    "height": 1,
+    "weight": 27.4,
+    "category": "the Kindled Hunter",
+    "vellumEntry": "Runs the ridgelines at dusk. You see the tail-light long before you see the animal.",
+    "habitat": "highland scrub",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "strike"
+      },
+      {
+        "level": 1,
+        "move": "ember_spit"
+      },
+      {
+        "level": 1,
+        "move": "quickstep"
+      },
+      {
+        "level": 14,
+        "move": "cinderlash"
+      },
+      {
+        "level": 19,
+        "move": "batter"
+      },
+      {
+        "level": 25,
+        "move": "kilnburst"
+      },
+      {
+        "level": 31,
+        "move": "square_up"
+      },
+      {
+        "level": 37,
+        "move": "heat_haze"
+      },
+      {
+        "level": 44,
+        "move": "pyre_dive"
+      }
+    ],
+    "evolutions": [
+      {
+        "to": "volcatrix",
+        "method": {
+          "kind": "level",
+          "level": 34
+        }
+      }
+    ],
+    "design": {
+      "silhouette": "long-limbed cat, high shoulders, mane of ember tufts",
+      "palette": [
+        "#e0703a",
+        "#a03c1e",
+        "#f2b45a",
+        "#2e1a14",
+        "#ffd070"
+      ],
+      "role": "sweeper",
+      "plan": "quadruped",
+      "scale": 0.55
+    }
+  },
+  {
+    "num": 6,
+    "id": "volcatrix",
+    "name": "Volcatrix",
+    "types": [
+      "flame",
+      "brawl"
+    ],
+    "base": {
+      "hp": 76,
+      "atk": 104,
+      "def": 70,
+      "spa": 80,
+      "spd": 72,
+      "spe": 108
+    },
+    "abilities": [
+      "kindling",
+      "closequarters"
+    ],
+    "hiddenAbility": "shortfuse",
+    "growthRate": "mediumSlow",
+    "catchRate": 45,
+    "baseExp": 245,
+    "evYield": {
+      "spe": 3
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "field"
+    ],
+    "hatchCycles": 20,
+    "baseFriendship": 70,
+    "height": 1.7,
+    "weight": 88.6,
+    "category": "the Ridge Burner",
+    "vellumEntry": "It fights standing up, which no other cat in Veldras does. The stance is learned, not born.",
+    "habitat": "highland scrub",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "palm_thrust"
+      },
+      {
+        "level": 1,
+        "move": "cinderlash"
+      },
+      {
+        "level": 1,
+        "move": "quickstep"
+      },
+      {
+        "level": 25,
+        "move": "kilnburst"
+      },
+      {
+        "level": 31,
+        "move": "square_up"
+      },
+      {
+        "level": 34,
+        "move": "ribcracker"
+      },
+      {
+        "level": 41,
+        "move": "heat_haze"
+      },
+      {
+        "level": 48,
+        "move": "pyre_dive"
+      },
+      {
+        "level": 55,
+        "move": "final_form"
+      }
+    ],
+    "design": {
+      "silhouette": "upright bipedal cat, braced stance, banded forearms",
+      "palette": [
+        "#e06a34",
+        "#8f3218",
+        "#f2b45a",
+        "#2a1610",
+        "#ffcc60"
+      ],
+      "role": "sweeper",
+      "plan": "biped",
+      "scale": 0.8
+    }
+  },
+  {
+    "num": 7,
+    "id": "rilltail",
+    "name": "Rilltail",
+    "types": [
+      "tide"
+    ],
+    "base": {
+      "hp": 48,
+      "atk": 44,
+      "def": 48,
+      "spa": 62,
+      "spd": 58,
+      "spe": 44
+    },
+    "abilities": [
+      "stillwater"
+    ],
+    "hiddenAbility": "riptide",
+    "growthRate": "mediumSlow",
+    "catchRate": 45,
+    "baseExp": 62,
+    "evYield": {
+      "spa": 1
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "water",
+      "field"
+    ],
+    "hatchCycles": 20,
+    "baseFriendship": 70,
+    "height": 0.4,
+    "weight": 8.8,
+    "category": "the Brook Reader",
+    "vellumEntry": "It taps the water surface in patterns. Vess is convinced this is counting. Nobody can say what it is counting.",
+    "habitat": "streams and ponds",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "strike"
+      },
+      {
+        "level": 1,
+        "move": "spray"
+      },
+      {
+        "level": 6,
+        "move": "mindprick"
+      },
+      {
+        "level": 10,
+        "move": "undertow"
+      },
+      {
+        "level": 14,
+        "move": "brace"
+      },
+      {
+        "level": 18,
+        "move": "hullcrack"
+      },
+      {
+        "level": 23,
+        "move": "muddle"
+      },
+      {
+        "level": 28,
+        "move": "breakwater"
+      },
+      {
+        "level": 34,
+        "move": "wallshield"
+      },
+      {
+        "level": 40,
+        "move": "downpour"
+      }
+    ],
+    "evolutions": [
+      {
+        "to": "brookmaw",
+        "method": {
+          "kind": "level",
+          "level": 16
+        }
+      }
+    ],
+    "design": {
+      "silhouette": "flat-headed otterish shape with a broad paddle tail",
+      "palette": [
+        "#4a86bd",
+        "#2c5a86",
+        "#8fd0e8",
+        "#e8f0f4",
+        "#1c3a58"
+      ],
+      "role": "pivot",
+      "plan": "quadruped",
+      "scale": 0.33
+    }
+  },
+  {
+    "num": 8,
+    "id": "brookmaw",
+    "name": "Brookmaw",
+    "types": [
+      "tide"
+    ],
+    "base": {
+      "hp": 66,
+      "atk": 58,
+      "def": 62,
+      "spa": 86,
+      "spd": 76,
+      "spe": 58
+    },
+    "abilities": [
+      "stillwater"
+    ],
+    "hiddenAbility": "riptide",
+    "growthRate": "mediumSlow",
+    "catchRate": 45,
+    "baseExp": 142,
+    "evYield": {
+      "spa": 2
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "water",
+      "field"
+    ],
+    "hatchCycles": 20,
+    "baseFriendship": 70,
+    "height": 1.1,
+    "weight": 33.9,
+    "category": "the Slow Current",
+    "vellumEntry": "Holds station against a current all day without visible effort, then moves faster than anything its size has any right to.",
+    "habitat": "streams and ponds",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "spray"
+      },
+      {
+        "level": 1,
+        "move": "mindprick"
+      },
+      {
+        "level": 1,
+        "move": "undertow"
+      },
+      {
+        "level": 15,
+        "move": "brace"
+      },
+      {
+        "level": 20,
+        "move": "hullcrack"
+      },
+      {
+        "level": 26,
+        "move": "muddle"
+      },
+      {
+        "level": 32,
+        "move": "breakwater"
+      },
+      {
+        "level": 38,
+        "move": "wallshield"
+      },
+      {
+        "level": 45,
+        "move": "downpour"
+      }
+    ],
+    "evolutions": [
+      {
+        "to": "maelstrix",
+        "method": {
+          "kind": "level",
+          "level": 34
+        }
+      }
+    ],
+    "design": {
+      "silhouette": "heavy-shouldered swimmer, fluked tail, wide jaw",
+      "palette": [
+        "#3f79b0",
+        "#264e78",
+        "#7fc4e0",
+        "#dce8f0",
+        "#16304c"
+      ],
+      "role": "pivot",
+      "plan": "aquatic",
+      "scale": 0.55
+    }
+  },
+  {
+    "num": 9,
+    "id": "maelstrix",
+    "name": "Maelstrix",
+    "types": [
+      "tide",
+      "psyche"
+    ],
+    "base": {
+      "hp": 82,
+      "atk": 70,
+      "def": 78,
+      "spa": 112,
+      "spd": 100,
+      "spe": 68
+    },
+    "abilities": [
+      "stillwater",
+      "deepmind"
+    ],
+    "hiddenAbility": "riptide",
+    "growthRate": "mediumSlow",
+    "catchRate": 45,
+    "baseExp": 245,
+    "evYield": {
+      "spa": 3
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "water",
+      "field"
+    ],
+    "hatchCycles": 20,
+    "baseFriendship": 70,
+    "height": 2.1,
+    "weight": 121.4,
+    "category": "the Reading Depth",
+    "vellumEntry": "Old sailors will not name it out loud on the water. They say it answers, and that answering is the problem.",
+    "habitat": "streams and ponds",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "undertow"
+      },
+      {
+        "level": 1,
+        "move": "mindprick"
+      },
+      {
+        "level": 1,
+        "move": "wallshield"
+      },
+      {
+        "level": 26,
+        "move": "muddle"
+      },
+      {
+        "level": 32,
+        "move": "breakwater"
+      },
+      {
+        "level": 34,
+        "move": "thoughtwave"
+      },
+      {
+        "level": 42,
+        "move": "second_sight"
+      },
+      {
+        "level": 49,
+        "move": "downpour"
+      },
+      {
+        "level": 56,
+        "move": "unravel"
+      }
+    ],
+    "design": {
+      "silhouette": "long coiling swimmer with a crowned brow and trailing fins",
+      "palette": [
+        "#3a6fa8",
+        "#1f4670",
+        "#7fc4e0",
+        "#c9a8e0",
+        "#122a44"
+      ],
+      "role": "pivot",
+      "plan": "serpentine",
+      "scale": 0.85
+    }
+  },
+  {
+    "num": 10,
+    "id": "nibbet",
+    "name": "Nibbet",
+    "types": [
+      "beast"
+    ],
+    "base": {
+      "hp": 42,
+      "atk": 50,
+      "def": 38,
+      "spa": 30,
+      "spd": 36,
+      "spe": 62
+    },
+    "abilities": [
+      "quickpaw"
+    ],
+    "hiddenAbility": "scavenger",
+    "growthRate": "fast",
+    "catchRate": 255,
+    "baseExp": 44,
+    "evYield": {
+      "spe": 1
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "field"
+    ],
+    "hatchCycles": 10,
+    "baseFriendship": 70,
+    "height": 0.3,
+    "weight": 3.4,
+    "category": "the Pantry Thief",
+    "vellumEntry": "Every household in Veldras has a story about one. Most of the stories end with a missing loaf.",
+    "habitat": "everywhere, unfortunately",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "strike"
+      },
+      {
+        "level": 4,
+        "move": "quickstep"
+      },
+      {
+        "level": 8,
+        "move": "unnerve"
+      },
+      {
+        "level": 12,
+        "move": "batter"
+      },
+      {
+        "level": 16,
+        "move": "lowblow"
+      },
+      {
+        "level": 21,
+        "move": "howl"
+      },
+      {
+        "level": 26,
+        "move": "bull_rush"
+      }
+    ],
+    "evolutions": [
+      {
+        "to": "burrowen",
+        "method": {
+          "kind": "level",
+          "level": 18
+        }
+      }
+    ],
+    "design": {
+      "silhouette": "small round rodent, long ears, ring-marked tail",
+      "palette": [
+        "#b09070",
+        "#7d6248",
+        "#e0cdb0",
+        "#3a2c20",
+        "#d8a05a"
+      ],
+      "role": "glass",
+      "plan": "critter",
+      "scale": 0.25
+    }
+  },
+  {
+    "num": 11,
+    "id": "burrowen",
+    "name": "Burrowen",
+    "types": [
+      "beast",
+      "terra"
+    ],
+    "base": {
+      "hp": 68,
+      "atk": 82,
+      "def": 66,
+      "spa": 44,
+      "spd": 58,
+      "spe": 82
+    },
+    "abilities": [
+      "quickpaw",
+      "gritskin"
+    ],
+    "hiddenAbility": "scavenger",
+    "growthRate": "fast",
+    "catchRate": 120,
+    "baseExp": 142,
+    "evYield": {
+      "atk": 2
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "field"
+    ],
+    "hatchCycles": 10,
+    "baseFriendship": 70,
+    "height": 0.8,
+    "weight": 24.6,
+    "category": "the Undermine",
+    "vellumEntry": "Digs a tunnel network under a field in one night. The Kellowmere quarry hires them and pretends it does not.",
+    "habitat": "farmland and quarry",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "strike"
+      },
+      {
+        "level": 1,
+        "move": "quickstep"
+      },
+      {
+        "level": 12,
+        "move": "batter"
+      },
+      {
+        "level": 18,
+        "move": "gravelspray"
+      },
+      {
+        "level": 23,
+        "move": "lowblow"
+      },
+      {
+        "level": 28,
+        "move": "fissure_step"
+      },
+      {
+        "level": 34,
+        "move": "howl"
+      },
+      {
+        "level": 40,
+        "move": "bull_rush"
+      },
+      {
+        "level": 46,
+        "move": "landslide"
+      }
+    ],
+    "design": {
+      "silhouette": "broad digging rodent with shovel forepaws",
+      "palette": [
+        "#a8825c",
+        "#6e5238",
+        "#d8bd95",
+        "#33261a",
+        "#c98f4a"
+      ],
+      "role": "bruiser",
+      "plan": "critter",
+      "scale": 0.5
+    }
+  },
+  {
+    "num": 12,
+    "id": "pipwing",
+    "name": "Pipwing",
+    "types": [
+      "gale"
+    ],
+    "base": {
+      "hp": 40,
+      "atk": 45,
+      "def": 40,
+      "spa": 42,
+      "spd": 40,
+      "spe": 66
+    },
+    "abilities": [
+      "keeneye"
+    ],
+    "hiddenAbility": "updraft",
+    "growthRate": "mediumFast",
+    "catchRate": 255,
+    "baseExp": 46,
+    "evYield": {
+      "spe": 1
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "flying"
+    ],
+    "hatchCycles": 12,
+    "baseFriendship": 70,
+    "height": 0.3,
+    "weight": 2.1,
+    "category": "the First Flock",
+    "vellumEntry": "The first thing to leave before weather turns. Hollow farmers watch the pipwings, not the sky.",
+    "habitat": "open route and treeline",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "strike"
+      },
+      {
+        "level": 4,
+        "move": "gustline"
+      },
+      {
+        "level": 8,
+        "move": "quickstep"
+      },
+      {
+        "level": 12,
+        "move": "wingbeat"
+      },
+      {
+        "level": 17,
+        "move": "unnerve"
+      },
+      {
+        "level": 22,
+        "move": "stoop"
+      },
+      {
+        "level": 27,
+        "move": "tailwind_call"
+      }
+    ],
+    "evolutions": [
+      {
+        "to": "kestrelle",
+        "method": {
+          "kind": "level",
+          "level": 17
+        }
+      }
+    ],
+    "design": {
+      "silhouette": "small round bird, oversized head, short tail",
+      "palette": [
+        "#9ab8e8",
+        "#5f7ba8",
+        "#e0e8f4",
+        "#2c3850",
+        "#e0b060"
+      ],
+      "role": "glass",
+      "plan": "bird",
+      "scale": 0.25
+    }
+  },
+  {
+    "num": 13,
+    "id": "kestrelle",
+    "name": "Kestrelle",
+    "types": [
+      "gale",
+      "beast"
+    ],
+    "base": {
+      "hp": 58,
+      "atk": 68,
+      "def": 56,
+      "spa": 56,
+      "spd": 54,
+      "spe": 92
+    },
+    "abilities": [
+      "keeneye"
+    ],
+    "hiddenAbility": "updraft",
+    "growthRate": "mediumFast",
+    "catchRate": 120,
+    "baseExp": 128,
+    "evYield": {
+      "spe": 2
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "flying"
+    ],
+    "hatchCycles": 12,
+    "baseFriendship": 70,
+    "height": 0.8,
+    "weight": 14.2,
+    "category": "the Hanging Hunter",
+    "vellumEntry": "Holds position in a headwind without moving a feather. It is showing off, and it knows it.",
+    "habitat": "open route and treeline",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "gustline"
+      },
+      {
+        "level": 1,
+        "move": "quickstep"
+      },
+      {
+        "level": 12,
+        "move": "wingbeat"
+      },
+      {
+        "level": 19,
+        "move": "unnerve"
+      },
+      {
+        "level": 25,
+        "move": "stoop"
+      },
+      {
+        "level": 31,
+        "move": "tailwind_call"
+      },
+      {
+        "level": 37,
+        "move": "skylift"
+      },
+      {
+        "level": 43,
+        "move": "bull_rush"
+      }
+    ],
+    "evolutions": [
+      {
+        "to": "galecrest",
+        "method": {
+          "kind": "level",
+          "level": 36
+        }
+      }
+    ],
+    "design": {
+      "silhouette": "falcon build, swept wings, banded chest",
+      "palette": [
+        "#8fb0e0",
+        "#4f6b98",
+        "#e8eef8",
+        "#232c40",
+        "#d8a04a"
+      ],
+      "role": "sweeper",
+      "plan": "bird",
+      "scale": 0.48
+    }
+  },
+  {
+    "num": 14,
+    "id": "galecrest",
+    "name": "Galecrest",
+    "types": [
+      "gale",
+      "spark"
+    ],
+    "base": {
+      "hp": 78,
+      "atk": 92,
+      "def": 72,
+      "spa": 88,
+      "spd": 74,
+      "spe": 106
+    },
+    "abilities": [
+      "keeneye",
+      "stormborn"
+    ],
+    "hiddenAbility": "updraft",
+    "growthRate": "mediumFast",
+    "catchRate": 45,
+    "baseExp": 232,
+    "evYield": {
+      "spe": 3
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "flying"
+    ],
+    "hatchCycles": 12,
+    "baseFriendship": 70,
+    "height": 1.6,
+    "weight": 39.8,
+    "category": "the Stormrider",
+    "vellumEntry": "Flies into the front instead of away from it. The crest sparks when the pressure drops.",
+    "habitat": "open route and treeline",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "wingbeat"
+      },
+      {
+        "level": 1,
+        "move": "arcjolt"
+      },
+      {
+        "level": 25,
+        "move": "stoop"
+      },
+      {
+        "level": 31,
+        "move": "tailwind_call"
+      },
+      {
+        "level": 36,
+        "move": "skylift"
+      },
+      {
+        "level": 42,
+        "move": "thunderhead"
+      },
+      {
+        "level": 50,
+        "move": "bull_rush"
+      }
+    ],
+    "design": {
+      "silhouette": "large raptor with a forked tail and a raised crest",
+      "palette": [
+        "#7fa4dc",
+        "#3f5a88",
+        "#e8eef8",
+        "#f0d060",
+        "#1c2438"
+      ],
+      "role": "sweeper",
+      "plan": "bird",
+      "scale": 0.75
+    }
+  },
+  {
+    "num": 15,
+    "id": "nettlebug",
+    "name": "Nettlebug",
+    "types": [
+      "chitin"
+    ],
+    "base": {
+      "hp": 44,
+      "atk": 42,
+      "def": 52,
+      "spa": 34,
+      "spd": 44,
+      "spe": 40
+    },
+    "abilities": [
+      "hardshell"
+    ],
+    "hiddenAbility": "swarming",
+    "growthRate": "mediumFast",
+    "catchRate": 255,
+    "baseExp": 39,
+    "evYield": {
+      "def": 1
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "chitin"
+    ],
+    "hatchCycles": 8,
+    "baseFriendship": 70,
+    "height": 0.3,
+    "weight": 4.5,
+    "category": "the Nettle Grub",
+    "vellumEntry": "Eats only stinging plants and becomes, predictably, unpleasant to handle.",
+    "habitat": "thistlemoor undergrowth",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "nibble"
+      },
+      {
+        "level": 1,
+        "move": "brace"
+      },
+      {
+        "level": 6,
+        "move": "silkbind"
+      },
+      {
+        "level": 10,
+        "move": "acid_flick"
+      },
+      {
+        "level": 14,
+        "move": "shellstrike"
+      }
+    ],
+    "evolutions": [
+      {
+        "to": "spinnet",
+        "method": {
+          "kind": "level",
+          "level": 12
+        }
+      }
+    ],
+    "design": {
+      "silhouette": "segmented grub with raised bristle ridges",
+      "palette": [
+        "#8fb03a",
+        "#5f7a24",
+        "#c9d98a",
+        "#33401a",
+        "#d0a050"
+      ],
+      "role": "wall",
+      "plan": "grub",
+      "scale": 0.28
+    }
+  },
+  {
+    "num": 16,
+    "id": "spinnet",
+    "name": "Spinnet",
+    "types": [
+      "chitin",
+      "venom"
+    ],
+    "base": {
+      "hp": 52,
+      "atk": 40,
+      "def": 72,
+      "spa": 40,
+      "spd": 68,
+      "spe": 34
+    },
+    "abilities": [
+      "hardshell"
+    ],
+    "hiddenAbility": "swarming",
+    "growthRate": "mediumFast",
+    "catchRate": 120,
+    "baseExp": 72,
+    "evYield": {
+      "def": 2
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "chitin"
+    ],
+    "hatchCycles": 8,
+    "baseFriendship": 70,
+    "height": 0.5,
+    "weight": 11,
+    "category": "the Patient Weaver",
+    "vellumEntry": "Spends four days building and one minute using. It considers this a fair trade.",
+    "habitat": "thistlemoor undergrowth",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "nibble"
+      },
+      {
+        "level": 1,
+        "move": "silkbind"
+      },
+      {
+        "level": 1,
+        "move": "brace"
+      },
+      {
+        "level": 15,
+        "move": "acid_flick"
+      },
+      {
+        "level": 19,
+        "move": "shellstrike"
+      },
+      {
+        "level": 24,
+        "move": "swarmcall"
+      },
+      {
+        "level": 29,
+        "move": "creeping_dose"
+      }
+    ],
+    "evolutions": [
+      {
+        "to": "weaverjaw",
+        "method": {
+          "kind": "level",
+          "level": 28
+        }
+      }
+    ],
+    "design": {
+      "silhouette": "eight-legged spinner, high abdomen, silk spools at the hip",
+      "palette": [
+        "#7a9a34",
+        "#4f6820",
+        "#b8c878",
+        "#9a58b0",
+        "#2a3818"
+      ],
+      "role": "trapper",
+      "plan": "arachnid",
+      "scale": 0.4
+    }
+  },
+  {
+    "num": 17,
+    "id": "weaverjaw",
+    "name": "Weaverjaw",
+    "types": [
+      "chitin",
+      "venom"
+    ],
+    "base": {
+      "hp": 72,
+      "atk": 88,
+      "def": 92,
+      "spa": 62,
+      "spd": 88,
+      "spe": 58
+    },
+    "abilities": [
+      "hardshell",
+      "gripjaw"
+    ],
+    "hiddenAbility": "swarming",
+    "growthRate": "mediumFast",
+    "catchRate": 75,
+    "baseExp": 178,
+    "evYield": {
+      "def": 2,
+      "atk": 1
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "chitin"
+    ],
+    "hatchCycles": 8,
+    "baseFriendship": 70,
+    "height": 1.2,
+    "weight": 47.3,
+    "category": "the Standing Trap",
+    "vellumEntry": "It does not chase. In sixty recorded encounters, not once has it needed to.",
+    "habitat": "thistlemoor undergrowth",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "shellstrike"
+      },
+      {
+        "level": 1,
+        "move": "silkbind"
+      },
+      {
+        "level": 24,
+        "move": "swarmcall"
+      },
+      {
+        "level": 29,
+        "move": "creeping_dose"
+      },
+      {
+        "level": 33,
+        "move": "fang_venom"
+      },
+      {
+        "level": 39,
+        "move": "closing_hold"
+      },
+      {
+        "level": 46,
+        "move": "miasma"
+      }
+    ],
+    "design": {
+      "silhouette": "heavy-bodied spinner with armoured jaw plates",
+      "palette": [
+        "#6e8a2e",
+        "#43581c",
+        "#a8b868",
+        "#8a4aa0",
+        "#22300f"
+      ],
+      "role": "trapper",
+      "plan": "arachnid",
+      "scale": 0.65
+    }
+  },
+  {
+    "num": 18,
+    "id": "tuftail",
+    "name": "Tuftail",
+    "types": [
+      "beast"
+    ],
+    "base": {
+      "hp": 56,
+      "atk": 52,
+      "def": 50,
+      "spa": 40,
+      "spd": 52,
+      "spe": 50
+    },
+    "abilities": [
+      "thickcoat"
+    ],
+    "hiddenAbility": "forager",
+    "growthRate": "mediumFast",
+    "catchRate": 190,
+    "baseExp": 52,
+    "evYield": {
+      "hp": 1
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "field"
+    ],
+    "hatchCycles": 15,
+    "baseFriendship": 90,
+    "height": 0.6,
+    "weight": 13.8,
+    "category": "the Hedgegrazer",
+    "vellumEntry": "Follows walkers for a mile and a half, then loses interest exactly at the parish boundary.",
+    "habitat": "route verges",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "strike"
+      },
+      {
+        "level": 5,
+        "move": "brace"
+      },
+      {
+        "level": 9,
+        "move": "vinewhip"
+      },
+      {
+        "level": 13,
+        "move": "batter"
+      },
+      {
+        "level": 18,
+        "move": "unnerve"
+      },
+      {
+        "level": 23,
+        "move": "recover"
+      }
+    ],
+    "evolutions": [
+      {
+        "to": "bristlebuck",
+        "method": {
+          "kind": "friendship",
+          "threshold": 160
+        }
+      }
+    ],
+    "design": {
+      "silhouette": "small grazing quadruped, thick neck ruff",
+      "palette": [
+        "#c9b088",
+        "#8f7856",
+        "#e8dcc0",
+        "#4a3a28",
+        "#6e8a4a"
+      ],
+      "role": "support",
+      "plan": "quadruped",
+      "scale": 0.38
+    }
+  },
+  {
+    "num": 19,
+    "id": "bristlebuck",
+    "name": "Bristlebuck",
+    "types": [
+      "beast",
+      "verdant"
+    ],
+    "base": {
+      "hp": 86,
+      "atk": 84,
+      "def": 78,
+      "spa": 62,
+      "spd": 82,
+      "spe": 68
+    },
+    "abilities": [
+      "thickcoat",
+      "deeproot"
+    ],
+    "hiddenAbility": "forager",
+    "growthRate": "mediumFast",
+    "catchRate": 75,
+    "baseExp": 168,
+    "evYield": {
+      "hp": 2
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "field"
+    ],
+    "hatchCycles": 15,
+    "baseFriendship": 90,
+    "height": 1.4,
+    "weight": 78.5,
+    "category": "the Hedge Warden",
+    "vellumEntry": "Puts itself between a herd and whatever is coming. It has never once been asked to.",
+    "habitat": "route verges",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "batter"
+      },
+      {
+        "level": 1,
+        "move": "brace"
+      },
+      {
+        "level": 1,
+        "move": "vinewhip"
+      },
+      {
+        "level": 24,
+        "move": "thornrake"
+      },
+      {
+        "level": 30,
+        "move": "recover"
+      },
+      {
+        "level": 36,
+        "move": "bull_rush"
+      },
+      {
+        "level": 42,
+        "move": "bulwark"
+      },
+      {
+        "level": 48,
+        "move": "bloomburst"
+      }
+    ],
+    "design": {
+      "silhouette": "stag-like grazer with a bristled mantle and low horns",
+      "palette": [
+        "#b89a70",
+        "#7d6444",
+        "#e0d4b0",
+        "#4f7a42",
+        "#3a2c1c"
+      ],
+      "role": "support",
+      "plan": "quadruped",
+      "scale": 0.7
+    }
+  },
+  {
+    "num": 20,
+    "id": "pebblet",
+    "name": "Pebblet",
+    "types": [
+      "stone"
+    ],
+    "base": {
+      "hp": 46,
+      "atk": 60,
+      "def": 74,
+      "spa": 30,
+      "spd": 38,
+      "spe": 26
+    },
+    "abilities": [
+      "stonebound"
+    ],
+    "hiddenAbility": "gritskin",
+    "growthRate": "mediumSlow",
+    "catchRate": 255,
+    "baseExp": 48,
+    "evYield": {
+      "def": 1
+    },
+    "genderRatio": -1,
+    "eggGroups": [
+      "mineral"
+    ],
+    "hatchCycles": 18,
+    "baseFriendship": 60,
+    "height": 0.3,
+    "weight": 22,
+    "category": "the Loose Stone",
+    "vellumEntry": "Indistinguishable from a rock until it is not. Kellowmere quarry hands kick everything twice.",
+    "habitat": "quarry and cave",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "strike"
+      },
+      {
+        "level": 1,
+        "move": "brace"
+      },
+      {
+        "level": 6,
+        "move": "stonefling"
+      },
+      {
+        "level": 11,
+        "move": "gravelspray"
+      },
+      {
+        "level": 16,
+        "move": "batter"
+      },
+      {
+        "level": 21,
+        "move": "shale_edge"
+      },
+      {
+        "level": 27,
+        "move": "plating"
+      }
+    ],
+    "evolutions": [
+      {
+        "to": "cairnling",
+        "method": {
+          "kind": "level",
+          "level": 22
+        }
+      }
+    ],
+    "design": {
+      "silhouette": "rounded boulder with stubby limbs and a seam of quartz",
+      "palette": [
+        "#9d9da3",
+        "#6b6b73",
+        "#c8c8d0",
+        "#3a3a42",
+        "#d8c890"
+      ],
+      "role": "wall",
+      "plan": "mineral",
+      "scale": 0.3
+    }
+  },
+  {
+    "num": 21,
+    "id": "cairnling",
+    "name": "Cairnling",
+    "types": [
+      "stone"
+    ],
+    "base": {
+      "hp": 66,
+      "atk": 84,
+      "def": 100,
+      "spa": 44,
+      "spd": 56,
+      "spe": 34
+    },
+    "abilities": [
+      "stonebound"
+    ],
+    "hiddenAbility": "gritskin",
+    "growthRate": "mediumSlow",
+    "catchRate": 120,
+    "baseExp": 136,
+    "evYield": {
+      "def": 2
+    },
+    "genderRatio": -1,
+    "eggGroups": [
+      "mineral"
+    ],
+    "hatchCycles": 18,
+    "baseFriendship": 60,
+    "height": 0.9,
+    "weight": 105,
+    "category": "the Stacked Marker",
+    "vellumEntry": "Stacks itself in the shape of a waymarker and stands at crossroads. Travellers have been following them for centuries. Nobody knows where they lead.",
+    "habitat": "quarry and cave",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "stonefling"
+      },
+      {
+        "level": 1,
+        "move": "brace"
+      },
+      {
+        "level": 16,
+        "move": "batter"
+      },
+      {
+        "level": 22,
+        "move": "shale_edge"
+      },
+      {
+        "level": 28,
+        "move": "plating"
+      },
+      {
+        "level": 34,
+        "move": "grit_field"
+      },
+      {
+        "level": 40,
+        "move": "quarryfall"
+      }
+    ],
+    "evolutions": [
+      {
+        "to": "menhir",
+        "method": {
+          "kind": "level",
+          "level": 38
+        }
+      }
+    ],
+    "design": {
+      "silhouette": "stacked slab figure, uneven shoulders, moss at the joints",
+      "palette": [
+        "#93939b",
+        "#5f5f68",
+        "#c0c0c8",
+        "#33333c",
+        "#6e8a4a"
+      ],
+      "role": "wall",
+      "plan": "mineral",
+      "scale": 0.55
+    }
+  },
+  {
+    "num": 22,
+    "id": "menhir",
+    "name": "Menhir",
+    "types": [
+      "stone",
+      "iron"
+    ],
+    "base": {
+      "hp": 90,
+      "atk": 112,
+      "def": 138,
+      "spa": 56,
+      "spd": 78,
+      "spe": 36
+    },
+    "abilities": [
+      "stonebound",
+      "oredense"
+    ],
+    "hiddenAbility": "gritskin",
+    "growthRate": "mediumSlow",
+    "catchRate": 45,
+    "baseExp": 238,
+    "evYield": {
+      "def": 3
+    },
+    "genderRatio": -1,
+    "eggGroups": [
+      "mineral"
+    ],
+    "hatchCycles": 18,
+    "baseFriendship": 60,
+    "height": 2.4,
+    "weight": 460,
+    "category": "the Standing Stone",
+    "vellumEntry": "There are nineteen on the Northwatch ridge. There were eighteen last spring. Nobody saw it arrive.",
+    "habitat": "quarry and cave",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "shale_edge"
+      },
+      {
+        "level": 1,
+        "move": "plating"
+      },
+      {
+        "level": 1,
+        "move": "rivet_punch"
+      },
+      {
+        "level": 34,
+        "move": "grit_field"
+      },
+      {
+        "level": 40,
+        "move": "quarryfall"
+      },
+      {
+        "level": 44,
+        "move": "girder_slam"
+      },
+      {
+        "level": 52,
+        "move": "forgefall"
+      },
+      {
+        "level": 58,
+        "move": "bulwark"
+      }
+    ],
+    "design": {
+      "silhouette": "tall monolith with ore veins and a carved face",
+      "palette": [
+        "#8a8a92",
+        "#565660",
+        "#b8b8c0",
+        "#93a3ad",
+        "#2a2a33"
+      ],
+      "role": "wall",
+      "plan": "monolith",
+      "scale": 0.95
+    }
+  },
+  {
+    "num": 23,
+    "id": "fizzlet",
+    "name": "Fizzlet",
+    "types": [
+      "spark"
+    ],
+    "base": {
+      "hp": 40,
+      "atk": 40,
+      "def": 38,
+      "spa": 62,
+      "spd": 44,
+      "spe": 74
+    },
+    "abilities": [
+      "staticcling"
+    ],
+    "hiddenAbility": "stormborn",
+    "growthRate": "mediumFast",
+    "catchRate": 190,
+    "baseExp": 54,
+    "evYield": {
+      "spe": 1
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "field"
+    ],
+    "hatchCycles": 14,
+    "baseFriendship": 70,
+    "height": 0.3,
+    "weight": 5,
+    "category": "the Loose Charge",
+    "vellumEntry": "Sticks to metal fences and refuses to be removed politely.",
+    "habitat": "cinderfall works and route wires",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "strike"
+      },
+      {
+        "level": 5,
+        "move": "static_nip"
+      },
+      {
+        "level": 10,
+        "move": "quickstep"
+      },
+      {
+        "level": 15,
+        "move": "arcjolt"
+      },
+      {
+        "level": 20,
+        "move": "earthing_wire"
+      },
+      {
+        "level": 26,
+        "move": "tailwind_call"
+      }
+    ],
+    "evolutions": [
+      {
+        "to": "voltwick",
+        "method": {
+          "kind": "level",
+          "level": 24
+        }
+      }
+    ],
+    "design": {
+      "silhouette": "small bristling ball with two trailing filaments",
+      "palette": [
+        "#e8c53a",
+        "#b09420",
+        "#fff0a0",
+        "#3a3418",
+        "#8fb4cf"
+      ],
+      "role": "glass",
+      "plan": "orb",
+      "scale": 0.25
+    }
+  },
+  {
+    "num": 24,
+    "id": "voltwick",
+    "name": "Voltwick",
+    "types": [
+      "spark"
+    ],
+    "base": {
+      "hp": 62,
+      "atk": 58,
+      "def": 58,
+      "spa": 100,
+      "spd": 70,
+      "spe": 104
+    },
+    "abilities": [
+      "staticcling"
+    ],
+    "hiddenAbility": "stormborn",
+    "growthRate": "mediumFast",
+    "catchRate": 75,
+    "baseExp": 174,
+    "evYield": {
+      "spe": 2,
+      "spa": 1
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "field"
+    ],
+    "hatchCycles": 14,
+    "baseFriendship": 70,
+    "height": 1,
+    "weight": 22.5,
+    "category": "the Live Line",
+    "vellumEntry": "Cinderfall pays a bounty for every one removed from the substation. The bounty has never been reduced.",
+    "habitat": "cinderfall works and route wires",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "static_nip"
+      },
+      {
+        "level": 1,
+        "move": "arcjolt"
+      },
+      {
+        "level": 20,
+        "move": "earthing_wire"
+      },
+      {
+        "level": 28,
+        "move": "tailwind_call"
+      },
+      {
+        "level": 34,
+        "move": "wallshield"
+      },
+      {
+        "level": 41,
+        "move": "thunderhead"
+      }
+    ],
+    "design": {
+      "silhouette": "lean upright creature with a filament crest and forked tail",
+      "palette": [
+        "#e8c53a",
+        "#a88a1c",
+        "#fff0a0",
+        "#4a4020",
+        "#6fa8d0"
+      ],
+      "role": "sweeper",
+      "plan": "biped",
+      "scale": 0.5
+    }
+  },
+  {
+    "num": 25,
+    "id": "rillfry",
+    "name": "Rillfry",
+    "types": [
+      "tide"
+    ],
+    "base": {
+      "hp": 40,
+      "atk": 42,
+      "def": 40,
+      "spa": 52,
+      "spd": 44,
+      "spe": 58
+    },
+    "abilities": [
+      "stillwater"
+    ],
+    "hiddenAbility": "riptide",
+    "growthRate": "mediumFast",
+    "catchRate": 255,
+    "baseExp": 42,
+    "evYield": {
+      "spe": 1
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "water"
+    ],
+    "hatchCycles": 10,
+    "baseFriendship": 70,
+    "height": 0.2,
+    "weight": 2.4,
+    "category": "the Shallow Dart",
+    "vellumEntry": "Travels in counts of exactly seven. Split the shoal and both halves stop moving until it is seven again.",
+    "habitat": "ponds and shallows",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "spray"
+      },
+      {
+        "level": 5,
+        "move": "quickstep"
+      },
+      {
+        "level": 10,
+        "move": "undertow"
+      },
+      {
+        "level": 15,
+        "move": "hullcrack"
+      },
+      {
+        "level": 21,
+        "move": "breakwater"
+      }
+    ],
+    "evolutions": [
+      {
+        "to": "currentail",
+        "method": {
+          "kind": "level",
+          "level": 20
+        }
+      }
+    ],
+    "design": {
+      "silhouette": "slim darting fish with a split tail",
+      "palette": [
+        "#6fb0d8",
+        "#3f7aa8",
+        "#c0e8f4",
+        "#1f4060",
+        "#e0d070"
+      ],
+      "role": "glass",
+      "plan": "fish",
+      "scale": 0.22
+    }
+  },
+  {
+    "num": 26,
+    "id": "currentail",
+    "name": "Currentail",
+    "types": [
+      "tide"
+    ],
+    "base": {
+      "hp": 68,
+      "atk": 74,
+      "def": 66,
+      "spa": 86,
+      "spd": 70,
+      "spe": 88
+    },
+    "abilities": [
+      "stillwater",
+      "riptide"
+    ],
+    "hiddenAbility": "riptide",
+    "growthRate": "mediumFast",
+    "catchRate": 90,
+    "baseExp": 162,
+    "evYield": {
+      "spe": 2
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "water"
+    ],
+    "hatchCycles": 10,
+    "baseFriendship": 70,
+    "height": 1.1,
+    "weight": 26.8,
+    "category": "the Running Water",
+    "vellumEntry": "Swims upstream through the Turning while everything else swims with it. Nobody has established why.",
+    "habitat": "ponds and shallows",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "spray"
+      },
+      {
+        "level": 1,
+        "move": "undertow"
+      },
+      {
+        "level": 15,
+        "move": "hullcrack"
+      },
+      {
+        "level": 23,
+        "move": "breakwater"
+      },
+      {
+        "level": 29,
+        "move": "chillbite"
+      },
+      {
+        "level": 36,
+        "move": "downpour"
+      }
+    ],
+    "design": {
+      "silhouette": "streamlined swimmer with long trailing tail ribbons",
+      "palette": [
+        "#4a90c0",
+        "#28648f",
+        "#a8dcf0",
+        "#16344f",
+        "#e8d078"
+      ],
+      "role": "sweeper",
+      "plan": "fish",
+      "scale": 0.5
+    }
+  },
+  {
+    "num": 27,
+    "id": "sootmoth",
+    "name": "Sootmoth",
+    "types": [
+      "flame",
+      "chitin"
+    ],
+    "base": {
+      "hp": 50,
+      "atk": 44,
+      "def": 46,
+      "spa": 74,
+      "spd": 56,
+      "spe": 66
+    },
+    "abilities": [
+      "kindling",
+      "swarming"
+    ],
+    "hiddenAbility": "shortfuse",
+    "growthRate": "mediumFast",
+    "catchRate": 120,
+    "baseExp": 98,
+    "evYield": {
+      "spa": 1
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "chitin"
+    ],
+    "hatchCycles": 12,
+    "baseFriendship": 70,
+    "height": 0.5,
+    "weight": 6.2,
+    "category": "the Ash Drifter",
+    "vellumEntry": "Lays its eggs in still-warm hearths. Householders in Cinderfall have simply given up.",
+    "habitat": "chimneys and warm caves",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "nibble"
+      },
+      {
+        "level": 1,
+        "move": "ember_spit"
+      },
+      {
+        "level": 12,
+        "move": "gustline"
+      },
+      {
+        "level": 17,
+        "move": "silkbind"
+      },
+      {
+        "level": 22,
+        "move": "swarmcall"
+      },
+      {
+        "level": 28,
+        "move": "kilnburst"
+      },
+      {
+        "level": 34,
+        "move": "heat_haze"
+      }
+    ],
+    "design": {
+      "silhouette": "broad-winged moth with ember-lit wing edges",
+      "palette": [
+        "#c9603a",
+        "#8a3a20",
+        "#f0a860",
+        "#4a3428",
+        "#e8d0a0"
+      ],
+      "role": "glass",
+      "plan": "moth",
+      "scale": 0.35
+    }
+  },
+  {
+    "id": "chalkid",
+    "name": "Chalkid",
+    "types": [
+      "stone"
+    ],
+    "base": {
+      "hp": 52,
+      "atk": 54,
+      "def": 66,
+      "spa": 38,
+      "spd": 46,
+      "spe": 34
+    },
+    "abilities": [
+      "stonebound"
+    ],
+    "hiddenAbility": "gritskin",
+    "growthRate": "mediumFast",
+    "catchRate": 190,
+    "baseExp": 54,
+    "evYield": {
+      "def": 1
+    },
+    "genderRatio": -1,
+    "eggGroups": [
+      "mineral"
+    ],
+    "hatchCycles": 16,
+    "baseFriendship": 60,
+    "height": 0.4,
+    "weight": 18.5,
+    "category": "the Chalk Nodule",
+    "vellumEntry": "Leaves a white smear on anything it touches. Quarry children use them to mark tunnels and then cannot explain the extra marks.",
+    "habitat": "quarry faces",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "strike"
+      },
+      {
+        "level": 1,
+        "move": "brace"
+      },
+      {
+        "level": 5,
+        "move": "stonefling"
+      },
+      {
+        "level": 9,
+        "move": "gravelspray"
+      },
+      {
+        "level": 14,
+        "move": "batter"
+      },
+      {
+        "level": 19,
+        "move": "shale_edge"
+      },
+      {
+        "level": 24,
+        "move": "plating"
+      },
+      {
+        "level": 30,
+        "move": "quarryfall"
+      }
+    ],
+    "evolutions": [
+      {
+        "to": "chalkmar",
+        "method": {
+          "kind": "level",
+          "level": 26
+        }
+      }
+    ],
+    "design": {
+      "silhouette": "rounded chalk lump with blunt limbs and a banded seam",
+      "palette": [
+        "#d8d4c4",
+        "#a8a494",
+        "#f0ece0",
+        "#8a8478",
+        "#3a3830"
+      ],
+      "role": "wall",
+      "plan": "mineral",
+      "scale": 0.32
+    },
+    "num": 28
+  },
+  {
+    "id": "chalkmar",
+    "name": "Chalkmar",
+    "types": [
+      "stone",
+      "iron"
+    ],
+    "base": {
+      "hp": 78,
+      "atk": 92,
+      "def": 112,
+      "spa": 54,
+      "spd": 72,
+      "spe": 44
+    },
+    "abilities": [
+      "stonebound",
+      "oredense"
+    ],
+    "hiddenAbility": "gritskin",
+    "growthRate": "mediumFast",
+    "catchRate": 70,
+    "baseExp": 172,
+    "evYield": {
+      "def": 2
+    },
+    "genderRatio": -1,
+    "eggGroups": [
+      "mineral"
+    ],
+    "hatchCycles": 16,
+    "baseFriendship": 60,
+    "height": 1.5,
+    "weight": 210,
+    "category": "the Cut Face",
+    "vellumEntry": "Grows a shell of quarried slate over the soft chalk beneath. Nobody has ever seen one shed, and nobody has ever found a shed one.",
+    "habitat": "quarry faces",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "stonefling"
+      },
+      {
+        "level": 1,
+        "move": "brace"
+      },
+      {
+        "level": 1,
+        "move": "gravelspray"
+      },
+      {
+        "level": 19,
+        "move": "shale_edge"
+      },
+      {
+        "level": 24,
+        "move": "plating"
+      },
+      {
+        "level": 26,
+        "move": "rivet_punch"
+      },
+      {
+        "level": 32,
+        "move": "quarryfall"
+      },
+      {
+        "level": 38,
+        "move": "girder_slam"
+      },
+      {
+        "level": 45,
+        "move": "grit_field"
+      }
+    ],
+    "design": {
+      "silhouette": "broad slab-plated walker with a chalk-white underbody",
+      "palette": [
+        "#b0b4bc",
+        "#7c8088",
+        "#d8dce4",
+        "#a89c78",
+        "#2e3138"
+      ],
+      "role": "wall",
+      "plan": "brute",
+      "scale": 0.7
+    },
+    "num": 29
+  },
+  {
+    "id": "mossback",
+    "name": "Mossback",
+    "types": [
+      "verdant",
+      "stone"
+    ],
+    "base": {
+      "hp": 84,
+      "atk": 62,
+      "def": 96,
+      "spa": 58,
+      "spd": 84,
+      "spe": 28
+    },
+    "abilities": [
+      "deeproot",
+      "stonebound"
+    ],
+    "hiddenAbility": "thickcoat",
+    "growthRate": "slow",
+    "catchRate": 90,
+    "baseExp": 148,
+    "evYield": {
+      "def": 1,
+      "hp": 1
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "mineral",
+      "flora"
+    ],
+    "hatchCycles": 22,
+    "baseFriendship": 70,
+    "height": 1.1,
+    "weight": 165,
+    "category": "the Slow Boulder",
+    "vellumEntry": "Moves roughly two metres a day. Surveyors mark them on charts as landmarks and have had to redraw the charts twice.",
+    "habitat": "quarry faces",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "brace"
+      },
+      {
+        "level": 1,
+        "move": "vinewhip"
+      },
+      {
+        "level": 8,
+        "move": "stonefling"
+      },
+      {
+        "level": 14,
+        "move": "rootdrink"
+      },
+      {
+        "level": 20,
+        "move": "thornrake"
+      },
+      {
+        "level": 27,
+        "move": "bulwark"
+      },
+      {
+        "level": 34,
+        "move": "quarryfall"
+      },
+      {
+        "level": 41,
+        "move": "recover"
+      }
+    ],
+    "design": {
+      "silhouette": "low mossed boulder with a slow-blinking eye and stubby legs",
+      "palette": [
+        "#6e7a5c",
+        "#4a5440",
+        "#93a37c",
+        "#8a8478",
+        "#26301f"
+      ],
+      "role": "wall",
+      "plan": "mineral",
+      "scale": 0.5
+    },
+    "num": 30
+  },
+  {
+    "id": "slatewing",
+    "name": "Slatewing",
+    "types": [
+      "stone",
+      "gale"
+    ],
+    "base": {
+      "hp": 46,
+      "atk": 58,
+      "def": 62,
+      "spa": 40,
+      "spd": 44,
+      "spe": 64
+    },
+    "abilities": [
+      "keeneye",
+      "stonebound"
+    ],
+    "hiddenAbility": "updraft",
+    "growthRate": "mediumFast",
+    "catchRate": 160,
+    "baseExp": 62,
+    "evYield": {
+      "spe": 1
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "flying",
+      "mineral"
+    ],
+    "hatchCycles": 14,
+    "baseFriendship": 70,
+    "height": 0.5,
+    "weight": 12,
+    "category": "the Loose Shard",
+    "vellumEntry": "Roosts flat against a quarry wall and is indistinguishable from the wall until the wall leaves.",
+    "habitat": "quarry faces",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "strike"
+      },
+      {
+        "level": 4,
+        "move": "gustline"
+      },
+      {
+        "level": 9,
+        "move": "stonefling"
+      },
+      {
+        "level": 14,
+        "move": "wingbeat"
+      },
+      {
+        "level": 19,
+        "move": "shale_edge"
+      },
+      {
+        "level": 25,
+        "move": "stoop"
+      }
+    ],
+    "evolutions": [
+      {
+        "to": "craglide",
+        "method": {
+          "kind": "level",
+          "level": 28
+        }
+      }
+    ],
+    "design": {
+      "silhouette": "angular flat-winged bird with slate plating along the back",
+      "palette": [
+        "#8a90a0",
+        "#5c6272",
+        "#c0c6d4",
+        "#a8845a",
+        "#282c38"
+      ],
+      "role": "pivot",
+      "plan": "bird",
+      "scale": 0.4
+    },
+    "num": 31
+  },
+  {
+    "id": "craglide",
+    "name": "Craglide",
+    "types": [
+      "stone",
+      "gale"
+    ],
+    "base": {
+      "hp": 74,
+      "atk": 92,
+      "def": 90,
+      "spa": 62,
+      "spd": 70,
+      "spe": 96
+    },
+    "abilities": [
+      "keeneye",
+      "stonebound"
+    ],
+    "hiddenAbility": "updraft",
+    "growthRate": "mediumFast",
+    "catchRate": 55,
+    "baseExp": 186,
+    "evYield": {
+      "spe": 2,
+      "atk": 1
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "flying",
+      "mineral"
+    ],
+    "hatchCycles": 14,
+    "baseFriendship": 70,
+    "height": 1.5,
+    "weight": 52,
+    "category": "the Falling Wall",
+    "vellumEntry": "Dives without a single wingbeat. The quarry calls the sound it makes on the way down \"the whistle\", and they stop working when they hear it.",
+    "habitat": "quarry faces",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "wingbeat"
+      },
+      {
+        "level": 1,
+        "move": "shale_edge"
+      },
+      {
+        "level": 25,
+        "move": "stoop"
+      },
+      {
+        "level": 30,
+        "move": "grit_field"
+      },
+      {
+        "level": 36,
+        "move": "quarryfall"
+      },
+      {
+        "level": 42,
+        "move": "skylift"
+      },
+      {
+        "level": 48,
+        "move": "tailwind_call"
+      }
+    ],
+    "design": {
+      "silhouette": "large raptor with slab-plated wings and a hooked stone beak",
+      "palette": [
+        "#7d8494",
+        "#4e5464",
+        "#b8c0d0",
+        "#c08a3a",
+        "#20242e"
+      ],
+      "role": "sweeper",
+      "plan": "bird",
+      "scale": 0.72
+    },
+    "num": 32
+  },
+  {
+    "id": "emberbore",
+    "name": "Emberbore",
+    "types": [
+      "flame",
+      "terra"
+    ],
+    "base": {
+      "hp": 58,
+      "atk": 74,
+      "def": 60,
+      "spa": 62,
+      "spd": 50,
+      "spe": 46
+    },
+    "abilities": [
+      "kindling",
+      "gritskin"
+    ],
+    "hiddenAbility": "shortfuse",
+    "growthRate": "mediumSlow",
+    "catchRate": 120,
+    "baseExp": 96,
+    "evYield": {
+      "atk": 1
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "field",
+      "mineral"
+    ],
+    "hatchCycles": 18,
+    "baseFriendship": 70,
+    "height": 0.7,
+    "weight": 41,
+    "category": "the Hot Seam",
+    "vellumEntry": "Bores through rock by heating it until it gives up. The tunnels it leaves are perfectly round and slightly warm for a week.",
+    "habitat": "quarry undermine",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "strike"
+      },
+      {
+        "level": 1,
+        "move": "ember_spit"
+      },
+      {
+        "level": 10,
+        "move": "gravelspray"
+      },
+      {
+        "level": 16,
+        "move": "cinderlash"
+      },
+      {
+        "level": 22,
+        "move": "fissure_step"
+      },
+      {
+        "level": 29,
+        "move": "kilnburst"
+      },
+      {
+        "level": 36,
+        "move": "landslide"
+      },
+      {
+        "level": 43,
+        "move": "heat_haze"
+      }
+    ],
+    "design": {
+      "silhouette": "squat armoured digger with a glowing drill-snout",
+      "palette": [
+        "#c06038",
+        "#8a3c1e",
+        "#e8a050",
+        "#8a7a5a",
+        "#2e1c14"
+      ],
+      "role": "bruiser",
+      "plan": "critter",
+      "scale": 0.5
+    },
+    "num": 33
+  },
+  {
+    "id": "lantric",
+    "name": "Lantric",
+    "types": [
+      "spark",
+      "iron"
+    ],
+    "base": {
+      "hp": 54,
+      "atk": 46,
+      "def": 74,
+      "spa": 82,
+      "spd": 76,
+      "spe": 50
+    },
+    "abilities": [
+      "staticcling",
+      "oredense"
+    ],
+    "hiddenAbility": "stormborn",
+    "growthRate": "mediumFast",
+    "catchRate": 110,
+    "baseExp": 108,
+    "evYield": {
+      "spa": 1,
+      "def": 1
+    },
+    "genderRatio": -1,
+    "eggGroups": [
+      "mineral"
+    ],
+    "hatchCycles": 18,
+    "baseFriendship": 60,
+    "height": 0.8,
+    "weight": 34,
+    "category": "the Pit Lamp",
+    "vellumEntry": "Hangs itself on a hook and burns steady for eleven hours. Quarry crews insist this is a coincidence and hang it up anyway.",
+    "habitat": "quarry undermine",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "strike"
+      },
+      {
+        "level": 1,
+        "move": "static_nip"
+      },
+      {
+        "level": 12,
+        "move": "arcjolt"
+      },
+      {
+        "level": 18,
+        "move": "plating"
+      },
+      {
+        "level": 24,
+        "move": "earthing_wire"
+      },
+      {
+        "level": 31,
+        "move": "rivet_punch"
+      },
+      {
+        "level": 38,
+        "move": "wallshield"
+      },
+      {
+        "level": 45,
+        "move": "thunderhead"
+      }
+    ],
+    "design": {
+      "silhouette": "hanging iron lantern with a filament core and two hook arms",
+      "palette": [
+        "#c8b458",
+        "#8a7a30",
+        "#f4e69a",
+        "#93a3ad",
+        "#2a2a20"
+      ],
+      "role": "support",
+      "plan": "orb",
+      "scale": 0.42
+    },
+    "num": 34
+  },
+  {
+    "id": "frostnip",
+    "name": "Frostnip",
+    "types": [
+      "frost"
+    ],
+    "base": {
+      "hp": 44,
+      "atk": 52,
+      "def": 42,
+      "spa": 56,
+      "spd": 48,
+      "spe": 62
+    },
+    "abilities": [
+      "thickcoat"
+    ],
+    "hiddenAbility": "keeneye",
+    "growthRate": "mediumFast",
+    "catchRate": 190,
+    "baseExp": 58,
+    "evYield": {
+      "spe": 1
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "field"
+    ],
+    "hatchCycles": 15,
+    "baseFriendship": 70,
+    "height": 0.4,
+    "weight": 8,
+    "category": "the Cold Snap",
+    "vellumEntry": "Sleeps on the lake shore where the water refuses to freeze, which is the only warm place it can find and the only place it does not want to be.",
+    "habitat": "kellowmere lakeshore",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "strike"
+      },
+      {
+        "level": 5,
+        "move": "chillbite"
+      },
+      {
+        "level": 10,
+        "move": "quickstep"
+      },
+      {
+        "level": 15,
+        "move": "rimewind"
+      },
+      {
+        "level": 21,
+        "move": "unnerve"
+      },
+      {
+        "level": 27,
+        "move": "coldsnap"
+      }
+    ],
+    "evolutions": [
+      {
+        "to": "rimehound",
+        "method": {
+          "kind": "level",
+          "level": 25
+        }
+      }
+    ],
+    "design": {
+      "silhouette": "small frost-furred canine with icicle whiskers",
+      "palette": [
+        "#c8e4f0",
+        "#8fb4cc",
+        "#f0fafc",
+        "#5a7a94",
+        "#26384a"
+      ],
+      "role": "glass",
+      "plan": "quadruped",
+      "scale": 0.33
+    },
+    "num": 35
+  },
+  {
+    "id": "rimehound",
+    "name": "Rimehound",
+    "types": [
+      "frost",
+      "beast"
+    ],
+    "base": {
+      "hp": 76,
+      "atk": 96,
+      "def": 68,
+      "spa": 82,
+      "spd": 74,
+      "spe": 94
+    },
+    "abilities": [
+      "thickcoat",
+      "quickpaw"
+    ],
+    "hiddenAbility": "keeneye",
+    "growthRate": "mediumFast",
+    "catchRate": 60,
+    "baseExp": 178,
+    "evYield": {
+      "spe": 2,
+      "atk": 1
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "field"
+    ],
+    "hatchCycles": 15,
+    "baseFriendship": 70,
+    "height": 1.3,
+    "weight": 54,
+    "category": "the Long Winter",
+    "vellumEntry": "Runs the lake ice in packs of three. There is always a fourth set of tracks and there has never been a fourth hound.",
+    "habitat": "kellowmere lakeshore",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "chillbite"
+      },
+      {
+        "level": 1,
+        "move": "quickstep"
+      },
+      {
+        "level": 15,
+        "move": "rimewind"
+      },
+      {
+        "level": 25,
+        "move": "howl"
+      },
+      {
+        "level": 31,
+        "move": "coldsnap"
+      },
+      {
+        "level": 38,
+        "move": "throatgrip"
+      },
+      {
+        "level": 45,
+        "move": "glacier_fall"
+      }
+    ],
+    "design": {
+      "silhouette": "long-legged hound with a frost mane and trailing breath",
+      "palette": [
+        "#a8cfe0",
+        "#6d94ac",
+        "#e8f6fc",
+        "#4a6880",
+        "#1e2c3c"
+      ],
+      "role": "sweeper",
+      "plan": "quadruped",
+      "scale": 0.62
+    },
+    "num": 36
+  },
+  {
+    "id": "deeplum",
+    "name": "Deeplum",
+    "types": [
+      "tide",
+      "umbral"
+    ],
+    "base": {
+      "hp": 68,
+      "atk": 58,
+      "def": 66,
+      "spa": 88,
+      "spd": 78,
+      "spe": 52
+    },
+    "abilities": [
+      "stillwater"
+    ],
+    "hiddenAbility": "riptide",
+    "growthRate": "slow",
+    "catchRate": 80,
+    "baseExp": 152,
+    "evYield": {
+      "spa": 2
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "water"
+    ],
+    "hatchCycles": 20,
+    "baseFriendship": 60,
+    "height": 0.9,
+    "weight": 28,
+    "category": "the Lamp Below",
+    "vellumEntry": "A single pale light, forty metres down, that has not moved in the eleven years the lake has been surveyed.",
+    "habitat": "kellowmere lake",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "spray"
+      },
+      {
+        "level": 1,
+        "move": "cold_touch"
+      },
+      {
+        "level": 12,
+        "move": "undertow"
+      },
+      {
+        "level": 18,
+        "move": "hollowing"
+      },
+      {
+        "level": 25,
+        "move": "muddle"
+      },
+      {
+        "level": 32,
+        "move": "breakwater"
+      },
+      {
+        "level": 39,
+        "move": "shadewrack"
+      },
+      {
+        "level": 46,
+        "move": "wake_dread"
+      }
+    ],
+    "design": {
+      "silhouette": "trailing deep-water form with one hanging lure light",
+      "palette": [
+        "#2f4a68",
+        "#1c2e44",
+        "#5a86a8",
+        "#c8e0a0",
+        "#101a26"
+      ],
+      "role": "pivot",
+      "plan": "aquatic",
+      "scale": 0.48
+    },
+    "num": 37
+  },
+  {
+    "id": "tallowmoth",
+    "name": "Tallowmoth",
+    "types": [
+      "chitin",
+      "radiant"
+    ],
+    "base": {
+      "hp": 56,
+      "atk": 44,
+      "def": 52,
+      "spa": 80,
+      "spd": 68,
+      "spe": 72
+    },
+    "abilities": [
+      "swarming"
+    ],
+    "hiddenAbility": "keeneye",
+    "growthRate": "mediumFast",
+    "catchRate": 100,
+    "baseExp": 124,
+    "evYield": {
+      "spa": 1,
+      "spe": 1
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "chitin"
+    ],
+    "hatchCycles": 12,
+    "baseFriendship": 70,
+    "height": 0.6,
+    "weight": 5.4,
+    "category": "the Lampwing",
+    "vellumEntry": "Drawn to any steady light. Quarry crews carry a spare lamp purely to send somewhere else.",
+    "habitat": "quarry undermine",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "nibble"
+      },
+      {
+        "level": 1,
+        "move": "glimmer"
+      },
+      {
+        "level": 13,
+        "move": "silkbind"
+      },
+      {
+        "level": 19,
+        "move": "gustline"
+      },
+      {
+        "level": 26,
+        "move": "swarmcall"
+      },
+      {
+        "level": 33,
+        "move": "sunspill"
+      },
+      {
+        "level": 40,
+        "move": "lantern_fall"
+      }
+    ],
+    "design": {
+      "silhouette": "pale broad-winged moth with luminous wing panels",
+      "palette": [
+        "#e8dca8",
+        "#b8a870",
+        "#fdf6d8",
+        "#d8b048",
+        "#4a4028"
+      ],
+      "role": "glass",
+      "plan": "moth",
+      "scale": 0.42
+    },
+    "num": 38
+  },
+  {
+    "id": "gravelet",
+    "name": "Gravelet",
+    "types": [
+      "terra"
+    ],
+    "base": {
+      "hp": 50,
+      "atk": 62,
+      "def": 54,
+      "spa": 34,
+      "spd": 42,
+      "spe": 58
+    },
+    "abilities": [
+      "gritskin"
+    ],
+    "hiddenAbility": "scavenger",
+    "growthRate": "fast",
+    "catchRate": 200,
+    "baseExp": 50,
+    "evYield": {
+      "atk": 1
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "field"
+    ],
+    "hatchCycles": 12,
+    "baseFriendship": 70,
+    "height": 0.3,
+    "weight": 9.6,
+    "category": "the Spoil Heap",
+    "vellumEntry": "Lives in the waste rock and eats what the quarry throws away, which is most of it.",
+    "habitat": "quarry spoil",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "strike"
+      },
+      {
+        "level": 6,
+        "move": "gravelspray"
+      },
+      {
+        "level": 11,
+        "move": "quickstep"
+      },
+      {
+        "level": 16,
+        "move": "batter"
+      },
+      {
+        "level": 22,
+        "move": "fissure_step"
+      },
+      {
+        "level": 29,
+        "move": "bull_rush"
+      }
+    ],
+    "design": {
+      "silhouette": "scruffy digger caked in loose grit, oversized foreclaws",
+      "palette": [
+        "#b09878",
+        "#7a6650",
+        "#d8c8a8",
+        "#8a7040",
+        "#332a1e"
+      ],
+      "role": "glass",
+      "plan": "critter",
+      "scale": 0.3
+    },
+    "num": 39
+  },
+  {
+    "id": "shalefin",
+    "name": "Shalefin",
+    "types": [
+      "tide"
+    ],
+    "base": {
+      "hp": 48,
+      "atk": 60,
+      "def": 58,
+      "spa": 46,
+      "spd": 44,
+      "spe": 56
+    },
+    "abilities": [
+      "stillwater"
+    ],
+    "hiddenAbility": "riptide",
+    "growthRate": "mediumFast",
+    "catchRate": 190,
+    "baseExp": 58,
+    "evYield": {
+      "atk": 1
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "water"
+    ],
+    "hatchCycles": 14,
+    "baseFriendship": 70,
+    "height": 0.4,
+    "weight": 11.2,
+    "category": "the Flat Runner",
+    "vellumEntry": "Lies under two centimetres of water on the flats and is invisible until you tread on one. Then it is extremely visible.",
+    "habitat": "tidal flats",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "strike"
+      },
+      {
+        "level": 1,
+        "move": "spray"
+      },
+      {
+        "level": 8,
+        "move": "gravelspray"
+      },
+      {
+        "level": 13,
+        "move": "hullcrack"
+      },
+      {
+        "level": 19,
+        "move": "undertow"
+      },
+      {
+        "level": 25,
+        "move": "shale_edge"
+      },
+      {
+        "level": 31,
+        "move": "breakwater"
+      }
+    ],
+    "evolutions": [
+      {
+        "to": "tidewrack",
+        "method": {
+          "kind": "level",
+          "level": 29
+        }
+      }
+    ],
+    "design": {
+      "silhouette": "flat bottom-dwelling fish with a gritted upper hide",
+      "palette": [
+        "#6a7f8c",
+        "#43535e",
+        "#9db3bd",
+        "#c8b078",
+        "#232e36"
+      ],
+      "role": "bruiser",
+      "plan": "fish",
+      "scale": 0.34
+    },
+    "num": 40
+  },
+  {
+    "id": "tidewrack",
+    "name": "Tidewrack",
+    "types": [
+      "tide",
+      "stone"
+    ],
+    "base": {
+      "hp": 82,
+      "atk": 100,
+      "def": 96,
+      "spa": 62,
+      "spd": 72,
+      "spe": 62
+    },
+    "abilities": [
+      "stillwater",
+      "stonebound"
+    ],
+    "hiddenAbility": "riptide",
+    "growthRate": "mediumFast",
+    "catchRate": 60,
+    "baseExp": 184,
+    "evYield": {
+      "atk": 2,
+      "def": 1
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "water"
+    ],
+    "hatchCycles": 14,
+    "baseFriendship": 70,
+    "height": 1.6,
+    "weight": 96,
+    "category": "the Ground Swell",
+    "vellumEntry": "Carries a hide of cemented shingle. Brackwater dredges the channel twice a year and finds the shingle gone every time.",
+    "habitat": "tidal flats",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "hullcrack"
+      },
+      {
+        "level": 1,
+        "move": "gravelspray"
+      },
+      {
+        "level": 25,
+        "move": "shale_edge"
+      },
+      {
+        "level": 31,
+        "move": "breakwater"
+      },
+      {
+        "level": 36,
+        "move": "quarryfall"
+      },
+      {
+        "level": 42,
+        "move": "downpour"
+      },
+      {
+        "level": 48,
+        "move": "bulwark"
+      }
+    ],
+    "design": {
+      "silhouette": "heavy shingle-plated swimmer with a blunt ramming head",
+      "palette": [
+        "#5c7280",
+        "#38464f",
+        "#8fa6b2",
+        "#b09a68",
+        "#1c262d"
+      ],
+      "role": "bruiser",
+      "plan": "fish",
+      "scale": 0.7
+    },
+    "num": 41
+  },
+  {
+    "id": "pinchel",
+    "name": "Pinchel",
+    "types": [
+      "tide",
+      "chitin"
+    ],
+    "base": {
+      "hp": 50,
+      "atk": 66,
+      "def": 72,
+      "spa": 34,
+      "spd": 46,
+      "spe": 42
+    },
+    "abilities": [
+      "hardshell"
+    ],
+    "hiddenAbility": "gripjaw",
+    "growthRate": "mediumFast",
+    "catchRate": 190,
+    "baseExp": 60,
+    "evYield": {
+      "def": 1
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "water",
+      "chitin"
+    ],
+    "hatchCycles": 12,
+    "baseFriendship": 70,
+    "height": 0.3,
+    "weight": 7.8,
+    "category": "the Flat Picker",
+    "vellumEntry": "Works the tideline for whatever the sea has given up on. Will fight anything for a shell it does not need.",
+    "habitat": "tidal flats",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "nibble"
+      },
+      {
+        "level": 1,
+        "move": "brace"
+      },
+      {
+        "level": 7,
+        "move": "spray"
+      },
+      {
+        "level": 12,
+        "move": "shellstrike"
+      },
+      {
+        "level": 18,
+        "move": "closing_hold"
+      },
+      {
+        "level": 24,
+        "move": "hullcrack"
+      },
+      {
+        "level": 30,
+        "move": "plating"
+      }
+    ],
+    "evolutions": [
+      {
+        "to": "clatterclaw",
+        "method": {
+          "kind": "level",
+          "level": 27
+        }
+      }
+    ],
+    "design": {
+      "silhouette": "squat armoured crab with one oversized claw",
+      "palette": [
+        "#c26a4a",
+        "#8a4028",
+        "#e8a074",
+        "#5f7a48",
+        "#2e1a12"
+      ],
+      "role": "wall",
+      "plan": "arachnid",
+      "scale": 0.32
+    },
+    "num": 42
+  },
+  {
+    "id": "clatterclaw",
+    "name": "Clatterclaw",
+    "types": [
+      "tide",
+      "chitin"
+    ],
+    "base": {
+      "hp": 78,
+      "atk": 104,
+      "def": 106,
+      "spa": 48,
+      "spd": 70,
+      "spe": 56
+    },
+    "abilities": [
+      "hardshell",
+      "gripjaw"
+    ],
+    "hiddenAbility": "swarming",
+    "growthRate": "mediumFast",
+    "catchRate": 55,
+    "baseExp": 186,
+    "evYield": {
+      "def": 2,
+      "atk": 1
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "water",
+      "chitin"
+    ],
+    "hatchCycles": 12,
+    "baseFriendship": 70,
+    "height": 1.2,
+    "weight": 68,
+    "category": "the Dredge",
+    "vellumEntry": "The sound of a colony working the flats at night carries a mile inland. Brackwater has stopped finding it unsettling.",
+    "habitat": "tidal flats",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "shellstrike"
+      },
+      {
+        "level": 1,
+        "move": "closing_hold"
+      },
+      {
+        "level": 24,
+        "move": "hullcrack"
+      },
+      {
+        "level": 30,
+        "move": "plating"
+      },
+      {
+        "level": 35,
+        "move": "breakwater"
+      },
+      {
+        "level": 41,
+        "move": "ribcracker"
+      },
+      {
+        "level": 47,
+        "move": "bulwark"
+      }
+    ],
+    "design": {
+      "silhouette": "broad reef crab with paired shearing claws",
+      "palette": [
+        "#b85a3c",
+        "#7a3420",
+        "#e09468",
+        "#4f6a3c",
+        "#28150f"
+      ],
+      "role": "wall",
+      "plan": "arachnid",
+      "scale": 0.62
+    },
+    "num": 43
+  },
+  {
+    "id": "gullswift",
+    "name": "Gullswift",
+    "types": [
+      "gale",
+      "tide"
+    ],
+    "base": {
+      "hp": 60,
+      "atk": 72,
+      "def": 54,
+      "spa": 66,
+      "spd": 58,
+      "spe": 92
+    },
+    "abilities": [
+      "keeneye",
+      "riptide"
+    ],
+    "hiddenAbility": "updraft",
+    "growthRate": "mediumFast",
+    "catchRate": 120,
+    "baseExp": 128,
+    "evYield": {
+      "spe": 2
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "flying",
+      "water"
+    ],
+    "hatchCycles": 12,
+    "baseFriendship": 70,
+    "height": 0.9,
+    "weight": 16.4,
+    "category": "the Channel Diver",
+    "vellumEntry": "Hits the water at forty knots and comes up with something every time. Nobody has photographed a miss.",
+    "habitat": "brackwater channel",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "gustline"
+      },
+      {
+        "level": 1,
+        "move": "spray"
+      },
+      {
+        "level": 12,
+        "move": "wingbeat"
+      },
+      {
+        "level": 18,
+        "move": "undertow"
+      },
+      {
+        "level": 24,
+        "move": "stoop"
+      },
+      {
+        "level": 31,
+        "move": "breakwater"
+      },
+      {
+        "level": 38,
+        "move": "tailwind_call"
+      },
+      {
+        "level": 44,
+        "move": "skylift"
+      }
+    ],
+    "design": {
+      "silhouette": "long-winged seabird with a dagger bill and forked tail",
+      "palette": [
+        "#e4ecf4",
+        "#a8b8c8",
+        "#ffffff",
+        "#e0a038",
+        "#2a3440"
+      ],
+      "role": "sweeper",
+      "plan": "bird",
+      "scale": 0.52
+    },
+    "num": 44
+  },
+  {
+    "id": "bladderwrack",
+    "name": "Bladderwrack",
+    "types": [
+      "verdant",
+      "tide"
+    ],
+    "base": {
+      "hp": 88,
+      "atk": 54,
+      "def": 84,
+      "spa": 74,
+      "spd": 88,
+      "spe": 30
+    },
+    "abilities": [
+      "deeproot",
+      "stillwater"
+    ],
+    "hiddenAbility": "thickcoat",
+    "growthRate": "slow",
+    "catchRate": 100,
+    "baseExp": 156,
+    "evYield": {
+      "spd": 2
+    },
+    "genderRatio": -1,
+    "eggGroups": [
+      "flora",
+      "water"
+    ],
+    "hatchCycles": 20,
+    "baseFriendship": 60,
+    "height": 1.4,
+    "weight": 44,
+    "category": "the Holdfast",
+    "vellumEntry": "Anchors to one rock and stays there for its whole life. Prise one loose and it will find the same rock again.",
+    "habitat": "tidal flats",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "vinewhip"
+      },
+      {
+        "level": 1,
+        "move": "spray"
+      },
+      {
+        "level": 11,
+        "move": "rootdrink"
+      },
+      {
+        "level": 17,
+        "move": "undertow"
+      },
+      {
+        "level": 23,
+        "move": "sporecloud"
+      },
+      {
+        "level": 30,
+        "move": "bloomburst"
+      },
+      {
+        "level": 37,
+        "move": "wallshield"
+      },
+      {
+        "level": 44,
+        "move": "recover"
+      }
+    ],
+    "design": {
+      "silhouette": "draped kelp column with float bladders and a holdfast base",
+      "palette": [
+        "#5a7a48",
+        "#3a5230",
+        "#8aa860",
+        "#c8b45a",
+        "#22301c"
+      ],
+      "role": "wall",
+      "plan": "serpentine",
+      "scale": 0.45
+    },
+    "num": 45
+  },
+  {
+    "id": "silthopper",
+    "name": "Silthopper",
+    "types": [
+      "terra",
+      "chitin"
+    ],
+    "base": {
+      "hp": 54,
+      "atk": 68,
+      "def": 56,
+      "spa": 40,
+      "spd": 50,
+      "spe": 76
+    },
+    "abilities": [
+      "gritskin",
+      "swarming"
+    ],
+    "hiddenAbility": "quickpaw",
+    "growthRate": "fast",
+    "catchRate": 190,
+    "baseExp": 62,
+    "evYield": {
+      "spe": 1
+    },
+    "genderRatio": 0.5,
+    "eggGroups": [
+      "chitin"
+    ],
+    "hatchCycles": 10,
+    "baseFriendship": 70,
+    "height": 0.3,
+    "weight": 4.2,
+    "category": "the Mud Skipper",
+    "vellumEntry": "Crosses two hundred metres of open mud in under a minute and has never once been seen to walk.",
+    "habitat": "tidal flats",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "nibble"
+      },
+      {
+        "level": 5,
+        "move": "quickstep"
+      },
+      {
+        "level": 10,
+        "move": "gravelspray"
+      },
+      {
+        "level": 16,
+        "move": "shellstrike"
+      },
+      {
+        "level": 22,
+        "move": "fissure_step"
+      },
+      {
+        "level": 29,
+        "move": "swarmcall"
+      }
+    ],
+    "design": {
+      "silhouette": "long-legged mud insect built for launching",
+      "palette": [
+        "#8a7a52",
+        "#5c5034",
+        "#b8a878",
+        "#6a8a4a",
+        "#2a2418"
+      ],
+      "role": "glass",
+      "plan": "grub",
+      "scale": 0.3
+    },
+    "num": 46
+  },
+  {
+    "id": "brinewisp",
+    "name": "Brinewisp",
+    "types": [
+      "tide",
+      "spirit"
+    ],
+    "base": {
+      "hp": 62,
+      "atk": 42,
+      "def": 58,
+      "spa": 94,
+      "spd": 86,
+      "spe": 78
+    },
+    "abilities": [
+      "stillwater"
+    ],
+    "hiddenAbility": "riptide",
+    "growthRate": "slow",
+    "catchRate": 60,
+    "baseExp": 168,
+    "evYield": {
+      "spa": 2
+    },
+    "genderRatio": -1,
+    "eggGroups": [
+      "water",
+      "spirit"
+    ],
+    "hatchCycles": 24,
+    "baseFriendship": 50,
+    "height": 1,
+    "weight": 2.2,
+    "category": "the Channel Light",
+    "vellumEntry": "Appears over the channel on flat nights. Brackwater lost eleven boats to them in one generation and then stopped following them.",
+    "habitat": "brackwater channel",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "spray"
+      },
+      {
+        "level": 1,
+        "move": "cold_touch"
+      },
+      {
+        "level": 14,
+        "move": "undertow"
+      },
+      {
+        "level": 20,
+        "move": "hollowing"
+      },
+      {
+        "level": 27,
+        "move": "muddle"
+      },
+      {
+        "level": 34,
+        "move": "breakwater"
+      },
+      {
+        "level": 41,
+        "move": "wake_dread"
+      },
+      {
+        "level": 47,
+        "move": "grave_hold"
+      }
+    ],
+    "design": {
+      "silhouette": "drifting hooded light with a trailing brine veil",
+      "palette": [
+        "#7fd0d8",
+        "#3f8090",
+        "#c8f4f8",
+        "#a8e8b0",
+        "#1c3840"
+      ],
+      "role": "glass",
+      "plan": "orb",
+      "scale": 0.45
+    },
+    "num": 47
+  },
+  {
+    "id": "anchorling",
+    "name": "Anchorling",
+    "types": [
+      "iron",
+      "tide"
+    ],
+    "base": {
+      "hp": 72,
+      "atk": 88,
+      "def": 104,
+      "spa": 50,
+      "spd": 72,
+      "spe": 34
+    },
+    "abilities": [
+      "oredense",
+      "stillwater"
+    ],
+    "hiddenAbility": "stonebound",
+    "growthRate": "mediumSlow",
+    "catchRate": 70,
+    "baseExp": 164,
+    "evYield": {
+      "def": 2
+    },
+    "genderRatio": -1,
+    "eggGroups": [
+      "mineral",
+      "water"
+    ],
+    "hatchCycles": 20,
+    "baseFriendship": 60,
+    "height": 1.1,
+    "weight": 148,
+    "category": "the Lost Weight",
+    "vellumEntry": "Every one of them is shaped like a working anchor. Brackwater has never lost an anchor it could not account for.",
+    "habitat": "brackwater channel",
+    "learnset": [
+      {
+        "level": 1,
+        "move": "brace"
+      },
+      {
+        "level": 1,
+        "move": "spray"
+      },
+      {
+        "level": 13,
+        "move": "rivet_punch"
+      },
+      {
+        "level": 19,
+        "move": "hullcrack"
+      },
+      {
+        "level": 26,
+        "move": "plating"
+      },
+      {
+        "level": 33,
+        "move": "girder_slam"
+      },
+      {
+        "level": 40,
+        "move": "breakwater"
+      },
+      {
+        "level": 46,
+        "move": "forgefall"
+      }
+    ],
+    "design": {
+      "silhouette": "iron anchor form with barnacled flukes and a single eye",
+      "palette": [
+        "#7f8a94",
+        "#4e5860",
+        "#b4c0cc",
+        "#5a7a58",
+        "#20272e"
+      ],
+      "role": "wall",
+      "plan": "monolith",
+      "scale": 0.5
+    },
+    "num": 48
+  }
+]

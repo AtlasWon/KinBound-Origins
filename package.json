@@ -1,0 +1,87 @@
+{
+  "name": "kinbound",
+  "version": "0.1.0",
+  "private": true,
+  "description": "KinBound - Amber Version. An original GBA-era monster-catching RPG.",
+  "type": "module",
+  "main": "launcher/main.cjs",
+  "scripts": {
+    "dev": "node tools/serve.js",
+    "typecheck": "tsc --noEmit",
+    "compile": "tsc",
+    "watch": "tsc --watch",
+    "build": "node tools/build.js",
+    "test": "tsc && node --test \"tests/**/*.test.js\"",
+    "validate": "node tools/validate-data.js",
+    "icon": "node tools/make-icon.mjs",
+    "launcher": "npm run compile && electron .",
+    "dist": "npm run compile && electron-builder --win --publish never",
+    "release": "node tools/release.mjs",
+    "shortcut": "node tools/make-shortcut.mjs",
+    "launcher:quiet": "npm run compile && electron . --mute",
+    "smoke": "npm run compile && electron . --smoke"
+  },
+  "devDependencies": {
+    "electron": "^33.4.11",
+    "electron-builder": "^25.1.8",
+    "electron-updater": "^6.8.9",
+    "esbuild": "^0.24.0",
+    "typescript": "^5.6.0"
+  },
+  "build": {
+    "appId": "com.kinbound.amber",
+    "productName": "KinBound",
+    "directories": {
+      "output": "dist",
+      "buildResources": "launcher"
+    },
+    "files": [
+      "index.html",
+      "package.json",
+      "launcher/**/*",
+      "data/**/*",
+      "build/js/**/*.js",
+      "!build/js/**/*.map",
+      "!build/shots/**",
+      "!src/**",
+      "!tests/**",
+      "!tools/**",
+      "!docs/**"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "launcher/icon.png",
+      "artifactName": "KinBound-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "KinBound",
+      "uninstallDisplayName": "KinBound - Amber Version"
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "icon": "launcher/icon.png",
+      "category": "Game"
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "icon": "launcher/icon.png",
+      "category": "public.app-category.games"
+    }
+  }
+}

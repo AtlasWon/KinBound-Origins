@@ -1,0 +1,182 @@
+[
+  {
+    "id": "deeproot",
+    "name": "Deeproot",
+    "description": "Cannot be forced out of battle, and takes 10% less damage from Terra moves.",
+    "hooks": [
+      "onForceSwitch",
+      "onDamage"
+    ]
+  },
+  {
+    "id": "thornskin",
+    "name": "Thornskin",
+    "description": "Contact moves cost the attacker 1/8 of its maximum HP.",
+    "hooks": [
+      "onHitByContact"
+    ]
+  },
+  {
+    "id": "kindling",
+    "name": "Kindling",
+    "description": "Flame moves deal 50% more damage below one third HP.",
+    "hooks": [
+      "onModifyDamage"
+    ]
+  },
+  {
+    "id": "shortfuse",
+    "name": "Short Fuse",
+    "description": "Moves with a secondary effect trigger it twice as often.",
+    "hooks": [
+      "onSecondaryChance"
+    ]
+  },
+  {
+    "id": "stillwater",
+    "name": "Stillwater",
+    "description": "Immune to confusion, and cures it on entry.",
+    "hooks": [
+      "onSwitchIn",
+      "onVolatile"
+    ]
+  },
+  {
+    "id": "riptide",
+    "name": "Riptide",
+    "description": "Tide moves gain +1 priority in rain.",
+    "hooks": [
+      "onModifyPriority"
+    ]
+  },
+  {
+    "id": "closequarters",
+    "name": "Close Quarters",
+    "description": "Contact moves deal 20% more damage.",
+    "hooks": [
+      "onModifyDamage"
+    ]
+  },
+  {
+    "id": "deepmind",
+    "name": "Deep Mind",
+    "description": "Raises Special Defence one stage when hit by a Psyche move.",
+    "hooks": [
+      "onHit"
+    ]
+  },
+  {
+    "id": "quickpaw",
+    "name": "Quick Paw",
+    "description": "Occasionally moves first regardless of Speed.",
+    "hooks": [
+      "onModifyPriority"
+    ]
+  },
+  {
+    "id": "scavenger",
+    "name": "Scavenger",
+    "description": "Recovers a consumed held item after battle.",
+    "hooks": [
+      "onBattleEnd"
+    ]
+  },
+  {
+    "id": "gritskin",
+    "name": "Gritskin",
+    "description": "Immune to sandstorm damage; Defence rises 30% in a sandstorm.",
+    "hooks": [
+      "onWeather",
+      "onModifyStat"
+    ]
+  },
+  {
+    "id": "keeneye",
+    "name": "Keen Eye",
+    "description": "Accuracy cannot be lowered.",
+    "hooks": [
+      "onStatChange"
+    ]
+  },
+  {
+    "id": "updraft",
+    "name": "Updraft",
+    "description": "Speed rises one stage on entry in wind or storm weather.",
+    "hooks": [
+      "onSwitchIn"
+    ]
+  },
+  {
+    "id": "stormborn",
+    "name": "Stormborn",
+    "description": "Spark moves never miss in rain or storm.",
+    "hooks": [
+      "onModifyAccuracy"
+    ]
+  },
+  {
+    "id": "hardshell",
+    "name": "Hardshell",
+    "description": "Takes half damage from critical hits.",
+    "hooks": [
+      "onModifyDamage"
+    ]
+  },
+  {
+    "id": "swarming",
+    "name": "Swarming",
+    "description": "Multi-hit moves always hit the maximum number of times.",
+    "hooks": [
+      "onMultiHit"
+    ]
+  },
+  {
+    "id": "gripjaw",
+    "name": "Gripjaw",
+    "description": "Trapping moves last two extra turns.",
+    "hooks": [
+      "onTrap"
+    ]
+  },
+  {
+    "id": "thickcoat",
+    "name": "Thick Coat",
+    "description": "Halves damage from Frost moves.",
+    "hooks": [
+      "onModifyDamage"
+    ]
+  },
+  {
+    "id": "forager",
+    "name": "Forager",
+    "description": "Finds an item after a battle it participated in.",
+    "hooks": [
+      "onBattleEnd"
+    ]
+  },
+  {
+    "id": "stonebound",
+    "name": "Stonebound",
+    "description": "Cannot be knocked back; Stone moves gain 20% power.",
+    "hooks": [
+      "onModifyDamage",
+      "onForceSwitch"
+    ]
+  },
+  {
+    "id": "oredense",
+    "name": "Ore-Dense",
+    "description": "Halves damage from the first hit of every battle.",
+    "hooks": [
+      "onModifyDamage"
+    ]
+  },
+  {
+    "id": "staticcling",
+    "name": "Static Cling",
+    "description": "Contact moves have a 30% chance to paralyse the attacker.",
+    "hooks": [
+      "onHitByContact"
+    ]
+  }
+]

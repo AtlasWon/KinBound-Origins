@@ -1,0 +1,11 @@
+{
+  "//": "Point this at the GitHub repository that holds KinBound's releases.",
+  "//owner": "The account or organisation, e.g. 'AtlasWon'.",
+  "//repo": "The repository name, e.g. 'KinBound-Origins'.",
+  "//note": "While these are blank the launcher shows 'Updates not configured' and Play still works normally.",
+  "github": {
+    "owner": "AtlasWon",
+    "repo": "KinBound-Origins"
+  },
+  "allowPrerelease": false
+}

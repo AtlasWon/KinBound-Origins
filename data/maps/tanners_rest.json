@@ -1,0 +1,229 @@
+{
+  "id": "tanners_rest",
+  "name": "Tanners Rest",
+  "displayName": "TANNERS REST",
+  "music": "town_hollow",
+  "battleBackdrop": "highland",
+  "indoor": false,
+  "regionPos": {
+    "x": 8,
+    "y": 13
+  },
+  "rows": [
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+    "TT...144443.......699998....TT",
+    "TT...122523.......677078....TT",
+    "TT...GGhgGG.......GGmgGG....TT",
+    "TT...------.......------....TT",
+    "TT..........................TT",
+    "TT..........................TT",
+    "------------------------------",
+    "------------------------------",
+    "TT..........................TT",
+    "TT......o............o......TT",
+    "TT..........................TT",
+    "-------------....-------------",
+    "-------------....-------------",
+    "TT..........................TT",
+    "TT...[^^]............[^^]...TT",
+    "TT..!#wD#............#wD#...TT",
+    "TT..........................TT",
+    "TT.....!..............!.....TT",
+    "TT..........................TT",
+    "TTTTTTTTTTTTTT--TTTTTTTTTTTTTT"
+  ],
+  "warps": [
+    {
+      "x": 8,
+      "y": 3,
+      "toMap": "tanners_waystation",
+      "toX": 6,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 21,
+      "y": 3,
+      "toMap": "tanners_provisioner",
+      "toX": 6,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 7,
+      "y": 16,
+      "toMap": "tanners_concord",
+      "toX": 6,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 23,
+      "y": 16,
+      "toMap": "tanners_house",
+      "toX": 6,
+      "toY": 6,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 2,
+      "y": 12,
+      "toMap": "route_3",
+      "toX": 38,
+      "toY": 9,
+      "facing": "left",
+      "style": "edge"
+    },
+    {
+      "x": 2,
+      "y": 13,
+      "toMap": "route_3",
+      "toX": 38,
+      "toY": 10,
+      "facing": "left",
+      "style": "edge"
+    },
+    {
+      "x": 14,
+      "y": 20,
+      "toMap": "route_4",
+      "toX": 14,
+      "toY": 1,
+      "facing": "down",
+      "style": "edge"
+    },
+    {
+      "x": 15,
+      "y": 20,
+      "toMap": "route_4",
+      "toX": 15,
+      "toY": 1,
+      "facing": "down",
+      "style": "edge"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tr_crier",
+      "sprite": "villager_f",
+      "x": 15,
+      "y": 10,
+      "facing": "down",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "tr_crier"
+    },
+    {
+      "id": "tr_drover",
+      "sprite": "hiker",
+      "x": 9,
+      "y": 14,
+      "facing": "right",
+      "movement": {
+        "kind": "pace",
+        "axis": "x",
+        "distance": 3
+      },
+      "script": "tr_drover"
+    },
+    {
+      "id": "tr_clerk",
+      "sprite": "concord",
+      "x": 8,
+      "y": 15,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tr_clerk"
+    },
+    {
+      "id": "tr_child",
+      "sprite": "villager_m",
+      "x": 20,
+      "y": 18,
+      "facing": "left",
+      "movement": {
+        "kind": "wander",
+        "radius": 2
+      },
+      "script": "tr_child"
+    },
+    {
+      "id": "tr_vess_runner",
+      "sprite": "villager_f",
+      "x": 16,
+      "y": 6,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tr_runner"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 18,
+      "text": [
+        "TANNERS REST",
+        "Four roads meet here and none of them agree about anything."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 22,
+      "y": 18,
+      "text": [
+        "Route 3 west to Kellowmere. Route 4 south to the coast.",
+        "East road: closed. Has been for a generation."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 4,
+      "text": [
+        "WAYSTATION"
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 20,
+      "y": 4,
+      "text": [
+        "PROVISIONER - largest stock this side of Vantry."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 4,
+      "y": 16,
+      "text": [
+        "STILLWATER CONCORD - REGIONAL SURVEY OFFICE"
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 27,
+      "y": 10,
+      "item": "rouse",
+      "quantity": 1,
+      "flag": "item_tr_rouse"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 4,
+      "y": 19,
+      "item": "deep_vessel",
+      "quantity": 1,
+      "flag": "item_tr_hidden"
+    }
+  ]
+}

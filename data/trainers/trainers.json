@@ -1,0 +1,1102 @@
+[
+  {
+    "id": "r1_madden",
+    "name": "Madden",
+    "className": "Hiker",
+    "sprite": "hiker",
+    "ai": "novice",
+    "payout": 24,
+    "party": [
+      {
+        "species": "nibbet",
+        "level": 5
+      },
+      {
+        "species": "pebblet",
+        "level": 6
+      }
+    ],
+    "intro": [
+      "Six hours out, six hours back.",
+      "You are the most interesting thing I have seen all day. No offence to the rock."
+    ],
+    "defeat": [
+      "Well. That is the second interesting thing."
+    ],
+    "victory": [
+      "Ah. Sorry. I did warn you about the rock."
+    ],
+    "afterward": [
+      "Go north. Ashgate has a proper roof and everything."
+    ]
+  },
+  {
+    "id": "r1_wray",
+    "name": "Wray",
+    "className": "Student",
+    "sprite": "villager_f",
+    "ai": "novice",
+    "payout": 20,
+    "party": [
+      {
+        "species": "pipwing",
+        "level": 6
+      }
+    ],
+    "intro": [
+      "I am counting pipwings for Dr. Vess. There are meant to be forty on this route.",
+      "There are eleven.",
+      "...Battle me, I need to think about something else."
+    ],
+    "defeat": [
+      "Eleven. Still eleven."
+    ],
+    "victory": [
+      "Sorry. I have been out here a while."
+    ],
+    "afterward": [
+      "Twelve now. One came back. That is something."
+    ]
+  },
+  {
+    "id": "r1_bex",
+    "name": "Bex",
+    "className": "Child",
+    "sprite": "villager_m",
+    "ai": "novice",
+    "payout": 16,
+    "party": [
+      {
+        "species": "nibbet",
+        "level": 4
+      },
+      {
+        "species": "nibbet",
+        "level": 4
+      },
+      {
+        "species": "nibbet",
+        "level": 5
+      }
+    ],
+    "intro": [
+      "I have THREE.",
+      "They are all the same one. I mean they are all nibbets.",
+      "I could not choose."
+    ],
+    "defeat": [
+      "All three. In a row. That is just rude."
+    ],
+    "victory": [
+      "THREE!"
+    ],
+    "afterward": [
+      "I am going to catch a fourth."
+    ]
+  },
+  {
+    "id": "r1_ottel",
+    "name": "Ottel",
+    "className": "Angler",
+    "sprite": "villager_m",
+    "ai": "trained",
+    "payout": 28,
+    "party": [
+      {
+        "species": "rillfry",
+        "level": 7
+      },
+      {
+        "species": "rilltail",
+        "level": 8
+      }
+    ],
+    "intro": [
+      "Pond is mine. Fish are mine. Argument is available."
+    ],
+    "defeat": [
+      "Fine. Pond is still mine."
+    ],
+    "victory": [
+      "Told you. Pond is mine."
+    ],
+    "afterward": [
+      "Come back at dusk. Different fish then. Better fish."
+    ]
+  },
+  {
+    "id": "r1_cale",
+    "name": "Cale",
+    "className": "Ranger",
+    "sprite": "hiker",
+    "ai": "trained",
+    "payout": 36,
+    "party": [
+      {
+        "species": "tuftail",
+        "level": 8
+      },
+      {
+        "species": "nettlebug",
+        "level": 7
+      },
+      {
+        "species": "pipwing",
+        "level": 9
+      }
+    ],
+    "intro": [
+      "Rangers walk this road so nobody else has to worry about it.",
+      "Let me see whether I need to worry about you."
+    ],
+    "defeat": [
+      "No. I do not need to worry about you at all. Good."
+    ],
+    "victory": [
+      "Get some levels on that team before Ashgate. I mean it kindly."
+    ],
+    "afterward": [
+      "Ledges south, water east. Do not swim yet."
+    ]
+  },
+  {
+    "id": "concord_surveyor_1",
+    "name": "Ilm",
+    "className": "Concord Surveyor",
+    "sprite": "concord",
+    "ai": "trained",
+    "payout": 44,
+    "party": [
+      {
+        "species": "fizzlet",
+        "level": 9
+      },
+      {
+        "species": "pebblet",
+        "level": 10
+      }
+    ],
+    "intro": [
+      "This is a survey corridor. It is not closed, exactly.",
+      "It is just easier for both of us if you go around.",
+      "...You are not going around, are you."
+    ],
+    "defeat": [
+      "Fine. Walk it. Look at the stakes if you like, they are only stakes.",
+      "The Concord is not hiding anything. We are measuring."
+    ],
+    "victory": [
+      "Thank you. Genuinely. Go around."
+    ],
+    "afterward": [
+      "Every seventy years this coast drowns. We are going to stop that. That is all this is."
+    ],
+    "items": [
+      "potion"
+    ]
+  },
+  {
+    "id": "r2_dell",
+    "name": "Dell",
+    "className": "Student",
+    "sprite": "villager_f",
+    "ai": "trained",
+    "payout": 30,
+    "party": [
+      {
+        "species": "nettlebug",
+        "level": 10
+      },
+      {
+        "species": "tuftail",
+        "level": 11
+      }
+    ],
+    "intro": [
+      "I am supposed to be cataloguing thorn growth.",
+      "It grew across the whole spur in one season. That is the catalogue."
+    ],
+    "defeat": [
+      "Fine. Back to the thorn."
+    ],
+    "victory": [
+      "Come back when your notes are better than mine."
+    ],
+    "afterward": [
+      "That thorn was not there in spring. I have the sketch to prove it."
+    ]
+  },
+  {
+    "id": "r2_pike",
+    "name": "Pike",
+    "className": "Hiker",
+    "sprite": "hiker",
+    "ai": "trained",
+    "payout": 34,
+    "party": [
+      {
+        "species": "chalkid",
+        "level": 11
+      },
+      {
+        "species": "gravelet",
+        "level": 12
+      }
+    ],
+    "intro": [
+      "Uphill both ways, this road. Ask anyone."
+    ],
+    "defeat": [
+      "Downhill for me, then."
+    ],
+    "victory": [
+      "Told you. Uphill."
+    ],
+    "afterward": [
+      "Kellowmere is over the rise. You will smell the quarry first."
+    ]
+  },
+  {
+    "id": "r2_juna",
+    "name": "Juna",
+    "className": "Ranger",
+    "sprite": "villager_m",
+    "ai": "veteran",
+    "payout": 40,
+    "party": [
+      {
+        "species": "pipwing",
+        "level": 11
+      },
+      {
+        "species": "nibbet",
+        "level": 11
+      },
+      {
+        "species": "tuftail",
+        "level": 13
+      }
+    ],
+    "intro": [
+      "Ranger post. I check the ledges, the pond and the thorn.",
+      "Two of those are behaving."
+    ],
+    "defeat": [
+      "Good team. Keep them fed."
+    ],
+    "victory": [
+      "Rest up at Ashgate. The hill does not get kinder."
+    ],
+    "afterward": [
+      "If you ever learn to cut that thorn, come and find me. I want to know what is behind it."
+    ]
+  },
+  {
+    "id": "r2_shale",
+    "name": "Shale",
+    "className": "Quarry Hand",
+    "sprite": "hiker",
+    "ai": "trained",
+    "payout": 38,
+    "party": [
+      {
+        "species": "gravelet",
+        "level": 12
+      },
+      {
+        "species": "chalkid",
+        "level": 13
+      }
+    ],
+    "intro": [
+      "Walking down for the week. You are walking up.",
+      "One of us has made a mistake."
+    ],
+    "defeat": [
+      "Still going down. Cheerfully now."
+    ],
+    "victory": [
+      "Get some weight on that team before the Bastion."
+    ],
+    "afterward": [
+      "Roxen does not go easy. Roxen has never gone easy in her life."
+    ]
+  },
+  {
+    "id": "r2_wren",
+    "name": "Wren",
+    "className": "Performer",
+    "sprite": "villager_f",
+    "ai": "veteran",
+    "payout": 44,
+    "party": [
+      {
+        "species": "slatewing",
+        "level": 12
+      },
+      {
+        "species": "sootmoth",
+        "level": 12
+      },
+      {
+        "species": "pipwing",
+        "level": 14
+      }
+    ],
+    "intro": [
+      "I do a routine with the slatewings on the quarry face.",
+      "Nobody comes. The slatewings come."
+    ],
+    "defeat": [
+      "That was a better routine than mine."
+    ],
+    "victory": [
+      "Curtain."
+    ],
+    "afterward": [
+      "Dusk is the good hour. Come and watch, it is free and it always will be."
+    ]
+  },
+  {
+    "id": "bastion1_guard_a",
+    "name": "Corrin",
+    "className": "Bastion Hand",
+    "sprite": "hiker",
+    "ai": "veteran",
+    "payout": 46,
+    "party": [
+      {
+        "species": "chalkid",
+        "level": 13
+      },
+      {
+        "species": "gravelet",
+        "level": 14
+      }
+    ],
+    "intro": [
+      "Stones first, then Roxen.",
+      "Nobody has ever done it the other way round."
+    ],
+    "defeat": [
+      "Stones are yours, then."
+    ],
+    "victory": [
+      "Push the stones. Then come back."
+    ],
+    "afterward": [
+      "Three plates. Three stones. It is not a riddle, it is just heavy."
+    ]
+  },
+  {
+    "id": "bastion1_guard_b",
+    "name": "Wick",
+    "className": "Bastion Hand",
+    "sprite": "villager_m",
+    "ai": "veteran",
+    "payout": 46,
+    "party": [
+      {
+        "species": "nettlebug",
+        "level": 12
+      },
+      {
+        "species": "chalkid",
+        "level": 13
+      },
+      {
+        "species": "slatewing",
+        "level": 14
+      }
+    ],
+    "intro": [
+      "You get one thing wrong in a quarry and the quarry corrects it for you.",
+      "Same here, roughly."
+    ],
+    "defeat": [
+      "Corrected. Go on up."
+    ],
+    "victory": [
+      "Try again when the stones are where they belong."
+    ],
+    "afterward": [
+      "Verdant and Tide give her trouble. That is not a secret, it is a type chart."
+    ]
+  },
+  {
+    "id": "bastion1_roxen",
+    "name": "Roxen Quill",
+    "className": "Keeper",
+    "sprite": "hiker",
+    "ai": "keeper",
+    "payout": 90,
+    "party": [
+      {
+        "species": "gravelet",
+        "level": 14,
+        "moves": [
+          "gravelspray",
+          "batter",
+          "quickstep",
+          "fissure_step"
+        ]
+      },
+      {
+        "species": "slatewing",
+        "level": 14,
+        "moves": [
+          "shale_edge",
+          "wingbeat",
+          "gustline",
+          "stonefling"
+        ]
+      },
+      {
+        "species": "chalkmar",
+        "level": 16,
+        "item": "potion",
+        "moves": [
+          "shale_edge",
+          "plating",
+          "rivet_punch",
+          "gravelspray"
+        ]
+      }
+    ],
+    "items": [
+      "potion"
+    ],
+    "intro": [
+      "Roxen Quill. I keep the Stone Bastion, and before that I kept the west face for nineteen years.",
+      "You moved the stones. Good. That is the whole lesson, really.",
+      "Now find out whether you can move me."
+    ],
+    "defeat": [
+      "Hah. All right.",
+      "You did not out-hit me. You out-waited me. That is the harder one."
+    ],
+    "victory": [
+      "Not yet. Go and put some weight on them.",
+      "The stones will still be where you left them."
+    ],
+    "afterward": [
+      "The quarry road north is shut until the face settles. Do not test me on it."
+    ]
+  },
+  {
+    "id": "perrin_km_sprigling",
+    "name": "Perrin",
+    "className": "Rival",
+    "sprite": "rival",
+    "ai": "veteran",
+    "payout": 60,
+    "party": [
+      {
+        "species": "nibbet",
+        "level": 12
+      },
+      {
+        "species": "slatewing",
+        "level": 12
+      },
+      {
+        "species": "cinderpaw",
+        "level": 15
+      }
+    ],
+    "intro": [
+      "There you are. I have been in this town two days waiting for you.",
+      "Roxen said no. Twice. Said I was rushing it.",
+      "So I am going to beat you instead, and then I am going to ask her a third time."
+    ],
+    "defeat": [
+      "Right. Right, all right.",
+      "She is going to say no again, isn't she.",
+      "Go on, take the Seal. I will get mine. Just later than you."
+    ],
+    "victory": [
+      "There. That is what rushing it looks like when it works.",
+      "Go and heal up. I will wait, I am very good at waiting."
+    ],
+    "afterward": [
+      "Beat her yet? ...Do not answer that."
+    ]
+  },
+  {
+    "id": "perrin_km_cinderpaw",
+    "name": "Perrin",
+    "className": "Rival",
+    "sprite": "rival",
+    "ai": "veteran",
+    "payout": 60,
+    "party": [
+      {
+        "species": "nibbet",
+        "level": 12
+      },
+      {
+        "species": "slatewing",
+        "level": 12
+      },
+      {
+        "species": "rilltail",
+        "level": 15
+      }
+    ],
+    "intro": [
+      "There you are. I have been in this town two days waiting for you.",
+      "Roxen said no. Twice. Said I was rushing it.",
+      "So I am going to beat you instead, and then I am going to ask her a third time."
+    ],
+    "defeat": [
+      "Right. Right, all right.",
+      "She is going to say no again, isn't she.",
+      "Go on, take the Seal. I will get mine. Just later than you."
+    ],
+    "victory": [
+      "There. That is what rushing it looks like when it works.",
+      "Go and heal up. I will wait, I am very good at waiting."
+    ],
+    "afterward": [
+      "Beat her yet? ...Do not answer that."
+    ]
+  },
+  {
+    "id": "perrin_km_rilltail",
+    "name": "Perrin",
+    "className": "Rival",
+    "sprite": "rival",
+    "ai": "veteran",
+    "payout": 60,
+    "party": [
+      {
+        "species": "nibbet",
+        "level": 12
+      },
+      {
+        "species": "slatewing",
+        "level": 12
+      },
+      {
+        "species": "sprigling",
+        "level": 15
+      }
+    ],
+    "intro": [
+      "There you are. I have been in this town two days waiting for you.",
+      "Roxen said no. Twice. Said I was rushing it.",
+      "So I am going to beat you instead, and then I am going to ask her a third time."
+    ],
+    "defeat": [
+      "Right. Right, all right.",
+      "She is going to say no again, isn't she.",
+      "Go on, take the Seal. I will get mine. Just later than you."
+    ],
+    "victory": [
+      "There. That is what rushing it looks like when it works.",
+      "Go and heal up. I will wait, I am very good at waiting."
+    ],
+    "afterward": [
+      "Beat her yet? ...Do not answer that."
+    ]
+  },
+  {
+    "id": "r3_bram",
+    "name": "Bram",
+    "className": "Drover",
+    "sprite": "hiker",
+    "ai": "trained",
+    "payout": 48,
+    "party": [
+      {
+        "species": "tuftail",
+        "level": 15
+      },
+      {
+        "species": "mossback",
+        "level": 16
+      }
+    ],
+    "intro": [
+      "Moving forty head down to the Rest.",
+      "They will wait. They are extremely good at waiting."
+    ],
+    "defeat": [
+      "Right. Off we go, then."
+    ],
+    "victory": [
+      "Mind the herd on your way past."
+    ],
+    "afterward": [
+      "Mossback keeps the herd calm. Do not ask me how. It just sits there."
+    ]
+  },
+  {
+    "id": "r3_sill",
+    "name": "Sill",
+    "className": "Student",
+    "sprite": "villager_f",
+    "ai": "veteran",
+    "payout": 50,
+    "party": [
+      {
+        "species": "chalkid",
+        "level": 15
+      },
+      {
+        "species": "nettlebug",
+        "level": 14
+      },
+      {
+        "species": "slatewing",
+        "level": 17
+      }
+    ],
+    "intro": [
+      "Dr. Vess has me counting stream depth. Twice a day, same spot.",
+      "It is down eleven centimetres since spring."
+    ],
+    "defeat": [
+      "Eleven centimetres. It should not be moving at all."
+    ],
+    "victory": [
+      "Come back when you have read the numbers."
+    ],
+    "afterward": [
+      "Every stream on this side of the region is dropping. Every single one."
+    ]
+  },
+  {
+    "id": "r3_holt",
+    "name": "Holt",
+    "className": "Veteran",
+    "sprite": "villager_m",
+    "ai": "veteran",
+    "payout": 56,
+    "party": [
+      {
+        "species": "burrowen",
+        "level": 16
+      },
+      {
+        "species": "kestrelle",
+        "level": 17
+      }
+    ],
+    "intro": [
+      "Forty years on this road. Watched three Turnings come and go.",
+      "This is not one of them. This is something else."
+    ],
+    "defeat": [
+      "Good. You will need that where you are going."
+    ],
+    "victory": [
+      "Come back when it means something."
+    ],
+    "afterward": [
+      "The last Turning took Old Tidefall. Whole town, one night.",
+      "People forget that when they talk about the Concord like they are villains."
+    ]
+  },
+  {
+    "id": "concord_surveyor_2",
+    "name": "Ivo",
+    "className": "Concord Surveyor",
+    "sprite": "concord",
+    "ai": "veteran",
+    "payout": 62,
+    "party": [
+      {
+        "species": "fizzlet",
+        "level": 15
+      },
+      {
+        "species": "chalkid",
+        "level": 16
+      },
+      {
+        "species": "voltwick",
+        "level": 18
+      }
+    ],
+    "items": [
+      "strong_potion"
+    ],
+    "intro": [
+      "You are the one from the Ashgate corridor. Ilm mentioned you.",
+      "She said you asked good questions. That was not a compliment, it was a report."
+    ],
+    "defeat": [
+      "Fine. Fine.",
+      "Go to the office at Tanners Rest and ask them yourself. They will tell you more than I can.",
+      "Ask about the west face. Ask what is under it."
+    ],
+    "victory": [
+      "Good. Now go around."
+    ],
+    "afterward": [
+      "I have surveyed nine sites this season. Not one of them was near water."
+    ]
+  },
+  {
+    "id": "r4_teal",
+    "name": "Teal",
+    "className": "Student",
+    "sprite": "villager_f",
+    "ai": "veteran",
+    "payout": 58,
+    "party": [
+      {
+        "species": "pipwing",
+        "level": 17
+      },
+      {
+        "species": "spinnet",
+        "level": 18
+      }
+    ],
+    "intro": [
+      "Downhill from here all the way to the sea.",
+      "That is not a metaphor. I checked."
+    ],
+    "defeat": [
+      "Downhill for me too, then."
+    ],
+    "victory": [
+      "Rest at the Rest. Everyone says that. Everyone hates it."
+    ],
+    "afterward": [
+      "You can smell the flats from the second ledge. Try it."
+    ]
+  },
+  {
+    "id": "r4_gorse",
+    "name": "Gorse",
+    "className": "Hiker",
+    "sprite": "hiker",
+    "ai": "veteran",
+    "payout": 60,
+    "party": [
+      {
+        "species": "chalkid",
+        "level": 18
+      },
+      {
+        "species": "burrowen",
+        "level": 19
+      }
+    ],
+    "intro": [
+      "I carry salt up and stone down. Been doing it thirty years."
+    ],
+    "defeat": [
+      "Salt up, stone down. Nothing changes."
+    ],
+    "victory": [
+      "Come back with more weight on them."
+    ],
+    "afterward": [
+      "Something changed. The flats used to flood to that second post. Look where it is now."
+    ]
+  },
+  {
+    "id": "r4_nesh",
+    "name": "Nesh",
+    "className": "Swimmer",
+    "sprite": "villager_m",
+    "ai": "veteran",
+    "payout": 64,
+    "party": [
+      {
+        "species": "shalefin",
+        "level": 18
+      },
+      {
+        "species": "pinchel",
+        "level": 18
+      },
+      {
+        "species": "currentail",
+        "level": 20
+      }
+    ],
+    "intro": [
+      "Cannot swim the channel any more. Water is wrong.",
+      "So I stand here instead and battle people. It is less satisfying."
+    ],
+    "defeat": [
+      "Wrong water. Wrong everything."
+    ],
+    "victory": [
+      "Stay out of the deep. I mean it."
+    ],
+    "afterward": [
+      "Used to be a current here you could ride to the pier. It stopped in the spring."
+    ]
+  },
+  {
+    "id": "r4_bay",
+    "name": "Bay",
+    "className": "Angler",
+    "sprite": "villager_f",
+    "ai": "veteran",
+    "payout": 62,
+    "party": [
+      {
+        "species": "pinchel",
+        "level": 19
+      },
+      {
+        "species": "gullswift",
+        "level": 20
+      }
+    ],
+    "intro": [
+      "Flats are full. Channel is empty. That has never happened."
+    ],
+    "defeat": [
+      "Full flats. Empty channel. Explain that to me."
+    ],
+    "victory": [
+      "Ask at the pier. They will tell you the same thing."
+    ],
+    "afterward": [
+      "Everything that can leave the deep has come inshore. Everything."
+    ]
+  },
+  {
+    "id": "bastion2_guard_a",
+    "name": "Rill",
+    "className": "Bastion Hand",
+    "sprite": "villager_m",
+    "ai": "veteran",
+    "payout": 66,
+    "party": [
+      {
+        "species": "shalefin",
+        "level": 19
+      },
+      {
+        "species": "pinchel",
+        "level": 20
+      }
+    ],
+    "intro": [
+      "Shallow is walkable. Deep is not. Learn the difference here, not out there."
+    ],
+    "defeat": [
+      "Learned it, then."
+    ],
+    "victory": [
+      "Read the water before you step in it."
+    ],
+    "afterward": [
+      "Mabry flooded this hall herself. Said a Tide Bastion with a dry floor was a lie."
+    ]
+  },
+  {
+    "id": "bastion2_guard_b",
+    "name": "Cove",
+    "className": "Bastion Hand",
+    "sprite": "villager_f",
+    "ai": "veteran",
+    "payout": 66,
+    "party": [
+      {
+        "species": "pinchel",
+        "level": 19
+      },
+      {
+        "species": "gullswift",
+        "level": 21
+      }
+    ],
+    "intro": [
+      "Most people rush the middle and end up back at the door."
+    ],
+    "defeat": [
+      "Not most people, then."
+    ],
+    "victory": [
+      "Back to the door with you."
+    ],
+    "afterward": [
+      "The channel to your left is deep the whole way. It is not a shortcut, it is a wall."
+    ]
+  },
+  {
+    "id": "bastion2_guard_c",
+    "name": "Skell",
+    "className": "Bastion Hand",
+    "sprite": "hiker",
+    "ai": "keeper",
+    "payout": 70,
+    "party": [
+      {
+        "species": "anchorling",
+        "level": 20
+      },
+      {
+        "species": "shalefin",
+        "level": 20
+      },
+      {
+        "species": "currentail",
+        "level": 22
+      }
+    ],
+    "items": [
+      "strong_potion"
+    ],
+    "intro": [
+      "Island in the middle. Everyone gets here. Not everyone leaves."
+    ],
+    "defeat": [
+      "Go on up. She is waiting and she does not like waiting."
+    ],
+    "victory": [
+      "Come back drier."
+    ],
+    "afterward": [
+      "Spark and Verdant. That is what she cannot answer. I did not tell you that."
+    ]
+  },
+  {
+    "id": "bastion2_mabry",
+    "name": "Mabry Sull",
+    "className": "Keeper",
+    "sprite": "villager_f",
+    "ai": "keeper",
+    "payout": 130,
+    "party": [
+      {
+        "species": "pinchel",
+        "level": 22,
+        "moves": [
+          "hullcrack",
+          "shellstrike",
+          "closing_hold",
+          "brace"
+        ]
+      },
+      {
+        "species": "gullswift",
+        "level": 22,
+        "moves": [
+          "undertow",
+          "wingbeat",
+          "gustline",
+          "stoop"
+        ]
+      },
+      {
+        "species": "currentail",
+        "level": 23,
+        "moves": [
+          "breakwater",
+          "hullcrack",
+          "undertow",
+          "quickstep"
+        ]
+      },
+      {
+        "species": "tidewrack",
+        "level": 25,
+        "item": "strong_potion",
+        "moves": [
+          "hullcrack",
+          "shale_edge",
+          "breakwater",
+          "gravelspray"
+        ]
+      }
+    ],
+    "items": [
+      "strong_potion"
+    ],
+    "intro": [
+      "Mabry Sull. Forty years on this channel, twenty-two of them keeping this Bastion.",
+      "You got across my floor without drowning. That is most of it.",
+      "The rest is whether you can stand still while something bigger than you comes in."
+    ],
+    "defeat": [
+      "Ha. Good. Genuinely good.",
+      "You did not fight the water. You waited for it. That is the whole art."
+    ],
+    "victory": [
+      "The sea does not care how fast you are. Come back when you have learned to wait."
+    ],
+    "afterward": [
+      "Ask the harbourmaster about the soundings. Then ask why the Concord took them at night."
+    ]
+  },
+  {
+    "id": "perrin_first_cinderpaw",
+    "className": "Rival",
+    "name": "Perrin",
+    "sprite": "rival",
+    "ai": "novice",
+    "payout": 16,
+    "intro": [
+      "You get one shot at beating me before either of us is any good at this."
+    ],
+    "defeat": [
+      "Right. Yes. Fair."
+    ],
+    "victory": [
+      "Ha! Sorry. Sorry."
+    ],
+    "party": [
+      {
+        "species": "cinderpaw",
+        "level": 5
+      }
+    ]
+  },
+  {
+    "id": "perrin_first_rilltail",
+    "className": "Rival",
+    "name": "Perrin",
+    "sprite": "rival",
+    "ai": "novice",
+    "payout": 16,
+    "intro": [
+      "You get one shot at beating me before either of us is any good at this."
+    ],
+    "defeat": [
+      "Right. Yes. Fair."
+    ],
+    "victory": [
+      "Ha! Sorry. Sorry."
+    ],
+    "party": [
+      {
+        "species": "rilltail",
+        "level": 5
+      }
+    ]
+  },
+  {
+    "id": "perrin_first_sprigling",
+    "className": "Rival",
+    "name": "Perrin",
+    "sprite": "rival",
+    "ai": "novice",
+    "payout": 16,
+    "intro": [
+      "You get one shot at beating me before either of us is any good at this."
+    ],
+    "defeat": [
+      "Right. Yes. Fair."
+    ],
+    "victory": [
+      "Ha! Sorry. Sorry."
+    ],
+    "party": [
+      {
+        "species": "sprigling",
+        "level": 5
+      }
+    ]
+  }
+]

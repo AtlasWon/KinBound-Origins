@@ -1,0 +1,42 @@
+{
+  "id": "tanners_house",
+  "name": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIIIIIIIIII",
+    "IffffffffffI",
+    "IfKKffffrrfI",
+    "IfffffffrrfI",
+    "IffffffffffI",
+    "IffffffffffI",
+    "IfffffDffffI",
+    "IIIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 6,
+      "toMap": "tanners_rest",
+      "toX": 23,
+      "toY": 17,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tanners_house_resident",
+      "sprite": "villager_f",
+      "x": 4,
+      "y": 4,
+      "facing": "down",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "tr_house"
+    }
+  ],
+  "objects": []
+}

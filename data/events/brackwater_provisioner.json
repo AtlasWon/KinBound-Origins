@@ -1,0 +1,19 @@
+[
+  {
+    "id": "brackwater_shop",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "PROVISIONER",
+        "lines": [
+          "Salt in everything. Including the prices."
+        ]
+      },
+      {
+        "kind": "openShop",
+        "shop": "brackwater_provisioner"
+      }
+    ]
+  }
+]

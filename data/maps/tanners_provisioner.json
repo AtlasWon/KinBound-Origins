@@ -1,0 +1,55 @@
+{
+  "id": "tanners_provisioner",
+  "name": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIIIIIIIIIIII",
+    "IffffffffffffI",
+    "IfKKKKKKKKKKfI",
+    "IffffffffffffI",
+    "IffffffffffffI",
+    "IffffffffffffI",
+    "IffffffffffffI",
+    "IffffffffffffI",
+    "IfffffDffffffI",
+    "IIIIIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 8,
+      "toMap": "tanners_rest",
+      "toX": 21,
+      "toY": 4,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tr_shopkeeper",
+      "sprite": "villager_m",
+      "x": 5,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tanners_shop"
+    },
+    {
+      "id": "tr_shop_hand",
+      "sprite": "villager_f",
+      "x": 10,
+      "y": 5,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tr_shop_hand"
+    }
+  ],
+  "objects": []
+}

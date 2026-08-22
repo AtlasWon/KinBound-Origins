@@ -1,0 +1,66 @@
+{
+  "id": "brackwater_waystation",
+  "name": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIIIIIIIIIIII",
+    "IffffffffffffI",
+    "IfKKKKKKfffffI",
+    "IffffffffffffI",
+    "IffffffffffffI",
+    "IfrrffffffrrfI",
+    "IffffffffffffI",
+    "IffffffffffffI",
+    "IfffffDffffffI",
+    "IIIIIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 8,
+      "toMap": "brackwater",
+      "toX": 8,
+      "toY": 5,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "bw_ways_keeper",
+      "sprite": "villager_f",
+      "x": 4,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "waystation_heal"
+    },
+    {
+      "id": "bw_ways_roost",
+      "sprite": "professor",
+      "x": 10,
+      "y": 1,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "roost_terminal"
+    },
+    {
+      "id": "bw_ways_sailor",
+      "sprite": "hiker",
+      "x": 3,
+      "y": 5,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "bw_sailor"
+    }
+  ],
+  "objects": []
+}

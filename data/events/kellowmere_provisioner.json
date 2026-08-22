@@ -1,0 +1,13 @@
+[
+  {
+    "id": "kellowmere_shop",
+    "trigger": "interact",
+    "actions": [
+      { "kind": "say", "who": "PROVISIONER", "lines": [
+        "Everything here has quarry dust on it. Everything in Kellowmere has quarry dust on it.",
+        "It does not affect the product."
+      ]},
+      { "kind": "openShop", "shop": "kellowmere_provisioner" }
+    ]
+  }
+]

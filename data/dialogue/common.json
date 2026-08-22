@@ -1,0 +1,161 @@
+{
+  "speakers": {
+    "mother": "MOM",
+    "vess": "DR. VESS",
+    "vess_aide": "TIRREN",
+    "ollet": "OLLET",
+    "ollet_child": "PERRIN",
+    "hollow_villager": "SAFFRA",
+    "hollow_kid": "BENNO",
+    "hollow_hiker": "GRUE",
+    "r1_madden": "HIKER MADDEN",
+    "r1_cale": "WATCHER ILSE",
+    "mh_perrin": "PERRIN"
+  },
+  "entries": {
+    "mh_mother": [
+      {
+        "unlessFlags": [
+          "got_starter"
+        ],
+        "lines": [
+          "There you are. I have unpacked exactly two boxes and I am calling that a day.",
+          "Dr. Vess came by at dawn asking for you. At DAWN.",
+          "Go on. The station is the big one with the charts in the window."
+        ]
+      },
+      {
+        "ifFlags": [
+          "got_starter"
+        ],
+        "lines": [
+          "Let me look at it. Oh, it is watching me back.",
+          "Take care of each other out there. Both of you.",
+          "And eat something that is not dried fish."
+        ]
+      }
+    ],
+    "mh_villager": [
+      {
+        "unlessFlags": [
+          "seen_turning_talk"
+        ],
+        "lines": [
+          "New face. You are the family that took the Corrin place, yes?",
+          "Fair warning: the well hums some nights. Everyone says it is the pipes.",
+          "It is not the pipes."
+        ]
+      },
+      {
+        "ifFlags": [
+          "seen_turning_talk"
+        ],
+        "lines": [
+          "Still humming. Louder now.",
+          "My grandmother said the well only talks before a Turning.",
+          "She also said fish could hold a grudge, so. Grain of salt."
+        ]
+      }
+    ],
+    "mh_kid": [
+      "I can name every kin on Route 1. Go on, test me.",
+      "...I can name FOUR kin on Route 1.",
+      "The fifth one just kind of screams and leaves."
+    ],
+    "mh_hiker": [
+      "Ledges. Best invention in the region.",
+      "You drop down one, you save an hour walking back.",
+      "You try to climb UP one, you learn something about yourself."
+    ],
+    "mh_ollet": [
+      "Perrin has not stopped pacing since Vess sent word.",
+      "Two starters, two candidates, and my child has decided this is a duel.",
+      "Try not to let it be a duel."
+    ],
+    "mh_ollet_child": [
+      {
+        "unlessFlags": [
+          "got_starter"
+        ],
+        "lines": [
+          "You are the new one. Good. I was worried Vess would give them both to me.",
+          "That was a joke. Mostly.",
+          "Go and pick. I will wait. I am very good at waiting."
+        ]
+      },
+      {
+        "ifFlags": [
+          "got_starter"
+        ],
+        "lines": [
+          "So that is the one you went with.",
+          "Huh. Not what I would have taken.",
+          "Which means when I beat you, it will actually mean something."
+        ]
+      }
+    ],
+    "vess_intro": [
+      {
+        "unlessFlags": [
+          "got_starter"
+        ],
+        "lines": [
+          "You came. Good. Sit, do not sit, whichever gets you talking faster.",
+          "I study movement. Not battling, not breeding. Movement.",
+          "Where things go, and why they all go at once.",
+          "And something in the Hollow Sea is early this year. Decades early.",
+          "I cannot walk the whole region any more. My knees have opinions.",
+          "So I am asking you to walk it for me, and write down what you see."
+        ]
+      },
+      {
+        "ifFlags": [
+          "got_starter"
+        ],
+        "lines": [
+          "Keep the Vellum open and keep your eyes up.",
+          "Anything that is where it should not be, I want to know about it."
+        ]
+      }
+    ],
+    "vess_aide": [
+      "Careful of the charts, the pins are older than I am.",
+      "Vess has been awake for two days. He says the currents 'feel wrong'.",
+      "He is usually right, which is the annoying part."
+    ],
+    "r1_walker": [
+      "Six hours out, six hours back, and I have seen one interesting rock.",
+      "Beautiful rock, though. Genuinely.",
+      "Ashgate is north if you keep on the spine road."
+    ],
+    "r1_watcher": [
+      {
+        "unlessFlags": [
+          "seen_turning_talk"
+        ],
+        "lines": [
+          "You will want to keep out of the deep grass until that one of yours has some weight on it.",
+          "Nothing on this route will kill you. Plenty of it will embarrass you.",
+          "Watch the pond. The kin there come out at dusk and only at dusk."
+        ]
+      },
+      {
+        "ifFlags": [
+          "seen_turning_talk"
+        ],
+        "lines": [
+          "You felt it too, then. Ground went quiet about an hour ago.",
+          "Birds left first. They always do.",
+          "Get to Ashgate. Somebody there will want to hear it from you."
+        ]
+      }
+    ],
+    "mh_perrin_idle": [
+      {
+        "lines": [
+          "Go and see Vess. I will be right behind you, obviously."
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,172 @@
+{
+  "id": "marrow_hollow",
+  "name": "Marrow Hollow",
+  "displayName": "MARROW HOLLOW",
+  "music": "town_hollow",
+  "battleBackdrop": "highland",
+  "indoor": false,
+  "regionPos": {
+    "x": 22,
+    "y": 30
+  },
+  "encounterTable": "marrow_hollow",
+  "_legend": "T tree  C cliff face  c cliff top  . grass  , tuft  * flowers  \" tall grass  - path  = stone  ! sign  [ ^ ] R roof  # wall  w window  D door",
+  "rows": [
+    "TTTTTTTTTTTTTT\"\"TTTTTTTTTTTTTT",
+    "TTTTTTTTTTTTTT--TTTTTTTTTTTTTT",
+    "CCCTTTTTTTTTTT--TTTTTTTTTTTTTT",
+    "CCc..........,--,..........TTT",
+    "CCc...*.......--.....*...TTTTT",
+    "CCc.[^^]......--...[^^^^]TTTTT",
+    "CCc.#wD#......--...#wwDw#TTTTT",
+    "CCc...........--.........TTTTT",
+    "CCc..........!--.........TTTTT",
+    "CCc.---------------------TTTTT",
+    "CCc...........--.........TTTTT",
+    "CCc...........--..==.....TTTTT",
+    "CCc...........--..==.....TTTTT",
+    "CCc.[^^]......--.........TTTTT",
+    "CCc.#wD#......--.........TTTTT",
+    "CCc...........--.........TTTTT",
+    "CCc...........--.........TTTTT",
+    "CCc\"\"\"\"\"\"\"....--.........TTTTT",
+    "CCc\"\"\"\"\"\"\"....--....,,...TTTTT",
+    "CCc\"\"\"\"\"\"\"....--.........TTTTT",
+    "CCc...........--.........TTTTT",
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 6,
+      "toMap": "marrow_house_player",
+      "toX": 6,
+      "toY": 6,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 6,
+      "y": 14,
+      "toMap": "marrow_house_neighbour",
+      "toX": 6,
+      "toY": 6,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 22,
+      "y": 6,
+      "toMap": "vess_station",
+      "toX": 7,
+      "toY": 9,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 14,
+      "y": 0,
+      "toMap": "route_1",
+      "toX": 14,
+      "toY": 30,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 15,
+      "y": 0,
+      "toMap": "route_1",
+      "toX": 15,
+      "toY": 30,
+      "facing": "up",
+      "style": "edge"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "hollow_villager",
+      "sprite": "villager_f",
+      "x": 17,
+      "y": 11,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "mh_villager"
+    },
+    {
+      "id": "hollow_kid",
+      "sprite": "villager_m",
+      "x": 11,
+      "y": 18,
+      "facing": "down",
+      "movement": {
+        "kind": "pace",
+        "axis": "x",
+        "distance": 2
+      },
+      "script": "mh_kid"
+    },
+    {
+      "id": "hollow_hiker",
+      "sprite": "hiker",
+      "x": 20,
+      "y": 8,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mh_hiker"
+    },
+    {
+      "id": "mh_perrin",
+      "sprite": "rival",
+      "x": 10,
+      "y": 8,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "mh_perrin_idle",
+      "requiresFlag": "mom_sendoff",
+      "hiddenIfFlag": "met_perrin"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 8,
+      "text": [
+        "MARROW HOLLOW",
+        "Six houses, one well, and the last",
+        "quiet road before the coast."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18,
+      "y": 11,
+      "text": [
+        "The well runs dry every Turning.",
+        "It has not run dry in sixty years."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 15,
+      "y": 20,
+      "item": "potion",
+      "quantity": 1,
+      "flag": "item_mh_potion"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 4,
+      "y": 19,
+      "item": "field_vessel",
+      "quantity": 2,
+      "flag": "item_mh_hidden"
+    }
+  ]
+}

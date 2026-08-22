@@ -1,0 +1,44 @@
+{
+  "id": "brackwater_provisioner",
+  "name": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIIIIIIIIIIII",
+    "IffffffffffffI",
+    "IfKKKKKKKKKKfI",
+    "IffffffffffffI",
+    "IffffffffffffI",
+    "IffffffffffffI",
+    "IffffffffffffI",
+    "IffffffffffffI",
+    "IfffffDffffffI",
+    "IIIIIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 8,
+      "toMap": "brackwater",
+      "toX": 21,
+      "toY": 5,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "bw_shopkeeper",
+      "sprite": "villager_m",
+      "x": 5,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "brackwater_shop"
+    }
+  ],
+  "objects": []
+}

@@ -1,0 +1,72 @@
+{
+  "speakers": {
+    "ashgate_elder": "OLD BRENN",
+    "ashgate_kid": "TIP",
+    "ashgate_house_a_resident": "HANWELL",
+    "ashgate_house_b_resident": "MARGE",
+    "ways_traveller": "TRAVELLER",
+    "ways_roost": "THE ROOST",
+    "ashgate_surveyor": "SURVEYOR NELL",
+    "ashgate_fisher": "OSK",
+    "ashgate_porter": "PORTER"
+  },
+  "entries": {
+    "ag_elder": [
+      {
+        "unlessFlags": [
+          "ag_gate_asked"
+        ],
+        "lines": [
+          "Ashgate used to be the last stop before the north road.",
+          "Now it is just the last stop.",
+          "Ask the gate fellow how the survey is going. Watch his face."
+        ]
+      },
+      {
+        "ifFlags": [
+          "ag_gate_asked"
+        ],
+        "lines": [
+          "Under the road, is it. Under the road.",
+          "My grandmother said the same thing about the well in Marrow Hollow.",
+          "Nobody believed her either."
+        ]
+      }
+    ],
+    "ag_kid": [
+      "I am not allowed past the gate.",
+      "I have been past the gate four times.",
+      "There is nothing there. Just stakes and string and a man writing numbers."
+    ],
+    "ag_house_a": [
+      "Waystation's free, you know. Always has been.",
+      "The Concord offered to pay for a new roof on it last spring.",
+      "We said no. Then we said yes. It is a very good roof."
+    ],
+    "ag_house_b": [
+      "You are the one Vess sent out, then.",
+      "He wrote ahead. Three pages. Two of them were about currents.",
+      "Take care on Route 1 after dark. Things come down off the ridge."
+    ],
+    "ag_traveller": [
+      "Walked in from the coast. Six days.",
+      "The sea is wrong. Flat wrong, not storm wrong.",
+      "You get out there far enough and it does not move at all."
+    ],
+    "ag_surveyor": [
+      "Depth soundings. Every forty metres, all the way to the coast.",
+      "No, I do not know what we are listening for.",
+      "I know that it answers, though. Sometimes it answers."
+    ],
+    "ag_fisher": [
+      "Pond is fine. Pond is normal. Pond does what a pond does.",
+      "It is the SEA that has gone strange.",
+      "Come back when you can wade. There is something on the far bank."
+    ],
+    "ag_porter": [
+      "Four crates of survey stakes a week, up the north road.",
+      "Four crates a week for five weeks and the road is still closed.",
+      "You do the arithmetic. I just carry them."
+    ]
+  }
+}

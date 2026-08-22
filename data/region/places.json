@@ -1,0 +1,23 @@
+{
+  "$comment": "Region-map layout on a 40x30 logical grid. Places whose map does not exist yet still appear as unlabelled marks, which is the point: the region should look bigger than the part you have walked.",
+  "seaName": "THE HOLLOW SEA",
+  "places": [
+    { "id": "marrow_hollow", "name": "Marrow Hollow", "x": 7, "y": 25, "kind": "town", "blurb": "Six houses, one well." },
+    { "id": "route_1", "name": "Route 1", "x": 7, "y": 23, "kind": "route", "blurb": "The last quiet road." },
+    { "id": "ashgate", "name": "Ashgate", "x": 7, "y": 21, "kind": "town", "blurb": "Waystation and provisioner." },
+    { "id": "route_2", "name": "Route 2", "x": 7, "y": 19, "kind": "route", "blurb": "Uphill, both ways." },
+    { "id": "kellowmere", "name": "Kellowmere", "x": 7, "y": 17, "kind": "bastion", "blurb": "Quarry town. Stone Bastion." },
+
+    { "id": "tanners_rest", "name": "Tanners Rest", "x": 8, "y": 13, "kind": "town" },
+    { "id": "brackwater", "name": "Brackwater", "x": 12, "y": 7, "kind": "bastion" },
+    { "id": "cinderfall", "name": "Cinderfall", "x": 19, "y": 5, "kind": "bastion" },
+    { "id": "hallowfen", "name": "Hallowfen", "x": 26, "y": 6, "kind": "bastion" },
+    { "id": "vantry", "name": "Vantry", "x": 31, "y": 10, "kind": "bastion" },
+    { "id": "kite_landing", "name": "Kite Landing", "x": 32, "y": 15, "kind": "bastion" },
+    { "id": "solmere", "name": "Solmere", "x": 18, "y": 14, "kind": "bastion" },
+    { "id": "gravehold", "name": "Gravehold", "x": 31, "y": 20, "kind": "bastion" },
+    { "id": "northwatch", "name": "Northwatch", "x": 28, "y": 24, "kind": "town" },
+    { "id": "the_spire", "name": "The Spire", "x": 24, "y": 26, "kind": "spire" },
+    { "id": "tidefall", "name": "Tidefall", "x": 22, "y": 18, "kind": "town" }
+  ]
+}

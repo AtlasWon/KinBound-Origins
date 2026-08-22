@@ -1,0 +1,83 @@
+{
+  "speakers": {
+    "km_quarryman": "FOREMAN BRACK",
+    "km_child": "NELLA",
+    "km_angler": "OSRIC",
+    "km_greeter": "WARDEN OF THE ROAD",
+    "km_ways_rester": "RESTING HAND",
+    "kellowmere_house_a_resident": "TULLY",
+    "kellowmere_house_b_resident": "MIREN",
+    "km_perrin": "PERRIN"
+  },
+  "entries": {
+    "km_quarryman": [
+      {
+        "unlessFlags": [
+          "seal_1_taken"
+        ],
+        "lines": [
+          "West face is shut. Not unsafe, exactly. Just wrong.",
+          "Nineteen years I worked it with Roxen and it never once sounded hollow.",
+          "It sounds hollow now."
+        ]
+      },
+      {
+        "ifFlags": [
+          "seal_1_taken"
+        ],
+        "lines": [
+          "She gave you the Seal? Roxen doesn't hand those out, she loses them on purpose.",
+          "Then you must have made her work.",
+          "Do me a favour. When somebody official asks you what's under my quarry, tell me what they said."
+        ]
+      }
+    ],
+    "km_child": [
+      "I can lift a stone THIS big.",
+      "...I can push a stone this big.",
+      "Pushing is lifting sideways. Everyone knows that."
+    ],
+    "km_angler": [
+      "Lake's forty metres deep and it has never frozen. Not once, not in the records.",
+      "There's a light down there. Sits still. Doesn't drift.",
+      "I've fished this water thirty years and I've never once put a hook near it."
+    ],
+    "km_greeter": [
+      {
+        "unlessFlags": [
+          "seal_1_taken"
+        ],
+        "lines": [
+          "Kellowmere. Waystation east, provisioner west, Bastion straight up the road.",
+          "Roxen's in. Roxen's always in.",
+          "Bring something green or something wet. That's not a hint, that's just the type chart."
+        ]
+      },
+      {
+        "ifFlags": [
+          "seal_1_taken"
+        ],
+        "lines": [
+          "One Seal down. Seven to go, and they do not get easier.",
+          "Brackwater is the next one that will have you, but the coast road runs east from Ashgate.",
+          "Long walk back. Sorry."
+        ]
+      }
+    ],
+    "km_rester": [
+      "Walked up from Ashgate in one go. Do not do that.",
+      "There is a ledge halfway that you can drop down on the way home.",
+      "Only on the way home, mind. It is a ledge, not a staircase."
+    ],
+    "km_house_a": [
+      "My father cut stone. His father cut stone.",
+      "I keep the accounts. Somebody has to know what the stone is worth.",
+      "Lately the Concord pays over the odds for anything from the west face. Anything at all."
+    ],
+    "km_house_b": [
+      "You want the truth about the lake? Nobody knows. That is the truth about the lake.",
+      "Every seventy years it drops a metre and comes back up. Ask why and you get shrugs.",
+      "That's the Turning for you. Everything moves and nobody can say what for."
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "id": "kellowmere_house_a",
+  "name": "House",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIIIIIIIIII",
+    "IffffffffffI",
+    "IfKKffffrrfI",
+    "IfffffffrrfI",
+    "IffffffffffI",
+    "IffffffffffI",
+    "IfffffDffffI",
+    "IIIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 6,
+      "toMap": "kellowmere",
+      "toX": 6,
+      "toY": 23,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "kellowmere_house_a_resident",
+      "sprite": "villager_m",
+      "x": 4,
+      "y": 4,
+      "facing": "down",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "km_house_a"
+    }
+  ],
+  "objects": []
+}

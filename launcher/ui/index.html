@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Security-Policy"
+      content="default-src 'none'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self';" />
+<title>KinBound</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Custom titlebar. The window is frameless so the art can run edge to edge. -->
+  <header class="titlebar">
+    <div class="titlebar-drag">
+      <span class="mark" aria-hidden="true"></span>
+      <span class="wordmark">KINBOUND</span>
+      <span class="edition">Amber Version</span>
+    </div>
+    <div class="window-buttons">
+      <button id="btn-min" class="win-btn" title="Minimise" aria-label="Minimise">&#x2013;</button>
+      <button id="btn-close" class="win-btn danger" title="Close" aria-label="Close">&#x2715;</button>
+    </div>
+  </header>
+
+  <main class="shell">
+    <!-- Hero art, drawn to canvas so the launcher ships no image assets. -->
+    <section class="hero">
+      <canvas id="hero-art" width="960" height="400" aria-label="KinBound key art"></canvas>
+      <div class="hero-fade"></div>
+      <div class="hero-copy">
+        <h1>KinBound</h1>
+        <p class="tagline">Every seventy years the Hollow Sea turns over, and the whole of Veldras moves.</p>
+      </div>
+    </section>
+
+    <!-- Everything actionable lives in one bar along the bottom. -->
+    <section class="dock">
+      <div class="dock-info">
+        <div class="row">
+          <span class="label">Installed</span>
+          <span id="version" class="value">--</span>
+        </div>
+        <div class="row">
+          <span class="label">Last played</span>
+          <span id="last-played" class="value">Never</span>
+        </div>
+        <div class="row">
+          <span class="label">Updates</span>
+          <span id="channel" class="value">Checking...</span>
+        </div>
+      </div>
+
+      <div class="dock-actions">
+        <div id="update-panel" class="update-panel" hidden>
+          <div class="update-head">
+            <span id="update-title">Update available</span>
+            <span id="update-version" class="pill"></span>
+          </div>
+          <p id="update-notes" class="update-notes"></p>
+          <div id="progress-track" class="progress" hidden><div id="progress-bar"></div></div>
+          <div class="update-buttons">
+            <button id="btn-update" class="btn btn-update">Update</button>
+            <button id="btn-notes" class="btn btn-ghost" hidden>Release notes</button>
+          </div>
+        </div>
+
+        <div class="play-row">
+          <button id="btn-check" class="btn btn-ghost" title="Check for updates">Check for updates</button>
+          <button id="btn-folder" class="btn btn-ghost" title="Open the install folder">Files</button>
+          <button id="btn-play" class="btn btn-play">PLAY</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="hero.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

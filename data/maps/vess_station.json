@@ -1,0 +1,56 @@
+{
+  "id": "vess_station",
+  "name": "Vess Field Station",
+  "displayName": "VESS FIELD STATION",
+  "music": "station",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIIIIIIIIIIIIII",
+    "IffffffffffffffI",
+    "IfKKKKfffffffffI",
+    "IffffffffffffffI",
+    "IffffrrrrrrffffI",
+    "IffffrrrrrrffffI",
+    "IffffrrrrrrffffI",
+    "IffffffffffffffI",
+    "IfKKffffffffKKfI",
+    "IffffffDfffffffI",
+    "IIIIIIIIIIIIIIII"
+  ],
+  "warps": [
+    { "x": 7, "y": 9, "toMap": "marrow_hollow", "toX": 22, "toY": 7, "facing": "down", "style": "door" }
+  ],
+  "npcs": [
+    {
+      "id": "vess",
+      "sprite": "professor",
+      "x": 7,
+      "y": 2,
+      "facing": "down",
+      "movement": { "kind": "static" },
+      "script": "vess_intro"
+    },
+    {
+      "id": "vess_aide",
+      "sprite": "villager_f",
+      "x": 13,
+      "y": 8,
+      "facing": "left",
+      "movement": { "kind": "static" },
+      "script": "vess_aide"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 2,
+      "text": [
+        "A wall of pinned charts. Arrows sweep",
+        "across the Hollow Sea in one long curl.",
+        "Someone has written: 'IT IS EARLY.'"
+      ]
+    }
+  ]
+}

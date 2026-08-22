@@ -1,0 +1,186 @@
+{
+  "id": "brackwater",
+  "name": "Brackwater",
+  "displayName": "BRACKWATER",
+  "music": "route_coast",
+  "battleBackdrop": "coast",
+  "indoor": false,
+  "regionPos": {
+    "x": 12,
+    "y": 7
+  },
+  "rows": [
+    "TTTTTTTTTTTTTT--TTTTTTTTTTTTTT",
+    "TT............--............TT",
+    "TT...144443...--...699998...TT",
+    "TT...122523...--...677078...TT",
+    "TT...GGhgGG...--...GGmgGG...TT",
+    "TT...------...--...------...TT",
+    "TT............--............TT",
+    "TT--------------------------TT",
+    "TT............--............TT",
+    "TT~~~~~~......--.....[^^]...TT",
+    "TT~~~~~~......--.....#wD#...TT",
+    "TT~~~~~~~.....--............TT",
+    "TT~~~~~~~.....--............TT",
+    "TT~~~~~~~~....--....!.......TT",
+    "TT~~~~~~~~....--............TT",
+    "TT~~~~~~~~sssBBBBsss........TT",
+    "TTWWWWWWWWWWWBBBBWWW........TT",
+    "TTWWWWWWWWWWWBBBBWWWssss....TT",
+    "TTWWWWWWWWWWWB[]BWWWWWWWWWWWTT",
+    "TTWWWWWWWWWWWB#DBWWWWWWWWWWWTT",
+    "TTWWWWWWWWWWWWWWWWWWWWWWWWWWTT",
+    "TTWWWWWWWWWWWWWWWWWWWWWWWWWWTT"
+  ],
+  "warps": [
+    {
+      "x": 8,
+      "y": 4,
+      "toMap": "brackwater_waystation",
+      "toX": 6,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 22,
+      "y": 4,
+      "toMap": "brackwater_provisioner",
+      "toX": 6,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 23,
+      "y": 10,
+      "toMap": "brackwater_house",
+      "toX": 6,
+      "toY": 6,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 15,
+      "y": 19,
+      "toMap": "brackwater_bastion",
+      "toX": 8,
+      "toY": 16,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 14,
+      "y": 0,
+      "toMap": "route_4",
+      "toX": 14,
+      "toY": 23,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 15,
+      "y": 0,
+      "toMap": "route_4",
+      "toX": 15,
+      "toY": 23,
+      "facing": "up",
+      "style": "edge"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "bw_harbourmaster",
+      "sprite": "hiker",
+      "x": 18,
+      "y": 8,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "bw_harbourmaster"
+    },
+    {
+      "id": "bw_netter",
+      "sprite": "villager_f",
+      "x": 11,
+      "y": 14,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "bw_netter"
+    },
+    {
+      "id": "bw_child",
+      "sprite": "villager_m",
+      "x": 20,
+      "y": 13,
+      "facing": "left",
+      "movement": {
+        "kind": "wander",
+        "radius": 2
+      },
+      "script": "bw_child"
+    },
+    {
+      "id": "bw_greeter",
+      "sprite": "villager_f",
+      "x": 16,
+      "y": 6,
+      "facing": "down",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "bw_greeter"
+    },
+    {
+      "id": "bw_surveyor",
+      "sprite": "concord",
+      "x": 22,
+      "y": 17,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "bw_surveyor"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 19,
+      "y": 13,
+      "text": [
+        "BRACKWATER",
+        "Tidal flats west. Deep water east. Bastion at the end of the pier."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 15,
+      "text": [
+        "THE PIER",
+        "Keeper Mabry Sull. Bring something that does not mind getting wet."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 26,
+      "y": 8,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_bw_pier"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 4,
+      "y": 12,
+      "item": "dusk_vessel",
+      "quantity": 1,
+      "flag": "item_bw_hidden"
+    }
+  ]
+}

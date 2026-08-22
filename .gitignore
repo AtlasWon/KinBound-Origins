@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Compiled output and packaged builds
+build/js/
+build/kinbound.min.js
+build/kinbound.min.js.map
+dist/
+
+# Development screenshots. These are working files, not content.
+build/shots/
+
+# Editor / OS noise
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# Never commit a publishing token
+.env
+*.pem

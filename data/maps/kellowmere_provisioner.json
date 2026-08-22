@@ -1,0 +1,43 @@
+{
+  "id": "kellowmere_provisioner",
+  "name": "Provisioner",
+  "displayName": "PROVISIONER",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIIIIIIIIII",
+    "IffffffffffI",
+    "IfKKKKKKKKfI",
+    "IffffffffffI",
+    "IffffffffffI",
+    "IffffffffffI",
+    "IfffffDffffI",
+    "IIIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 6,
+      "toMap": "kellowmere",
+      "toX": 11,
+      "toY": 20,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "km_shopkeeper",
+      "sprite": "villager_m",
+      "x": 5,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "kellowmere_shop"
+    }
+  ],
+  "objects": []
+}

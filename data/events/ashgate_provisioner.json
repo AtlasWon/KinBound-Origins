@@ -1,0 +1,12 @@
+[
+  {
+    "id": "ashgate_shop",
+    "trigger": "interact",
+    "actions": [
+      { "kind": "say", "who": "PROVISIONER", "lines": [
+        "Morning. Or afternoon. The gate is closed so nobody knows what time it is."
+      ]},
+      { "kind": "openShop", "shop": "ashgate_provisioner" }
+    ]
+  }
+]

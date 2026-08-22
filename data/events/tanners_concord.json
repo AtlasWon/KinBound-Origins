@@ -1,0 +1,127 @@
+[
+  {
+    "id": "tr_kerrow_first",
+    "trigger": "interact",
+    "when": {
+      "kind": "not",
+      "of": {
+        "kind": "flag",
+        "flag": "met_kerrow"
+      }
+    },
+    "actions": [
+      {
+        "kind": "say",
+        "who": "???",
+        "lines": [
+          "You are the one filling in a Vellum for Halcyon Vess."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 24
+      },
+      {
+        "kind": "face",
+        "who": "tr_concord_kerrow",
+        "dir": "down"
+      },
+      {
+        "kind": "say",
+        "who": "ISOLDE KERROW",
+        "lines": [
+          "Isolde Kerrow. I direct the Stillwater Concord, which is a longer way of saying I sign things.",
+          "He writes to this office every week. Careful letters. Good numbers in them.",
+          "I read all of them. I have not answered one, and I would like to tell you why to your face rather than have yo",
+          "u decide for yourself."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "ISOLDE KERROW",
+        "lines": [
+          "Seventy years ago the Hollow Sea turned over and took a town called Old Tidefall off the map in one night.",
+          "Two hundred and forty people. My brother was one of them. I was six.",
+          "Dr. Vess would like us to observe the Turning. Record it. Understand it."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "say",
+        "who": "ISOLDE KERROW",
+        "lines": [
+          "I would like to stop it.",
+          "Not delay it. Not survive it. Stop it, permanently, and never have that conversation with anybody's family aga",
+          "in."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "ISOLDE KERROW",
+        "lines": [
+          "You have walked the west arm. You have seen the streams dropping and the herds refusing the bridge.",
+          "Everyone tells you that is frightening. It is not. It is the sea being *held*.",
+          "That is us. That is working."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "say",
+        "who": "ISOLDE KERROW",
+        "lines": [
+          "Go on to Brackwater. Take your Seals, they are a fine thing to have.",
+          "And when Vess writes to you about the Turning, ask him one question for me.",
+          "Ask him what he intends to say to the next Old Tidefall."
+        ]
+      },
+      {
+        "kind": "setFlag",
+        "flag": "met_kerrow"
+      },
+      {
+        "kind": "setVar",
+        "var": "act",
+        "value": 2
+      },
+      {
+        "kind": "move",
+        "who": "tr_concord_kerrow",
+        "steps": [
+          "down",
+          "down",
+          "down",
+          "down",
+          "down",
+          "down"
+        ],
+        "speed": "walk"
+      },
+      {
+        "kind": "removeNpc",
+        "who": "tr_concord_kerrow"
+      }
+    ]
+  },
+  {
+    "id": "tr_kerrow_after",
+    "trigger": "interact",
+    "when": {
+      "kind": "flag",
+      "flag": "met_kerrow"
+    },
+    "actions": [
+      {
+        "kind": "say",
+        "lines": [
+          "The Director's chair is empty. The soundings on the wall are not."
+        ]
+      }
+    ]
+  }
+]

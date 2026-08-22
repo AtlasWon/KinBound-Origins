@@ -1,0 +1,177 @@
+[
+  {
+    "id": "steady",
+    "name": "Steady",
+    "up": "atk",
+    "down": "atk",
+    "likes": "bitter"
+  },
+  {
+    "id": "brash",
+    "name": "Brash",
+    "up": "atk",
+    "down": "def",
+    "likes": "bitter"
+  },
+  {
+    "id": "studious",
+    "name": "Studious",
+    "up": "atk",
+    "down": "spa",
+    "likes": "bitter"
+  },
+  {
+    "id": "guarded",
+    "name": "Guarded",
+    "up": "atk",
+    "down": "spd",
+    "likes": "bitter"
+  },
+  {
+    "id": "restless",
+    "name": "Restless",
+    "up": "atk",
+    "down": "spe",
+    "likes": "bitter"
+  },
+  {
+    "id": "blunt",
+    "name": "Blunt",
+    "up": "def",
+    "down": "atk",
+    "likes": "sour"
+  },
+  {
+    "id": "stubborn",
+    "name": "Stubborn",
+    "up": "def",
+    "down": "def",
+    "likes": "sour"
+  },
+  {
+    "id": "careful",
+    "name": "Careful",
+    "up": "def",
+    "down": "spa",
+    "likes": "sour"
+  },
+  {
+    "id": "dogged",
+    "name": "Dogged",
+    "up": "def",
+    "down": "spd",
+    "likes": "sour"
+  },
+  {
+    "id": "heavy",
+    "name": "Heavy",
+    "up": "def",
+    "down": "spe",
+    "likes": "sour"
+  },
+  {
+    "id": "sharp",
+    "name": "Sharp",
+    "up": "spa",
+    "down": "atk",
+    "likes": "dry"
+  },
+  {
+    "id": "clever",
+    "name": "Clever",
+    "up": "spa",
+    "down": "def",
+    "likes": "dry"
+  },
+  {
+    "id": "curious",
+    "name": "Curious",
+    "up": "spa",
+    "down": "spa",
+    "likes": "dry"
+  },
+  {
+    "id": "distant",
+    "name": "Distant",
+    "up": "spa",
+    "down": "spd",
+    "likes": "dry"
+  },
+  {
+    "id": "dreamy",
+    "name": "Dreamy",
+    "up": "spa",
+    "down": "spe",
+    "likes": "dry"
+  },
+  {
+    "id": "wary",
+    "name": "Wary",
+    "up": "spd",
+    "down": "atk",
+    "likes": "sweet"
+  },
+  {
+    "id": "patient",
+    "name": "Patient",
+    "up": "spd",
+    "down": "def",
+    "likes": "sweet"
+  },
+  {
+    "id": "quiet",
+    "name": "Quiet",
+    "up": "spd",
+    "down": "spa",
+    "likes": "sweet"
+  },
+  {
+    "id": "solemn",
+    "name": "Solemn",
+    "up": "spd",
+    "down": "spd",
+    "likes": "sweet"
+  },
+  {
+    "id": "slack",
+    "name": "Slack",
+    "up": "spd",
+    "down": "spe",
+    "likes": "sweet"
+  },
+  {
+    "id": "eager",
+    "name": "Eager",
+    "up": "spe",
+    "down": "atk",
+    "likes": "salt"
+  },
+  {
+    "id": "hasty",
+    "name": "Hasty",
+    "up": "spe",
+    "down": "def",
+    "likes": "salt"
+  },
+  {
+    "id": "flighty",
+    "name": "Flighty",
+    "up": "spe",
+    "down": "spa",
+    "likes": "salt"
+  },
+  {
+    "id": "skittish",
+    "name": "Skittish",
+    "up": "spe",
+    "down": "spd",
+    "likes": "salt"
+  },
+  {
+    "id": "quick",
+    "name": "Quick",
+    "up": "spe",
+    "down": "spe",
+    "likes": "salt"
+  }
+]

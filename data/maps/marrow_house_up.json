@@ -1,0 +1,51 @@
+{
+  "id": "marrow_house_up",
+  "name": "Your Room",
+  "displayName": "YOUR ROOM",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIIwwIIwwII",
+    "IbfffffffkkI",
+    "IefffffffffI",
+    "IffffffffffI",
+    "IfKKffffffSI",
+    "IffffffrrffI",
+    "IffffffrrffI",
+    "IIIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 10,
+      "y": 4,
+      "toMap": "marrow_house_player",
+      "toX": 10,
+      "toY": 1,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 4,
+      "text": [
+        "Your desk. A folded map of Veldras, three months old and already wrong.",
+        "Somebody has circled the Hollow Sea and written NOT DUE FOR ELEVEN YEARS.",
+        "Underneath, in different ink: so why is it happening now."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 1,
+      "text": [
+        "Shelves of your father's field journals, carried the whole way here.",
+        "Every one of them ends the same way: I will finish this next season."
+      ]
+    }
+  ]
+}

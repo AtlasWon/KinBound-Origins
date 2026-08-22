@@ -1,0 +1,178 @@
+[
+  {
+    "id": "bastion2_guide",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "HAND",
+        "lines": [
+          "Mabry flooded this hall herself, twenty-two years ago.",
+          "Said a Tide Bastion with a dry floor was a lie told to children."
+        ]
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "not",
+          "of": {
+            "kind": "flag",
+            "flag": "bastion2_hint"
+          }
+        },
+        "then": [
+          {
+            "kind": "setFlag",
+            "flag": "bastion2_hint"
+          },
+          {
+            "kind": "say",
+            "who": "HAND",
+            "lines": [
+              "Pale water is shallow. You can walk it.",
+              "Dark water is deep and it will simply refuse you.",
+              "The middle lane is dark the whole way up. Everyone tries it once."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bastion2_keeper",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "hasSeal",
+          "seal": 2
+        },
+        "then": [
+          {
+            "kind": "say",
+            "who": "MABRY SULL",
+            "lines": [
+              "Still dripping on my floor. Good.",
+              "Go and ask Ott about the night soundings. He will not tell me, I am too obviously angry about it."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "if",
+            "cond": {
+              "kind": "not",
+              "of": {
+                "kind": "hasSeal",
+                "seal": 1
+              }
+            },
+            "then": [
+              {
+                "kind": "say",
+                "who": "MABRY SULL",
+                "lines": [
+                  "One Seal first. Go and see Roxen at the quarry.",
+                  "Not a rule I invented. A rule I enforce cheerfully."
+                ]
+              }
+            ],
+            "else": [
+              {
+                "kind": "battleTrainer",
+                "trainer": "bastion2_mabry"
+              },
+              {
+                "kind": "if",
+                "cond": {
+                  "kind": "var",
+                  "var": "last_battle_won",
+                  "op": "==",
+                  "value": 1
+                },
+                "then": [
+                  {
+                    "kind": "giveSeal",
+                    "seal": 2,
+                    "name": "Channel Seal"
+                  },
+                  {
+                    "kind": "sfx",
+                    "sound": "levelup"
+                  },
+                  {
+                    "kind": "say",
+                    "lines": [
+                      "You received the CHANNEL SEAL."
+                    ]
+                  },
+                  {
+                    "kind": "say",
+                    "who": "MABRY SULL",
+                    "lines": [
+                      "Two things about water, and then you can go.",
+                      "The first: shallow is a road and deep is a wall, and telling them apart is most of seamanship."
+                    ]
+                  },
+                  {
+                    "kind": "giveArt",
+                    "art": "wade"
+                  },
+                  {
+                    "kind": "say",
+                    "lines": [
+                      "You learned the field art WADE.",
+                      "Shallow water out in the world can be crossed now."
+                    ]
+                  },
+                  {
+                    "kind": "giveItem",
+                    "item": "full_restore",
+                    "count": 1
+                  },
+                  {
+                    "kind": "say",
+                    "lines": [
+                      "Mabry handed over a Full Restore."
+                    ]
+                  },
+                  {
+                    "kind": "wait",
+                    "frames": 20
+                  },
+                  {
+                    "kind": "say",
+                    "who": "MABRY SULL",
+                    "lines": [
+                      "The second thing. My channel has not moved since the first week of spring.",
+                      "Not the tide, not the current, not the colour. Ninety days of held water."
+                    ]
+                  },
+                  {
+                    "kind": "say",
+                    "who": "MABRY SULL",
+                    "lines": [
+                      "The Concord will tell you that is safety. And for a town that drowned once, it is.",
+                      "But I have watched forty years of this channel breathe, and I know what a held breath looks like.",
+                      "Somebody is going to have to let it out. Try to be somebody who thinks first."
+                    ]
+                  },
+                  {
+                    "kind": "setFlag",
+                    "flag": "seal_2_taken"
+                  },
+                  {
+                    "kind": "setVar",
+                    "var": "act",
+                    "value": 2
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

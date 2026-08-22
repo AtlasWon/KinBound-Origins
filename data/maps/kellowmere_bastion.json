@@ -1,0 +1,142 @@
+{
+  "id": "kellowmere_bastion",
+  "name": "Stone Bastion",
+  "displayName": "THE STONE BASTION",
+  "music": "station",
+  "battleBackdrop": "quarry",
+  "indoor": true,
+  "rows": [
+    "IIIIIIIIIIIIIIII",
+    "I==============I",
+    "I==============I",
+    "I==============I",
+    "IIIIIII==IIIIIII",
+    "I==============I",
+    "I==============I",
+    "I===x======x===I",
+    "I==============I",
+    "I======x=======I",
+    "I==============I",
+    "I==============I",
+    "I==============I",
+    "I==============I",
+    "I==============I",
+    "IIIIIIIDIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 7,
+      "y": 15,
+      "toMap": "kellowmere",
+      "toX": 15,
+      "toY": 6,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "bastion1_keeper",
+      "sprite": "hiker",
+      "x": 7,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "bastion1_keeper"
+    },
+    {
+      "id": "bastion1_statue_a",
+      "sprite": "concord",
+      "x": 7,
+      "y": 4,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "bastion1_statue",
+      "hiddenIfFlag": "bastion1_gate_open"
+    },
+    {
+      "id": "bastion1_statue_b",
+      "sprite": "concord",
+      "x": 8,
+      "y": 4,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "bastion1_statue",
+      "hiddenIfFlag": "bastion1_gate_open"
+    },
+    {
+      "id": "bastion1_guard_a",
+      "sprite": "hiker",
+      "x": 3,
+      "y": 12,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "bastion1_guard_a",
+      "sightRange": 3
+    },
+    {
+      "id": "bastion1_guard_b",
+      "sprite": "villager_m",
+      "x": 12,
+      "y": 12,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "bastion1_guard_b",
+      "sightRange": 3
+    },
+    {
+      "id": "bastion1_guide",
+      "sprite": "villager_f",
+      "x": 2,
+      "y": 14,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "bastion1_guide"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "switch",
+      "x": 4,
+      "y": 7
+    },
+    {
+      "kind": "switch",
+      "x": 11,
+      "y": 7
+    },
+    {
+      "kind": "switch",
+      "x": 7,
+      "y": 9
+    },
+    {
+      "kind": "pushable",
+      "x": 2,
+      "y": 7
+    },
+    {
+      "kind": "pushable",
+      "x": 13,
+      "y": 7
+    },
+    {
+      "kind": "pushable",
+      "x": 7,
+      "y": 12
+    }
+  ],
+  "freePush": true
+}

@@ -1,0 +1,100 @@
+{
+  "id": "brackwater_bastion",
+  "name": "Tide Bastion",
+  "displayName": "THE TIDE BASTION",
+  "music": "station",
+  "battleBackdrop": "coast",
+  "indoor": true,
+  "freeWade": true,
+  "rows": [
+    "IIIIIIIIIIIIIIIIII",
+    "I================I",
+    "I================I",
+    "I======WWWW======I",
+    "I==~~~~WWWW~~~~==I",
+    "I==~~WWWWWWWW~~==I",
+    "I==~~WWWWWWWW~~==I",
+    "I==~~WWW==WWW~~==I",
+    "I==~~WWW==WWW~~==I",
+    "I==~~~~~~~~~~~~==I",
+    "I===WWWW~~WWWW===I",
+    "I===WWWW~~WWWW===I",
+    "I====~~~~~~~~~~==I",
+    "I================I",
+    "I================I",
+    "I================I",
+    "IIIIIIIIDIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 8,
+      "y": 16,
+      "toMap": "brackwater",
+      "toX": 16,
+      "toY": 19,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "bastion2_keeper",
+      "sprite": "villager_f",
+      "x": 8,
+      "y": 1,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "bastion2_keeper"
+    },
+    {
+      "id": "bastion2_guard_a",
+      "sprite": "villager_m",
+      "x": 3,
+      "y": 8,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "bastion2_guard_a",
+      "sightRange": 2
+    },
+    {
+      "id": "bastion2_guard_b",
+      "sprite": "villager_f",
+      "x": 14,
+      "y": 8,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "bastion2_guard_b",
+      "sightRange": 2
+    },
+    {
+      "id": "bastion2_guard_c",
+      "sprite": "hiker",
+      "x": 8,
+      "y": 7,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "bastion2_guard_c",
+      "sightRange": 3
+    },
+    {
+      "id": "bastion2_guide",
+      "sprite": "villager_m",
+      "x": 2,
+      "y": 14,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "bastion2_guide"
+    }
+  ],
+  "objects": []
+}

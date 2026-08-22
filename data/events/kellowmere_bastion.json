@@ -1,0 +1,115 @@
+[
+  {
+    "id": "bastion1_gate",
+    "trigger": "step",
+    "map": "kellowmere_bastion",
+    "at": [{ "x": 7, "y": 5 }, { "x": 8, "y": 5 }],
+    "when": {
+      "kind": "all",
+      "of": [
+        { "kind": "var", "var": "kellowmere_bastion_plates", "op": ">=", "value": 3 },
+        { "kind": "not", "of": { "kind": "flag", "flag": "bastion1_gate_open" } }
+      ]
+    },
+    "actions": [
+      { "kind": "sfx", "sound": "levelup" },
+      { "kind": "shake", "frames": 24, "power": 2 },
+      { "kind": "say", "lines": [
+        "Three plates. Three stones.",
+        "Somewhere above, a counterweight lets go, and the gate grinds open."
+      ]},
+      { "kind": "removeNpc", "who": "bastion1_statue_a" },
+      { "kind": "removeNpc", "who": "bastion1_statue_b" },
+      { "kind": "setFlag", "flag": "bastion1_gate_open" }
+    ]
+  },
+  {
+    "id": "bastion1_statue",
+    "trigger": "interact",
+    "actions": [
+      { "kind": "say", "lines": [
+        "A cut-stone figure, arms folded, blocking the way up.",
+        "There is a slot in the floor where a counterweight chain would run.",
+        "It is slack."
+      ]}
+    ]
+  },
+  {
+    "id": "bastion1_guide",
+    "trigger": "interact",
+    "actions": [
+      { "kind": "if",
+        "cond": { "kind": "flag", "flag": "bastion1_gate_open" },
+        "then": [
+          { "kind": "say", "who": "HAND", "lines": [
+            "Gate is open. She will be expecting you.",
+            "She is always expecting people. It is unnerving."
+          ]}
+        ],
+        "else": [
+          { "kind": "say", "who": "HAND", "lines": [
+            "Three stones, three plates in the floor. Put one on each.",
+            "You cannot pull them, only push, so think about which side you want to be standing on."
+          ]},
+          { "kind": "if",
+            "cond": { "kind": "not", "of": { "kind": "flag", "flag": "bastion1_hint" } },
+            "then": [
+              { "kind": "setFlag", "flag": "bastion1_hint" },
+              { "kind": "say", "who": "HAND", "lines": [
+                "And if you wedge one somewhere stupid, just walk out and come back.",
+                "They go home. Everything here goes home eventually."
+              ]}
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bastion1_keeper",
+    "trigger": "interact",
+    "actions": [
+      { "kind": "if",
+        "cond": { "kind": "hasSeal", "seal": 1 },
+        "then": [
+          { "kind": "say", "who": "ROXEN QUILL", "lines": [
+            "Still here? The road north is shut and it will stay shut.",
+            "Go east when you can. Brackwater wants people who can take a hit."
+          ]}
+        ],
+        "else": [
+          { "kind": "battleTrainer", "trainer": "bastion1_roxen" },
+          { "kind": "if",
+            "cond": { "kind": "var", "var": "last_battle_won", "op": "==", "value": 1 },
+            "then": [
+              { "kind": "giveSeal", "seal": 1, "name": "Quarry Seal" },
+              { "kind": "sfx", "sound": "levelup" },
+              { "kind": "say", "lines": [
+                "You received the QUARRY SEAL.",
+                "The first of eight."
+              ]},
+              { "kind": "say", "who": "ROXEN QUILL", "lines": [
+                "Nineteen years on the west face taught me one thing worth passing on.",
+                "Anything can be moved. Most things just need a shoulder and a reason."
+              ]},
+              { "kind": "giveArt", "art": "shoulder" },
+              { "kind": "say", "lines": [
+                "You learned the field art SHOULDER.",
+                "Heavy stones out in the world can be pushed now."
+              ]},
+              { "kind": "giveItem", "item": "great_potion", "count": 1 },
+              { "kind": "say", "lines": ["Roxen handed over a Great Potion."] },
+              { "kind": "say", "who": "ROXEN QUILL", "lines": [
+                "One more thing, and I want you to actually hear it.",
+                "The Concord surveyed my quarry in the spring. Depth soundings, they said.",
+                "They were not measuring the rock. They were measuring what the rock is sitting on.",
+                "Ask them about it. Watch how fast they stop being friendly."
+              ]},
+              { "kind": "setFlag", "flag": "seal_1_taken" }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

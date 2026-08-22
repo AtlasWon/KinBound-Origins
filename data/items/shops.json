@@ -1,0 +1,259 @@
+[
+  {
+    "id": "ashgate_provisioner",
+    "name": "Ashgate Provisioner",
+    "greeting": [
+      "First time on the road? You will want vessels before you want anything clever."
+    ],
+    "stock": [
+      {
+        "item": "field_vessel"
+      },
+      {
+        "item": "potion"
+      },
+      {
+        "item": "clearleaf"
+      },
+      {
+        "item": "steadyroot"
+      },
+      {
+        "item": "ward_incense"
+      },
+      {
+        "item": "fine_vessel",
+        "requiresSeal": 1
+      },
+      {
+        "item": "strong_potion",
+        "requiresSeal": 1
+      },
+      {
+        "item": "escape_line",
+        "requiresSeal": 1
+      },
+      {
+        "item": "full_heal",
+        "requiresSeal": 3
+      },
+      {
+        "item": "great_potion",
+        "requiresSeal": 4
+      },
+      {
+        "item": "deep_vessel",
+        "requiresSeal": 4
+      },
+      {
+        "item": "rouse",
+        "requiresSeal": 5
+      },
+      {
+        "item": "full_restore",
+        "requiresSeal": 7
+      },
+      {
+        "item": "full_rouse",
+        "requiresSeal": 7
+      }
+    ]
+  },
+  {
+    "id": "kellowmere_provisioner",
+    "name": "Kellowmere Provisioner",
+    "greeting": [
+      "Quarry prices. Which is to say, the same as everywhere, but dustier."
+    ],
+    "stock": [
+      {
+        "item": "field_vessel"
+      },
+      {
+        "item": "fine_vessel"
+      },
+      {
+        "item": "potion"
+      },
+      {
+        "item": "strong_potion"
+      },
+      {
+        "item": "clearleaf"
+      },
+      {
+        "item": "steadyroot"
+      },
+      {
+        "item": "coolsalve"
+      },
+      {
+        "item": "ward_incense"
+      },
+      {
+        "item": "escape_line"
+      },
+      {
+        "item": "full_heal",
+        "requiresSeal": 2
+      },
+      {
+        "item": "great_potion",
+        "requiresSeal": 3
+      },
+      {
+        "item": "deep_vessel",
+        "requiresSeal": 4
+      },
+      {
+        "item": "rouse",
+        "requiresSeal": 4
+      }
+    ]
+  },
+  {
+    "id": "tanners_provisioner",
+    "name": "Tanners Rest Provisioner",
+    "greeting": [
+      "Four roads meet outside that door. Everything on those roads ends up on these shelves."
+    ],
+    "stock": [
+      {
+        "item": "field_vessel"
+      },
+      {
+        "item": "fine_vessel"
+      },
+      {
+        "item": "net_vessel"
+      },
+      {
+        "item": "potion"
+      },
+      {
+        "item": "strong_potion"
+      },
+      {
+        "item": "clearleaf"
+      },
+      {
+        "item": "steadyroot"
+      },
+      {
+        "item": "coolsalve"
+      },
+      {
+        "item": "thawcloth"
+      },
+      {
+        "item": "wakebell"
+      },
+      {
+        "item": "ward_incense"
+      },
+      {
+        "item": "escape_line"
+      },
+      {
+        "item": "full_heal",
+        "requiresSeal": 2
+      },
+      {
+        "item": "great_potion",
+        "requiresSeal": 3
+      },
+      {
+        "item": "deep_vessel",
+        "requiresSeal": 3
+      },
+      {
+        "item": "dusk_vessel",
+        "requiresSeal": 4
+      },
+      {
+        "item": "rouse",
+        "requiresSeal": 4
+      },
+      {
+        "item": "full_restore",
+        "requiresSeal": 6
+      },
+      {
+        "item": "full_rouse",
+        "requiresSeal": 6
+      }
+    ]
+  },
+  {
+    "id": "brackwater_provisioner",
+    "name": "Brackwater Provisioner",
+    "greeting": [
+      "Salt gets into everything here. Including the prices, apparently."
+    ],
+    "stock": [
+      {
+        "item": "field_vessel"
+      },
+      {
+        "item": "fine_vessel"
+      },
+      {
+        "item": "net_vessel"
+      },
+      {
+        "item": "potion"
+      },
+      {
+        "item": "strong_potion"
+      },
+      {
+        "item": "clearleaf"
+      },
+      {
+        "item": "steadyroot"
+      },
+      {
+        "item": "coolsalve"
+      },
+      {
+        "item": "thawcloth"
+      },
+      {
+        "item": "wakebell"
+      },
+      {
+        "item": "full_heal"
+      },
+      {
+        "item": "ward_incense"
+      },
+      {
+        "item": "escape_line"
+      },
+      {
+        "item": "great_potion",
+        "requiresSeal": 2
+      },
+      {
+        "item": "deep_vessel",
+        "requiresSeal": 2
+      },
+      {
+        "item": "dusk_vessel",
+        "requiresSeal": 3
+      },
+      {
+        "item": "rouse",
+        "requiresSeal": 3
+      },
+      {
+        "item": "full_restore",
+        "requiresSeal": 6
+      },
+      {
+        "item": "full_rouse",
+        "requiresSeal": 6
+      }
+    ]
+  }
+]

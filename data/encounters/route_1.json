@@ -1,0 +1,28 @@
+{
+  "mapId": "route_1",
+  "methods": {
+    "tallGrass": {
+      "rate": 170,
+      "slots": [
+        { "species": "nibbet", "minLevel": 3, "maxLevel": 6, "weight": 30 },
+        { "species": "pipwing", "minLevel": 3, "maxLevel": 6, "weight": 25 },
+        { "species": "tuftail", "minLevel": 4, "maxLevel": 6, "weight": 20 },
+        { "species": "nettlebug", "minLevel": 3, "maxLevel": 5, "weight": 15 },
+        { "species": "fizzlet", "minLevel": 4, "maxLevel": 6, "weight": 7 },
+        { "species": "sootmoth", "minLevel": 5, "maxLevel": 7, "weight": 3, "time": ["evening", "night"] }
+      ]
+    },
+    "water": {
+      "rate": 120,
+      "slots": [
+        { "species": "rillfry", "minLevel": 4, "maxLevel": 8, "weight": 80 },
+        { "species": "rilltail", "minLevel": 5, "maxLevel": 8, "weight": 20 }
+      ]
+    },
+    "fishOld": {
+      "slots": [
+        { "species": "rillfry", "minLevel": 3, "maxLevel": 6, "weight": 100 }
+      ]
+    }
+  }
+}

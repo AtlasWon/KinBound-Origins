@@ -1,0 +1,202 @@
+{
+  "id": "route_3",
+  "name": "Route 3",
+  "displayName": "ROUTE 3",
+  "music": "route_west",
+  "battleBackdrop": "highland",
+  "indoor": false,
+  "regionPos": {
+    "x": 7,
+    "y": 15
+  },
+  "encounterTable": "route_3",
+  "rows": [
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+    "T........\"\"\"\"\"\"\"\"......oo..............T",
+    "T........\"\"\"\"\"\"\"\"......................T",
+    "T........\"\"\"\"\"\"\"\".....TTTTTT...........T",
+    "T......................T~~~~T..........T",
+    "T......................T~~~~T..........T",
+    "T......................TTTTTT..........T",
+    "T......................................T",
+    "------------------BBBB------------------",
+    "------------------BBBB------------------",
+    "T......................................T",
+    "T.....LLLLLLLLLLLL.....................T",
+    "T......................................T",
+    "T..........\"\"\"\"\"\"\"\"\"\"....O.............T",
+    "T..........\"\"\"\"\"\"\"\"\"\"..................T",
+    "T..........\"\"\"\"\"\"\"\"\"\"....TTTTTTTT......T",
+    "T........................TTTTTTTT......T",
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT"
+  ],
+  "warps": [
+    {
+      "x": 0,
+      "y": 9,
+      "toMap": "kellowmere",
+      "toX": 28,
+      "toY": 16,
+      "facing": "left",
+      "style": "edge"
+    },
+    {
+      "x": 0,
+      "y": 10,
+      "toMap": "kellowmere",
+      "toX": 28,
+      "toY": 16,
+      "facing": "left",
+      "style": "edge"
+    },
+    {
+      "x": 39,
+      "y": 9,
+      "toMap": "tanners_rest",
+      "toX": 2,
+      "toY": 12,
+      "facing": "right",
+      "style": "edge"
+    },
+    {
+      "x": 39,
+      "y": 10,
+      "toMap": "tanners_rest",
+      "toX": 2,
+      "toY": 13,
+      "facing": "right",
+      "style": "edge"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "r3_bram",
+      "sprite": "hiker",
+      "x": 8,
+      "y": 8,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r3_bram",
+      "sightRange": 3
+    },
+    {
+      "id": "r3_sill",
+      "sprite": "villager_f",
+      "x": 24,
+      "y": 12,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r3_sill",
+      "sightRange": 3
+    },
+    {
+      "id": "r3_holt",
+      "sprite": "villager_m",
+      "x": 31,
+      "y": 8,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r3_holt",
+      "sightRange": 3
+    },
+    {
+      "id": "r3_ivo",
+      "sprite": "concord",
+      "x": 14,
+      "y": 12,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "concord_surveyor_2",
+      "sightRange": 3
+    },
+    {
+      "id": "r3_drover",
+      "sprite": "villager_m",
+      "x": 33,
+      "y": 13,
+      "facing": "left",
+      "movement": {
+        "kind": "pace",
+        "axis": "y",
+        "distance": 2
+      },
+      "script": "r3_drover"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 3,
+      "y": 8,
+      "text": [
+        "ROUTE 3",
+        "Kellowmere west. Tanners Rest east.",
+        "Bridge is sound. The stream under it is not where it was last year."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 26,
+      "y": 14,
+      "text": [
+        "A stone the size of a cart, sat in the middle of good pasture.",
+        "It did not roll here. There is no slope."
+      ]
+    },
+    {
+      "kind": "pushable",
+      "x": 26,
+      "y": 14
+    },
+    {
+      "kind": "item",
+      "x": 27,
+      "y": 14,
+      "item": "strong_potion",
+      "quantity": 2,
+      "flag": "item_r3_stone"
+    },
+    {
+      "kind": "item",
+      "x": 20,
+      "y": 3,
+      "item": "fine_vessel",
+      "quantity": 3,
+      "flag": "item_r3_grass"
+    },
+    {
+      "kind": "item",
+      "x": 25,
+      "y": 6,
+      "item": "coolsalve",
+      "quantity": 2,
+      "flag": "item_r3_stream"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 12,
+      "y": 15,
+      "item": "great_potion",
+      "quantity": 1,
+      "flag": "item_r3_hidden"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 35,
+      "y": 3,
+      "item": "escape_line",
+      "quantity": 1,
+      "flag": "item_r3_hidden2"
+    }
+  ]
+}
