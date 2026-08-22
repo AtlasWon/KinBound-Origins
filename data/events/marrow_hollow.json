@@ -25,7 +25,7 @@
         "kind": "say",
         "who": "PERRIN",
         "lines": [
-          "FINALLY. I have been stood in this exact spot since it was dark.",
+          "FINALLY. {name}. I have been stood in this exact spot since it was dark.",
           "A woman with a bucket asked me twice if I was lost."
         ]
       },
@@ -112,7 +112,7 @@
         "kind": "say",
         "who": "PERRIN",
         "lines": [
-          "Hey. HEY. Don't you dare walk off up that road yet.",
+          "{name}. HEY. Don't you dare walk off up that road yet.",
           "Vess gave me one too. She picked the one that beats yours, which I am choosing to find funny."
         ]
       },
@@ -182,7 +182,7 @@
         "kind": "say",
         "who": "PERRIN",
         "lines": [
-          "Listen, before you go. There were people on the north road last week.",
+          "Listen, {name}, before you go. There were people on the north road last week.",
           "Grey coats, brass instruments, very polite. Stillwater Concord, the badges said.",
           "They were not measuring the road. They were kneeling on it, measuring what is underneath."
         ]

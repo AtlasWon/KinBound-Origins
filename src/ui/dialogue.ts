@@ -23,6 +23,7 @@ import type { Scene } from '../core/scene.js';
 import { Renderer, SCREEN_H, SCREEN_W } from '../engine/renderer.js';
 import { textDelayFrames } from '../core/settings.js';
 import { audio } from '../audio/audio.js';
+import { resolveTokens } from '../core/tokens.js';
 
 const BOX_H = 50;
 const BOX_MARGIN = 4;
@@ -84,7 +85,10 @@ export class DialogueScene implements Scene {
     const maxW = SCREEN_W - TEXT_X - 16;
     const wrapped: string[] = [];
     for (const line of this.lines) {
-      for (const w of r.wrapText(line, maxW)) wrapped.push(w);
+      // Resolved here rather than at the call site: every authored line in the
+      // game reaches the box through this loop, and nothing else has to know
+      // that {name} is a thing.
+      for (const w of r.wrapText(resolveTokens(line), maxW)) wrapped.push(w);
     }
     this.pages = [];
     for (let i = 0; i < wrapped.length; i += MAX_LINES) {

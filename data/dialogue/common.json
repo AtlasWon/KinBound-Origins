@@ -19,7 +19,7 @@
           "got_starter"
         ],
         "lines": [
-          "There you are. I have unpacked exactly two boxes and I am calling that a day.",
+          "There you are, {name}. I have unpacked exactly two boxes and I am calling that a day.",
           "Dr. Vess came by at dawn asking for you. At DAWN.",
           "Go on. The station is the big one with the charts in the window."
         ]

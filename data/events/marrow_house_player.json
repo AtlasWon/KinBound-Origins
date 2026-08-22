@@ -36,7 +36,7 @@
                 "kind": "say",
                 "who": "MOM",
                 "lines": [
-                  "Sit down a minute first. You look like your father used to."
+                  "Sit down a minute first, {name}. You look like your father used to."
                 ]
               },
               {
@@ -99,7 +99,7 @@
             "kind": "say",
             "who": "MOM",
             "lines": [
-              "There you are. Up before me, which has happened exactly twice in your life.",
+              "There you are, {name}. Up before me, which has happened exactly twice in your life.",
               "Both times for the same reason."
             ]
           },
@@ -202,7 +202,7 @@
             "kind": "say",
             "who": "MOM",
             "lines": [
-              "Go on. The station is the big one with the charts in the window.",
+              "Go on, {name}. The station is the big one with the charts in the window.",
               "And Perrin has been outside since dawn pretending not to wait for you."
             ]
           }

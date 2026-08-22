@@ -21,6 +21,8 @@ interface Harness {
   key(code: string, settle?: number): void;
   /** Hold a key down for n ticks, then release. */
   hold(code: string, ticks: number): void;
+  /** Type literal characters, for name entry and anything else that reads text. */
+  type(text: string, settle?: number): void;
   /** Press and hold without releasing. */
   down(code: string): void;
   up(code: string): void;
@@ -70,6 +72,21 @@ export function installHarness(game: Game): void {
       tick(ticks);
       fire('keyup', code);
       tick(1);
+    },
+
+    // Typing needs the event's `key`, not just its `code`: that is the field
+    // the text buffer reads, and a synthetic event without it produces
+    // keystrokes that move the player but never spell anything.
+    type(text, settle = 2) {
+      for (const ch of text) {
+        const code = /[a-z]/i.test(ch) ? 'Key' + ch.toUpperCase()
+          : /[0-9]/.test(ch) ? 'Digit' + ch
+          : ch === ' ' ? 'Space' : 'Unidentified';
+        window.dispatchEvent(new KeyboardEvent('keydown', { key: ch, code, bubbles: true }));
+        tick(1);
+        window.dispatchEvent(new KeyboardEvent('keyup', { key: ch, code, bubbles: true }));
+      }
+      tick(settle);
     },
 
     down(code) { fire('keydown', code); },
@@ -164,6 +181,10 @@ export function installHarness(game: Game): void {
     },
   };
 
-  (globalThis as unknown as { tw: Harness }).tw = h;
-  console.log('[dev] harness installed as window.tw');
+  // `dev` is the name now; `tw` stays because scripts written before the game
+  // was renamed still reach for it and there is no reason to break them.
+  const g = globalThis as unknown as { dev: Harness; tw: Harness };
+  g.dev = h;
+  g.tw = h;
+  console.log('[dev] harness installed as window.dev');
 }

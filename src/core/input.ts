@@ -87,6 +87,8 @@ export class InputManager {
   private state: Record<Action, ActionState>;
   private frame = 0;
   private textBuffer: string[] = [];
+  /** Physical keys that went down this frame, whatever they are bound to. */
+  private keyEdge = new Set<string>();
   private captureNext: ((code: string) => void) | null = null;
 
   readonly mouse: MouseState = {
@@ -128,6 +130,7 @@ export class InputManager {
 
       if (!e.repeat) {
         this.keyDown.add(e.code);
+        this.keyEdge.add(e.code);
         this.lastDevice = 'keyboard';
       }
       if (e.key.length === 1 && !e.ctrlKey && !e.metaKey) this.textBuffer.push(e.key);
@@ -251,6 +254,19 @@ export class InputManager {
     this.mouse.rightPressed = false;
     this.mouse.wheel = 0;
     this.textBuffer.length = 0;
+    this.keyEdge.clear();
+  }
+
+  /**
+   * Whether a specific physical key went down this frame.
+   *
+   * For screens where the keyboard is being typed on rather than played with:
+   * while a name is being entered, W is a letter, not "walk up", and the only
+   * way to tell Enter from the other keys bound to confirm is to ask for it by
+   * name.
+   */
+  keyPressed(code: string): boolean {
+    return this.keyEdge.has(code);
   }
 
   /** True on any frame where the player pressed or clicked something. */

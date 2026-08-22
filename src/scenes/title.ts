@@ -13,6 +13,7 @@ import { makeTextSprite } from '../gfx/textart.js';
 import { ListMenu } from '../ui/menu.js';
 import { audio } from '../audio/audio.js';
 import { OverworldScene } from './overworld.js';
+import { OpeningScene } from './opening.js';
 import { GameState } from '../systems/state.js';
 import { OptionsScene } from './options.js';
 import { load, saveExists } from '../systems/save.js';
@@ -81,10 +82,9 @@ export class TitleScene implements Scene {
     if (res === 'select') {
       const choice = this.menu.selectedValue;
       if (choice === 'new') {
-        const state = new GameState();
-        game.scenes.replaceAll(
-          new OverworldScene(state, state.currentMap, state.currentX, state.currentY, 'down'),
-        );
+        // A new journey starts with the cinematic and character creation; the
+        // creator is what finally hands the state to the overworld.
+        game.scenes.replaceAll(new OpeningScene(new GameState()));
       } else if (choice === 'continue') {
         // Newest save wins, so "continue" means what the player expects.
         const slots = [0, 1, 2, 3]

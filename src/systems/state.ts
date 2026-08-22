@@ -9,6 +9,8 @@
 import { registry } from '../data/registry.js';
 import { Kin } from './kin.js';
 import { worldRng } from '../core/rng.js';
+import { setToken } from '../core/tokens.js';
+import { DEFAULT_APPEARANCE, normaliseAppearance, type CharAppearance } from '../gfx/charsprite.js';
 import type { Direction, TimeOfDay } from '../data/schema.js';
 
 export interface InventoryEntry {
@@ -27,7 +29,18 @@ export interface SaveHeader {
 }
 
 export class GameState {
-  playerName = 'AVEN';
+  private name = 'AVEN';
+
+  /** Publishes {name} for dialogue on every write, including load. */
+  get playerName(): string { return this.name; }
+  set playerName(value: string) {
+    this.name = value;
+    setToken('name', value);
+  }
+
+  /** How the player built themselves. Drives every sprite they appear in. */
+  appearance: CharAppearance = { ...DEFAULT_APPEARANCE };
+
   money = 3000;
 
   // A new game opens in the player's own bedroom rather than in the middle of
@@ -66,6 +79,13 @@ export class GameState {
   caught = new Set<string>();
 
   playTime = 0;
+
+  constructor() {
+    // A fresh state has a default name, and dialogue has to know it before the
+    // player has picked one -- a {name} that resolves to nothing looks like a
+    // bug in the writing rather than in the code.
+    setToken('name', this.name);
+  }
 
   /* ---------------------------------------------------------- the party */
 
@@ -233,6 +253,7 @@ export class GameState {
     return {
       version: 1,
       playerName: this.playerName,
+      appearance: this.appearance,
       money: this.money,
       currentMap: this.currentMap,
       currentX: this.currentX,
@@ -260,6 +281,9 @@ export class GameState {
   static fromJSON(data: Record<string, any>): GameState {
     const s = new GameState();
     s.playerName = data.playerName ?? 'AVEN';
+    // Saves written before character creation existed have no appearance, and
+    // get the default one rather than a crash or an invisible player.
+    s.appearance = normaliseAppearance(data.appearance);
     s.money = data.money ?? 3000;
     s.currentMap = data.currentMap ?? 'marrow_house_up';
     s.currentX = data.currentX ?? 2;

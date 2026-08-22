@@ -5,7 +5,7 @@
     "when": { "kind": "not", "of": { "kind": "flag", "flag": "got_starter" } },
     "actions": [
       { "kind": "say", "who": "DR. VESS", "lines": [
-        "You came. Good. Sit, do not sit, whichever gets you talking faster.",
+        "{name}. You came. Good. Sit, do not sit, whichever gets you talking faster.",
         "I study movement. Not battling, not breeding. Movement.",
         "Where things go, and why they all go at once."
       ]},
@@ -35,7 +35,7 @@
       { "kind": "setFlag", "flag": "quest_walk_the_region" },
       { "kind": "say", "who": "DR. VESS", "lines": [
         "Ashgate is north up Route 1. Ask for Tirren's sister at the Waystation, she owes me a favour.",
-        "And if anything out there is somewhere it should not be...",
+        "And if anything out there is somewhere it should not be, {name}...",
         "write it down. Write down everything."
       ]}
     ]

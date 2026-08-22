@@ -10,6 +10,11 @@
  * become a hundred PNGs. Each frame is drawn into a scratch buffer and then run
  * through a silhouette outline pass, which is what gives every character the
  * same hard read against grass, stone or water without hand-drawing the border.
+ *
+ * The player is the same machinery with the knobs exposed: an appearance is a
+ * dozen indices into the tables at the bottom of this file, and it turns into a
+ * palette like any other. That is what makes character creation possible at all
+ * -- there is no sprite sheet to redraw, only numbers to change.
  */
 
 import { DETAIL } from '../engine/renderer.js';
@@ -23,6 +28,13 @@ export const CHAR_LH = CHAR_H / DETAIL;
 
 export const DIRS = ['down', 'up', 'left', 'right'] as const;
 export type CharDir = (typeof DIRS)[number];
+
+/** Hair silhouettes. The head is nine pixels across, so these are shapes, not
+ *  hairdressing: what matters is the outline you can recognise from a tile
+ *  away. */
+export type HairStyle = 'short' | 'swept' | 'spiky' | 'bob' | 'long' | 'ponytail' | 'bun' | 'curls';
+export type HatStyle = 'cap' | 'beanie' | 'bandana' | 'sunhat' | 'band';
+export type JacketStyle = 'open' | 'hoodie' | 'vest';
 
 export interface CharPalette {
   skin: string;
@@ -38,8 +50,20 @@ export interface CharPalette {
   /** Optional hat/hood drawn over the hair. */
   hat?: string;
   hatShade?: string;
+  /** Shape of that headwear. A hat colour with no style is a cap, as before. */
+  hatStyle?: HatStyle;
   /** Optional pack on the back, visible facing up. */
   pack?: string;
+  /** Iris colour. */
+  eye?: string;
+  /** Hair silhouette; short if unset, which is what every NPC had. */
+  hairStyle?: HairStyle;
+  /** Optional jacket worn over the top. */
+  jacket?: string;
+  jacketShade?: string;
+  jacketStyle?: JacketStyle;
+  /** Shoulder width and waist. */
+  build?: 'broad' | 'slim';
 }
 
 export const DEFAULT_PALETTES: Record<string, CharPalette> = {
@@ -58,6 +82,7 @@ export const DEFAULT_PALETTES: Record<string, CharPalette> = {
     top: '#3f7a5c', topShade: '#2b5640',
     legs: '#4a4a58', legsShade: '#33333f',
     shoes: '#2a2a30', outline: '#1a1a22',
+    hairStyle: 'swept', eye: '#6aa87c',
   },
   professor: {
     skin: '#e0aa84', skinShade: '#b8825e',
@@ -79,6 +104,7 @@ export const DEFAULT_PALETTES: Record<string, CharPalette> = {
     top: '#c88ab0', topShade: '#9a6484',
     legs: '#8a6a90', legsShade: '#654c6a',
     shoes: '#3a3038', outline: '#1a1a22',
+    hairStyle: 'bob', build: 'slim',
   },
   hiker: {
     skin: '#d09068', skinShade: '#a86c48',
@@ -104,8 +130,6 @@ type Ctx = CanvasRenderingContext2D;
 const CX = 16;
 const HEAD_TOP = 4;
 const HEAD_BOT = 22;
-const HEAD_L = 7;
-const HEAD_R = 24;
 const SHOULDER = 23;
 const HIP = 36;
 const FOOT = 46;
@@ -204,9 +228,18 @@ export class CharSheet {
     // walk at this size.
     const bob = frame === 0 ? 0 : -1;
     const profile = dir === 'left' || dir === 'right';
+    const slim = p.build === 'slim';
     const headCy = (HEAD_TOP + HEAD_BOT) / 2 + bob;
     const headRx = profile ? 8 : 9;
     const headCx = profile ? CX - 1 : CX;
+    const eye = p.eye ?? '#8fb8d8';
+    const style: HairStyle = p.hairStyle ?? 'short';
+    const jacket = p.jacket;
+    const jacketShade = p.jacketShade ?? (jacket ? darken(jacket, 0.28) : undefined);
+    const jacketStyle: JacketStyle = p.jacketStyle ?? 'open';
+    /** Sleeves take the jacket colour unless it is a vest. */
+    const sleeve = jacket && jacketStyle !== 'vest' ? jacket : p.top;
+    const sleeveShade = jacket && jacketStyle !== 'vest' ? jacketShade! : p.topShade;
 
     /* ------------------------------------------------------------- legs */
     // Drawn first so the tunic hem overlaps them.
@@ -224,17 +257,18 @@ export class CharSheet {
       // Front and back views read the stride as one foot lifted.
       const liftL = stride > 0 ? 2 : 0;
       const liftR = stride < 0 ? 2 : 0;
-      box(CX - 7, legTop, CX - 1, FOOT - 3 - liftL, p.legs);
-      box(CX + 1, legTop, CX + 7, FOOT - 3 - liftR, p.legsShade);
-      box(CX - 8, FOOT - 3 - liftL, CX - 1, FOOT - liftL, p.shoes);
-      box(CX + 1, FOOT - 3 - liftR, CX + 8, FOOT - liftR, p.shoes);
+      const legHalf = slim ? 6 : 7;
+      box(CX - legHalf, legTop, CX - 1, FOOT - 3 - liftL, p.legs);
+      box(CX + 1, legTop, CX + legHalf, FOOT - 3 - liftR, p.legsShade);
+      box(CX - legHalf - 1, FOOT - 3 - liftL, CX - 1, FOOT - liftL, p.shoes);
+      box(CX + 1, FOOT - 3 - liftR, CX + legHalf + 1, FOOT - liftR, p.shoes);
       // Inner shadow separates the two legs.
       for (let y = legTop; y <= FOOT - 4; y++) px(CX, y, p.legsShade);
     }
 
     /* ------------------------------------------------------------ torso */
     const shoulderY = SHOULDER + bob;
-    const torsoHalf = profile ? 5 : 7;
+    const torsoHalf = profile ? (slim ? 4 : 5) : (slim ? 6 : 7);
     box(CX - torsoHalf, shoulderY, CX + torsoHalf, HIP, p.top);
     // Light from the upper left: a lit band down the left, shade down the right.
     box(CX - torsoHalf, shoulderY, CX - torsoHalf + 2, HIP, lighten(p.top, 0.16));
@@ -266,19 +300,53 @@ export class CharSheet {
       box(CX - torsoHalf, shoulderY, CX - torsoHalf + 1, shoulderY + 4, lighten(p.top, 0.24));
     }
 
+    /* ----------------------------------------------------------- jacket */
+    if (jacket) {
+      const js = jacketShade!;
+      if (dir === 'up') {
+        // From behind a jacket is simply the back of a jacket.
+        box(CX - torsoHalf, shoulderY, CX + torsoHalf, HIP - 1, jacket);
+        box(CX + torsoHalf - 2, shoulderY, CX + torsoHalf, HIP - 1, js);
+        box(CX - torsoHalf, HIP - 2, CX + torsoHalf, HIP - 1, js);
+      } else if (profile) {
+        box(CX - torsoHalf, shoulderY, CX + torsoHalf - 2, HIP - 1, jacket);
+        box(CX - torsoHalf, shoulderY, CX - torsoHalf + 1, HIP - 1, lighten(jacket, 0.18));
+        box(CX + torsoHalf - 3, shoulderY, CX + torsoHalf - 2, HIP - 1, js);
+      } else {
+        // Open at the front: two panels with the shirt showing between them.
+        box(CX - torsoHalf, shoulderY, CX - torsoHalf + 3, HIP - 1, jacket);
+        box(CX + torsoHalf - 3, shoulderY, CX + torsoHalf, HIP - 1, jacket);
+        box(CX - torsoHalf, shoulderY, CX - torsoHalf + 1, HIP - 1, lighten(jacket, 0.18));
+        box(CX + torsoHalf - 1, shoulderY, CX + torsoHalf, HIP - 1, js);
+        // Collar folded back over the shoulders.
+        box(CX - torsoHalf + 3, shoulderY, CX - 2, shoulderY + 2, js);
+        box(CX + 2, shoulderY, CX + torsoHalf - 3, shoulderY + 2, js);
+        box(CX - torsoHalf, HIP - 2, CX - torsoHalf + 3, HIP - 1, js);
+        box(CX + torsoHalf - 3, HIP - 2, CX + torsoHalf, HIP - 1, js);
+      }
+      if (jacketStyle === 'hoodie') {
+        // A hood bunched behind the neck, which is most of what says "hoodie"
+        // from the front and all of it from behind.
+        const hy = shoulderY - 1;
+        ell(CX, hy + 1, torsoHalf - 1, 3, js);
+        ell(CX, hy, torsoHalf - 2, 2, jacket);
+        if (dir === 'up') ell(CX, hy + 3, torsoHalf - 1, 4, js);
+      }
+    }
+
     /* ------------------------------------------------------------- arms */
     // Arms swing opposite the legs.
     const swing = -stride;
     if (profile) {
       const ay = shoulderY + 2 + Math.max(0, swing);
-      box(CX - 5, ay, CX - 2, ay + 7, p.topShade);
+      box(CX - 5, ay, CX - 2, ay + 7, sleeveShade);
       ell(CX - 4, ay + 8, 2, 2, p.skin);
       px(CX - 5, ay + 8, p.skinShade);
     } else {
       const lY = shoulderY + 2 - swing;
       const rY = shoulderY + 2 + swing;
-      box(CX - torsoHalf - 3, lY, CX - torsoHalf - 1, lY + 7, lighten(p.top, 0.1));
-      box(CX + torsoHalf + 1, rY, CX + torsoHalf + 3, rY + 7, p.topShade);
+      box(CX - torsoHalf - 3, lY, CX - torsoHalf - 1, lY + 7, lighten(sleeve, 0.1));
+      box(CX + torsoHalf + 1, rY, CX + torsoHalf + 3, rY + 7, sleeveShade);
       ell(CX - torsoHalf - 2, lY + 9, 2, 2, p.skin);
       ell(CX + torsoHalf + 2, rY + 9, 2, 2, p.skinShade);
     }
@@ -294,6 +362,38 @@ export class CharSheet {
 
     /* ------------------------------------------------------------- hair */
     const hairTop = headCy - 10;
+    const back = profile ? 1 : 0;   // in profile the back of the head is +x
+
+    /** The dome on top of the head. */
+    const crown = (rise = 0) => {
+      const top = hairTop - rise;
+      const span = headCy - 1 - top;
+      for (let y = top; y <= headCy - 1; y++) {
+        const t = (y - top) / span;
+        const half = Math.round((headRx + (rise > 0 ? 1 : 0)) * Math.sqrt(Math.max(0, 1 - (1 - t) ** 2)) + 1);
+        box(headCx - half, y, headCx + half, y, p.hair);
+      }
+    };
+
+    /** Jagged fringe edge, rather than a flat line across the brow. */
+    const fringe = () => {
+      for (let x = -headRx; x <= headRx; x++) {
+        const dip = 1 + ((x + 9) % 3 === 0 ? 1 : 0);
+        for (let k = 0; k < dip; k++) px(headCx + x, headCy - 1 + k, p.hairShade);
+      }
+    };
+
+    /** Hair hanging past the jaw. In profile only the back side has length. */
+    const sides = (len: number, width = 2) => {
+      const run = (sign: number) => {
+        for (let k = 0; k < width; k++) {
+          const x = headCx + sign * (headRx - k);
+          box(x, headCy - 4, x, headCy + len, k === 0 ? p.hairShade : p.hair);
+        }
+      };
+      if (!profile) { run(-1); run(1); } else run(back === 1 ? 1 : -1);
+    };
+
     if (dir === 'up') {
       // Back of the head: hair all the way down to the collar.
       ell(headCx, headCy, headRx, 9, p.hair);
@@ -301,44 +401,150 @@ export class CharSheet {
       ell(headCx - 3, headCy - 3, 4, 4, lighten(p.hair, 0.22));
       box(headCx - 3, headCy + 7, headCx + 3, headCy + 9, p.hairShade);
     } else {
-      // Crown and fringe.
-      for (let y = hairTop; y <= headCy - 1; y++) {
-        const t = (y - hairTop) / 10;
-        const half = Math.round(headRx * Math.sqrt(Math.max(0, 1 - (1 - t) ** 2)) + 1);
-        box(headCx - half, y, headCx + half, y, y < headCy - 6 ? p.hair : p.hair);
+      crown(style === 'spiky' || style === 'curls' ? 1 : 0);
+      fringe();
+      // Sideburns down past the ear -- in profile only on the back of the head,
+      // where there is a head to have hair on.
+      if (!profile) {
+        box(headCx - headRx, headCy - 3, headCx - headRx + 1, headCy + 3, p.hairShade);
       }
-      // Fringe edge, jagged rather than a flat line.
-      for (let x = -headRx; x <= headRx; x++) {
-        const dip = 1 + ((x + 9) % 3 === 0 ? 1 : 0);
-        for (let k = 0; k < dip; k++) px(headCx + x, headCy - 1 + k, p.hairShade);
-      }
-      // Sideburns down past the ear.
-      box(headCx - headRx, headCy - 3, headCx - headRx + 1, headCy + 3, p.hairShade);
       box(headCx + headRx - 1, headCy - 3, headCx + headRx, headCy + 3, p.hairShade);
       ell(headCx - 4, headCy - 6, 4, 3, lighten(p.hair, 0.24));
     }
 
+    switch (style) {
+      case 'swept':
+        // A lock combed across the brow, climbing as it goes.
+        if (dir !== 'up') {
+          for (let x = -headRx; x <= 3; x++) {
+            const y = headCy - 1 - Math.floor((x + headRx) / 5);
+            box(headCx + x, y, headCx + x, headCy - 1, p.hair);
+            px(headCx + x, y, lighten(p.hair, 0.2));
+          }
+        }
+        break;
+
+      case 'spiky':
+        // Five spikes off the crown, tallest in the middle.
+        for (let i = 0; i < 5; i++) {
+          const sx = headCx - 6 + i * 3;
+          const tall = 3 + (i === 2 ? 2 : i === 1 || i === 3 ? 1 : 0);
+          for (let k = 0; k < tall; k++) {
+            const w = Math.max(0, 1 - Math.floor(k / 2));
+            box(sx - w, hairTop - 1 - k, sx + w, hairTop - 1 - k, k > tall - 2 ? p.hairShade : p.hair);
+          }
+        }
+        break;
+
+      case 'bob':
+        sides(6, 3);
+        if (dir === 'up') box(headCx - headRx, headCy + 6, headCx + headRx, headCy + 8, p.hairShade);
+        break;
+
+      case 'long':
+        sides(13, 3);
+        if (dir === 'up') {
+          box(headCx - 5, headCy + 7, headCx + 5, shoulderY + 9, p.hair);
+          box(headCx + 2, headCy + 7, headCx + 5, shoulderY + 9, p.hairShade);
+          box(headCx - 5, shoulderY + 8, headCx + 5, shoulderY + 9, p.hairShade);
+        }
+        break;
+
+      case 'ponytail':
+        if (dir === 'up') {
+          box(headCx - 2, headCy + 6, headCx + 2, shoulderY + 7, p.hair);
+          box(headCx + 1, headCy + 6, headCx + 2, shoulderY + 7, p.hairShade);
+          box(headCx - 2, headCy + 5, headCx + 2, headCy + 6, darken(p.hair, 0.35));
+        } else if (profile) {
+          // Swept back and down behind the head.
+          for (let i = 0; i < 10; i++) {
+            const x = headCx + headRx + 1 + Math.floor(i / 3);
+            const y = headCy - 4 + i;
+            box(x, y, x + 1, y, i > 6 ? p.hairShade : p.hair);
+          }
+          box(headCx + headRx - 1, headCy - 5, headCx + headRx + 1, headCy - 4, darken(p.hair, 0.35));
+        } else {
+          // From the front it is a bump either side of the head.
+          box(headCx - headRx - 1, headCy - 4, headCx - headRx, headCy - 1, p.hairShade);
+          box(headCx + headRx, headCy - 4, headCx + headRx + 1, headCy - 1, p.hairShade);
+        }
+        break;
+
+      case 'bun':
+        if (dir === 'up') {
+          ell(headCx, headCy - 5, 4, 4, p.hair);
+          ell(headCx - 1, headCy - 6, 2, 2, lighten(p.hair, 0.22));
+        } else {
+          ell(headCx, hairTop - 1, 4, 3, p.hair);
+          ell(headCx - 1, hairTop - 2, 2, 1, lighten(p.hair, 0.22));
+          box(headCx - 3, hairTop, headCx + 3, hairTop + 1, p.hairShade);
+        }
+        break;
+
+      case 'curls':
+        // Bumps around the outline, which is all a curl is at this size.
+        for (let i = 0; i < 7; i++) {
+          const a = Math.PI + (i / 6) * Math.PI;
+          const cx2 = headCx + Math.round(Math.cos(a) * (headRx + 1));
+          const cy2 = headCy - 1 + Math.round(Math.sin(a) * 9);
+          ell(cx2, cy2, 2, 2, i % 2 ? p.hair : p.hairShade);
+        }
+        sides(3, 3);
+        break;
+
+      default:
+        break;
+    }
+
     /* -------------------------------------------------------------- hat */
     if (p.hat) {
-      const hatShade = p.hatShade ?? p.hat;
-      // Dome.
-      for (let y = headCy - 12; y <= headCy - 2; y++) {
-        const t = (y - (headCy - 12)) / 10;
-        const half = Math.round((headRx + 1) * Math.sqrt(Math.max(0, 1 - (1 - t) ** 2)));
-        box(headCx - half, y, headCx + half, y, y < headCy - 7 ? p.hat : hatShade);
-      }
-      ell(headCx - 3, headCy - 9, 4, 2, lighten(p.hat, 0.2));
-      // Band.
-      box(headCx - headRx - 1, headCy - 3, headCx + headRx + 1, headCy - 2, darken(hatShade, 0.25));
-      // Brim: forward for the front and profile views, a short lip from behind.
-      if (dir === 'down') {
-        box(headCx - headRx - 2, headCy - 2, headCx + headRx + 2, headCy - 1, hatShade);
-        box(headCx - headRx - 1, headCy - 1, headCx + headRx + 1, headCy, darken(hatShade, 0.3));
-      } else if (profile) {
-        box(headCx - headRx - 5, headCy - 3, headCx - headRx + 2, headCy - 2, hatShade);
-        box(headCx - headRx - 5, headCy - 2, headCx - headRx + 2, headCy - 1, darken(hatShade, 0.3));
+      const hatShade = p.hatShade ?? darken(p.hat, 0.22);
+      const shape: HatStyle = p.hatStyle ?? 'cap';
+
+      if (shape === 'band' || shape === 'bandana') {
+        // Worn on the hair rather than over it, so the style still reads.
+        const y = shape === 'band' ? headCy - 6 : headCy - 4;
+        box(headCx - headRx - 1, y, headCx + headRx + 1, y + 1, p.hat);
+        box(headCx - headRx - 1, y + 1, headCx + headRx + 1, y + 1, hatShade);
+        if (shape === 'bandana') {
+          box(headCx - headRx - 1, y + 2, headCx - headRx + 1, y + 3, p.hat);
+          if (dir !== 'up') px(headCx - headRx - 2, y + 3, hatShade);
+          // Knot tails trailing off the side.
+          box(headCx - headRx - 3, y + 1, headCx - headRx - 2, y + 2, hatShade);
+        }
       } else {
-        box(headCx - headRx - 1, headCy - 3, headCx + headRx + 1, headCy - 2, hatShade);
+        // Dome.
+        const domeTop = shape === 'beanie' ? headCy - 13 : headCy - 12;
+        for (let y = domeTop; y <= headCy - 2; y++) {
+          const t = (y - domeTop) / (headCy - 2 - domeTop);
+          const half = Math.round((headRx + 1) * Math.sqrt(Math.max(0, 1 - (1 - t) ** 2)));
+          box(headCx - half, y, headCx + half, y, y < headCy - 7 ? p.hat : hatShade);
+        }
+        ell(headCx - 3, headCy - 9, 4, 2, lighten(p.hat, 0.2));
+
+        if (shape === 'beanie') {
+          // Folded brim and a bobble.
+          box(headCx - headRx - 1, headCy - 5, headCx + headRx + 1, headCy - 2, lighten(p.hat, 0.12));
+          box(headCx - headRx - 1, headCy - 3, headCx + headRx + 1, headCy - 2, hatShade);
+          ell(headCx, domeTop - 1, 2, 2, lighten(p.hat, 0.24));
+        } else if (shape === 'sunhat') {
+          // A brim all the way round, wider than the shoulders.
+          box(headCx - headRx - 5, headCy - 3, headCx + headRx + 5, headCy - 2, p.hat);
+          box(headCx - headRx - 5, headCy - 2, headCx + headRx + 5, headCy - 1, hatShade);
+          box(headCx - headRx - 2, headCy - 4, headCx + headRx + 2, headCy - 4, darken(hatShade, 0.2));
+        } else {
+          // Cap: a band, and a brim that points where the character is facing.
+          box(headCx - headRx - 1, headCy - 3, headCx + headRx + 1, headCy - 2, darken(hatShade, 0.25));
+          if (dir === 'down') {
+            box(headCx - headRx - 2, headCy - 2, headCx + headRx + 2, headCy - 1, hatShade);
+            box(headCx - headRx - 1, headCy - 1, headCx + headRx + 1, headCy, darken(hatShade, 0.3));
+          } else if (profile) {
+            box(headCx - headRx - 5, headCy - 3, headCx - headRx + 2, headCy - 2, hatShade);
+            box(headCx - headRx - 5, headCy - 2, headCx - headRx + 2, headCy - 1, darken(hatShade, 0.3));
+          } else {
+            box(headCx - headRx - 1, headCy - 3, headCx + headRx + 1, headCy - 2, hatShade);
+          }
+        }
       }
     }
 
@@ -347,10 +553,13 @@ export class CharSheet {
       // Whites first, then pupils, so the eyes read at a glance.
       box(headCx - 6, headCy + 1, headCx - 3, headCy + 3, '#f4f0e8');
       box(headCx + 3, headCy + 1, headCx + 6, headCy + 3, '#f4f0e8');
-      box(headCx - 5, headCy + 1, headCx - 4, headCy + 3, p.outline);
-      box(headCx + 4, headCy + 1, headCx + 5, headCy + 3, p.outline);
-      px(headCx - 5, headCy + 1, '#8fb8d8');
-      px(headCx + 4, headCy + 1, '#8fb8d8');
+      box(headCx - 5, headCy + 1, headCx - 4, headCy + 3, eye);
+      box(headCx + 4, headCy + 1, headCx + 5, headCy + 3, eye);
+      // Pupil and a catchlight, which is what makes the eye look wet.
+      box(headCx - 5, headCy + 2, headCx - 4, headCy + 3, darken(eye, 0.55));
+      box(headCx + 4, headCy + 2, headCx + 5, headCy + 3, darken(eye, 0.55));
+      px(headCx - 5, headCy + 1, lighten(eye, 0.4));
+      px(headCx + 4, headCy + 1, lighten(eye, 0.4));
       // Brows.
       box(headCx - 6, headCy - 1, headCx - 3, headCy - 1, p.hairShade);
       box(headCx + 3, headCy - 1, headCx + 6, headCy - 1, p.hairShade);
@@ -358,13 +567,15 @@ export class CharSheet {
       px(headCx, headCy + 4, p.skinShade);
       box(headCx - 2, headCy + 6, headCx + 1, headCy + 6, darken(p.skinShade, 0.3));
     } else if (profile) {
-      box(headCx + 1, headCy + 1, headCx + 3, headCy + 3, '#f4f0e8');
-      box(headCx + 2, headCy + 1, headCx + 3, headCy + 3, p.outline);
-      box(headCx + 1, headCy - 1, headCx + 4, headCy - 1, p.hairShade);
+      box(headCx - 3, headCy + 1, headCx - 1, headCy + 3, '#f4f0e8');
+      box(headCx - 3, headCy + 1, headCx - 2, headCy + 3, eye);
+      box(headCx - 3, headCy + 2, headCx - 2, headCy + 3, darken(eye, 0.55));
+      px(headCx - 3, headCy + 1, lighten(eye, 0.4));
+      box(headCx - 4, headCy - 1, headCx - 1, headCy - 1, p.hairShade);
       // Nose bump on the leading edge.
-      px(headCx + headRx - 1, headCy + 2, p.skin);
-      px(headCx + headRx, headCy + 3, p.skinShade);
-      box(headCx + 2, headCy + 6, headCx + 4, headCy + 6, darken(p.skinShade, 0.3));
+      px(headCx - headRx + 1, headCy + 2, p.skin);
+      px(headCx - headRx, headCy + 3, p.skinShade);
+      box(headCx - 4, headCy + 6, headCx - 2, headCy + 6, darken(p.skinShade, 0.3));
     }
   }
 }
@@ -389,6 +600,188 @@ function mix(hex: string, target: number, amount: number): string {
 function lighten(hex: string, amount: number): string { return mix(hex, 255, amount); }
 function darken(hex: string, amount: number): string { return mix(hex, 0, amount); }
 
+/* ------------------------------------------------------------ appearance */
+
+export interface Swatch { name: string; c: string; shade?: string }
+
+/** Skin is two tones: everything else is derived from them. */
+export const SKIN_TONES: Swatch[] = [
+  { name: 'Porcelain', c: '#f6d9c0', shade: '#d0a888' },
+  { name: 'Fair', c: '#f0c9a4', shade: '#c99a72' },
+  { name: 'Warm', c: '#e8b48c', shade: '#c08a63' },
+  { name: 'Olive', c: '#d8a274', shade: '#a97a50' },
+  { name: 'Tan', c: '#c08658', shade: '#94603a' },
+  { name: 'Umber', c: '#9a6440', shade: '#71462a' },
+  { name: 'Deep', c: '#70452c', shade: '#4d2d1b' },
+];
+
+export const HAIR_COLOURS: Swatch[] = [
+  { name: 'Black', c: '#26222c', shade: '#141119' },
+  { name: 'Espresso', c: '#3d2a1c', shade: '#241710' },
+  { name: 'Chestnut', c: '#5a3a24', shade: '#3d2614' },
+  { name: 'Auburn', c: '#7a3a26', shade: '#542517' },
+  { name: 'Ginger', c: '#c06030', shade: '#8c401e' },
+  { name: 'Honey', c: '#c8a04a', shade: '#9a7830' },
+  { name: 'Blond', c: '#e8cc84', shade: '#b89a58' },
+  { name: 'Platinum', c: '#e6e2d6', shade: '#b4b0a4' },
+  { name: 'Ash', c: '#8e8e9c', shade: '#65656f' },
+  { name: 'Sea', c: '#3f8a90', shade: '#2a6066' },
+  { name: 'Plum', c: '#7a4a86', shade: '#54305e' },
+  { name: 'Rose', c: '#d07a96', shade: '#a1546e' },
+];
+
+export const EYE_COLOURS: Swatch[] = [
+  { name: 'Slate', c: '#6f7f96' },
+  { name: 'Blue', c: '#5f9fd8' },
+  { name: 'Ice', c: '#9ad4e4' },
+  { name: 'Green', c: '#5aa85e' },
+  { name: 'Hazel', c: '#a07a3c' },
+  { name: 'Amber', c: '#d08c30' },
+  { name: 'Brown', c: '#6a4428' },
+  { name: 'Violet', c: '#8a6ac0' },
+];
+
+/** Shirts, jackets and hats all pull from one set, so nothing clashes by
+ *  accident and the creator only has to teach the player one row of swatches. */
+export const CLOTH_COLOURS: Swatch[] = [
+  { name: 'Ember', c: '#c8543f', shade: '#8f3a2b' },
+  { name: 'Coral', c: '#e08060', shade: '#a85840' },
+  { name: 'Amber', c: '#d8a03c', shade: '#a3742a' },
+  { name: 'Sand', c: '#e0cf9c', shade: '#b0a074' },
+  { name: 'Moss', c: '#6a8c46', shade: '#4a6430' },
+  { name: 'Fern', c: '#3f7a5c', shade: '#2b5640' },
+  { name: 'Teal', c: '#3f8a90', shade: '#2a6066' },
+  { name: 'Sea', c: '#3a6ea8', shade: '#284d78' },
+  { name: 'Sky', c: '#7ab0dc', shade: '#5482a8' },
+  { name: 'Indigo', c: '#4a4a86', shade: '#33335e' },
+  { name: 'Plum', c: '#7a4a86', shade: '#54305e' },
+  { name: 'Rose', c: '#d07a96', shade: '#a1546e' },
+  { name: 'Snow', c: '#e8e8ee', shade: '#b4b4c0' },
+  { name: 'Charcoal', c: '#3a3a44', shade: '#26262e' },
+];
+
+export const TROUSER_COLOURS: Swatch[] = [
+  { name: 'Denim', c: '#3f5478', shade: '#2b3c58' },
+  { name: 'Navy', c: '#2c3a5c', shade: '#1d2740' },
+  { name: 'Slate', c: '#4a4a58', shade: '#33333f' },
+  { name: 'Khaki', c: '#9a8a5e', shade: '#6f6342' },
+  { name: 'Olive', c: '#5a6440', shade: '#3e462b' },
+  { name: 'Brown', c: '#6a5040', shade: '#48362a' },
+  { name: 'Charcoal', c: '#35353e', shade: '#232329' },
+  { name: 'Rust', c: '#8a4a34', shade: '#603022' },
+];
+
+export const SHOE_COLOURS: Swatch[] = [
+  { name: 'Black', c: '#2a2a30' },
+  { name: 'Brown', c: '#4d3627' },
+  { name: 'Grey', c: '#5c5c66' },
+  { name: 'Red', c: '#9a3a34' },
+  { name: 'Cream', c: '#ddd6c4' },
+  { name: 'Green', c: '#3c5a40' },
+];
+
+export const HAIR_STYLES: { name: string; style: HairStyle }[] = [
+  { name: 'Short', style: 'short' },
+  { name: 'Swept', style: 'swept' },
+  { name: 'Spiky', style: 'spiky' },
+  { name: 'Bob', style: 'bob' },
+  { name: 'Long', style: 'long' },
+  { name: 'Ponytail', style: 'ponytail' },
+  { name: 'Bun', style: 'bun' },
+  { name: 'Curls', style: 'curls' },
+];
+
+export const HAT_STYLES: { name: string; style: HatStyle | null }[] = [
+  { name: 'None', style: null },
+  { name: 'Cap', style: 'cap' },
+  { name: 'Beanie', style: 'beanie' },
+  { name: 'Sun hat', style: 'sunhat' },
+  { name: 'Bandana', style: 'bandana' },
+  { name: 'Headband', style: 'band' },
+];
+
+export const JACKET_STYLES: { name: string; style: JacketStyle | null }[] = [
+  { name: 'None', style: null },
+  { name: 'Jacket', style: 'open' },
+  { name: 'Hoodie', style: 'hoodie' },
+  { name: 'Vest', style: 'vest' },
+];
+
+export const BUILDS: { name: string; build: 'broad' | 'slim' }[] = [
+  { name: 'Boy', build: 'broad' },
+  { name: 'Girl', build: 'slim' },
+];
+
+/** Every choice the character creator makes, as indices into the tables above.
+ *  Indices rather than colours so a save stays small and stays readable, and so
+ *  a retuned palette reaches characters that were made before it. */
+export interface CharAppearance {
+  build: number;
+  skin: number;
+  hairStyle: number;
+  hairColour: number;
+  eyes: number;
+  hat: number;
+  hatColour: number;
+  jacket: number;
+  jacketColour: number;
+  shirt: number;
+  trousers: number;
+  shoes: number;
+}
+
+export const DEFAULT_APPEARANCE: CharAppearance = {
+  build: 0,
+  skin: 2,
+  hairStyle: 0,
+  hairColour: 2,
+  eyes: 1,
+  hat: 1,
+  hatColour: 12,
+  jacket: 0,
+  jacketColour: 9,
+  shirt: 0,
+  trousers: 0,
+  shoes: 0,
+};
+
+/** Clamped lookup: a save written against an older table never crashes. */
+function pick<T>(list: T[], index: number): T {
+  return list[((Math.round(index) % list.length) + list.length) % list.length]!;
+}
+
+export function normaliseAppearance(a: Partial<CharAppearance> | undefined): CharAppearance {
+  return { ...DEFAULT_APPEARANCE, ...(a ?? {}) };
+}
+
+export function appearancePalette(raw: Partial<CharAppearance> | undefined): CharPalette {
+  const a = normaliseAppearance(raw);
+  const skin = pick(SKIN_TONES, a.skin);
+  const hair = pick(HAIR_COLOURS, a.hairColour);
+  const shirt = pick(CLOTH_COLOURS, a.shirt);
+  const legs = pick(TROUSER_COLOURS, a.trousers);
+  const hat = pick(HAT_STYLES, a.hat);
+  const hatColour = pick(CLOTH_COLOURS, a.hatColour);
+  const jacket = pick(JACKET_STYLES, a.jacket);
+  const jacketColour = pick(CLOTH_COLOURS, a.jacketColour);
+
+  return {
+    skin: skin.c, skinShade: skin.shade ?? darken(skin.c, 0.2),
+    hair: hair.c, hairShade: hair.shade ?? darken(hair.c, 0.3),
+    top: shirt.c, topShade: shirt.shade ?? darken(shirt.c, 0.28),
+    legs: legs.c, legsShade: legs.shade ?? darken(legs.c, 0.28),
+    shoes: pick(SHOE_COLOURS, a.shoes).c,
+    outline: '#1a1a22',
+    eye: pick(EYE_COLOURS, a.eyes).c,
+    hairStyle: pick(HAIR_STYLES, a.hairStyle).style,
+    build: pick(BUILDS, a.build).build,
+    ...(hat.style ? { hat: hatColour.c, hatShade: hatColour.shade, hatStyle: hat.style } : {}),
+    ...(jacket.style
+      ? { jacket: jacketColour.c, jacketShade: jacketColour.shade, jacketStyle: jacket.style }
+      : {}),
+  };
+}
+
 const sheetCache = new Map<string, CharSheet>();
 
 /** Cached sheet for a named palette, falling back to a villager look. */
@@ -398,5 +791,21 @@ export function getCharSheet(spriteId: string): CharSheet {
   const pal = DEFAULT_PALETTES[spriteId] ?? DEFAULT_PALETTES.villager_m!;
   const sheet = new CharSheet(pal);
   sheetCache.set(spriteId, sheet);
+  return sheet;
+}
+
+/** Cached sheet for a built appearance, keyed on the choices themselves: the
+ *  creator can preview a hundred combinations and only pay for the ones it
+ *  actually draws. */
+export function getAppearanceSheet(raw: Partial<CharAppearance> | undefined): CharSheet {
+  const a = normaliseAppearance(raw);
+  const key = 'a:' + [
+    a.build, a.skin, a.hairStyle, a.hairColour, a.eyes,
+    a.hat, a.hatColour, a.jacket, a.jacketColour, a.shirt, a.trousers, a.shoes,
+  ].join(',');
+  const cached = sheetCache.get(key);
+  if (cached) return cached;
+  const sheet = new CharSheet(appearancePalette(a));
+  sheetCache.set(key, sheet);
   return sheet;
 }

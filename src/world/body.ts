@@ -15,7 +15,10 @@
  */
 
 import { TILE_SIZE } from '../gfx/tileset.js';
-import { CharSheet, getCharSheet, CHAR_H, CHAR_W, type CharDir } from '../gfx/charsprite.js';
+import {
+  CharSheet, getCharSheet, getAppearanceSheet, CHAR_H, CHAR_W,
+  type CharDir, type CharAppearance,
+} from '../gfx/charsprite.js';
 import { DETAIL, type Renderer } from '../engine/renderer.js';
 import type { Direction } from '../data/schema.js';
 
@@ -31,6 +34,13 @@ const STRIDE = 6;
 const DIAGONAL = Math.SQRT1_2;
 
 export type SolidTest = (tileX: number, tileY: number, from: Direction) => boolean;
+
+/** A named NPC palette, or a built appearance: the player is the second kind. */
+export type SpriteRef = string | CharAppearance;
+
+function sheetFor(sprite: SpriteRef): CharSheet {
+  return typeof sprite === 'string' ? getCharSheet(sprite) : getAppearanceSheet(sprite);
+}
 
 export class PlayerBody {
   /** Top-left of the feet box, in world pixels. */
@@ -49,15 +59,15 @@ export class PlayerBody {
   private hop: { fromX: number; fromY: number; toX: number; toY: number; t: number; frames: number } | null = null;
   private path: { toX: number; toY: number; speed: number; done: () => void } | null = null;
 
-  constructor(spriteId: string, tileX: number, tileY: number, facing: Direction = 'down') {
-    this.sheet = getCharSheet(spriteId);
+  constructor(sprite: SpriteRef, tileX: number, tileY: number, facing: Direction = 'down') {
+    this.sheet = sheetFor(sprite);
     this.x = 0; this.y = 0;
     this.setTile(tileX, tileY);
     this.facing = facing;
   }
 
-  setSprite(id: string): void {
-    this.sheet = getCharSheet(id);
+  setSprite(sprite: SpriteRef): void {
+    this.sheet = sheetFor(sprite);
   }
 
   /** Place the body centred on a tile. */

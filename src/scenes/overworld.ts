@@ -90,7 +90,7 @@ export class OverworldScene implements Scene {
   async enter(game: Game): Promise<void> {
     this.tileset = new Tileset();
     this.events = new EventRunner(new OverworldEventHost(game, this));
-    this.player = new PlayerBody('player', this.startX, this.startY, this.startFacing);
+    this.player = new PlayerBody(this.state.appearance, this.startX, this.startY, this.startFacing);
     await this.loadMap(game, this.startMap, this.startX, this.startY, this.startFacing, false);
     this.snapCamera();
     this.beginFade('in', 24);
