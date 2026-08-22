@@ -12,7 +12,7 @@
     "watch": "tsc --watch",
     "build": "node tools/build.js",
     "test": "tsc && node --test",
-    "validate": "node tools/validate-data.js",
+    "validate": "node tools/validate-maps.js",
     "icon": "node tools/make-icon.mjs",
     "launcher": "npm run compile && electron .",
     "dist": "npm run compile && electron-builder --win --publish never",
