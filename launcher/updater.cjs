@@ -106,6 +106,13 @@ class Updater {
    */
   async check(manual) {
     if (!this.configured) { this.set('unconfigured'); return this.snapshot(); }
+    // If the module failed to load, the constructor already recorded why.
+    // Without this guard the next line throws "Cannot read properties of
+    // undefined", which tells the player nothing and buries the real cause.
+    if (!this.autoUpdater) {
+      this.set('error', { error: this.error ?? 'The update component failed to load.' });
+      return this.snapshot();
+    }
     try {
       await this.autoUpdater.checkForUpdates();
     } catch (err) {
@@ -178,6 +185,13 @@ function describe(err) {
   }
   if (/404/.test(msg)) {
     return 'No releases found for that repository yet.';
+  }
+  // electron-builder only packages *production* dependencies. If
+  // electron-updater ever drifts back into devDependencies it vanishes from
+  // the build and only fails once installed, where it is hardest to diagnose.
+  if (/Cannot find module 'electron-updater'/.test(msg)) {
+    return 'This build shipped without its updater. electron-updater must be a '
+      + 'dependency, not a devDependency.';
   }
   return msg.slice(0, 300);
 }

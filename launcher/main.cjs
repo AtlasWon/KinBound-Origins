@@ -309,6 +309,16 @@ async function runSmokeTest() {
       console.error('  !! WARNING: this run was NOT silent');
     }
     if (gameWindow) await shoot(gameWindow, 'launcher-03-game');
+
+    // Exercise the real update check. This path has broken three times and
+    // every failure only showed up on an installed build, so the smoke run
+    // does the one thing a screenshot cannot: actually calls it.
+    if (updater) {
+      const snap = await updater.check(true);
+      console.log(`  update check: ${snap.status}${snap.error ? ' - ' + snap.error : ''}`);
+      if (snap.status === 'error') console.error('  !! the update check is broken');
+      else console.log('  update check reached GitHub and returned a real answer');
+    }
   } catch (err) {
     console.error('smoke failed:', err);
   } finally {
