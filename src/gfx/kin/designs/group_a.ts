@@ -159,9 +159,17 @@ function bramblehusk(p: Pen): void {
      brow, and every one of them was invisible in the code and a tangle of green
      and tan in the picture. A face needs one dark thing over the eye, not four. */
   blobFront(p, headX, headY, 18, 16, BASE);
-  // A pale cheek pad under each socket, so the dark eye has something bright to
-  // be a hole in, and a hard crease along its top edge.
+  // A pale mask over the whole front of the face, brow left green, and a hard
+  // crease along the cheek.
+  //
+  // The pale used to be a narrow pad under each socket and that was not enough
+  // by half: the party screen halves this sprite, and a dark eye needs three or
+  // four cells of pale all round it to survive that, not one. Anything smaller
+  // than the eye's own outline ring is simply painted over by it -- which is
+  // what happened to the first attempt at a fix, tan pads that the eyes covered
+  // completely and that changed the icon by not one pixel.
   if (!p.back) {
+    blob(p, headX - 3, headY + 2, 13, 12, LIGHT);
     blob(p, headX - 6, headY + 9, 13, 6, LIGHT);
     for (const q of arc(headX - 5, headY + 9, 11, 5, Math.PI * 1.02, Math.PI * 1.98, 16)) cellOver(p, q[0], q[1], DEEP);
   }
@@ -220,9 +228,13 @@ function bramblehusk(p: Pen): void {
   if (p.back) { p.face(headX, headY, 17); return; }
 
   /* --- the face. Small, hard and set deep under the brow: an animal that
-     shoves. Two thorn spurs above the eyes tie the head to the husk. */
-  eye(p, headX - 9, headY - 1, 6.2, 'angry', { side: -1, iris: EYE_DARK, sclera: ACCENT_LIT });
-  eye(p, headX + 9, headY - 3, 4.9, 'angry', { side: 1, iris: EYE_DARK, sclera: ACCENT_LIT });
+     shoves. Two thorn spurs above the eyes tie the head to the husk.
+
+     An `angry` eye is nearly all iris and leaves the sclera showing only in its
+     two corners, which is right at full size and gives it nothing to sit on at
+     half. The pale mask painted into the head above does that job instead. */
+  eye(p, headX - 9, headY, 6.4, 'angry', { side: -1, iris: EYE_DARK, sclera: ACCENT_LIT });
+  eye(p, headX + 9, headY - 2, 5.1, 'angry', { side: 1, iris: EYE_DARK, sclera: ACCENT_LIT });
   p.face(headX, headY, 17);
 
   // Two thorn spurs, and they belong on the *crown*, clear of the brow. Placed
@@ -294,14 +306,27 @@ function thornmarch(p: Pen): void {
   p.noTypeTraits();
 
   const hipY = G - 50, shY = G - 82;
-  const headX = cx - 13, headY = G - 76;
-  const BX = cx + 3, BY = G - 94, BRX = 26, BRY = 9;   // the shoulder bale
+  // The skull is carried forward and *high*, out past the near shoulder, and the
+  // bale has been slid off centre onto the far shoulder to leave it the sky.
+  // Sunk between the shoulders -- where it was -- the head vanished under the
+  // bale and the top-left of the silhouette came out as one anonymous bump; on a
+  // roster with several tall grey-green masses that is the whole species lost.
+  // Now the contour reads shoulder, then skull, then a fifteen-cell notch, then
+  // the bale: three events instead of one.
+  const headX = cx - 24, headY = G - 84;
+  const BX = cx + 16, BY = G - 91, BRX = 23, BRY = 9;   // the shoulder bale
 
   /* --- far leg and far arm, in the recessed tone. Both hang from the far edge
-     of the trunk and both are behind it. */
+     of the trunk and both are behind it.
+
+     The far arm is swung well clear of the flank -- further out than looks
+     right in the numbers -- because at the old spacing the trunk, the far
+     shoulder and the arm were one contiguous dark green field and the entire
+     right half of the animal was a mass doing nothing. It needs real sky
+     between it and the ribs to be an arm at all. */
   legColumn(p, cx + 13, hipY + 4, G - 1, { tone: SHADE, side: 1, thick: 17, footHalf: 12, claws: true });
-  limbPath(p, [[cx + 20, shY + 2], [cx + 37, G - 58], [cx + 34, G - 34]], 15, 12, SHADE, { bulge: 2 });
-  hand(p, cx + 34, G - 27, 9, { tone: SHADE, side: 1, fingers: 3, fist: true });
+  limbPath(p, [[cx + 22, shY + 5], [cx + 43, G - 56], [cx + 40, G - 30]], 15, 12, SHADE, { bulge: 2, dark: DEEP });
+  hand(p, cx + 40, G - 23, 9, { tone: SHADE, side: 1, fingers: 3, fist: true });
 
   /* --- the trunk: a slab-sided wall, wide at the shoulder and only a little
      narrower at the hip. Squared off rather than rounded, because everything
@@ -315,21 +340,26 @@ function thornmarch(p: Pen): void {
      arms were welded to the flanks. */
   polyFront(p, [[cx - 15, shY - 2], [cx + 17, shY - 4], [cx + 19, hipY + 10], [cx - 12, hipY + 12]], BASE, DEEP, 0);
   blob(p, cx + 2, hipY + 4, 17, 13, BASE);
-  blobFront(p, cx + 18, shY + 1, 13, 12, SHADE);
-  blobFront(p, cx - 20, shY - 1, 15, 14, BASE);
+  // Both shoulder caps sit *lower* than the old ones. They used to reach G-97
+  // and G-95, which is exactly the band the skull now needs, and a shoulder that
+  // stands as tall as the head is the reason a heavy biped reads as headless.
+  blobFront(p, cx + 16, shY + 3, 12, 11, SHADE);
+  blobFront(p, cx - 17, shY + 4, 14, 12, BASE);
 
   /* --- near leg, forward and planted. The two feet leave a wide gap. */
   legColumn(p, cx - 5, hipY + 4, G, { tone: BASE, side: -1, thick: 19, footHalf: 13, front: true, claws: true });
 
-  /* --- the near arm, hanging clear of the flank with the elbow driven out. */
-  limbPath(p, [[cx - 22, shY + 2], [cx - 42, G - 56], [cx - 38, G - 30]], 18, 14, BASE, { front: true, bulge: 2.5 });
-  crease(p, cx - 42, G - 56, 8);
-  hand(p, cx - 38, G - 22, 11, { tone: BASE, side: -1, fingers: 3, fist: true });
+  /* --- the near arm, hanging clear of the flank with the elbow driven out. It
+     starts lower than it used to so the skull can overhang it: the step from
+     arm-top to skull-top is what makes the top-left corner two masses. */
+  limbPath(p, [[cx - 20, shY + 8], [cx - 38, G - 52], [cx - 34, G - 28]], 18, 14, BASE, { front: true, bulge: 2.5 });
+  crease(p, cx - 38, G - 52, 8);
+  hand(p, cx - 34, G - 20, 11, { tone: BASE, side: -1, fingers: 3, fist: true });
   // Stone knuckles on the fist, so the hand reads as a mallet rather than a mitt.
   for (let i = 0; i < 3; i++) {
-    const kx = cx - 47 + i * 6;
-    blob(p, kx, G - 15, 3, 3.2, ACCENT);
-    cellOver(p, kx - 1, G - 17, ACCENT_LIT);
+    const kx = cx - 43 + i * 6;
+    blob(p, kx, G - 13, 3, 3.2, ACCENT);
+    cellOver(p, kx - 1, G - 15, ACCENT_LIT);
   }
 
   /* --- the plating. This is where the species lives, and the first passes at
@@ -343,14 +373,15 @@ function thornmarch(p: Pen): void {
      broke the trunk up into masses: a body of one material and one hue reads as
      one lump whatever is drawn on it. */
   const slabs: Array<[Pt[], number]> = [
-    [[[cx - 33, shY - 4], [cx - 16, shY - 12], [cx - 4, shY - 4], [cx - 8, shY + 10], [cx - 28, shY + 10]], ACCENT],
-    [[[cx + 1, shY - 6], [cx + 21, shY - 2], [cx + 24, shY + 12], [cx + 2, shY + 10]], ACCENT_DARK],
-    [[[cx + 26, shY + 4], [cx + 37, shY + 10], [cx + 34, G - 46], [cx + 25, G - 48]], ACCENT_DARK],
+    [[[cx - 36, G - 66], [cx - 25, G - 70], [cx - 30, G - 56], [cx - 41, G - 53]], ACCENT],
+    [[[cx - 1, shY - 2], [cx + 20, shY - 2], [cx + 22, shY + 11], [cx, shY + 10]], ACCENT_DARK],
+    [[[cx + 23, G - 72], [cx + 31, G - 68], [cx + 42, G - 58], [cx + 35, G - 54]], ACCENT],
+    [[[cx + 36, G - 58], [cx + 48, G - 56], [cx + 47, G - 38], [cx + 36, G - 40]], ACCENT_DARK],
     [[[cx - 13, shY + 15], [cx + 3, shY + 13], [cx + 5, shY + 30], [cx - 11, shY + 32]], ACCENT],
-    [[[cx + 8, shY + 14], [cx + 22, shY + 16], [cx + 21, shY + 31], [cx + 8, shY + 30]], ACCENT_DARK],
+    [[[cx + 7, shY + 14], [cx + 18, shY + 16], [cx + 17, shY + 31], [cx + 7, shY + 30]], ACCENT_DARK],
     [[[cx - 11, hipY + 2], [cx + 6, hipY - 1], [cx + 8, hipY + 14], [cx - 10, hipY + 16]], ACCENT],
     [[[cx + 11, hipY], [cx + 21, hipY + 3], [cx + 20, hipY + 18], [cx + 11, hipY + 16]], ACCENT_DARK],
-    [[[cx - 48, G - 50], [cx - 36, G - 54], [cx - 31, G - 36], [cx - 43, G - 32]], ACCENT],
+    [[[cx - 44, G - 50], [cx - 32, G - 52], [cx - 29, G - 34], [cx - 41, G - 32]], ACCENT],
     [[[cx - 20, G - 34], [cx - 7, G - 36], [cx - 5, G - 14], [cx - 18, G - 12]], ACCENT],
     [[[cx + 8, G - 36], [cx + 21, G - 33], [cx + 20, G - 14], [cx + 8, G - 16]], ACCENT_DARK],
   ];
@@ -364,38 +395,73 @@ function thornmarch(p: Pen): void {
   thornCrown(p, BX, BY, BRX - 2, BRY - 1, 11, 1.02, 1.98, 14, 9, ACCENT_DARK);
   // Loose cane ends trailing off the back of the bale, so it reads as bound
   // rather than moulded.
-  for (const [ex, ey, len, ang] of [[BX + 22, BY + 3, 14, 0.24], [BX + 24, BY - 2, 10, -0.1]] as const) {
+  for (const [ex, ey, len, ang] of [[BX + 19, BY + 3, 12, 0.24], [BX + 21, BY - 2, 9, -0.1]] as const) {
     limbPath(p, [[ex, ey], [ex + Math.cos(ang) * len, ey + Math.sin(ang) * len]], 5, 2, ACCENT_DARK, { lit: ACCENT_LIT });
   }
 
-  /* --- the head. Small, wide, and pushed forward out from under the bale with
-     no neck at all. On a creature this heavy the absence of a neck is most of
-     what makes it read as heavy, and a small head on a wide shoulder line is
-     most of what makes the shoulder line read as wide. */
-  blobFront(p, headX, headY, 15, 13, BASE);
-  // Jaw: a broad flat shelf under the skull, wider than it is deep.
-  blobFront(p, headX - 5, headY + 9, 11, 5, LIGHT);
-  for (const q of arc(headX - 5, headY + 9, 11, 5, Math.PI * 1.02, Math.PI * 1.98, 16)) cellOver(p, q[0], q[1], DEEP);
-  // Two thorn spurs on the crown -- the parent's, grown into short stone horns.
-  for (const [sx, sy, ln, ang] of [[headX - 10, headY - 10, 14, Math.PI * 1.14], [headX + 7, headY - 11, 11, Math.PI * 1.86]] as const) {
-    poly(p, [[sx - 3, sy + 3], [sx + 3, sy + 3], [sx + Math.cos(ang) * ln, sy + Math.sin(ang) * ln]], ACCENT);
-    stroke(p, sx - 3, sy + 3, sx + Math.cos(ang) * ln, sy + Math.sin(ang) * ln, ACCENT_LIT, false);
-    cell(p, sx + Math.cos(ang) * ln, sy + Math.sin(ang) * ln, SPEC);
-  }
+  /* --- the head. Carried forward out from under the bale with no neck at all.
+     On a creature this heavy the absence of a neck is most of what makes it read
+     as heavy.
 
-  if (p.back) { p.face(headX, headY, 16); return; }
+     It is bigger than the first version by three cells of radius, and that is
+     not vanity: the party screen draws this animal at half size, where a skull
+     of fifteen cells' radius is seven icon pixels holding two eyes, a brow and a
+     jaw, and everything in it turns to one grey smudge. Eighteen is the smallest
+     head that still has a face in it at 64 pixels. */
+  blobFront(p, headX, headY, 18, 15, BASE);
+
+  // The brow: a mossed stone slab across the whole skull, the same material and
+  // the same fringe as the plates on the body. The old head was bare green with
+  // a pale shelf under it and read as a grin; a face on a plated animal has to
+  // be plated too, and one heavy dark thing above the eyes is worth any amount
+  // of modelling below them.
+  //
+  // In the *dark* stone, not the mid. The skull sits at the top of the sprite
+  // where the shading pass's light band is strongest, and a mid-grey brow up
+  // here came back almost white -- the whole head read as a bleached mask.
+  mossySlab(p, [[headX - 16, headY - 3], [headX - 8, headY - 11], [headX + 6, headY - 11],
+    [headX + 13, headY - 4], [headX + 9, headY + 2], [headX - 13, headY + 2]], ACCENT_DARK, 5);
+
+  // The jaw: one squared stone block slung under the skull and jutting a little
+  // past it, so the front of the face ends in a corner rather than a curve.
+  plate(p, [[headX - 20, headY + 5], [headX - 2, headY + 4], [headX + 4, headY + 12],
+    [headX - 16, headY + 15]], ACCENT_DARK);
+
+  // The crown: the family's thorns, growing straight out of the skull the same
+  // way they grow out of the bale and out of the parent's husk.
+  //
+  // This was two tall spurs, one either side, and that is a trap worth writing
+  // down: two upright triangles on top of a head are *ears*, whatever they are
+  // made of and however you shade them. The whole giant came back reading as a
+  // cat in armour. A raked row of five never can -- and a serrated ridge breaks
+  // the skyline harder than a smooth pair of points did.
+  thornCrown(p, headX, headY - 1, 15, 12, 5, 1.02, 1.56, 12, 8, ACCENT_DARK);
+
+  if (p.back) { p.face(headX, headY, 18); return; }
 
   /* --- the face. Half-lidded and immovable: this is a thing farmers build
      around. Where the forager glares out from under its brow, the giant barely
      opens its eyes at all, and that difference in the *lid* is the cheapest way
-     to age an animal by twenty years. */
-  eye(p, headX - 7, headY, 5.4, 'hooded', { side: -1, iris: ACCENT_DARK, lid: BASE });
-  eye(p, headX + 8, headY - 2, 4.6, 'hooded', { side: 1, iris: ACCENT_DARK, lid: BASE });
-  p.face(headX, headY, 16);
+     to age an animal by twenty years.
 
-  nostril(p, headX - 11, headY + 6, -1);
-  nostril(p, headX - 7, headY + 7, 1);
-  mouthLine(p, headX - 6, headY + 12, 7, 0.5, true);
+     No sclera at all: `INNER` in that slot floods the whole opening dark and
+     leaves only the stone iris and one white glint showing. The first version
+     took the default white and the two rings it produced were the loudest thing
+     on the creature -- from a pace away it wore spectacles; the pale stone that
+     replaced them was quieter but still turned the face owlish. A brute's eye is
+     a wet hole under a ledge. The lid takes the brow's own grey so it reads as a
+     slot cut in the plate rather than a bead set on it. */
+  eye(p, headX - 8, headY + 2, 5.8, 'hooded', { side: -1, iris: ACCENT_DARK, sclera: INNER, lid: ACCENT });
+  eye(p, headX + 7, headY, 5.0, 'hooded', { side: 1, iris: ACCENT_DARK, sclera: INNER, lid: ACCENT });
+  p.face(headX, headY, 18);
+
+  // The mouth is the gap between the jaw block and the face above it: one hard
+  // kinked line with a lit lip under it, the way the mossback's is. A curve here
+  // is a smile and this animal has never smiled.
+  polyLine(p, [[headX - 19, headY + 7], [headX - 8, headY + 5], [headX + 2, headY + 8]], INNER, false, true);
+  polyLine(p, [[headX - 19, headY + 8], [headX - 8, headY + 6], [headX + 2, headY + 9]], ACCENT_LIT, false, true);
+  nostril(p, headX - 15, headY + 1, -1);
+  nostril(p, headX - 11, headY + 2, 1);
 }
 
 /* ============================================================= mossback */
@@ -668,20 +734,60 @@ function bladderwrack(p: Pen): void {
   // A pale plastron up the front of the stem, so the column has a lit face and
   // a shadow face instead of being one green tube.
   limbPath(p, path(stipe), 21, 16, BASE, { front: true, bulge: 1.5, lit: LIGHT, dark: DEEP });
-  // Growth nodes: the stipe of a wrack is jointed, and each joint is where a
-  // frond leaves it.
   const sd = path(stipe);
-  for (const t of [0.2, 0.45, 0.7]) {
+  const halfAt = (t: number): number => (21 + (16 - 21) * t) / 2;
+
+  /* The pale left face of this stem was the emptiest area anywhere in the group
+     -- twenty cells across, sixty tall, and three scratches on it. Three things
+     go on it now, in order, none of them costing a cell of silhouette.
+
+     First: longitudinal striae. A kelp stipe is grooved along its whole length,
+     and two broken dark runs with a lit one between them are the difference
+     between a slab of colour and something with a grain. Broken, never ruled --
+     a continuous line down a limb reads as a seam in a mould. */
+  for (const [s, tone] of [[-0.78, DEEP], [-0.52, DEEP], [-0.22, LIGHT], [0.3, DEEP], [0.62, DEEP]] as const) {
+    for (let i = 3; i < sd.length - 3; i++) {
+      if (((i + Math.round(s * 7)) >> 1) % 4 === 0) continue;
+      const n = normalAt(sd, i), q = sd[i]!, w = halfAt(i / (sd.length - 1));
+      cellOver(p, q[0] + n[0] * w * s, q[1] + n[1] * w * s, tone);
+    }
+  }
+
+  /* Second: the growth nodes. The stipe of a wrack is jointed, and each joint is
+     where a frond leaves it. Five instead of three, and each is a swelling
+     rather than a line -- a lit lip, a dark gutter beneath it, and a dark pinch
+     at each flank so the stem narrows through the joint. */
+  for (const t of [0.13, 0.29, 0.45, 0.61, 0.77]) {
     const i = Math.round(t * (sd.length - 1));
-    const q = sd[i]!, n = normalAt(sd, i);
-    const hh = 11 - t * 3;
-    stroke(p, q[0] - n[0] * hh, q[1] - n[1] * hh, q[0] + n[0] * hh, q[1] + n[1] * hh, DEEP);
-    stroke(p, q[0] - n[0] * hh, q[1] - n[1] * hh - 1, q[0] + n[0] * hh, q[1] + n[1] * hh - 1, LIGHT);
+    const q = sd[i]!, n = normalAt(sd, i), hh = halfAt(t) + 0.5;
+    for (const d of [-1, 0, 1]) {
+      const tone = d < 0 ? LIGHT : d === 0 ? DEEP : SHADE;
+      stroke(p, q[0] - n[0] * hh, q[1] - n[1] * hh + d, q[0] + n[0] * hh, q[1] + n[1] * hh + d, tone);
+    }
+    for (const s of [-1, 1]) {
+      cellOver(p, q[0] + n[0] * hh * s, q[1] + n[1] * hh * s - 1, DEEP);
+      cellOver(p, q[0] + n[0] * hh * s * 0.82, q[1] + n[1] * hh * s * 0.82 - 2, SHADE);
+    }
+  }
+
+  /* Third: old bladders, shrivelled and half reabsorbed into the stem, studding
+     the face between the joints. This is the species' own ornament reused as
+     texture -- the same thing the fronds carry, older and smaller -- so the flat
+     gets filled without inventing a second vocabulary for it. */
+  for (const [t, s, r] of [[0.20, -0.62, 2.6], [0.35, 0.38, 2.2], [0.38, -0.4, 3.0],
+    [0.50, -0.66, 2.4], [0.56, 0.44, 2.0], [0.70, -0.44, 2.8], [0.82, -0.64, 2.2],
+    [0.88, 0.4, 1.9]] as const) {
+    const i = Math.round(t * (sd.length - 1));
+    const q = sd[i]!, n = normalAt(sd, i), w = halfAt(t);
+    const bx = q[0] + n[0] * w * s, by = q[1] + n[1] * w * s;
+    blob(p, bx, by, r, r * 0.86, ACCENT);
+    for (const c of arc(bx, by, r, r * 0.86, Math.PI * 0.12, Math.PI * 0.88, 8)) cellOver(p, c[0], c[1], ACCENT_DARK);
+    cellOver(p, bx - 1, by - 1, ACCENT_LIT);
   }
 
   /* --- the crown: a swollen head-bulb at the top of the stipe, with the fronds
      springing out of its underside. */
-  blobFront(p, crownX, crownY, 15, 15, BASE);
+  blobFront(p, crownX, crownY, 17, 16, BASE);
   // Two young blades springing up out of the crown, each carrying a bladder.
   //
   // These exist to kill a specific failure. Drawn with a smooth domed top, the
@@ -729,14 +835,39 @@ function bladderwrack(p: Pen): void {
 
   if (p.back) { p.face(crownX, crownY, 16); return; }
 
-  /* --- the face. Two big wet eyes high on the crown and nothing else: no
-     muzzle, no jaw, no brow. A plant that watches. The eyes are the roundest
-     and softest in the group on purpose -- everything else here glares, squints
-     or is half asleep. */
-  eye(p, crownX - 7, crownY - 2, 4.8, 'round', { side: -1, iris: ACCENT_DARK });
-  eye(p, crownX + 7, crownY - 4, 4.2, 'round', { side: 1, iris: ACCENT_DARK });
-  p.face(crownX, crownY, 16);
-  mouthLine(p, crownX - 2, crownY + 7, 5, -1);
+  /* --- the face. Two eyes high on the crown and nothing else: no muzzle, no
+     jaw, no snout. A plant that watches.
+
+     They were big round wet ones, and round plus white plus large is the exact
+     recipe for a mascot: the thing came back looking delighted to see you, which
+     is wrong for an animal whose entire biography is that it has held the same
+     rock since before you were born. A narrow amber slit with a black bar
+     through it is almost all iris and hardly any white -- patient, and not
+     readable, which is what a plant's eye should be.
+
+     The fold above each one is doing real work too. The crown is a smooth bulb
+     and an eye set into a smooth bulb has no socket; one dark crease with a lit
+     lip on it gives the face a brow without adding a single cell of outline.
+
+     And the pale mask under both of them is what makes this creature have a face
+     at 64 pixels at all. Green eyes on a green bulb halve to green: the icon of
+     the first version had no face on it whatsoever, just a column of weed. A
+     bleached patch of blade across the brow -- which is what a wrack's oldest
+     tissue actually looks like -- gives the two dark slits a ground. */
+  blob(p, crownX - 1, crownY - 2, 14, 10, LIGHT);
+  for (const c of arc(crownX - 1, crownY - 2, 14, 10, Math.PI * 0.08, Math.PI * 0.92, 16)) cellOver(p, c[0], c[1], DEEP);
+  for (const [ex, ey, w] of [[crownX - 8, crownY - 9, 7], [crownX + 7, crownY - 11, 6]] as const) {
+    for (const c of arc(ex, ey + 2, w, 4, Math.PI * 1.06, Math.PI * 1.94, 10)) {
+      cellOver(p, c[0], c[1] + 1, DEEP);
+      cellOver(p, c[0], c[1], LIGHT);
+    }
+  }
+  eye(p, crownX - 8, crownY - 2, 5.0, 'slit', { side: -1, iris: ACCENT_DARK });
+  eye(p, crownX + 7, crownY - 4, 4.3, 'slit', { side: 1, iris: ACCENT_DARK });
+  p.face(crownX, crownY, 17);
+  // Short. At six cells of half-width this line halved to a bar wider than both
+  // eyes together and the icon read as a letterbox with two lights behind it.
+  mouthLine(p, crownX - 3, crownY + 8, 4, -1);
 }
 
 /* =========================================================== silthopper */

@@ -27,7 +27,7 @@ import {
   INNER, LIGHT, SHADE, SPEC,
 } from '../mask.js';
 import {
-  arc, bevel, blob, blobFront, brow, cell, cellOver, cellUnder, claw, contourTop, crease, ease,
+  arc, bevel, blob, blobFront, brow, cell, cellOver, cellUnder, claw, contourTop, ease,
   eye, fin, hand, horn, jaw, lerp, limbPath, mane, mouthLine, muzzle, normalAt, nostril, paddle, path,
   paw, plate, poly, polyFront, polyLine, rings, seamPath, speckle, spineRow, stroke, taper,
   teeth, tuft, whiskers,
@@ -380,13 +380,20 @@ function brookmaw(p: Pen): void {
   // on this animal is the tail it already has. Gills are placed by hand below.
   p.noTypeTraits();
 
-  const shX = cx - 18, shY = G - 44;
+  const shX = cx - 28, shY = G - 48;
   // The hip sits *below* where the tail wants to be, so a length of bare stem
   // shows between the back and the blade. Run the back straight up into the
   // fluke -- which is what the first version did -- and the whole tail reads in
   // silhouette as a hump grown out of the shoulders.
-  const hipX = cx + 18, hipY = G - 50;
-  const hdX = cx - 46, hdY = G - 30;
+  const hipX = cx + 22, hipY = G - 48;
+  // The waist: its own anchor, because it is a feature and not a place where two
+  // masses happen to meet. It sits low enough that the back *dips* behind the
+  // shoulder crest and high enough that there is open water under it.
+  const wsX = cx + 4, wsY = G - 49;
+  // The head hangs low but not *on the floor*: dropped far enough that the jaw
+  // rests on top of the near forefoot, the whole front corner of the animal
+  // becomes one undivided lump and neither feature reads.
+  const hdX = cx - 52, hdY = G - 36;
 
   /* --- the tail. Down first so the hip sits on its root: a thick muscular base
      streaming off the rump, up and back, into a single broad fluke. It is
@@ -398,34 +405,67 @@ function brookmaw(p: Pen): void {
   // one came out as a bow tied to the end of the tail. A fluke is a *blade* --
   // a solid flat surface with a ridge down the middle and a scalloped rim --
   // and that is exactly what `paddle` builds.
-  limbPath(p, [[hipX - 2, hipY + 2], [cx + 28, G - 62], [cx + 34, G - 76]], 20, 9, BASE,
+  limbPath(p, [[hipX - 2, hipY + 2], [cx + 30, G - 62], [cx + 35, G - 76]], 18, 8, BASE,
     { front: true, lit: HILIGHT, dark: DEEP });
   // Stood upright across the top of the stem rather than continuing its line.
   // Laid along the stem it reads as a mitten on the end of a raised arm; turned
   // across it, the peduncle shows underneath and the blade is a blade.
-  paddle(p, cx + 32, G - 71, 33, 15, -Math.PI * 0.42, ACCENT);
+  paddle(p, cx + 33, G - 71, 33, 15, -Math.PI * 0.42, ACCENT);
 
-  /* --- far forelimb: the same brace, one step behind and darker. */
-  limbPath(p, [[cx - 6, G - 34], [cx - 4, G - 18], [cx - 2, G - 5]], 14, 10, SHADE);
-  paw(p, cx - 2, G - 1, 9, { tone: SHADE, toes: 4, webbed: true, long: true, claws: false });
+  /* --- far forelimb, and it is *tucked*: a thin straight pillar raked back
+     under the chest, with a small foot. The near one is a braced post with its
+     elbow thrown out into the silhouette. Two arms of the same width dropped
+     side by side under a chest read as one pair of trousers, which is what the
+     last version of this animal was wearing. */
+  limbPath(p, [[cx - 12, G - 30], [cx - 9, G - 19], [cx - 8, G - 9]], 11, 8, SHADE);
+  paw(p, cx - 8, G - 1, 6, { tone: SHADE, toes: 3, webbed: true, long: true, claws: false });
 
   /* --- the trailing hind limb, folded up under the lifted rump and held clear
-     of the floor. Its webbed foot is a fan, not a pad: a planted foot drawn in
-     mid-air reads as a leg that has been cut off. */
-  limbPath(p, [[hipX - 2, hipY + 6], [cx + 6, G - 40], [cx + 10, G - 32]], 14, 9, SHADE, { front: true });
-  poly(p, [[cx + 4, G - 34], [cx + 16, G - 33], [cx + 22, G - 18], [cx + 8, G - 14], [cx, G - 22]], SHADE);
-  for (let i = 0; i < 4; i++) stroke(p, cx + 8, G - 32, cx + 2 + i * 5, G - 17 + i, DEEP);
+     of the floor. It is tucked back under the *hip*, not under the waist: laid
+     under the waist it fills in exactly the gap that the taper is supposed to
+     open, and the animal goes back to being a barrel with legs. Its webbed foot
+     is a fan, not a pad: a planted foot drawn in mid-air reads as a leg that has
+     been cut off. */
+  limbPath(p, [[hipX + 1, hipY + 8], [cx + 25, G - 32], [cx + 27, G - 25]], 13, 8, SHADE, { front: true });
+  poly(p, [[cx + 21, G - 27], [cx + 33, G - 26], [cx + 38, G - 13], [cx + 25, G - 9], [cx + 18, G - 16]], SHADE);
+  for (let i = 0; i < 4; i++) stroke(p, cx + 25, G - 25, cx + 20 + i * 5, G - 12 + i, DEEP);
 
-  /* --- the body: a wedge that is all shoulder, rising behind the brace. The
-     barrel does not taper evenly from end to end, it *collapses* behind the
-     ribs, which is the difference between front-heavy and merely long. */
-  limbPath(p, [[shX - 6, shY + 4], [cx, G - 50], [hipX, hipY + 2]], 46, 22, BASE, { bulge: -6 });
-  blobFront(p, hipX, hipY, 14, 13, BASE);
+  /* --- the body, and this is the whole proportion. Three masses, not one
+     barrel: a deep shoulder that runs from a high crest all the way down to the
+     braced arms, a *waist* half its depth held clear of the floor, and a small
+     hip behind that. The back dips sixteen cells between the crest and the
+     waist and the belly jumps fourteen the other way, so the taper is a thing
+     you can see rather than a thing the tone is hinting at.
+     The version before this drew one tube from shoulder to hip and asked a
+     negative bulge to do the collapsing. It cannot: a bulge narrows the middle
+     of a tube symmetrically, which reads as a sausage tied once, and the two
+     ends stay the same size -- which was exactly the complaint. */
+  // Waist first and thin, so both larger masses seam down over its ends.
+  limbPath(p, [[cx - 6, wsY], [wsX + 4, wsY + 1], [hipX - 4, hipY + 1]], 22, 19, BASE,
+    { lit: HILIGHT, dark: DEEP });
+  blobFront(p, hipX, hipY, 13, 13, BASE);
+  // The crest of the shoulder sits well forward -- almost over the head -- so
+  // the whole back *slopes away* behind it. A mass centred at mid-body gives an
+  // even dome, and an even dome on a four-limbed animal is a shell.
+  // Deep, but its floor sits a good twenty cells clear of the ground: a chest
+  // that hangs down to the paws leaves no limb showing, and every joint drawn
+  // in that band ends up buried inside the body outline.
   blobFront(p, shX, shY, 26, 24, BASE);
-  // The shoulder itself, as its own lit mass on the near side.
-  for (const q of arc(shX - 2, shY + 4, 18, 19, Math.PI * 0.9, Math.PI * 2.05, 22)) {
+  // The scapula: a hard crease over the front of the mass with a lit lip, so
+  // the shoulder has a bone in it. A contour line all the way round the blob
+  // only re-draws the outline one cell in and adds nothing.
+  for (const q of arc(shX - 4, shY + 6, 17, 20, Math.PI * 1.04, Math.PI * 1.86, 16)) {
     cellOver(p, q[0], q[1], DEEP);
-    cellOver(p, q[0], q[1] - 1, HILIGHT);
+    cellOver(p, q[0] + 1, q[1] + 1, HILIGHT);
+  }
+  // The hollow behind the shoulder, where the ribs stop. Two runs of shade
+  // pressed into the near flank right on the seam between the two masses: the
+  // taper is in the outline, and this is what tells the eye the outline means
+  // depth rather than a join between two drawings.
+  for (const q of arc(cx - 3, wsY + 9, 9, 15, Math.PI * 1.12, Math.PI * 1.9, 12)) {
+    cellOver(p, q[0], q[1], SHADE);
+    cellOver(p, q[0] + 1, q[1], DEEP);
+    cellOver(p, q[0] + 3, q[1], SHADE);
   }
   // A low rounded keel running the length of the back into the root of the
   // fluke, so the tail grows out of the animal instead of being screwed onto
@@ -434,42 +474,75 @@ function brookmaw(p: Pen): void {
   // In LIGHT rather than in the near-white accent: with both in the same tone
   // the keel and the fluke read as one continuous cream shape draped over the
   // animal, and the fluke stops being a fin.
-  if (keel.length > 3) limbPath(p, keel.map((q) => [q[0], q[1] + 2] as Pt), 5, 3, LIGHT, { lit: HILIGHT, dark: DEEP });
+  // Set six cells in from the back rather than two. Riding the contour itself
+  // it reads as a rim round the edge of the mass, and a pale rim round a big
+  // rounded back is a shell -- which is what the shoulder had started to look
+  // like once it grew.
+  if (keel.length > 3) limbPath(p, keel.map((q) => [q[0], q[1] + 6] as Pt), 5, 3, LIGHT, { lit: HILIGHT, dark: DEEP });
 
-  /* --- the pale throat, hanging between the braced arms. */
-  blob(p, hdX + 22, G - 24, 20, 11, LIGHT);
-  blob(p, cx - 12, G - 26, 14, 10, LIGHT);
-  for (let i = 0; i < 4; i++) {
-    stroke(p, hdX + 14 + i * 9, G - 32, hdX + 16 + i * 9, G - 16, DEEP);
-    stroke(p, hdX + 13 + i * 9, G - 32, hdX + 15 + i * 9, G - 16, ACCENT);
+  /* --- the pale chest, hanging between the braced arms. Three short folds, not
+     four long ones: at the old length they ran clear of the pale patch onto the
+     bare flank at both ends and read as scratches rather than as slack skin. */
+  blob(p, cx - 27, G - 30, 15, 8, LIGHT);
+  blob(p, cx - 14, G - 31, 10, 7, LIGHT);
+  for (let i = 0; i < 2; i++) {
+    const fx = cx - 18 + i * 8;
+    stroke(p, fx, G - 34, fx + 2, G - 26, DEEP);
+    stroke(p, fx - 1, G - 34, fx + 1, G - 26, ACCENT);
   }
 
-  /* --- near forelimb, locked straight down and taking the weight, with the
-     elbow thrown out to the side. It is a post, not a stride: both feet are
-     level and both are directly under the shoulders, which is what an animal
-     holding position against water actually does with its arms. */
-  limbPath(p, [[shX - 8, G - 34], [cx - 34, G - 22], [cx - 34, G - 6]], 18, 12, BASE, { front: true, bulge: 3 });
-  crease(p, cx - 33, G - 22, 7);
-  paw(p, cx - 35, G - 1, 13, { tone: BASE, toes: 4, webbed: true, long: true, claws: false });
+  /* --- near forelimb: the braced one, and it is a *fore-flipper*, not an arm.
+     A broad wedge that leaves the shoulder already wide, bows out to the front
+     at the elbow, and finishes on a splayed webbed foot planted flat.
+     Two versions of this tried to be an arm with a thrown-out elbow knob, and
+     neither could work: this animal's chest bottoms out twenty-four cells above
+     the floor and a planted foot is eighteen cells tall, so there is a three
+     cell window in which an elbow could ever break the outline. What separates
+     the two limbs is not a joint. It is that this one is twice as wide, a whole
+     tone lighter, bowed forward, and stands on a foot three times the size --
+     against a far limb that is a thin dark vertical pin set well back. */
+  polyFront(p, [[cx - 36, G - 34], [cx - 20, G - 32], [cx - 17, G - 5], [cx - 45, G - 5]], BASE);
+  // The leading edge bows out forward at the elbow, so the limb has a bend in
+  // its outline even with no joint drawn in it.
+  polyFront(p, [[cx - 36, G - 32], [cx - 44, G - 20], [cx - 43, G - 6], [cx - 34, G - 8]], BASE);
+  polyLine(p, [[cx - 36, G - 32], [cx - 45, G - 20], [cx - 44, G - 6]], LIGHT, false, true);
+  polyLine(p, [[cx - 35, G - 31], [cx - 44, G - 20], [cx - 43, G - 6]], HILIGHT, false, true);
+  // The web rays through the flipper, and the shadow it throws back onto the
+  // chest and the far limb behind it.
+  for (let i = 0; i < 3; i++) {
+    const t = i / 2;
+    stroke(p, lerp(cx - 38, cx - 22, t), G - 30, lerp(cx - 39, cx - 20, t), G - 8, DEEP);
+    stroke(p, lerp(cx - 38, cx - 22, t) - 1, G - 30, lerp(cx - 39, cx - 20, t) - 1, G - 8, ACCENT);
+  }
+  polyLine(p, [[cx - 19, G - 31], [cx - 16, G - 6]], DEEP, false, true);
+  polyLine(p, [[cx - 18, G - 31], [cx - 15, G - 6]], SHADE, false, true);
+  paw(p, cx - 31, G - 1, 15, { tone: BASE, toes: 4, webbed: true, long: true, claws: false });
 
   /* --- the head. Broad, flat, and driven forward and down out of the shoulders
      with no neck showing at all, so that it sits almost on the floor. Half again
      as wide as it is deep, and the jaw line runs back past the eye -- a wide jaw
      is not a big mouth, it is a mouth whose corner is behind the eye socket. */
-  blobFront(p, hdX, hdY, 20, 12.5, BASE);
-  blob(p, hdX - 4, hdY - 6, 14, 4.5, LIGHT);
-  for (const q of arc(hdX - 4, hdY - 5, 14, 6, Math.PI, Math.PI * 2, 22)) cellOver(p, q[0], q[1] + 1, DEEP);
+  blobFront(p, hdX, hdY, 21, 13, BASE);
+  blob(p, hdX - 4, hdY - 6, 15, 4.5, LIGHT);
+  for (const q of arc(hdX - 4, hdY - 5, 15, 6, Math.PI, Math.PI * 2, 22)) cellOver(p, q[0], q[1] + 1, DEEP);
+  // The lower jaw, hung under the front of the skull and jutting clear of it.
+  // Without it the head is an ellipse with a line ruled across it, and at icon
+  // size an ellipse tucked against a shoulder is not a head at all -- it is the
+  // front end of the shoulder.
+  blobFront(p, hdX - 6, hdY + 8, 15, 6.5, BASE);
   // Cheek pouches at the corners of the jaw, which is where a wide-mouthed
   // amphibian carries its mass.
   blobFront(p, hdX + 12, hdY + 5, 9, 7, BASE);
   blob(p, hdX - 13, hdY + 4, 8, 5.5, LIGHT);
 
-  // Gill slits on the side of the neck, behind the jaw corner.
+  // Gill slits, set on the cheek behind the jaw corner rather than out on the
+  // very rim of the skull, where they straddled the seam between head and
+  // shoulder and read as a bracket floating in the join.
   for (let i = 0; i < 3; i++) {
-    const gx = hdX + 18 + i * 4;
-    stroke(p, gx, hdY - 4 + i, gx, hdY + 5 + i, INNER);
-    stroke(p, gx + 1, hdY - 4 + i, gx + 1, hdY + 5 + i, INNER);
-    stroke(p, gx - 1, hdY - 4 + i, gx - 1, hdY + 5 + i, ACCENT_LIT);
+    const gx = hdX + 13 + i * 4;
+    stroke(p, gx, hdY - 2 + i, gx, hdY + 5 + i, INNER);
+    stroke(p, gx + 1, hdY - 2 + i, gx + 1, hdY + 5 + i, INNER);
+    stroke(p, gx - 1, hdY - 2 + i, gx - 1, hdY + 5 + i, ACCENT_LIT);
   }
 
   if (p.back) { p.face(hdX, hdY, 20); return; }
@@ -490,8 +563,12 @@ function brookmaw(p: Pen): void {
   /* --- the face. Small, half-lidded and set high and wide on the roof of the
      skull: an animal that has been holding the same position for six hours and
      intends to hold it for six more. */
-  eye(p, hdX - 9, hdY - 5, 5, 'hooded', { side: -1, iris: ACCENT_LIT, lid: BASE });
-  eye(p, hdX + 8, hdY - 4, 4.5, 'hooded', { side: 1, iris: ACCENT_LIT, lid: BASE });
+  // Sized for the 64-pixel icon rather than for the 3x view: at half scale a
+  // five-cell hooded eye is two dark pixels under a lid, and the party screen
+  // gets a face with no eyes in it. Bigger, and spread wider apart, so a whole
+  // cell of skull survives between them at icon size.
+  eye(p, hdX - 11, hdY - 5, 6, 'hooded', { side: -1, iris: ACCENT_LIT, lid: BASE });
+  eye(p, hdX + 9, hdY - 4, 5.4, 'hooded', { side: 1, iris: ACCENT_LIT, lid: BASE });
   p.face(hdX, hdY, 20);
 }
 
@@ -619,8 +696,16 @@ function maelstrix(p: Pen): void {
   /* --- the face. Narrow, almost all iris, and lit from inside: this is the
      thing sailors will not name out loud. Nothing else in the group has an eye
      with no white in it. */
-  eye(p, hdX - 8, hdY - 5, 4.3, 'slit', { side: -1, iris: ACCENT_LIT, bare: true });
-  eye(p, hdX + 6, hdY - 2, 3.7, 'slit', { side: 1, iris: ACCENT_LIT, bare: true });
+  // Each one sunk in a hard dark socket. Bare, a pale slit iris sits on a pale
+  // muzzle and is two light cells on light cells: at 3x it reads as a narrow
+  // eye, and at the 64-pixel icon size the party screen uses it disappears
+  // completely and the head becomes a lilac lump with a mouth. The socket is
+  // what survives the halving -- a dark almond with a lit core in it.
+  for (const [ex, ey, er] of [[hdX - 8, hdY - 5, 7.5], [hdX + 6, hdY - 2, 6.5]] as const) {
+    blob(p, ex, ey, er, er * 0.72, INNER);
+  }
+  eye(p, hdX - 8, hdY - 5, 5, 'slit', { side: -1, iris: ACCENT_LIT, bare: true });
+  eye(p, hdX + 6, hdY - 2, 4.4, 'slit', { side: 1, iris: ACCENT_LIT, bare: true });
   // A hard lilac brow riding each socket, in place of the stock black ring the
   // slit eye draws for itself: two ringed almonds side by side on a pale face
   // come out looking like a pair of goggles.

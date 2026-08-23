@@ -380,13 +380,17 @@ function volcatrix(p: Pen): void {
     if (i % 2 === 0) cellOver(p, ox + Math.cos(a) * len * 0.8, oy + Math.sin(a) * len * 0.8, SPEC);
   }
 
-  /* --- the lead arm, up in guard. Elbow low and in, forearm rising forward,
-     fist at chin height. It has to be a good deal smaller than the head and a
-     good deal further from it than feels right on paper: drawn at full arm
-     thickness in the pale tone it came out as a cream mitten the size of the
-     skull, welded to the jaw by its own outline. */
-  const elbow: Pt = [cx - 32, G - 56], fist: Pt = [cx - 40, G - 70];
-  limbPath(p, [[leadSh[0], leadSh[1] + 2], elbow, fist], 14, 9, BASE, { front: true, bulge: 2 });
+  /* --- the lead arm, up in guard. Elbow low and in, forearm driving forward
+     and out, fist held well clear of the face.
+     The fist used to sit at chin height, which is where a boxer's lead hand
+     actually goes and which is wrong here: at 64 pixels the skull, the muzzle
+     and the fist stacked into one continuous pale lump down the whole left edge
+     of the icon and the head stopped being findable. Dropped fourteen cells and
+     pushed five further forward, the guard reads as a *jab* -- the fist is the
+     leftmost thing on the sprite, the head is the highest, and there is eleven
+     cells of clear air between them, which survives being halved. */
+  const elbow: Pt = [cx - 28, G - 52], fist: Pt = [cx - 45, G - 60];
+  limbPath(p, [[leadSh[0], leadSh[1] + 4], elbow, fist], 14, 9, BASE, { front: true, bulge: 2 });
   crease(p, elbow[0], elbow[1], 6);
   // Banded forearm: three soot rings with a lit lip riding each one. This is
   // the species' second signature and the only reason a smooth orange cylinder
@@ -394,7 +398,7 @@ function volcatrix(p: Pen): void {
   // Three cells of soot to one of lit lip, and drawn by hand rather than with
   // `rings`: a one-cell ring on a nine-cell forearm is a scratch, and at this
   // size the lit lip wins the contrast fight and the bands read as pale scars.
-  const fore = path([[elbow[0], elbow[1]], [cx - 37, G - 62], [fist[0], fist[1]]]);
+  const fore = path([[elbow[0], elbow[1]], [cx - 37, G - 57], [fist[0], fist[1]]]);
   for (const t of [0.24, 0.52, 0.8]) {
     const i = Math.round(t * (fore.length - 1));
     const q = fore[i]!, nrm = normalAt(fore, i);
@@ -405,7 +409,7 @@ function volcatrix(p: Pen): void {
     stroke(p, q[0] - nrm[0] * 6 - 2 * nrm[1], q[1] - nrm[1] * 6 + 2 * nrm[0],
       q[0] + nrm[0] * 6 - 2 * nrm[1], q[1] + nrm[1] * 6 + 2 * nrm[0], HILIGHT);
   }
-  volFist(p, fist[0] - 2, fist[1] - 3, 7, -1);
+  volFist(p, fist[0] - 1, fist[1], 8, -1);
 
   /* --- the head, chin tucked, carried low between the shoulders. */
   limbPath(p, [[headX + 12, chestY - 6], [headX + 5, headY + 11]], 20, 17, BASE, { front: true });
@@ -561,16 +565,24 @@ function emberbore(p: Pen): void {
       cellOver(p, r[0] - 1, r[1], ACCENT_LIT);
     }
   }
-  // The hot end. Three nested cones over the front quarter only -- run further
-  // back and the drill stops being made of stone -- and then the last three
-  // ring bands repainted in the same heat, so the glow is *in the threads*
-  // rather than dipped onto the point like paint.
-  for (const [s, tone] of [[0.26, LIGHT], [0.17, HILIGHT], [0.08, SPEC]] as const) {
+  // The hot end. Three nested cones and then the front third's ring bands
+  // repainted in the same heat, so the glow is *in the threads* rather than
+  // dipped onto the point like paint.
+  //
+  // Run over the front quarter only -- which is where it was -- the whole
+  // gradient is twelve cells of a forty-cell drill and it halves to six for the
+  // party icon, where it disappears: the icon showed a plain grey spike, and a
+  // grey spike is not "bores through rock by heating it until it gives up", it
+  // is a beak. Widened to the front two fifths there is now a real ramp on it,
+  // stone to orange to cream to white, and the orange step is the one doing the
+  // work at 64 pixels. It still starts well back from the point, which is what
+  // stops the thing reading as a lightbulb.
+  for (const [s, tone] of [[0.42, LIGHT], [0.22, HILIGHT], [0.09, SPEC]] as const) {
     const b: Pt = [lerp2(dTip[0], dRoot[0], s), lerp2(dTip[1], dRoot[1], s)];
-    const w = 28 * s;
+    const w = 25 * s;
     poly(p, [[b[0] + 2, b[1] - w], [dTip[0] + 1, dTip[1]], [b[0] - 2, b[1] + w]], tone);
   }
-  for (const t of [0.78, 0.86, 0.93]) {
+  for (const t of [0.66, 0.74, 0.82, 0.9, 0.96]) {
     const i = Math.round(t * (drill.length - 1));
     const q = drill[i]!, hh = (12.5 * (1 - t) + 1.5) * 0.78;
     for (const r of arc(q[0], q[1], 2.6, hh, Math.PI * 0.5, Math.PI * 1.5, 12)) {
@@ -709,16 +721,26 @@ function sootmoth(p: Pen): void {
      head so the head covers their roots. Long barbs close together on a short
      shaft simply fill in, and the first version came out as two fuzzy pom-poms
      sat on the face. */
-  for (const [dx, dy] of [[-30, -18], [-18, -30]] as const) {
+  // Both of them carry a lit leading edge now, and they are swept wider apart.
+  // Drawn in flat accent they were two soot plumes laid over the far wing --
+  // which is itself painted in the recessed tone -- and dark on dark is the one
+  // thing the party icon cannot resolve: at 64 pixels the antennae were simply
+  // gone and the head was a smudge. One pale cell riding each shaft costs
+  // nothing and puts them back.
+  for (const [dx, dy] of [[-31, -16], [-16, -32]] as const) {
     const ant = path([[headX - 2, headY - 4], [headX + dx * 0.5, headY + dy * 0.56], [headX + dx, headY + dy]]);
     limbPath(p, ant, 4, 2, ACCENT);
+    for (let i = 1; i < ant.length; i++) {
+      const q = ant[i]!, n = normalAt(ant, i);
+      cellOver(p, q[0] + n[0] * 1.6, q[1] + n[1] * 1.6, LIGHT);
+    }
     for (let i = 3; i < ant.length - 1; i += 4) {
       const q = ant[i]!, n = normalAt(ant, i);
-      const l = 3.4 * (1 - (i / ant.length) * 0.45);
-      stroke(p, q[0], q[1], q[0] + n[0] * l, q[1] + n[1] * l, ACCENT, false);
+      const l = 3.6 * (1 - (i / ant.length) * 0.45);
+      stroke(p, q[0], q[1], q[0] + n[0] * l, q[1] + n[1] * l, HILIGHT, false);
       stroke(p, q[0], q[1], q[0] - n[0] * l, q[1] - n[1] * l, ACCENT_DARK, false);
     }
-    cell(p, headX + dx, headY + dy, ACCENT_LIT);
+    cell(p, headX + dx, headY + dy, SPEC);
   }
 
   /* --- the head: small, furry, and turned further than the body. */
@@ -761,65 +783,104 @@ function sootmoth(p: Pen): void {
 function gravelet(p: Pen): void {
   const G = p.ground, cx = p.cx;
 
-  const bodyX = cx + 2, bodyY = G - 30;
-  const headX = cx - 12, headY = G - 66;
+  // The stock terra pass, off -- and this is the single biggest thing wrong
+  // with the last version of this creature, which I diagnosed as "a pile of
+  // bumps" without working out where most of the bumps were coming from.
+  // `terra` walks the bottom contour and drops a five-cell dark pebble every
+  // five columns, then knocks chips out of the outline every eleventh edge
+  // cell. On a creature whose whole silhouette is one low arc, that is a row of
+  // eight matched beads strung right along the arc plus a ragged rim, and it
+  // buries the three grit lumps this animal is actually supposed to have.
+  // The other four in the group all hand-place their type read; so does this
+  // one now. The crust below IS the terra, and there are three of them.
+  p.noTypeTraits();
+
+  const bodyX = cx + 5, bodyY = G - 29;
+  const headX = cx - 14, headY = G - 65;
 
   /* --- a stubby tail, and the far hind foot, both behind. */
-  limbPath(p, [[bodyX + 20, bodyY - 4], [cx + 34, G - 28], [cx + 38, G - 16]], 12, 5, SHADE, { lit: LIGHT, dark: DEEP });
-  paw(p, cx + 24, G - 1, 10, { tone: SHADE, toes: 3, long: true, claws: true });
+  limbPath(p, [[bodyX + 16, bodyY - 6], [cx + 32, G - 26], [cx + 37, G - 14]], 12, 5, SHADE, { lit: LIGHT, dark: DEEP });
+  paw(p, cx + 22, G - 1, 9, { tone: SHADE, toes: 3, long: true, claws: true });
   // Far arm, tucked in behind the chest.
-  limbPath(p, [[cx + 6, G - 48], [cx + 15, G - 36]], 11, 8, SHADE);
+  limbPath(p, [[cx + 2, G - 44], [cx + 12, G - 34]], 11, 8, SHADE);
 
-  /* --- the body: a pear sat on the floor. Wide and heavy at the base, and the
-     haunch is its own mass or the animal reads as a bag. */
-  blob(p, bodyX, bodyY, 28, 25, BASE);
-  limbPath(p, [[bodyX - 2, bodyY - 10], [cx - 8, G - 48], [cx - 10, G - 56]], 36, 26, BASE);
-  blobFront(p, bodyX - 18, bodyY + 2, 16, 16, BASE);
-  for (const q of arc(bodyX - 18, bodyY + 2, 13, 14, Math.PI * 1.1, Math.PI * 2.1, 20)) {
+  /* --- the body: ONE egg sat on the floor, and nothing on the far side of it
+     allowed to break that arc.
+     This is the fix the last pass earned. There used to be a separate haunch
+     mass, four grit lumps strung down the flank and a fringe of guard hair, and
+     every one of them put another bump on the same outline -- filled flat the
+     animal came back as a pile of rubble with eyes rather than as a specific
+     small digger. One clean rump means the foreclaws are the only things that
+     interrupt the silhouette, and the foreclaws are the species. */
+  blob(p, bodyX, bodyY, 27, 26, BASE);
+  // Neck: narrow, and kept well inside the body outline. Run wide -- it was
+  // thirty-six cells -- it lays its own lit flank diagonally across the pale
+  // chest and the creature comes out wearing a bandolier.
+  limbPath(p, [[bodyX - 8, bodyY - 12], [cx - 10, G - 50], [cx - 12, G - 57]], 24, 21, BASE);
+  // The rump: a dark rim following that one arc, with a mid tone inside it.
+  // Rim and no lumps is what turns a plain oval into a haunch.
+  for (const q of arc(bodyX, bodyY, 26.5, 25.5, -Math.PI * 0.46, Math.PI * 0.44, 24)) {
     cellOver(p, q[0], q[1], DEEP);
-    cellOver(p, q[0] - 1, q[1], LIGHT);
+    cellOver(p, q[0] - 1, q[1], SHADE);
+    cellOver(p, q[0] - 2, q[1], SHADE);
   }
-  // Near hind foot, splayed forward off the haunch.
-  paw(p, bodyX - 27, G - 1, 11, { tone: LIGHT, toes: 4, long: true, claws: true });
-  // A big pale bib down the chest and belly. It is the only large flat value on
-  // an animal that is otherwise tan lumps on tan fur, and without it nothing on
-  // the sprite separates from anything else.
-  blob(p, cx - 12, G - 36, 15, 14, LIGHT);
-  blob(p, cx - 8, G - 20, 17, 9, LIGHT);
+  // Near hind foot, splayed forward off the haunch. Three toes, not four: on a
+  // foot this wide four are a row of matched knuckles, which is one more run of
+  // repeating bumps on an animal that had far too many of them.
+  // Body-toned, not cream. Painted in the pale step it is a flat slab the same
+  // value as the bib directly above it, and the two run together into one
+  // shapeless cream front with a line across it.
+  paw(p, bodyX - 27, G - 1, 9.5, { tone: BASE, toes: 3, long: true, claws: true });
+  // A pale bib down the chest and belly -- the only large flat value on an
+  // animal that is otherwise tan on tan. It is one mass now rather than two,
+  // and the arms are routed clear of it below.
+  blob(p, cx - 11, G - 38, 12, 12, LIGHT);
+  blob(p, cx - 8, G - 22, 16, 12, LIGHT);
 
-  /* --- the grit crust. Irregular lumps along the back and shoulders, each with
-     a lit top face and a dark gutter under it, plus loose grains speckled
-     around them. The sizes are deliberately unequal: a row of matched lumps is
-     armour, and armour is emberbore's job. */
-  const backLine = path([[cx - 16, G - 62], [cx + 6, G - 57], [bodyX + 20, G - 46], [bodyX + 26, G - 34]]);
-  const LUMP = [7.5, 4, 9.5, 5.5];
+  /* --- the grit crust. THREE lumps, on the top contour of the shoulder where
+     they cut real notches into the outline. Strung down the flank -- which is
+     where the four of them were -- they are beads on a surface that is already
+     ochre on tan, and they buy the silhouette nothing at all.
+     The sizes stay deliberately unequal: a row of matched lumps is armour, and
+     armour is emberbore's job. */
+  const backLine = path([[cx + 1, G - 54], [cx + 14, G - 49], [cx + 25, G - 38]] as Pt[]);
+  const LUMP = [8.5, 6, 4.2];
   for (let i = 0; i < LUMP.length; i++) {
     const q = backLine[Math.round((i / (LUMP.length - 1)) * (backLine.length - 1))]!;
     const r = LUMP[i]!;
-    blobFront(p, q[0], q[1] - r * 0.35, r, r * 0.8, ACCENT);
+    // Lifted six tenths of a radius off the contour rather than three, so each
+    // lump stands proud enough to survive being halved for the party icon.
+    blobFront(p, q[0], q[1] - r * 0.62, r, r * 0.82, ACCENT);
     // Dark under, lit on top. Without both, a lump is a stain.
-    for (const s of arc(q[0], q[1] - r * 0.35, r * 0.92, r * 0.74, 0, Math.PI, 12)) cellOver(p, s[0], s[1], ACCENT_DARK);
-    blob(p, q[0] - r * 0.3, q[1] - r * 0.8, r * 0.5, r * 0.3, ACCENT_LIT);
+    for (const s of arc(q[0], q[1] - r * 0.62, r * 0.92, r * 0.76, 0, Math.PI, 12)) cellOver(p, s[0], s[1], ACCENT_DARK);
+    blob(p, q[0] - r * 0.3, q[1] - r * 1.05, r * 0.5, r * 0.3, ACCENT_LIT);
   }
   // Loose grains, but sparse: a heavy speckle over a tan animal in a tan accent
   // is not grit, it is noise, and it takes the shading with it.
-  speckle(p, cx - 26, G - 60, bodyX + 22, G - 26, 0.045, ACCENT_DARK);
+  speckle(p, cx - 16, G - 52, bodyX + 18, G - 24, 0.04, ACCENT_DARK);
   // No guard hairs on the rump. They were there for a pass and all they did was
   // add three more lumps to an animal already made of lumps -- when everything
   // in a silhouette is a bump, nothing in it is a shape.
 
   /* --- the head: wide, blunt and tilted, with a flat digging snout on the
      front of it and two small round ears set low and wide. */
-  limbPath(p, [[cx - 4, G - 48], [headX + 7, headY + 9]], 18, 16, BASE, { front: true });
-  blobFront(p, headX, headY, 18, 15, BASE);
+  limbPath(p, [[cx - 6, G - 46], [headX + 8, headY + 9]], 18, 16, BASE, { front: true });
+  blobFront(p, headX, headY, 17, 15, BASE);
   // Ears set high enough to break the crown line. An ear entirely inside the
   // skull outline is an ear nobody sees, and on the rear view the bowls have to
   // stop being cavities or two dark holes on a blank face read as eyes.
+  // The near ear is half again the far one and set higher. Two ears the same
+  // size with a grit lump between them gave the skull three matched bumps in a
+  // row, and at 64 pixels that is a tiara, not a head.
   const bowl = p.back ? SHADE : INNER;
-  blobFront(p, headX + 15, headY - 11, 5.5, 6, SHADE, DEEP, 1.5);
-  blob(p, headX + 16, headY - 10, 2.6, 2.8, bowl);
-  blobFront(p, headX - 14, headY - 13, 6, 6.5, BASE, DEEP, 1.5);
-  blob(p, headX - 15, headY - 12, 2.8, 3.2, bowl);
+  blobFront(p, headX + 14, headY - 8, 4.5, 4.8, SHADE, DEEP, 1.5);
+  blob(p, headX + 15, headY - 7, 1.9, 2.1, bowl);
+  blobFront(p, headX - 14, headY - 14, 6.8, 7.2, BASE, DEEP, 1.5);
+  // A shallow bowl, not a filled one. At a third of the ear the dark disc sat
+  // in the middle of a pale ring the size of an eye, level with and just above
+  // the real eyes -- the animal read as having three of them.
+  blob(p, headX - 15, headY - 13, 2.5, 2.9, bowl);
+  for (const s of arc(headX - 15, headY - 13, 3.2, 3.6, Math.PI * 0.85, Math.PI * 1.85, 10)) cellOver(p, s[0], s[1], HILIGHT);
   // The snout: a broad flat pad, low on the face, with a wide nose on the end.
   polyFront(p, [[headX + 2, headY + 2], [headX - 16, headY + 5], [headX - 15, headY + 13], [headX + 2, headY + 13]], LIGHT, DEEP, 1);
   blob(p, headX - 15, headY + 6, 5, 3.4, ACCENT_DARK);
@@ -828,11 +889,24 @@ function gravelet(p: Pen): void {
     nostril(p, headX - 17, headY + 6, -1);
     mouthLine(p, headX - 9, headY + 12, 6, -1);
   }
-  // A grit cap over the crown -- the crust reaching up onto the head, which is
-  // what ties the two halves of the animal together.
-  for (const [gx, gy, gr] of [[headX - 4, headY - 14, 5.5], [headX + 6, headY - 13, 4], [headX - 12, headY - 11, 3.4]] as const) {
-    blobFront(p, gx, gy, gr, gr * 0.8, ACCENT);
-    blob(p, gx - gr * 0.3, gy - gr * 0.4, gr * 0.4, gr * 0.3, ACCENT_LIT);
+  // NO grit on the skull. Three lumps were up here, then one, then a painted
+  // skullcap, and every version of it failed the same way: a thirty-cell head
+  // carrying two eyes twelve cells tall has no room left above the brows, so
+  // the ochre came down to eye level, welded to both eye rings, and the animal
+  // came out wearing spectacles. That was the loudest single fault on the last
+  // pass and the head is worth more clean than tied.
+  // What ties the crust to the head instead is grit on the *nape*, behind and
+  // below the skull, where the neck meets the first lump of the back crest --
+  // and a plain dark rim round the back of the cranium, which is form rather
+  // than ornament and costs the face nothing.
+  for (const s of arc(headX, headY, 16.5, 14.5, -Math.PI * 0.42, Math.PI * 0.34, 16)) {
+    cellOver(p, s[0], s[1], SHADE);
+    cellOver(p, s[0] - 1, s[1], SHADE);
+  }
+  for (const [gx, gy, gr] of [[headX + 18, headY + 12, 4.2], [headX + 11, headY + 18, 3]] as const) {
+    blobFront(p, gx, gy, gr, gr * 0.78, ACCENT);
+    for (const s of arc(gx, gy, gr * 0.9, gr * 0.72, 0, Math.PI, 10)) cellOver(p, s[0], s[1], ACCENT_DARK);
+    blob(p, gx - gr * 0.3, gy - gr * 0.5, gr * 0.45, gr * 0.28, ACCENT_LIT);
   }
 
   /* --- the foreclaws. The name of the species is in these: two scoops far too
@@ -844,21 +918,31 @@ function gravelet(p: Pen): void {
     // first version built the whole hand as one quadrilateral with `claw` tips
     // on the corners, and it came out as a folded newspaper: the claws have to
     // *be* the shape, not a detail hung off one.
-    blobFront(p, hx, hy, big * 0.62, big * 0.58, tone);
+    blobFront(p, hx, hy, big * 0.66, big * 0.6, tone);
     for (let i = -1; i <= 1; i++) {
-      // Half a radian apart, not a third. Three claws fanned narrowly over
-      // twenty cells end up eight cells apart at the tip, their outlines weld,
-      // and the whole hand comes back as one tan cylinder with a dark end.
-      const a = ang + i * 0.52;
-      const l = big * 2.2 * (1 - Math.abs(i) * 0.12);
+      // Better than half a radian apart, and long. Three claws fanned narrowly
+      // over twenty cells end up eight cells apart at the tip, their outlines
+      // weld, and the whole hand comes back as one tan cylinder with a dark
+      // end. Fanned this wide the spade has three points in the outline, which
+      // is the one part of this animal that has to survive at 64 pixels.
+      const a = ang + i * 0.56;
+      const l = big * 2.15 * (1 - Math.abs(i) * 0.1);
       const tx = hx + Math.cos(a) * l, ty = hy + Math.sin(a) * l;
+      // Wide at the root and only a little shorter: a *spade*, not a spike.
+      // Drawn at half the knuckle's width these came out as three ochre twigs,
+      // and three twigs on a tan animal are the first thing the party icon
+      // throws away. Nine cells across the base survives being halved.
       limbPath(p, [[hx, hy], [lerp2(hx, tx, 0.5), lerp2(hy, ty, 0.5)], [tx, ty]],
-        big * 0.44, 1.4, ACCENT, { lit: ACCENT_LIT, dark: ACCENT_DARK });
+        big * 0.64, 2, ACCENT, { lit: ACCENT_LIT, dark: ACCENT_DARK });
+      // A lit point on each tip. Ochre claw against a tan body loses its own
+      // edge; the pale tip is what puts three points back in the outline.
+      cellOver(p, tx, ty, ACCENT_LIT);
+      cellOver(p, tx - Math.cos(a), ty - Math.sin(a), ACCENT_LIT);
     }
     // The gaps, cut after every claw is down. Cut between them as they go on,
     // each one is buried by the next and the hand comes out a mitten.
     for (const i of [-0.5, 0.5]) {
-      const a = ang + i * 0.52;
+      const a = ang + i * 0.56;
       for (let k = 0; k < 2; k++) {
         stroke(p, hx + Math.cos(a) * big * 0.4 + k, hy + Math.sin(a) * big * 0.4,
           hx + Math.cos(a) * big * 2.1 + k, hy + Math.sin(a) * big * 2.1, ACCENT_DARK);
@@ -866,22 +950,30 @@ function gravelet(p: Pen): void {
     }
     cellOver(p, hx - big * 0.3, hy - big * 0.35, HILIGHT);
   };
-  // The upper claw is aimed up and out into clear air rather than tucked under
-  // the chin. Held where a hand naturally goes it sat directly beneath the
-  // skull, their outlines welded, and the silhouette lost both of them.
-  limbPath(p, [[cx - 2, G - 50], [cx - 18, G - 44], [cx - 27, G - 45]], 13, 9, BASE, { front: true, bulge: 1 });
-  scoop(cx - 30, G - 46, Math.PI * 1.10, BASE, 9);
-  limbPath(p, [[cx + 2, G - 42], [cx - 14, G - 32], [cx - 22, G - 26]], 12, 8, BASE, { front: true, bulge: 1 });
-  scoop(cx - 26, G - 25, Math.PI * 0.98, LIGHT, 7.5);
+  // Both arms leave the shoulder and go straight out into clear air. They used
+  // to be rooted at the far side of the chest and reach across it, and the two
+  // tan bars they ruled over the cream bib read as a pair of straps -- which is
+  // most of why this creature was tonal soup. Short arms, spades in the open.
+  // Four cells lower than they were, too. Rooted at the old height the upper
+  // arm's own dark seam ran straight across the jaw, and a black bar under the
+  // chin at icon size is a creature with no lower face.
+  limbPath(p, [[cx - 10, G - 44], [cx - 21, G - 44], [cx - 28, G - 46]], 13, 9, BASE, { front: true, bulge: 1 });
+  scoop(cx - 32, G - 47, Math.PI * 1.13, BASE, 9.5);
+  limbPath(p, [[cx - 8, G - 33], [cx - 19, G - 29], [cx - 25, G - 26]], 12, 8, BASE, { front: true, bulge: 1 });
+  scoop(cx - 29, G - 25, Math.PI * 0.96, LIGHT, 8);
 
   if (p.back) { p.face(headX, headY, 17); return; }
 
   /* --- the face. Big round wet eyes with small pupils, set wide: this is the
      smallest and least dangerous thing in the group and it should look it. The
      two other diggers in the set are hooded and half shut; nothing else here
-     looks straight at you. */
-  eye(p, headX - 7, headY - 3, 5.4, 'round', { side: -1, iris: ACCENT_DARK });
-  eye(p, headX + 8, headY - 5, 4.6, 'round', { side: 1, iris: ACCENT_DARK });
+     looks straight at you.
+     A cell smaller than they were, on both. At five and a half they filled the
+     whole width of the skull and the two rings of sclera read as spectacles --
+     the head lost its shape behind them. This is still by a distance the widest
+     eye in the group and it still halves cleanly. */
+  eye(p, headX - 7, headY - 3, 4.5, 'round', { side: -1, iris: ACCENT_DARK });
+  eye(p, headX + 8, headY - 5, 3.4, 'round', { side: 1, iris: ACCENT_DARK });
   p.face(headX, headY, 17);
 }
 

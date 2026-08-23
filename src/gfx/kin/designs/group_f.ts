@@ -10,21 +10,31 @@
  *               shoulder as a cluster of prisms.
  *   cairnling   a stack of loose stones standing upright with one arm of rocks
  *               raised and pointing, moss in every joint. Stepped silhouette.
- *   menhir      one continuous leaning slab -- no joint anywhere on it -- tall
- *               and narrow on a rubble plinth, braced on a single enormous
- *               fist, ore veins branching up the shaft, a face carved into the
- *               stone rather than sitting on it.
+ *   menhir      one continuous leaning slab -- no joint anywhere on it -- a bar
+ *               108 cells tall by 41 wide on a narrow rubble plinth, buttressed
+ *               by a fist carved into its own left flank, ore veins up the
+ *               right, and a face cut INTO the stone rather than sitting on it.
  *   chalkid     a standing chalk nodule: an upright lump with a dark stratum
  *               banded round its waist, blunt stubs for legs, one arm reaching
  *               up over its head.
- *   chalkmar    a broad low quadruped walker under a roof of overlapping slate
- *               slabs, chalk-white belly and legs, a wide chisel jaw.
+ *   chalkmar    a broad low quadruped walker under six leaning slate slabs whose
+ *               points stand well proud of its back, chalk-white belly and
+ *               legs, a wide chisel jaw.
  *   anchorling  an anchor. Ring, shank, stock, two curved arms with barbed
  *               flukes, weed and barnacles on the iron, and one enormous eye.
  *
  * Four different numbers of legs, four different overall proportions, and no
  * two of them use the same eye: round, hooded, slit, sleepy, angry, and one
  * huge single lens set in iron.
+ *
+ * Every one of those eyes is sunk in a socket of DEEP, and that is not
+ * decoration. The party and switch screens draw creatures through iconSprite(),
+ * which halves the sprite by taking the dominant colour of each 2x2 block, and
+ * a feature built out of several near-tones interleaved comes back from that as
+ * an average smear. Six grey rocks have no colour to spend, so their faces have
+ * to be built out of ONE big flat area of the darkest tone in the palette with
+ * the eye sitting inside it. Three of these species had faces that were fine at
+ * 3x and gone at 64 pixels before that rule was applied.
  *
  * The family thread is the seam. Every one of these has a mineral vein or a
  * plate line running across it with a lit lip and a dark gutter, and the line
@@ -37,7 +47,7 @@ import {
   ACCENT, ACCENT_DARK, ACCENT_LIT, BASE, DEEP, EMPTY, HILIGHT, INNER, LIGHT, SHADE, SPEC,
 } from '../mask.js';
 import {
-  arc, blob, blobFront, cell, cellOver, eye, lerp, limbPath, mouthLine, normalAt,
+  arc, blob, blobFront, cell, cellOver, eye, lerp, limbPath, normalAt,
   path, poly, polyFront, polyLine, rect, speckle, stroke, tuft,
   type Pen, type Pt,
 } from '../parts.js';
@@ -450,56 +460,93 @@ function cairnling(p: Pen): void {
  * seam, same half-lidded patience, but where the child is loose stones with
  * daylight between them the adult is ONE slab with no joint anywhere on it.
  *
- * The proportion is the species. It is 108 cells tall and 46 wide -- a bar,
- * not a body -- standing on a spread of rubble, leaning, and braced on one
- * enormous fist driven into the ground beside it.
+ * The proportion IS the species, and the first fit of it did not deliver the
+ * proportion. On paper it was a bar; on the sheet it was 93 cells wide against
+ * 110 tall, because a wide skirt of rubble, a fist swung out to cx-49 and a
+ * stub arm out to cx+33 had quietly added forty-five cells of width to a shaft
+ * that was only fifty-two across to begin with. Next to pebblet, chalkid and
+ * chalkmar -- three more rounded grey masses -- it was just a fourth grey mass.
+ * A tall thing is not tall because its shaft is tall. It is tall because
+ * NOTHING on it is wide, and that means every appendage has to be pulled in
+ * against the shaft, not hung off it.
+ *
+ * So: 108 cells tall by 41 wide, a 2.6:1 bar, which is the narrowest thing on
+ * the roster by a distance and cannot be confused with any of them in flat
+ * silhouette. The shaft is 33 across, the buttress arm is carved into its left
+ * flank rather than swung clear of it, the stub arm hugs the right, and the
+ * plinth is three small stones instead of five big ones.
  *
  * The first two passes came out as a hooded monk, and the reasons are worth
  * keeping written down. A crown that narrows and curves is a cowl. A pale panel
  * that tapers as it goes down is a robe. And a face carved just under the top
  * of a tapering shaft turns the whole top into a head. The fixes are all in the
- * geometry: the sides run near enough parallel, the crown is two straight shear
- * planes meeting at a hard corner, the lit strip has parallel edges from top to
- * bottom, and the face is cut a third of the way down where a mason could
- * actually reach it.
+ * geometry: the sides run near enough parallel, the crown is one straight shear
+ * plane sliced off to the right, the lit band runs unbroken from crown to floor
+ * -- shaft above, arm below -- and the face is cut a third of the way down
+ * where a mason could actually reach it.
+ *
+ * At icon size the face is the whole gamble, so it is cut to the FULL width of
+ * the stone: two sockets sitting edge to edge across all thirty-three cells,
+ * because half a dozen spare cells of blank granite round a pair of eyes is a
+ * luxury a 64-pixel sprite cannot afford.
  */
 function menhir(p: Pen): void {
   const G = p.ground, cx = p.cx;
 
-  /* --- the plinth. A spread of rubble the stone is standing IN rather than
-     on, drawn first and recessed. It also does the job the widening base of a
-     tapered shaft would have done, without tapering the shaft. */
-  for (const [rx, ry, w, h] of [[-38, -4, 11, 6], [-24, -2, 8, 4.5], [-8, -3, 7, 4],
-    [20, -4, 10, 5.5], [36, -2, 8, 4]] as const) {
+  /* --- the plinth. Three small stones, kept inside twenty cells of centre.
+     The old spread ran nearly forty either side and it was most of what made
+     this creature square: a monolith with a wide skirt of debris is a cairn
+     lying on the floor with a slab standing in it. */
+  for (const [rx, ry, w, h] of [[-13, -3, 7, 5], [-2, -2, 5.5, 4], [11, -3, 6.5, 4.5]] as const) {
     rock(p, [[cx + rx - w, G + ry + h], [cx + rx - w * 0.55, G + ry - h], [cx + rx + w * 0.65, G + ry - h * 0.7],
       [cx + rx + w, G + ry + h]], SHADE);
   }
 
-  /* --- the far stub arm, a short block against the right flank. */
-  rock(p, [[cx + 17, G - 54], [cx + 33, G - 50], [cx + 31, G - 24], [cx + 16, G - 28]], SHADE);
+  /* --- the far stub arm, a short block held tight against the right flank.
+     Three cells of it clear the shaft; that is all it is allowed. */
+  rock(p, [[cx + 11, G - 58], [cx + 19, G - 55], [cx + 18, G - 30], [cx + 10, G - 33]], SHADE);
 
-  /* --- the shaft. One polygon and no horizontal line on it anywhere. */
+  /* --- the shaft. One polygon, no horizontal line on it anywhere, and sides
+     that run within three cells of parallel over a hundred cells of height. */
+  // The crown is the one place this shape can still betray it. A top that
+  // narrows to a point over a brow ledge is a COWL -- the monk got back in that
+  // way once the sides came in, because a long diagonal from the left arris
+  // down to the right shoulder is exactly the line a hood makes. So the sides
+  // run full width to within fourteen cells of the top and the crown is a
+  // shallow slant with one steep bevel knocked off its right corner: a slab
+  // snapped off level, not a head under cloth.
   const shaft: Pt[] = [
-    [cx - 19, G - 3], [cx - 22, G - 40], [cx - 24, G - 74], [cx - 25, G - 98],
-    [cx + 10, G - 108],                      // shear one, climbing to the right
-    [cx + 16, G - 100],                      // the corner, then straight down
-    [cx + 20, G - 64], [cx + 24, G - 32], [cx + 27, G - 3],
+    [cx - 15, G - 2], [cx - 18, G - 44], [cx - 18, G - 82], [cx - 17, G - 104],
+    [cx + 5, G - 106],                       // the top: a shallow slant, full width
+    [cx + 13, G - 92],                       // one steep bevel off the right corner
+    [cx + 13, G - 60], [cx + 14, G - 46], [cx + 16, G - 2],
   ];
   rock(p, shaft, BASE);
 
-  // A lit strip down the left arris with PARALLEL edges, and a dark face down
+  // A lit band down the left arris with PARALLEL edges, and a dark face down
   // the right. Two hard-edged polygons, no gradient: stone turns on an edge.
-  poly(p, [[cx - 21, G - 5], [cx - 24, G - 97], [cx - 17, G - 100], [cx - 15, G - 5]], LIGHT);
-  polyLine(p, [[cx - 17, G - 100], [cx - 15, G - 5]], DEEP, false, true);
-  poly(p, [[cx + 14, G - 99], [cx + 18, G - 64], [cx + 22, G - 32], [cx + 26, G - 5],
-    [cx + 17, G - 5], [cx + 12, G - 60], [cx + 9, G - 96]], SHADE);
-  polyLine(p, [[cx + 9, G - 96], [cx + 12, G - 60], [cx + 17, G - 5]], DEEP, false, true);
-  polyLine(p, [[cx + 8, G - 96], [cx + 11, G - 60], [cx + 16, G - 5]], HILIGHT, false, true);
+  // The band stops at G-46 and the buttress arm picks the same line up below,
+  // so the eye follows one unbroken pale edge from the crown to the floor --
+  // which is the single cheapest way to say "this is one tall thing".
+  poly(p, [[cx - 16, G - 46], [cx - 17, G - 82], [cx - 16, G - 102], [cx - 10, G - 101],
+    [cx - 11, G - 80], [cx - 10, G - 46]], LIGHT);
+  polyLine(p, [[cx - 10, G - 101], [cx - 11, G - 80], [cx - 10, G - 46]], DEEP, false, true);
+  // The dark flank PINCHES to three cells where it crosses the carved face.
+  // Run at full width it put the right-hand socket on recessed stone while the
+  // left sat on the lit band, and at half size the right eye simply vanished --
+  // the party icon had a one-eyed monolith on it. Both sockets have to be cut
+  // into the same tone or only one of them survives the halving.
+  poly(p, [[cx + 10, G - 88], [cx + 11, G - 84], [cx + 12, G - 48], [cx + 15, G - 4],
+    [cx + 8, G - 4], [cx + 5, G - 48], [cx + 8, G - 84], [cx + 7, G - 88]], SHADE);
+  polyLine(p, [[cx + 7, G - 88], [cx + 8, G - 84], [cx + 5, G - 48], [cx + 8, G - 4]], DEEP, false, true);
+  polyLine(p, [[cx + 6, G - 88], [cx + 7, G - 84], [cx + 4, G - 48], [cx + 7, G - 4]], HILIGHT, false, true);
   // Vertical flute grooves down the middle face. They run WITH the stone; a
   // horizontal line anywhere on this creature would turn it back into a stack.
-  for (const [gx, gy0, gy1] of [[cx - 6, G - 100, G - 10]] as const) {
-    stroke(p, gx, gy0, gx + 2, gy1, DEEP);
-    stroke(p, gx - 1, gy0, gx + 1, gy1, HILIGHT);
+  // Broken either side of the carved face -- a groove ruled straight through a
+  // pair of sunk eyes is a crack in the face, not a flute in the shaft.
+  for (const [gx, gy0, gy1] of [[cx - 3, G - 96, G - 84], [cx - 1, G - 44, G - 12]] as const) {
+    stroke(p, gx, gy0, gx + 1, gy1, DEEP);
+    stroke(p, gx - 1, gy0, gx, gy1, HILIGHT);
   }
 
   /* --- ore veins. They BRANCH, and they run with the length of the stone --
@@ -512,14 +559,18 @@ function menhir(p: Pen): void {
   // sunk eyes wins: the face vanished and the sprite read as a rock with a
   // stripe. Ornament near a face is the easiest thing on a sprite to get
   // wrong, and it is only ever visible in the render.
-  vein(p, [[cx + 2, G - 4], [cx + 7, G - 32], [cx + 6, G - 60], [cx + 11, G - 86], [cx + 4, G - 100]], 2.4);
-  vein(p, [[cx + 4, G - 44], [cx - 6, G - 50], [cx - 17, G - 46]], 1.2);
-  vein(p, [[cx - 2, G - 22], [cx + 8, G - 18], [cx + 17, G - 26]], 1.2);
-  vein(p, [[cx + 10, G - 92], [cx - 2, G - 96]], 1);
+  //
+  // Thinner than they were, too. A vein of 2.4 half-width was fine across a
+  // fifty-two cell shaft and is a stripe across a thirty-three cell one: the
+  // first fit of the narrow stone came out with a great gold arrow painted on
+  // its belly. Ornament has to be budgeted as a FRACTION of the mass it sits
+  // on, not in absolute cells.
+  vein(p, [[cx + 4, G - 4], [cx + 9, G - 26], [cx + 4, G - 46]], 1.6);
+  vein(p, [[cx + 9, G - 26], [cx + 14, G - 34]], 1);
+  vein(p, [[cx + 6, G - 84], [cx + 1, G - 94], [cx - 8, G - 100]], 1.4);
   // Ore nodules swelling on the seam. A vein of even width is a drawn line; the
   // lumps are what make it a mineral that grew.
-  for (const [nx, ny, nr] of [[cx + 6, G - 46, 4.5], [cx + 11, G - 88, 4], [cx - 6, G - 14, 3.6],
-    [cx - 15, G - 46, 3.4]] as const) {
+  for (const [nx, ny, nr] of [[cx + 6, G - 36, 3.4], [cx + 1, G - 94, 3.2]] as const) {
     blob(p, nx, ny, nr, nr * 1.1, ACCENT_LIT);
     for (const q of arc(nx, ny, nr, nr * 1.1, Math.PI * 0.05, Math.PI * 0.9, 10)) cellOver(p, q[0], q[1], ACCENT_DARK);
     cellOver(p, nx - nr * 0.4, ny - nr * 0.5, SPEC);
@@ -527,45 +578,67 @@ function menhir(p: Pen): void {
   // Ore breaking the surface: prisms sitting proud on the vein, bigger than
   // pebblet's because this is the same seam two evolutions on. None of them
   // near the crown -- one on the top corner reads as an ear, every time.
-  crystal(p, cx + 14, G - 84, 14, -Math.PI * 0.12, 5);
-  crystal(p, cx + 17, G - 26, 12, -Math.PI * 0.04, 4.4);
-  crystal(p, cx - 20, G - 48, 11, -Math.PI * 0.9, 4);
+  // Both are on the lower right flank, and neither is anywhere near the crown.
+  // A prism on the top corner reads as an ear -- and worse here, it rounds off
+  // the shear plane, which on a bar this narrow is the only bit of drawing that
+  // says which way up the creature is.
+  crystal(p, cx + 11, G - 40, 9, -Math.PI * 0.06, 3.4);
+  crystal(p, cx + 8, G - 16, 8, -Math.PI * 0.1, 3);
 
-  /* --- the buttress arm. One block limb dropping down the left flank to a
-     fist planted flat on the floor. It is the only asymmetric mass on the
-     sprite and it is what carries the lean.
+  /* --- the buttress arm. One block limb down the left flank to a fist planted
+     flat on the floor. It is the only asymmetric mass on the sprite.
 
      It bowed a long way out at first and the gap between arm and shaft came out
-     as a great oval hole -- the creature read as a jug with a handle. A limb
-     against a body wants a slot, not a loop: keep the gap eight or ten cells
-     and it is a gap between two things, open it to thirty and it is a shape in
-     its own right and the eye reads it before it reads either of them. */
-  rock(p, [[cx - 26, G - 70], [cx - 9, G - 66], [cx - 24, G - 28], [cx - 43, G - 32]], BASE, HILIGHT, DEEP, 3);
-  rock(p, [[cx - 49, G - 26], [cx - 24, G - 30], [cx - 21, G - 2], [cx - 46, G]], BASE, HILIGHT, DEEP, 3);
+     as a great oval hole -- the creature read as a jug with a handle. Swinging
+     it back in fixed the hole and left a different problem: at cx-49 the fist
+     alone was twenty cells of pure width on a creature whose whole point is
+     that it has none. So it is pulled right in against the flank, four cells
+     proud of the shaft and no more, and the LIGHT band down its left edge is
+     the same band that runs down the shaft above it. A buttress reads as a
+     buttress from its shadow, not from how far it sticks out. */
+  rock(p, [[cx - 19, G - 50], [cx - 7, G - 46], [cx - 10, G - 30], [cx - 21, G - 34]], BASE, HILIGHT, DEEP, 3);
+  rock(p, [[cx - 22, G - 28], [cx - 8, G - 31], [cx - 6, G - 2], [cx - 20, G - 1]], BASE, HILIGHT, DEEP, 3);
+  // The lit band carried on down the arm and the fist, picking up the shaft's
+  // edge exactly where it stopped.
+  poly(p, [[cx - 20, G - 2], [cx - 21, G - 30], [cx - 18, G - 48], [cx - 13, G - 47],
+    [cx - 16, G - 30], [cx - 15, G - 2]], LIGHT);
+  polyLine(p, [[cx - 13, G - 47], [cx - 16, G - 30], [cx - 15, G - 2]], DEEP, false, true);
   // The gutter that separates the arm from the shaft. Carved in relief rather
   // than swung clear, it costs no silhouette and cannot make a handle -- and a
   // limb cut into a standing stone is more of what a menhir is than a limb
   // waved beside one.
-  for (let i = 0; i <= 40; i++) {
-    const t = i / 40, gx = lerp(cx - 9, cx - 23, t), gy = lerp(G - 66, G - 29, t);
+  for (let i = 0; i <= 30; i++) {
+    const t = i / 30, gx = lerp(cx - 7, cx - 9, t), gy = lerp(G - 46, G - 31, t);
     cellOver(p, gx, gy, DEEP);
     cellOver(p, gx + 1, gy, DEEP);
     cellOver(p, gx - 1, gy, HILIGHT);
   }
-  // Knuckle grooves across the fist, and a lit lip on each.
-  for (let i = 0; i < 3; i++) {
-    const y = G - 22 + i * 7;
-    stroke(p, cx - 47, y, cx - 24, y - 1, DEEP);
-    stroke(p, cx - 47, y - 1, cx - 24, y - 2, HILIGHT);
+  // Finger grooves down the fist -- VERTICAL, with one raked knuckle line
+  // across the top of them. Three level courses ruled across a narrow column,
+  // with a chip below and the arm joint above, gave the whole lower left of the
+  // sprite five horizontal divisions: it came out as brickwork, on the one
+  // creature in the family whose entire premise is that it has no joint
+  // anywhere on it. Fingers run the other way, so they say "hand" and stack the
+  // vertical up at the same time.
+  // Two of them, fat, not four thin ones -- evenly spaced hairlines across a
+  // pale panel are a barcode, and the first cut of this came out looking like
+  // one. Three fingers is a fist; five is a comb.
+  for (let i = 0; i < 2; i++) {
+    const fx = cx - 16 + i * 5;
+    stroke(p, fx, G - 21, fx + 1, G - 5, DEEP);
+    stroke(p, fx + 1, G - 21, fx + 2, G - 5, DEEP);
+    stroke(p, fx - 1, G - 21, fx, G - 5, HILIGHT);
   }
-  // Chips and a cracked corner in the lit strip. A pale panel of exactly even
-  // width from top to bottom is a plank; three broken edges make it stone.
-  for (const [qx, qy, ql] of [[cx - 20, G - 88, 7], [cx - 16, G - 52, 6], [cx - 22, G - 30, 5]] as const) {
+  stroke(p, cx - 21, G - 23, cx - 8, G - 26, DEEP);
+  stroke(p, cx - 21, G - 24, cx - 8, G - 27, HILIGHT);
+  // Chips and a cracked corner in the lit band. A pale panel of exactly even
+  // width from top to bottom is a plank; broken edges make it stone.
+  for (const [qx, qy, ql] of [[cx - 16, G - 96, 6], [cx - 15, G - 56, 5]] as const) {
     stroke(p, qx, qy, qx + ql, qy + ql * 0.6, DEEP);
     stroke(p, qx, qy - 1, qx + ql, qy + ql * 0.6 - 1, HILIGHT);
   }
 
-  if (p.back) { p.face(cx - 8, G - 76, 18); return; }
+  if (p.back) { p.face(cx - 4, G - 68, 18); return; }
 
   /* --- the carved face, a third of the way down the shaft. Not features
      sitting on stone: slots cut INTO it. The sockets are struck first as
@@ -574,31 +647,65 @@ function menhir(p: Pen): void {
   // The socket walls are DEEP, not INNER. A warm cavity tone is right for a
   // mouth or an ear and wrong for a chiselled hole: two INNER rectangles round
   // the eyes came out as a pair of maroon spectacles.
-  for (const [ex, ey, ew] of [[cx - 16, G - 74, 8], [cx + 1, G - 77, 7]] as const) {
-    poly(p, [[ex - ew, ey + 6], [ex - ew + 1, ey - 6], [ex + ew, ey - 7], [ex + ew - 1, ey + 5]], DEEP);
-    stroke(p, ex - ew, ey - 6, ex + ew, ey - 7, HILIGHT);
-    stroke(p, ex - ew + 1, ey + 5, ex + ew - 1, ey + 4, SHADE);
+  //
+  // Both sockets are cut to the full width of the stone and set edge to edge,
+  // so between them they span all thirty-three cells of the shaft. On the wide
+  // version there were six cells of blank granite outside each socket and at
+  // half size that blank is what the eye reads: the face shrank to a smudge in
+  // the middle of a slab. A carved face on a narrow stone should look like the
+  // mason used every inch he had.
+  //
+  // The sockets are cut BIG and left mostly empty -- fifteen cells across and
+  // sixteen deep, with an eye only eleven across sitting in the middle of each,
+  // so three or four cells of solid black run right round the eye. That margin
+  // is the whole trick. The icon pass takes the dominant colour of every 2x2
+  // block, so a socket whose ink is six different tones interleaved comes back
+  // as an arbitrary grey smear at half size; a socket that is one big flat area
+  // of the darkest tone in the palette comes back as a hole, every time, and
+  // the eye inside it is then free to be small.
+  for (const [ex, ey, ew] of [[cx - 11, G - 69, 7], [cx + 6, G - 72, 6.5]] as const) {
+    poly(p, [[ex - ew, ey + 7], [ex - ew + 1, ey - 7], [ex + ew, ey - 8], [ex + ew - 1, ey + 6]], DEEP);
+    // A chiselled rim right round the socket, not just along the top lip. The
+    // socket has to hold its own contrast wherever it happens to land on the
+    // shaft, and a dark hole with a bright edge all the way round it survives
+    // any tone behind it -- a top lip alone only works on the lit side.
+    polyLine(p, [[ex - ew - 1, ey + 8], [ex - ew, ey - 8], [ex + ew + 1, ey - 9]], LIGHT, false, true);
+    polyLine(p, [[ex + ew + 1, ey - 9], [ex + ew, ey + 7], [ex - ew - 1, ey + 8]], HILIGHT, false, true);
   }
-  eye(p, cx - 16, G - 74, 5.6, 'slit', { side: -1, iris: ACCENT_LIT, bare: true });
-  eye(p, cx + 1, G - 77, 5, 'slit', { side: 1, iris: ACCENT_LIT, bare: true });
-  p.face(cx - 8, G - 76, 18);
+  // The bridge of stone between the two sockets, lit on its left face. Cut edge
+  // to edge with no bridge they merge into one dark visor slot and the creature
+  // has a letterbox where its eyes should be -- which is exactly what the first
+  // narrow fit came out with.
+  for (let i = 0; i <= 14; i++) {
+    const by = G - 77 + i;
+    cellOver(p, cx - 4, by, HILIGHT);
+    cellOver(p, cx - 3, by, LIGHT);
+    cellOver(p, cx - 2, by, BASE);
+    cellOver(p, cx - 1, by, DEEP);
+  }
+  eye(p, cx - 11, G - 69, 4.6, 'slit', { side: -1, iris: ACCENT_LIT, bare: true });
+  eye(p, cx + 6, G - 72, 4.2, 'slit', { side: 1, iris: ACCENT_LIT, bare: true });
+  p.face(cx - 4, G - 71, 16);
 
   // A straight chiselled brow ledge over both sockets: one cut, right across,
   // with a lit lip above it and two rows of shadow under.
-  for (let i = 0; i <= 40; i++) {
-    const bx = cx - 26 + i, by = G - 84 - i * 0.17;
+  for (let i = 0; i <= 32; i++) {
+    const bx = cx - 19 + i, by = G - 81 - i * 0.16;
     cellOver(p, bx, by - 1, LIGHT);
     cellOver(p, bx, by, HILIGHT);
     cellOver(p, bx, by + 1, DEEP);
     cellOver(p, bx, by + 2, DEEP);
     cellOver(p, bx, by + 3, SHADE);
   }
-  // The mouth: a deep horizontal cut with a lit sill, and three broken teeth of
-  // pale stone standing in it. A carved face needs a cut mouth, not lips.
-  rect(p, cx - 17, G - 61, cx + 3, G - 58, DEEP);
-  stroke(p, cx - 17, G - 62, cx + 3, G - 62, HILIGHT);
-  stroke(p, cx - 17, G - 57, cx + 3, G - 57, SHADE);
-  for (const tx of [cx - 12, cx - 4]) rect(p, tx, G - 61, tx + 1, G - 59, LIGHT);
+  // The mouth: a deep horizontal cut with a lit sill, and two broken teeth of
+  // pale stone standing in it. A carved face needs a cut mouth, not lips. Four
+  // cells deep rather than three -- at half size a three-cell slot on a
+  // thirty-three cell face closes up and the creature loses its mouth on the
+  // party screen, which is the screen it is looked at on most.
+  rect(p, cx - 12, G - 59, cx + 4, G - 55, DEEP);
+  stroke(p, cx - 12, G - 60, cx + 4, G - 60, HILIGHT);
+  stroke(p, cx - 12, G - 54, cx + 4, G - 54, SHADE);
+  for (const tx of [cx - 8, cx - 1]) rect(p, tx, G - 59, tx + 1, G - 57, LIGHT);
 }
 
 /* =============================================================== chalkid */
@@ -706,15 +813,58 @@ function chalkid(p: Pen): void {
 
   /* --- the face, low on the crown and half shut. Placid to the point of smug:
      the lids do all of it, and they are what stop this reading as another
-     startled pebble. The lids are body-toned so they shade as chalk. */
-  eye(p, cx - 15, bodyY - 10, 5.6, 'sleepy', { side: -1, iris: ACCENT_DARK, lid: BASE });
-  eye(p, cx + 7, bodyY - 13, 5, 'sleepy', { side: 1, iris: ACCENT_DARK, lid: BASE });
+     startled pebble. The lids are body-toned so they shade as chalk.
+
+     Each eye is sunk in a socket of DEEP first. Chalkid is the palest creature
+     on the roster -- body LIGHT, lid BASE, sclera white -- and a half-shut eye
+     made of three near-identical pale tones on a pale lump is nothing at all
+     once the sprite is halved: the party icon was a white blob with two grey
+     smudges on it, and the eyes were the weakest part of the sprite at full
+     size too. The socket is the only dark shape available, so it has to do the
+     work, and it shows above the lid line as a deep-set brow, which suits a
+     creature this smug better than a bright eye would. */
+  //
+  // A ring of dark all the way round the eye was the first attempt and it was
+  // wrong: it made the lens read as the white of a big open eye and chalkid
+  // came out startled and cheerful, which is a different animal. The dark has
+  // to go where the character already is -- in the LID. A solid four-cell hood
+  // of the dull accent over each socket is the biggest flat dark shape on the
+  // creature, it survives the halving as a bar, and a heavy stone lid is
+  // exactly what "placid to the point of smug" looks like.
+  for (const [ex, ey, er] of [[cx - 15, bodyY - 10, 6.4], [cx + 7, bodyY - 13, 5.8]] as const) {
+    blob(p, ex, ey + er * 0.35, er + 1.6, er * 0.6 + 1.6, DEEP);
+    for (let dx = -Math.ceil(er) - 2; dx <= er + 2; dx++) {
+      const t = dx / (er + 2);
+      const ly = ey - er * 0.05 - (1 - t * t) * er * 0.32;
+      for (let k = 1; k <= 2; k++) cellOver(p, ex + dx, ly - k, DEEP);
+      for (let k = 3; k <= 4; k++) cellOver(p, ex + dx, ly - k, ACCENT_DARK);
+      cellOver(p, ex + dx, ly - 5, LIGHT);
+      cellOver(p, ex + dx, ly - 6, HILIGHT);
+    }
+  }
+  // The sclera is the accent, not white. A half-shut eye is a small lens, and
+  // two cells of white either side of the iris are enough for the icon's
+  // dominant-colour sampler to split the eye into three pale fragments -- the
+  // dark patch a viewer needs has to be UNBROKEN, so the whole lens is dark and
+  // the glint alone carries the wet.
+  eye(p, cx - 15, bodyY - 10, 6.4, 'sleepy', { side: -1, iris: ACCENT_DARK, sclera: ACCENT, lid: BASE, bare: true });
+  eye(p, cx + 7, bodyY - 13, 5.8, 'sleepy', { side: 1, iris: ACCENT_DARK, sclera: ACCENT, lid: BASE, bare: true });
   p.face(cx - 4, bodyY - 11, 20);
 
   // A small flat mouth well below the eyes, turned up at the corners. There is
   // a lot of blank chalk between the two and that gap is deliberate: it makes
   // the head a lump with a face on it rather than a head.
-  mouthLine(p, cx - 4, bodyY + 1, 7, -1);
+  //
+  // Cut in DEEP rather than with `mouthLine`, whose cavity tone is a warm
+  // near-maroon: on white chalk that came out as one pale pink hairline, which
+  // is a mouth at 3x and nothing whatever at half size.
+  for (let i = -8; i <= 8; i++) {
+    const my = bodyY + 2 - Math.abs(i) * 0.22;
+    cellOver(p, cx - 4 + i, my, DEEP);
+    cellOver(p, cx - 4 + i, my + 1, DEEP);
+    cellOver(p, cx - 4 + i, my - 1, HILIGHT);
+    cellOver(p, cx - 4 + i, my + 2, LIGHT);
+  }
   // Two dust smears wiped down the belly, in the dull accent. The Vellum says
   // it marks everything it touches; this is it marking itself.
   for (const [sx, sy] of [[cx - 13, bodyY + 19], [cx - 7, bodyY + 22]] as const) {
@@ -760,14 +910,30 @@ function chalkmar(p: Pen): void {
      bevelled in the weathered tan the palette gives us. They step, so the top
      contour is a serrated ridge and not a curve -- and that serration is the
      whole silhouette read. */
+  //
+  // They have to CLEAR the barrel, and the first cut of them did not. The body
+  // blobs top out at G-66 and the slab apexes were reaching G-71 at best and
+  // G-62 at worst, so four of the six were drawn entirely inside the barrel's
+  // own outline: a serration you can only see because it is a different tone is
+  // not a serration, it is a pattern, and in flat silhouette chalkmar came out
+  // as a smooth loaf. Every apex now stands eight to fifteen cells proud of the
+  // back and is a real POINT rather than a rounded corner, which turns the top
+  // contour into six hard teeth -- and six hard teeth is a shape no other rock
+  // on the sheet has.
   for (let i = 0; i < 6; i++) {
     const t = i / 5;
     const px = cx + 40 - i * 17;
-    const top = G - 56 - Math.sin(t * Math.PI) * 10;
+    // Alternate slabs are shoved three cells higher than the sine alone would
+    // put them, and every apex sits FORWARD of the slab's centre so the plate
+    // leans the way the animal walks. Six symmetric triangles stepped smoothly
+    // up and down are a stegosaur off a shelf; six leaning slates at six
+    // different heights are a quarry face that has grown over an animal, which
+    // is what this species is supposed to be.
+    const top = G - 63 - Math.sin(t * Math.PI) * 6 - (i % 2) * 3;
     const w = 12 - i * 0.5;
     const slab: Pt[] = [
-      [px - w, top + 4], [px - w * 0.35, top - 6], [px + w * 0.8, top - 3], [px + w + 2, top + 12],
-      [px - w * 0.6, top + 16],
+      [px - w, top + 8], [px - w * 0.75, top - 3], [px - w * 0.15, top - 11],
+      [px + w * 0.95, top + 4], [px + w + 2, top + 16], [px - w * 0.6, top + 20],
     ];
     // Bevelled in the body ramp, with the weathered tan kept to the single
     // leading edge. Ringing every slab in ACCENT_LIT outlined all six of them
@@ -775,6 +941,7 @@ function chalkmar(p: Pen): void {
     rock(p, slab, i % 2 ? BASE : SHADE, HILIGHT, DEEP, true);
     stroke(p, slab[0]![0], slab[0]![1], slab[1]![0], slab[1]![1], ACCENT);
     stroke(p, slab[1]![0], slab[1]![1], slab[2]![0], slab[2]![1], ACCENT_LIT);
+    stroke(p, slab[2]![0], slab[2]![1], slab[3]![0], slab[3]![1], ACCENT);
     stroke(p, slab[1]![0], slab[1]![1] + 1, slab[2]![0], slab[2]![1] + 1, ACCENT_DARK);
   }
 
@@ -793,40 +960,61 @@ function chalkmar(p: Pen): void {
   overhang(p, cx - 38, cx - 8, G - 23, 6);
   overhang(p, cx + 6, cx + 42, G - 24, 6);
 
+  //
+  // The visor is three cells higher and the jaw three lower than they were.
+  // Between them they used to leave a five-cell band for a pair of eight-cell
+  // eyes, so the eyes were half under the brow and half under the chin -- and
+  // at half size they stopped being eyes at all and became two chips in the
+  // chalk. A face needs a CLEAR band of its own, and on a head this small three
+  // cells at each end is the difference between a face and a texture.
   const hx = cx - 44, hy = G - 46;
   limbPath(p, [[cx - 26, G - 44], [hx + 8, hy + 2]], 26, 22, BASE, { front: true });
-  rock(p, [[hx - 20, hy - 4], [hx - 14, hy - 13], [hx + 12, hy - 12], [hx + 14, hy + 8],
-    [hx - 3, hy + 14], [hx - 19, hy + 9]], BASE, HILIGHT, DEEP, true);
-  rock(p, [[hx - 22, hy - 6], [hx - 12, hy - 16], [hx + 13, hy - 15], [hx + 15, hy - 2], [hx - 20, hy - 1]],
+  rock(p, [[hx - 20, hy - 6], [hx - 14, hy - 15], [hx + 12, hy - 14], [hx + 14, hy + 10],
+    [hx - 3, hy + 17], [hx - 19, hy + 11]], BASE, HILIGHT, DEEP, true);
+  rock(p, [[hx - 22, hy - 8], [hx - 12, hy - 18], [hx + 13, hy - 17], [hx + 15, hy - 4], [hx - 20, hy - 3]],
     SHADE, ACCENT_LIT, ACCENT_DARK, true);
   for (let i = 0; i <= 36; i++) {
-    const bx = hx - 22 + i, by = hy - 1 - i * 0.06;
+    const bx = hx - 22 + i, by = hy - 3 - i * 0.06;
     cellOver(p, bx, by, ACCENT);
     cellOver(p, bx, by + 1, DEEP);
     cellOver(p, bx, by + 2, DEEP);
   }
   // The chisel jaw: a flat pale wedge driven forward under the wedge of the
   // skull, with a hard straight bite line. Chalk, and it is what it digs with.
-  poly(p, [[hx - 21, hy + 4], [hx + 4, hy + 6], [hx + 2, hy + 15], [hx - 19, hy + 12]], LIGHT);
-  stroke(p, hx - 21, hy + 4, hx + 4, hy + 6, DEEP);
-  stroke(p, hx - 21, hy + 3, hx + 4, hy + 5, HILIGHT);
-  polyLine(p, [[hx - 19, hy + 12], [hx + 2, hy + 15]], DEEP, false, true);
+  poly(p, [[hx - 21, hy + 8], [hx + 4, hy + 10], [hx + 2, hy + 18], [hx - 19, hy + 15]], LIGHT);
+  stroke(p, hx - 21, hy + 8, hx + 4, hy + 10, DEEP);
+  stroke(p, hx - 21, hy + 7, hx + 4, hy + 9, HILIGHT);
+  polyLine(p, [[hx - 19, hy + 15], [hx + 2, hy + 18]], DEEP, false, true);
   if (!p.back) {
     for (let i = 0; i < 4; i++) {
       const tx = hx - 17 + i * 5.5;
-      rect(p, tx, hy + 9, tx + 2, hy + 12, ACCENT_LIT);
-      stroke(p, tx + 3, hy + 8, tx + 3, hy + 13, DEEP);
+      rect(p, tx, hy + 12, tx + 2, hy + 16, ACCENT_DARK);
+      stroke(p, tx + 3, hy + 11, tx + 3, hy + 17, DEEP);
     }
-    stroke(p, hx - 20, hy + 8, hx + 3, hy + 10, INNER);
+    stroke(p, hx - 20, hy + 11, hx + 3, hy + 13, INNER);
   }
 
-  if (p.back) { p.face(hx - 4, hy + 1, 16); return; }
+  if (p.back) { p.face(hx - 4, hy + 2, 16); return; }
 
   /* --- the face. Small, hard and jammed up under the visor: a heavy animal
-     that has decided about you already. Big eyes here would make it a cow. */
-  eye(p, hx - 12, hy + 2, 4.4, 'angry', { side: -1, iris: ACCENT_LIT });
-  eye(p, hx + 4, hy + 2, 4, 'angry', { side: 1, iris: ACCENT_LIT });
-  p.face(hx - 4, hy + 1, 16);
+     that has decided about you already. Big eyes here would make it a cow.
+
+     Both eyes are sunk in a DEEP socket with a lit rim, and the iris is the
+     dark end of the accent rather than the bright one. On a creature whose
+     whole head is pale chalk and pale tan, a pale tan iris is invisible --
+     chalkmar spent a pass with two pale chips where its eyes should be, and
+     they had been that way at full size too, not just in the icon. Read the
+     palette before choosing which end of the ramp a feature lives on: this
+     species' contrast runs dark-on-light, like chalkid's, and everything that
+     has to be seen on it must be the dark thing. */
+  for (const [ex, ey, er] of [[hx - 12, hy + 3, 6.4], [hx + 4, hy + 3, 5.9]] as const) {
+    blob(p, ex, ey, er, er * 0.95, DEEP);
+    for (const q of arc(ex, ey, er, er * 0.95, Math.PI * 1.02, Math.PI * 1.92, 14)) cellOver(p, q[0], q[1], LIGHT);
+    for (const q of arc(ex, ey, er + 1, er * 0.95 + 1, Math.PI * 0.06, Math.PI * 0.9, 14)) cellOver(p, q[0], q[1], HILIGHT);
+  }
+  eye(p, hx - 12, hy + 3, 5, 'angry', { side: -1, iris: ACCENT_DARK, bare: true });
+  eye(p, hx + 4, hy + 3, 4.6, 'angry', { side: 1, iris: ACCENT_DARK, bare: true });
+  p.face(hx - 4, hy + 2, 16);
 }
 
 /* ============================================================ anchorling */

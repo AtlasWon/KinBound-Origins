@@ -14,8 +14,9 @@
  *               and one three-clawed shovel paw planted in front. The ears
  *               shrank to folded discs; the ringed tail and the buck teeth
  *               came through unchanged.
- *   tuftail     a small grazer buried to the jaw in a woolly collar, one hoof
- *               lifted mid-step, a fan of a tail cocked up over the rump.
+ *   tuftail     a small grazer buried to the jaw in a woolly collar, folded
+ *               down onto the floor with its legs tucked under it and its head
+ *               up, a fan of a tail cocked over the rump.
  *   bristlebuck the same animal grown tall and square: long legs, high
  *               shoulders, the collar hardened into a mantle of stiff green
  *               bristles on the withers, and two short horns rising back off
@@ -26,9 +27,11 @@
  *               head thrust low and forward, a ridge of frost spikes down its
  *               neck and its breath clouding off the muzzle.
  *
- * Sitting, low wedge, compact collar, tall square, diagonal crouch, stretched
- * run. That is six silhouettes before a single detail is drawn, which is the
- * only way six beasts avoid being one beast six times.
+ * Sitting, low wedge, couched, tall square, diagonal crouch, stretched run.
+ * That is six silhouettes before a single detail is drawn, which is the only
+ * way six beasts avoid being one beast six times -- and note that exactly one
+ * of the six is standing square on four legs, which is the shape every beast
+ * in a roster defaults to and the shape that makes them interchangeable.
  *
  * ONE THING WORTH KNOWING BEFORE YOU DRAW A BEAST. The stock type character
  * pass has no case for `beast`, so beasts fall through to its default: guard
@@ -47,11 +50,36 @@ import {
 import {
   arc, bellyPlate, blob, blobFront, brow, cell, cellOver, claw, crease, earPointed, earRound,
   eye, legDigitigrade, legPlantigrade, limbPath, mane, muzzle, normalAt,
-  path, paw, poly, polyFront, rings, spineRow, stroke, tailPlume, tuft, whiskers,
+  path, paw, poly, polyFront, spineRow, stroke, tailPlume, topOf, tuft, whiskers,
   type Pen, type Pt,
 } from '../parts.js';
 
 /* ------------------------------------------------------------- shared */
+
+/**
+ * Round off a closed outline: densify it, then run a few averaging passes
+ * around the loop.
+ *
+ * A body built as one polygon is the only way to get one continuous contour --
+ * overlapping masses each bring their own seam -- but a hand-listed polygon
+ * comes out of the rasteriser as a run of flats with visible corners between
+ * them, and a corner on a back reads as a bump. Four passes of this turn the
+ * fourteen points a body is easy to *think* in into the two hundred a body
+ * needs to be *drawn* in.
+ */
+function smoothLoop(pts: Pt[], passes = 4): Pt[] {
+  let cur = path([...pts, pts[0]!]);
+  const n = cur.length;
+  for (let k = 0; k < passes; k++) {
+    const out: Pt[] = [];
+    for (let i = 0; i < n; i++) {
+      const a = cur[(i - 2 + n) % n]!, q = cur[i]!, b = cur[(i + 2) % n]!;
+      out.push([(a[0] + q[0] * 2 + b[0]) / 4, (a[1] + q[1] * 2 + b[1]) / 4]);
+    }
+    cur = out;
+  }
+  return cur;
+}
 
 /**
  * A cloven hoof: a dark wedge with a lit top lip and a split up the middle.
@@ -277,11 +305,13 @@ function burrowen(p: Pen): void {
   // front of the animal came out as one loaf with a face drawn on the end;
   // the notch between skull and shoulder is the only thing that says which end
   // is the head when the sprite is filled with one flat colour.
-  const headX = cx - 40, headY = G - 41;
+  const headX = cx - 40, headY = G - 38;
 
   /* --- the tail: short, thick and ringed, the one piece of nibbet that grew
      rather than shrank. */
-  const tailPts: Pt[] = [[hipX + 12, G - 44], [hipX + 21, G - 40], [hipX + 24, G - 29]];
+  // It has to leave the rump before it is a tail. Rooted level with the hip it
+  // was drawn entirely inside the body mass and the animal came out with none.
+  const tailPts: Pt[] = [[hipX + 14, G - 40], [hipX + 25, G - 37], [hipX + 30, G - 25]];
   limbPath(p, tailPts, 13, 5, BASE, { lit: HILIGHT, dark: DEEP });
   const td = path(tailPts);
   for (const t of [0.3, 0.62]) {
@@ -298,23 +328,60 @@ function burrowen(p: Pen): void {
   limbPath(p, [[shX + 4, shY + 8], [shX - 4, G - 16], [shX - 12, G - 8]], 12, 9, SHADE);
   paw(p, shX - 18, G - 2, 8, { tone: SHADE, toes: 3, long: true, claws: true });
 
-  /* --- the body: a long low mass, deepest at the shoulder rather than at the
-     hip. Every digging animal is built like that and nothing else says
-     "front-wheel drive" as cheaply. */
-  limbPath(p, [[hipX, hipY], [cx, G - 40], [shX, shY]], 40, 36, BASE, { bulge: 2 });
-  blobFront(p, hipX + 2, hipY + 2, 21, 20, BASE);
-  blobFront(p, shX + 2, shY - 6, 22, 21, BASE);
-  // The shoulder hump: a lit crest riding over a dark gutter, right where the
-  // digging muscle is. One curve, and it is what makes the animal look strong
-  // rather than merely fat.
-  for (const q of arc(shX + 2, shY - 8, 21, 16, Math.PI * 1.06, Math.PI * 1.94, 26)) {
-    cellOver(p, q[0], q[1] + 3, DEEP);
-    cellOver(p, q[0], q[1] + 2, HILIGHT);
+  /* --- the body. ONE contour, and this is the whole of what was wrong with
+     the first version of this animal.
+
+     It used to be three overlapping masses -- rump, barrel, shoulder hump --
+     each laid down with `blobFront`, and `blobFront` presses a dark seam ring
+     into whatever it lands on. Three rings meant three hard edges across the
+     back, and at 3x the creature read as three bumps standing in a row rather
+     than as one animal. So the trunk is a single polygon now: the outline
+     leaves the tail root, climbs a rounded rump, runs forward along a back
+     that rises the whole way, crests over the digging hump and drops down the
+     nape. Nothing drawn inside it is allowed to make an edge -- every mark
+     below goes down with `cellOver`, which cannot extend or cut the
+     silhouette -- and there is exactly ONE crease on the trunk, the shoulder
+     blade. One crease reads as anatomy. Three read as upholstery. */
+  const trunk: Pt[] = [
+    [hipX + 21, G - 32], [hipX + 18, G - 44], [hipX + 10, G - 52], [hipX - 4, G - 58],
+    [cx - 2, G - 63], [shX + 5, G - 67], [shX - 3, G - 65], [shX - 11, G - 56],
+    [shX - 16, G - 44], [shX - 16, G - 31], [shX - 7, G - 23],
+    [cx + 6, G - 19], [hipX + 4, G - 19], [hipX + 17, G - 24],
+  ];
+  poly(p, smoothLoop(trunk), BASE);
+
+  /* The back, lit as one unbroken run from rump to nape.
+
+     It is read off the mask rather than off the point list -- `topOf` walks
+     the finished contour column by column -- so the highlight lands on the
+     silhouette that actually got rasterised instead of on the one that was
+     specified. A single bright line the length of the animal is the cheapest
+     thing that says "all of this is one back", and it is the exact thing the
+     three seams were destroying. */
+  for (let x = shX - 14; x <= hipX + 13; x++) {
+    const y = topOf(p, x);
+    if (y < 0) continue;
+    cellOver(p, x, y + 1, HILIGHT);
+    cellOver(p, x, y + 2, LIGHT);
+    cellOver(p, x, y + 3, LIGHT);
   }
-  bellyPlate(p, cx - 4, G - 22, 22, 8, 3);
+  // The underside, and the roll of the far haunch. Both washes, not outlines:
+  // a wash gives a mass its round without cutting the animal into pieces.
+  for (const q of path([[shX - 12, G - 25], [cx, G - 20], [hipX + 12, G - 23]] as Pt[])) {
+    for (let k = 0; k < 6; k++) cellOver(p, q[0], q[1] - k, SHADE);
+  }
+  for (const q of arc(hipX + 2, G - 41, 19, 18, -Math.PI * 0.5, Math.PI * 0.5, 20)) {
+    for (let k = 0; k < 4; k++) cellOver(p, q[0] - k, q[1], SHADE);
+  }
+  // The one crease: the shoulder blade, raked down and forward off the hump,
+  // right where a digger's power comes from.
+  for (const q of arc(shX + 7, G - 46, 15, 17, Math.PI * 0.6, Math.PI * 1.34, 18)) {
+    cellOver(p, q[0], q[1], DEEP);
+    cellOver(p, q[0] + 1, q[1], LIGHT);
+  }
 
   /* --- near hind leg, carrying the weight. */
-  legPlantigrade(p, hipX - 6, hipY + 12, G, { tone: BASE, side: 1, thick: 16, ankle: 9, footHalf: 9, front: true, claws: true });
+  legPlantigrade(p, hipX - 6, hipY + 2, G, { tone: BASE, side: 1, thick: 16, ankle: 9, footHalf: 9, front: true, claws: true });
 
   /* --- the head, dropped low and forward off the hump. The cheek line behind
      the jaw is what keeps it a head: drawn onto the same broad mass in the
@@ -337,9 +404,9 @@ function burrowen(p: Pen): void {
      above the eyes -- and two dark hollows over two dark eyes gave the animal
      four of them. An ear that has to be dark inside belongs on a creature
      whose ears are not near its eyes. */
-  earRound(p, headX + 15, headY - 7, 4.5, 1, { tone: SHADE, inner: SHADE, front: true });
-  earRound(p, headX + 5, headY - 13, 6.5, -1, { tone: BASE, inner: SHADE, front: true });
-  for (const q of arc(headX + 5, headY - 13, 4.2, 4.6, Math.PI * 0.85, Math.PI * 1.95, 12)) cellOver(p, q[0], q[1], DEEP);
+  earRound(p, headX + 9, headY - 6, 4.5, 1, { tone: SHADE, inner: SHADE, front: true });
+  earRound(p, headX + 1, headY - 13, 6.5, -1, { tone: BASE, inner: SHADE, front: true });
+  for (const q of arc(headX + 1, headY - 13, 4.2, 4.6, Math.PI * 0.85, Math.PI * 1.95, 12)) cellOver(p, q[0], q[1], DEEP);
 
   // The snout is pushed well forward of the skull. On a silhouette this
   // loaf-shaped it is the only thing that says which end the head is.
@@ -360,10 +427,29 @@ function burrowen(p: Pen): void {
        around them. Drawn as two patches wider than the eyes, it reads. And it
        has to be laid before them either way -- `eye` marks the mask
        immediately, unlike the stock pair, which is queued until after the
-       light has run. */
-    blob(p, headX - 7, headY - 4, 7.5, 5.5, ACCENT);
-    blob(p, headX + 7, headY - 6, 6.5, 4.8, ACCENT);
-    for (let k = 0; k < 2; k++) stroke(p, headX - 13, headY - 3 + k, headX + 11, headY - 7 + k, ACCENT);
+       light has run.
+
+       In plain ACCENT it was still invisible, and that is the second half of
+       the lesson: ACCENT is a *species* colour, and on a brown animal the
+       species feature colour is another brown. A marking has to be painted in
+       a tone the shading pass will not touch, so this is ACCENT_DARK -- the
+       same fixed near-black that carries nibbet's tail rings, which are the
+       one marking on that sprite anybody can actually see. It is also most of
+       what gives this animal a face at icon size: two dark blots the eye can
+       find from across the party screen, before it can find an eye at all.
+
+       And it is a *band*, not two rings. Drawn as one patch per socket it came
+       out as a pair of spectacles, because a patch only a little wider than
+       the eye inside it is an eye outline however dark it is. Fourteen rows
+       raked across the whole face, from the near jaw up to the far brow, is
+       the smallest thing that reads as a mask -- and `stroke` only marks
+       existing body, so a band this wide cannot spill off the skull. */
+    for (let k = 0; k < 14; k++) {
+      // Pulled in at the top and bottom rows, so the band is a lens rather
+      // than the domino it comes out as when every row is the same length.
+      const in0 = Math.abs(k / 13 - 0.5) * 11;
+      stroke(p, headX - 17 + in0, headY - 10 + k, headX + 15 - in0, headY - 13 + k, ACCENT_DARK);
+    }
   }
 
   /* --- the near foreleg and the shovel. The paw is planted out past the
@@ -374,16 +460,27 @@ function burrowen(p: Pen): void {
      five cells across at the root, tapering over sixteen. A spike four cells
      wide at the base is two cells wide for most of its length and comes back
      from the ink pass as wire. */
-  limbPath(p, [[shX + 2, shY + 10], [shX - 12, G - 26], [shX - 26, G - 20]], 16, 12, BASE, { front: true, bulge: 2 });
-  crease(p, shX - 12, G - 26, 7);
-  const wx = cx - 48, wy = G - 19;
-  polyFront(p, [[wx + 11, wy - 9], [wx + 14, wy + 3], [wx - 5, wy + 7], [wx - 9, wy - 5]], BASE);
-  stroke(p, wx + 10, wy - 8, wx - 8, wy - 5, HILIGHT);
+  limbPath(p, [[shX + 2, shY + 10], [shX - 12, G - 24], [shX - 26, G - 17]], 16, 12, BASE, { front: true, bulge: 2 });
+  crease(p, shX - 12, G - 24, 7);
+  /* The paw itself is a rounded knuckle mass, not a flat quadrilateral. Drawn
+     as a plank it sat under the jaw as a pale slab and nobody could tell where
+     the head ended and the foot began; a mass with three knuckle bumps along
+     its front edge and a dark line under it reads as a hand even before the
+     claws go on. It is also dropped clear of the skull -- the first version
+     overlapped the chin, which is the one place a paw must not be. */
+  const wx = cx - 48, wy = G - 15;
+  blobFront(p, wx + 2, wy - 2, 11, 7.5, BASE);
+  for (let i = 0; i < 3; i++) blob(p, wx - 7 + i * 8, wy + 2, 4.6, 4.2, BASE);
+  for (const q of arc(wx + 2, wy - 3, 10, 7, Math.PI * 1.02, Math.PI * 1.98, 14)) {
+    cellOver(p, q[0], q[1] + 1, HILIGHT);
+    cellOver(p, q[0], q[1] + 2, LIGHT);
+  }
+  for (let i = 1; i < 3; i++) stroke(p, wx - 11 + i * 8, wy - 3, wx - 11 + i * 8, wy + 6, DEEP);
   for (let i = 0; i < 3; i++) {
-    const bx = wx - 8 + i * 8, by = wy + 6 + i * 0.5;
-    poly(p, [[bx - 4.5, by - 4], [bx + 4.5, by - 5], [bx + 1, by + 13]], ACCENT_LIT);
-    stroke(p, bx - 4.5, by - 4, bx + 1, by + 13, SPEC);
-    stroke(p, bx + 4.5, by - 5, bx + 1, by + 12, ACCENT_DARK);
+    const bx = wx - 8 + i * 8, by = wy + 5 + i * 0.5;
+    poly(p, [[bx - 4.5, by - 4], [bx + 4.5, by - 5], [bx + 1, by + 11]], ACCENT_LIT);
+    stroke(p, bx - 4.5, by - 4, bx + 1, by + 11, SPEC);
+    stroke(p, bx + 4.5, by - 5, bx + 1, by + 10, ACCENT_DARK);
     stroke(p, bx - 4.5, by - 4, bx + 4.5, by - 5, ACCENT_DARK);
   }
 
@@ -394,8 +491,8 @@ function burrowen(p: Pen): void {
   // The lid is body-toned, not mask-toned. Painted in the near-black of the
   // mask it sat inside, the whole eye disappeared into the patch and the
   // animal came out with a smudge for a face.
-  eye(p, headX - 7, headY - 4, 5, 'sleepy', { side: -1, iris: ACCENT_LIT, lid: BASE });
-  eye(p, headX + 7, headY - 6, 4.2, 'sleepy', { side: 1, iris: ACCENT_LIT, lid: BASE });
+  eye(p, headX - 7, headY - 3, 5, 'sleepy', { side: -1, iris: ACCENT_LIT, lid: BASE });
+  eye(p, headX + 8, headY - 5, 4.2, 'sleepy', { side: 1, iris: ACCENT_LIT, lid: BASE });
   p.face(headX, headY, 19);
 }
 
@@ -413,7 +510,27 @@ function burrowen(p: Pen): void {
  * SHADE, the front half in LIGHT over the chest -- which is what makes it a
  * thing the creature is wearing rather than a sunburst printed behind it.
  *
- * The pose is one lifted forehoof. It follows walkers, so it is walking.
+ * THE POSE, which is the most important decision on this sprite and the one
+ * thing on it worth arguing about.
+ *
+ * This animal used to be walking, and walking is what tuftail, frostnip and
+ * rimehound were each doing a version of: three mid-sized quadrupeds with four
+ * legs under them and daylight beneath the belly. They told apart, but only
+ * just, and they were the one place on the sheet where the pair-of-eyes test
+ * had to be taken twice.
+ *
+ * So this one is couched -- folded onto the floor with its legs tucked under
+ * it, chest down, head up. It is the only creature in the group that is not
+ * standing on anything; there is no gap of light beneath it anywhere; and the
+ * silhouette is a low mound with the collar and the head stacked at the front
+ * corner of it. A posture the other two cannot take is worth more than any
+ * quantity of fur, and it costs nothing at icon size -- fur is the first thing
+ * to go down there and a body plan is the last.
+ *
+ * Keeping the head *up* is the other half of the decision. Head-down grazing
+ * is the other posture nothing else here has, and it was tried first, but it
+ * buries the face in the floor -- and the face is the half of the sprite the
+ * party screen actually shows.
  */
 function tuftail(p: Pen): void {
   const G = p.ground, cx = p.cx;
@@ -422,60 +539,99 @@ function tuftail(p: Pen): void {
      it landed on top of the collar and came out as two extra ears. The collar
      is this species' entire read; it does not need help. */
   p.noTypeTraits();
-  const hipX = cx + 18, hipY = G - 48;
-  const shX = cx - 6, shY = G - 48;
-  const headX = cx - 42, headY = G - 62;
-  const ruffX = cx - 22, ruffY = G - 53;
+  const chX = cx - 12;
+  const headX = cx - 40, headY = G - 52;
+  const ruffX = cx - 22, ruffY = G - 32;
 
-  /* --- the bottle-brush tail, cocked up over the rump. Long enough to read as
-     a tail rather than as a fifth foot: this species is named for it. */
   /* --- the tail, and the species is named for it, so it is built rather than
-     called for: a short thick stalk with a fan of long clumps bursting off the
-     end of it. `tailPlume` gave a tapered brush that came out as a flag; a
-     tuft is a *fan*, and a fan has to be drawn as separate hairs radiating
-     from one point. */
-  limbPath(p, [[hipX + 4, G - 44], [hipX + 13, G - 55], [hipX + 15, G - 64]], 11, 7, BASE, { lit: HILIGHT, dark: DEEP });
-  for (let i = 0; i < 5; i++) {
-    const a = -Math.PI * (0.82 - i * 0.16);
-    tuft(p, hipX + 14, G - 62, 17 - Math.abs(i - 2) * 3, a, 0.2, i % 2 ? SHADE : BASE);
+     called for: a tapering stalk sweeping up and back off the rump with a
+     ragged coat of hair down both sides of it.
+
+     Three failed shapes, all of them reached by reasoning rather than by
+     looking. `tailPlume` came out as a flag. Two `mane` runs down either side
+     of a stalk came out as a dorsal crest welded to the rump. And a fan of
+     five long separate clumps radiating from the stalk's tip -- the obvious
+     reading of the word "tuft", and what this animal wore for a whole pass --
+     came out unmistakably as a *waving hand*: five fingers with daylight
+     between them, a palm behind, a forearm below. It stayed a hand at every
+     angle and every size tried.
+
+     What kills the hand is filling the gaps. The fan is a solid half-disc with
+     six dark ribs raked across it and a short ragged fringe round the rim, and
+     the fringe is the only part that is hair. Fingers are defined by the space
+     between them; a fan has none. */
+  const fanX = cx + 31, fanY = G - 43;
+  limbPath(p, [[cx + 24, G - 26], [cx + 29, G - 34], [fanX, fanY]], 11, 8, BASE, { lit: HILIGHT, dark: DEEP });
+  const rim = arc(fanX, fanY, 14, 13, Math.PI * 1.04, Math.PI * 1.96, 16);
+  poly(p, [[fanX, fanY + 5], ...rim], BASE);
+  // Ribs, not hairs: six dark runs from the hub to the rim. They are what turn
+  // a filled half-disc into a fan, and they cost six strokes.
+  for (let i = 0; i < 6; i++) {
+    const a = Math.PI * (1.1 + i * 0.16);
+    stroke(p, fanX + Math.cos(a) * 4, fanY + Math.sin(a) * 4, fanX + Math.cos(a) * 12, fanY + Math.sin(a) * 11, DEEP);
+    stroke(p, fanX + Math.cos(a) * 4 + 1, fanY + Math.sin(a) * 4, fanX + Math.cos(a) * 12 + 1, fanY + Math.sin(a) * 11, LIGHT);
   }
-  for (let i = 0; i < 4; i++) {
-    const a = -Math.PI * (0.76 - i * 0.16);
-    tuft(p, hipX + 14, G - 63, 14 - Math.abs(i - 1.5) * 3, a, 0.16, LIGHT);
-  }
-
-  /* --- far legs, slender, with cloven hooves.
-
-     Built by hand rather than with `legDigitigrade`, because that helper
-     places its own foot from a toe position it works out internally -- and a
-     hoof dropped at a guessed x lands beside the ankle rather than on it. Four
-     dark boxes standing on the floor next to four legs is what the first pass
-     at this animal looked like. */
-  limbPath(p, [[hipX + 2, hipY + 8], [hipX + 8, G - 28], [hipX + 2, G - 8]], 11, 6, SHADE);
-  hoof(p, hipX + 2, G - 1, 4.5, SHADE);
-  limbPath(p, [[shX - 2, shY + 8], [shX - 8, G - 28], [shX - 4, G - 8]], 10, 6, SHADE);
-  hoof(p, shX - 4, G - 1, 4, SHADE);
-
-  /* --- the barrel. Short and level: a grazer is a gut on four sticks, and
-     this one is deliberately plain so the collar never has to compete. */
-  limbPath(p, [[hipX, hipY], [cx + 4, hipY - 2], [shX, shY]], 30, 27, BASE, { bulge: 2 });
-  blobFront(p, hipX + 1, hipY + 1, 16, 16, BASE);
-  bellyPlate(p, cx + 4, G - 36, 15, 7, 2);
-  for (const q of arc(cx + 4, hipY + 2, 20, 18, Math.PI * 1.12, Math.PI * 1.88, 22)) {
-    cellOver(p, q[0], q[1] + 3, DEEP);
-    cellOver(p, q[0], q[1] + 2, HILIGHT);
+  // And a short ragged fringe all round the rim, so the edge is hair.
+  for (let i = 0; i < 11; i++) {
+    const a = Math.PI * (1.06 + (i / 10) * 0.88);
+    tuft(p, fanX + Math.cos(a) * 13, fanY + Math.sin(a) * 12, 6 + (i % 3) * 2, a, 0.45, i % 2 ? SHADE : LIGHT);
   }
 
-  /* --- near hind leg down, near foreleg LIFTED and swinging forward. */
-  limbPath(p, [[hipX - 6, hipY + 10], [hipX + 2, G - 26], [hipX - 6, G - 8]], 12, 7, BASE, { front: true });
-  crease(p, hipX + 2, G - 26, 5);
-  hoof(p, hipX - 6, G - 1, 5, BASE);
-  // The lifted foreleg has to come out from *under* the collar and keep going:
-  // swung only as far as the hem, it was swallowed whole and the animal came
-  // out with three legs.
-  limbPath(p, [[shX - 4, shY + 10], [shX - 14, G - 26], [shX - 28, G - 18]], 12, 7, BASE, { front: true });
-  crease(p, shX - 14, G - 26, 5);
-  hoof(p, shX - 32, G - 15, 4.5, BASE);
+  /* --- the far side, which on a couched animal is one hoof and a shadow. The
+     far foreleg lies folded flat along the floor; of the far hind there is
+     nothing to see but the toe. */
+  limbPath(p, [[chX + 4, G - 24], [cx - 22, G - 14], [cx - 34, G - 10]], 10, 7, SHADE);
+  hoof(p, cx - 37, G - 7, 4, SHADE);
+  hoof(p, cx + 13, G - 5, 4, SHADE);
+
+  /* --- the body, resting. One polygon, same reason as burrowen's: an animal
+     lying down is a single continuous mass touching the ground along most of
+     its length, and any seam laid across it turns it back into a stack of
+     cushions. The bottom edge is flat on purpose -- a lying body spreads. */
+  const barrel: Pt[] = [
+    [cx + 33, G - 18], [cx + 30, G - 31], [cx + 17, G - 40], [cx + 1, G - 42],
+    [chX - 6, G - 37], [chX - 11, G - 25], [chX - 5, G - 12],
+    [cx + 4, G - 6], [cx + 20, G - 6], [cx + 30, G - 10],
+  ];
+  poly(p, smoothLoop(barrel), BASE);
+  // One lit cell along the back and no more. Two rows of pale on top of a body
+  // this size lightened the whole barrel, and the collar -- which is the one
+  // thing on this animal that has to be paler than everything around it --
+  // stopped reading as a separate object at all.
+  for (let x = chX - 8; x <= cx + 22; x++) {
+    const y = topOf(p, x);
+    if (y >= 0) cellOver(p, x, y + 1, HILIGHT);
+  }
+  for (const q of path([[chX - 6, G - 12], [cx + 6, G - 8], [cx + 26, G - 12]] as Pt[])) {
+    for (let k = 0; k < 6; k++) cellOver(p, q[0], q[1] - k, SHADE);
+  }
+
+  /* --- the near haunch, folded up alongside the barrel, with the hock poking
+     out behind it. Those two are what stop a couched animal reading as a
+     bolster: the hip has to be the highest thing on the back half and the
+     hock has to break the outline somewhere behind it. */
+  blob(p, cx + 19, G - 24, 13, 11, BASE);
+  for (const q of arc(cx + 19, G - 24, 12, 10, Math.PI * 0.22, Math.PI * 0.98, 12)) {
+    cellOver(p, q[0], q[1], DEEP);
+    cellOver(p, q[0], q[1] - 1, LIGHT);
+  }
+  limbPath(p, [[cx + 24, G - 22], [cx + 31, G - 14], [cx + 21, G - 8]], 11, 7, BASE, { front: true });
+  hoof(p, cx + 18, G - 5, 4.5, BASE);
+
+  /* --- the near foreleg, stretched out along the floor in front with the
+     hoof well clear of the collar.
+
+     Folded under the chest -- which is what a couched goat actually does --
+     the whole leg vanished behind the hem of the wool, and what was left was
+     a black hoof-shaped block sitting in a fringe with nothing above it. A
+     lying animal has to show one limb doing something a standing one cannot,
+     and a foreleg reaching out in front is the clearest version of that: it
+     puts a knee, a cannon and a toe on the floor in a line, and it gives the
+     collar something to rest on instead of a hem that stops in mid-air. */
+  limbPath(p, [[chX + 2, G - 22], [cx - 24, G - 13], [cx - 41, G - 7]], 12, 8, BASE,
+    { front: true, bulge: 1.5, lit: HILIGHT, dark: DEEP });
+  crease(p, cx - 26, G - 12, 5);
+  hoof(p, cx - 44, G - 4, 4, BASE);
 
   /* --- the ruff.
 
@@ -485,27 +641,29 @@ function tuftail(p: Pen): void {
      them -- the far half recessed, the near half pale over the chest. That is
      what makes it a thing the creature is wearing rather than a halo printed
      behind it. */
-  blob(p, ruffX + 3, ruffY - 1, 19, 18, SHADE);
+  blob(p, ruffX + 3, ruffY - 1, 18, 17, SHADE);
   for (let i = 0; i < 12; i++) {
     // Nothing points *up*. A tuft standing beside the skull is a third ear,
     // and this animal already has two the eye has to find; the first pass at
     // the collar fringed it all the way round and gave it four.
     const a = Math.PI * (0.06 + (i / 12) * 0.94);
-    tuft(p, ruffX + 3 + Math.cos(a) * 17, ruffY - 1 + Math.sin(a) * 16, 8 + (i % 3) * 2.5, a, 0.42, SHADE);
+    tuft(p, ruffX + 3 + Math.cos(a) * 16, ruffY - 1 + Math.sin(a) * 15, 8 + (i % 3) * 2.5, a, 0.42, SHADE);
   }
 
-  /* --- the neck. Short, thick, and almost entirely buried, which is the whole
-     point: an animal with no visible neck reads as woolly. */
-  limbPath(p, [[shX + 2, shY - 6], [headX + 14, headY + 8]], 20, 16, BASE);
+  /* --- the neck. Short, thick, rising out of the chest, and almost entirely
+     buried, which is the whole point: an animal with no visible neck reads as
+     woolly. On the couched pose it is the one part that has to *climb* -- the
+     chest is on the floor and the head is not. */
+  limbPath(p, [[chX + 2, G - 32], [headX + 12, headY + 8]], 20, 16, BASE);
 
-  blob(p, ruffX - 3, ruffY + 2, 16, 16, LIGHT);
+  blob(p, ruffX - 3, ruffY + 2, 15, 15, LIGHT);
   for (let i = 0; i < 11; i++) {
     const a = Math.PI * (0.12 + (i / 11) * 1.0);
-    tuft(p, ruffX - 3 + Math.cos(a) * 14, ruffY + 2 + Math.sin(a) * 14, 9 + (i % 3) * 2.5, a, 0.42, LIGHT);
+    tuft(p, ruffX - 3 + Math.cos(a) * 13, ruffY + 2 + Math.sin(a) * 13, 9 + (i % 3) * 2.5, a, 0.42, LIGHT);
   }
   // Two creases raking out of the collar, so it is a coat with a lie to it
   // rather than a pom-pom.
-  for (const [a, l] of [[Math.PI * 0.82, 15], [Math.PI * 1.18, 16], [Math.PI * 1.5, 13]] as const) {
+  for (const [a, l] of [[Math.PI * 0.82, 14], [Math.PI * 1.18, 15], [Math.PI * 1.5, 12]] as const) {
     stroke(p, ruffX - 3 + Math.cos(a) * 4, ruffY + 2 + Math.sin(a) * 4,
       ruffX - 3 + Math.cos(a) * l, ruffY + 2 + Math.sin(a) * l, DEEP);
   }
@@ -513,18 +671,33 @@ function tuftail(p: Pen): void {
   /* --- the head: small, blunt, and poking out of the top of the collar. */
   blobFront(p, headX, headY, 13, 11.5, BASE);
   earPointed(p, headX + 9, headY - 7, 12, 5, 1, { tone: SHADE, inner: p.back ? SHADE : SHADE, front: true });
-  earPointed(p, headX - 6, headY - 10, 17, -5, -1, { tone: BASE, inner: p.back ? SHADE : INNER, front: true });
+  earPointed(p, headX - 6, headY - 10, 16, -5, -1, { tone: BASE, inner: p.back ? SHADE : INNER, front: true });
   muzzle(p, headX - 12, headY + 5, 8.5, 6, { dir: -1, tone: LIGHT, detail: !p.back, frown: -1 });
   // A dark band across the bridge: the one marking, and it is what makes the
-  // face read at icon size when the ruff has eaten everything else.
-  for (let k = 0; k < 3; k++) stroke(p, headX - 16, headY + 1 + k, headX - 5, headY + 2 + k, ACCENT);
+  // face read at icon size when the ruff has eaten everything else. In
+  // ACCENT it was another shade of the same wool -- a marking has to be laid
+  // in a tone the shading pass will not move, so it is the fixed dark.
+  // It is a dark *nose*, not a band across the bridge. A band low enough to
+  // clear the eyes lands on the muzzle and paints it black, and the animal
+  // comes out braying; a band high enough to clear the muzzle runs along both
+  // lower lids and joins the two dark eye rings into a pair of spectacles.
+  // There is no row between the two, so the marking moves to the one place on
+  // a long pale face where a dark spot is always right.
+  blob(p, headX - 19, headY + 4, 4, 3.2, ACCENT_DARK);
+  cell(p, headX - 21, headY + 2, SPEC);
 
   if (p.back) { p.face(headX, headY, 17); return; }
 
-  /* --- the face. Heavy-lidded and pale-eyed: placid, incurious, and entirely
-     willing to follow you for a mile and a half. */
-  eye(p, headX - 6, headY - 1, 5.4, 'hooded', { side: -1, iris: ACCENT_LIT, lid: BASE });
-  eye(p, headX + 8, headY - 2, 4.6, 'hooded', { side: 1, iris: ACCENT_LIT, lid: BASE });
+  /* --- the face. Heavy-lidded: placid, incurious, and entirely willing to
+     follow you for a mile and a half.
+
+     The iris is the dark end of the accent ramp and not the bright one, and
+     that is an icon decision rather than a taste one. A pale iris under a
+     heavy lid on a cream-coloured face is three pale things stacked, and at
+     half size the eye simply is not there -- the icon came back with a nose
+     and no gaze. */
+  eye(p, headX - 7, headY - 1, 4.8, 'hooded', { side: -1, iris: ACCENT_DARK, lid: BASE });
+  eye(p, headX + 9, headY - 3, 4, 'hooded', { side: 1, iris: ACCENT_DARK, lid: BASE });
   p.face(headX, headY, 17);
 }
 
@@ -586,11 +759,16 @@ function bristlebuck(p: Pen): void {
   crease(p, hipX, G - 32, 6);
   hoof(p, hipX - 8, G - 1, 5.5, BASE, DEEP, LIGHT);
 
-  /* --- the neck: thick, and *rising*. Run level out of the shoulder it made
-     the head, the neck and the muzzle into one long pale wedge with an eye
-     somewhere along it; a neck that climbs gives the head a throat line to sit
-     on and the skull somewhere to be. */
-  limbPath(p, [[shX + 2, shY + 2], [shX - 14, shY - 12], [headX + 13, headY + 9]], 27, 18, BASE, { front: true, bulge: 1 });
+  /* --- the neck: rising, and *narrow*.
+
+     Run level out of the shoulder it made the head, the neck and the muzzle
+     into one long pale wedge with an eye somewhere along it. Run at
+     twenty-seven cells wide -- barely less than the head is tall -- it did the
+     same thing at a different angle: the icon came back with a body, a green
+     smudge and no findable head. A neck has to be thinner than the skull it
+     carries, and there has to be a throat line under the jaw, or the animal is
+     a sock. */
+  limbPath(p, [[shX + 2, shY + 2], [shX - 14, shY - 14], [headX + 13, headY + 9]], 23, 12, BASE, { front: true, bulge: 1 });
 
   /* --- the mantle. Bristles rather than fur: stiff, straight and unequal, in
      two rows so the mass has depth instead of being a comb.
@@ -635,25 +813,49 @@ function bristlebuck(p: Pen): void {
      degrees with daylight under both of them, and stay short. Low horns are
      short horns; they do not have to be flat to the skull.
 
-     They must also stay mostly *body colour*. Ringed like a real horn and
-     given a lit leading edge, a spike this narrow came back from the light
-     pass as a pale bar: on a mass three cells wide a growth ring, a highlight
-     and a bright tip between them are the entire horn. So the rings stop at
-     the base, where there is room for them. */
-  for (const [hx, hy, k, tone] of [[headX + 11, headY - 6, 0.78, ACCENT_DARK], [headX + 2, headY - 11, 1, ACCENT]] as const) {
+     And they are BONE, not bristle. They used to be drawn in ACCENT and
+     ACCENT_DARK -- the species feature colour, which on this animal is the
+     green of the mantle -- and they rose off the crown a dozen cells in front
+     of a mantle painted in exactly the same two tones. At full size you could
+     tell them apart because there was air between them. At sixty-four pixels
+     you could not: the icon came back with one green smear over the whole top
+     of the animal and no way to tell horn from bristle from ear. Ornament has
+     to differ from the ornament nearest it in *tone*, not only in shape, and
+     the tone was already chosen elsewhere on this sprite -- the hooves are
+     keratin in DEEP and LIGHT, and horn is the same material.
+
+     Drawn pale they were no better, only differently bad: pale horn rising off
+     a pale skull in front of a pale neck is one cream wedge with a notch in
+     it. A horn is dark keratin with a lit leading edge, the same as the feet,
+     and dark is the only value on this animal that neither the mantle nor the
+     head is already wearing. */
+  for (const [hx, hy, k, tone] of [[headX + 11, headY - 6, 0.72, DEEP], [headX + 2, headY - 11, 0.92, DEEP]] as const) {
     const hp = path([[hx, hy], [hx + 4 * k, hy - 11 * k], [hx + 11 * k, hy - 21 * k]] as Pt[]);
-    limbPath(p, hp, 10 * k, 2.5, tone, { front: true, dark: ACCENT_DARK });
-    for (let i = 1; i <= 2; i++) {
-      const q = hp[Math.round((i / 7) * (hp.length - 1))]!, n = normalAt(hp, Math.round((i / 7) * (hp.length - 1)));
-      const hw = 4.6 * k;
-      stroke(p, q[0] - n[0] * hw, q[1] - n[1] * hw, q[0] + n[0] * hw, q[1] + n[1] * hw, ACCENT_DARK);
+    limbPath(p, hp, 8.5 * k, 2.5, tone, { front: true, dark: DEEP });
+    // Growth rings, and they have to be *lighter* than the horn now that the
+    // horn is dark: a dark ring on dark keratin is nothing, and without rings
+    // a smooth dark blade rising off a skull is read as an ear every time.
+    for (let i = 1; i <= 3; i++) {
+      const j = Math.round((i / 6) * (hp.length - 1));
+      const q = hp[j]!, n = normalAt(hp, j);
+      const hw = 4.4 * k * (1 - i * 0.14);
+      stroke(p, q[0] - n[0] * hw, q[1] - n[1] * hw, q[0] + n[0] * hw, q[1] + n[1] * hw, LIGHT);
     }
     // One lit cell on the leading edge, at the base, and one at the point.
     // Two marks, not a stripe down the whole length.
-    stroke(p, hp[2]![0] - 4 * k, hp[2]![1], hp[Math.round(hp.length * 0.5)]![0] - 3 * k, hp[Math.round(hp.length * 0.5)]![1], ACCENT_LIT);
+    stroke(p, hp[2]![0] - 4 * k, hp[2]![1], hp[Math.round(hp.length * 0.5)]![0] - 3 * k, hp[Math.round(hp.length * 0.5)]![1], HILIGHT);
     const tip = hp[hp.length - 1]!;
-    cell(p, tip[0], tip[1], ACCENT_LIT);
-    cell(p, tip[0], tip[1] - 1, ACCENT_LIT);
+    cell(p, tip[0], tip[1], SPEC);
+    cell(p, tip[0], tip[1] - 1, SPEC);
+  }
+
+  /* --- the throat line. One dark curve under the jaw, from the corner of the
+     mouth back and down into the neck, with a lit lip along the top of it.
+     It is four dozen cells and it is the difference between a head on a neck
+     and a neck that widens into a face. */
+  for (const q of arc(headX + 2, headY - 2, 15, 15, Math.PI * 0.18, Math.PI * 0.78, 14)) {
+    cellOver(p, q[0], q[1], DEEP);
+    cellOver(p, q[0], q[1] - 1, HILIGHT);
   }
 
   /* --- the near foreleg, planted forward and apart from its partner. */
@@ -905,7 +1107,17 @@ function rimehound(p: Pen): void {
      a closed loop hanging in front of a face does not read as vapour at all --
      the hound came out with a trunk. A trailing plume has to leave the mouth
      going the other way from the animal, and it has to be rooted in the muzzle
-     so the ink pass treats it as part of the head. */
+     so the ink pass treats it as part of the head.
+
+     AND IT MUST NOT SWALLOW THE NOSE. The plume is laid after the muzzle and
+     it is painted at the pale end of the same near-white ramp as everything
+     else on this species, so it went straight over the top of the one dark
+     mark on the whole head -- and a pale hound with a pale cloud where its
+     face should be is, at sixty-four pixels, a snowdrift with legs. Moving
+     the plume clear of the muzzle costs the sprite ten cells of width it does
+     not have. Redrawing the nose *on top of the plume* costs nothing, and a
+     dark spot at the front is the entire difference between a head the player
+     can find on the switch screen and one they cannot. */
   poly(p, [[headX - 17, headY + 1], [headX - 25, headY - 3], [headX - 29, headY + 4],
     [headX - 27, headY + 12], [headX - 18, headY + 14]] as Pt[], LIGHT);
   for (const [bx, by, r] of [[headX - 26, headY + 1, 4.2], [headX - 28, headY + 8, 4], [headX - 22, headY + 13, 4]] as const) {
@@ -920,6 +1132,13 @@ function rimehound(p: Pen): void {
   // back on themselves, and a closed loop hanging off a muzzle does not read as
   // vapour at all -- the hound came out with a trunk.
   for (const q of arc(headX - 25, headY + 5, 8, 9, Math.PI * 0.24, Math.PI * 0.9, 12)) cellOver(p, q[0], q[1], SHADE);
+  // The nose and the mouth line, restamped over the plume.
+  blob(p, headX - 22, headY + 3, 4, 3.2, ACCENT_DARK);
+  cell(p, headX - 24, headY + 1, SPEC);
+  cell(p, headX - 25, headY + 1, SPEC);
+  for (const q of path([[headX - 23, headY + 6], [headX - 16, headY + 8], [headX - 6, headY + 9]] as Pt[])) {
+    cellOver(p, q[0], q[1], DEEP);
+  }
 
   /* --- the near foreleg, reaching forward, well clear of the floor. */
   limbPath(p, [[shX + 2, shY + 14], [shX - 12, G - 32], [shX - 28, G - 24]], 14, 9, BASE, { front: true, bulge: 1.5 });

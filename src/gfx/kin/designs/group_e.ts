@@ -47,7 +47,7 @@ import {
  */
 function bristle(
   p: Pen, x: number, y: number, ang: number, len: number,
-  v = ACCENT, lit = ACCENT_LIT, spread = 0.19,
+  v = ACCENT, lit = ACCENT_LIT, spread = 0.19, thick = 3.4,
 ): void {
   // Needles, not triangles. A triangle whose base is three cells across and
   // whose sides open thirty degrees is a LEAF, and a clump of three of them is
@@ -58,7 +58,7 @@ function bristle(
     const a = ang + d;
     const l = len * (1 - Math.abs(d) * 0.8);
     limbPath(p, [[x, y], [x + Math.cos(a) * l * 0.55, y + Math.sin(a) * l * 0.55],
-      [x + Math.cos(a) * l, y + Math.sin(a) * l]] as Pt[], 3.4, 1.2, v);
+      [x + Math.cos(a) * l, y + Math.sin(a) * l]] as Pt[], thick, 1.2, v);
   }
   // One lit shaft up the middle. Without it the clump is a black blot; with it
   // the bristles read as separate and shining.
@@ -76,7 +76,7 @@ function bristle(
 function bristleRidge(
   p: Pen, dense: Pt[], count: number, radius: (t: number) => number,
   len: (t: number) => number, knobTone: number, spikeTone: number, lit: number,
-  knobR = 4.0,
+  knobR = 4.0, spread = 0.19, thick = 3.4,
 ): void {
   for (let i = 0; i < count; i++) {
     const t = (i + 0.5) / count;
@@ -96,7 +96,7 @@ function bristleRidge(
     // and large they turn a bristled back into a row of soap bubbles.
     blobFront(p, kx, ky, knobR, knobR * 0.86, knobTone, DEEP, 1);
     cellOver(p, kx - knobR * 0.4, ky - knobR * 0.4, HILIGHT);
-    bristle(p, kx + n[0] * knobR * 0.5, ky + n[1] * knobR * 0.5, Math.atan2(n[1], n[0]), len(t), spikeTone, lit);
+    bristle(p, kx + n[0] * knobR * 0.5, ky + n[1] * knobR * 0.5, Math.atan2(n[1], n[0]), len(t), spikeTone, lit, spread, thick);
   }
 }
 
@@ -315,31 +315,55 @@ function nettlebug(p: Pen): void {
     return lerp(RAD[i]!, RAD[i + 1]!, u - i);
   };
 
-  const headX = cx - 30, headY = G - 72;
+  const headX = cx - 31, headY = G - 70;
 
-  /** A stubby proleg: a fleshy cone with a hooked pad on the floor. */
+  /**
+   * A stubby proleg: a fleshy stump with a hooked sole on the floor.
+   *
+   * Kept NARROW and cut off from its neighbour by a dark seam up each side.
+   * Drawn fat, four of them side by side under a body that is itself a row of
+   * discs read as a bunch of grapes hanging off the animal -- the stumps and
+   * the segments above them made one field of circles and nothing in it was
+   * legible. A proleg is a short column with air either side of it.
+   */
   const proleg = (t: number, tone: number, front: boolean, lean: number): void => {
     const q = at(t), n = nAt(t), r = radius(t);
     const bx = q[0] - n[0] * r * 0.55, by = q[1] - n[1] * r * 0.55;
-    limbPath(p, [[bx, by], [bx + lean * 2, G - 5], [bx + lean * 3, G - 2]] as Pt[], 8, 6.4, tone,
+    const fx = bx + lean * 3;
+    limbPath(p, [[bx, by], [bx + lean * 2, G - 5], [fx, G - 2]] as Pt[], 6.4, 5.4, tone,
       front ? { front: true } : {});
     // A flat gripping sole, not a ball. Round pads on eight stubs came out as
     // a bunch of grapes hanging under the animal.
-    rect(p, bx + lean * 3 - 4.5, G - 4, bx + lean * 3 + 4.5, G, tone);
-    stroke(p, bx + lean * 3 - 5, G + 1, bx + lean * 3 + 5, G + 1, DEEP);
-    stroke(p, bx + lean * 3 - 4.5, G - 4, bx + lean * 3 + 4.5, G - 4, tone === SHADE ? BASE : LIGHT);
-    for (let k = -1; k <= 1; k++) cell(p, bx + lean * 3 + k * 2.6, G - 1, ACCENT_DARK);
+    rect(p, fx - 4, G - 4, fx + 4, G, tone);
+    stroke(p, fx - 4.5, G + 1, fx + 4.5, G + 1, DEEP);
+    stroke(p, fx - 4, G - 4, fx + 4, G - 4, tone === SHADE ? BASE : LIGHT);
+    for (let k = -1; k <= 1; k++) cell(p, fx + k * 2.6, G - 1, ACCENT_DARK);
+    // The seams. A dark gutter down the trailing side and a lit ridge down the
+    // leading one: this is what separates one stump from the next when they are
+    // all the same colour and only four cells apart.
+    for (let k = 0; k <= 14; k++) {
+      const u = k / 14;
+      const sxp = lerp(bx, fx, u), syp = lerp(by, G - 2, u);
+      const w = lerp(3.2, 4.0, u);
+      cellOver(p, sxp + w, syp, DEEP);
+      cellOver(p, sxp - w, syp, tone === SHADE ? BASE : LIGHT);
+    }
   };
 
   /* --- far prolegs, in the recessed tone, before the body goes over them. */
   for (const t of [0.07, 0.20, 0.33, 0.46]) proleg(t, SHADE, false, 1.4);
 
-  /* --- the body: nine discs walked up the spine, each laid in front of the
-     one behind it so every joint gets a dark ring. A single tapered tube gets
-     a smooth contour and a smooth contour is not a grub. */
+  /* --- the body: nine discs walked up the spine.
+
+     They are laid down as PLAIN masses, with no ring between them. Stamped
+     front-to-back each disc brought its own dark rim with it, and what the
+     picture showed was nine circles in a heap -- overlapping discs, which is
+     how the thing is built, is exactly what a viewer should never be able to
+     see. The discs are here only to make the contour bulge once per segment.
+     Everything that says "segmented" is painted on afterwards. */
   for (let i = 0; i < 9; i++) {
     const t = i / 8, q = at(t), r = radius(t);
-    blobFront(p, q[0], q[1], r * 1.02, r, BASE, DEEP, 1.4);
+    blob(p, q[0], q[1], r * 1.02, r, BASE);
   }
 
   /* --- the pale underside, along the belly of the rear half only. */
@@ -350,20 +374,69 @@ function nettlebug(p: Pen): void {
     }
   }
 
-  /* --- the segment rings. Nine overlapping discs give a lumpy contour but not
-     a segmented one -- the joints have to be RULED, a dark line across the body
-     with a lit lip on the leading side, or the whole thing is a sausage with
-     dents in it. This is the single mark that turns the mass into a grub. */
-  rings(p, dense, 8, 13, DEEP, LIGHT);
+  /* --- the segmentation, and the one thing this sprite lives or dies on.
+     ================================================================
 
-  /* --- spiracles: a row of dark ports with a lit lip, low on the flank. The
-     cheapest single mark that says "insect" rather than "worm". */
-  for (const t of [0.10, 0.22, 0.34, 0.46, 0.58, 0.70, 0.80]) {
+     A one-cell dark rule at each joint -- which is all `rings` draws -- is
+     invisible the moment the sprite is halved for the party icon, and even at
+     full size it left the segments being carried by the bumps in the outline.
+     Contour segmentation is the weakest kind there is: it only exists where the
+     body meets the sky, so the entire middle of the animal stays a flat green
+     field and the grub reads as a bag.
+
+     Each joint is therefore built as a full TONAL STEP across the whole width
+     of the body -- two cells of shadow behind it, a hard dark crease, then a
+     lit lip and a hot spec run on the upper half in front. That is a surface
+     rolling over a fold, and it reads at every scale because it is four tones
+     wide rather than one cell dark. */
+  const band = (t: number, off: number, tone: number, lo: number, hi: number): void => {
+    const idx = clamp(idxAt(t) + off, 0, dense.length - 1);
+    const q = dense[idx]!, n = normalAt(dense, idx), r = radius(t) + 1.4;
+    for (let k = 0; k <= 34; k++) {
+      const d = lerp(lo, hi, k / 34);
+      cellOver(p, q[0] + n[0] * r * d, q[1] + n[1] * r * d, tone);
+    }
+  };
+  for (let j = 1; j <= 8; j++) {
+    const t = j / 8;
+    // Indices run about 1.6 to the cell, so these offsets are roughly
+    // -3, -2, -1, 0, +1.5 and +3 cells along the spine.
+    band(t, -4, SHADE, -1, 1);
+    band(t, -3, SHADE, -1, 1);
+    band(t, -2, SHADE, -1, 1);
+    band(t, -1, DEEP, -1, 1);
+    band(t, 0, DEEP, -1, 1);
+    band(t, 2, LIGHT, -1, 1);
+    // The spec run stops short of the belly: a hot lip all the way round turns
+    // the fold into a hoop and the grub into a stack of tyres.
+    band(t, 4, SPEC, -0.1, 0.95);
+  }
+  // A dorsal sheen down the whole back, riding just inside the top contour, so
+  // the segments are lit by one light rather than each being its own bead.
+  for (let i = 0; i <= 90; i++) {
+    const t = i / 90, q = at(t), n = nAt(t), r = radius(t);
+    cellOver(p, q[0] + n[0] * r * 0.52, q[1] + n[1] * r * 0.52, LIGHT);
+  }
+
+  /* --- the flank ocelli: one bold ringed spot per segment, low on the side.
+
+     A caterpillar's markings repeat once per segment, and a repeating mark is
+     a second, redundant statement of the segmentation that survives being
+     halved -- which the shading alone does not quite. Ringed dark on pale,
+     because at icon size a spot is either two tones or it is nothing. */
+  /* They sit at mid flank, NOT low on it. Dropped to the underside they were
+     covered by the prolegs one for one and five of the seven could not be seen
+     at all -- the row existed entirely in the code. */
+  for (let j = 0; j < 6; j++) {
+    const t = 0.09 + j * 0.125;
     const q = at(t), n = nAt(t), r = radius(t);
-    const sx = q[0] - n[0] * r * 0.16, sy = q[1] - n[1] * r * 0.16;
-    blob(p, sx, sy, 2.6, 1.9, ACCENT_DARK);
-    cellOver(p, sx, sy - 2, LIGHT);
-    cellOver(p, sx, sy, ACCENT);
+    const sx = q[0] + n[0] * r * 0.06, sy = q[1] + n[1] * r * 0.06;
+    blob(p, sx, sy, 4.2, 3.6, ACCENT_DARK);
+    blob(p, sx, sy, 2.6, 2.1, ACCENT_LIT);
+    blob(p, sx, sy, 1.4, 1.1, ACCENT_DARK);
+    cellOver(p, sx - 1, sy - 2, SPEC);
+    // The spiracle proper, a dark port just under the ring.
+    cellOver(p, sx - n[0] * 6.0, sy - n[1] * 6.0, DEEP);
   }
 
   /* --- near prolegs, carrying the weight, and the three little thoracic legs
@@ -387,55 +460,143 @@ function nettlebug(p: Pen): void {
      -- the animal came out as a rabbit wearing a fern. Fur and bristle are the
      same two numbers every time: how near the trough between clumps gets to
      zero, and whether consecutive clumps are the same length. */
-  bristleRidge(p, dense, 6, (t) => radius(t),
-    (t) => (t * 6 % 2 < 1 ? 16 : 9.5) * (0.72 + Math.sin(t * Math.PI) * 0.4),
-    LIGHT, ACCENT, ACCENT_LIT, 3.4);
-  // A second, shorter row down the near flank so the back reads as bristled
-  // all over rather than as having a mohawk. Kept low on the side and short:
-  // the first pass put them near the belly at full length and they came out
-  // as four black smudges under the animal.
-  for (let i = 0; i < 3; i++) {
-    const t = 0.24 + (i / 2) * 0.42;
-    const idx = idxAt(t), q = dense[idx]!, n = normalAt(dense, idx), r = radius(t);
-    const a = Math.atan2(n[1], n[0]) - 1.0;
-    bristle(p, q[0] + Math.cos(a) * r * 0.78, q[1] + Math.sin(a) * r * 0.78, a, 6, ACCENT_DARK, ACCENT);
-  }
+  /* FOUR clumps, not six, and stopped four fifths of the way up the back.
 
-  /* --- the head: a hard round capsule, tipped forward off the front segment,
-     with a pale face plate and a pair of long bristle horns over it. */
-  blobFront(p, headX, headY, 9.5, 9, BASE, DEEP, 1.5);
-  for (const q of arc(headX, headY - 1, 8, 6.5, Math.PI * 1.05, Math.PI * 1.95, 20)) {
-    cellOver(p, q[0], q[1] + 3, DEEP);
-    cellOver(p, q[0], q[1] + 2, HILIGHT);
+     Six clumps eleven cells apart, plus three more down the flank, plus two on
+     the skull, is eleven separate dark tufts on a sprite thirty pixels wide
+     once it is halved for the party icon -- and eleven dark tufts at that size
+     is not a bristled animal, it is static. What survives the halving is a
+     small number of long spikes with clear sky between them, so the count came
+     down and the length went up. The flank row is gone outright: it was never
+     more than a smudge and it was the noisiest thing on the sprite.
+
+     Stopping the ridge at 0.8 also clears the last ten cells of back, so the
+     head sits on its own against the sky instead of inside the mat. */
+  /* Wider spread and a THINNER shaft than the family default. At three and a
+     half cells across and nineteen long the three needles of a clump touched
+     each other for their whole length, and what stood on the back was four
+     dark paddles with a pale stripe up the middle -- prickly pear, not nettle.
+     A bristle has to have sky between it and the next one. */
+  const ridge = dense.slice(0, Math.round(dense.length * 0.80));
+  bristleRidge(p, ridge, 4, (t) => radius(t * 0.8),
+    (t) => (t * 4 % 2 < 1 ? 19 : 13) * (0.74 + Math.sin(t * Math.PI) * 0.38),
+    LIGHT, ACCENT, ACCENT_LIT, 4.0, 0.30, 2.4);
+
+  /* --- the head. The weakest thing on the old sprite and rebuilt whole.
+     ================================================================
+
+     What was here was a small round body-toned ball carrying two big PALE
+     lenses and a pale muzzle blob under them, with the pale belly running up
+     to meet it. Pale lens, pale muzzle, dark mouth bar, round skull, two
+     things standing off the top: that is a lamb, and no amount of bristle
+     anywhere else on the animal argued it out of being one.
+
+     Three things fix it, and all three are also what makes the head survive
+     being halved for the party icon:
+
+       1. The capsule is a rounded BOX, not a ball -- flat across the front,
+          hard corners at the jaw. Chitin has corners; wool does not.
+       2. It is painted a full step PALER than the body, so at icon size the
+          head is the one bright thing on a green diagonal and the eye finds
+          it instantly. Before, head and body were the same tone and the front
+          end of the animal simply had no address.
+       3. The eyes are DARK on that pale plate instead of pale on pale. Two
+          black dots is the entire face at 64 pixels; anything subtler is a
+          face the player never actually sees. */
+  /* It is also BIG -- fourteen cells of half-width on a body whose fattest
+     segment is twelve. Everything that has to be read on this animal is on the
+     head, and a head drawn to scale with the grub cannot carry two eyes, a
+     suture and a pair of jaws without all four of them landing on top of each
+     other, which is exactly what the first attempt at this did. */
+  const HW = 14, HH = 13;
+  const headPts: Pt[] = [
+    [headX - HW + 3, headY - HH + 1], [headX + HW - 6, headY - HH],
+    [headX + HW, headY - 3], [headX + HW - 2, headY + HH - 5],
+    [headX + HW - 9, headY + HH], [headX - HW + 5, headY + HH - 1],
+    [headX - HW, headY + 2], [headX - HW + 1, headY - HH + 6],
+  ];
+  polyFront(p, headPts, LIGHT, DEEP, 1.9);
+  // Crown gloss. A larval head capsule is varnished, and one hard highlight
+  // across the top of it is what says so.
+  blob(p, headX - 2, headY - 9, 8.4, 3.0, SPEC);
+  blob(p, headX - 3, headY - 10, 5.6, 1.8, HILIGHT);
+  // A dark crease where the capsule sockets into the first segment, so the head
+  // is a separate hard thing pushed into the grub rather than the front end of
+  // the same tube.
+  for (const q of arc(headX + 4, headY + 2, 12, 12, Math.PI * 1.72, Math.PI * 0.34, 20)) {
+    cellOver(p, q[0], q[1], DEEP);
+    cellOver(p, q[0] - 1, q[1], SHADE);
   }
-  blob(p, headX - 3, headY + 3, 6.4, 5.4, LIGHT);
+  /* The epicranial suture: the inverted Y down the front of the capsule that
+     every larva on earth has and nothing with a face has. It splits the head
+     into two lobes, which is the single cheapest mark that stops a round pale
+     head being a mammal's. */
+  /* Ruled ONCE, two cells wide, in the ink tone. The first version drew every
+     arm twice, dark with a lit companion beside it, and at half size the three
+     doubled lines dissolved into a grey scribble across the face -- a mark you
+     cannot afford to double is one you should draw thick instead. */
+  const suture = (a: Pt, b: Pt): void => {
+    for (const q of path([a, b])) { cellOver(p, q[0], q[1], DEEP); cellOver(p, q[0] + 1, q[1], DEEP); }
+  };
+  /* Only the stem and the two SHORT arms. The long arms of the Y ran down past
+     the outside of each eye, straight through the two cells of pale plate that
+     were all that separated the near eye from the head's own outline -- and an
+     eye whose dark touches the ink around the head is not an eye, it is a notch
+     in the silhouette. */
+  suture([headX + 2, headY - HH + 1], [headX - 1, headY - 7]);
+  suture([headX - 1, headY - 7], [headX - 4, headY - 4]);
+  suture([headX - 1, headY - 7], [headX + 3, headY - 4]);
   // Horns. Two clumps, long and swept back over the skull -- the tallest thing
   // on the sprite, and what the eye finds first at icon size. They are splayed
   // much wider than the ridge clumps: at the ridge's tight spread two upright
   // clumps on a round head came out as a pair of rabbit ears.
   // Both lean BACK, over the shoulder. A symmetric V of two upright clumps on
   // a round head is a pair of rabbit ears, whatever they are made of.
-  bristle(p, headX - 3, headY - 8, Math.PI * 1.58, 18, ACCENT, ACCENT_LIT, 0.42);
-  bristle(p, headX + 6, headY - 5, Math.PI * 1.78, 14, ACCENT_DARK, ACCENT, 0.38);
+  /* The second clump roots BEHIND the capsule, on the nape, not on the crown.
+     Two tufts standing off the top of a rounded pale head at the same height
+     are ears no matter what they are made of, and this pair very nearly got
+     away with being a pair -- one on the brow and one at the back of the neck,
+     at obviously different lengths, cannot. */
+  bristle(p, headX - 4, headY - 11, Math.PI * 1.56, 19, ACCENT, ACCENT_LIT, 0.42, 2.6);
+  bristle(p, headX + 13, headY - 3, Math.PI * 1.86, 15, ACCENT_DARK, ACCENT, 0.36, 2.6);
 
-  if (p.back) { p.face(headX, headY, 11); return; }
+  if (p.back) { p.face(headX, headY, 12); return; }
 
   /* --- the face. Half-shut and entirely unbothered: this animal's defence is
-     that it tastes appalling, and it knows it. The sleepy lid is the only eye
-     in the group that does not look alert. */
-  eye(p, headX - 5, headY - 1, 3.6, 'sleepy', { side: -1, iris: ACCENT_DARK, lid: BASE, sclera: ACCENT_LIT });
-  eye(p, headX + 5, headY - 3, 3.0, 'sleepy', { side: 1, iris: ACCENT_DARK, lid: BASE, sclera: ACCENT_LIT });
-  p.face(headX, headY, 11);
+     that it tastes appalling, and it knows it.
 
-  // Mandibles: two dark chewing plates under a pale lip, meeting at the front.
-  poly(p, [[headX - 9, headY + 4], [headX - 2, headY + 5], [headX - 3, headY + 9], [headX - 8, headY + 8]], ACCENT_DARK);
-  stroke(p, headX - 9, headY + 5, headX - 3, headY + 6, ACCENT_LIT);
-  stroke(p, headX - 8, headY + 7, headX - 3, headY + 7, INNER);
-  // Two stub antennae, short enough not to cost silhouette.
-  for (const [ax, ay] of [[headX - 9, headY - 2], [headX - 8, headY + 1]] as const) {
-    cellOver(p, ax, ay, ACCENT_DARK);
-    cellOver(p, ax - 1, ay, ACCENT_DARK);
-  }
+     `hooded` rather than `sleepy`, because sleepy is nearly all lid and what
+     is left showing is a shallow PALE lens -- which on a pale head is nothing
+     at all once the sprite is halved. Hooded keeps the heavy lid, so the
+     animal still looks as though none of this concerns it, but what shows
+     under it is a full dark iris that reads as an eye at any size. */
+  /* Pulled INBOARD. At six cells off centre on a twelve-cell half-head the near
+     eye's dark ran into the ink round the rim and the two of them read as one
+     dark corner; there has to be pale plate all the way round an eye or it is
+     not sitting on a face. */
+  eye(p, headX - 6, headY - 1, 5.0, 'hooded', { side: -1, iris: ACCENT_DARK, lid: LIGHT, sclera: ACCENT_LIT });
+  eye(p, headX + 7, headY - 3, 4.2, 'hooded', { side: 1, iris: ACCENT_DARK, lid: LIGHT, sclera: ACCENT_LIT });
+  p.face(headX, headY, 13);
+
+  /* Mandibles: two dark chewing plates meeting at the middle of the lower rim,
+     opposed left and right the way an insect's are.
+
+     They sit CENTRED and entirely inside the capsule's outline. Hung off the
+     front-left corner, as they were, they stuck a dark wedge out past the head
+     with pale above it -- which is a nose on a muzzle, and put the whole animal
+     back where it started. The pair of short antennae that were down here went
+     with them: three dark things inside eight cells of the near eye, and the
+     eye was the one that lost. */
+  /* And painted in the BODY ramp, not in near-black. The eyes are three cells
+     above the jaws; at half size three cells is one pixel, so a pair of
+     near-black mandibles and a pair of near-black irises merged into one dark
+     bar straight across the face and the icon had no eyes at all. The darkest
+     thing on this head has to be the eyes and nothing else. */
+  poly(p, [[headX - 8, headY + 6], [headX - 1, headY + 7], [headX - 2, headY + 12], [headX - 8, headY + 11]], SHADE);
+  poly(p, [[headX + 1, headY + 6], [headX + 7, headY + 6], [headX + 5, headY + 11], [headX, headY + 12]], BASE);
+  stroke(p, headX - 8, headY + 7, headX - 2, headY + 8, LIGHT);
+  stroke(p, headX - 7, headY + 10, headX - 2, headY + 11, ACCENT_DARK);
+  stroke(p, headX + 1, headY + 7, headX + 6, headY + 7, LIGHT);
 }
 
 /* ============================================================== spinnet */

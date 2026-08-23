@@ -35,7 +35,7 @@ import {
 } from '../mask.js';
 import {
   arc, bellyPlate, blob, blobFront, cell, cellOver, crease, eye, fin, hand, lerp, limbPath,
-  mane, mouthLine, nostril, offsetPath, path, paw, plate, poly, polyFront, rect, seamPath,
+  mouthLine, nostril, offsetPath, path, paw, plate, poly, polyFront, rect, seamPath,
   stroke, tuft, whiskers,
   type Pen, type Pt,
 } from '../parts.js';
@@ -216,115 +216,177 @@ function fizzlet(p: Pen): void {
  * The lean is the pose and the fork is the signature. The tail splits into two
  * prongs at a real branch point, well clear of the rump, so the notch between
  * them survives the outline pass -- a fork that opens two cells is a bar.
+ *
+ * TWO NUMBERS RUN THIS FUNCTION, and getting them wrong is what made the second
+ * pass of it a small gorilla.
+ *
+ * The first is the *authored height*. `fitToCell` bottom-aligns the work mask
+ * and only scales it if it does not fit, and the height it is allowed is 110
+ * design cells. This animal was authored 139 tall -- a crest that shot forty
+ * units straight up -- so the whole of it came back through a rounding resample
+ * at 0.79 and every one-cell mark on its face, the eye spark, the mask stripe,
+ * the tape on the wires, was scattered or dropped. It is not drawn any *bigger*
+ * for being authored bigger: 139 x 0.79 and 110 x 1.0 are the same hundred and
+ * ten cells on the screen. The only difference is whether the face survives the
+ * trip. So the crest sweeps *back* now instead of up, the tail prong flicks
+ * rather than salutes, and the whole animal is authored inside 110. Check it
+ * before touching a coordinate here; it is invisible in the picture and it
+ * decides everything about the icon.
+ *
+ * The second is the *trunk width*. A biped is read as lean or heavy almost
+ * entirely off the ratio between its chest and its hips, and the previous pass
+ * had a 21-cell trunk with 27-cell blobs on both ends of it, which is a barrel
+ * with two identical bulges -- no waist, hips as wide as the shoulders, and an
+ * animal that reads as built rather than as fast. The chest is now half again
+ * the hip and the waist between them is narrower than either.
  */
 function voltwick(p: Pen): void {
   const G = p.ground, cx = p.cx;
   p.noTypeTraits();
 
-  const hipX = cx + 8, hipY = G - 54;
-  const chestX = cx - 13, chestY = G - 78;
-  const headX = cx - 34, headY = G - 94;
+  const hipX = cx + 6, hipY = G - 46;
+  const chestX = cx - 10, chestY = G - 66;
+  const headX = cx - 29, headY = G - 85;
 
   /* --- the forked tail, laid down before the body so the rump covers its root.
      It sweeps back and up, then splits: the upper prong flicks high, the lower
      one trails. Two different lengths, because a symmetric fork is a tuning
-     fork. */
-  const stemPts: Pt[] = [[hipX + 2, hipY + 6], [cx + 26, G - 56], [cx + 38, G - 66]];
-  const stem = path(stemPts);
-  limbPath(p, stem, 12, 7, BASE, { lit: HILIGHT, dark: DEEP });
-  const fork: Pt = [cx + 38, G - 66];
-  const prongA: Pt[] = [fork, [cx + 48, G - 78], [cx + 52, G - 92]];
-  const prongB: Pt[] = [fork, [cx + 50, G - 62], [cx + 60, G - 56]];
-  limbPath(p, path(prongA), 7.5, 3.6, BASE, { front: true, lit: HILIGHT, dark: DEEP });
-  limbPath(p, path(prongB), 7, 3.6, SHADE, { front: true, lit: BASE, dark: DEEP });
-  bead(p, cx + 52, G - 95, 5);
-  bead(p, cx + 63, G - 54, 4.4);
+     fork. Thin: the stem is eight cells where it leaves the rump and four at
+     the branch, so the fork is a wire that divides rather than a limb. */
+  const forkX = cx + 30, forkY = G - 58;
+  limbPath(p, path([[hipX + 1, hipY + 4], [cx + 19, G - 46], [forkX, forkY]] as Pt[]),
+    8, 4.5, BASE, { lit: HILIGHT, dark: DEEP });
+  const fork: Pt = [forkX, forkY];
+  limbPath(p, path([fork, [cx + 38, G - 68], [cx + 41, G - 78]] as Pt[]), 5.5, 2.8, BASE,
+    { front: true, lit: HILIGHT, dark: DEEP });
+  limbPath(p, path([fork, [cx + 43, G - 54], [cx + 52, G - 47]] as Pt[]), 5, 2.8, SHADE,
+    { front: true, lit: BASE, dark: DEEP });
+  bead(p, cx + 42, G - 81, 4);
+  bead(p, cx + 55, G - 45, 3.6);
 
   /* --- the far leg first, in the recessed tone and braced back under the tail.
      The two feet are twenty cells apart, because two legs whose outlines merge
      are one trunk with a hole in it, which is what the first pass gave. */
-  legDig(p, hipX + 12, hipY + 2, G - 1, SHADE, 1, 10, 5.5);
+  legDig(p, hipX + 9, hipY + 2, G - 1, SHADE, 1, 8, 4.4);
 
-  /* --- the body: a narrow S laid down at a slant. Twenty cells through the
-     ribs and no wider -- the first pass ran twenty-six with a belly plate on
-     it, and a plated barrel that size on two legs is a weightlifter, whatever
-     the brief says about lean. */
-  limbPath(p, [[hipX, hipY + 2], [cx - 4, G - 66], [chestX + 1, chestY + 3]], 21, 20, BASE, { bulge: 1 });
-  blobFront(p, hipX - 1, hipY, 13.5, 13, BASE);
-  blobFront(p, chestX + 1, chestY, 14, 13.5, BASE);
+  /* --- the body: a narrow S laid down at a slant, and it is a *waisted* S.
+     Fourteen cells through the hips, eleven through the loin, fifteen at the
+     shoulder, and the only mass on the animal is the chest blob at the top of
+     it. Everything about "lean and tall" is in those three numbers -- lengthen
+     a thick body and you get a bigger thick body. */
+  limbPath(p, [[hipX, hipY + 1], [cx - 2, G - 56], [chestX + 1, chestY + 2]], 12, 10, BASE);
+  limbPath(p, [[cx - 2, G - 56], [chestX + 1, chestY + 2]], 10, 14, BASE, { bulge: 0.4 });
+  // Hips deliberately smaller than the shoulders. This is the whole difference
+  // between a sprinter and a weightlifter and it costs two numbers.
+  blobFront(p, hipX - 1, hipY, 7.5, 7, BASE);
+  blobFront(p, chestX + 1, chestY, 10.5, 9.5, BASE);
   // Chest and throat, pale, and one crease behind the ribs. One.
-  blob(p, chestX - 3, chestY + 8, 9, 9, LIGHT);
-  for (const q of arc(cx - 2, G - 70, 12, 14, Math.PI * 0.12, Math.PI * 0.6, 16)) {
+  blob(p, chestX - 3, chestY + 6, 7, 7, LIGHT);
+  for (const q of arc(cx - 2, G - 59, 9, 11, Math.PI * 0.12, Math.PI * 0.6, 14)) {
     cellOver(p, q[0], q[1], DEEP);
     cellOver(p, q[0] - 1, q[1], SHADE);
   }
 
   /* --- the near leg, carrying the whole animal, planted forward of the hip so
-     the lean has something to fall onto. */
-  legDig(p, hipX - 16, hipY + 6, G, BASE, -1, 12, 6.5, true);
+     the lean has something to fall onto. Thin enough to see daylight between
+     the thigh and the belly -- a leg as thick as the waist above it welds the
+     two into one column and the creature loses its stance. */
+  legDig(p, hipX - 12, hipY + 5, G, BASE, -1, 9.5, 5.2, true);
 
-  /* --- a bristling ruff over the haunch and the small of the back: Fizzlet's
-     entire coat, kept as one patch.
-     It began as a mane down the nape, where its clumps landed on top of the
-     skull and the head came out wearing a wig. Fur near a face is as dangerous
-     as ornament near one, and the rump is the one place on a biped where nine
-     cells of hair cannot reach anything that matters. */
-  mane(p, path([[hipX + 14, hipY - 4], [hipX + 2, hipY - 13], [cx - 10, G - 70]] as Pt[]), 9, 5, LIGHT, SPEC);
+  /* --- Fizzlet's coat, kept as a bristling ridge along the back.
+     It was a `mane` over the haunch for one pass and it was wasted ink: the
+     helper takes its outward direction from the path normal, this path's
+     normals point into the body, and the clumps were drawn inside the rump
+     where nobody has ever seen them. These are the same `tuft` calls Fizzlet's
+     coat is made of, at angles I chose rather than inferred -- combed up and
+     back, exactly the way the ball's fur is -- so the two of them are visibly
+     the same animal at a glance and at icon size, which is the one place a
+     shared palette does not do the job on its own.
+     It stops well behind the skull. Fur near a face is as dangerous as ornament
+     near one. */
+  const ridge: Pt[] = [[hipX + 5, hipY - 7], [hipX - 4, hipY - 11], [cx - 5, G - 62], [chestX + 3, chestY - 6]];
+  const ridgePts = path(ridge);
+  // Nine short clumps, not six long ones. At eleven cells with a quarter-radian
+  // spread each clump is a triangle wide enough to be a fin, and three fins
+  // along a back is a stegosaur; at seven they are hair. All of them comb the
+  // same way, which is what separates a coat from a row of spikes.
+  for (let i = 0; i < 9; i++) {
+    const q = ridgePts[Math.round((i / 8) * (ridgePts.length - 1))]!;
+    tuft(p, q[0], q[1], [9, 6, 8, 5, 9, 6, 8, 5, 7][i]!, -0.95, 0.18, i % 3 ? LIGHT : SPEC);
+  }
 
   /* --- neck and head. The head is small -- a fifth of the animal's height --
      and carried forward and low, which is most of what makes a biped read as
      lean rather than as upright furniture. The neck is deliberately thinner
      than the skull: a neck as thick as the head it carries is a shoulder, and
      the animal comes out with no head at all. */
-  limbPath(p, [[chestX + 1, chestY - 6], [headX + 11, headY + 10]], 13, 10, BASE);
-  blobFront(p, headX, headY, 14, 12, BASE);
-  // A dark cap over the crown. The head is the highest, leftmost mass on the
-  // sprite, so a plain BASE skull takes the top step of its own ramp and comes
-  // out nearly as pale as the muzzle -- and at icon size a pale head with a
-  // pale snout on it has no features left at all.
-  for (let dy = -13; dy <= -3; dy++) {
-    for (let dx = -15; dx <= 15; dx++) cellOver(p, headX + dx, headY + dy, SHADE);
+  limbPath(p, [[chestX + 1, chestY - 5], [headX + 10, headY + 9]], 10, 8, BASE);
+  blobFront(p, headX, headY, 13, 11.5, BASE);
+  // A dark cap over the crown, and only the crown -- four cells of it. The head
+  // is the highest, leftmost mass on the sprite, so a plain BASE skull takes the
+  // top step of its own ramp and comes out nearly as pale as the muzzle, and the
+  // cap is what stops that. But it is a *lid*, not a hood: run it down past the
+  // brow -- which is what the last pass did, eight cells of it -- and the skull
+  // becomes one dark lump with a near-black crest growing straight out of it,
+  // and at half size that is a single olive blob with no head in it. Everything
+  // below the cap stays body colour, so the crest reads dark against a lit face
+  // and the eyes have something to be dark against.
+  for (let dy = -13; dy <= -10; dy++) {
+    for (let dx = -13; dx <= 13; dx++) cellOver(p, headX + dx, headY + dy, SHADE);
   }
 
-  /* --- the crest: four filaments springing from the *back* of the skull and
+  /* --- the crest: three filaments springing from the *back* of the skull and
      streaming away over the shoulders, each ending in a bead.
      They started rooted on the crown, arcing forward over the face, and the
      head came out wearing a bunch of grapes. A crest belongs behind the ear
-     line and it has to go somewhere -- these travel thirty cells. */
-  // The roots sit high on the back of the skull and every wire leaves going
-  // *up*. Rooted a few cells lower and one of them ran straight through the far
-  // eye -- invisible in the code, unmissable in the picture.
-  const rootX = headX + 11, rootY = headY - 8;
-  for (const [ang, len, tone] of [[-0.85, 36, ACCENT], [-0.42, 44, ACCENT_DARK], [-0.02, 33, ACCENT]] as const) {
+     line and it has to go somewhere -- these travel thirty cells.
+     They travel them nearly flat. Aimed steeply up they were the tallest thing
+     on the animal by twenty cells and the fit pass charged the whole sprite for
+     it; swept back along the shoulders they cost almost no height, they read as
+     speed instead of as antlers, and the skull below them stays clear.
+     They root on the *neck*, behind the jaw, not on the skull at all. Anywhere
+     on the crown -- and two passes of this put them there -- the near-black
+     wires and the head are one continuous olive mass at half size: a lump with
+     an eye somewhere in it. Sprung from the nape, the whole dome of the skull
+     is clean background all the way over, and a head with a clear round top is
+     a head from across the room. It costs nothing at 3x and it is the entire
+     difference at 64 pixels.
+     It is also the truer family drawing: Fizzlet's filaments grow out of its
+     body, not off its head. */
+  const rootX = headX + 15, rootY = headY + 4;
+  for (const [ang, len, tone] of [[-0.62, 27, ACCENT], [-0.30, 32, ACCENT_DARK], [0.02, 25, ACCENT]] as const) {
     const tipX = rootX + Math.cos(ang) * len, tipY = rootY + Math.sin(ang) * len;
-    limbPath(p, path([[rootX, rootY], [lerp(rootX, tipX, 0.5), lerp(rootY, tipY, 0.5) - 5], [tipX, tipY]] as Pt[]),
-      5.5, 2.6, tone, { lit: ACCENT_LIT, dark: ACCENT_DARK });
+    limbPath(p, path([[rootX, rootY], [lerp(rootX, tipX, 0.5), lerp(rootY, tipY, 0.5) - 4], [tipX, tipY]] as Pt[]),
+      5, 2.4, tone, { lit: ACCENT_LIT, dark: ACCENT_DARK });
     // The same taped band Fizzlet wears on its wires.
-    const bx2 = lerp(rootX, tipX, 0.46), by2 = lerp(rootY, tipY, 0.46) - 4;
-    for (let k = -1; k <= 1; k++) stroke(p, bx2 + k, by2 - 4, bx2 + k + 2, by2 + 4, k === 1 ? ACCENT_DARK : LIGHT);
-    bead(p, tipX, tipY, 4);
+    const bx2 = lerp(rootX, tipX, 0.46), by2 = lerp(rootY, tipY, 0.46) - 3;
+    for (let k = -1; k <= 1; k++) stroke(p, bx2 + k, by2 - 3, bx2 + k + 2, by2 + 3, k === 1 ? ACCENT_DARK : LIGHT);
+    bead(p, tipX, tipY, 3.6);
   }
 
   /* --- a short sharp muzzle, driven down and forward out of the lower front
      corner of the skull. Kept to a third of the head: the first pass ran a pale
      wedge nearly the length of the face and there was nowhere left to put an
      eye. */
-  polyFront(p, [[headX - 4, headY + 1], [headX - 18, headY + 5], [headX - 16, headY + 12], [headX - 3, headY + 11]],
+  polyFront(p, [[headX - 3, headY + 4], [headX - 16, headY + 6], [headX - 14, headY + 12], [headX - 2, headY + 11]],
     LIGHT, DEEP, 1);
-  stroke(p, headX - 5, headY + 2, headX - 17, headY + 5, HILIGHT);
-  poly(p, [[headX - 18, headY + 4], [headX - 12, headY + 3], [headX - 14, headY + 8]], ACCENT);
-  cell(p, headX - 17, headY + 4, ACCENT_LIT);
-  if (!p.back) mouthLine(p, headX - 10, headY + 10, 5, 1, true);
+  stroke(p, headX - 4, headY + 5, headX - 15, headY + 6, HILIGHT);
+  poly(p, [[headX - 16, headY + 5], [headX - 11, headY + 4], [headX - 13, headY + 9]], ACCENT);
+  cell(p, headX - 15, headY + 5, ACCENT_LIT);
+  if (!p.back) mouthLine(p, headX - 10, headY + 10, 4, 1, true);
 
   /* --- arms, last, so the head cannot bury them. Short and held high: the near
      one open with the fingers spread out in front of the chest, the far one
-     tucked back against the ribs. */
-  limbPath(p, [[chestX + 8, chestY + 6], [chestX + 6, chestY + 16]], 8, 5.5, SHADE);
-  limbPath(p, [[chestX + 2, chestY + 4], [chestX - 10, chestY + 12], [chestX - 19, chestY + 12]], 10, 6, BASE,
+     tucked back against the ribs.
+     The near hand is held low and close. Reaching out at chest height it ended
+     up directly under the jaw, and a pale three-fingered hand touching the
+     underside of a head reads as part of the head -- the animal grew a beard. */
+  limbPath(p, [[chestX + 7, chestY + 5], [chestX + 5, chestY + 13]], 6.5, 4.5, SHADE);
+  limbPath(p, [[chestX + 2, chestY + 3], [chestX - 7, chestY + 10], [chestX - 14, chestY + 12]], 8, 5, BASE,
     { front: true, bulge: 1 });
-  hand(p, chestX - 24, chestY + 13, 6, { tone: LIGHT, side: -1, fingers: 3, claws: true });
+  hand(p, chestX - 18, chestY + 13, 5, { tone: LIGHT, side: -1, fingers: 3, claws: true });
 
-  if (p.back) { p.face(headX, headY, 15); return; }
+  if (p.back) { p.face(headX, headY, 13); return; }
 
   /* --- the face. Narrow, slanted and hard: this is a sweeper, the fastest
      thing in its half of the roster, and it should look like it has already
@@ -334,11 +396,19 @@ function voltwick(p: Pen): void {
   // palette declares a near-black olive as its accent, so its *lit* end is a
   // warm grey -- an iris in it, inside a white almond, on a yellow head, is
   // what the first pass had: two eyes you could not find.
-  eye(p, headX - 6, headY - 1, 5.2, 'angry', { side: -1, iris: ACCENT_DARK });
-  eye(p, headX + 5, headY - 2, 4.2, 'angry', { side: 1, iris: ACCENT_DARK });
-  p.face(headX, headY, 15);
-  // A black mask band running back from the eyes over the cheek.
-  for (let k = 0; k < 2; k++) stroke(p, headX + 1, headY + 3 + k, headX + 12, headY + k, ACCENT);
+  // The eye sits in the band of plain body colour between the cap above it and
+  // the pale muzzle below, and it is placed by measuring that band rather than
+  // by eye. The 'angry' almond carries a brow two units above itself; put the
+  // eye where the brow lands on the cap -- which is where it was -- and cap,
+  // brow, lid and iris stack into one unbroken dark bar across the skull, and
+  // at half size that bar is the whole head. Three clear cells of lit face
+  // above the brow are what turn it back into two eyes.
+  eye(p, headX - 6, headY + 1, 5.5, 'angry', { side: -1, iris: ACCENT_DARK });
+  eye(p, headX + 6, headY, 4.5, 'angry', { side: 1, iris: ACCENT_DARK });
+  p.face(headX, headY + 1, 14);
+  // A black mask band running back from the eyes over the cheek. It keeps well
+  // clear of the near eye for the same reason.
+  for (let k = 0; k < 2; k++) stroke(p, headX + 4, headY + 7 + k, headX + 13, headY + 4 + k, ACCENT);
 }
 
 /**
@@ -806,9 +876,25 @@ function currentail(p: Pen): void {
   /* --- the face. A hard slit eye under a straight brow: the fry's wet round
      bead has become a predator's, which is the whole of what says this one
      swims at things rather than away from them. */
+  // A pale socket under the eye before the eye goes in it.
+  // The slit is drawn almost entirely in the dark end of the accent ramp, which
+  // for this palette is a near-black navy, and it sits on a skull that carries
+  // the countershading cap -- dark ink on a dark ground. At 3x you can find it
+  // by knowing where it is; at 64 pixels the head is a navy smudge with no eye
+  // in it at all. Two cells of pale rim all the way round is the whole fix, and
+  // it is the fry's eye exactly: Rillfry's black bead in its pale ring, grown
+  // narrow and mean. The one mark both fish share is now a mark you can see on
+  // both fish.
+  // It has to be drawn generously. `eye` lays its own OUTLINE ring 1.3 cells
+  // proud of the almond, and the almond of a 5.4 slit is already seven cells
+  // wide -- a socket any smaller than this is entirely eaten by that ring and
+  // the change does not appear in the picture at all, which is exactly what the
+  // first attempt at it did.
+  blob(p, cx - 34, G - 88, 10, 8.2, LIGHT);
+  blob(p, cx - 34, G - 88, 8.6, 6.8, SPEC);
   eye(p, cx - 34, G - 88, 5.4, 'slit', { side: -1, iris: ACCENT_DARK });
   p.face(cx - 32, G - 86, 15);
-  for (let k = 0; k < 2; k++) stroke(p, cx - 42, G - 94 + k, cx - 26, G - 96 + k, ACCENT_DARK);
+  for (let k = 0; k < 2; k++) stroke(p, cx - 42, G - 95 + k, cx - 26, G - 97 + k, ACCENT_DARK);
 }
 
 export const DESIGNS: Record<string, (p: Pen) => void> = {

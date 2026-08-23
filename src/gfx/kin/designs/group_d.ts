@@ -26,6 +26,17 @@
  * wing, with the mass moving out of the wings and into the shoulders as it
  * grows up.
  *
+ * Every face in here is drawn to the *icon* rather than to the sprite. The
+ * party screen and the switch menu both go through `iconSprite`, which is a
+ * mode-of-four downsample to half size, and half size is where a bird's head
+ * lives or dies: at 3x these six all had faces, and at 64px three of them had a
+ * pale smudge with something dark somewhere in it. What survives the halving is
+ * a block of value, never a line -- so each head here is a dark cap, a light
+ * field big enough to be a field, and one dark eye with clear light on every
+ * side of it. Detail that cannot be described in those terms was taken off
+ * rather than made bigger, because making it bigger is what turns a face into
+ * a pair of sunglasses.
+ *
  * The four gale species all opt out of the type character pass. It scallops
  * every trailing edge in the silhouette, which on a creature already made of
  * feathers turns the whole outline into frost damage -- the first render of
@@ -38,7 +49,7 @@ import {
   INNER, LIGHT, SHADE, SPEC,
 } from '../mask.js';
 import {
-  arc, blob, blobFront, cell, cellOver, eye, lerp, limbPath, mane,
+  arc, beak, blob, blobFront, cell, cellOver, eye, lerp, limbPath, mane,
   path, paw, poly, polyFront, stroke, taper, tuft, wingFeathered,
   type Pen, type Pt,
 } from '../parts.js';
@@ -237,24 +248,24 @@ function kestrelle(p: Pen): void {
   const G = p.ground, cx = p.cx;
   p.noTypeTraits();
 
-  const chestX = cx - 14, chestY = G - 48;
-  const rumpX = cx + 22, rumpY = G - 42;
-  const headX = cx - 40, headY = G - 68;
+  const chestX = cx - 12, chestY = G - 46;
+  const rumpX = cx + 17, rumpY = G - 40;
+  const headX = cx - 42, headY = G - 66;
 
   /* --- far wing, swept back and LOW, in the recessed tone. Down first. */
-  limbPath(p, [[rumpX - 14, rumpY - 12], [rumpX + 4, rumpY - 19], [rumpX + 18, rumpY - 22]], 17, 10, SHADE);
+  limbPath(p, [[rumpX - 12, rumpY - 11], [rumpX + 4, rumpY - 17], [rumpX + 16, rumpY - 20]], 15, 9, SHADE);
   for (let i = 0; i < 3; i++) {
-    blade(p, rumpX + 16, rumpY - 21, 27 - i * 3, -0.20 + i * 0.24, 8, SHADE, DEEP);
+    blade(p, rumpX + 14, rumpY - 19, 24 - i * 3, -0.20 + i * 0.24, 8, SHADE, DEEP);
   }
 
   /* --- the tail: long, narrow and banded, trailing down and back. A falcon's
      tail is nearly as long as its body and that proportion is half the read. */
-  const tailPts: Pt[] = [[rumpX - 2, rumpY + 2], [rumpX + 18, rumpY + 8], [rumpX + 36, rumpY + 16]];
-  limbPath(p, tailPts, 18, 13, BASE, { lit: HILIGHT, dark: DEEP });
+  const tailPts: Pt[] = [[rumpX - 2, rumpY + 2], [rumpX + 16, rumpY + 8], [rumpX + 32, rumpY + 15]];
+  limbPath(p, tailPts, 16, 12, BASE, { lit: HILIGHT, dark: DEEP });
   const dense = path(tailPts);
   for (let i = 1; i <= 3; i++) {
     const q = dense[Math.round((i / 4.6) * (dense.length - 1))]!;
-    for (let k = -9; k <= 9; k++) {
+    for (let k = -8; k <= 8; k++) {
       cellOver(p, q[0] - k * 0.16, q[1] + k, ACCENT);
       cellOver(p, q[0] - k * 0.16 - 1, q[1] + k, ACCENT);
       cellOver(p, q[0] - k * 0.16 + 1, q[1] + k, HILIGHT);
@@ -269,13 +280,18 @@ function kestrelle(p: Pen): void {
   paw(p, cx - 7, G - 1, 6, { tone: ACCENT, toes: 3, claws: true, long: true, clawTone: ACCENT_DARK });
 
   /* --- the body: a long tilted capsule, deep at the chest, tucked at the
-     waist. A level barrel is a pigeon; the tilt is the entire posture. */
-  limbPath(p, [[chestX, chestY], [cx + 4, chestY + 5], [rumpX, rumpY]], 34, 27, BASE, { bulge: -2 });
-  blobFront(p, chestX - 2, chestY + 2, 17, 17, BASE);
-  blobFront(p, rumpX + 1, rumpY - 1, 15, 16, BASE);
-  blob(p, chestX - 5, chestY + 8, 15, 13, LIGHT);
-  barredBreast(p, chestX - 6, chestY + 1, 11, 5, 5, ACCENT);
-  for (const q of arc(cx + 2, chestY + 2, 20, 22, Math.PI * 0.16, Math.PI * 0.86, 22)) {
+     waist. A level barrel is a pigeon; the tilt is the entire posture.
+
+     Deliberately six cells shallower than it first was. A falcon's head is a
+     large fraction of it, and the first version of this animal had a barrel so
+     deep that the skull read as a knob on the front of a loaf -- shrinking the
+     body did more for the head than anything drawn on the head did. */
+  limbPath(p, [[chestX, chestY], [cx + 3, chestY + 5], [rumpX, rumpY]], 28, 22, BASE, { bulge: -2 });
+  blobFront(p, chestX - 2, chestY + 2, 14, 14, BASE);
+  blobFront(p, rumpX + 1, rumpY - 1, 12, 13, BASE);
+  blob(p, chestX - 5, chestY + 7, 13, 11, LIGHT);
+  barredBreast(p, chestX - 6, chestY + 1, 9, 4, 5, ACCENT);
+  for (const q of arc(cx + 1, chestY + 2, 17, 18, Math.PI * 0.16, Math.PI * 0.86, 20)) {
     cellOver(p, q[0], q[1], DEEP);
     cellOver(p, q[0], q[1] - 1, SHADE);
   }
@@ -286,71 +302,87 @@ function kestrelle(p: Pen): void {
      is dark above and pale below, and that single division does more for the
      read than every feather on it -- it is also what makes the barred breast
      legible, because a pale chest only counts as pale against something. */
-  for (let dx = 0; dx <= 44; dx++) {
-    const bx = chestX - 12 + dx, t = dx / 44;
+  for (let dx = 0; dx <= 40; dx++) {
+    const bx = chestX - 11 + dx, t = dx / 40;
     const ty = p.m.top(Math.round(bx));
     if (ty < 0) continue;
-    const depth = 6 + Math.sin(t * Math.PI) * 9;
+    const depth = 5 + Math.sin(t * Math.PI) * 8;
     for (let k = 1; k <= depth; k++) cellOver(p, bx, ty + k, k > depth - 2 ? DEEP : SHADE);
   }
 
   /* --- near leg, planted and carrying the weight, forward of the far one. */
-  taper(p, cx + 8, G - 28, cx + 12, G - 6, 9, 6, ACCENT_LIT);
+  taper(p, cx + 8, G - 26, cx + 12, G - 6, 9, 6, ACCENT_LIT);
   paw(p, cx + 12, G, 7, { tone: ACCENT_LIT, toes: 3, claws: true, long: true, clawTone: ACCENT_DARK });
 
   /* --- near wing, swept back and HIGH. Three long primaries off a short arm,
      each a blade rather than a spike. */
-  limbPath(p, [[chestX + 16, chestY - 12], [cx + 8, chestY - 22], [cx + 20, chestY - 30]], 19, 11, SHADE,
+  limbPath(p, [[chestX + 14, chestY - 11], [cx + 7, chestY - 20], [cx + 18, chestY - 27]], 17, 10, SHADE,
     { front: true, lit: LIGHT, dark: DEEP });
   for (let i = 0; i < 3; i++) {
-    blade(p, cx + 18, chestY - 29, 34 - i * 4, -0.46 + i * 0.26, 10, i === 1 ? BASE : SHADE);
+    blade(p, cx + 16, chestY - 26, 30 - i * 4, -0.46 + i * 0.26, 10, i === 1 ? BASE : SHADE);
   }
-  stroke(p, chestX + 14, chestY - 16, cx + 16, chestY - 32, LIGHT);
+  stroke(p, chestX + 12, chestY - 14, cx + 14, chestY - 29, LIGHT);
 
   /* --- neck and head, driven forward and down. The neck is short and thick;
-     a falcon has no visible one and the head sits proud of the chest. */
-  limbPath(p, [[chestX + 6, chestY - 4], [headX + 11, headY + 10]], 20, 14, BASE, { front: true });
-  blobFront(p, headX, headY, 19, 17, BASE);
-  // The cap stops just above the eye, and the malar stripe below carries the
-  // dark down past it. Run the hood any lower and the eye is inside it, which
-  // on a head this size means no eye at all.
-  crownCap(p, headX, headY, 19, 17, -7, 0.20, ACCENT);
-  // Two swept crest feathers off the back of the cap -- pipwing's three sprigs
-  // laid flat by the wind, and the middle stage of the line's crest. Two and
-  // not five: this head already carries a hood, a cheek, a malar stripe, a
-  // hooked bill and two eyes, and the version with a fan on the back of it as
-  // well was unreadable at any size.
-  limbPath(p, [[headX + 8, headY - 11], [headX + 21, headY - 16]], 7, 2, SHADE, { front: true });
-  limbPath(p, [[headX + 10, headY - 7], [headX + 22, headY - 9]], 6, 2, BASE, { front: true });
+     a falcon has no visible one and the head sits proud of the chest.
 
-  /* --- the bill: short, deep and hooked. A falcon's is a hook with a notch,
-     never a cone. */
-  poly(p, [[headX - 8, headY + 1], [headX - 26, headY + 6], [headX - 22, headY + 15], [headX - 7, headY + 14]], ACCENT_LIT);
-  poly(p, [[headX - 26, headY + 6], [headX - 29, headY + 15], [headX - 21, headY + 14]], ACCENT_DARK);
-  stroke(p, headX - 9, headY + 2, headX - 25, headY + 6, SPEC);
-  // The cere: a hard dark band where the bill enters the face, which is what
-  // stops a pale bill on a pale muzzle reading as a chipped cheek.
-  stroke(p, headX - 8, headY + 1, headX - 7, headY + 14, ACCENT);
-  if (!p.back) {
-    stroke(p, headX - 8, headY + 10, headX - 26, headY + 10, DEEP);
-    cellOver(p, headX - 15, headY + 4, INNER);
-  }
+     The head is three cells bigger every way than it was, and everything drawn
+     on it is one thing simpler. Both halves of that were needed: the old skull
+     carried a hood, a cheek patch, a malar stripe, two crest feathers, a hooked
+     bill and two eyes on 38x34 pixels, and halved for the party icon the whole
+     front end came back as a dark smudge with one pale fleck in it. */
+  limbPath(p, [[chestX + 4, chestY - 4], [headX + 13, headY + 10]], 19, 13, BASE, { front: true });
+  blobFront(p, headX, headY, 22, 19, BASE);
 
-  if (p.back) { p.face(headX, headY, 19); return; }
+  /* --- the hood, and the one decision this whole face turns on: it is worn
+     HIGH, as a cap over the crown only, and stops five cells clear of the eye.
 
-  /* --- the face. A slit eye, small and almost all iris: a bird that hunts,
-     and the exact opposite of pipwing's saucer. Under it the malar stripe --
-     the black moustache that is the single most recognisable thing about a
-     falcon, and three cells of it does the whole job. */
-  // A pale cheek under each eye first. The malar stripe is painted in the same
-  // near-black as the hood, and a near-black stripe laid on mid-blue barely
-  // reads at all -- it needs something light to cut across.
-  blob(p, headX - 5, headY + 8, 10, 6, LIGHT);
-  eye(p, headX - 7, headY - 2, 5.4, 'slit', { side: -1, iris: ACCENT_LIT });
-  eye(p, headX + 12, headY - 2, 3.6, 'slit', { side: 1, iris: ACCENT_LIT });
-  for (let k = 0; k < 5; k++) stroke(p, headX - 11 + k, headY + 2, headX - 10 + k, headY + 15, ACCENT);
-  for (let k = 0; k < 3; k++) stroke(p, headX + 9 + k, headY, headX + 10 + k, headY + 10, ACCENT);
-  p.face(headX, headY, 19);
+     A real peregrine's hood comes down around the eye, and drawn that way it
+     did here too -- and at icon size, where this skull is eleven pixels tall,
+     a near-black hood with a near-black eye inside it is not a hood and an eye,
+     it is one black blot on the front of a bird. Everything else on this head
+     was already tuned; this was the fault. Raise the cap, drop the eye into
+     open white, and the face survives being halved. */
+  crownCap(p, headX, headY, 22, 19, -8, 0.12, ACCENT);
+  // One swept crest spike off the back of the cap -- pipwing's three sprigs
+  // laid flat by the wind, on their way to galecrest's crown. One and not two:
+  // the pair read as a scuff on the back of the skull, and a single spike is
+  // the only version that puts a notch in the outline.
+  limbPath(p, [[headX + 13, headY - 8], [headX + 29, headY - 14]], 8, 2.4, ACCENT, { front: true });
+
+  /* --- the mask: a white field over cheek and jaw, stopping short of the nape
+     and short of the chin. The eye and the moustache are both near-black and
+     neither counts for anything until there is something light for them to be
+     dark against -- but run the white all the way to the jaw and the head
+     welds itself onto the white breast below, which is the other half of why
+     the front of this animal used to be one shape. */
+  blob(p, headX, headY + 4, 16, 12, LIGHT);
+
+  /* --- the bill: the toolkit's own, hooked, rooted well forward of the eye.
+     Hand-cut as a four-cornered slab it was a brick with a notch in it -- a
+     beak has to come to a point or it is a jaw, and at half size a blunt one
+     just extends the head. Warm grey with a black hook, which is a falcon's. */
+  beak(p, headX - 13, headY + 7, 19, 15, { hooked: true, tone: ACCENT_LIT });
+
+  if (p.back) { p.face(headX, headY, 22); return; }
+
+  /* --- the face. A slit eye, all iris and no white: a bird that hunts, and the
+     exact opposite of pipwing's saucer. Bigger than it was, set back off the
+     bill, and with clear white above and in front of it, so at half size it is
+     still a hard dark almond in a pale face rather than one more dark cell
+     among many. */
+  eye(p, headX - 3, headY + 1, 6.2, 'slit', { side: -1, iris: ACCENT });
+  // The far eye is dropped level with the near one and kept inside the white,
+  // with four clear cells above it. Tucked up under the cap the way it was, the
+  // two darks touched and the icon showed one wide black band instead of an eye.
+  eye(p, headX + 14, headY + 3, 3, 'slit', { side: 1, iris: ACCENT });
+  /* --- the moustache. The single most recognisable thing about a falcon, and
+     now the only other mark on the cheek: one solid black bar four cells wide
+     dropping from under the eye to the jaw. The far-side copy is gone -- at
+     icon size a second stripe on the far cheek was three cells of noise sitting
+     exactly where the far eye needed its contrast. */
+  for (let k = 0; k < 4; k++) stroke(p, headX - 8 + k, headY + 8, headX - 7 + k, headY + 19, ACCENT);
+  p.face(headX, headY, 22);
 }
 
 /* ============================================================ galecrest */
@@ -441,7 +473,11 @@ function galecrest(p: Pen): void {
   /* --- neck and head, thrown up and back: a bird shouting into a front. */
   limbPath(p, [[chestX - 4, chestY - 8], [headX + 8, headY + 12]], 22, 17, BASE, { front: true });
   blobFront(p, headX, headY, 17, 15, BASE);
-  blob(p, headX - 6, headY + 9, 11, 6, LIGHT);
+  // The pale face reaches up under both eyes rather than sitting as a patch on
+  // the chin. On a bird whose whole head ornament is gold, the eye is the only
+  // dark thing there is, and a dark eye needs light immediately around it or
+  // the party icon shows a gold crown on a blank head.
+  blob(p, headX - 4, headY + 7, 13, 8, LIGHT);
   crownCap(p, headX, headY, 17, 15, -4, 0.20, ACCENT_DARK);
 
   /* --- the crown. Five blades raised clear of the skull, the middle ones
@@ -471,17 +507,22 @@ function galecrest(p: Pen): void {
   if (p.back) { p.face(headX, headY, 18); return; }
 
   /* --- the face. Angry: a narrow almond nearly filled by iris under a bone
-     brow that sits on the lid. Small and hard, and the brow does more work
-     than the eye does. */
-  eye(p, headX - 5, headY - 1, 5.2, 'angry', { side: -1, iris: ACCENT });
-  eye(p, headX + 12, headY - 4, 3.4, 'angry', { side: 1, iris: ACCENT });
-  // A spark fleck at each temple: this one is half storm, and two bright cells
-  // say so more cheaply than a bolt drawn across its chest.
-  for (const [sx, sy] of [[headX + 4, headY - 9], [headX - 12, headY - 5]] as const) {
-    cellOver(p, sx, sy, ACCENT_LIT);
-    cellOver(p, sx + 1, sy + 1, ACCENT_LIT);
-    cellOver(p, sx + 2, sy, ACCENT);
-  }
+     brow that sits on the lid. The brow stays gold and does most of the work,
+     but the iris is the dark blue now rather than the bright gold it was --
+     gold iris inside a gold brow on a pale face is three warm tones stacked on
+     each other, and halved for the icon they averaged into one blank cheek.
+     Dark centre, gold rim: the eye survives the downsample.
+
+     The size is untouched, and that was the second lesson. Enlarged to force
+     the read as well, the almond grew past its own brow and the pair came out
+     as sunglasses -- what the icon needed was a dark *value* where the eye is,
+     not a bigger eye.
+
+     The two spark flecks that used to sit at the temples are gone. In the
+     bright accent, laid on the pale face they were painted on, they were
+     invisible at full size and noise at half. */
+  eye(p, headX - 5, headY - 1, 5.2, 'angry', { side: -1, iris: ACCENT_DARK });
+  eye(p, headX + 12, headY - 4, 3.4, 'angry', { side: 1, iris: ACCENT_DARK });
   p.face(headX, headY, 18);
 }
 
@@ -667,7 +708,11 @@ function slatewing(p: Pen): void {
      the thing it is named for. */
   for (let i = 0; i < 4; i++) {
     const px = cx - 13 + i * 9, py = bodyY - 15 + Math.abs(i - 1.4) * 2;
-    slab(p, [[px, py - 4], [px + 11, py - 7], [px + 12, py + 6], [px + 1, py + 9]], i % 2 ? BASE : ACCENT, ACCENT_LIT, DEEP);
+    // All four in the warm stone, alternating light and dark rather than
+    // alternating stone and body. Every other scute painted in the body tone
+    // vanished into the body at icon size, and what should have been a plated
+    // ridge came back as two tan buttons floating on a grey slab.
+    slab(p, [[px, py - 4], [px + 11, py - 7], [px + 12, py + 6], [px + 1, py + 9]], i % 2 ? ACCENT_DARK : ACCENT, ACCENT_LIT, DEEP);
     // The scutes stand a little proud of the back, so the ridge shows as a row
     // of steps in the silhouette itself. Plating that only exists inside the
     // outline is plating that does not survive the one test that matters.
@@ -712,9 +757,19 @@ function slatewing(p: Pen): void {
   /* --- the face. Sleepy: almost all lid, one long dark curve with a shallow
      lens under it. A creature holding perfectly still against a rock is not
      glaring at anything, and the half-shut eye says it has been there a while
-     and can wait longer. */
-  eye(p, headX - 5, headY + 3, 4.6, 'sleepy', { side: -1, iris: ACCENT, lid: BASE });
-  eye(p, headX + 9, headY + 1, 3.6, 'sleepy', { side: 1, iris: ACCENT, lid: BASE });
+     and can wait longer.
+
+     The iris is the dark stone rather than the bright one. A half-shut eye is
+     mostly sclera and iris with a pupil the size of a full stop, and in the
+     bright tan the whole opening averaged pale -- at icon size this creature
+     had two white slots for a face. In the dark tan the opening reads as one
+     solid dark mark, which is all an eye can be at that size.
+
+     Widening the eye to force the same read does not work and was tried: a
+     sleepy eye grown past its own lid stops being half shut and the pair come
+     out startled, which is the one expression this animal must not have. */
+  eye(p, headX - 5, headY + 3, 4.6, 'sleepy', { side: -1, iris: ACCENT_DARK, lid: BASE });
+  eye(p, headX + 9, headY + 1, 3.6, 'sleepy', { side: 1, iris: ACCENT_DARK, lid: BASE });
   p.face(headX, headY, 15);
 }
 
