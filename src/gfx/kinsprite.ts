@@ -24,240 +24,23 @@
 import { Rng } from '../core/rng.js';
 import { registry } from '../data/registry.js';
 import type { SpeciesData } from '../data/schema.js';
-
-/**
- * The design cell, one cell to a buffer pixel. Everything after the fit --
- * shading, texture, eyes, rim, outline, cast shadow -- runs here at full
- * resolution.
- */
-const DESIGN = 128;
+import {
+  ACCENT, ACCENT_DARK, ACCENT_LIT, BASE, DEEP, DESIGN, EMPTY, EYE_DARK, EYE_WHITE,
+  HILIGHT, INNER, LIGHT, Mask, OUTLINE, OUTLINE_LIT, SHADE, SHADOW, SHADOW_CORE,
+  SPEC, TONE_COUNT, U, WORK,
+} from './kin/mask.js';
+import { DESIGNS } from './kin/index.js';
+import type { Pen as DesignPen } from './kin/parts.js';
 
 /** The canvas a sprite is handed out on. Derived, so the two can never drift:
  *  the mask is the sprite now that nothing scales it on the way out. */
 export const SPRITE_SIZE = DESIGN;
 export const ICON_SIZE = DESIGN / 2;
 
-/**
- * Plans draw into a larger scratch cell than they end up in.
- *
- * Composing straight into the design cell meant a tall species -- a reared
- * serpent, a horned brute, a crested biped -- ran off the top and was silently
- * beheaded, because the mask clamps rather than throws. Drawing with room and
- * then fitting the result is the difference between a creature that is too big
- * and a creature that is missing its skull. Measured in plan units.
- */
-const WORK = 96;
-
-/**
- * Design cells to a plan unit.
- *
- * The plans and the decoration passes are authored in units, not cells, and a
- * pen rasterises them at this density -- see `Pen`. Two means the geometry
- * that was tuned on the old grid comes out at exactly the same size, with
- * every curve resolved twice as finely and a half-unit reach for detail that
- * the old grid could not hold at all.
- */
-const U = 2;
-
-/** Mask cell meanings. Resolved to colours at the end. */
-const EMPTY = 0;
-const BASE = 1;
-const SHADE = 2;
-const LIGHT = 3;
-const ACCENT = 4;
-const ACCENT_DARK = 5;
-const EYE_WHITE = 6;
-const EYE_DARK = 7;
-const OUTLINE = 8;
-/** Extra ramp steps, only ever produced by the shading and finishing passes. */
-const HILIGHT = 9;
-const DEEP = 10;
-/** Specular: the brightest step, reserved for the rim and the top of a curve. */
-const SPEC = 11;
-/** Lit outline. A silhouette drawn entirely in one dark tone reads as marker
- *  pen; letting the light side of the outline carry some of the body's own
- *  colour is most of what separates painted art from traced art. */
-const OUTLINE_LIT = 12;
-/** Contact shadow on the ground, drawn under everything and never outlined. */
-const SHADOW = 13;
-/**
- * The bright end of the accent ramp: flame cores, ice facets, quartz seams,
- * metal sheen, claw tips, feather quills. Small marks in this tone are what
- * make a detail read as a *thing* rather than as a lighter patch, so the
- * shading pass deliberately leaves it alone -- it is a material, not a band.
- */
-const ACCENT_LIT = 14;
-/**
- * Cavity colour: inner ear, open mouth, nostril, gill slit. Reference art
- * almost never leaves an opening in body colour, and one dark warm cell in the
- * right place does more for a face than another whole shading band.
- */
-const INNER = 15;
-/**
- * The dark heart of the cast shadow. A shadow of one flat opacity is a decal;
- * an umbra with a lighter penumbra around it is what puts a creature on the
- * floor rather than over it.
- */
-const SHADOW_CORE = 16;
-/** One past the last mask value, for the ramp lookup tables. */
-const TONE_COUNT = 17;
-
 export type BodyPlan =
   | 'quadruped' | 'biped' | 'brute' | 'critter' | 'bird' | 'grub'
   | 'arachnid' | 'mineral' | 'monolith' | 'orb' | 'fish' | 'moth'
   | 'aquatic' | 'serpentine';
-
-class Mask {
-  data: Uint8Array;
-  constructor(readonly w = DESIGN, readonly h = DESIGN) {
-    this.data = new Uint8Array(w * h);
-  }
-
-  get(x: number, y: number): number {
-    if (x < 0 || y < 0 || x >= this.w || y >= this.h) return EMPTY;
-    return this.data[y * this.w + x]!;
-  }
-
-  set(x: number, y: number, v: number): void {
-    if (x < 0 || y < 0 || x >= this.w || y >= this.h) return;
-    this.data[y * this.w + x] = v;
-  }
-
-  /** Fills only where currently empty, so earlier shapes stay on top. */
-  under(x: number, y: number, v: number): void {
-    if (this.get(x, y) === EMPTY) this.set(x, y, v);
-  }
-
-  /** Paints only onto cells that are already body, so a seam, a marking or a
-   *  crease can never accidentally extend the silhouette. */
-  over(x: number, y: number, v: number): void {
-    if (this.filled(x, y)) this.set(x, y, v);
-  }
-
-  filled(x: number, y: number): boolean {
-    const v = this.get(x, y);
-    return v !== EMPTY && v !== OUTLINE;
-  }
-
-  ellipse(cx: number, cy: number, rx: number, ry: number, v: number, beneath = false): void {
-    if (rx <= 0 || ry <= 0) return;
-    for (let y = Math.floor(cy - ry); y <= Math.ceil(cy + ry); y++) {
-      for (let x = Math.floor(cx - rx); x <= Math.ceil(cx + rx); x++) {
-        const dx = (x - cx) / rx;
-        const dy = (y - cy) / ry;
-        if (dx * dx + dy * dy <= 1) {
-          if (beneath) this.under(x, y, v);
-          else this.set(x, y, v);
-        }
-      }
-    }
-  }
-
-  box(x0: number, y0: number, x1: number, y1: number, v: number, beneath = false): void {
-    for (let y = Math.min(y0, y1); y <= Math.max(y0, y1); y++) {
-      for (let x = Math.min(x0, x1); x <= Math.max(x0, x1); x++) {
-        if (beneath) this.under(x, y, v);
-        else this.set(x, y, v);
-      }
-    }
-  }
-
-  /** A limb that narrows from `w0` at the start to `w1` at the end. */
-  limb(x0: number, y0: number, x1: number, y1: number, w0: number, w1: number, v: number, beneath = false): void {
-    const steps = Math.max(Math.abs(x1 - x0), Math.abs(y1 - y0), 1);
-    for (let i = 0; i <= steps; i++) {
-      const t = i / steps;
-      const x = Math.round(x0 + (x1 - x0) * t);
-      const y = Math.round(y0 + (y1 - y0) * t);
-      const w = Math.max(1, Math.round(w0 + (w1 - w0) * t));
-      const r = Math.floor(w / 2);
-      for (let dy = -r; dy <= r; dy++) {
-        for (let dx = -r; dx <= r; dx++) {
-          if (dx * dx + dy * dy <= r * r + 1) {
-            if (beneath) this.under(x + dx, y + dy, v);
-            else this.set(x + dx, y + dy, v);
-          }
-        }
-      }
-    }
-  }
-
-  /**
-   * An ellipse that sits *in front of* whatever is already drawn: a dark seam
-   * is laid down one cell proud of it, but only where it lands on existing
-   * body. Two masses in the same colour with no seam between them read as one
-   * blob however well the shading pass runs, and that -- not the palette -- is
-   * why a generated head so often looks welded to its own shoulders.
-   */
-  ellipseFront(cx: number, cy: number, rx: number, ry: number, v: number, seam = DEEP, pad = 1): void {
-    if (rx <= 0 || ry <= 0) return;
-    for (let y = Math.floor(cy - ry - pad); y <= Math.ceil(cy + ry + pad); y++) {
-      for (let x = Math.floor(cx - rx - pad); x <= Math.ceil(cx + rx + pad); x++) {
-        const dx = (x - cx) / (rx + pad);
-        const dy = (y - cy) / (ry + pad);
-        if (dx * dx + dy * dy <= 1 && this.filled(x, y)) this.set(x, y, seam);
-      }
-    }
-    this.ellipse(cx, cy, rx, ry, v);
-  }
-
-  /** The limb equivalent of `ellipseFront`. */
-  limbFront(x0: number, y0: number, x1: number, y1: number, w0: number, w1: number, v: number, seam = DEEP, pad = 1): void {
-    const steps = Math.max(Math.abs(x1 - x0), Math.abs(y1 - y0), 1);
-    for (let i = 0; i <= steps; i++) {
-      const t = i / steps;
-      const x = Math.round(x0 + (x1 - x0) * t);
-      const y = Math.round(y0 + (y1 - y0) * t);
-      const w = Math.max(1, Math.round(w0 + (w1 - w0) * t)) + pad * 2;
-      const r = Math.floor(w / 2);
-      for (let dy = -r; dy <= r; dy++) {
-        for (let dx = -r; dx <= r; dx++) {
-          if (dx * dx + dy * dy <= r * r + 1 && this.filled(x + dx, y + dy)) this.set(x + dx, y + dy, seam);
-        }
-      }
-    }
-    this.limb(x0, y0, x1, y1, w0, w1, v);
-  }
-
-  /** Topmost body row in a column, or -1. */
-  top(x: number): number {
-    for (let y = 0; y < this.h; y++) if (this.filled(x, y)) return y;
-    return -1;
-  }
-
-  /** Bottommost body row in a column, or -1. */
-  bottom(x: number): number {
-    for (let y = this.h - 1; y >= 0; y--) if (this.filled(x, y)) return y;
-    return -1;
-  }
-
-  /** Mirror the left half onto the right, for a symmetric front view. */
-  mirror(axis: number): void {
-    for (let y = 0; y < this.h; y++) {
-      for (let x = 0; x < axis; x++) {
-        const v = this.get(x, y);
-        const mx = Math.round(axis * 2 - x) - 1;
-        if (v !== EMPTY) this.set(mx, y, v);
-      }
-    }
-  }
-
-  bounds(): { x0: number; y0: number; x1: number; y1: number } | null {
-    let x0 = this.w, y0 = this.h, x1 = -1, y1 = -1;
-    for (let y = 0; y < this.h; y++) {
-      for (let x = 0; x < this.w; x++) {
-        if (this.get(x, y) !== EMPTY) {
-          if (x < x0) x0 = x;
-          if (y < y0) y0 = y;
-          if (x > x1) x1 = x;
-          if (y > y1) y1 = y;
-        }
-      }
-    }
-    return x1 < 0 ? null : { x0, y0, x1, y1 };
-  }
-
-}
 
 /**
  * A pen that draws in plan units onto a finer mask.
@@ -1895,7 +1678,20 @@ function contactShadow(mask: Mask): void {
 
 /* --------------------------------------------------------------- eyes */
 
-interface EyeSpot { x: number; y: number; spread: number; size: number; angry: boolean }
+interface EyeSpot {
+  x: number; y: number; spread: number; size: number; angry: boolean;
+  /**
+   * False for a face anchor that carries no eyes of its own.
+   *
+   * A hand-authored design draws its own eyes -- eye shape is most of a
+   * creature's character and the stock pair cannot carry six different ones --
+   * but the later passes still need to know where the face *is*, or the type
+   * character pass hangs leaf blades off the muzzle and the marking pass rules
+   * a stripe down the middle of it. So a design registers the anchor without
+   * asking for eyes, and `drawEyes` skips it.
+   */
+  draw: boolean;
+}
 
 /**
  * Eyes are the one feature a viewer reads first and forgives least, so they are
@@ -1911,7 +1707,7 @@ let pendingEyes: EyeSpot[] = [];
 function eyes(p: Pen, cx: number, cy: number, spread: number, size: number, angry: boolean): void {
   pendingEyes.push({
     x: Math.round(cx * p.u), y: Math.round(cy * p.u),
-    spread: Math.round(spread * p.u), size: Math.round(size * p.u), angry,
+    spread: Math.round(spread * p.u), size: Math.round(size * p.u), angry, draw: true,
   });
 }
 
@@ -1934,6 +1730,7 @@ function eyes(p: Pen, cx: number, cy: number, spread: number, size: number, angr
  */
 function drawEyes(mask: Mask, spots: EyeSpot[]): void {
   for (const s of spots) {
+    if (!s.draw) continue;
     const cy = s.y;
     // Big enough to hold an expression across a battle, small enough that the
     // head still has room for a skull behind it.
@@ -2957,6 +2754,19 @@ function hexToRgb(h: string): [number, number, number] {
 
 const cache = new Map<string, HTMLCanvasElement>();
 
+/**
+ * The composition origin a hand-authored design is handed.
+ *
+ * Designs work in mask cells, one cell to one sprite pixel, rather than in the
+ * plan units the old body plans use -- at 128 cells a creature is best thought
+ * about in the pixels it will actually occupy. The scratch mask is much larger
+ * than the design cell, so a tall or a wide creature has somewhere to go before
+ * the fit pass brings it home, and these are simply a comfortable place to
+ * stand inside it.
+ */
+const DESIGN_CX = Math.round(WORK * U / 2);
+const DESIGN_GROUND = Math.round(WORK * U * 0.78);
+
 function build(speciesId: string, back: boolean): HTMLCanvasElement {
   const sp = registry.species.get(speciesId);
   const plan = (sp?.design.plan as BodyPlan) ?? 'quadruped';
@@ -2965,27 +2775,67 @@ function build(speciesId: string, back: boolean): HTMLCanvasElement {
 
   const work = new Mask(WORK * U, WORK * U);
   pendingEyes = [];
-  const ctx: PlanCtx = {
-    m: new Pen(work, U), rng, s, back,
-    ground: WORK - 6, cx: Math.floor(WORK / 2),
-  };
 
-  (PLAN_FNS[plan] ?? planQuadruped)(ctx);
+  /**
+   * A design is run *instead of* the body plan, and instead of the two random
+   * decoration passes that go with it.
+   *
+   * Appendages and markings exist to stop forty species on fourteen plans
+   * reading as fourteen creatures in forty colours. A design has already solved
+   * that problem properly, by being a specific animal, so bolting a random
+   * frill and a random spot pattern onto it can only make it worse. Everything
+   * that is genuinely craft rather than variety -- the light, the surface, the
+   * rim, the ink, the floor, the fit -- still runs, so an author gets all of it
+   * for free and only has to think about the creature.
+   */
+  const designed = sp ? DESIGNS[speciesId] : undefined;
+  let wantTypeTraits = true, wantTexture = true;
+
+  if (designed && sp) {
+    const pen: DesignPen = {
+      m: work, rng, back, sp,
+      cx: DESIGN_CX, ground: DESIGN_GROUND,
+      eyes: (x, y, spread, size, angry = false) => {
+        pendingEyes.push({
+          x: Math.round(x), y: Math.round(y),
+          spread: Math.round(spread), size: Math.round(size), angry, draw: true,
+        });
+      },
+      face: (x, y, r) => {
+        pendingEyes.push({
+          x: Math.round(x), y: Math.round(y),
+          spread: Math.round(r * 0.5), size: Math.round(r * 0.25), angry: false, draw: false,
+        });
+      },
+      noTypeTraits: () => { wantTypeTraits = false; },
+      noTexture: () => { wantTexture = false; },
+    };
+    designed(pen);
+  } else {
+    const ctx: PlanCtx = {
+      m: new Pen(work, U), rng, s, back,
+      ground: WORK - 6, cx: Math.floor(WORK / 2),
+    };
+    (PLAN_FNS[plan] ?? planQuadruped)(ctx);
+  }
+
   // Decoration runs after the fit, so a tuft or a rivet is the same size on
   // every species regardless of how much its body plan had to be squeezed to
   // get into the frame -- and it is still authored in plan units, through a
   // pen of its own, so a horn is a horn and not a horn divided by two.
   const design = fitToCell(work, DESIGN - 6);
   const dpen = new Pen(design, U);
-  appendages(dpen, speciesId);
-  markings(dpen, speciesId);
-  typeTraits(dpen, sp, speciesId);
+  if (!designed) {
+    appendages(dpen, speciesId);
+    markings(dpen, speciesId);
+  }
+  if (wantTypeTraits) typeTraits(dpen, sp, speciesId);
 
   // Silhouette first, then everything that reads as craftsmanship: the light,
   // the surface it falls on, the eyes, the rim, the ink and the floor. All of
   // these run one cell at a time, which is the entire point of the finer cell.
   shade(design);
-  texture(design, sp, speciesId);
+  if (wantTexture) texture(design, sp, speciesId);
   drawEyes(design, pendingEyes);
   pendingEyes = [];
   rimLight(design);
