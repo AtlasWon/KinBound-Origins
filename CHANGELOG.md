@@ -8,6 +8,48 @@ Add a new `## vX.Y.Z` heading above the others before running `npm run ship`.
 
 ---
 
+## v0.5.0
+
+### Fixed
+- **Furniture stopped bringing its own floor.** Every chair, plant and table
+  carried a baked-in wooden background, so in the laboratory they sat in brown
+  squares on a white tiled floor. Furniture is transparent now and picks up
+  whatever floor it is standing on, with a shadow where it meets it.
+- The move panel's type name ran into its own chip.
+- The command pad marked the three options you were **not** choosing. Now it
+  marks the one you are.
+
+### Interfaces
+- **The switch screen** is a card for the kin that is out and a bench row for
+  each of the others, all with portraits, health bars and numbers -- instead of
+  a text list spilling out of the message box.
+- **The party screen** outside battle was a white sheet with black text. It is
+  now a tall lead card and five bench cards, tinted by type, each carrying its
+  own portrait, level, health bar and status.
+- **The character creator** lays out its columns from measured text, so nothing
+  overlaps whatever the labels turn out to be.
+- **The region map** is a proper sea chart: depth contours, forest, the crescent
+  road, a compass, a scale, and a legend that fills in as you travel.
+
+### Battle
+- **Kin come out of their vessels.** The capsule arcs in, splits, opens a cone
+  of light and the creature grows out of it before the capsule flies back.
+  Recalling reverses it, a faint sinks instead of vanishing, and a capture pulls
+  the kin into the beam before the vessel starts to wobble.
+- Damage lands three frames after the hit rather than eighteen.
+- Route 1 trainers field one kin each.
+
+### Elsewhere
+- **Creatures are drawn at twice the resolution** and detailed to match.
+- **The cinematic explains itself.** It goes through the drowned town of Old
+  Tidefall and Dr. Vess's wall of charts before it reaches the house with the
+  light on -- so that house is the reason the game starts, not a picture of a
+  window. And the kin face the way they are going.
+- NPCs talk like people: contractions, half-finished thoughts, and things they
+  only tell you once the story has moved on.
+
+---
+
 ## v0.4.0
 
 ### The world
