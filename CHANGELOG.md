@@ -8,6 +8,40 @@ Add a new `## vX.Y.Z` heading above the others before running `npm run ship`.
 
 ---
 
+## v0.6.0
+
+### Every kin redrawn, one at a time
+
+Forty-eight species used to be drawn by fourteen shared body plans, so any two
+species on the same plan were the same animal in different paint. All three
+starters sat on the same plan -- which is exactly what it looked like.
+
+Every creature now has its own design, drawn from the description already
+written for it. The roster passes a silhouette test: fill each one with a single
+flat colour and no two are the same shape.
+
+- **The starters are three different animals.** A squat leaf-bud low to the
+  ground, a fox caught mid-step with a raised forepaw and a curling plume, and
+  an otter sitting up on its haunches with its hands at its chest.
+- A reared serpent over its own coil. A leaning kelp column on a splayed
+  holdfast. A hanging lantern with a face and two hooks. An anchor. An
+  anglerfish holding its lure out in front of it. A cricket coiled on one raised
+  femur. A flounder lying in profile with both eyes on one side of its skull.
+  A standing stone. A heron on stilt legs.
+- **Evolution families look related** without being the same drawing scaled up:
+  a crab and a bigger crab sharing a claw, a cub and the cat it becomes sharing
+  ears and a tail flame, a chalk figure and the armoured slab it grows into.
+- Every creature is legible at **icon size** as well as in battle, because that
+  is what the party and switch screens draw.
+
+Underneath it: a per-species design layer and a library of sixty-nine drawing
+tools -- limbs along curved paths, digitigrade legs, paws with separated toes,
+gripping hands, jaws with teeth, beaks, feathered and membraned wings, fins with
+rays, shells, horns, manes, four kinds of tail, and eyes in six shapes, because
+eye shape is most of a creature's character.
+
+---
+
 ## v0.5.0
 
 ### Fixed
