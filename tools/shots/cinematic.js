@@ -20,7 +20,7 @@ for (let i = 0; i < 12; i++) {
   const shot = scene.shot;
   // SHOTS is module-private, so read the lengths that were printed into the
   // source rather than reaching for it.
-  const frames = [300, 300, 320, 280, 320, 230][shot] || 280;
+  const frames = [230, 210, 200, 230, 270, 300, 290, 180][shot] || 280;
   d.tick(Math.round(frames * 0.35));
   await d.shoot('cine-' + String(i).padStart(2, '0') + 'a', 2);
   d.tick(Math.round(frames * 0.5));

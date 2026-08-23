@@ -10,7 +10,7 @@
           {
             "kind": "ask",
             "who": "KEEPER",
-            "lines": ["Back again, {name}. Shall I take a look at them?"],
+            "lines": ["Back again, {name}. Shall I have a look at them?"],
             "yes": [
               { "kind": "setRespawn" },
               { "kind": "fade", "to": "black", "frames": 16 },
@@ -20,7 +20,7 @@
               { "kind": "say", "who": "KEEPER", "lines": ["There. Right as rain, the lot of them."] }
             ],
             "no": [
-              { "kind": "say", "who": "KEEPER", "lines": ["Suit yourself. I am here either way."] }
+              { "kind": "say", "who": "KEEPER", "lines": ["Suit yourself. I'm here either way."] }
             ]
           }
         ],
@@ -29,31 +29,34 @@
             "kind": "say",
             "who": "KEEPER",
             "lines": [
-              "Welcome in. You look like the road has been long.",
-              "I am the keeper here. Every waystation has one, and we all do the same job.",
-              "We put your kin back together, and we do not charge you for it."
+              "Come in, come in. You've the look of a long road about you.",
+              "I'm the keeper here. Every waystation has one and we all do the same job.",
+              "We put your kin back together, and we don't charge you for it. Ever."
             ]
           },
           { "kind": "setFlag", "flag": "ways_met" },
           {
             "kind": "ask",
             "who": "KEEPER",
-            "lines": ["May I see them, {name}?"],
+            "lines": ["Well then. May I see them?"],
             "yes": [
               { "kind": "setRespawn" },
               { "kind": "fade", "to": "black", "frames": 16 },
               { "kind": "healParty" },
               { "kind": "wait", "frames": 24 },
               { "kind": "fade", "to": "clear", "frames": 16 },
-              { "kind": "say", "who": "KEEPER", "lines": ["All patched up. Try to keep them that way."] },
+              { "kind": "say", "who": "KEEPER", "lines": ["There. All patched up. Try to keep them that way."] },
               {
                 "kind": "say",
                 "who": "KEEPER",
-                "lines": ["And if it goes badly out there, you will wake up here. That is the other half of the job."]
+                "lines": [
+                  "And if it goes badly out there, you'll wake up here. That's the other half of it.",
+                  "Nobody tells you that part until they have to. Now you know."
+                ]
               }
             ],
             "no": [
-              { "kind": "say", "who": "KEEPER", "lines": ["When you are ready, then. The counter does not move."] }
+              { "kind": "say", "who": "KEEPER", "lines": ["When you're ready, then. The counter doesn't move."] }
             ]
           }
         ]
@@ -64,7 +67,10 @@
     "id": "roost_terminal",
     "trigger": "interact",
     "actions": [
-      { "kind": "say", "lines": ["The Roost terminal hums awake."] },
+      { "kind": "say", "lines": [
+        "The Roost terminal hums awake.",
+        "Somewhere a long way off, a great many things shuffle and settle."
+      ]},
       { "kind": "openStorage" }
     ]
   }

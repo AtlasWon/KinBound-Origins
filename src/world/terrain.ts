@@ -11,8 +11,15 @@ import { T } from '../gfx/tileset.js';
 import type { CollisionCode, TerrainTag } from '../data/schema.js';
 
 export interface TerrainDef {
-  /** Base layer tile. */
-  ground: number;
+  /**
+   * Base layer tile.
+   *
+   * Furniture leaves this out. A chair has to stand on floorboards in a house
+   * and on civic tile in the laboratory, so naming one floor here is exactly
+   * what put every sofa in a cream square on a white floor. TileMap fills the
+   * gap from the floor around the cell instead -- see `inheritGround`.
+   */
+  ground?: number;
   /** Overlay tile drawn above the player when they are behind it. */
   over?: number;
   collision: CollisionCode;
@@ -59,7 +66,7 @@ export const TERRAIN: Record<string, TerrainDef> = {
   'f': { ground: T.FLOOR_WOOD, collision: 0, tag: 'floor', step: 'wood' },
   'r': { ground: T.FLOOR_RUG, collision: 0, tag: 'floor', step: 'wood' },
   'I': { ground: T.WALL_INTERIOR, collision: 1, tag: 'floor' },
-  'K': { ground: T.COUNTER, collision: 1, tag: 'floor' },
+  'K': { over: T.COUNTER, collision: 1, tag: 'floor' },
   'S': { ground: T.STAIRS, collision: 0, tag: 'floor', step: 'stone' },
   'p': { ground: T.PUDDLE, collision: 0, tag: 'sand', step: 'water' },
   'B': { ground: T.BRIDGE, collision: 0, tag: 'floor', step: 'wood' },
@@ -86,17 +93,18 @@ export const TERRAIN: Record<string, TerrainDef> = {
   'h': { ground: T.CIVIC_SIGN_HEAL, collision: 1, tag: 'floor' },
   'm': { ground: T.CIVIC_SIGN_SHOP, collision: 1, tag: 'floor' },
 
-  // --- Interior furniture. -------------------------------------------
-  'b': { ground: T.BED_HEAD, collision: 1, tag: 'floor' },
-  'e': { ground: T.BED_FOOT, collision: 1, tag: 'floor' },
-  'k': { ground: T.BOOKSHELF, collision: 1, tag: 'floor' },
-  'A': { ground: T.TABLE, collision: 1, tag: 'floor' },
-  'E': { ground: T.CHAIR, collision: 1, tag: 'floor' },
-  'V': { ground: T.TELEVISION, collision: 1, tag: 'floor' },
-  'P': { ground: T.PLANT, collision: 1, tag: 'floor' },
-  'J': { ground: T.FRIDGE, collision: 1, tag: 'floor' },
-  'N': { ground: T.SINK, collision: 1, tag: 'floor' },
-  'Q': { ground: T.STOVE, collision: 1, tag: 'floor' },
+  // --- Interior furniture. All overlay, all floorless: see TerrainDef.ground.
+  'b': { over: T.BED_HEAD, collision: 1, tag: 'floor' },
+  'e': { over: T.BED_FOOT, collision: 1, tag: 'floor' },
+  'k': { over: T.BOOKSHELF, collision: 1, tag: 'floor' },
+  'A': { over: T.TABLE, collision: 1, tag: 'floor' },
+  'E': { over: T.CHAIR, collision: 1, tag: 'floor' },
+  'V': { over: T.TELEVISION, collision: 1, tag: 'floor' },
+  'P': { over: T.PLANT, collision: 1, tag: 'floor' },
+  'J': { over: T.FRIDGE, collision: 1, tag: 'floor' },
+  'N': { over: T.SINK, collision: 1, tag: 'floor' },
+  'Q': { over: T.STOVE, collision: 1, tag: 'floor' },
+  // A window is cut into the wall, not stood in front of it, so it stays fabric.
   'U': { ground: T.WINDOW_IN, collision: 1, tag: 'floor' },
   'F': { ground: T.CIVIC_FLOOR, collision: 0, tag: 'floor', step: 'stone' },
 
@@ -134,21 +142,38 @@ export const TERRAIN: Record<string, TerrainDef> = {
   'y': { ground: T.LAB_VENT, collision: 1, tag: 'floor' },
 
   // --- Laboratory interior. -------------------------------------------
-  '+': { ground: T.LAB_MACHINE, collision: 1, tag: 'floor' },
-  '?': { ground: T.LAB_CONSOLE, collision: 1, tag: 'floor' },
-  '@': { ground: T.LAB_TANK, collision: 1, tag: 'floor' },
-  '$': { ground: T.WORKBENCH, collision: 1, tag: 'floor' },
+  '+': { over: T.LAB_MACHINE, collision: 1, tag: 'floor' },
+  '?': { over: T.LAB_CONSOLE, collision: 1, tag: 'floor' },
+  '@': { over: T.LAB_TANK, collision: 1, tag: 'floor' },
+  '$': { over: T.WORKBENCH, collision: 1, tag: 'floor' },
   ':': { ground: T.FLOOR_LAB, collision: 0, tag: 'floor', step: 'stone' },
 
   // --- More house and shop furniture. ---------------------------------
-  '/': { ground: T.SOFA, collision: 1, tag: 'floor' },
-  ';': { ground: T.SHOP_SHELF, collision: 1, tag: 'floor' },
+  '/': { over: T.SOFA, collision: 1, tag: 'floor' },
+  ';': { over: T.SHOP_SHELF, collision: 1, tag: 'floor' },
 
-  // --- Town dressing. 'Y' is an overlay with a transparent background, so
-  // the turf under the lamp is the same turf as the tile beside it. ------
-  'a': { ground: T.FLOWER_BED, collision: 1, tag: 'grass' },
-  'Y': { ground: T.GRASS, over: T.LAMP_POST, collision: 1, tag: 'grass' },
+  // --- Town dressing. Overlays with transparent backgrounds, so the ground
+  // under a lamp is the same ground as the tile beside it -- turf, path or
+  // paving, whichever the map put there. ---------------------------------
+  'a': { over: T.FLOWER_BED, collision: 1, tag: 'grass' },
+  'Y': { over: T.LAMP_POST, collision: 1, tag: 'grass' },
 };
+
+/**
+ * Ground tiles that are a doorway cut into a wall rather than floor.
+ *
+ * They are walkable, so the plain "most common walkable neighbour" vote that
+ * gives furniture its floor would happily slide a front door under a pot plant
+ * standing beside one.
+ */
+const DOORWAY = new Set<number>([
+  T.DOOR, T.DOOR_PORCH, T.CIVIC_DOOR, T.LAB_DOOR_L, T.LAB_DOOR_R,
+]);
+
+/** Whether a cell's ground may be borrowed by floorless terrain next to it. */
+export function donatesFloor(t: TerrainDef): boolean {
+  return t.collision === 0 && t.ground !== undefined && !DOORWAY.has(t.ground);
+}
 
 export function terrainFor(ch: string): TerrainDef {
   return TERRAIN[ch] ?? { ground: T.EMPTY, collision: 1, tag: 'floor' };

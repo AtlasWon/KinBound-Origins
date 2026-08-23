@@ -4,9 +4,23 @@
   },
   "entries": {
     "r2_walker": [
-      "Up to the quarry, down to the port, up to the quarry.",
-      "I have walked this road four hundred times and the thorn on that spur is new.",
-      "One season. Straight across. Nothing grows like that."
+      {
+        "ifFlags": [
+          "r2_thorn_cut"
+        ],
+        "lines": [
+          "You cut it. Just like that. I've been walking round that since May.",
+          "Don't tell me it was easy. Let me have this one.",
+          "...It was easy, wasn't it. Right. Fine."
+        ]
+      },
+      {
+        "lines": [
+          "Up to the quarry, down to the port, up to the quarry. That's the whole of it.",
+          "Four hundred times on this road, and the thorn on that spur is new.",
+          "One season. Straight across the path. Nothing grows like that."
+        ]
+      }
     ]
   }
 }

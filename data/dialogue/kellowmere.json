@@ -12,45 +12,56 @@
   "entries": {
     "km_quarryman": [
       {
-        "unlessFlags": [
-          "seal_1_taken"
-        ],
-        "lines": [
-          "West face is shut. Not unsafe, exactly. Just wrong.",
-          "Nineteen years I worked it with Roxen and it never once sounded hollow.",
-          "It sounds hollow now."
-        ]
-      },
-      {
         "ifFlags": [
           "seal_1_taken"
         ],
         "lines": [
           "She gave you the Seal? Roxen doesn't hand those out, she loses them on purpose.",
-          "Then you must have made her work.",
-          "Do me a favour. When somebody official asks you what's under my quarry, tell me what they said."
+          "So you made her work. Good. Somebody should.",
+          "Do me a favour. Next time someone official asks what's under my quarry, tell me."
+        ]
+      },
+      {
+        "lines": [
+          "West face is shut. Not unsafe, exactly. Just wrong.",
+          "Nineteen years I worked it alongside Roxen and it never once sounded hollow.",
+          "It sounds hollow now. Put your ear on it and tell me I'm imagining that."
         ]
       }
     ],
     "km_child": [
       "I can lift a stone THIS big.",
       "...I can push a stone this big.",
-      "Pushing is lifting sideways. Everyone knows that."
+      "Pushing is lifting sideways. Dad says that's not how it works. Dad is wrong."
     ],
     "km_angler": [
-      "Lake's forty metres deep and it has never frozen. Not once, not in the records.",
-      "There's a light down there. Sits still. Doesn't drift.",
-      "I've fished this water thirty years and I've never once put a hook near it."
+      {
+        "ifFlags": [
+          "seal_2_taken"
+        ],
+        "lines": [
+          "You can wade now. Don't. Not here.",
+          "Forty metres straight down, and a light at the bottom that hasn't drifted.",
+          "I'm not a superstitious man. I'm just not going in."
+        ]
+      },
+      {
+        "lines": [
+          "Lake's forty metres deep and it's never frozen. Not once, not in the records.",
+          "There's a light down there. Sits still. Doesn't drift, doesn't dim.",
+          "Thirty years on this water and I've never once put a hook near it."
+        ]
+      }
     ],
     "km_greeter": [
       {
-        "unlessFlags": [
-          "seal_1_taken"
+        "ifFlags": [
+          "seal_2_taken"
         ],
         "lines": [
-          "Kellowmere. Waystation east, provisioner west, Bastion straight up the road.",
-          "Roxen's in. Roxen's always in.",
-          "Bring something green or something wet. That's not a hint, that's just the type chart."
+          "Two Seals. You went round by the coast, then. Everybody does.",
+          "North road's still shut and I still can't tell you a thing about why.",
+          "Sit down before you go up that hill. That's not advice, that's an order."
         ]
       },
       {
@@ -58,26 +69,35 @@
           "seal_1_taken"
         ],
         "lines": [
-          "One Seal down. Seven to go, and they do not get easier.",
-          "Brackwater is the next one that will have you, but the coast road runs east from Ashgate.",
-          "Long walk back. Sorry."
+          "One down, seven to go, and they don't get kinder.",
+          "Brackwater's next to have you, but the coast road runs east out of Ashgate.",
+          "Long walk back. Sorry. I didn't lay the roads."
+        ]
+      },
+      {
+        "lines": [
+          "Kellowmere. Waystation east, provisioner west, Bastion straight up the road.",
+          "Roxen's in. Roxen's always in.",
+          "Bring something green or something wet. That's not a hint, that's the type chart."
         ]
       }
     ],
     "km_rester": [
-      "Walked up from Ashgate in one go. Do not do that.",
-      "There is a ledge halfway that you can drop down on the way home.",
-      "Only on the way home, mind. It is a ledge, not a staircase."
+      "Walked up from Ashgate in one go. Don't do that. I'm serious.",
+      "There's a ledge halfway you can drop down on the way home.",
+      "Only on the way home, mind. It's a ledge, not a staircase."
     ],
     "km_house_a": [
-      "My father cut stone. His father cut stone.",
-      "I keep the accounts. Somebody has to know what the stone is worth.",
-      "Lately the Concord pays over the odds for anything from the west face. Anything at all."
+      "My father cut stone. His father cut stone. I keep the accounts.",
+      "Somebody has to know what the stone is actually worth.",
+      "Lately the Concord pays over the odds for anything off the west face.",
+      "Chippings. Dust. I sold them a barrow of dust in June and they thanked me."
     ],
     "km_house_b": [
-      "You want the truth about the lake? Nobody knows. That is the truth about the lake.",
-      "Every seventy years it drops a metre and comes back up. Ask why and you get shrugs.",
-      "That's the Turning for you. Everything moves and nobody can say what for."
+      "You want the truth about the lake? Nobody knows. That's the truth about the lake.",
+      "Every seventy years it drops a metre and comes back up. Ask why, you get shrugs.",
+      "That's the Turning for you. Everything moves and nobody can say what for.",
+      "My grandmother watched it go down. She said the quiet was the worst of it."
     ]
   }
 }

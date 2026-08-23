@@ -8,37 +8,56 @@
  * pass over it, then wraps the whole silhouette in a hard outline.
  *
  * This is not a substitute for a hand-drawn set, but it obeys the same rules a
- * hand-drawn set would -- 64x64 cells, a small ramp, no anti-aliasing, light
+ * hand-drawn set would -- a fixed cell, a small ramp, no anti-aliasing, light
  * from the upper left -- so 200 creatures can exist, be readable and be
  * distinguishable long before an artist touches them. Every sprite is
  * deterministic: the same species id always produces the same animal.
+ *
+ * RESOLUTION. The cell is 128x128 and one design cell is one buffer pixel, so
+ * a creature is 128 buffer pixels tall in a 480x320 buffer -- the same 64
+ * logical pixels it has always occupied, at twice the detail. The world around
+ * it is still drawn one design pixel to a 2x2 block, and that difference is
+ * deliberate: it is the whole reason a reference-quality creature can carry
+ * separate toes, teeth and scale texture while a tile cannot.
  */
 
 import { Rng } from '../core/rng.js';
 import { registry } from '../data/registry.js';
 import type { SpeciesData } from '../data/schema.js';
 
-export const SPRITE_SIZE = 128;
-export const ICON_SIZE = 64;
-
 /**
- * Body plans are composed at 64x64 and the mask is then doubled before the
- * finishing passes. Authoring at design resolution keeps the proportions that
- * were tuned there, and every later pass works on whole 2x2 blocks so the
- * creature stays on the same grid as the world it stands in.
+ * The design cell, one cell to a buffer pixel. Everything after the fit --
+ * shading, texture, eyes, rim, outline, cast shadow -- runs here at full
+ * resolution.
  */
-const DESIGN = 64;
+const DESIGN = 128;
+
+/** The canvas a sprite is handed out on. Derived, so the two can never drift:
+ *  the mask is the sprite now that nothing scales it on the way out. */
+export const SPRITE_SIZE = DESIGN;
+export const ICON_SIZE = DESIGN / 2;
 
 /**
  * Plans draw into a larger scratch cell than they end up in.
  *
- * Composing straight into 64x64 meant a tall species -- a reared serpent, a
- * horned brute, a crested biped -- ran off the top of the cell and was silently
+ * Composing straight into the design cell meant a tall species -- a reared
+ * serpent, a horned brute, a crested biped -- ran off the top and was silently
  * beheaded, because the mask clamps rather than throws. Drawing with room and
  * then fitting the result is the difference between a creature that is too big
- * and a creature that is missing its skull.
+ * and a creature that is missing its skull. Measured in plan units.
  */
 const WORK = 96;
+
+/**
+ * Design cells to a plan unit.
+ *
+ * The plans and the decoration passes are authored in units, not cells, and a
+ * pen rasterises them at this density -- see `Pen`. Two means the geometry
+ * that was tuned on the old grid comes out at exactly the same size, with
+ * every curve resolved twice as finely and a half-unit reach for detail that
+ * the old grid could not hold at all.
+ */
+const U = 2;
 
 /** Mask cell meanings. Resolved to colours at the end. */
 const EMPTY = 0;
@@ -74,6 +93,14 @@ const ACCENT_LIT = 14;
  * right place does more for a face than another whole shading band.
  */
 const INNER = 15;
+/**
+ * The dark heart of the cast shadow. A shadow of one flat opacity is a decal;
+ * an umbra with a lighter penumbra around it is what puts a creature on the
+ * floor rather than over it.
+ */
+const SHADOW_CORE = 16;
+/** One past the last mask value, for the ramp lookup tables. */
+const TONE_COUNT = 17;
 
 export type BodyPlan =
   | 'quadruped' | 'biped' | 'brute' | 'critter' | 'bird' | 'grub'
@@ -162,12 +189,12 @@ class Mask {
    * blob however well the shading pass runs, and that -- not the palette -- is
    * why a generated head so often looks welded to its own shoulders.
    */
-  ellipseFront(cx: number, cy: number, rx: number, ry: number, v: number, seam = DEEP): void {
+  ellipseFront(cx: number, cy: number, rx: number, ry: number, v: number, seam = DEEP, pad = 1): void {
     if (rx <= 0 || ry <= 0) return;
-    for (let y = Math.floor(cy - ry - 1); y <= Math.ceil(cy + ry + 1); y++) {
-      for (let x = Math.floor(cx - rx - 1); x <= Math.ceil(cx + rx + 1); x++) {
-        const dx = (x - cx) / (rx + 1);
-        const dy = (y - cy) / (ry + 1);
+    for (let y = Math.floor(cy - ry - pad); y <= Math.ceil(cy + ry + pad); y++) {
+      for (let x = Math.floor(cx - rx - pad); x <= Math.ceil(cx + rx + pad); x++) {
+        const dx = (x - cx) / (rx + pad);
+        const dy = (y - cy) / (ry + pad);
         if (dx * dx + dy * dy <= 1 && this.filled(x, y)) this.set(x, y, seam);
       }
     }
@@ -175,13 +202,13 @@ class Mask {
   }
 
   /** The limb equivalent of `ellipseFront`. */
-  limbFront(x0: number, y0: number, x1: number, y1: number, w0: number, w1: number, v: number, seam = DEEP): void {
+  limbFront(x0: number, y0: number, x1: number, y1: number, w0: number, w1: number, v: number, seam = DEEP, pad = 1): void {
     const steps = Math.max(Math.abs(x1 - x0), Math.abs(y1 - y0), 1);
     for (let i = 0; i <= steps; i++) {
       const t = i / steps;
       const x = Math.round(x0 + (x1 - x0) * t);
       const y = Math.round(y0 + (y1 - y0) * t);
-      const w = Math.max(1, Math.round(w0 + (w1 - w0) * t)) + 2;
+      const w = Math.max(1, Math.round(w0 + (w1 - w0) * t)) + pad * 2;
       const r = Math.floor(w / 2);
       for (let dy = -r; dy <= r; dy++) {
         for (let dx = -r; dx <= r; dx++) {
@@ -232,49 +259,214 @@ class Mask {
 
 }
 
-/* ------------------------------------------------------- anatomy pieces */
-
 /**
- * A planted foot: a pad split into toes by dark seams, with a claw on the end
- * of each. A flat dark bar under every leg was the single loudest tell that
- * these sprites were generated rather than drawn -- real feet have digits, and
- * three of them is enough to say so at this size.
+ * A pen that draws in plan units onto a finer mask.
+ *
+ * Every number in the body plans and the decoration passes -- a haunch radius,
+ * the lean on a crest, the gap between two rivets -- is a proportion that took
+ * a lot of looking to settle, and there are several hundred of them. Doubling
+ * the design grid must not mean retyping all of them and hoping the animals
+ * come out the same shape. So they keep their units and the pen rasterises at
+ * `u` cells to the unit: the silhouette is identical, every curve and taper
+ * resolves twice as finely, and -- the part that is actually new -- fractional
+ * coordinates reach inside a unit. `cell` paints a single mask cell, which is
+ * where claws, teeth, bevels, quills and eyelids live.
  */
-function foot(m: Mask, x: number, y: number, half: number, dark: boolean): void {
-  const hw = Math.max(2, half);
-  m.box(x - hw, y - 2, x + hw, y, dark ? SHADE : BASE);
-  const g = Math.max(1, Math.round(hw * 0.5));
-  m.box(x - g, y - 1, x - g, y, DEEP);
-  m.box(x + g, y - 1, x + g, y, DEEP);
-  // Claws are left in the bright accent on purpose: the shading pass never
-  // touches that tone, so a claw stays visible even in the ground occlusion.
-  for (const tx of [x - hw, x, x + hw]) m.set(tx, y, ACCENT_LIT);
-}
+class Pen {
+  constructor(readonly m: Mask, readonly u: number) {}
 
-/**
- * A muzzle pushed forward of the skull, with a nostril and a mouth line that
- * turns down at the corner. A head that is one flat ellipse reads as a ball
- * with eyes stuck on it however carefully it is lit.
- */
-function muzzle(m: Mask, x: number, y: number, rx: number, ry: number, dir: number, detail: boolean): void {
-  const rxx = Math.max(2, rx);
-  const ryy = Math.max(1, ry);
-  m.ellipseFront(x, y, rxx, ryy, LIGHT);
-  if (!detail) return;
-  m.over(x + dir * Math.round(rxx * 0.4), y - Math.max(1, Math.round(ryy * 0.4)), INNER);
-  const half = Math.max(2, Math.round(rxx * 0.85));
-  for (let i = -half; i <= half; i++) {
-    m.over(x + i, y + Math.max(1, Math.round(ryy * 0.5)) + (Math.abs(i) > half - 2 ? 1 : 0), INNER);
+  get w(): number { return Math.floor(this.m.w / this.u); }
+  get h(): number { return Math.floor(this.m.h / this.u); }
+
+  /** A length measured in mask cells, expressed in pen units. */
+  units(v: number): number { return v / this.u; }
+
+  /** Unit coordinate to the top-left mask cell of that unit. */
+  private c(v: number): number { return Math.round(v * this.u); }
+  /** Unit coordinate to the centre of that unit, for the round primitives. */
+  private p(v: number): number { return v * this.u + (this.u - 1) / 2; }
+
+  get(x: number, y: number): number { return this.m.get(this.c(x), this.c(y)); }
+  filled(x: number, y: number): boolean { return this.m.filled(this.c(x), this.c(y)); }
+
+  /** Exactly one mask cell. Half-unit coordinates are the point of it. */
+  cell(x: number, y: number, v: number): void { this.m.set(this.c(x), this.c(y), v); }
+  /** One cell, but only onto existing body -- the fine-grained `over`. */
+  cellOver(x: number, y: number, v: number): void { this.m.over(this.c(x), this.c(y), v); }
+
+  /**
+   * A continuous run one cell wide, between two points in unit space.
+   *
+   * The trap this exists to close: a loop that steps a whole unit and plots
+   * one cell each time leaves every other cell untouched, because a unit is
+   * two cells. Mouth lines, plate bevels, gill lips and fin rays all came out
+   * looking like zips the first time they were drawn that way. Stepping in
+   * cells and letting the coordinates be fractional is the fix.
+   */
+  line(x0: number, y0: number, x1: number, y1: number, v: number, onlyBody = true): void {
+    const steps = Math.max(1, Math.round(Math.max(Math.abs(x1 - x0), Math.abs(y1 - y0)) * this.u));
+    for (let i = 0; i <= steps; i++) {
+      const t = i / steps;
+      const x = x0 + (x1 - x0) * t, y = y0 + (y1 - y0) * t;
+      if (onlyBody) this.cellOver(x, y, v); else this.cell(x, y, v);
+    }
+  }
+
+  set(x: number, y: number, v: number): void { this.block(x, y, v, 0); }
+  under(x: number, y: number, v: number): void { this.block(x, y, v, 1); }
+  over(x: number, y: number, v: number): void { this.block(x, y, v, 2); }
+
+  private block(x: number, y: number, v: number, mode: 0 | 1 | 2): void {
+    const bx = this.c(x), by = this.c(y);
+    for (let dy = 0; dy < this.u; dy++) {
+      for (let dx = 0; dx < this.u; dx++) {
+        if (mode === 0) this.m.set(bx + dx, by + dy, v);
+        else if (mode === 1) this.m.under(bx + dx, by + dy, v);
+        else this.m.over(bx + dx, by + dy, v);
+      }
+    }
+  }
+
+  ellipse(cx: number, cy: number, rx: number, ry: number, v: number, beneath = false): void {
+    this.m.ellipse(this.p(cx), this.p(cy), this.p(rx), this.p(ry), v, beneath);
+  }
+
+  box(x0: number, y0: number, x1: number, y1: number, v: number, beneath = false): void {
+    const lo = (a: number, b: number) => this.c(Math.min(a, b));
+    const hi = (a: number, b: number) => this.c(Math.max(a, b)) + this.u - 1;
+    this.m.box(lo(x0, x1), lo(y0, y1), hi(x0, x1), hi(y0, y1), v, beneath);
+  }
+
+  limb(x0: number, y0: number, x1: number, y1: number, w0: number, w1: number, v: number, beneath = false): void {
+    this.m.limb(this.p(x0), this.p(y0), this.p(x1), this.p(y1), w0 * this.u, w1 * this.u, v, beneath);
+  }
+
+  ellipseFront(cx: number, cy: number, rx: number, ry: number, v: number, seam = DEEP): void {
+    this.m.ellipseFront(this.p(cx), this.p(cy), this.p(rx), this.p(ry), v, seam, this.u);
+  }
+
+  limbFront(x0: number, y0: number, x1: number, y1: number, w0: number, w1: number, v: number, seam = DEEP): void {
+    this.m.limbFront(this.p(x0), this.p(y0), this.p(x1), this.p(y1), w0 * this.u, w1 * this.u, v, seam, this.u);
+  }
+
+  top(x: number): number {
+    const y = this.m.top(this.c(x));
+    return y < 0 ? -1 : Math.floor(y / this.u);
+  }
+
+  bottom(x: number): number {
+    const y = this.m.bottom(this.c(x));
+    return y < 0 ? -1 : Math.floor(y / this.u);
+  }
+
+  bounds(): { x0: number; y0: number; x1: number; y1: number } | null {
+    const b = this.m.bounds();
+    if (!b) return null;
+    return {
+      x0: Math.floor(b.x0 / this.u), y0: Math.floor(b.y0 / this.u),
+      x1: Math.floor(b.x1 / this.u), y1: Math.floor(b.y1 / this.u),
+    };
   }
 }
 
-/** A crease across a limb, so a leg reads as bending rather than bowing. */
-function joint(m: Mask, x: number, y: number, half: number): void {
+/* ------------------------------------------------------- anatomy pieces */
+
+/**
+ * A planted foot.
+ *
+ * On the old grid this was a pad with two seams cut in it and three bright
+ * cells for claws, because three cells was all there was room for. The finer
+ * grid buys the thing a foot actually needs: separate toes with a gap between
+ * them, a knuckle highlight on each, and a claw that is a *shape* -- a dark
+ * root, a lit body and a point -- rather than a lit dot. Toes are what stop a
+ * leg ending in a bar, and a bar is the loudest tell there is.
+ */
+function foot(p: Pen, x: number, y: number, half: number, dark: boolean): void {
+  const hw = Math.max(2, half);
+  const body = dark ? SHADE : BASE;
+  p.box(x - hw, y - 2, x + hw, y, body);
+  // The heel rolls under: a dark run along the very bottom so the pad has a
+  // near edge rather than being sliced off flat by the ground line.
+  p.line(x - hw, y + 0.5, x + hw, y + 0.5, DEEP);
+
+  const toes = hw >= 5 ? 4 : 3;
+  const pitch = (hw * 2) / (toes - 1);
+  for (let i = 0; i < toes; i++) {
+    const tx = x - hw + i * pitch;
+    // The gap between two toes is half a unit of dark. Cutting it a whole unit
+    // wide -- the only option before -- ate the toes it was meant to separate.
+    if (i > 0) p.line(tx - pitch / 2, y - 1.5, tx - pitch / 2, y + 0.5, DEEP);
+    // Knuckle: one lit cell on the upper left of each toe, which is what makes
+    // the digits read as rounded rather than as slots cut in a slab.
+    p.cellOver(tx - 0.25, y - 1.5, dark ? BASE : LIGHT);
+    // Claws stay in the bright accent on purpose: the shading pass never
+    // touches that tone, so a claw survives the ground occlusion under it.
+    p.cell(tx, y + 0.5, ACCENT_DARK);
+    p.cell(tx, y, ACCENT_LIT);
+    p.cell(tx - 0.5, y + 0.5, ACCENT);
+  }
+}
+
+/**
+ * A muzzle pushed forward of the skull.
+ *
+ * A head that is one flat ellipse reads as a ball with eyes stuck on it
+ * however carefully it is lit, so this carries a bridge, a nostril, a parted
+ * mouth and -- new, and only possible now there are cells to spare -- a tongue
+ * behind the lip and a pair of teeth at the corners. Teeth are two cells each
+ * and they change the animal completely.
+ */
+function muzzle(p: Pen, x: number, y: number, rx: number, ry: number, dir: number, detail: boolean): void {
+  const rxx = Math.max(2, rx);
+  const ryy = Math.max(1, ry);
+  p.ellipseFront(x, y, rxx, ryy, LIGHT);
+  if (!detail) return;
+
+  // Bridge: a lit plane along the top of the snout, one cell proud of the
+  // shading, so the muzzle has a top face and not just a lit half.
+  p.line(x - rxx, y - ryy * 0.6, x + rxx * 0.4, y - ryy * 0.6, HILIGHT);
+
+  // Nostril: a cavity with a lit lip under it, which is the difference between
+  // a nostril and a dirty mark.
+  const nx = x + dir * rxx * 0.45;
+  p.cellOver(nx, y - ryy * 0.35, INNER);
+  p.cellOver(nx - 0.5, y - ryy * 0.35, INNER);
+  p.cellOver(nx, y - ryy * 0.35 + 0.5, LIGHT);
+
+  const half = Math.max(2, Math.round(rxx * 0.85));
+  const lipY = y + Math.max(1, Math.round(ryy * 0.5));
+  // The mouth turns down at both corners, so it is drawn as three runs rather
+  // than one: a flat middle and a dropped corner each side.
+  p.line(x - half + 1.5, lipY, x + half - 1.5, lipY, INNER);
+  p.line(x - half, lipY + 0.5, x - half + 1.5, lipY, INNER);
+  p.line(x + half - 1.5, lipY, x + half, lipY + 0.5, INNER);
+  // Tongue behind the lip, only where the mouth is deep enough to show one.
+  if (half >= 4) p.line(x - half + 2, lipY + 0.5, x + half - 2, lipY + 0.5, ACCENT_DARK);
+  else p.line(x - half + 1, lipY + 0.5, x + half - 1, lipY + 0.5, INNER);
+  // Two teeth at the corners of the jaw, hanging below the lip line.
+  if (half >= 3) {
+    for (const side of [-1, 1]) {
+      const tx = x + side * (half - 1);
+      p.cellOver(tx, lipY + 1, ACCENT_LIT);
+      p.cellOver(tx, lipY + 1.5, ACCENT_LIT);
+    }
+  }
+}
+
+/**
+ * A crease across a limb, so a leg reads as bending rather than bowing. The
+ * fine grid lets the crease be a cell of dark under a cell of light instead of
+ * two whole units of each, which is the difference between a joint and a belt.
+ */
+function joint(p: Pen, x: number, y: number, half: number): void {
   const hh = Math.max(1, half);
-  for (let d = -hh; d <= hh; d++) {
-    const yy = y - Math.round(Math.abs(d) * 0.4);
-    m.over(x + d, yy, DEEP);
-    m.over(x + d, yy - 1, LIGHT);
+  for (const side of [-1, 1]) {
+    // The crease arcs up towards the outside of the limb, so it reads as
+    // wrapping round a cylinder rather than as a bar laid across one.
+    const ey = y - hh * 0.4;
+    p.line(x, y, x + side * hh, ey, DEEP);
+    p.line(x, y + 0.5, x + side * hh, ey + 0.5, SHADE);
+    p.line(x, y - 0.5, x + side * hh, ey - 0.5, LIGHT);
   }
 }
 
@@ -282,7 +474,7 @@ function joint(m: Mask, x: number, y: number, half: number): void {
  * Creases at intervals along a path, drawn perpendicular to it. Tails, grub
  * abdomens and serpent bodies all read as one extruded tube without them.
  */
-function segments(m: Mask, x0: number, y0: number, x1: number, y1: number, count: number, half: number, v: number): void {
+function segments(p: Pen, x0: number, y0: number, x1: number, y1: number, count: number, half: number, v: number): void {
   const dx = x1 - x0, dy = y1 - y0;
   const len = Math.max(1, Math.hypot(dx, dy));
   const nx = -dy / len, ny = dx / len;
@@ -290,9 +482,12 @@ function segments(m: Mask, x0: number, y0: number, x1: number, y1: number, count
     const t = i / (count + 1);
     const px = x0 + dx * t, py = y0 + dy * t;
     const hh = Math.max(1, Math.round(half * (1 - t * 0.45)));
-    for (let d = -hh; d <= hh; d++) {
-      m.over(Math.round(px + nx * d), Math.round(py + ny * d), v);
-    }
+    p.line(px - nx * hh, py - ny * hh, px + nx * hh, py + ny * hh, v);
+    // A ring is an overlap, not a scratch: the segment in front of the gap
+    // catches a lit edge along its whole length. Half a unit of light is all
+    // it takes and there was never anywhere to put it before.
+    const lx = -0.5 * dx / len, ly = -0.5 * dy / len;
+    p.line(px - nx * hh + lx, py - ny * hh + ly, px + nx * hh + lx, py + ny * hh + ly, LIGHT);
   }
 }
 
@@ -300,28 +495,35 @@ function segments(m: Mask, x0: number, y0: number, x1: number, y1: number, count
  * Rays across a fin or a wing membrane, fanning from a root. A web with no
  * struts in it is a paddle; the struts are the whole read.
  */
-function rays(m: Mask, rootX: number, rootY: number, tipX: number, tipY: number, spanX: number, spanY: number, count: number, v: number): void {
+function rays(p: Pen, rootX: number, rootY: number, tipX: number, tipY: number, spanX: number, spanY: number, count: number, v: number): void {
   for (let i = 0; i < count; i++) {
     const t = count === 1 ? 0.5 : i / (count - 1);
     const ex = Math.round(tipX + (t - 0.5) * spanX);
     const ey = Math.round(tipY + (t - 0.5) * spanY);
-    const steps = Math.max(Math.abs(ex - rootX), Math.abs(ey - rootY), 1);
-    for (let k = 1; k <= steps; k++) {
-      const p = k / steps;
-      const px = Math.round(rootX + (ex - rootX) * p);
-      const py = Math.round(rootY + (ey - rootY) * p);
+    // Stepped in cells, not units: a strut plotted one cell at a time along a
+    // path that advances a whole unit each step comes out as a dotted line.
+    const steps = Math.max(Math.abs(ex - rootX), Math.abs(ey - rootY), 1) * 2;
+    for (let k = 2; k <= steps; k++) {
+      const q = k / steps;
+      const px = rootX + (ex - rootX) * q;
+      const py = rootY + (ey - rootY) * q;
+      const gx = Math.round(px), gy = Math.round(py);
       // Interior only. A ray laid along a fin that is three cells wide eats the
       // whole fin and the creature comes out drawn in twigs.
-      if (!m.filled(px - 1, py) || !m.filled(px + 1, py)) continue;
-      if (!m.filled(px, py - 1) || !m.filled(px, py + 1)) continue;
-      m.set(px, py, v);
+      if (!p.filled(gx - 1, gy) || !p.filled(gx + 1, gy)) continue;
+      if (!p.filled(gx, gy - 1) || !p.filled(gx, gy + 1)) continue;
+      // Half a unit of strut with half a unit of lit membrane beside it. On
+      // the old grid a ray was a whole unit and a membrane with four rays in it
+      // was mostly rays; now the webbing survives and the struts still read.
+      p.cellOver(px, py, v);
+      p.cellOver(px - 0.5, py, LIGHT);
     }
   }
 }
 
 /* ------------------------------------------------------------- shading */
 
-/** 4x4 ordered dither, used to break a single band boundary and to fray edges. */
+/** 4x4 ordered dither, used to fray an edge into the background. */
 const BAYER = [
   [0, 8, 2, 10],
   [12, 4, 14, 6],
@@ -330,6 +532,54 @@ const BAYER = [
 ];
 const ditherOn = (x: number, y: number, level: number): boolean =>
   BAYER[y & 3]![x & 3]! < level * 16;
+
+/**
+ * 8x8 ordered dither, for the band boundaries.
+ *
+ * The 4x4 pattern was right when a shading block was two cells across: it gave
+ * four visible levels and the checker read as deliberate. At one cell to a
+ * block a 4x4 threshold repeats every four pixels and the transitions come out
+ * as visible tartan. Eight levels over eight cells reads as a gradient built
+ * out of dots, which is what the reference art actually does between bands.
+ */
+const BAYER8: number[][] = (() => {
+  const g: number[][] = [];
+  for (let y = 0; y < 8; y++) {
+    const row: number[] = [];
+    for (let x = 0; x < 8; x++) {
+      // Standard recursive Bayer construction, bit-interleaved.
+      let v = 0;
+      for (let b = 0; b < 3; b++) {
+        v |= (((y >> b) ^ (x >> b)) & 1) << (2 * b + 1);
+        v |= ((x >> b) & 1) << (2 * b);
+      }
+      row.push(v);
+    }
+    g.push(row);
+  }
+  return g;
+})();
+const ditherOn8 = (x: number, y: number, level: number): boolean =>
+  BAYER8[y & 7]![x & 7]! < level * 64;
+
+/**
+ * Step an already-lit cell one place along its own ramp.
+ *
+ * The texture pass works on the shaded mask rather than before it, so a scale
+ * or a quill or a rivet is a *modulation of the light* and not a fixed tone
+ * pasted over it. Tables rather than a search, because this runs per cell.
+ */
+const TONE_UP = new Uint8Array(TONE_COUNT);
+const TONE_DOWN = new Uint8Array(TONE_COUNT);
+(() => {
+  for (let i = 0; i < TONE_COUNT; i++) { TONE_UP[i] = i; TONE_DOWN[i] = i; }
+  for (const ramp of [[SPEC, HILIGHT, LIGHT, BASE, SHADE, DEEP], [ACCENT_LIT, ACCENT, ACCENT_DARK]]) {
+    for (let i = 0; i < ramp.length; i++) {
+      TONE_UP[ramp[i]!] = ramp[Math.max(0, i - 1)]!;
+      TONE_DOWN[ramp[i]!] = ramp[Math.min(ramp.length - 1, i + 1)]!;
+    }
+  }
+})();
 
 /**
  * The six shading bands, per material.
@@ -347,12 +597,15 @@ const RAMP_ACCENT = [ACCENT_LIT, ACCENT_LIT, ACCENT, ACCENT, ACCENT_DARK, ACCENT
 /**
  * Light from the upper left, as banded form shading.
  *
- * The pass runs on the doubled mask but samples and paints whole 2x2 blocks.
- * A band that steps on a half-block boundary is exactly the thing that makes a
- * sprite look smoothed instead of drawn, and the ground it stands on is drawn
- * one design pixel to a block.
+ * This used to sample and paint whole 2x2 blocks, because the mask underneath
+ * it was a doubled copy of a coarser design and a band that stepped on a
+ * half-block boundary looked smoothed rather than drawn. The design cell is
+ * now the buffer pixel, so the pass runs one cell at a time and the terminator
+ * can follow the actual curve of the mass instead of a staircase of it. Every
+ * distance in here is measured in the finer cells, which is why the numbers
+ * are twice what they were.
  *
- * Each block takes its band from where it sits *across* the thickness of its
+ * Each cell takes its band from where it sits *across* the thickness of its
  * own mass along the light axis, not from an absolute distance to the lit
  * edge. A leg then gets the same number of bands as the torso, just narrower,
  * which is how a person shades. The old absolute ramp could not: it lit thin
@@ -371,40 +624,40 @@ const RAMP_ACCENT = [ACCENT_LIT, ACCENT_LIT, ACCENT, ACCENT, ACCENT_DARK, ACCENT
  *    equally bright where it touches the floor.
  */
 function shade(mask: Mask): void {
-  const W = mask.w;
-  const bw = W >> 1, bh = mask.h >> 1;
+  const W = mask.w, H = mask.h;
   const src = mask.data.slice();
 
-  const at = (bx: number, by: number): number => {
-    if (bx < 0 || by < 0 || bx >= bw || by >= bh) return EMPTY;
-    return src[by * 2 * W + bx * 2]!;
+  const at = (x: number, y: number): number => {
+    if (x < 0 || y < 0 || x >= W || y >= H) return EMPTY;
+    return src[y * W + x]!;
   };
-  const solid = (bx: number, by: number): boolean => {
-    const v = at(bx, by);
+  const solid = (x: number, y: number): boolean => {
+    const v = at(x, y);
     return v !== EMPTY && v !== OUTLINE && v !== SHADOW;
   };
-  /** How many blocks the mass continues in a direction, capped. */
-  const ray = (bx: number, by: number, dx: number, dy: number, max: number): number => {
+  /** How many cells the mass continues in a direction, capped. */
+  const ray = (x: number, y: number, dx: number, dy: number, max: number): number => {
     let d = 0;
-    while (d < max && solid(bx + dx * (d + 1), by + dy * (d + 1))) d++;
+    while (d < max && solid(x + dx * (d + 1), y + dy * (d + 1))) d++;
     return d;
   };
 
-  // Coverage table, so the crevice term costs four lookups per block rather
-  // than a neighbourhood scan.
-  const stride = bw + 1;
-  const sum = new Int32Array(stride * (bh + 1));
-  for (let by = 0; by < bh; by++) {
-    for (let bx = 0; bx < bw; bx++) {
-      sum[(by + 1) * stride + bx + 1] = (solid(bx, by) ? 1 : 0)
-        + sum[by * stride + bx + 1]! + sum[(by + 1) * stride + bx]! - sum[by * stride + bx]!;
+  // Coverage table, so the crevice term costs four lookups per cell rather
+  // than a neighbourhood scan. This is the one place a bigger radius would
+  // have cost quadratically, and the summed area is why it does not.
+  const stride = W + 1;
+  const sum = new Int32Array(stride * (H + 1));
+  for (let y = 0; y < H; y++) {
+    for (let x = 0; x < W; x++) {
+      sum[(y + 1) * stride + x + 1] = (solid(x, y) ? 1 : 0)
+        + sum[y * stride + x + 1]! + sum[(y + 1) * stride + x]! - sum[y * stride + x]!;
     }
   }
-  const AO_R = 5;
+  const AO_R = 10;
   const AO_AREA = (AO_R * 2 + 1) * (AO_R * 2 + 1);
-  const coverage = (bx: number, by: number): number => {
-    const x0 = Math.max(0, bx - AO_R), y0 = Math.max(0, by - AO_R);
-    const x1 = Math.min(bw - 1, bx + AO_R), y1 = Math.min(bh - 1, by + AO_R);
+  const coverage = (cx: number, cy: number): number => {
+    const x0 = Math.max(0, cx - AO_R), y0 = Math.max(0, cy - AO_R);
+    const x1 = Math.min(W - 1, cx + AO_R), y1 = Math.min(H - 1, cy + AO_R);
     if (x1 < x0 || y1 < y0) return 0;
     const s = sum[(y1 + 1) * stride + x1 + 1]! - sum[y0 * stride + x1 + 1]!
       - sum[(y1 + 1) * stride + x0]! + sum[y0 * stride + x0]!;
@@ -412,92 +665,269 @@ function shade(mask: Mask): void {
   };
 
   let floor = 0;
-  for (let by = bh - 1; by >= 0 && floor === 0; by--) {
-    for (let bx = 0; bx < bw; bx++) if (solid(bx, by)) { floor = by; break; }
+  for (let y = H - 1; y >= 0 && floor === 0; y--) {
+    for (let x = 0; x < W; x++) if (solid(x, y)) { floor = y; break; }
   }
 
-  for (let by = 0; by < bh; by++) {
-    for (let bx = 0; bx < bw; bx++) {
-      const v = at(bx, by);
+  // Where each band starts along the thickness. Kept as a table so the
+  // fractional position inside a band is available for the dither.
+  const EDGES = [0.10, 0.28, 0.52, 0.74, 0.92, 1.01];
+  /** How many cells wide the feathered seam between two bands is. */
+  const SEAM = 3.5;
+
+  for (let y = 0; y < H; y++) {
+    for (let x = 0; x < W; x++) {
+      const v = at(x, y);
       const ramp = v === BASE ? RAMP_BASE
         : v === LIGHT ? RAMP_LIGHT
           : v === SHADE ? RAMP_SHADE
             : v === ACCENT ? RAMP_ACCENT : null;
       if (!ramp) continue;
 
-      const up = ray(bx, by, -1, -1, 16);
-      const down = ray(bx, by, 1, 1, 16);
+      const up = ray(x, y, -1, -1, 32);
+      const down = ray(x, y, 1, 1, 32);
       const span = up + down;
       const t = span === 0 ? 0.5 : up / span;
 
-      let band = t < 0.10 ? 0 : t < 0.28 ? 1 : t < 0.52 ? 2 : t < 0.74 ? 3 : t < 0.92 ? 4 : 5;
+      let band = 0;
+      while (band < 5 && t >= EDGES[band]!) band++;
+      const lo = band === 0 ? 0 : EDGES[band - 1]!;
+      const frac = (t - lo) / Math.max(0.01, EDGES[band]! - lo);
+      let forced = false;
 
-      if (span <= 2) {
+      if (span <= 4) {
         // Too thin to carry six steps; two is honest and stays readable.
         band = up === 0 ? 2 : 4;
-      } else if (span <= 5) {
-        band = Math.max(1, Math.min(4, band));
+        forced = true;
+      } else if (span <= 10) {
+        const clamped = Math.max(1, Math.min(4, band));
+        if (clamped !== band) forced = true;
+        band = clamped;
       } else {
         // A large mass must not carry a highlight the size of a limb, nor let
         // its shadow eat half the body.
-        if (band === 0 && up > 1) band = 1;
-        if (band === 1 && up > 3) band = 2;
-        if (band === 2 && up > 7) band = 3;
-        if (band === 5 && down > 2) band = 4;
-        if (band === 4 && down > 6) band = 3;
-        if (down <= 1) band = 5;
+        const was = band;
+        if (band === 0 && up > 3) band = 1;
+        if (band === 1 && up > 7) band = 2;
+        if (band === 2 && up > 15) band = 3;
+        if (band === 5 && down > 5) band = 4;
+        if (band === 4 && down > 13) band = 3;
+        if (down <= 2) band = 5;
+        if (band !== was) forced = true;
       }
 
       // The diagonal ray is degenerate at the lower-left and upper-right tips
       // of a round mass, where it reports a lit edge for a surface that is
       // plainly underneath. A second measurement on each axis vetoes that.
-      const vUp = ray(bx, by, 0, -1, 16), vDn = ray(bx, by, 0, 1, 16);
-      if (vUp + vDn > 0 && vUp / (vUp + vDn) > 0.74 && band < 3) band = 3;
-      const hL = ray(bx, by, -1, 0, 16), hR = ray(bx, by, 1, 0, 16);
-      if (hL + hR > 0 && hL / (hL + hR) > 0.82 && band < 3) band = 3;
+      // Only ever consulted for a cell the diagonal called lit, which keeps
+      // four of the six rays off the hot path entirely.
+      if (band < 3) {
+        const vUp = ray(x, y, 0, -1, 24), vDn = ray(x, y, 0, 1, 24);
+        if (vUp + vDn > 0 && vUp / (vUp + vDn) > 0.74) { band = 3; forced = true; }
+        if (band < 3) {
+          const hL = ray(x, y, -1, 0, 24), hR = ray(x, y, 1, 0, 24);
+          if (hL + hR > 0 && hL / (hL + hR) > 0.82) { band = 3; forced = true; }
+        }
+      }
 
       // Crevice: close to an edge, but with the body wrapping around rather
       // than falling away. That is an armpit, never a tip.
-      const edge = !solid(bx - 1, by) || !solid(bx + 1, by) || !solid(bx, by - 1) || !solid(bx, by + 1)
-        || !solid(bx - 1, by - 1) || !solid(bx + 1, by - 1) || !solid(bx - 1, by + 1) || !solid(bx + 1, by + 1);
-      if (edge && band < 5 && coverage(bx, by) > 0.70) band++;
+      const edge = !solid(x - 1, y) || !solid(x + 1, y) || !solid(x, y - 1) || !solid(x, y + 1)
+        || !solid(x - 1, y - 1) || !solid(x + 1, y - 1) || !solid(x - 1, y + 1) || !solid(x + 1, y + 1);
+      if (edge && band < 5 && coverage(x, y) > 0.70) { band++; forced = true; }
 
-      if (floor > 0 && by >= floor - 1 && band < 5) band++;
+      if (floor > 0 && y >= floor - 2 && band < 5) { band++; forced = true; }
 
-      // Exactly one dithered boundary, at the terminator. More than that and
-      // the bands stop reading as bands, which is the whole point of them.
-      if (band === 4 && t < 0.80 && ditherOn(bx, by, 0.5)) band = 3;
+      // Every boundary is dithered now, not just the terminator.
+      //
+      // Six bands over a 128-cell creature is a step every ten cells or so,
+      // and at that spacing a hard edge reads as a contour line on a map. So
+      // each boundary gets a narrow feathered seam and the bands themselves
+      // stay flat: the eye reads eleven steps that still resolve into six when
+      // it looks straight at them.
+      //
+      // The seam is measured in *cells*, not in a fraction of the band. That
+      // distinction is the whole thing. A fractional threshold dithers the
+      // last third of a band, and on a barrel-shaped torso the last third of a
+      // band is fifteen cells wide, so the creature comes out wearing tartan.
+      // Three cells is a seam whatever the mass behind it is doing.
+      //
+      // And a band narrower than the seam gets no seam at all. A leg eight
+      // cells thick carries bands two cells wide, every one of which is inside
+      // the feather distance, so the whole limb dithers and comes out looking
+      // like wire mesh -- which is what the front legs of every quadruped on
+      // the roster did until this guard went in.
+      const bandCells = span * Math.max(0.01, EDGES[band]! - lo);
+      const toEdge = (1 - frac) * bandCells;
+      if (!forced && band < 5 && bandCells > SEAM * 1.6
+        && toEdge < SEAM && ditherOn8(x, y, 1 - toEdge / SEAM)) band++;
 
-      const out = ramp[band]!;
-      mask.set(bx * 2, by * 2, out);
-      mask.set(bx * 2 + 1, by * 2, out);
-      mask.set(bx * 2, by * 2 + 1, out);
-      mask.set(bx * 2 + 1, by * 2 + 1, out);
+      mask.set(x, y, ramp[band]!);
     }
   }
 }
 
 /**
- * Double the design mask, one cell to a block.
+ * Surface texture.
  *
- * This used to be a Scale2x pass, which rounds off every diagonal and fills in
- * the steps. That is the right algorithm for making old art look modern and
- * exactly the wrong one here: the world around these sprites is drawn one
- * design pixel to a 2x2 block, and a creature with smoothed edges standing on
- * blocky ground reads as a sprite from a different game.
+ * This pass did not exist before and could not have: at one shading block to
+ * two cells there was no spare pixel to put a scale, a barb or a bevel on, and
+ * anything drawn at that size came out as a pattern of blobs rather than as a
+ * material. It runs *after* the light, and it works by stepping cells one
+ * place along the ramp they were already given, so a scale on the shadow side
+ * is a dark scale and the same scale on the lit shoulder is a bright one --
+ * which is the difference between texture and a decal.
+ *
+ * Everything here is one cell wide and one step deep on purpose. Two steps and
+ * the creature reads as diseased; two cells and it reads as a knitted jumper.
  */
-function upscale(src: Mask): Mask {
-  const out = new Mask(src.w * 2, src.h * 2);
-  for (let y = 0; y < src.h; y++) {
-    for (let x = 0; x < src.w; x++) {
-      const v = src.get(x, y);
-      out.set(x * 2, y * 2, v);
-      out.set(x * 2 + 1, y * 2, v);
-      out.set(x * 2, y * 2 + 1, v);
-      out.set(x * 2 + 1, y * 2 + 1, v);
+function texture(mask: Mask, sp: SpeciesData | undefined, seed: string): void {
+  const b = mask.bounds();
+  if (!b) return;
+  const kind = sp?.types?.[0] ?? 'beast';
+  const plan = sp?.design.plan;
+  const rng = new Rng('skin:' + seed);
+  const src = mask.data.slice();
+  const W = mask.w, H = mask.h;
+
+  const val = (x: number, y: number): number => {
+    if (x < 0 || y < 0 || x >= W || y >= H) return EMPTY;
+    return src[y * W + x]!;
+  };
+  const body = (x: number, y: number): boolean => {
+    const v = val(x, y);
+    return v !== EMPTY && v !== OUTLINE && v !== OUTLINE_LIT && v !== SHADOW
+      && v !== EYE_WHITE && v !== EYE_DARK && v !== INNER;
+  };
+  /** Two cells clear of the silhouette on every side. Texture that runs to the
+   *  edge eats the rim light and the outline comes out looking chewed. */
+  const inside = (x: number, y: number): boolean =>
+    body(x, y) && body(x - 2, y) && body(x + 2, y) && body(x, y - 2) && body(x, y + 2);
+
+  const up = (x: number, y: number): void => {
+    if (!inside(x, y)) return;
+    const v = val(x, y);
+    // Texture never reaches the specular. That tone belongs to the rim light
+    // and to nothing else; a pale creature speckled with it comes out looking
+    // like television static, which is exactly how the first pass looked.
+    if (v === HILIGHT || v === SPEC || v === ACCENT_LIT) return;
+    mask.set(x, y, TONE_UP[v]!);
+  };
+  const dn = (x: number, y: number): void => { if (inside(x, y)) mask.set(x, y, TONE_DOWN[val(x, y)]!); };
+
+  const family =
+    kind === 'tide' || kind === 'frost' || plan === 'fish' || plan === 'serpentine' || plan === 'aquatic' ? 'scales'
+      : kind === 'chitin' || kind === 'iron' ? 'plates'
+        : kind === 'gale' || plan === 'bird' || plan === 'moth' ? 'feathers'
+          : kind === 'stone' || kind === 'terra' || plan === 'mineral' || plan === 'monolith' ? 'grain'
+            : kind === 'radiant' || kind === 'spirit' || kind === 'psyche' ? 'sheen'
+              : 'hide';
+
+  switch (family) {
+    case 'scales': {
+      // Offset rows of scallops: a dark lower rim with a lit crown, and the
+      // row below staggered by half a pitch so the coverage reads as
+      // imbricated rather than as a grid.
+      //
+      // Two cells a scale, not five. Five drew every scale in full and the
+      // creature came out wearing chain mail; the eye only needs the shadow
+      // under each scale and one catchlight to infer the rest.
+      const pitch = 7, rowH = 5;
+      for (let y = b.y0 + 3, row = 0; y <= b.y1 - 3; y += rowH, row++) {
+        const off = (row & 1) ? Math.floor(pitch / 2) : 0;
+        for (let x = b.x0 + 3 + off; x <= b.x1 - 3; x += pitch) {
+          dn(x, y + 1);
+          dn(x + 1, y + 1);
+          up(x, y - 1);
+        }
+      }
+      break;
+    }
+
+    case 'plates': {
+      // Stacked armour: a dark gutter with a bevel catching the light on the
+      // plate above it, and a rivet line down the middle of each band.
+      for (let y = b.y0 + 4; y <= b.y1 - 3; y += 7) {
+        for (let x = b.x0 + 1; x <= b.x1 - 1; x++) {
+          const bow = Math.round(Math.abs(x - (b.x0 + b.x1) / 2) * 0.08);
+          dn(x, y + bow);
+          up(x, y + bow - 1);
+        }
+        for (let x = b.x0 + 4; x <= b.x1 - 4; x += 9) {
+          const ry = y + Math.round(Math.abs(x - (b.x0 + b.x1) / 2) * 0.08) - 4;
+          dn(x, ry + 1); dn(x + 1, ry); dn(x - 1, ry);
+          up(x, ry - 1);
+        }
+      }
+      break;
+    }
+
+    case 'feathers': {
+      // Barbs: a short slanted stroke with a lit leading edge, laid in rows
+      // that lean the way the wing does. Three cells each, which is exactly
+      // one cell more than the old grid could spare and the reason a feather
+      // now reads as a feather instead of as a dash.
+      for (let y = b.y0 + 4, row = 0; y <= b.y1 - 3; y += 5, row++) {
+        const off = (row & 1) ? 4 : 0;
+        for (let x = b.x0 + 3 + off; x <= b.x1 - 5; x += 8) {
+          up(x, y - 1);
+          dn(x, y); dn(x + 1, y + 1); dn(x + 2, y + 1);
+        }
+      }
+      break;
+    }
+
+    case 'grain': {
+      // Mineral speckle plus a few straight cleavage lines. Hashed rather
+      // than sampled from the rng so the cost stays one multiply per cell.
+      for (let y = b.y0 + 2; y <= b.y1 - 2; y++) {
+        for (let x = b.x0 + 2; x <= b.x1 - 2; x++) {
+          const n = (x * 7 + y * 13 + ((x * y) & 7)) & 15;
+          if (n === 0) dn(x, y);
+          else if (n === 9) up(x, y);
+        }
+      }
+      for (let i = 0; i < 5; i++) {
+        const ax = b.x0 + rng.below(Math.max(1, b.x1 - b.x0));
+        const ay = b.y0 + rng.below(Math.max(1, b.y1 - b.y0));
+        const dx = rng.chance(50) ? 1 : -1;
+        const slope = 0.3 + rng.next() * 0.6;
+        for (let k = 0; k < 14; k++) {
+          dn(ax + dx * k, ay + Math.round(k * slope));
+          up(ax + dx * k, ay + Math.round(k * slope) - 1);
+        }
+      }
+      break;
+    }
+
+    case 'sheen': {
+      // Diagonal light banding, the way a lantern or a ghost reads: no
+      // material at all, just the surface catching and losing the glow.
+      for (let y = b.y0 + 2; y <= b.y1 - 2; y++) {
+        for (let x = b.x0 + 2; x <= b.x1 - 2; x++) {
+          const d = (x + y) % 9;
+          if (d === 0) up(x, y);
+          else if (d === 4) dn(x, y);
+        }
+      }
+      break;
+    }
+
+    default: {
+      // Hide and fur: short strokes lying the way the light falls. Sparse is
+      // the whole discipline here -- a stroke every four cells reads as a coat
+      // and a stroke every two reads as a knitted jumper, and the difference
+      // between the two is one number.
+      for (let y = b.y0 + 4, row = 0; y <= b.y1 - 3; y += 5, row++) {
+        const off = (row & 1) ? 3 : 0;
+        for (let x = b.x0 + 3 + off; x <= b.x1 - 4; x += 6) {
+          up(x, y - 1);
+          dn(x + 1, y);
+        }
+      }
+      break;
     }
   }
-  return out;
 }
 
 /**
@@ -512,7 +942,7 @@ function upscale(src: Mask): Mask {
  * feature is grown *outward from a pixel that is already solid*, so nothing
  * ever floats free of the body -- a detached horn is worse than no horn.
  */
-function appendages(mask: Mask, seed: string): void {
+function appendages(mask: Pen, seed: string): void {
   const rng = new Rng('limb:' + seed);
 
   let x0 = mask.w, x1 = 0, y0 = mask.h, y1 = 0;
@@ -527,10 +957,11 @@ function appendages(mask: Mask, seed: string): void {
   if (x1 - x0 < 8 || y1 - y0 < 8) return;
   const w = x1 - x0;
 
+  // The eyes are recorded in mask cells; this pass is authored in pen units.
   const eye = pendingEyes[0];
-  const faceX = eye ? eye.x : Math.round((x0 + x1) / 2);
-  const faceY = eye ? eye.y : y0 + Math.round((y1 - y0) * 0.2);
-  const faceR = eye ? Math.max(3, eye.spread + eye.size * 2) : Math.round(w * 0.22);
+  const faceX = eye ? Math.round(mask.units(eye.x)) : Math.round((x0 + x1) / 2);
+  const faceY = eye ? Math.round(mask.units(eye.y)) : y0 + Math.round((y1 - y0) * 0.2);
+  const faceR = eye ? Math.max(3, Math.round(mask.units(eye.spread + eye.size * 2))) : Math.round(w * 0.22);
 
   /** Topmost solid pixel in a column, or -1. */
   const crown = (x: number): number => {
@@ -561,10 +992,16 @@ function appendages(mask: Mask, seed: string): void {
           const y = by - 1 - i;
           const half = Math.max(0, Math.round((1 - t) * 1.6));
           for (let d = -half; d <= half; d++) mask.set(x + d, y, ACCENT);
-          // A lit leading edge, so the horn reads as a cone and not a stick.
-          if (half > 0) mask.set(x - half, y, ACCENT_LIT);
           // Growth rings, which is what a horn has and a spike does not.
           if (i % 3 === 1) for (let d = -half; d <= half; d++) mask.set(x + d, y, ACCENT_DARK);
+          // Half a unit of lit leading edge and half a unit of dark trailing
+          // edge, so the horn reads as a cone. A whole unit of each -- all the
+          // old grid could manage -- left nothing in between for the horn.
+          // Both half-rows, since a unit is two cells tall as well as wide.
+          for (const dy of [0, 0.5]) {
+            mask.cell(x - half, y + dy, ACCENT_LIT);
+            mask.cell(x + half + 0.5, y + dy, ACCENT_DARK);
+          }
         }
       }
       break;
@@ -615,8 +1052,16 @@ function appendages(mask: Mask, seed: string): void {
         for (let i = 0; i < len; i++) {
           const half = Math.max(0, 2 - i);
           for (let d = -half; d <= half; d++) mask.set(bx + d, by - 1 - i, ACCENT);
+          // The lit front edge of the shell, half a unit of it.
+          mask.line(bx - half, by - 1 - i, bx - half, by - 0.5 - i, ACCENT_LIT, false);
         }
-        mask.set(bx, by - 1, INNER);
+        // A real ear canal: a cavity that narrows upward, with a dark rim on
+        // the near lip. One flat cell of INNER was all that used to fit, and it
+        // read as a hole punched in the head.
+        const deep = Math.min(3, len);
+        mask.line(bx, by - deep, bx, by - 0.5, INNER, false);
+        mask.line(bx + 0.5, by - deep + 1, bx + 0.5, by - 0.5, INNER, false);
+        mask.line(bx - 0.5, by - deep, bx - 0.5, by - 0.5, ACCENT_DARK, false);
       }
       break;
     }
@@ -631,9 +1076,15 @@ function appendages(mask: Mask, seed: string): void {
           if (mask.get(x, ny + k) === EMPTY && mask.get(x, ny + k - 1) === EMPTY) continue;
           mask.set(x, ny + k, ACCENT);
         }
-        // The frill has scallops on its lower edge; a smooth arc reads as a
-        // painted stripe rather than as something standing away from the neck.
-        if ((x - faceX) % 3 === 0) mask.set(x, ny + Math.round(t * 2) + 1, ACCENT_DARK);
+        // A frill is a stack of separate lobes, so its lower edge scallops and
+        // each lobe carries a lit ridge. Drawing one dark cell every third unit
+        // -- which is what a coarser grid forced -- came out as a dotted line
+        // across the neck and read as a zip. Half-unit steps make each scallop
+        // an actual arc.
+        const base = ny + Math.round(t * 2);
+        const lobe = ((x - faceX) % 3 + 3) % 3;
+        mask.line(x, base + (lobe === 1 ? 1 : 0.5), x + 1, base + (lobe === 0 ? 1 : 0.5), ACCENT_DARK);
+        if (lobe === 2) mask.line(x, base - 0.5, x + 1, base - 0.5, ACCENT_LIT);
       }
       break;
     }
@@ -661,7 +1112,7 @@ function appendages(mask: Mask, seed: string): void {
  *    stripe straight down the middle of every face, which is the single most
  *    artificial thing a generated sprite can do.
  */
-function markings(mask: Mask, seed: string): void {
+function markings(mask: Pen, seed: string): void {
   const rng = new Rng('mark:' + seed);
 
   // Body extent, so a pattern can be placed in proportion rather than in pixels.
@@ -677,10 +1128,11 @@ function markings(mask: Mask, seed: string): void {
   const w = x1 - x0, h = y1 - y0;
 
   // Where the face is. Falls back to "the top third" for plans with no eyes.
+  // Eye coordinates are mask cells; this pass is authored in pen units.
   const eye = pendingEyes[0];
-  const faceY = eye ? eye.y : y0 + Math.round(h * 0.22);
-  const faceR = eye ? Math.max(3, eye.spread + eye.size * 2) : Math.round(w * 0.22);
-  const faceX = eye ? eye.x : x0 + Math.round(w * 0.5);
+  const faceY = eye ? Math.round(mask.units(eye.y)) : y0 + Math.round(h * 0.22);
+  const faceR = eye ? Math.max(3, Math.round(mask.units(eye.spread + eye.size * 2))) : Math.round(w * 0.22);
+  const faceX = eye ? Math.round(mask.units(eye.x)) : x0 + Math.round(w * 0.5);
   const bodyTop = Math.min(y1 - 2, Math.round(faceY + faceR * 1.1));
 
   /** Paint only well inside the silhouette, so a rim of body colour survives. */
@@ -694,6 +1146,43 @@ function markings(mask: Mask, seed: string): void {
       }
     }
     mask.set(x, y, ACCENT);
+  };
+
+  /**
+   * Feather the edge of the patch into the body.
+   *
+   * A marking whose edge is a clean arc reads as a sticker. Painted art breaks
+   * that edge up, and breaking it up needs a grid fine enough that a broken
+   * cell is smaller than the shapes either side of it -- which is exactly what
+   * the old design cell was not, and why this pass could not exist before.
+   *
+   * The two halves use the same ordered threshold from opposite directions, so
+   * the cells the patch gives up are precisely the ones the body takes back and
+   * the fringe interlocks instead of merely being noisy.
+   *
+   * Worked in mask cells on purpose. The first attempt tracked painted units
+   * and rimmed them in unit space, which put a mark on both cell rows of every
+   * unit -- a unit being two cells tall -- so the belly of every quadruped came
+   * out as a ladder. Cells cannot make that mistake.
+   */
+  const border = () => {
+    const raw = mask.m;
+    const src = raw.data.slice();
+    const is = (x: number, y: number, v: number): boolean =>
+      x >= 0 && y >= 0 && x < raw.w && y < raw.h && src[y * raw.w + x] === v;
+    for (let y = 0; y < raw.h; y++) {
+      for (let x = 0; x < raw.w; x++) {
+        const touching = is(x - 1, y, ACCENT) || is(x + 1, y, ACCENT)
+          || is(x, y - 1, ACCENT) || is(x, y + 1, ACCENT);
+        if (is(x, y, ACCENT)) {
+          const open = !is(x - 1, y, ACCENT) || !is(x + 1, y, ACCENT)
+            || !is(x, y - 1, ACCENT) || !is(x, y + 1, ACCENT);
+          if (open && ditherOn(x, y, 0.5)) raw.set(x, y, BASE);
+        } else if (touching && is(x, y, BASE) && !ditherOn(x, y, 0.5)) {
+          raw.set(x, y, ACCENT);
+        }
+      }
+    }
   };
 
   const kinds = ['belly', 'saddle', 'bands', 'spots', 'crest', 'cheeks', 'plain'] as const;
@@ -776,10 +1265,11 @@ function markings(mask: Mask, seed: string): void {
     default:
       break;
   }
+  border();
 }
 
 /**
- * Fit the scratch cell into the 64x64 design cell.
+ * Fit the scratch cell into the design cell.
  *
  * The content is bottom-aligned onto the ground line and centred, and only if
  * it still will not fit is it scaled down. Losing a claw to a resample is
@@ -793,9 +1283,9 @@ function fitToCell(work: Mask, groundY: number): Mask {
   const b = work.bounds();
   if (!b) return out;
   const cw = b.x1 - b.x0 + 1, ch = b.y1 - b.y0 + 1;
-  // Two cells of margin on each side for the outline, and five above the body
+  // Two units of margin on each side for the outline, and five above the body
   // for whatever the appendage and type passes are about to grow up there.
-  const k = Math.min(1, (DESIGN - 4) / cw, (groundY - 6) / ch);
+  const k = Math.min(1, (DESIGN - 4 * U) / cw, (groundY - 6 * U) / ch);
   const dx0 = Math.round((DESIGN - cw * k) / 2);
   const dy0 = Math.round(groundY - ch * k);
 
@@ -812,7 +1302,7 @@ function fitToCell(work: Mask, groundY: number): Mask {
     e.x = dx0 + Math.round((e.x - b.x0) * k);
     e.y = dy0 + Math.round((e.y - b.y0) * k);
     e.spread = Math.max(0, Math.round(e.spread * k));
-    e.size = Math.max(2, Math.round(e.size * k));
+    e.size = Math.max(3, Math.round(e.size * k));
   }
   return out;
 }
@@ -834,7 +1324,7 @@ interface EdgePt { x: number; y: number; nx: number; ny: number }
  * Runs at design resolution, after markings, so everything here is lit by the
  * shading pass along with the body rather than pasted over the top of it.
  */
-function typeTraits(m: Mask, sp: SpeciesData | undefined, seed: string): void {
+function typeTraits(m: Pen, sp: SpeciesData | undefined, seed: string): void {
   const kind = sp?.types?.[0];
   if (!kind) return;
   const b = m.bounds();
@@ -843,10 +1333,11 @@ function typeTraits(m: Mask, sp: SpeciesData | undefined, seed: string): void {
   if (w < 8 || h < 8) return;
 
   const rng = new Rng('type:' + seed);
+  // Eye coordinates are mask cells; this pass is authored in pen units.
   const eye = pendingEyes[0];
-  const faceX = eye ? eye.x : Math.round((b.x0 + b.x1) / 2);
-  const faceY = eye ? eye.y : b.y0 + Math.round(h * 0.2);
-  const faceR = eye ? Math.max(3, eye.spread + eye.size * 2) : Math.round(w * 0.22);
+  const faceX = eye ? Math.round(m.units(eye.x)) : Math.round((b.x0 + b.x1) / 2);
+  const faceY = eye ? Math.round(m.units(eye.y)) : b.y0 + Math.round(h * 0.2);
+  const faceR = eye ? Math.max(3, Math.round(m.units(eye.spread + eye.size * 2))) : Math.round(w * 0.22);
 
   // Nothing may rise more than a few cells above the silhouette the plan
   // built, and nothing may grow off a tip. Both rules exist because the first
@@ -868,17 +1359,24 @@ function typeTraits(m: Mask, sp: SpeciesData | undefined, seed: string): void {
    * and comes out as polka dots -- which is exactly what the first pass at the
    * carapace seams did to an eight-legged spider.
    */
-  const mark = (x: number, y: number, v: number) => {
-    if (!m.filled(x, y)) return;
-    // Body three cells away on all four sides. A limb fails this on one axis
+  const isMass = (x: number, y: number): boolean => {
+    if (!m.filled(x, y)) return false;
+    // Body three units away on all four sides. A limb fails this on one axis
     // however densely it is packed against its neighbours, which a coverage
     // count alone does not catch.
-    if (!m.filled(x - 3, y) || !m.filled(x + 3, y) || !m.filled(x, y - 3) || !m.filled(x, y + 3)) return;
+    if (!m.filled(x - 3, y) || !m.filled(x + 3, y) || !m.filled(x, y - 3) || !m.filled(x, y + 3)) return false;
     let n = 0;
     for (let dy = -3; dy <= 3; dy++) {
       for (let dx = -3; dx <= 3; dx++) if (m.filled(x + dx, y + dy)) n++;
     }
-    if (n >= 42) m.set(x, y, v);
+    return n >= 42;
+  };
+  const mark = (x: number, y: number, v: number) => { if (isMass(x, y)) m.set(x, y, v); };
+  /** `mark` at a single cell. Bevels, barbs and rivet highlights live here:
+   *  each of them is a half-unit mark and none of them existed before there
+   *  was a half unit to put them in. */
+  const markCell = (x: number, y: number, v: number) => {
+    if (isMass(Math.round(x), Math.round(y))) m.cell(x, y, v);
   };
 
   let edgeCache: EdgePt[] | null = null;
@@ -924,6 +1422,9 @@ function typeTraits(m: Mask, sp: SpeciesData | undefined, seed: string): void {
         const lean = -1 - rng.below(2);
         m.limb(x, ty, x + lean, ty - len, 3, 1, ACCENT);
         m.limb(x, ty - 1, x + Math.round(lean * 0.6), ty - len + 1, 1, 1, ACCENT_LIT);
+        // The trailing edge of a tongue is cooler than its core. Half a unit
+        // of it -- a whole one would have been the entire flame.
+        m.line(x + 0.5, ty - 1, x + lean + 0.5, ty - len + 1, ACCENT_DARK);
       }
       break;
     }
@@ -943,7 +1444,11 @@ function typeTraits(m: Mask, sp: SpeciesData | undefined, seed: string): void {
       }
       const gx = faceX + Math.round(faceR * 1.3);
       for (let i = 0; i < 3; i++) {
-        for (let k = -1; k <= 1; k++) m.over(gx + i * 2, faceY + Math.round(faceR * 0.6) + k, INNER);
+        const gy = faceY + Math.round(faceR * 0.6);
+        for (let k = -1; k <= 1; k++) m.over(gx + i * 2, gy + k, INNER);
+        // Each slit gets a lit leading lip, so the gills read as flaps standing
+        // off the neck rather than as three scratches ruled into it.
+        m.line(gx + i * 2 - 0.5, gy - 1, gx + i * 2 - 0.5, gy + 1, ACCENT_LIT);
       }
       for (let i = 0; i < 2; i++) {
         const sx = faceX + Math.round(w * (0.3 + i * 0.16));
@@ -970,6 +1475,12 @@ function typeTraits(m: Mask, sp: SpeciesData | undefined, seed: string): void {
           for (let d = -half; d <= half; d++) m.set(px + d, py, ACCENT);
           if (half > 0) m.set(px - half, py, ACCENT_LIT);
           if (k > 0 && k < len) m.set(px, py, ACCENT_DARK);
+          // Side veins branching off the midrib. Half a unit each, angled down
+          // and out, which is the read the mid-vein alone never gave.
+          if (half > 1 && k % 3 === 1) {
+            m.cellOver(px - 0.5, py + 0.5, ACCENT_DARK);
+            m.cellOver(px + 0.5, py + 0.5, ACCENT_DARK);
+          }
         }
       }
       break;
@@ -1055,7 +1566,12 @@ function typeTraits(m: Mask, sp: SpeciesData | undefined, seed: string): void {
         for (let dy = -1; dy <= 1; dy++) {
           for (let dx = -1; dx <= 1; dx++) mark(x + dx, ry + dy, ACCENT_DARK);
         }
-        mark(x, ry, ACCENT_LIT);
+        mark(x, ry, ACCENT);
+        // A rivet is a dome: a specular on its upper left and its own little
+        // shadow on the lower right. Two cells, and the head stops being a
+        // flat square of accent.
+        markCell(x - 0.5, ry - 0.5, ACCENT_LIT);
+        markCell(x + 0.5, ry + 0.5, INNER);
       }
       for (let k = 0; k < 5; k++) {
         const sx = faceX + Math.round(w * 0.3) + k;
@@ -1073,7 +1589,15 @@ function typeTraits(m: Mask, sp: SpeciesData | undefined, seed: string): void {
         for (let x = b.x0; x <= b.x1; x++) {
           const bow = Math.round(Math.abs(x - faceX) * 0.1);
           mark(x, sy + bow, ACCENT_DARK);
-          if ((x & 1) === 0) mark(x, sy + bow - 1, ACCENT_LIT);
+          // A bevel half a unit above the seam and a gutter half a unit below
+          // it. That pair is what "overlapped" means: a lip catching the light
+          // and an edge disappearing under the plate in front of it.
+          // Both half-cells of the unit, or the bevel comes out as a dashed
+          // line: a unit is two cells wide and one plot only fills one of them.
+          markCell(x, sy + bow - 0.5, ACCENT_LIT);
+          markCell(x + 0.5, sy + bow - 0.5, ACCENT_LIT);
+          markCell(x, sy + bow + 0.5, INNER);
+          markCell(x + 0.5, sy + bow + 0.5, INNER);
         }
       }
       break;
@@ -1089,6 +1613,10 @@ function typeTraits(m: Mask, sp: SpeciesData | undefined, seed: string): void {
         for (let k = 0; k < 9; k++) {
           mark(qx + k, qy + Math.round(k * 0.5), ACCENT_LIT);
           mark(qx + k, qy + Math.round(k * 0.5) + 1, ACCENT_DARK);
+          // Barbs off the shaft: half a unit each, alternating sides. They are
+          // the whole reason this now reads as a feather and not a pinstripe.
+          markCell(qx + k - 0.5, qy + Math.round(k * 0.5) - 0.5, ACCENT_LIT);
+          if ((k & 1) === 0) markCell(qx + k + 0.5, qy + Math.round(k * 0.5) + 1.5, ACCENT_DARK);
         }
       }
       break;
@@ -1219,81 +1747,119 @@ function typeTraits(m: Mask, sp: SpeciesData | undefined, seed: string): void {
 /**
  * Inner rim light.
  *
- * A single bright run along the edges that face the light, painted a whole
- * block at a time so it sits on the same grid as everything else. This is the
- * highest-value pass in the generator: it separates the creature from whatever
- * it is standing on, and it is the difference between a flat cutout and
- * something that looks like it has a surface.
+ * A bright run along the edges that face the light. This is the highest-value
+ * pass in the generator: it separates the creature from whatever it is
+ * standing on, and it is the difference between a flat cutout and something
+ * that looks like it has a surface.
+ *
+ * It used to be one shading block wide, which meant one flat step of specular
+ * and nothing else -- a rim with no falloff, because there was no second row
+ * to put the falloff in. There is now. The cell on the edge takes the full
+ * lift and the cell behind it takes half of one, so the rim rolls off into the
+ * body the way a real highlight on a curved surface does.
  *
  * Shadowed material gets a rim too, but only a modest one. A limb whose lit
  * edge is a contact seam otherwise looks sunk into the body it belongs to.
  */
 function rimLight(mask: Mask): void {
-  const W = mask.w;
-  const bw = W >> 1, bh = mask.h >> 1;
+  const W = mask.w, H = mask.h;
   const src = mask.data.slice();
-  const at = (bx: number, by: number): number => {
-    if (bx < 0 || by < 0 || bx >= bw || by >= bh) return EMPTY;
-    return src[by * 2 * W + bx * 2]!;
+  const at = (x: number, y: number): number => {
+    if (x < 0 || y < 0 || x >= W || y >= H) return EMPTY;
+    return src[y * W + x]!;
   };
-  const filled = (bx: number, by: number): boolean => {
-    const v = at(bx, by);
+  const filled = (x: number, y: number): boolean => {
+    const v = at(x, y);
     return v !== EMPTY && v !== OUTLINE && v !== SHADOW;
   };
+  /** On the lit edge: nothing of the body up, left, or up-left of here. */
+  const lit = (x: number, y: number): boolean =>
+    !(filled(x, y - 1) && filled(x - 1, y) && filled(x - 1, y - 1));
 
-  for (let by = 0; by < bh; by++) {
-    for (let bx = 0; bx < bw; bx++) {
-      const v = at(bx, by);
+  for (let y = 0; y < H; y++) {
+    for (let x = 0; x < W; x++) {
+      const v = at(x, y);
       // Shadowed material is lifted exactly one step, never up to the
       // specular: a rim as bright as the lit side turns the whole silhouette
       // into a halo and undoes the banding underneath it.
-      const out = (v === BASE || v === LIGHT || v === HILIGHT || v === SPEC) ? SPEC
+      const full = (v === BASE || v === LIGHT || v === HILIGHT || v === SPEC) ? SPEC
         : v === SHADE ? BASE : v === DEEP ? SHADE : EMPTY;
-      if (out === EMPTY) continue;
-      if (filled(bx, by - 1) && filled(bx - 1, by) && filled(bx - 1, by - 1)) continue;
-      mask.set(bx * 2, by * 2, out);
-      mask.set(bx * 2 + 1, by * 2, out);
-      mask.set(bx * 2, by * 2 + 1, out);
-      mask.set(bx * 2 + 1, by * 2 + 1, out);
-    }
-  }
-}
-
-/** Wrap the whole silhouette in a hard 1px outline. */
-function outline(mask: Mask): void {
-  const src = mask.data.slice();
-  const solid = (x: number, y: number): boolean => {
-    if (x < 0 || y < 0 || x >= mask.w || y >= mask.h) return false;
-    const v = src[y * mask.w + x]!;
-    return v !== EMPTY && v !== OUTLINE;
-  };
-  // Walked two cells at a time: the mask is block-aligned, so the border has to
-  // be as well or it comes out half a block thick on one side.
-  for (let y = 0; y < mask.h; y += 2) {
-    for (let x = 0; x < mask.w; x += 2) {
-      if (solid(x, y)) continue;
-      const touching =
-        solid(x - 2, y) || solid(x + 2, y) || solid(x, y - 2) || solid(x, y + 2) ||
-        solid(x - 2, y - 2) || solid(x + 2, y - 2) || solid(x - 2, y + 2) || solid(x + 2, y + 2);
-      if (!touching) continue;
-      // The light side of the outline carries some of the body colour, so the
-      // silhouette does not read as a uniform marker-pen border.
-      const litSide = solid(x + 2, y) || solid(x, y + 2) || solid(x + 2, y + 2);
-      const darkSide = solid(x - 2, y) || solid(x, y - 2);
-      const v = litSide && !darkSide ? OUTLINE_LIT : OUTLINE;
-      mask.set(x, y, v);
-      mask.set(x + 1, y, v);
-      mask.set(x, y + 1, v);
-      mask.set(x + 1, y + 1, v);
+      if (full === EMPTY) continue;
+      if (lit(x, y)) { mask.set(x, y, full); continue; }
+      // Second row in: half the lift, and only where the cell in front of it
+      // actually took the rim.
+      if (!filled(x, y) ) continue;
+      if (lit(x - 1, y) || lit(x, y - 1) || lit(x - 1, y - 1)) mask.set(x, y, TONE_UP[v]!);
     }
   }
 }
 
 /**
- * Contact shadow.
+ * Wrap the whole silhouette in a hard outline, two cells thick.
+ *
+ * Two rather than one, and worth being deliberate about. One cell would be
+ * half the ink the silhouette carries today and the creature would read as
+ * spindly against a world drawn on a coarser grid. Two keeps the border the
+ * same physical weight it has always had, while the finer grid lets it follow
+ * the actual contour instead of a staircase of blocks -- so the outline is
+ * unchanged in strength and considerably better in shape.
+ */
+function outline(mask: Mask): void {
+  const W = mask.w, H = mask.h;
+  const src = mask.data.slice();
+  const solid = (x: number, y: number): boolean => {
+    if (x < 0 || y < 0 || x >= W || y >= H) return false;
+    const v = src[y * W + x]!;
+    return v !== EMPTY && v !== OUTLINE;
+  };
+
+  // First ring, eight-connected, so a diagonal step in the silhouette is
+  // closed rather than leaking a pinhole of background through the corner.
+  const ring: number[] = [];
+  for (let y = 0; y < H; y++) {
+    for (let x = 0; x < W; x++) {
+      if (solid(x, y)) continue;
+      const touching =
+        solid(x - 1, y) || solid(x + 1, y) || solid(x, y - 1) || solid(x, y + 1) ||
+        solid(x - 1, y - 1) || solid(x + 1, y - 1) || solid(x - 1, y + 1) || solid(x + 1, y + 1);
+      if (!touching) continue;
+      // The light side of the outline carries some of the body colour, so the
+      // silhouette does not read as a uniform marker-pen border.
+      const litSide = solid(x + 1, y) || solid(x, y + 1) || solid(x + 1, y + 1);
+      const darkSide = solid(x - 1, y) || solid(x, y - 1);
+      const v = litSide && !darkSide ? OUTLINE_LIT : OUTLINE;
+      mask.set(x, y, v);
+      ring.push(x, y, v);
+    }
+  }
+
+  // Second ring, four-connected only. Eight here would balloon every convex
+  // corner into a lump and the creature would come out looking shrink-wrapped.
+  for (let i = 0; i < ring.length; i += 3) {
+    const x = ring[i]!, y = ring[i + 1]!, v = ring[i + 2]!;
+    for (const [dx, dy] of [[-1, 0], [1, 0], [0, -1], [0, 1]] as const) {
+      const nx = x + dx, ny = y + dy;
+      if (nx < 0 || ny < 0 || nx >= W || ny >= H) continue;
+      // Anything already written is either body or first ring or a second-ring
+      // cell laid down a moment ago; leaving all three alone is what keeps the
+      // border exactly two cells and stops it growing across the loop.
+      if (mask.data[ny * W + nx] !== EMPTY) continue;
+      mask.set(nx, ny, v);
+    }
+  }
+}
+
+/**
+ * Cast shadow.
  *
  * Drawn last and only into empty cells, so it is never outlined. Without it a
  * sprite floats over whatever it is standing on no matter how well it is lit.
+ *
+ * It used to be one flat ellipse of one opacity, because at two cells to a
+ * shading block anything more structured came out as a stack of bars. It is
+ * now an umbra with a penumbra around it, thrown down and to the right of the
+ * light, with a hard dark core where the feet actually meet the ground -- the
+ * three things that separate a cast shadow from a grey oval.
  */
 function contactShadow(mask: Mask): void {
   let floor = 0, x0 = mask.w, x1 = 0;
@@ -1310,13 +1876,19 @@ function contactShadow(mask: Mask): void {
   }
   if (x1 <= x0) return;
 
-  const cx = (x0 + x1) / 2;
-  const rx = (x1 - x0) * 0.55;
-  const ry = Math.max(3, rx * 0.17);
+  // Thrown away from the light, which is up and to the left.
+  const cx = (x0 + x1) / 2 + (x1 - x0) * 0.06;
+  const rx = (x1 - x0) * 0.56;
+  const ry = Math.max(6, rx * 0.18);
+  const cy = floor - 1;
   for (let y = -Math.ceil(ry); y <= Math.ceil(ry); y++) {
     for (let x = -Math.ceil(rx); x <= Math.ceil(rx); x++) {
-      if ((x * x) / (rx * rx) + (y * y) / (ry * ry) > 1) continue;
-      mask.under(Math.round(cx + x), Math.round(floor - 1 + y), SHADOW);
+      const d = (x * x) / (rx * rx) + (y * y) / (ry * ry);
+      if (d > 1) continue;
+      // The penumbra frays into the floor rather than ending on a hard arc,
+      // which is what a soft light does and what a single ellipse never did.
+      if (d > 0.72 && !ditherOn(Math.round(cx + x), Math.round(cy + y), (1 - d) / 0.28)) continue;
+      mask.under(Math.round(cx + x), Math.round(cy + y), d < 0.42 ? SHADOW_CORE : SHADOW);
     }
   }
 }
@@ -1327,58 +1899,84 @@ interface EyeSpot { x: number; y: number; spread: number; size: number; angry: b
 
 /**
  * Eyes are the one feature a viewer reads first and forgives least, so they are
- * recorded here and drawn after the mask is doubled -- at design resolution a
- * pupil is one pixel, and doubling one pixel gives a blank square rather than
- * an eye.
+ * recorded by the plans and drawn at the very end, after the light has run. A
+ * lit eye is a wrong eye: the glint has to be the brightest thing on the
+ * creature no matter which way its head is turned.
+ *
+ * Coordinates are recorded in mask cells, not pen units, because the fit pass
+ * moves them and the fit pass works in cells.
  */
 let pendingEyes: EyeSpot[] = [];
 
-function eyes(mask: Mask, cx: number, cy: number, spread: number, size: number, angry: boolean): void {
-  pendingEyes.push({ x: cx, y: cy, spread, size, angry });
-  void mask;
+function eyes(p: Pen, cx: number, cy: number, spread: number, size: number, angry: boolean): void {
+  pendingEyes.push({
+    x: Math.round(cx * p.u), y: Math.round(cy * p.u),
+    spread: Math.round(spread * p.u), size: Math.round(size * p.u), angry,
+  });
 }
 
 /**
- * Draw a recorded pair at full resolution.
+ * Draw a recorded pair.
  *
  * The proportions matter more than the size: a mostly-dark eye with a single
  * bright glint reads as an animal looking at you, while a mostly-white eye with
  * a dot in it reads as a doll. The pupil sits slightly inboard so both eyes
  * converge on the viewer.
+ *
+ * Everything from the iris inward is new. An eye ten cells across used to be
+ * five shading blocks and could hold a sclera, a pupil and a glint and nothing
+ * else -- so every creature on the roster had the same black bead with a white
+ * corner. Ten actual cells hold a coloured iris in the species accent, a
+ * pupil, a fine dark limbal ring around the iris, a hard glint up towards the
+ * light and a soft warm bounce reflected back into the lower rim. That last
+ * pair is the whole trick: one cool highlight and one warm one is what makes a
+ * painted eye look wet rather than merely shiny.
  */
-function drawEyes(mask: Mask, spots: EyeSpot[], scale: number): void {
+function drawEyes(mask: Mask, spots: EyeSpot[]): void {
   for (const s of spots) {
-    const cy = s.y * scale;
-    const spread = s.spread * scale;
-    // Eyes carry a creature at this size. Two or three pixels on a sixty-four
-    // pixel sprite reads as a bead rather than as a face; twelve reads as a
-    // cartoon. This sits between: big enough to hold an expression across a
-    // battle, small enough that the head still has room for a skull.
-    const r = Math.max(3, s.size * scale * 0.95);
+    const cy = s.y;
+    // Big enough to hold an expression across a battle, small enough that the
+    // head still has room for a skull behind it.
+    const r = Math.max(4.2, s.size * 1.25);
 
     for (const side of [-1, 1]) {
-      const ex = s.x * scale + side * spread;
+      const ex = s.x + side * s.spread;
 
       // Socket: a hard rim so the eye separates from any body colour.
       mask.ellipse(ex, cy, r + 1.4, r * 1.25 + 1.4, OUTLINE);
-      // The eye itself, dark, with a lit rim along the bottom. The white is
-      // kept to a rim: an eye at this size with a wide sclera reads as a
-      // googly eye stuck on, and the whole point of enlarging them was to make
+      // The white is kept to a rim. An eye at this size with a wide sclera
+      // reads as a googly eye stuck on, and the point of a big eye is to make
       // the creature look at you, not to make it look surprised.
       mask.ellipse(ex, cy, r, r * 1.25, EYE_WHITE);
-      mask.ellipse(ex - side * r * 0.1, cy + r * 0.08, r * 0.86, r * 1.06, EYE_DARK);
+      // Limbal ring, then iris in the species accent, then the pupil. Three
+      // rings inside a ten-cell eye, which is exactly the budget the finer
+      // grid bought and exactly where it is best spent.
+      mask.ellipse(ex - side * r * 0.1, cy + r * 0.08, r * 0.88, r * 1.08, EYE_DARK);
+      mask.ellipse(ex - side * r * 0.1, cy + r * 0.08, r * 0.72, r * 0.92, ACCENT_DARK);
+      mask.ellipse(ex - side * r * 0.12, cy + r * 0.1, r * 0.54, r * 0.72, ACCENT);
+      mask.ellipse(ex - side * r * 0.12, cy + r * 0.12, r * 0.34, r * 0.5, EYE_DARK);
       // A lit crescent under the pupil, which is what makes an eye look wet.
-      mask.ellipse(ex, cy + r * 0.78, r * 0.5, r * 0.26, EYE_WHITE);
-      // Glint, up and towards the light.
-      mask.ellipse(ex - r * 0.42, cy - r * 0.52, Math.max(1.1, r * 0.28), Math.max(1.1, r * 0.28), EYE_WHITE);
+      mask.ellipse(ex, cy + r * 0.86, r * 0.46, r * 0.22, EYE_WHITE);
+      // Glint, up and towards the light: a hard square-cornered mark, because
+      // a round glint at this size just looks like a smudge.
+      const g = Math.max(1, Math.round(r * 0.3));
+      mask.box(Math.round(ex - r * 0.5) - g, Math.round(cy - r * 0.6) - g,
+        Math.round(ex - r * 0.5), Math.round(cy - r * 0.6), EYE_WHITE);
+      // Bounce light reflected back into the far rim, one cell, warm. The eye
+      // stops reading as a hole the moment this lands.
+      mask.set(Math.round(ex + r * 0.5), Math.round(cy + r * 0.45), ACCENT_LIT);
+      mask.set(Math.round(ex + r * 0.5), Math.round(cy + r * 0.45) + 1, ACCENT_LIT);
 
       if (s.angry) {
-        // A heavy slanted brow: the cheapest way to say predator.
-        const bh = Math.max(1, Math.round(r * 0.45));
+        // A heavy slanted brow: the cheapest way to say predator. It gets a lit
+        // top edge now, so it reads as a ridge of bone over the socket rather
+        // than as a stripe of paint above it.
+        const bh = Math.max(2, Math.round(r * 0.5));
         for (let i = 0; i <= Math.round(r * 2.4); i++) {
           const bx = Math.round(ex - side * r * 1.2 + side * i);
           const by = Math.round(cy - r * 1.5 - i * 0.35);
           mask.box(bx, by, bx, by + bh, ACCENT_DARK);
+          mask.set(bx, by, ACCENT);
         }
       }
     }
@@ -1388,7 +1986,9 @@ function drawEyes(mask: Mask, spots: EyeSpot[], scale: number): void {
 /* ---------------------------------------------------------- body plans */
 
 interface PlanCtx {
-  m: Mask;
+  /** Addressed in plan units. See `Pen`: the numbers below are the ones these
+   *  animals were tuned with and the pen resolves them onto the finer cell. */
+  m: Pen;
   rng: Rng;
   /** 0..1 size, mapped to a pixel radius by each plan. */
   s: number;
@@ -1446,6 +2046,15 @@ function planQuadruped(c: PlanCtx): void {
   // does not merge into one long sausage.
   m.ellipseFront(cx + Math.round(bodyRx * 0.55), bodyCy - 1,
     Math.round(bodyRx * 0.45), Math.round(bodyRy * 0.95), BASE);
+  // Scapula and the crease behind the ribs. One cell each and both of them
+  // sweeping rather than straight, because a straight line across a barrel is
+  // a strap and a curved one is an animal.
+  m.line(cx - Math.round(bodyRx * 0.5), bodyCy - Math.round(bodyRy * 0.55),
+    cx - Math.round(bodyRx * 0.15), bodyCy + Math.round(bodyRy * 0.35), DEEP);
+  m.line(cx - Math.round(bodyRx * 0.5) - 0.5, bodyCy - Math.round(bodyRy * 0.55),
+    cx - Math.round(bodyRx * 0.15) - 0.5, bodyCy + Math.round(bodyRy * 0.35), LIGHT);
+  m.line(cx + Math.round(bodyRx * 0.18), bodyCy - Math.round(bodyRy * 0.7),
+    cx + Math.round(bodyRx * 0.08), bodyCy + Math.round(bodyRy * 0.5), SHADE);
 
   // Front legs on top of the body, planted under the chest.
   for (const side of [-1, 1]) {
@@ -1579,6 +2188,11 @@ function planBiped(c: PlanCtx): void {
     m.limb(hockX, hockY, hockX - Math.round(1 + s), ground - 2, Math.round(4 + s * 2), Math.round(4 + s * 2), SHADE);
     joint(m, kneeX, kneeY, Math.round(3 + s * 2));
     joint(m, hockX, hockY, Math.round(2 + s * 2));
+    // Thigh sweep and calf bulge: a lit run down the front of the femur and a
+    // dark one behind the shin, so the leg has a near face and a far one.
+    m.line(lx - side, hipY + 2, kneeX - Math.round(1 + s), kneeY - 1, LIGHT);
+    m.line(lx + side * Math.round(2 + s * 2), hipY + 3, kneeX + Math.round(1 + s), kneeY - 1, DEEP);
+    m.line(kneeX + Math.round(1 + s), kneeY + 2, hockX + Math.round(1 + s), hockY - 1, DEEP);
     foot(m, hockX - Math.round(1 + s), ground, Math.round(4 + s * 2), side > 0);
   }
 
@@ -1611,6 +2225,13 @@ function planBiped(c: PlanCtx): void {
     m.limbFront(ax, shoulderY + 2, elbowX, elbowY, Math.round(5 + s * 4), Math.round(4 + s * 3), BASE);
     m.limb(elbowX, elbowY, handX, handY, Math.round(4 + s * 3), Math.round(5 + s * 3), BASE);
     joint(m, elbowX, elbowY, Math.round(2 + s * 2));
+    // Deltoid cap and the tendon down the back of the upper arm. One cell each,
+    // which is the whole reason they can exist: a muscle drawn a unit wide on
+    // an arm five units thick is not a muscle, it is a stripe.
+    m.line(ax - side, shoulderY + 2, ax + side * Math.round(2 + s * 2), shoulderY + Math.round(torsoH * 0.2), LIGHT);
+    m.line(ax + side * Math.round(2 + s * 2), shoulderY + Math.round(torsoH * 0.2),
+      elbowX, elbowY - 1, DEEP);
+    m.line(ax - side, shoulderY + 3, elbowX - side, elbowY - 1, SHADE);
     // Fist, with knuckle seams and claw tips.
     const fr = Math.round(3 + s * 2);
     m.ellipseFront(handX, handY, fr, fr, ACCENT);
@@ -1691,6 +2312,14 @@ function planBrute(c: PlanCtx): void {
     m.limbFront(ax, shoulderY + 3, elbowX, hipY, Math.round(9 + s * 5), Math.round(8 + s * 4), BASE);
     m.limb(elbowX, hipY, elbowX + side, ground - 3, Math.round(8 + s * 4), Math.round(7 + s * 3), SHADE);
     joint(m, elbowX, hipY, Math.round(4 + s * 2));
+    // A brute's arms are the point of it, so they get the most anatomy: a lit
+    // bicep swelling on the near face, a dark tricep behind it, and a pair of
+    // forearm tendons running down to the knuckles. All one cell wide.
+    m.line(ax - side * 2, shoulderY + 5, elbowX - side * 2, hipY - 2, LIGHT);
+    m.line(ax + side * Math.round(4 + s * 2), shoulderY + 6, elbowX + side * Math.round(3 + s * 2), hipY - 2, DEEP);
+    for (const k of [-2, 1]) {
+      m.line(elbowX + k, hipY + 2, elbowX + side + k, ground - 5, k < 0 ? LIGHT : DEEP);
+    }
     // Knuckles: three lobes with dark gaps, then claws on the ground.
     const kr = Math.round(5 + s * 3);
     m.ellipseFront(elbowX + side, ground - 3, kr, Math.round(kr * 0.8), ACCENT);
@@ -1780,10 +2409,23 @@ function planBird(c: PlanCtx): void {
     const wx = cx + side * bodyRx;
     const tipX = wx + side * Math.round(6 + s * 9);
     const tipY = bodyCy + Math.round(bodyRy * 0.6);
-    m.limbFront(wx, bodyCy - Math.round(bodyRy * 0.4), tipX, tipY,
+    const rootY = bodyCy - Math.round(bodyRy * 0.4);
+    m.limbFront(wx, rootY, tipX, tipY,
       Math.round(6 + s * 5), Math.round(3 + s * 3), back ? BASE : ACCENT);
     rays(m, wx, bodyCy - Math.round(bodyRy * 0.3), tipX, tipY, side * 4, 8, 4, ACCENT_DARK);
-    m.limb(wx, bodyCy - Math.round(bodyRy * 0.4), tipX, tipY - 2, 1, 1, ACCENT_LIT);
+    m.limb(wx, rootY, tipX, tipY - 2, 1, 1, ACCENT_LIT);
+
+    // Coverts: the shorter layer of feathers lying over the root of the wing.
+    // Drawn as the *seam* it makes rather than as a second mass -- a lit
+    // trailing edge with its own shadow immediately under it. Laying an actual
+    // slab of feathers over the wing was the obvious approach and it swallowed
+    // the wing whole on every species whose accent is near-black, which is
+    // most of them. Three cells of seam say the same thing and cost nothing.
+    const covX = wx + Math.round((tipX - wx) * 0.52);
+    const covY = rootY + Math.round((tipY - rootY) * 0.5);
+    m.line(wx, rootY + 1, covX, covY, ACCENT_LIT);
+    m.line(wx, rootY + 1.5, covX, covY + 0.5, ACCENT_DARK);
+    m.line(wx, rootY + 2, covX, covY + 1, DEEP);
   }
 
   // Tail, split into feathers.
@@ -1872,8 +2514,13 @@ function planArachnid(c: PlanCtx): void {
     const half = Math.round(abdRx * 0.72);
     for (let d = -half; d <= half; d++) {
       m.over(abdCx + d, py + Math.round(Math.abs(d) * 0.18), ACCENT_DARK);
-      if ((d & 1) === 0) m.over(abdCx + d, py + Math.round(Math.abs(d) * 0.18) - 1, ACCENT_LIT);
     }
+    // A continuous lit ridge riding half a unit above the seam. It used to be
+    // laid on every other unit, because a whole unit of highlight above every
+    // seam was too much ink -- and every other unit reads as stitching.
+    const bow = Math.round(half * 0.18);
+    m.line(abdCx - half, py + bow - 0.5, abdCx, py - 0.5, ACCENT_LIT);
+    m.line(abdCx, py - 0.5, abdCx + half, py + bow - 0.5, ACCENT_LIT);
   }
 
   const headR = Math.round(5 + s * 4);
@@ -2047,10 +2694,17 @@ function planMoth(c: PlanCtx): void {
       const ey = fy + Math.round(Math.sin(a) * wr * 0.68);
       m.over(ex, ey, ACCENT_DARK);
     }
+    // Leading edge of the forewing, and the seam where the forewing lies over
+    // the hind. Two runs, and between them the wings stop reading as one flat
+    // sheet of colour with veins printed on it.
+    m.line(cx, cy - Math.round(bodyRy * 0.5) - 0.5, fx + side * Math.round(wr * 0.8), fy - Math.round(wr * 0.55), ACCENT_LIT);
+    m.line(cx + side * 2, cy + Math.round(3 + s * 2), fx + side * Math.round(wr * 0.85), fy + Math.round(wr * 0.5), DEEP);
     // Eyespot: a dark disc with a lit ring, not a flat dot.
     m.ellipse(fx + side * Math.round(wr * 0.1), fy, 4, 4, ACCENT_LIT);
     m.ellipse(fx + side * Math.round(wr * 0.1), fy, 3, 3, ACCENT_DARK);
-    m.set(fx + side * Math.round(wr * 0.1) - 1, fy - 1, ACCENT_LIT);
+    // A crescent catchlight in the eyespot rather than a single cell, which is
+    // what stops it reading as a printed dot.
+    m.line(fx + side * Math.round(wr * 0.1) - 1.5, fy - 1, fx + side * Math.round(wr * 0.1) - 0.5, fy - 1.5, ACCENT_LIT);
   }
   m.ellipseFront(cx, cy, Math.round(4 + s * 3), bodyRy, BASE);
   segments(m, cx, cy - bodyRy, cx, cy + bodyRy, 4, Math.round(3 + s * 2), ACCENT_DARK);
@@ -2260,7 +2914,8 @@ function maskToCanvas(mask: Mask, pal: string[], flip: boolean): HTMLCanvasEleme
       case EYE_DARK: return ink;
       case OUTLINE: return outlineInk;
       case OUTLINE_LIT: return outlineLit;
-      case SHADOW: return 'rgba(18,22,30,0.20)';
+      case SHADOW: return 'rgba(18,22,30,0.18)';
+      case SHADOW_CORE: return 'rgba(14,17,24,0.34)';
       default: return null;
     }
   };
@@ -2308,32 +2963,38 @@ function build(speciesId: string, back: boolean): HTMLCanvasElement {
   const s = Math.max(0.1, Math.min(1, sp?.design.scale ?? 0.45));
   const rng = new Rng(`${speciesId}:${back ? 'back' : 'front'}`);
 
-  const work = new Mask(WORK, WORK);
+  const work = new Mask(WORK * U, WORK * U);
   pendingEyes = [];
-  const ctx: PlanCtx = { m: work, rng, s, back, ground: WORK - 6, cx: Math.floor(WORK / 2) };
+  const ctx: PlanCtx = {
+    m: new Pen(work, U), rng, s, back,
+    ground: WORK - 6, cx: Math.floor(WORK / 2),
+  };
 
   (PLAN_FNS[plan] ?? planQuadruped)(ctx);
-  // Decoration runs after the fit, at design resolution, so a tuft or a rivet
-  // is one design cell on every species regardless of how much its body plan
-  // had to be squeezed to get into the frame.
-  const design = fitToCell(work, DESIGN - 3);
-  appendages(design, speciesId);
-  markings(design, speciesId);
-  typeTraits(design, sp, speciesId);
+  // Decoration runs after the fit, so a tuft or a rivet is the same size on
+  // every species regardless of how much its body plan had to be squeezed to
+  // get into the frame -- and it is still authored in plan units, through a
+  // pen of its own, so a horn is a horn and not a horn divided by two.
+  const design = fitToCell(work, DESIGN - 6);
+  const dpen = new Pen(design, U);
+  appendages(dpen, speciesId);
+  markings(dpen, speciesId);
+  typeTraits(dpen, sp, speciesId);
 
-  // Silhouette first at design resolution, then everything that reads as
-  // craftsmanship at the final one.
-  const m = upscale(design);
-  shade(m);
-  drawEyes(m, pendingEyes, 2);
+  // Silhouette first, then everything that reads as craftsmanship: the light,
+  // the surface it falls on, the eyes, the rim, the ink and the floor. All of
+  // these run one cell at a time, which is the entire point of the finer cell.
+  shade(design);
+  texture(design, sp, speciesId);
+  drawEyes(design, pendingEyes);
   pendingEyes = [];
-  rimLight(m);
-  outline(m);
-  contactShadow(m);
+  rimLight(design);
+  outline(design);
+  contactShadow(design);
 
   // The back view is the same animal seen from behind: mirrored, and the
   // generator has already suppressed the face.
-  return maskToCanvas(m, paletteOf(sp), back);
+  return maskToCanvas(design, paletteOf(sp), back);
 }
 
 export function frontSprite(speciesId: string): HTMLCanvasElement {

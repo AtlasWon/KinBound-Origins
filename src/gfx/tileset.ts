@@ -267,6 +267,12 @@ export const PAL = {
 
   outline: '#20242e',
   shadow: 'rgba(24,28,38,0.26)',
+
+  // Contact shadow under furniture. Translucent on purpose: furniture is drawn
+  // over whatever floor the map has, so its shadow has to tint boards, civic
+  // tile and turf alike rather than stamp one colour of its own.
+  contact: 'rgba(38,32,34,0.34)',
+  contactSoft: 'rgba(38,32,34,0.15)',
 } as const;
 
 type Px = (x: number, y: number, color: string) => void;
@@ -485,7 +491,7 @@ export class Tileset {
       case T.FLOOR_WOOD: this.woodFloor(px, fill, rng); break;
       case T.FLOOR_RUG: this.rug(px, fill); break;
       case T.WALL_INTERIOR: this.interiorWall(px, fill, rng); break;
-      case T.COUNTER: this.counter(px, fill, rng); break;
+      case T.COUNTER: this.counter(px); break;
       case T.STAIRS: this.stairs(px, fill); break;
       case T.PUDDLE: this.puddle(px, fill, rng); break;
       case T.BRIDGE: this.bridge(px, fill, rng); break;
@@ -506,16 +512,16 @@ export class Tileset {
       case T.CIVIC_DOOR: this.civicWall(px, fill, 'door'); break;
       case T.CIVIC_SIGN_HEAL: this.civicWall(px, fill, 'heal'); break;
       case T.CIVIC_SIGN_SHOP: this.civicWall(px, fill, 'shop'); break;
-      case T.BED_HEAD: this.bed(px, fill, true); break;
-      case T.BED_FOOT: this.bed(px, fill, false); break;
-      case T.BOOKSHELF: this.bookshelf(px, fill); break;
-      case T.TABLE: this.table(px, fill); break;
-      case T.CHAIR: this.chair(px, fill); break;
-      case T.TELEVISION: this.television(px, fill); break;
-      case T.PLANT: this.plant(px, fill); break;
-      case T.FRIDGE: this.fridge(px, fill); break;
-      case T.SINK: this.sink(px, fill); break;
-      case T.STOVE: this.stove(px, fill); break;
+      case T.BED_HEAD: this.bed(px, true); break;
+      case T.BED_FOOT: this.bed(px, false); break;
+      case T.BOOKSHELF: this.bookshelf(px); break;
+      case T.TABLE: this.table(px); break;
+      case T.CHAIR: this.chair(px); break;
+      case T.TELEVISION: this.television(px); break;
+      case T.PLANT: this.plant(px); break;
+      case T.FRIDGE: this.fridge(px); break;
+      case T.SINK: this.sink(px); break;
+      case T.STOVE: this.stove(px); break;
       case T.WINDOW_IN: this.interiorWindow(px, fill, rng); break;
       case T.CIVIC_FLOOR: this.civicFloor(px, fill); break;
       case T.ROOF_SLATE_L: this.shingleRoof(px, fill, 'left', 'slate'); break;
@@ -537,14 +543,14 @@ export class Tileset {
       case T.LAB_DOOR_R: this.labDoor(px, fill, true); break;
       case T.LAB_ROOF: this.labRoof(px, fill, false); break;
       case T.LAB_VENT: this.labRoof(px, fill, true); break;
-      case T.LAB_MACHINE: this.labMachines(px, fill); break;
-      case T.LAB_CONSOLE: this.labConsole(px, fill); break;
-      case T.LAB_TANK: this.specimenTank(px, fill); break;
-      case T.WORKBENCH: this.workbench(px, fill); break;
+      case T.LAB_MACHINE: this.labMachines(px); break;
+      case T.LAB_CONSOLE: this.labConsole(px); break;
+      case T.LAB_TANK: this.specimenTank(px); break;
+      case T.WORKBENCH: this.workbench(px); break;
       case T.FLOOR_LAB: this.labFloor(px, fill); break;
-      case T.SOFA: this.sofa(px, fill); break;
-      case T.SHOP_SHELF: this.shopShelf(px, fill); break;
-      case T.FLOWER_BED: this.flowerBed(px, fill); break;
+      case T.SOFA: this.sofa(px); break;
+      case T.SHOP_SHELF: this.shopShelf(px); break;
+      case T.FLOWER_BED: this.flowerBed(px); break;
       case T.LAMP_POST: this.lampPost(px); break;
       default: fill('#ff00ff'); break; // loud, so a missing tile is obvious
     }
@@ -561,6 +567,29 @@ export class Tileset {
    */
   private unit(px: Px): Px {
     return (x, y, c) => px(x * DETAIL, y * DETAIL, c);
+  }
+
+  /**
+   * The dark line where a piece of furniture meets the floor.
+   *
+   * Furniture is drawn on the overlay layer and leaves its background
+   * transparent, so the floor under a chair is the map's floor and not a colour
+   * baked into the chair. That is what stops a sofa sitting in a cream square
+   * on a white laboratory floor -- but it also costs the object its footing:
+   * with real floor showing right up to the outline, the thing reads as a
+   * sticker hovering above the room.
+   *
+   * So every object gets its shadow back explicitly, as two translucent rows
+   * along the base. Translucent, because it has to darken boards, tile and turf
+   * alike; two rows, because a single hard one reads as a painted stripe. The
+   * lower row is inset by a pixel so the spill has a shape.
+   *
+   * Rows past the bottom of the cell are dropped by `px`, so passing y = 15 is
+   * a legal way to ask for one row.
+   */
+  private footShadow(P: Px, x0: number, x1: number, y: number): void {
+    for (let x = x0; x <= x1; x++) P(x, y, PAL.contact);
+    for (let x = x0 + 1; x < x1; x++) P(x, y + 1, PAL.contactSoft);
   }
 
   /**
@@ -1892,24 +1921,26 @@ export class Tileset {
    *
    * A worktop with a lit front edge and a shadow under it, so the thing
    * between the player and the person behind it looks like furniture.
+   *
+   * Runs the full width so a row of them fuses into one counter, and stops one
+   * row short of the bottom so the contact shadow has floor to fall on.
    */
-  private counter(px: Px, fill: (c: string) => void, rng: Rng): void {
-    fill(PAL.woodMid);
+  private counter(px: Px): void {
     const P = this.unit(px);
-    for (let y = 0; y < TILE_SIZE; y++) {
+    for (let y = 0; y <= 14; y++) {
       for (let x = 0; x < TILE_SIZE; x++) {
         if (y <= 1) P(x, y, PAL.woodPale);                 // top surface
         else if (y <= 3) P(x, y, PAL.woodLight);
-        else if (y >= TILE_SIZE - 2) P(x, y, PAL.woodDeep); // shadow at the foot
+        else if (y === 14) P(x, y, PAL.woodDeep);          // shadow at the foot
         else P(x, y, (x + y) % 6 === 0 ? PAL.woodDark : PAL.woodMid);
       }
     }
     for (let x = 0; x < TILE_SIZE; x++) P(x, 2, PAL.woodDeep);
     // Panel grooves down the front.
     for (let x = 2; x < TILE_SIZE; x += 5) {
-      for (let y = 5; y < TILE_SIZE - 2; y++) P(x, y, PAL.woodDark);
+      for (let y = 5; y <= 13; y++) P(x, y, PAL.woodDark);
     }
-    void rng;
+    this.footShadow(P, 0, TILE_SIZE - 1, 15);
   }
 
 
@@ -1963,54 +1994,54 @@ export class Tileset {
   /**
    * A bed, in two vertical halves.
    *
-   * Drawn on the floor rather than replacing it, so it reads as an object in
-   * the room instead of a hole in it. The head half carries the pillow and the
-   * turned-down sheet, which is the pair of shapes that says "bed" from across
-   * a 12-tile room faster than any amount of blanket detail.
+   * Drawn on the floor rather than replacing it -- the frame is fourteen units
+   * wide and everything outside it is left clear, so the boards or the tile the
+   * map actually has run right up to the bed rail. The head half carries the
+   * pillow and the turned-down sheet, which is the pair of shapes that says
+   * "bed" from across a 12-tile room faster than any amount of blanket detail.
+   *
+   * The shadow is a column down the right rather than a row along the bottom:
+   * the halves stack vertically, and a shadow under the head half would fall
+   * across the foot half instead of onto the floor.
    */
-  private bed(px: Px, fill: (c: string) => void, head: boolean): void {
-    fill(PAL.woodMid);
-    // Floorboards showing either side of the frame.
-    for (let y = 0; y < TILE_PX; y++) {
-      for (let x = 0; x < TILE_PX; x++) {
-        px(x, y, y % 8 === 0 ? PAL.woodDeep : PAL.woodMid);
-      }
-    }
+  private bed(px: Px, head: boolean): void {
+    const P = this.unit(px);
+    const L = 1, R = 14;
 
-    const L = 3, R = TILE_PX - 4;
-    // Frame.
-    for (let y = 0; y < TILE_PX; y++) {
-      for (let x = L; x <= R; x++) px(x, y, PAL.woodDark);
-      px(L, y, PAL.outline); px(R, y, PAL.outline);
+    // The foot half keeps its bottom row clear; that is where its shadow goes,
+    // and a shadow drawn over the frame instead of over the floor is just a
+    // dirty stripe on the woodwork.
+    const bottom = head ? TILE_SIZE - 1 : 14;
+    for (let y = 0; y <= bottom; y++) {
+      for (let x = L; x <= R; x++) P(x, y, PAL.woodDark);
+      P(L, y, PAL.outline); P(R, y, PAL.outline);
+      P(R + 1, y, PAL.contact);
     }
 
     if (head) {
       // Headboard.
-      for (let y = 0; y < 5; y++) for (let x = L; x <= R; x++) px(x, y, y < 2 ? PAL.outline : PAL.woodDeep);
+      for (let y = 0; y <= 2; y++) for (let x = L; x <= R; x++) P(x, y, y === 0 ? PAL.outline : PAL.woodDeep);
       // Pillow.
-      for (let y = 6; y < 13; y++) {
-        for (let x = L + 3; x <= R - 3; x++) {
-          px(x, y, y === 6 || y === 12 ? PAL.trimShade : (x + y) % 7 === 0 ? PAL.trimMid : PAL.trimPale);
+      for (let y = 3; y <= 6; y++) {
+        for (let x = L + 2; x <= R - 2; x++) {
+          P(x, y, y === 3 || y === 6 ? PAL.trimShade : (x + y) % 5 === 0 ? PAL.trimMid : PAL.trimPale);
         }
       }
       // Turned-down sheet under the pillow.
-      for (let y = 14; y < TILE_PX; y++) {
+      for (let y = 7; y < TILE_SIZE; y++) {
         for (let x = L + 1; x <= R - 1; x++) {
-          px(x, y, y < 17 ? PAL.trimLight : y % 6 === 0 ? '#5f7fb0' : '#7196c8');
+          P(x, y, y <= 8 ? PAL.trimLight : y % 3 === 0 ? '#5f7fb0' : '#7196c8');
         }
       }
     } else {
       // Blanket, with a fold line and a lit top edge.
-      for (let y = 0; y < TILE_PX - 3; y++) {
-        for (let x = L + 1; x <= R - 1; x++) {
-          px(x, y, y % 7 === 0 ? '#5f7fb0' : '#7196c8');
-        }
+      for (let y = 0; y <= 12; y++) {
+        for (let x = L + 1; x <= R - 1; x++) P(x, y, y % 3 === 0 ? '#5f7fb0' : '#7196c8');
       }
-      for (let x = L + 1; x <= R - 1; x++) px(x, 0, '#8fb0dc');
-      // Footboard.
-      for (let y = TILE_PX - 3; y < TILE_PX; y++) {
-        for (let x = L; x <= R; x++) px(x, y, y > TILE_PX - 3 ? PAL.outline : PAL.woodDeep);
-      }
+      for (let x = L + 1; x <= R - 1; x++) P(x, 0, '#8fb0dc');
+      // Footboard, then the floor showing under it.
+      for (let x = L; x <= R; x++) { P(x, 13, PAL.woodDeep); P(x, 14, PAL.outline); }
+      this.footShadow(P, L, R + 1, 15);
     }
   }
 
@@ -2023,51 +2054,52 @@ export class Tileset {
    * Drawn as a top with a lit edge and two legs under it. Furniture in the
    * reference art is always *lit from the same corner as everything else*,
    * which is what stops a room reading as a collection of stickers.
+   *
+   * Outlined hard all the way round, which it did not need back when it was
+   * stamped onto a matching cream field: standing on the laboratory's white
+   * tile, a mid-brown edge alone leaves the top with no silhouette at all.
    */
-  private table(px: Px, fill: (c: string) => void): void {
-    fill(PAL.woodPale);
+  private table(px: Px): void {
     const P = this.unit(px);
-    for (let y = 0; y < TILE_SIZE; y++) {
-      for (let x = 0; x < TILE_SIZE; x++) P(x, y, PAL.woodPale);
-    }
     // Top.
     for (let y = 2; y <= 10; y++) {
       for (let x = 1; x <= 14; x++) {
-        const edge = y === 2 || y === 10 || x === 1 || x === 14;
-        P(x, y, edge ? PAL.woodDark : (x + y) % 7 === 0 ? PAL.plasterPale : PAL.woodLight);
+        const edge = y === 2 || x === 1 || x === 14;
+        P(x, y, edge ? PAL.outline : (x + y) % 7 === 0 ? PAL.plasterPale : PAL.woodLight);
       }
     }
     for (let x = 2; x <= 13; x++) P(x, 3, PAL.plasterPale);
-    for (let x = 1; x <= 14; x++) P(x, 11, PAL.woodDeep);
+    for (let x = 2; x <= 13; x++) P(x, 10, PAL.woodDark);   // underside of the top
+    for (let x = 1; x <= 14; x++) P(x, 11, PAL.outline);
     // Legs, and the shadow they cast.
     for (const lx of [3, 11]) {
-      for (let y = 12; y <= 14; y++) { P(lx, y, PAL.woodDark); P(lx + 1, y, PAL.woodDeep); }
+      for (let y = 12; y <= 13; y++) { P(lx, y, PAL.outline); P(lx + 1, y, PAL.woodDark); }
     }
-    for (let x = 2; x <= 13; x++) P(x, 15, 'rgba(40,30,24,0.25)');
+    this.footShadow(P, 1, 14, 14);
   }
 
   /** A chair, seen from the front: back, seat, two legs. */
-  private chair(px: Px, fill: (c: string) => void): void {
-    fill(PAL.woodPale);
+  private chair(px: Px): void {
     const P = this.unit(px);
-    for (let y = 0; y < TILE_SIZE; y++) for (let x = 0; x < TILE_SIZE; x++) P(x, y, PAL.woodPale);
     for (let y = 1; y <= 7; y++) {
       for (let x = 4; x <= 11; x++) {
-        P(x, y, y === 1 || x === 4 || x === 11 ? PAL.woodDeep : PAL.woodMid);
+        P(x, y, y === 1 || x === 4 || x === 11 ? PAL.outline : PAL.woodMid);
       }
     }
     for (let x = 5; x <= 10; x++) P(x, 2, PAL.woodLight);
-    for (let y = 8; y <= 10; y++) for (let x = 3; x <= 12; x++) P(x, y, y === 8 ? PAL.woodLight : PAL.woodMid);
-    for (let x = 3; x <= 12; x++) P(x, 11, PAL.woodDeep);
-    for (const lx of [4, 11]) for (let y = 12; y <= 14; y++) P(lx, y, PAL.woodDark);
-    for (let x = 3; x <= 12; x++) P(x, 15, 'rgba(40,30,24,0.22)');
+    for (let y = 8; y <= 10; y++) {
+      for (let x = 3; x <= 12; x++) {
+        P(x, y, x === 3 || x === 12 ? PAL.outline : y === 8 ? PAL.woodLight : PAL.woodMid);
+      }
+    }
+    for (let x = 3; x <= 12; x++) P(x, 11, PAL.outline);
+    for (const lx of [4, 11]) for (let y = 12; y <= 13; y++) P(lx, y, PAL.outline);
+    this.footShadow(P, 3, 12, 14);
   }
 
   /** Television on a stand, with the screen catching the window. */
-  private television(px: Px, fill: (c: string) => void): void {
-    fill(PAL.plasterLight);
+  private television(px: Px): void {
     const P = this.unit(px);
-    for (let y = 0; y < TILE_SIZE; y++) for (let x = 0; x < TILE_SIZE; x++) P(x, y, PAL.plasterLight);
     // Aerials.
     P(5, 0, '#4a4a58'); P(4, 1, '#4a4a58');
     P(10, 0, '#4a4a58'); P(11, 1, '#4a4a58');
@@ -2086,16 +2118,14 @@ export class Tileset {
     }
     P(12, 5, '#c8c8d4'); P(12, 7, '#c8c8d4');
     // Stand.
-    for (let x = 5; x <= 10; x++) { P(x, 12, '#3a3a46'); P(x, 13, '#2c2c36'); }
-    for (let x = 3; x <= 12; x++) P(x, 14, '#41414f');
-    for (let x = 3; x <= 12; x++) P(x, 15, 'rgba(40,40,50,0.25)');
+    for (let x = 5; x <= 10; x++) P(x, 12, '#3a3a46');
+    for (let x = 3; x <= 12; x++) P(x, 13, '#41414f');
+    this.footShadow(P, 3, 12, 14);
   }
 
   /** Pot plant. Every house in the reference art has one. */
-  private plant(px: Px, fill: (c: string) => void): void {
-    fill(PAL.plasterLight);
+  private plant(px: Px): void {
     const P = this.unit(px);
-    for (let y = 0; y < TILE_SIZE; y++) for (let x = 0; x < TILE_SIZE; x++) P(x, y, PAL.plasterLight);
     // Fronds.
     const leaf = (x0: number, y0: number, dx: number) => {
       for (let i = 0; i < 5; i++) {
@@ -2106,36 +2136,36 @@ export class Tileset {
     leaf(7, 8, -1); leaf(8, 8, 1);
     for (let i = 0; i < 6; i++) P(7 + (i % 2), 8 - i, i > 3 ? PAL.leafLight : PAL.leafMid);
     P(6, 2, PAL.leafHi); P(9, 3, PAL.leafHi);
-    // Pot.
-    for (let y = 9; y <= 14; y++) {
+    // Pot, outlined so the terracotta keeps its shape against a pale floor.
+    for (let y = 9; y <= 13; y++) {
       const inset = y >= 12 ? 1 : 0;
       for (let x = 4 + inset; x <= 11 - inset; x++) {
-        P(x, y, y === 9 ? '#a05a3a' : x < 6 ? '#b06a44' : x > 9 ? '#7a4028' : '#96543a');
+        const edge = x === 4 + inset || x === 11 - inset || y === 13;
+        P(x, y, edge ? PAL.outline : y === 9 ? '#a05a3a' : x < 6 ? '#b06a44' : x > 9 ? '#7a4028' : '#96543a');
       }
     }
-    for (let x = 5; x <= 10; x++) P(x, 15, 'rgba(40,30,24,0.25)');
+    this.footShadow(P, 4, 11, 14);
   }
 
   /** Fridge: a tall pale box with a seam and a handle. */
-  private fridge(px: Px, fill: (c: string) => void): void {
-    fill(PAL.plasterLight);
+  private fridge(px: Px): void {
     const P = this.unit(px);
-    for (let y = 0; y < TILE_SIZE; y++) {
-      for (let x = 0; x < TILE_SIZE; x++) {
-        const inside = x >= 1 && x <= 14 && y >= 1;
-        if (!inside) { P(x, y, PAL.plasterLight); continue; }
-        const edge = x === 1 || x === 14 || y === 1 || y === 15;
-        P(x, y, edge ? '#8f96a4' : x < 4 ? '#e4e8ee' : x > 11 ? '#c3c9d4' : '#d6dbe4');
+    for (let y = 1; y <= 14; y++) {
+      for (let x = 1; x <= 14; x++) {
+        // A pale box on a pale floor is nothing without a hard border.
+        const edge = x === 1 || x === 14 || y === 1 || y === 14;
+        P(x, y, edge ? PAL.outline : x < 4 ? '#e4e8ee' : x > 11 ? '#c3c9d4' : '#d6dbe4');
       }
     }
     for (let x = 2; x <= 13; x++) P(x, 6, '#8f96a4');
     for (let y = 3; y <= 5; y++) P(12, y, '#8f96a4');
     for (let y = 8; y <= 11; y++) P(12, y, '#8f96a4');
+    this.footShadow(P, 1, 14, 15);
   }
 
   /** Sink: worktop, basin, tap. */
-  private sink(px: Px, fill: (c: string) => void): void {
-    this.counter(px, fill, new Rng('sink'));
+  private sink(px: Px): void {
+    this.counter(px);
     const P = this.unit(px);
     for (let y = 2; y <= 8; y++) {
       for (let x = 3; x <= 12; x++) {
@@ -2149,8 +2179,8 @@ export class Tileset {
   }
 
   /** Stove: four rings and an oven door. */
-  private stove(px: Px, fill: (c: string) => void): void {
-    this.counter(px, fill, new Rng('stove'));
+  private stove(px: Px): void {
+    this.counter(px);
     const P = this.unit(px);
     for (let y = 1; y <= 8; y++) {
       for (let x = 2; x <= 13; x++) {
@@ -2224,10 +2254,9 @@ export class Tileset {
    * else on the tile competes with it: those lamps are the only part a player
    * glancing at the room will actually register.
    */
-  private labMachines(px: Px, fill: (c: string) => void): void {
-    fill(PAL.steelMid);
+  private labMachines(px: Px): void {
     const P = this.unit(px);
-    for (let y = 0; y < TILE_SIZE; y++) {
+    for (let y = 0; y <= 14; y++) {
       for (let x = 0; x < TILE_SIZE; x++) {
         P(x, y, x % 8 === 0 ? PAL.steelDark : x % 8 === 1 ? PAL.steelLight : PAL.steelMid);
       }
@@ -2250,12 +2279,12 @@ export class Tileset {
     for (let y = 12; y <= 13; y++) {
       for (let x = 0; x < TILE_SIZE; x++) P(x, y, x % 4 === 0 ? PAL.steelDark : PAL.steelMid);
     }
-    for (let x = 0; x < TILE_SIZE; x++) { P(x, 14, PAL.steelDark); P(x, 15, PAL.outline); }
+    for (let x = 0; x < TILE_SIZE; x++) P(x, 14, PAL.outline);
+    this.footShadow(P, 0, TILE_SIZE - 1, 15);
   }
 
   /** A console with a screen: one object, outlined, standing on the floor. */
-  private labConsole(px: Px, fill: (c: string) => void): void {
-    this.civicFloor(px, fill);
+  private labConsole(px: Px): void {
     const P = this.unit(px);
     for (let y = 2; y <= 14; y++) {
       for (let x = 1; x <= 14; x++) {
@@ -2275,7 +2304,7 @@ export class Tileset {
     for (let i = 0; i < 8; i++) P(4 + i, trace[i]!, '#7cf0d8');
     for (let x = 3; x <= 12; x++) { P(x, 11, PAL.steelPale); P(x, 12, PAL.steelDark); }
     for (let x = 3; x <= 12; x += 2) P(x, 11, PAL.steelDark);
-    for (let x = 2; x <= 14; x++) P(x, 15, 'rgba(40,44,56,0.28)');
+    this.footShadow(P, 1, 14, 15);
   }
 
   /**
@@ -2285,8 +2314,7 @@ export class Tileset {
    * fridge with the door off; the silhouette and two lit eyes are what make
    * the room a laboratory that keeps living things.
    */
-  private specimenTank(px: Px, fill: (c: string) => void): void {
-    this.civicFloor(px, fill);
+  private specimenTank(px: Px): void {
     const P = this.unit(px);
     for (let y = 12; y <= 14; y++) {
       for (let x = 2; x <= 13; x++) {
@@ -2309,25 +2337,38 @@ export class Tileset {
     for (let x = 3; x <= 12; x++) { P(x, 1, PAL.outline); P(x, 2, PAL.steelPale); P(x, 3, PAL.steelMid); }
     for (let x = 4; x <= 11; x++) { P(x, 11, PAL.steelMid); P(x, 12, PAL.steelDark); }
     for (let y = 2; y <= 12; y++) { P(3, y, PAL.outline); P(12, y, PAL.outline); }
-    for (let x = 2; x <= 13; x++) P(x, 15, 'rgba(40,44,56,0.28)');
+    // The plinth needs its own border now that real floor runs up to it.
+    for (let y = 12; y <= 14; y++) { P(2, y, PAL.outline); P(13, y, PAL.outline); }
+    for (let x = 2; x <= 13; x++) P(x, 14, PAL.outline);
+    this.footShadow(P, 2, 13, 15);
   }
 
-  /** A run of bench: cupboards under, worktop over, glassware standing on it. */
-  private workbench(px: Px, fill: (c: string) => void): void {
-    fill(PAL.plasterPale);
+  /**
+   * A run of bench: cupboards under, worktop over, glassware standing on it.
+   *
+   * The pale band the glassware stands on is the worktop seen receding, not a
+   * background -- it used to be plaster, which is the colour of a wall, and
+   * that is precisely why a bench in the middle of the room looked like a
+   * cutting of wall laid on the floor. Steel, and drawn explicitly.
+   */
+  private workbench(px: Px): void {
     const P = this.unit(px);
-    for (let y = 0; y < TILE_SIZE; y++) for (let x = 0; x < TILE_SIZE; x++) P(x, y, PAL.plasterPale);
-    for (let y = 6; y <= 14; y++) {
+    for (let y = 0; y <= 3; y++) {
+      for (let x = 0; x < TILE_SIZE; x++) P(x, y, x % 8 === 0 ? PAL.steelMid : PAL.steelLight);
+    }
+    for (let y = 6; y <= 13; y++) {
       for (let x = 0; x < TILE_SIZE; x++) {
         P(x, y, x % 8 === 0 ? PAL.steelDark : x % 8 === 1 ? PAL.steelLight : PAL.steelMid);
       }
     }
     for (let x = 0; x < TILE_SIZE; x++) {
+      P(x, 0, PAL.outline);        // far edge of the top
       P(x, 4, PAL.steelPale);
       P(x, 5, PAL.steelLight);
       P(x, 6, PAL.steelDeep);      // shadow under the front lip of the top
-      P(x, 15, PAL.outline);
+      P(x, 14, PAL.outline);
     }
+    this.footShadow(P, 0, TILE_SIZE - 1, 15);
     for (let x = 2; x <= 5; x++) P(x, 10, PAL.steelDark);
     for (let x = 10; x <= 13; x++) P(x, 10, PAL.steelDark);
     // A flask, a microscope and a stack of paper. Three distinct shapes beat
@@ -2381,10 +2422,8 @@ export class Tileset {
    * back above them, and the seat sitting lower and lighter between the two,
    * with a hard shadow where the back meets it.
    */
-  private sofa(px: Px, fill: (c: string) => void): void {
-    fill(PAL.woodPale);
+  private sofa(px: Px): void {
     const P = this.unit(px);
-    for (let y = 0; y < TILE_SIZE; y++) for (let x = 0; x < TILE_SIZE; x++) P(x, y, PAL.woodPale);
 
     const deep = '#2a4f51';
     const mid = '#48787a';
@@ -2400,9 +2439,10 @@ export class Tileset {
     // Arms: two lumps standing proud at the sides, a full tone lighter.
     for (let x = 1; x <= 2; x++) P(x, 3, PAL.outline);
     for (let x = 13; x <= 14; x++) P(x, 3, PAL.outline);
+    for (let y = 4; y <= 14; y++) { P(0, y, PAL.outline); P(15, y, PAL.outline); }
     for (let y = 4; y <= 12; y++) {
-      P(0, y, PAL.outline); P(1, y, pale); P(2, y, light);
-      P(13, y, mid); P(14, y, deep); P(15, y, PAL.outline);
+      P(1, y, pale); P(2, y, light);
+      P(13, y, mid); P(14, y, deep);
     }
 
     // Seat, lower and lighter, under a hard shadow from the back.
@@ -2412,7 +2452,7 @@ export class Tileset {
     for (let y = 9; y <= 12; y++) P(8, y, mid);
 
     for (let x = 1; x <= 14; x++) { P(x, 13, deep); P(x, 14, PAL.outline); }
-    for (let x = 2; x <= 13; x++) P(x, 15, 'rgba(40,30,24,0.25)');
+    this.footShadow(P, 0, TILE_SIZE - 1, 15);
   }
 
   /**
@@ -2422,15 +2462,18 @@ export class Tileset {
    * of these fuses into one gondola. The goods are blocks of flat colour with a
    * lit top: at this size a "product" is a coloured rectangle, and pretending
    * otherwise just makes the shelf muddy.
+   *
+   * The pale field behind the goods is the unit's own back board, not a floor
+   * colour: leave it out and the stock reads as tins hovering in mid-air. It
+   * stops a row short of the bottom so the shadow lands on the map's floor.
    */
-  private shopShelf(px: Px, fill: (c: string) => void): void {
-    fill(PAL.plasterMid);
+  private shopShelf(px: Px): void {
     const P = this.unit(px);
-    for (let y = 0; y < TILE_SIZE; y++) for (let x = 0; x < TILE_SIZE; x++) P(x, y, PAL.plasterMid);
+    for (let y = 0; y <= 14; y++) for (let x = 0; x < TILE_SIZE; x++) P(x, y, PAL.plasterMid);
 
     const goods = ['#d8564a', '#4f8fd8', '#f2c44c', '#6ac48a', '#c47ad8', '#e8834a'];
     for (let s = 0; s < 3; s++) {
-      const board = 4 + s * 5;
+      const board = 3 + s * 5;
       let x = 2;
       let i = s * 3;
       while (x < TILE_SIZE) {
@@ -2447,10 +2490,11 @@ export class Tileset {
       }
       for (let bx = 0; bx < TILE_SIZE; bx++) {
         P(bx, board, PAL.stoneDeep);
-        if (board + 1 < TILE_SIZE) P(bx, board + 1, PAL.stoneLight);
+        P(bx, board + 1, PAL.stoneLight);
       }
     }
-    for (let y = 0; y < TILE_SIZE; y++) { P(0, y, PAL.outline); P(1, y, PAL.stoneLight); }
+    for (let y = 0; y <= 14; y++) { P(0, y, PAL.outline); P(1, y, PAL.stoneLight); }
+    this.footShadow(P, 0, TILE_SIZE - 1, 15);
   }
 
   /* ----------------------------------------------------- town dressing */
@@ -2462,11 +2506,14 @@ export class Tileset {
    * The blooms sit on a wrapping lattice rather than being scattered: planting
    * in rows reads as a garden, and the same flowers thrown at random read as
    * litter.
+   *
+   * The soil is the object, so it fills the cell -- but only down to the kerb,
+   * with the bottom row left for the shadow the raised bed casts on whatever it
+   * is standing in.
    */
-  private flowerBed(px: Px, fill: (c: string) => void): void {
-    fill(PAL.dirtDark);
+  private flowerBed(px: Px): void {
     const P = this.unit(px);
-    for (let y = 0; y < TILE_SIZE; y++) {
+    for (let y = 0; y <= 12; y++) {
       for (let x = 0; x < TILE_SIZE; x++) {
         const d = (x * 5 + y * 3) % 16;
         P(x, y, d === 2 ? PAL.dirtMid : d === 9 ? PAL.dirtDeep : PAL.dirtDark);
@@ -2485,8 +2532,9 @@ export class Tileset {
     }
     for (let x = 0; x < TILE_SIZE; x++) {
       P(x, 0, PAL.stoneLight); P(x, 1, PAL.stoneDark);
-      P(x, 14, PAL.stoneMid); P(x, 15, PAL.outline);
+      P(x, 13, PAL.stoneMid); P(x, 14, PAL.outline);
     }
+    this.footShadow(P, 0, TILE_SIZE - 1, 15);
   }
 
   /**
@@ -2512,38 +2560,51 @@ export class Tileset {
 
     for (let y = 7; y <= 13; y++) { P(7, y, PAL.stoneLight); P(8, y, PAL.stoneDeep); }
     for (let x = 6; x <= 9; x++) { P(x, 13, PAL.stoneMid); P(x, 14, PAL.stoneDark); }
-    for (let x = 5; x <= 10; x++) P(x, 15, PAL.outline);
     for (let y = 7; y <= 12; y++) { P(6, y, PAL.outline); P(9, y, PAL.outline); }
     P(5, 13, PAL.outline); P(10, 13, PAL.outline);
     P(5, 14, PAL.outline); P(10, 14, PAL.outline);
+    // The column stands on turf, path and paving alike, so the pool at its foot
+    // has to tint the ground rather than replace it.
+    this.footShadow(P, 4, 11, 15);
+    for (let x = 5; x <= 10; x++) P(x, 15, PAL.outline);
   }
 
-  private bookshelf(px: Px, fill: (c: string) => void): void {
-    fill(PAL.woodDark);
-    for (let y = 0; y < TILE_PX; y++) {
-      for (let x = 0; x < TILE_PX; x++) px(x, y, x < 2 || x > TILE_PX - 3 ? PAL.woodDeep : PAL.woodDark);
+  /**
+   * A shelf of books: the cheapest way to make a room look lived in.
+   *
+   * Designed on the authoring grid like everything else, and stopping a row
+   * above the floor so the carcass has a shadow under it instead of being sunk
+   * into the boards.
+   */
+  private bookshelf(px: Px): void {
+    const P = this.unit(px);
+    for (let y = 0; y <= 14; y++) {
+      for (let x = 0; x < TILE_SIZE; x++) P(x, y, x <= 1 || x >= 14 ? PAL.woodDeep : PAL.woodDark);
     }
     const spines = ['#b04840', '#3f7a5c', '#3f6ab0', '#c08a3a', '#8a5aa8', '#2f8090'];
     for (let shelf = 0; shelf < 3; shelf++) {
-      const top = 2 + shelf * 10;
-      for (let x = 2; x < TILE_PX - 2; x++) {
-        px(x, top + 8, PAL.woodDeep);
-        px(x, top + 9, PAL.woodLight);
-      }
-      let x = 3;
+      const top = 1 + shelf * 5;
+      let x = 2;
       let i = shelf * 2;
-      while (x < TILE_PX - 3) {
-        const bw = 2 + (i % 2);
+      while (x <= 13) {
+        const bw = 1 + (i % 2);
         const c = spines[(i + shelf) % spines.length]!;
-        for (let k = 0; k < bw && x + k < TILE_PX - 3; k++) {
-          for (let y = top + 1; y < top + 8; y++) px(x + k, y, k === 0 ? mixDown(c) : c);
+        for (let k = 0; k < bw && x + k <= 13; k++) {
+          for (let y = top; y <= top + 2; y++) P(x + k, y, k === 0 ? mixDown(c) : c);
         }
-        x += bw + 1;
+        // A gap every third book. A shelf packed edge to edge reads as one
+        // striped block; the holes are what make it read as books.
+        x += bw + (i % 3 === 2 ? 1 : 0);
         i++;
       }
+      for (let bx = 2; bx <= 13; bx++) {
+        P(bx, top + 3, PAL.woodDeep);
+        if (top + 4 <= 13) P(bx, top + 4, PAL.woodLight);
+      }
     }
-    for (let y = 0; y < TILE_PX; y++) { px(0, y, PAL.outline); px(TILE_PX - 1, y, PAL.outline); }
-    for (let x = 0; x < TILE_PX; x++) { px(x, 0, PAL.outline); px(x, TILE_PX - 1, PAL.outline); }
+    for (let y = 0; y <= 14; y++) { P(0, y, PAL.outline); P(15, y, PAL.outline); }
+    for (let x = 0; x < TILE_SIZE; x++) { P(x, 0, PAL.outline); P(x, 14, PAL.outline); }
+    this.footShadow(P, 0, TILE_SIZE - 1, 15);
   }
 
   /**

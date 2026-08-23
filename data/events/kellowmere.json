@@ -20,16 +20,16 @@
         "then": [
           { "kind": "setFlag", "flag": "perrin_km_done" },
           { "kind": "say", "who": "PERRIN", "lines": [
-            "Two days I waited in this town. Two.",
-            "Here. Take these, I have been carrying them around like an idiot."
+            "Two days I've waited in this town. Two.",
+            "Here, take these before I change my mind. I've been carrying them like an idiot."
           ]},
           { "kind": "giveItem", "item": "strong_potion", "count": 2 },
           { "kind": "say", "lines": ["Perrin handed over 2 Strong Potions."] },
           { "kind": "say", "who": "PERRIN", "lines": [
-            "My mother keeps the Hallowfen Bastion. Fourth one. Marsh.",
+            "My mother keeps the Hallowfen Bastion. Fourth one. Marsh, since you didn't ask.",
             "Everyone assumes that means I get an easy run at this.",
-            "It means the opposite and I would rather nobody said it out loud.",
-            "...Go and beat Roxen. I will see you at the coast."
+            "It means the exact opposite, and I'd rather nobody said it out loud again.",
+            "...Go on. Beat Roxen. I'll see you at the coast."
           ]},
           { "kind": "move", "who": "km_perrin", "steps": ["down", "down", "down", "down"], "speed": "run" },
           { "kind": "removeNpc", "who": "km_perrin" }

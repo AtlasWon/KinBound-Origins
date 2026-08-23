@@ -16,7 +16,7 @@
       { "kind": "shake", "frames": 24, "power": 2 },
       { "kind": "say", "lines": [
         "Three plates. Three stones.",
-        "Somewhere above, a counterweight lets go, and the gate grinds open."
+        "Somewhere overhead a counterweight lets go, and the gate grinds up out of the floor."
       ]},
       { "kind": "removeNpc", "who": "bastion1_statue_a" },
       { "kind": "removeNpc", "who": "bastion1_statue_b" },
@@ -28,9 +28,9 @@
     "trigger": "interact",
     "actions": [
       { "kind": "say", "lines": [
-        "A cut-stone figure, arms folded, blocking the way up.",
+        "A cut-stone figure, arms folded, standing where the stairs ought to be.",
         "There is a slot in the floor where a counterweight chain would run.",
-        "It is slack."
+        "The chain is there. It is slack."
       ]}
     ]
   },
@@ -42,22 +42,22 @@
         "cond": { "kind": "flag", "flag": "bastion1_gate_open" },
         "then": [
           { "kind": "say", "who": "HAND", "lines": [
-            "Gate is open. She will be expecting you.",
-            "She is always expecting people. It is unnerving."
+            "Gate's up. She'll be expecting you.",
+            "She's always expecting people. Nineteen years underground does that, apparently."
           ]}
         ],
         "else": [
           { "kind": "say", "who": "HAND", "lines": [
-            "Three stones, three plates in the floor. Put one on each.",
-            "You cannot pull them, only push, so think about which side you want to be standing on."
+            "Three stones, three plates in the floor. One each. That's the whole of it.",
+            "You can't pull them, only push. So think about which side you want to be on."
           ]},
           { "kind": "if",
             "cond": { "kind": "not", "of": { "kind": "flag", "flag": "bastion1_hint" } },
             "then": [
               { "kind": "setFlag", "flag": "bastion1_hint" },
               { "kind": "say", "who": "HAND", "lines": [
-                "And if you wedge one somewhere stupid, just walk out and come back.",
-                "They go home. Everything here goes home eventually."
+                "And if you wedge one somewhere stupid, walk out and walk back in.",
+                "They go home. Everything in here goes home eventually. That's the joke."
               ]}
             ]
           }
@@ -73,7 +73,7 @@
         "cond": { "kind": "hasSeal", "seal": 1 },
         "then": [
           { "kind": "say", "who": "ROXEN QUILL", "lines": [
-            "Still here? The road north is shut and it will stay shut.",
+            "Still here? North road's shut and it'll stay shut, whatever Ashgate tells you.",
             "Go east when you can. Brackwater wants people who can take a hit."
           ]}
         ],
@@ -89,8 +89,8 @@
                 "The first of eight."
               ]},
               { "kind": "say", "who": "ROXEN QUILL", "lines": [
-                "Nineteen years on the west face taught me one thing worth passing on.",
-                "Anything can be moved. Most things just need a shoulder and a reason."
+                "Nineteen years on the west face taught me exactly one thing worth passing on.",
+                "Anything moves. Most of it just wants a shoulder and a reason."
               ]},
               { "kind": "giveArt", "art": "shoulder" },
               { "kind": "say", "lines": [
@@ -100,10 +100,10 @@
               { "kind": "giveItem", "item": "great_potion", "count": 1 },
               { "kind": "say", "lines": ["Roxen handed over a Great Potion."] },
               { "kind": "say", "who": "ROXEN QUILL", "lines": [
-                "One more thing, {name}, and I want you to actually hear it.",
-                "The Concord surveyed my quarry in the spring. Depth soundings, they said.",
-                "They were not measuring the rock. They were measuring what the rock is sitting on.",
-                "Ask them about it. Watch how fast they stop being friendly."
+                "One more thing, {name}, and I'd like you to actually hear this one.",
+                "The Concord surveyed my quarry in the spring. Depth soundings, they called it.",
+                "They weren't measuring the rock. They were measuring what the rock sits on.",
+                "Ask them about it sometime. Watch how fast they stop being friendly."
               ]},
               { "kind": "setFlag", "flag": "seal_1_taken" }
             ]

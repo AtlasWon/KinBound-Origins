@@ -67,6 +67,11 @@ export class Registry {
 
     this.typeChart = await assets.loadJson<TypeChartFile>('data/region/types.json');
 
+    // Warmed, not stored: the region map fetches this itself when it opens, and
+    // without a warm cache the first frame of the chart is drawn before the
+    // places arrive -- an empty sheet with "0/0" on the legend.
+    void assets.loadJson('data/region/places.json').catch(() => null);
+
     const [speciesFile, movesFile, itemsFile, abilitiesFile, naturesFile] = await Promise.all([
       assets.loadJson<SpeciesData[]>('data/creatures/species.json').catch(() => [] as SpeciesData[]),
       assets.loadJson<MoveData[]>('data/moves/moves.json').catch(() => [] as MoveData[]),

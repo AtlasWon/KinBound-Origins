@@ -13,68 +13,123 @@
   },
   "entries": {
     "tr_crier": [
-      "FOUR ROADS! WEST TO THE QUARRY, SOUTH TO THE COAST, NORTH TO NOTHING!",
-      "EAST ROAD STILL CLOSED, THIRTY-ONE YEARS AND COUNTING!",
-      "...Sorry. Force of habit. You get used to shouting."
-    ],
-    "tr_drover": [
-      "Cannot get the herd over the Route 3 bridge. Not one animal.",
-      "Had to walk them the long way round, four days.",
-      "They know something. Animals always know first."
-    ],
-    "tr_clerk": [
-      "Office is open. Ask whatever you like.",
-      "That is not me being generous. It is policy. We have nothing to hide and we are very tired of being asked."
-    ],
-    "tr_child": [
-      "I am going to be a surveyor.",
-      "They get a coat and a brass thing and everyone stops talking when they walk in.",
-      "Mum says that is not a reason. It is a bit of a reason."
-    ],
-    "tr_runner": [
-      {
-        "unlessFlags": [
-          "met_kerrow"
-        ],
-        "lines": [
-          "You are the one Vess sent out? He has been writing to the office here every week.",
-          "They keep the letters. They do not answer them.",
-          "Go in and see. The Director herself came down two days ago."
-        ]
-      },
       {
         "ifFlags": [
           "met_kerrow"
         ],
         "lines": [
-          "You met her, then. Everyone says the same thing after.",
-          "That she was reasonable. That is what they always say."
+          "DIRECTOR IN TOWN! DIRECTOR STILL IN TOWN! DIRECTOR —",
+          "...she's gone, actually. Went south an hour back and nobody thought to tell me.",
+          "I'll keep crying it until somebody official says stop. That's the job."
+        ]
+      },
+      {
+        "lines": [
+          "FOUR ROADS! WEST TO THE QUARRY, SOUTH TO THE COAST, NORTH TO NOTHING!",
+          "EAST ROAD STILL CLOSED! THIRTY-ONE YEARS AND COUNTING!",
+          "...Sorry. Force of habit. You shout for a living, you stop being able to stop."
+        ]
+      }
+    ],
+    "tr_drover": [
+      "Can't get the herd over the Route 3 bridge. Not one animal.",
+      "Walked them the long way round instead. Four days, and they went happily.",
+      "They know something. Animals always know first and they never say what."
+    ],
+    "tr_clerk": [
+      {
+        "ifFlags": [
+          "met_kerrow"
+        ],
+        "lines": [
+          "You went in and you came out again. Most people manage one of those.",
+          "She'll have been reasonable with you. She's always reasonable.",
+          "Nine years I've worked for her and I still can't say if that's a comfort."
+        ]
+      },
+      {
+        "lines": [
+          "Office is open. Ask us whatever you like, we're instructed to answer.",
+          "That isn't generosity, it's policy. We have nothing to hide.",
+          "And we are very, very tired of being asked."
+        ]
+      }
+    ],
+    "tr_child": [
+      "I'm going to be a surveyor.",
+      "They get a coat and a brass thing and everyone stops talking when they walk in.",
+      "Mum says that isn't a reason. It's a bit of a reason."
+    ],
+    "tr_runner": [
+      {
+        "ifFlags": [
+          "met_kerrow"
+        ],
+        "lines": [
+          "You met her, then. Everyone says the same thing afterwards.",
+          "That she was reasonable. Always that word. Never once anything else.",
+          "I've a letter to carry back to Vess and I don't know what to put in it."
+        ]
+      },
+      {
+        "lines": [
+          "You're the one Vess sent out? He writes to this office every week.",
+          "They keep the letters. Filed, dated, never answered. I've seen the drawer.",
+          "Go in and look for yourself. The Director came down herself two days ago."
         ]
       }
     ],
     "tr_rester": [
-      "Walked up from Brackwater. Two days and the whole way the sea was flat.",
-      "Not calm. Flat. There is a difference and you only learn it once."
+      "Walked up from Brackwater. Two days, and the sea was flat the whole way.",
+      "Not calm. Flat. There's a difference, and you only need to learn it once."
     ],
     "tr_shop_hand": [
-      "Net Vessels are new in. Good for anything that swims.",
-      "Which is most of what you will meet south of here."
+      "Net Vessels are new in. Good on anything that swims.",
+      "Which is most of what you'll meet south of here, so don't be clever about it."
     ],
     "tr_concord_clerk": [
-      "Survey office. Soundings, bearings, permits.",
-      "No, you may not see the west face readings. Yes, I know that sounds bad.",
-      "It is not bad. It is procedure. Those are different things and I am required to say so."
+      {
+        "ifFlags": [
+          "met_kerrow"
+        ],
+        "lines": [
+          "The Director spoke to you personally. That doesn't happen.",
+          "I've filed everything she said. I've read it back twice since.",
+          "It's all correct. Every line. I'd feel better if one bit of it weren't."
+        ]
+      },
+      {
+        "lines": [
+          "Survey office. Soundings, bearings, permits. In that order, please.",
+          "No, you may not see the west face readings. Yes, I know how that sounds.",
+          "It isn't bad. It's procedure. Those are different, and I'm required to say so."
+        ]
+      }
     ],
     "tr_concord_hand": [
       "Nine sites this season and not one of them near the coast.",
-      "You would think a body that cares about the sea would survey the sea.",
-      "...I have said too much. I say that a lot lately."
+      "You'd think a body that worries about the sea might survey the sea.",
+      "...I've said too much. I say that a lot lately, and I keep on saying things."
     ],
     "tr_house": [
-      "Eighty-one years I have lived at this crossroads.",
-      "I remember the last Turning. I was ten. The sea came up the south road as far as the well.",
-      "Everyone talks about stopping it now like it is a simple thing.",
-      "It is not simple. But I will tell you this: nobody who was there thinks it should be allowed to happen twice."
+      {
+        "ifFlags": [
+          "met_kerrow"
+        ],
+        "lines": [
+          "You've been in to see the Kerrow girl. Her brother's name was Ald.",
+          "Nobody says it now. They say two hundred and forty, which is worse.",
+          "Decide what you like about her. Decide it knowing she isn't pretending."
+        ]
+      },
+      {
+        "lines": [
+          "Eighty-one years at this crossroads and six of them spent indoors.",
+          "I remember the last Turning. I was ten. The sea came up the south road to the well.",
+          "Everyone talks about stopping it now as though that's a simple thing. It isn't.",
+          "But nobody who was there thinks it should be allowed to happen twice."
+        ]
+      }
     ]
   }
 }

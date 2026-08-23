@@ -4,10 +4,24 @@
   },
   "entries": {
     "r4_watcher": [
-      "I mark the high tide on that post every morning. Have done for nine years.",
-      "The mark has not moved since the first week of spring.",
-      "Not higher. Not lower. The same line, ninety-odd days running.",
-      "The sea is not doing that on its own."
+      {
+        "ifFlags": [
+          "met_kerrow"
+        ],
+        "lines": [
+          "Somebody from the Concord copied out nine years of my marks last week.",
+          "Very polite. Asked if I'd consider stopping. Said the record wasn't informative.",
+          "I marked it again this morning. Same line. Ninety-four days."
+        ]
+      },
+      {
+        "lines": [
+          "I mark the high tide on that post every morning. Nine years running.",
+          "The mark hasn't moved since the first week of spring.",
+          "Not higher. Not lower. The same line, ninety-odd days.",
+          "The sea does not do that on its own."
+        ]
+      }
     ]
   }
 }

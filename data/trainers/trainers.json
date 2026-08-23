@@ -8,11 +8,7 @@
     "payout": 24,
     "party": [
       {
-        "species": "nibbet",
-        "level": 4
-      },
-      {
-        "species": "tuftail",
+        "species": "pebblet",
         "level": 5
       }
     ],
@@ -68,23 +64,18 @@
     "party": [
       {
         "species": "nibbet",
-        "level": 4
-      },
-      {
-        "species": "nibbet",
         "level": 5
       }
     ],
     "intro": [
-      "I have THREE.",
-      "They are all the same one. I mean they are all nibbets.",
-      "I could not choose."
+      "I have ONE.",
+      "Dad says one is plenty until I can look after one."
     ],
     "defeat": [
-      "All three. In a row. That is just rude."
+      "That was my one. That is just rude."
     ],
     "victory": [
-      "THREE!"
+      "ONE! That is all you need!"
     ],
     "afterward": [
       "I am going to catch a fourth."
@@ -100,11 +91,7 @@
     "party": [
       {
         "species": "rillfry",
-        "level": 4
-      },
-      {
-        "species": "nibbet",
-        "level": 6
+        "level": 5
       }
     ],
     "intro": [
@@ -131,10 +118,6 @@
       {
         "species": "tuftail",
         "level": 7
-      },
-      {
-        "species": "nettlebug",
-        "level": 6
       }
     ],
     "intro": [
@@ -160,12 +143,8 @@
     "payout": 44,
     "party": [
       {
-        "species": "nibbet",
-        "level": 8
-      },
-      {
         "species": "fizzlet",
-        "level": 8
+        "level": 7
       }
     ],
     "intro": [

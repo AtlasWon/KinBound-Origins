@@ -14,7 +14,7 @@ import { DETAIL, Renderer, SCREEN_H, SCREEN_W } from '../engine/renderer.js';
 import { Battle, type BattleAction, type BattleEvent, type SideId } from '../battle/battle.js';
 import { TrainerAI } from '../battle/ai.js';
 import { registry } from '../data/registry.js';
-import { backSprite, frontSprite, iconSprite, SPRITE_SIZE, whiteSprite } from '../gfx/kinsprite.js';
+import { backSprite, frontSprite, ICON_SIZE, iconSprite, SPRITE_SIZE, whiteSprite } from '../gfx/kinsprite.js';
 import { fxTargetsSelf, MoveFx } from '../gfx/movefx.js';
 import { ListMenu, type MenuItem } from '../ui/menu.js';
 import { battleSpeedScale, textDelayFrames } from '../core/settings.js';
@@ -75,6 +75,82 @@ const FOE_BOX = { x: 6, y: 10, w: 100, h: 28 };
 const PLAYER_BOX = { x: 134, y: 68, w: 100, h: 36 };
 const MSG = { x: 0, y: 114, w: SCREEN_W, h: SCREEN_H - 114 };
 
+/**
+ * Where each trainer is stood, just off the edge of the field.
+ *
+ * Vessels leave from here and come back to here. It is the whole reason a
+ * send-out reads as somebody throwing something rather than as a sprite fading
+ * in: the capsule has to arrive from a person, and go back to one.
+ */
+const THROW_FROM: Record<SideId, { x: number; y: number }> = {
+  player: { x: -12, y: 124 },
+  foe: { x: 254, y: 44 },
+};
+
+/** Where a side's vessel splits open: over its own pad, at shoulder height. */
+function openPoint(side: SideId): { x: number; y: number } {
+  const pad = side === 'player' ? PLAYER_PAD : FOE_PAD;
+  return { x: pad.x, y: pad.y - 30 };
+}
+
+/** 0 before `a`, 1 after `b`, linear between. Every beat below is cut from it. */
+function ramp(x: number, a: number, b: number): number {
+  return Math.max(0, Math.min(1, (x - a) / (b - a)));
+}
+
+/** A one-shot: nothing until `at`, full there, gone `span` later. */
+function pop(x: number, at: number, span: number): number {
+  return x < at ? 0 : 1 - ramp(x, at, at + span);
+}
+
+/** A thrown vessel travels on a lob, never on a straight line. */
+function arcTo(
+  from: { x: number; y: number }, to: { x: number; y: number }, p: number,
+): { x: number; y: number } {
+  return {
+    x: Math.round(from.x + (to.x - from.x) * p),
+    y: Math.round(from.y + (to.y - from.y) * p - Math.sin(p * Math.PI) * 30),
+  };
+}
+
+/**
+ * The vessel and its light, while one is on the field.
+ *
+ * Sending out, recalling and capturing are the same three parts in a different
+ * order -- a thrown capsule, a cone of light, and a creature either arriving or
+ * leaving along it -- so all three drive this one structure and share a
+ * renderer rather than each growing their own.
+ */
+interface Capsule {
+  x: number;
+  y: number;
+  /** 0 shut, 1 fully split. */
+  open: number;
+  /** Cone strength, 0..1. */
+  beam: number;
+  /** Where the cone lands; null while the vessel is merely in flight. */
+  beamTo: { x: number; y: number } | null;
+  /** Tumble phase across a throw, 0..1. */
+  spin: number;
+  /** One-shot burst: 1 the instant it fires, 0 once it has expanded away. */
+  burst: number;
+  /** The failure mark, drawn above the vessel. */
+  tell: string | null;
+}
+
+function capsuleAt(x: number, y: number, o: Partial<Capsule> = {}): Capsule {
+  return { x, y, open: 0, beam: 0, beamTo: null, spin: 0, burst: 0, tell: null, ...o };
+}
+
+/** Authored lengths of the capture performance, already speed-scaled. */
+interface VesselPhases {
+  throw: number;
+  suck: number;
+  settle: number;
+  wobble: number;
+  finish: number;
+}
+
 /** Panel palette. Warm off-white with a slate frame, per the reference UI. */
 const UI = {
   frame: '#283048',
@@ -102,7 +178,7 @@ type Anim =
   | { kind: 'withdraw'; side: SideId; frames: number; t: number }
   | { kind: 'windup'; side: SideId; self: boolean; frames: number; t: number }
   | { kind: 'moveFx'; side: SideId; anim: string; type: TypeId; frames: number; t: number }
-  | { kind: 'vessel'; shakes: number; caught: boolean; frames: number; t: number }
+  | { kind: 'vessel'; shakes: number; caught: boolean; ph: VesselPhases; frames: number; t: number }
   | { kind: 'exp'; kin: Kin; from: number; to: number; frames: number; t: number }
   | { kind: 'weather'; weather: WeatherId; frames: number; t: number }
   | { kind: 'wait'; frames: number; t: number }
@@ -125,7 +201,20 @@ interface SideView {
   offsetY: number;
   alpha: number;
   flash: number;
+  /** Frames of hit flicker still owed. Counted down by update() rather than by
+   *  the flash step, so the flicker can run on over the HP drain instead of
+   *  holding the queue up in front of it. */
+  flashT: number;
   visible: boolean;
+  /** How much of the sprite exists, measured up from the feet. Anything under 1
+   *  is a materialise or a dissolve part-way through. */
+  reveal: number;
+  /** How far the sprite has been replaced by its own white silhouette:
+   *  0 flesh, 1 pure light. */
+  ghost: number;
+  /** Absolute logical y the sprite is cut off at, so a beaten kin sinks into
+   *  the ground rather than sliding off the bottom of the screen. */
+  clipY: number | null;
   /** Staging offset, positive toward the opponent, with its spring state. */
   dash: number;
   dashV: number;
@@ -135,7 +224,8 @@ interface SideView {
 }
 
 const NEW_VIEW = (): SideView => ({
-  kin: null, displayHp: 0, offsetX: 0, offsetY: 0, alpha: 1, flash: 0, visible: true,
+  kin: null, displayHp: 0, offsetX: 0, offsetY: 0, alpha: 1, flash: 0, flashT: 0,
+  visible: true, reveal: 1, ghost: 0, clipY: null,
   dash: 0, dashV: 0, dashTo: 0, idleT: 0,
 });
 
@@ -182,7 +272,13 @@ export class BattleScene implements Scene {
   };
 
   private displayExp = 0;
-  private vesselState: { shakes: number; caught: boolean; t: number } | null = null;
+  /** The vessel currently on the field, if any. Written by whichever of the
+   *  send-out, recall or capture steps is running; read only by the renderer. */
+  private capsule: Capsule | null = null;
+  /** A click on a party card, resolved on the next update. The cards are drawn
+   *  by this scene rather than by the list widget, so the widget has no
+   *  rectangles of its own to hit-test against. */
+  private partyClick = false;
   private fx = new MoveFx();
   /** Which side is mid-attack, so the lunge is applied to the right sprite. */
   private fxSide: SideId | null = null;
@@ -225,9 +321,23 @@ export class BattleScene implements Scene {
     this.opts.state.markSeen(this.battle.foe.active.species);
     audio.playMusic(this.battleTrack(trainer));
 
-    this.enqueue(this.battle.begin());
+    // The opening send-out is the animation the whole scene is judged on, so it
+    // is queued with the player's real settings rather than with the neutral
+    // fallback frames() uses when nobody hands it a game.
+    this.enqueue(this.battle.begin(), game);
+
+    // A side that is about to be thrown out must not already be stood on its
+    // pad while the intro line types, or it appears, vanishes, and is then
+    // sent out -- which is worse than the no-animation version it replaces.
+    // A wild encounter emits no send-out for the foe, and that one is right to
+    // be there from the first frame.
+    for (const a of this.queue) {
+      if (a.kind !== 'sendOut') continue;
+      const v = this.view[a.side];
+      v.visible = false; v.alpha = 0; v.reveal = 0;
+    }
+
     this.buildActionMenu();
-    void game;
   }
 
   /**
@@ -274,11 +384,19 @@ export class BattleScene implements Scene {
           this.queue.push({ kind: 'sfx', id: e.id });
           break;
         case 'sendOut':
-          this.queue.push({ kind: 'sendOut', side: e.side, frames: this.frames(20, game), t: 0 });
+        case 'withdraw': {
+          // Same lift as useMove below: the engine emits the step in front of
+          // the line that narrates it, and "Go, X!" has to be on screen before
+          // the vessel leaves the trainer's hand or the throw reads as
+          // happening to nobody. The hold is short -- the animation is the
+          // sentence, the text is only its subject.
+          const next = events[i + 1];
+          if (next && next.t === 'message') { this.pushText(next.text, game, 8); i++; }
+          this.queue.push(e.t === 'sendOut'
+            ? { kind: 'sendOut', side: e.side, frames: this.frames(52, game), t: 0 }
+            : { kind: 'withdraw', side: e.side, frames: this.frames(36, game), t: 0 });
           break;
-        case 'withdraw':
-          this.queue.push({ kind: 'withdraw', side: e.side, frames: this.frames(14, game), t: 0 });
-          break;
+        }
         case 'useMove': {
           // The engine emits useMove *before* the line announcing it, so played
           // back in order the sprite lunged while the text was still typing. A
@@ -298,15 +416,21 @@ export class BattleScene implements Scene {
             kind: 'moveFx', side: e.side, anim: e.move.animation,
             type: e.move.type, frames: this.frames(46, game), t: 0,
           });
-          // A beat between the move landing and the damage showing. Without it
-          // the effect, the flash and the bar all happen on the same frame and
-          // the turn reads as one blur.
-          this.queue.push({ kind: 'wait', frames: this.frames(10, game), t: 0 });
+          // Barely a beat between the move landing and the damage showing. It
+          // used to be ten frames, plus a whole flash, plus eight more before
+          // the bar moved, and the cost of a hit arrived long after the hit.
+          // The pause that does useful work is the one *after* the drain.
+          this.queue.push({ kind: 'wait', frames: this.frames(3, game), t: 0 });
           break;
         }
         case 'damage': {
-          this.queue.push({ kind: 'flash', side: e.side, frames: this.frames(14, game), t: 0, effectiveness: e.effectiveness });
-          this.queue.push({ kind: 'wait', frames: this.frames(8, game), t: 0 });
+          // Only the lead-in of the flash blocks; the flicker itself runs on
+          // the defender's own clock, so it is still going while the bar
+          // drains and the two read as one blow rather than two events.
+          this.queue.push({
+            kind: 'flash', side: e.side, frames: this.frames(4, game), t: 0,
+            effectiveness: e.effectiveness,
+          });
           this.queue.push({
             kind: 'hp', side: e.side, kin: e.kin,
             from: -1, to: e.hpAfter, frames: this.frames(38, game), t: 0,
@@ -323,15 +447,26 @@ export class BattleScene implements Scene {
         }
         case 'faint':
           this.queue.push({ kind: 'wait', frames: this.frames(10, game), t: 0 });
-          this.queue.push({ kind: 'faint', side: e.side, frames: this.frames(32, game), t: 0 });
+          this.queue.push({ kind: 'faint', side: e.side, frames: this.frames(40, game), t: 0 });
           this.queue.push({ kind: 'wait', frames: this.frames(14, game), t: 0 });
           break;
-        case 'throwVessel':
+        case 'throwVessel': {
+          // The capture is five separate beats, so its lengths are scaled once
+          // here and carried on the step: working them out again inside the
+          // playback from one total would mean re-deriving the speed setting.
+          const ph: VesselPhases = {
+            throw: this.frames(22, game),
+            suck: this.frames(20, game),
+            settle: this.frames(10, game),
+            wobble: this.frames(24, game),
+            finish: this.frames(34, game),
+          };
           this.queue.push({
-            kind: 'vessel', shakes: e.shakes, caught: e.caught,
-            frames: this.frames(30 + e.shakes * 22, game), t: 0,
+            kind: 'vessel', shakes: e.shakes, caught: e.caught, ph, t: 0,
+            frames: ph.throw + ph.suck + ph.settle + e.shakes * ph.wobble + ph.finish,
           });
           break;
+        }
         case 'expGain': {
           this.queue.push({
             kind: 'exp', kin: e.kin, from: -1, to: e.kin.exp + e.amount,
@@ -365,7 +500,7 @@ export class BattleScene implements Scene {
 
     for (const side of ['player', 'foe'] as SideId[]) {
       const v = this.view[side];
-      if (v.flash > 0) v.flash--;
+      this.flickerStep(v);
       this.stageStep(v, game.settings.battleAnimations);
       if (this.breathing(side, game)) v.idleT++;
     }
@@ -425,6 +560,26 @@ export class BattleScene implements Scene {
   }
 
   /**
+   * The hit flicker.
+   *
+   * Driven here rather than by the flash step it belongs to, because that step
+   * has to hand the queue straight on to the HP drain: a defender that has
+   * finished flashing before its bar so much as twitches reads as two separate
+   * events instead of one blow landing. The flinch is released on the same beat
+   * the flicker stops, so the spring still carries the sprite home rather than
+   * snapping it back.
+   */
+  private flickerStep(v: SideView): void {
+    if (v.flashT <= 0) return;
+    v.flashT--;
+    v.flash = v.flashT % 6 < 3 ? 1 : 0;
+    if (v.flashT === 0) {
+      v.flash = 0;
+      v.dashTo = 0;
+    }
+  }
+
+  /**
    * Attack staging.
    *
    * Wind-up, drive and recoil are one spring per side rather than three
@@ -460,6 +615,8 @@ export class BattleScene implements Scene {
     if (!game.settings.battleAnimations) return false;
     const v = this.view[side];
     if (!v.visible || v.alpha < 1 || !v.kin || v.kin.currentHp <= 0) return false;
+    // Half-materialised is not idling either, whichever step put it there.
+    if (v.reveal < 1 || v.ghost > 0) return false;
     const a = this.current;
     if (a && (a.kind === 'faint' || a.kind === 'withdraw' || a.kind === 'sendOut') && a.side === side) {
       return false;
@@ -532,12 +689,12 @@ export class BattleScene implements Scene {
       }
       case 'flash': {
         a.t++;
-        this.view[a.side].flash = a.t % 6 < 3 ? 1 : 0;
+        // Only the lead-in is on the queue's clock; flickerStep owns the rest.
         if (a.t >= a.frames || skip) {
-          this.view[a.side].flash = 0;
-          // Release the flinch: the spring carries the defender back and
-          // settles it, so the recovery is not a snap.
-          this.view[a.side].dashTo = 0;
+          if (skip) {
+            const v = this.view[a.side];
+            v.flashT = 0; v.flash = 0; v.dashTo = 0;
+          }
           this.current = null;
         }
         break;
@@ -556,32 +713,40 @@ export class BattleScene implements Scene {
       case 'faint': {
         a.t++;
         const p = Math.min(1, a.t / a.frames);
-        this.view[a.side].offsetY = Math.round(p * 40);
-        this.view[a.side].alpha = 1 - p;
-        if (a.t >= a.frames) { this.view[a.side].visible = false; this.current = null; }
-        break;
-      }
-      case 'sendOut': {
-        a.t++;
-        const p = Math.min(1, a.t / a.frames);
         const v = this.view[a.side];
-        v.visible = true;
-        v.alpha = p;
-        v.offsetY = 0;
-        v.offsetX = Math.round((1 - p) * (a.side === 'player' ? -50 : 50));
-        if (a.t >= a.frames) {
-          v.alpha = 1; v.offsetX = 0;
+        const pad = a.side === 'player' ? PLAYER_PAD : FOE_PAD;
+        // Beaten, not deleted. It blanches on the blow, goes limp, then slides
+        // down through its own pad -- the clip is what sells "into the ground"
+        // rather than "off the bottom of the screen", and it is the reason the
+        // step no longer just fades a sprite out on the spot.
+        v.ghost = 1 - ramp(p, 0.02, 0.20);
+        v.offsetY = Math.round(Math.pow(p, 1.6) * 46);
+        v.offsetX = Math.round(Math.sin(p * Math.PI * 1.2) * 2);
+        v.clipY = pad.y + 3;
+        v.alpha = 1 - ramp(p, 0.62, 1);
+        if (a.t >= a.frames || skip) {
+          v.visible = false; v.alpha = 0; v.ghost = 0;
+          v.offsetX = 0; v.offsetY = 0; v.clipY = null;
           this.current = null;
         }
         break;
       }
+      case 'sendOut': {
+        a.t++;
+        this.sendOutFrame(a.side, a.t, a.frames);
+        if (a.t >= a.frames || skip) { this.arrive(a.side); this.current = null; }
+        break;
+      }
       case 'withdraw': {
         a.t++;
-        const p = Math.min(1, a.t / a.frames);
-        const v = this.view[a.side];
-        v.alpha = 1 - p;
-        v.offsetX = Math.round(p * (a.side === 'player' ? -40 : 40));
-        if (a.t >= a.frames) { v.visible = false; this.current = null; }
+        this.withdrawFrame(a.side, a.t, a.frames);
+        if (a.t >= a.frames || skip) {
+          const v = this.view[a.side];
+          v.visible = false; v.alpha = 0; v.reveal = 1; v.ghost = 0; v.clipY = null;
+          v.offsetX = 0; v.offsetY = 0;
+          this.capsule = null;
+          this.current = null;
+        }
         break;
       }
       case 'sfx':
@@ -610,8 +775,18 @@ export class BattleScene implements Scene {
       }
       case 'vessel': {
         a.t++;
-        this.vesselState = { shakes: a.shakes, caught: a.caught, t: a.t };
-        if (a.t >= a.frames) { this.vesselState = null; this.current = null; }
+        this.vesselFrame(a);
+        if (a.t >= a.frames || skip) {
+          this.capsule = null;
+          if (a.caught) {
+            // Caught: the field is empty, and the status panel goes with it.
+            const v = this.view.foe;
+            v.visible = false; v.alpha = 0; v.ghost = 0; v.reveal = 1; v.clipY = null;
+          } else {
+            this.arrive('foe');
+          }
+          this.current = null;
+        }
         break;
       }
       case 'weather': {
@@ -644,13 +819,18 @@ export class BattleScene implements Scene {
         // A fresh kin arrives square on its pad and takes its first breath
         // there, rather than inheriting whatever the last one was mid-flinch.
         v.dash = 0; v.dashV = 0; v.dashTo = 0; v.idleT = 0;
+        v.flash = 0; v.flashT = 0; v.clipY = null;
         if (a.side === 'player') this.displayExp = kin.exp;
-        audio.playSfx('send_out');
-        if (kin) audio.playCry(kin.species);
+        // With animations off the whole performance collapses onto its last
+        // frame. sendOutFrame still runs there, so the cry and the arrival
+        // both still happen -- those are information, not spectacle.
+        if (!game.settings.battleAnimations) a.frames = 1;
+        else audio.playSfx('vessel_throw');
         break;
       }
       case 'withdraw':
-        audio.playSfx('withdraw');
+        if (!game.settings.battleAnimations) a.frames = 1;
+        else audio.playSfx('vessel_throw');
         break;
       case 'sfx':
         audio.playSfx(a.id);
@@ -661,6 +841,8 @@ export class BattleScene implements Scene {
         // reason a trade of blows used to read as two sprites flickering at
         // each other; a super-effective hit shoves it further.
         this.view[a.side].dashTo = a.effectiveness > 1 ? -5 : a.effectiveness < 1 ? -2.2 : -3.4;
+        // The flicker outlasts the step that starts it, by design.
+        this.view[a.side].flashT = game.settings.battleAnimations ? this.frames(22, game) : 0;
         break;
       case 'windup':
         // Anticipation. The move's own effect takes over the frame it starts,
@@ -670,9 +852,16 @@ export class BattleScene implements Scene {
         break;
       case 'faint':
         audio.playSfx('faint');
+        if (!game.settings.battleAnimations) a.frames = 1;
         break;
       case 'vessel':
         audio.playSfx('vessel_throw');
+        if (!game.settings.battleAnimations) {
+          // Still five beats, so the shake count stays legible; just no
+          // performance around them.
+          a.ph = { throw: 1, suck: 1, settle: 1, wobble: 2, finish: 2 };
+          a.frames = 5 + a.shakes * 2;
+        }
         break;
       case 'heal' as never:
         break;
@@ -764,11 +953,12 @@ export class BattleScene implements Scene {
     const items: MenuItem<number>[] = this.battle.player.party.map((k, i) => ({
       label: k.name,
       value: i,
-      detail: k.fainted ? 'FAINTED' : `Lv${k.level}  ${k.currentHp}/${k.maxHp}`,
       enabled: !k.fainted && i !== this.battle.player.activeIndex,
     }));
     this.partyMenu.setItems(items, true);
-    this.partyMenu.visible = Math.min(6, items.length);
+    // The screen draws every kin at once, so the list must never scroll: a
+    // scrolled index would stop lining up with the card it points at.
+    this.partyMenu.visible = Math.max(1, items.length);
   }
 
   private buildBagMenu(): void {
@@ -818,7 +1008,16 @@ export class BattleScene implements Scene {
   }
 
   private updatePartyMenu(game: Game, forced = false): void {
-    const res = this.partyMenu.update(game);
+    let res = this.partyMenu.update(game);
+    // The widget hit-tests against the rectangle it last drew itself into, and
+    // this screen draws its own cards, so a click on one is resolved here.
+    if (this.partyClick) {
+      this.partyClick = false;
+      if (res !== 'select') {
+        audio.playSfx('confirm');
+        res = 'select';
+      }
+    }
     if (res === 'cancel' && !forced) { this.phase = 'menu'; return; }
     if (res === 'select') {
       const idx = this.partyMenu.selectedValue ?? 0;
@@ -848,6 +1047,188 @@ export class BattleScene implements Scene {
     const events = this.battle.takeTurn(action, foeAction);
     this.enqueue(events, game);
     this.phase = 'anim';
+  }
+
+  /* ------------------------------------------------------- vessel beats */
+
+  /** Everything a side looks like once it is simply stood on its pad. */
+  private arrive(side: SideId): void {
+    const v = this.view[side];
+    v.visible = true; v.alpha = 1; v.reveal = 1; v.ghost = 0; v.clipY = null;
+    v.offsetX = 0; v.offsetY = 0;
+    this.capsule = null;
+  }
+
+  /**
+   * Send-out.
+   *
+   * Throw, split, light, animal, vessel home -- five beats laid out as
+   * overlapping ramps across one progress value rather than as five steps in
+   * the queue, because they have to overlap: the capsule starts closing while
+   * the creature is still solidifying, which is what stops the sequence reading
+   * as a list of things that happened one after another.
+   *
+   * The creature is grown out of the ground inside the cone rather than scaled
+   * up into it. Nothing in this game is ever resampled, and a sprite drawn at a
+   * fraction of its height would land every row off the design grid; so the
+   * white silhouette is revealed a whole design pixel at a time from the feet
+   * up, and then cross-faded into the real sprite. See renderKin.
+   */
+  private sendOutFrame(side: SideId, t: number, frames: number): void {
+    const v = this.view[side];
+    const p = Math.min(1, t / frames);
+    const home = THROW_FROM[side];
+    const open = openPoint(side);
+    const pad = side === 'player' ? PLAYER_PAD : FOE_PAD;
+
+    const back = ramp(p, 0.82, 1);
+    const pos = back > 0 ? arcTo(open, home, back) : arcTo(home, open, ramp(p, 0, 0.30));
+
+    this.capsule = capsuleAt(pos.x, pos.y, {
+      open: ramp(p, 0.30, 0.38) - ramp(p, 0.74, 0.84),
+      beam: ramp(p, 0.31, 0.42) - ramp(p, 0.74, 0.86),
+      beamTo: p > 0.30 && p < 0.86 ? { x: pad.x, y: pad.y } : null,
+      spin: p < 0.30 ? p / 0.30 : 0,
+      burst: pop(p, 0.30, 0.18),
+    });
+
+    v.offsetX = 0;
+    v.offsetY = 0;
+    v.clipY = null;
+    v.reveal = ramp(p, 0.38, 0.64);
+    v.ghost = 1 - ramp(p, 0.62, 0.80);
+    v.visible = v.reveal > 0;
+    v.alpha = v.visible ? 1 : 0;
+
+    // Keyed off the frame index rather than a latch, so a skip cannot leave a
+    // cry owed. The max() is for the collapsed one-frame version.
+    if (t === Math.max(1, Math.round(frames * 0.30))) audio.playSfx('send_out');
+    if (t === Math.max(1, Math.round(frames * 0.64)) && v.kin) audio.playCry(v.kin.species);
+  }
+
+  /** Recall: the send-out run backwards, beam first and creature last. */
+  private withdrawFrame(side: SideId, t: number, frames: number): void {
+    const v = this.view[side];
+    const p = Math.min(1, t / frames);
+    const home = THROW_FROM[side];
+    const open = openPoint(side);
+    const pad = side === 'player' ? PLAYER_PAD : FOE_PAD;
+
+    const back = ramp(p, 0.72, 1);
+    const pos = back > 0 ? arcTo(open, home, back) : arcTo(home, open, ramp(p, 0, 0.22));
+
+    this.capsule = capsuleAt(pos.x, pos.y, {
+      open: ramp(p, 0.22, 0.30) - ramp(p, 0.60, 0.70),
+      beam: ramp(p, 0.24, 0.34) - ramp(p, 0.62, 0.72),
+      beamTo: p > 0.22 && p < 0.72 ? { x: pad.x, y: pad.y } : null,
+      spin: p < 0.22 ? p / 0.22 : 0,
+      burst: pop(p, 0.62, 0.16),
+    });
+
+    v.offsetX = 0;
+    v.offsetY = 0;
+    v.clipY = null;
+    v.ghost = ramp(p, 0.26, 0.40);
+    v.reveal = 1 - ramp(p, 0.38, 0.62);
+    // The alpha trails the reveal so the silhouette thins as it shrinks, and so
+    // the status panel -- which hides on alpha -- leaves with the creature.
+    v.alpha = 1 - ramp(p, 0.44, 0.62);
+    v.visible = v.reveal > 0;
+
+    if (t === Math.max(1, Math.round(frames * 0.24))) audio.playSfx('withdraw');
+  }
+
+  /**
+   * Capture.
+   *
+   * The throw and the wobble were already here; what was missing was the part
+   * that makes it read as a capture at all -- the beam that takes the kin, the
+   * dissolve into the vessel, and either a burst on the click or the whole
+   * thing given back. Walked as a countdown through the phase lengths rather
+   * than as fractions of the total, because the number of wobbles varies.
+   */
+  private vesselFrame(a: Extract<Anim, { kind: 'vessel' }>): void {
+    const v = this.view.foe;
+    const ph = a.ph;
+    const open = openPoint('foe');
+    const pad = FOE_PAD;
+    const rest = pad.y - 6;
+    let t = a.t;
+
+    if (t <= ph.throw) {
+      const q = t / ph.throw;
+      const at = arcTo(THROW_FROM.player, open, q);
+      this.capsule = capsuleAt(at.x, at.y, { spin: q });
+      return;
+    }
+    t -= ph.throw;
+
+    if (t <= ph.suck) {
+      const q = t / ph.suck;
+      if (t === 1) audio.playSfx('withdraw');
+      this.capsule = capsuleAt(open.x, open.y, {
+        open: ramp(q, 0, 0.22) - ramp(q, 0.72, 0.94),
+        beam: ramp(q, 0.04, 0.26) - ramp(q, 0.70, 0.92),
+        beamTo: { x: pad.x, y: pad.y },
+        // Spent by the end of the phase: the next one builds a fresh capsule
+        // and a burst still running would be cut off mid-expansion.
+        burst: pop(q, 0.72, 0.28),
+      });
+      v.ghost = ramp(q, 0.04, 0.28);
+      v.reveal = 1 - ramp(q, 0.24, 0.70);
+      v.alpha = 1 - ramp(q, 0.46, 0.76);
+      v.visible = v.reveal > 0;
+      return;
+    }
+    t -= ph.suck;
+
+    v.visible = false;
+    v.alpha = 0;
+    v.reveal = 0;
+
+    if (t <= ph.settle) {
+      // Falls to the ground with the kin inside it, accelerating.
+      const q = t / ph.settle;
+      this.capsule = capsuleAt(open.x, Math.round(open.y + (rest - open.y) * q * q));
+      return;
+    }
+    t -= ph.settle;
+
+    const shaking = a.shakes * ph.wobble;
+    if (t <= shaking) {
+      const local = (t - 1) % ph.wobble;
+      if (local === 0) audio.playSfx('vessel_shake');
+      const q = local / ph.wobble;
+      this.capsule = capsuleAt(
+        pad.x + Math.round(Math.sin(q * Math.PI * 2) * 3),
+        rest - Math.round(Math.sin(q * Math.PI) * 2),
+      );
+      return;
+    }
+    t -= shaking;
+
+    const q = Math.min(1, t / ph.finish);
+    if (a.caught) {
+      if (t === 1) audio.playSfx('vessel_click');
+      this.capsule = capsuleAt(pad.x, rest, { burst: pop(q, 0, 0.55) });
+      return;
+    }
+
+    if (t === 1) audio.playSfx('vessel_break');
+    // Given back. The vessel lifts off the ground as it splits, or the cone
+    // would have ten units to travel and the kin would appear to grow out of
+    // the lid rather than to be poured onto the pad.
+    this.capsule = capsuleAt(pad.x, Math.round(rest + (open.y - rest) * ramp(q, 0, 0.22)), {
+      open: ramp(q, 0, 0.18) - ramp(q, 0.62, 0.84),
+      beam: ramp(q, 0.06, 0.26) - ramp(q, 0.62, 0.86),
+      beamTo: { x: pad.x, y: pad.y },
+      burst: pop(q, 0, 0.26),
+      tell: q > 0.7 ? '!' : null,
+    });
+    v.reveal = ramp(q, 0.22, 0.52);
+    v.ghost = 1 - ramp(q, 0.48, 0.72);
+    v.visible = v.reveal > 0;
+    v.alpha = v.visible ? 1 : 0;
   }
 
   /* ------------------------------------------------------------ effects */
@@ -995,7 +1376,7 @@ export class BattleScene implements Scene {
 
   private renderKin(r: Renderer, side: SideId): void {
     const v = this.view[side];
-    if (!v.visible) return;
+    if (!v.visible || v.alpha <= 0) return;
     const kin = v.kin;
     if (!kin) return;
 
@@ -1029,17 +1410,43 @@ export class BattleScene implements Scene {
      * drawn. The silhouette loses exactly one design pixel of height, the feet
      * stay planted, and every pixel that survives is still where the grid says.
      */
+    /*
+     * The materialise window.
+     *
+     * A creature coming out of a vessel is grown from the feet up, not scaled
+     * up out of nothing, for exactly the reason above: a sprite drawn at some
+     * fraction of its height would land every row off the design grid. So the
+     * reveal is a source-rectangle crop snapped to whole design pixels, and the
+     * recall runs the same crop backwards. `clipY` cuts the other end of the
+     * same window, which is how a fainting kin sinks into its own pad.
+     */
+    const revealH = v.reveal >= 1 ? size : Math.round((size * v.reveal) / DETAIL) * DETAIL;
+    if (revealH <= 0) return;
+    const srcY = size - revealH;
+    const topY = y + srcY / DETAIL;
+    let drawH = revealH;
+    if (v.clipY !== null) {
+      drawH = Math.min(drawH, Math.max(0, Math.floor(v.clipY - topY) * DETAIL));
+      if (drawH <= 0) return;
+    }
+    const whole = srcY === 0 && drawH === size;
+
     const cut = Math.round(size * 0.62 / DETAIL) * DETAIL;
     const blit = (img: CanvasImageSource, alpha: number) => {
-      if (br.squash === 0) {
-        r.image(img, x, y, 0, 0, size, size, false, false, alpha);
+      // The squash is a two-part blit and assumes a complete sprite, so a
+      // cropped one is drawn flat. Nothing is breathing mid-materialise anyway.
+      if (br.squash === 0 || !whole) {
+        r.image(img, x, topY, 0, srcY, size, drawH, false, false, alpha);
         return;
       }
       r.image(img, x, y + 1, 0, 0, size, cut - DETAIL, false, false, alpha);
       r.image(img, x, y + cut / DETAIL, 0, cut, size, size - cut, false, false, alpha);
     };
 
-    blit(sprite, v.alpha);
+    if (v.ghost < 1) blit(sprite, v.alpha * (1 - v.ghost));
+    // The same white silhouette does three jobs: the light a kin arrives as,
+    // the light it leaves as, and the blanching of a beaten one.
+    if (v.ghost > 0) blit(whiteSprite(kin.species, back), v.alpha * v.ghost);
 
     if (v.flash > 0) {
       // A white silhouette over the sprite: the era's standard hit tell, and
@@ -1049,33 +1456,80 @@ export class BattleScene implements Scene {
   }
 
   private renderVessel(r: Renderer): void {
-    if (!this.vesselState) return;
-    const { shakes, caught, t } = this.vesselState;
-    const throwFrames = 20;
-    if (t < throwFrames) {
-      // Arc from the player's side to the foe.
-      const p = t / throwFrames;
-      const x = Math.round(PLAYER_PAD.x + (FOE_PAD.x - PLAYER_PAD.x) * p);
-      const y = Math.round(PLAYER_PAD.y - 20 + (FOE_PAD.y - PLAYER_PAD.y) * p - Math.sin(p * Math.PI) * 34);
-      this.drawVesselIcon(r, x, y);
-      return;
-    }
-    const after = t - throwFrames;
-    const wobble = Math.floor(after / 22);
-    const local = after % 22;
-    const tilt = wobble < shakes ? Math.round(Math.sin(local / 22 * Math.PI * 2) * 3) : 0;
-    this.drawVesselIcon(r, FOE_PAD.x + tilt, FOE_PAD.y - 8);
-    if (!caught && wobble >= shakes) {
-      r.text('!', FOE_PAD.x + 10, FOE_PAD.y - 24, { color: '#ffffff', shadow: '#000000' });
-    }
+    const c = this.capsule;
+    if (!c) return;
+    if (c.beam > 0 && c.beamTo) this.drawBeam(r, c, c.beamTo);
+    this.drawVesselIcon(r, c.x, c.y, c.open, c.spin);
+    if (c.burst > 0) this.drawBurst(r, c.x, c.y, c.burst);
+    if (c.tell) r.text(c.tell, c.x + 10, c.y - 22, { color: '#ffffff', shadow: '#000000' });
   }
 
-  private drawVesselIcon(r: Renderer, x: number, y: number): void {
-    r.rect(x - 4, y - 4, 8, 8, '#c8a05a');
-    r.rect(x - 4, y - 4, 8, 3, '#e0c07a');
-    r.rect(x - 4, y + 2, 8, 2, '#8a6a34');
-    r.outline(x - 5, y - 5, 10, 10, '#2a2018');
-    r.rect(x - 1, y - 1, 2, 2, '#f4f0e0');
+  /**
+   * The cone of light.
+   *
+   * Two nested wedges rather than one. A single flat triangle of white reads as
+   * a rendering artefact; the hard core down the middle is what makes it read
+   * as a beam with something travelling inside it. The pool on the ground is
+   * there so the light has somewhere to land -- a cone that stops in mid-air
+   * looks like it has been clipped.
+   */
+  private drawBeam(r: Renderer, c: Capsule, to: { x: number; y: number }): void {
+    const k = Math.max(0, Math.min(1, c.beam));
+    const span = Math.max(1, Math.round(to.y - c.y));
+    const soft = `rgba(255,255,255,${(0.30 * k).toFixed(3)})`;
+    const core = `rgba(255,252,224,${(0.85 * k).toFixed(3)})`;
+    for (let i = 0; i <= span; i++) {
+      const t = i / span;
+      const x = Math.round(c.x + (to.x - c.x) * t);
+      const wide = Math.max(1, Math.round((2 + t * 24) * k));
+      r.rect(x - wide, c.y + i, wide * 2, 1, soft);
+      const hot = Math.max(1, Math.round(wide * 0.34));
+      r.rect(x - hot, c.y + i, hot * 2, 1, core);
+    }
+    r.ellipsePixel(to.x * DETAIL, to.y * DETAIL, 26 * k * DETAIL, 7 * k * DETAIL, soft);
+  }
+
+  /**
+   * The vessel itself, as two halves that come apart.
+   *
+   * A tumbling one swaps its lit and dark bands instead of rotating: at eight
+   * design pixels across there is nothing in a rotation to see, and rotating
+   * would take the whole thing off the grid to say it.
+   */
+  private drawVesselIcon(r: Renderer, x: number, y: number, open = 0, spin = 0): void {
+    const gap = Math.round(open * 5);
+    const flipped = Math.floor(spin * 7) % 2 === 1;
+    const lit = flipped ? '#8a6a34' : '#e0c07a';
+    const dark = flipped ? '#e0c07a' : '#8a6a34';
+
+    const ty = y - 4 - gap;
+    r.rect(x - 4, ty, 8, 4, '#c8a05a');
+    r.rect(x - 4, ty, 8, 2, lit);
+    r.outline(x - 5, ty - 1, 10, 6, '#2a2018');
+
+    const by = y + gap;
+    r.rect(x - 4, by, 8, 4, '#c8a05a');
+    r.rect(x - 4, by + 2, 8, 2, dark);
+    r.outline(x - 5, by - 1, 10, 6, '#2a2018');
+
+    if (gap === 0) r.rect(x - 1, y - 1, 2, 2, '#f4f0e0');
+  }
+
+  /** A one-shot starburst: a ring of sparks and a cross, expanding as it dies. */
+  private drawBurst(r: Renderer, x: number, y: number, k: number): void {
+    const rad = 3 + (1 - k) * 20;
+    const col = `rgba(255,248,208,${k.toFixed(3)})`;
+    for (let i = 0; i < 8; i++) {
+      const ang = (i / 8) * Math.PI * 2;
+      r.rect(
+        Math.round(x + Math.cos(ang) * rad) - 1,
+        Math.round(y + Math.sin(ang) * rad * 0.8) - 1,
+        2, 2, col,
+      );
+    }
+    const rx = Math.round(rad), ry = Math.round(rad * 0.8);
+    r.rect(x - rx, y, rx * 2, 1, col);
+    r.rect(x, y - ry, 1, ry * 2, col);
   }
 
   /**
@@ -1180,7 +1634,10 @@ export class BattleScene implements Scene {
     const textW = showMenu ? 120 : MSG.w - 20;
 
     if (this.phase === 'moves') { this.renderMoveMenu(r); return; }
-    if (this.phase === 'party' || this.phase === 'forcedSwitch') { this.renderPartyMenu(r); return; }
+    if (this.phase === 'party' || this.phase === 'forcedSwitch') {
+      this.renderPartyMenu(game, r);
+      return;
+    }
     if (this.phase === 'bag') { this.renderBagMenu(r); return; }
 
     const lines = r.wrapText(this.message, textW);
@@ -1206,9 +1663,13 @@ export class BattleScene implements Scene {
    * The four-way command pad.
    *
    * Each command owns a colour and keeps it forever, so after a few battles the
-   * player stops reading the words and just goes for the red square. The
-   * selected tile lifts, brightens and takes a white keyline -- three cues at
-   * once, because this is the one widget that must never be ambiguous.
+   * player stops reading the words and just goes for the red square.
+   *
+   * The selected tile lifts, brightens and takes a heavy dark ring; the other
+   * three carry no outline at all. It used to be the other way round -- white
+   * keyline on the choice, dark frames on everything else -- and three dark
+   * boxes against one open square reads as three things ringed and one left
+   * out, which is the opposite of what a cursor is for.
    */
   private renderActionMenu(game: Game, r: Renderer): void {
     const bx = 132, by = MSG.y + 3, bw = 104, bh = MSG.h - 6;
@@ -1239,7 +1700,14 @@ export class BattleScene implements Scene {
       // A lit top edge and a dark bottom edge turn a flat square into a key.
       r.rect(x + 2, y + 2 - lift, cw - 4, 1, 'rgba(255,255,255,0.5)');
       r.rect(x + 2, y + ch - 3 - lift, cw - 4, 1, 'rgba(0,0,0,0.28)');
-      r.outline(x + 2, y + 2 - lift, cw - 4, ch - 4, selected ? '#ffffff' : UI.frame);
+      if (selected) {
+        // Two dark rings, one proud of the tile, so the keyline has real weight
+        // against the colour underneath; the white line sits inside them and
+        // lifts the dark off the face rather than competing with it.
+        r.outline(x + 1, y + 1 - lift, cw - 2, ch - 2, UI.frame);
+        r.outline(x + 2, y + 2 - lift, cw - 4, ch - 4, UI.frame);
+        r.outline(x + 3, y + 3 - lift, cw - 6, ch - 6, 'rgba(255,255,255,0.8)');
+      }
 
       const tw = r.textWidth(c.label);
       r.text(c.label, x + Math.round((cw - tw) / 2), y + Math.round(ch / 2) - 4 - lift, {
@@ -1251,72 +1719,237 @@ export class BattleScene implements Scene {
   }
 
   /**
-   * Move list.
+   * Move list and the detail panel beside it.
    *
-   * Every row carries its own type colour as a chip, which is the fastest way
-   * for a player to find the coverage move they are looking for without reading
-   * four names. The right-hand panel shows power and accuracy as bars as well
-   * as numbers, so relative strength is legible at a glance.
+   * Boxed rows in three columns -- type, name, PP -- so four moves scan as a
+   * table rather than as four lines of text, with the selected row taking the
+   * same dark keyline the command pad uses.
+   *
+   * The panel is laid out from one padded inner rectangle, and everything in it
+   * is measured against that. The version before this one placed each element
+   * at a hand-picked offset from the frame, which is how the type name ended up
+   * against the edge of its own chip and the two bars ended up against the
+   * border: nothing had a stated width, so nothing could be told it had run out
+   * of room.
    */
   private renderMoveMenu(r: Renderer): void {
     const kin = this.view.player.kin ?? this.battle.player.active;
-    const listW = 146;
+    const listW = 138;
     const rowH = 10;
+    const rowX = MSG.x + 5;
+    const rowW = listW - 10;
+    const ppCol = 32;
 
     for (let i = 0; i < 4; i++) {
+      const y = MSG.y + 3 + i * rowH;
       const slot = kin.moves[i];
-      const y = MSG.y + 5 + i * rowH;
-      if (!slot) continue;
+      if (!slot) {
+        // An empty slot still gets its box, or the list loses its shape and the
+        // four rows stop reading as four rows.
+        r.rect(rowX, y, rowW, rowH - 1, UI.fillDim);
+        r.outline(rowX, y, rowW, rowH - 1, UI.shade);
+        r.text('--', rowX + 12, y + 1, { color: UI.shade });
+        continue;
+      }
       const md = registry.moves.get(slot.id);
       const meta = md ? registry.typeChart?.meta?.[md.type] : undefined;
       const sel = this.moveMenu.index === i;
       const out = slot.pp <= 0;
 
-      if (sel) r.rect(MSG.x + 4, y - 1, listW - 6, rowH, '#d4e0f6');
-      r.rect(MSG.x + 8, y + 1, 6, 6, out ? '#98a0b4' : (meta?.color ?? '#888'));
-      r.outline(MSG.x + 8, y + 1, 6, 6, UI.frame);
-      r.text(md?.name ?? slot.id, MSG.x + 18, y, { color: out ? '#98a0b4' : UI.ink });
-      r.text(`${slot.pp}/${slot.maxPp}`, MSG.x + listW - 10, y, {
+      r.rect(rowX, y, rowW, rowH - 1, sel ? '#dbe6fb' : UI.fillDim);
+      r.outline(rowX, y, rowW, rowH - 1, sel ? UI.frame : UI.shade);
+
+      r.rect(rowX + 3, y + 2, 5, 5, out ? '#98a0b4' : (meta?.color ?? '#888'));
+      r.outline(rowX + 3, y + 2, 5, 5, UI.frame);
+
+      // Clipped against the PP column rather than allowed to run into it: a
+      // long move name would otherwise print straight through the divider.
+      const full = md?.name ?? slot.id;
+      let name = full;
+      const room = rowW - 14 - ppCol;
+      while (name.length > 1 && r.textWidth(name) > room) name = name.slice(0, -1);
+      if (name !== full) name = name.slice(0, -1) + '..';
+      r.text(name, rowX + 12, y + 1, { color: out ? '#98a0b4' : UI.ink });
+
+      r.rect(rowX + rowW - ppCol - 4, y + 2, 1, rowH - 5, UI.shade);
+      r.text(`${slot.pp}/${slot.maxPp}`, rowX + rowW - 4, y + 1, {
         color: out ? '#c05048' : UI.inkSoft, align: 'right',
       });
-      if (sel) r.cursor(MSG.x + 2, y, UI.frame);
+      if (sel) r.cursor(MSG.x + 1, y, UI.frame);
     }
 
     const slot = kin.moves[this.moveMenu.index];
     const md = slot ? registry.moves.get(slot.id) : undefined;
-    const px0 = MSG.x + listW;
+    const px = MSG.x + listW;
     const pw = MSG.w - listW - 4;
-    r.rect(px0, MSG.y + 4, pw, MSG.h - 8, UI.fillDim);
-    r.outline(px0, MSG.y + 4, pw, MSG.h - 8, UI.shade);
+    r.window(px, MSG.y + 4, pw, MSG.h - 8, {
+      fill: UI.fillDim, border: UI.frame, highlight: UI.shade,
+    });
     if (!md) return;
 
+    const ix = px + 5;
+    const iw = pw - 10;
+    const catW = 32;
+    const typeW = iw - catW - 3;
+    const chipY = MSG.y + 8;
+
     const meta = registry.typeChart?.meta?.[md.type];
-    r.rect(px0 + 4, MSG.y + 7, pw - 8, 9, meta?.color ?? '#888');
-    r.outline(px0 + 4, MSG.y + 7, pw - 8, 9, UI.frame);
-    r.text((meta?.name ?? md.type).toUpperCase(), px0 + 7, MSG.y + 8, {
-      color: '#ffffff', shadow: 'rgba(0,0,0,0.4)',
+    r.rect(ix, chipY, typeW, 11, meta?.color ?? '#888');
+    r.outline(ix, chipY, typeW, 11, UI.frame);
+    let typeName = (meta?.name ?? md.type).toUpperCase();
+    while (typeName.length > 1 && r.textWidth(typeName) > typeW - 6) {
+      typeName = typeName.slice(0, -1);
+    }
+    r.text(typeName, ix + Math.round((typeW - r.textWidth(typeName)) / 2), chipY + 2, {
+      color: '#ffffff', shadow: 'rgba(0,0,0,0.45)',
     });
 
-    const cat = md.category === 'physical' ? 'PHYS' : md.category === 'special' ? 'SPEC' : 'STATUS';
-    r.text(cat, px0 + 4, MSG.y + 19, { color: UI.inkSoft });
+    // The category earns a chip of its own rather than a line of grey text: it
+    // is the second thing a player checks and it should be found by shape.
+    const cat = md.category === 'physical' ? 'PHYS' : md.category === 'special' ? 'SPEC' : 'STAT';
+    const catC = md.category === 'physical' ? '#c8663c'
+      : md.category === 'special' ? '#5a72c0' : '#7a8298';
+    const catX = ix + typeW + 3;
+    r.rect(catX, chipY, catW, 11, catC);
+    r.outline(catX, chipY, catW, 11, UI.frame);
+    r.text(cat, catX + Math.round((catW - r.textWidth(cat)) / 2), chipY + 2, {
+      color: '#ffffff', shadow: 'rgba(0,0,0,0.45)',
+    });
 
-    const bar = (label: string, y: number, value: number, max: number, color: string) => {
-      r.text(label, px0 + 4, y, { color: UI.inkSoft });
-      r.meter(px0 + 24, y + 1, pw - 34, 4, Math.min(1, value / max), color, '#c2cade', UI.frame);
+    const statRow = (label: string, y: number, value: number, max: number, color: string) => {
+      r.text(label, ix, y, { color: UI.inkSoft });
+      if (value >= 0) {
+        r.meter(ix + 20, y + 1, iw - 40, 5, Math.min(1, value / max), color, '#c2cade', UI.frame);
+      }
+      r.text(value >= 0 ? String(value) : '--', ix + iw, y, { color: UI.ink, align: 'right' });
     };
-    if (md.power > 0) bar('PWR', MSG.y + 27, md.power, 140, '#e07048');
-    else r.text('PWR  --', px0 + 4, MSG.y + 27, { color: UI.inkSoft });
-    if (md.accuracy >= 0) bar('ACC', MSG.y + 36, md.accuracy, 100, '#58a8e0');
-    else r.text('ACC  --', px0 + 4, MSG.y + 36, { color: UI.inkSoft });
+    statRow('PWR', MSG.y + 22, md.power > 0 ? md.power : -1, 140, '#e07048');
+    statRow('ACC', MSG.y + 32, md.accuracy >= 0 ? md.accuracy : -1, 100, '#58a8e0');
   }
 
-  private renderPartyMenu(r: Renderer): void {
-    this.partyMenu.render(r, MSG.x + 2, MSG.y + 2, MSG.w - 4, {
-      rowHeight: 11, padY: 3, frame: false,
+  /**
+   * The switch screen.
+   *
+   * A full-field takeover rather than a list crammed into the message box.
+   * That is what it was: six rows eleven units tall inside a box forty-six
+   * units deep, so a full party ran a clear foot past the bottom of the screen
+   * and the only picture on it was one icon bolted to the side.
+   *
+   * Slot one gets the big card and the rest get rows, which is the same shape
+   * the party screen outside battle uses, and every one of them carries its own
+   * portrait, level, bar and status -- a switch is a decision about numbers and
+   * they all have to be on screen at once for it to be one.
+   */
+  private renderPartyMenu(game: Game, r: Renderer): void {
+    const party = this.battle.player.party;
+    r.rect(0, 0, SCREEN_W, SCREEN_H, '#3c4664');
+    for (let y = 0; y < SCREEN_H; y += 4) r.rect(0, y, SCREEN_W, 1, '#424d6e');
+
+    for (let i = 0; i < Math.min(6, party.length); i++) this.renderPartyCard(game, r, i);
+
+    r.window(2, 132, SCREEN_W - 4, 26, { fill: UI.fill, border: UI.frame, highlight: UI.shade });
+    // No "press X to go back" hint: cancel does that on every other list in
+    // the game without being told to, and the keys are rebindable anyway.
+    r.text(this.phase === 'forcedSwitch'
+      ? 'Which kin will you send out?'
+      : 'Choose a kin to switch in.', 8, 140, { color: UI.ink });
+  }
+
+  private partyCardRect(i: number): { x: number; y: number; w: number; h: number } {
+    if (i === 0) return { x: 3, y: 3, w: 92, h: 126 };
+    return { x: 99, y: 3 + (i - 1) * 25, w: 138, h: 23 };
+  }
+
+  private renderPartyCard(game: Game, r: Renderer, i: number): void {
+    const kin = this.battle.player.party[i];
+    if (!kin) return;
+    const c = this.partyCardRect(i);
+    const sel = this.partyMenu.index === i;
+    const active = i === this.battle.player.activeIndex;
+    const down = kin.fainted;
+    const usable = this.partyMenu.items[i]?.enabled !== false;
+
+    // Hovering moves the cursor, the same as it does on the command pad, so
+    // the two input methods never disagree about what is selected.
+    const hovered = game.input.mouseOver(c.x, c.y, c.w, c.h);
+    if (hovered && game.input.mouse.idleFrames < 2 && usable) this.partyMenu.index = i;
+    if (hovered && game.input.mouse.leftPressed && usable) {
+      this.partyMenu.index = i;
+      this.partyClick = true;
+    }
+
+    const fill = down ? '#c6cad6' : sel ? '#eef3fd' : '#d8def0';
+    r.window(c.x, c.y, c.w, c.h, {
+      fill, border: UI.frame, highlight: sel ? '#8fa8d8' : UI.shade,
     });
-    // Icon for the highlighted kin, so the list is not just names.
-    const kin = this.battle.player.party[this.partyMenu.index];
-    if (kin) r.image(iconSprite(kin.species), MSG.w - 36, MSG.y + 10);
+    if (sel) {
+      // Dark ring on the card you are on and nothing on the ones you are not,
+      // matching the command pad. Same rule, same reason.
+      r.outline(c.x - 1, c.y - 1, c.w + 2, c.h + 2, UI.frame);
+      r.outline(c.x + 2, c.y + 2, c.w - 4, c.h - 4, 'rgba(255,255,255,0.75)');
+    }
+
+    const frac = Math.max(0, kin.currentHp / Math.max(1, kin.maxHp));
+    const hpC = frac > 0.5 ? UI.hpGood : frac > 0.2 ? UI.hpWarn : UI.hpBad;
+    const ink = down ? '#6e7488' : UI.ink;
+    const art = down ? 0.4 : 1;
+
+    if (i === 0) {
+      r.image(frontSprite(kin.species), c.x + Math.floor((c.w - 64) / 2), c.y + 4,
+        0, 0, SPRITE_SIZE, SPRITE_SIZE, false, false, art);
+      const tx = c.x + 6;
+      const rx = c.x + c.w - 6;
+      this.partyName(r, kin.name, tx, c.y + 73, rx - tx - r.textWidth(`Lv${kin.level}`) - 4, ink);
+      r.text(`Lv${kin.level}`, rx, c.y + 73, { color: ink, align: 'right' });
+      r.text('HP', tx, c.y + 84, { color: UI.inkSoft });
+      r.meter(tx + 16, c.y + 85, c.w - 12 - 16, 6, frac, hpC, UI.hpBack, UI.frame);
+      r.text(`${kin.currentHp}/${kin.maxHp}`, rx, c.y + 94, { color: ink, align: 'right' });
+      this.partyChip(r, kin, tx, c.y + 105, down);
+      if (active) this.partyBadge(r, c.x + 5, c.y + 5);
+      return;
+    }
+
+    // The icon is cropped to the row height rather than scaled, so it stays on
+    // the pixel grid. Icons are built bottom-aligned on their own ground line,
+    // so the crop comes almost entirely off the headroom at the top -- take it
+    // off the bottom instead and the row shows a creature with no feet.
+    r.image(iconSprite(kin.species), c.x + 3, c.y + 2, 0, 18, ICON_SIZE, 38, false, false, art);
+    const tx = c.x + 38;
+    const rx = c.x + c.w - 6;
+    this.partyName(r, kin.name, tx, c.y + 3, rx - tx - r.textWidth(`Lv${kin.level}`) - 4, ink);
+    r.text(`Lv${kin.level}`, rx, c.y + 3, { color: ink, align: 'right' });
+    r.meter(tx, c.y + 14, 44, 5, frac, hpC, UI.hpBack, UI.frame);
+    r.text(`${kin.currentHp}/${kin.maxHp}`, rx, c.y + 13, { color: ink, align: 'right' });
+    // Both tags ride the portrait, top and bottom, so the text columns beside
+    // it keep their full width whether a kin is carrying one or not.
+    this.partyChip(r, kin, c.x + 3, c.y + c.h - 11, down);
+    if (active) this.partyBadge(r, c.x + 3, c.y + 2);
+  }
+
+  /** A nickname is player-supplied, so it is measured against its column. */
+  private partyName(r: Renderer, name: string, x: number, y: number, room: number, ink: string): void {
+    let text = name;
+    while (text.length > 1 && r.textWidth(text) > room) text = text.slice(0, -1);
+    if (text !== name) text = text.slice(0, -1) + '..';
+    r.text(text, x, y, { color: ink });
+  }
+
+  /** Fainted beats status: a kin at zero has nothing else worth reporting. */
+  private partyChip(r: Renderer, kin: Kin, x: number, y: number, down: boolean): void {
+    if (down) {
+      r.rect(x, y, 20, 9, '#8a4048');
+      r.outline(x, y, 20, 9, '#282838');
+      r.text('FNT', x + 2, y + 1, { color: '#ffffff' });
+      return;
+    }
+    if (kin.status !== 'none') this.renderStatusChip(r, x, y, kin.status);
+  }
+
+  /** The kin that is out. Marked, not selectable -- it is already in the fight. */
+  private partyBadge(r: Renderer, x: number, y: number): void {
+    r.rect(x, y, 20, 9, '#3f7cc0');
+    r.outline(x, y, 20, 9, '#282838');
+    r.text('OUT', x + 2, y + 1, { color: '#ffffff' });
   }
 
   private renderBagMenu(r: Renderer): void {

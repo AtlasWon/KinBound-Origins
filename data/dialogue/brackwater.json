@@ -12,72 +12,82 @@
   "entries": {
     "bw_harbourmaster": [
       {
-        "unlessFlags": [
-          "seal_2_taken"
-        ],
-        "lines": [
-          "Brackwater. Forty boats, two of them working.",
-          "Not for want of crew. For want of a channel worth taking a boat down.",
-          "Mabry is out on the pier. She has been out on the pier since Tuesday."
-        ]
-      },
-      {
         "ifFlags": [
           "seal_2_taken"
         ],
         "lines": [
-          "She gave you the Seal. Then I will tell you what I told her.",
+          "She gave you the Seal. Right. Then I'll tell you what I told her.",
           "The Concord took soundings off my pier for six weeks. Always after dark.",
-          "A survey is a survey. But an honest one does not need the dark."
+          "A survey's a survey. But an honest one doesn't need the dark."
+        ]
+      },
+      {
+        "lines": [
+          "Brackwater. Forty boats, two of them working.",
+          "Not for want of crew. For want of a channel worth putting a boat down.",
+          "Mabry's out on the pier. She's been out on the pier since Tuesday."
         ]
       }
     ],
     "bw_netter": [
-      "Flats are heaving. Everything that lives in deep water has come up onto the mud.",
-      "That is not a good year. That is a run.",
-      "Things run from something."
+      "Flats are heaving. Everything that lives deep has come up onto the mud.",
+      "My mother would have called that a gift year. It isn't. It's a run.",
+      "Things run from something. Nobody down here finishes that sentence."
     ],
     "bw_child": [
-      "Dad says the sea is holding its breath.",
-      "I asked what happens when it lets go.",
-      "He did not answer, so I asked louder, and he still did not answer."
+      "Dad says the sea's holding its breath.",
+      "So I asked what happens when it lets go.",
+      "He didn't answer. So I asked louder. He still didn't answer."
     ],
     "bw_greeter": [
-      "Waystation west, provisioner east, Bastion at the end of the pier.",
-      "Mind the lanes either side of the hall. The middle is deep and it does not forgive."
-    ],
-    "bw_surveyor": [
       {
-        "unlessFlags": [
-          "met_kerrow"
+        "ifFlags": [
+          "seal_2_taken"
         ],
         "lines": [
-          "Depth soundings. Standard work.",
-          "No, I cannot tell you the numbers. No, that is not sinister."
+          "Beat Mabry, did you. She'll be insufferable. She's always insufferable.",
+          "Coast road runs north when you're ready. Mind the lanes on your way out.",
+          "The middle one's deep. It doesn't forgive and it doesn't warn you."
         ]
       },
+      {
+        "lines": [
+          "Waystation west, provisioner east, Bastion at the end of the pier.",
+          "Mind the lanes either side of the hall when you get there.",
+          "The middle one's deep. It doesn't forgive and it doesn't warn you."
+        ]
+      }
+    ],
+    "bw_surveyor": [
       {
         "ifFlags": [
           "met_kerrow"
         ],
         "lines": [
-          "You spoke to the Director. Then you have heard it properly and I need not perform.",
-          "I will tell you the part she leaves out because it is not persuasive.",
-          "We do not know what happens to everything that migrates once the current stops.",
-          "We have models. The models disagree with each other."
+          "You've spoken to the Director. Good. Then I don't have to perform.",
+          "Here's the part she leaves out, because it doesn't persuade anybody.",
+          "We don't know what happens to everything that migrates once the current stops.",
+          "We have models. They disagree with each other. Loudly."
+        ]
+      },
+      {
+        "lines": [
+          "Depth soundings. Standard work. Very dull.",
+          "No, I can't give you the numbers. No, that isn't sinister, it's a form.",
+          "...I'd like it to be dull. I'd like that a great deal."
         ]
       }
     ],
     "bw_sailor": [
-      "Sixty years I read this channel. Currents, colour, the way the birds sit.",
-      "Now it is flat as a table and I cannot read a table.",
-      "A flat sea is not a calm sea, lad. A flat sea is a held one."
+      "Sixty years I read this channel. Currents, colour, the way the birds sit on it.",
+      "Now it's flat as a table, and I've never had to read a table before.",
+      "A flat sea isn't a calm sea. A flat sea is a held one, and something's holding it."
     ],
     "bw_house": [
       "My husband fished the deep channel. Thirty-one years.",
-      "He went out in the spring and the water did not move the boat. Not once, all day.",
-      "He came home and sat down and did not go out again.",
-      "He is not frightened of storms. He is frightened of stillness. So am I."
+      "He went out one morning in spring and the water never moved the boat. Not once.",
+      "He came home, sat down, and never went out again. He was gone by midsummer.",
+      "Storms never frightened him. Stillness did. I've come round to his way of thinking."
     ]
   }
 }

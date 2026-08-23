@@ -4,8 +4,8 @@
     "trigger": "interact",
     "actions": [
       { "kind": "say", "who": "PROVISIONER", "lines": [
-        "Everything here has quarry dust on it. Everything in Kellowmere has quarry dust on it.",
-        "It does not affect the product."
+        "Everything in here has quarry dust on it. Everything in Kellowmere has quarry dust on it.",
+        "It doesn't affect the product. It affects the mood."
       ]},
       { "kind": "openShop", "shop": "kellowmere_provisioner" }
     ]

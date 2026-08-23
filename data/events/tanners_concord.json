@@ -14,7 +14,7 @@
         "kind": "say",
         "who": "???",
         "lines": [
-          "{name}. You are the one filling in a Vellum for Halcyon Vess."
+          "{name}. You're the one filling in a Vellum for Halcyon Vess."
         ]
       },
       {
@@ -30,19 +30,26 @@
         "kind": "say",
         "who": "ISOLDE KERROW",
         "lines": [
-          "Isolde Kerrow. I direct the Stillwater Concord, which is a longer way of saying I sign things.",
+          "Isolde Kerrow. I direct the Stillwater Concord, which mostly means I sign things.",
           "He writes to this office every week. Careful letters. Good numbers in them.",
-          "I read all of them. I have not answered one, and I would like to tell you why to your face rather than have yo",
-          "u decide for yourself."
+          "I read all of them. I have answered none."
         ]
       },
       {
         "kind": "say",
         "who": "ISOLDE KERROW",
         "lines": [
-          "Seventy years ago the Hollow Sea turned over and took a town called Old Tidefall off the map in one night.",
-          "Two hundred and forty people. My brother was one of them. I was six.",
-          "Dr. Vess would like us to observe the Turning. Record it. Understand it."
+          "I'd rather tell you why to your face than let you work it out from the filing.",
+          "Seventy years ago the Hollow Sea turned over and took a town called Old Tidefall.",
+          "One night. Two hundred and forty people. My brother was one. I was six."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "ISOLDE KERROW",
+        "lines": [
+          "Dr. Vess would like us to observe the Turning. Record it. Understand it.",
+          "He's right that it is the greater science. He is usually right."
         ]
       },
       {
@@ -54,17 +61,16 @@
         "who": "ISOLDE KERROW",
         "lines": [
           "I would like to stop it.",
-          "Not delay it. Not survive it. Stop it, permanently, and never have that conversation with anybody's family aga",
-          "in."
+          "Not delay it. Not survive it. Stop it, and never have that conversation again."
         ]
       },
       {
         "kind": "say",
         "who": "ISOLDE KERROW",
         "lines": [
-          "You have walked the west arm. You have seen the streams dropping and the herds refusing the bridge.",
-          "Everyone tells you that is frightening. It is not. It is the sea being *held*.",
-          "That is us. That is working."
+          "You've walked the west arm. Streams dropping, herds refusing the bridge.",
+          "Everyone tells you that is frightening. It isn't. That is the sea being held.",
+          "That is us. That is the work going right."
         ]
       },
       {
@@ -75,8 +81,8 @@
         "kind": "say",
         "who": "ISOLDE KERROW",
         "lines": [
-          "Go on to Brackwater. Take your Seals, they are a fine thing to have.",
-          "And when Vess writes to you about the Turning, ask him one question for me.",
+          "Go on to Brackwater. Take your Seals, they're a fine thing to have.",
+          "And the next time Vess writes to you about the Turning, ask him one question.",
           "Ask him what he intends to say to the next Old Tidefall."
         ]
       },
@@ -119,7 +125,8 @@
       {
         "kind": "say",
         "lines": [
-          "The Director's chair is empty. The soundings on the wall are not."
+          "The Director's chair is empty.",
+          "The soundings pinned above it are not. Somebody has ringed the west face twice."
         ]
       }
     ]

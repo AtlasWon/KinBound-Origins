@@ -15,13 +15,13 @@
   "entries": {
     "mh_mother": [
       {
-        "unlessFlags": [
-          "got_starter"
+        "ifFlags": [
+          "seal_1_taken"
         ],
         "lines": [
-          "There you are, {name}. I have unpacked exactly two boxes and I am calling that a day.",
-          "Dr. Vess came by at dawn asking for you. At DAWN.",
-          "Go on. The station is the big one with the charts in the window."
+          "A Seal. On my kitchen table. Well.",
+          "Your father got his first one at nineteen and never once shut up about it.",
+          "You have until the kettle boils. Then I want all of it."
         ]
       },
       {
@@ -29,58 +29,38 @@
           "got_starter"
         ],
         "lines": [
-          "Let me look at it. Oh, it is watching me back.",
-          "Take care of each other out there. Both of you.",
-          "And eat something that is not dried fish."
+          "Let me look at it again. Go on.",
+          "It is watching me back. I do not think I will ever get used to that.",
+          "Eat something that is not dried fish, {name}. That is the whole of my advice."
+        ]
+      },
+      {
+        "lines": [
+          "There you are. I have unpacked exactly two boxes and I am calling that a day.",
+          "Dr. Vess came by at dawn asking for you. At DAWN.",
+          "Go on. The station is the big one with the charts in the window."
         ]
       }
     ],
     "mh_villager": [
-      {
-        "unlessFlags": [
-          "seen_turning_talk"
-        ],
-        "lines": [
-          "New face. You are the family that took the Corrin place, yes?",
-          "Fair warning: the well hums some nights. Everyone says it is the pipes.",
-          "It is not the pipes."
-        ]
-      },
       {
         "ifFlags": [
           "seen_turning_talk"
         ],
         "lines": [
           "Still humming. Louder now.",
-          "My grandmother said the well only talks before a Turning.",
+          "My gran said the well only talks before a Turning.",
           "She also said fish could hold a grudge, so. Grain of salt."
         ]
-      }
-    ],
-    "mh_kid": [
-      "I can name every kin on Route 1. Go on, test me.",
-      "...I can name FOUR kin on Route 1.",
-      "The fifth one just kind of screams and leaves."
-    ],
-    "mh_hiker": [
-      "Ledges. Best invention in the region.",
-      "You drop down one, you save an hour walking back.",
-      "You try to climb UP one, you learn something about yourself."
-    ],
-    "mh_ollet": [
-      "Perrin has not stopped pacing since Vess sent word.",
-      "Two starters, two candidates, and my child has decided this is a duel.",
-      "Try not to let it be a duel."
-    ],
-    "mh_ollet_child": [
+      },
       {
-        "unlessFlags": [
-          "got_starter"
+        "ifFlags": [
+          "seal_1_taken"
         ],
         "lines": [
-          "You are the new one. Good. I was worried Vess would give them both to me.",
-          "That was a joke. Mostly.",
-          "Go and pick. I will wait. I am very good at waiting."
+          "A Seal already. Don't tell Ollet, he'll get competitive on Perrin's behalf.",
+          "Listen. The well's stopped humming. Three nights now, nothing at all.",
+          "I thought that would be a relief. It isn't."
         ]
       },
       {
@@ -88,24 +68,89 @@
           "got_starter"
         ],
         "lines": [
-          "So that is the one you went with.",
-          "Huh. Not what I would have taken.",
-          "Which means when I beat you, it will actually mean something."
+          "So Vess gave you one after all. Look at the size of it.",
+          "Do me a favour on your way out. Stand by the well a minute and just listen.",
+          "Then come back and tell me I'm not going soft. Nobody else in this town will."
+        ]
+      },
+      {
+        "lines": [
+          "New face. You're the family that took the Corrin place, aren't you.",
+          "Fair warning: that well hums some nights. Everyone tells me it's the pipes.",
+          "It isn't the pipes."
+        ]
+      }
+    ],
+    "mh_kid": [
+      {
+        "ifFlags": [
+          "got_starter"
+        ],
+        "lines": [
+          "You've GOT one. Can I see it? Can I hold it? Can I name it?",
+          "...Fine. But I'm putting it in my book anyway and I'm spelling it how I like."
+        ]
+      },
+      {
+        "lines": [
+          "I can name every kin on Route 1. Go on, test me.",
+          "...I can name four kin on Route 1.",
+          "The fifth one just screams and leaves. You try writing that down."
+        ]
+      }
+    ],
+    "mh_hiker": [
+      "Ledges. Best thing in this region and nobody appreciates them.",
+      "Drop down one heading south and you save yourself an hour of walking.",
+      "Try climbing back UP one and you learn something about yourself. I've learned it twice."
+    ],
+    "mh_ollet": [
+      {
+        "ifFlags": [
+          "got_starter"
+        ],
+        "lines": [
+          "Gone, is he. Didn't take the lunch I packed him either.",
+          "His mother keeps a Bastion two provinces off. He's decided that's a debt.",
+          "It isn't. Tell him that somewhere I'm not standing. He might hear it from you."
+        ]
+      },
+      {
+        "lines": [
+          "Perrin hasn't sat down since Vess sent word. Wore a line in my floor.",
+          "Two starters, two candidates, and my child has decided that's a duel.",
+          "Try not to let it be a duel. That's all I'm asking. Try."
+        ]
+      }
+    ],
+    "mh_ollet_child": [
+      {
+        "ifFlags": [
+          "got_starter"
+        ],
+        "lines": [
+          "So that's what you went with.",
+          "Huh. Not what I'd have taken. Which means beating you will actually count.",
+          "Don't look at me like that, I'm being nice."
+        ]
+      },
+      {
+        "lines": [
+          "You're the new one. Good. I was worried Vess would hand me both of them.",
+          "That was a joke. Mostly.",
+          "Go and pick. I'll wait. I'm excellent at waiting, ask my father."
         ]
       }
     ],
     "vess_intro": [
       {
-        "unlessFlags": [
-          "got_starter"
+        "ifFlags": [
+          "met_kerrow"
         ],
         "lines": [
-          "You came. Good. Sit, do not sit, whichever gets you talking faster.",
-          "I study movement. Not battling, not breeding. Movement.",
-          "Where things go, and why they all go at once.",
-          "And something in the Hollow Sea is early this year. Decades early.",
-          "I cannot walk the whole region any more. My knees have opinions.",
-          "So I am asking you to walk it for me, and write down what you see."
+          "You've met Kerrow. I can tell. People go quiet in a particular way afterwards.",
+          "She isn't lying to you. That's the difficult part. She never has been.",
+          "Keep the Vellum open. Facts first. Sides afterwards, if you must."
         ]
       },
       {
@@ -113,47 +158,67 @@
           "got_starter"
         ],
         "lines": [
+          "Still here? Sit. No, don't, you'll only fidget and I'll watch you do it.",
           "Keep the Vellum open and keep your eyes up.",
-          "Anything that is where it should not be, I want to know about it."
+          "Anything that is where it shouldn't be, I want to know. Especially the dull ones."
+        ]
+      },
+      {
+        "lines": [
+          "You came. Good. Sit, don't sit, whichever gets you talking faster.",
+          "I study movement. Not battling, not breeding. Movement.",
+          "And something in the Hollow Sea is early this year. Decades early."
         ]
       }
     ],
     "vess_aide": [
-      "Careful of the charts, the pins are older than I am.",
-      "Vess has been awake for two days. He says the currents 'feel wrong'.",
-      "He is usually right, which is the annoying part."
-    ],
-    "r1_walker": [
-      "Six hours out, six hours back, and I have seen one interesting rock.",
-      "Beautiful rock, though. Genuinely.",
-      "Ashgate is north if you keep on the spine road."
-    ],
-    "r1_watcher": [
       {
-        "unlessFlags": [
-          "seen_turning_talk"
+        "ifFlags": [
+          "got_starter"
         ],
         "lines": [
-          "You will want to keep out of the deep grass until that one of yours has some weight on it.",
-          "Nothing on this route will kill you. Plenty of it will embarrass you.",
-          "Watch the pond. The kin there come out at dusk and only at dusk."
+          "Mind the charts on your way past. Those pins are older than I am.",
+          "He hasn't slept in two days. He says the currents feel wrong.",
+          "He's usually right. That's the annoying part."
         ]
       },
+      {
+        "lines": [
+          "Go through, he's expecting you. Mind the charts, the pins are ancient.",
+          "And if you can get him to eat anything on your way out, I'll owe you.",
+          "I've been trying since Tuesday."
+        ]
+      }
+    ],
+    "r1_walker": [
+      "Six hours out, six hours back, and one interesting rock to show for it.",
+      "Beautiful rock, mind. Genuinely.",
+      "Ashgate's north if you stay on the spine road and don't get clever."
+    ],
+    "r1_watcher": [
       {
         "ifFlags": [
           "seen_turning_talk"
         ],
         "lines": [
-          "You felt it too, then. Ground went quiet about an hour ago.",
+          "You felt it too, then. Ground went quiet about an hour back.",
           "Birds left first. They always do.",
-          "Get to Ashgate. Somebody there will want to hear it from you."
+          "Get to Ashgate. Somebody there will want to hear it from you and not me."
+        ]
+      },
+      {
+        "lines": [
+          "Stay out of the deep grass until that one of yours has some weight on it.",
+          "Nothing on this route will kill you. Plenty of it will embarrass you.",
+          "And watch the pond at dusk. Only at dusk. Don't ask me why, I've stopped asking."
         ]
       }
     ],
     "mh_perrin_idle": [
       {
         "lines": [
-          "Go and see Vess. I will be right behind you, obviously."
+          "Go and see Vess. I'll be right behind you.",
+          "Obviously I'll be right behind you. I've been up since four."
         ]
       }
     ]
