@@ -11,13 +11,13 @@
     "IfAAfff/fffI",
     "IfEEfffrfffI",
     "IffffffVffPI",
-    "IPffffDffffI",
-    "IIIIIIIIIIII"
+    "IPfffffffffI",
+    "IIIIIIDIIIII"
   ],
   "warps": [
     {
       "x": 6,
-      "y": 6,
+      "y": 7,
       "toMap": "marrow_hollow",
       "toX": 6,
       "toY": 7,

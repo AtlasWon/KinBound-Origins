@@ -91,28 +91,33 @@ function gameRoot() {
 /* ------------------------------------------------------------- protocol */
 
 /**
- * The creature-art listing.
+ * The hand-drawn art listings.
  *
- * Hand-drawn sprites live in assets/kin as <species-id>-front.png. The game
- * will not probe 96 URLs to find out which of them exist, so it asks for this
- * index; answering it from a directory read means the packaged app and a run
+ * Hand-drawn sprites live in assets/kin as <species-id>-front.png, and
+ * hand-drawn item icons in assets/items as <icon-key>.png. The game will not
+ * probe a URL per possible file to find out which of them exist, so it asks for
+ * an index; answering it from a directory read means the packaged app and a run
  * from source both report exactly what they are carrying, with no generated
  * file to keep in step. (fs reads through the asar transparently, so this works
- * inside the installer as well.) tools/serve.js answers it the same way for the
- * browser build, and tools/kinart.js writes a static copy for a plain host.
+ * inside the installer as well.) tools/serve.js answers them the same way for
+ * the browser build, and tools/kinart.js and tools/itemart.js write static
+ * copies for a plain host.
  */
-const KIN_ART_INDEX = '/assets/kin/index.json';
+const ART_INDEXES = {
+  '/assets/kin/index.json': 'kin',
+  '/assets/items/index.json': 'items',
+};
 
-function kinArtIndex(root) {
+function artIndex(root, folder) {
   let files = [];
   try {
-    files = fs.readdirSync(path.join(root, 'assets', 'kin'))
+    files = fs.readdirSync(path.join(root, 'assets', folder))
       .filter((f) => f.toLowerCase().endsWith('.png'))
       .sort();
   } catch {
     // No art folder in this build: an empty listing is the right answer.
   }
-  return new Response(JSON.stringify({ note: 'served from assets/kin', files }), {
+  return new Response(JSON.stringify({ note: `served from assets/${folder}`, files }), {
     headers: { 'Content-Type': 'application/json; charset=utf-8' },
   });
 }
@@ -123,7 +128,7 @@ function registerGameProtocol() {
     const url = new URL(request.url);
     let rel = decodeURIComponent(url.pathname);
     if (rel === '' || rel === '/') rel = '/index.html';
-    if (rel === KIN_ART_INDEX) return kinArtIndex(root);
+    if (ART_INDEXES[rel]) return artIndex(root, ART_INDEXES[rel]);
 
     // Resolve inside the app directory and refuse anything that escapes it.
     const target = path.normalize(path.join(root, rel));

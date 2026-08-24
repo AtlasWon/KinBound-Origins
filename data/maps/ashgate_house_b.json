@@ -11,13 +11,13 @@
     "I/fffffffPfI",
     "IrfffAAffffI",
     "IVfffEEfrrfI",
-    "IPffffDfffkI",
-    "IIIIIIIIIIII"
+    "IPffffffffkI",
+    "IIIIIIDIIIII"
   ],
   "warps": [
     {
       "x": 6,
-      "y": 6,
+      "y": 7,
       "toMap": "ashgate",
       "toX": 25,
       "toY": 16,

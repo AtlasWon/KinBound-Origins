@@ -46,6 +46,20 @@ export const TERRAIN: Record<string, TerrainDef> = {
   '~': { ground: T.WATER, collision: 2, tag: 'water', step: 'water' },
   'W': { ground: T.WATER_DEEP, collision: 8, tag: 'deepWater', encounter: true, step: 'water' },
   's': { ground: T.SAND, collision: 0, tag: 'sand', step: 'sand' },
+  /**
+   * The map border.
+   *
+   * 'T' is what the edge of a map is made of, everywhere. A wall of woodland
+   * is the era's way of saying "the world continues and you do not go that
+   * way", and it says it without claiming anything about the terrain: trees
+   * ring a coast, a marsh and a farm equally happily.
+   *
+   * The rock border below ('C' and 'c') is the exception and has to earn its
+   * place: a cliff edge is a statement that this place is up against a
+   * mountain, so it belongs on a highland map, on a settlement genuinely ringed
+   * by rock -- Kellowmere, which is a quarry town -- and in a cave. Anywhere
+   * else it reads as a quarry the map is not.
+   */
   'T': { ground: T.GRASS, over: T.TREE, collision: 1, tag: 'grass' },
   't': { ground: T.GRASS, over: T.TREE_SMALL, collision: 1, tag: 'grass' },
   'o': { ground: T.GRASS, over: T.ROCK, collision: 1, tag: 'grass' },
@@ -56,6 +70,15 @@ export const TERRAIN: Record<string, TerrainDef> = {
   '[': { ground: T.ROOF_EDGE_L, collision: 1, tag: 'floor' },
   ']': { ground: T.ROOF_EDGE_R, collision: 1, tag: 'floor' },
   '^': { ground: T.ROOF_PEAK, collision: 1, tag: 'floor' },
+  /**
+   * The way out of a room.
+   *
+   * The tile draws a doorcase and a dark opening in the interior wall's own
+   * material, so it only reads as a doorway when it is *part of a wall run* --
+   * put it in the middle of a floor and it is a stub of wall standing on the
+   * boards with a hole in it. It belongs in the row of 'I' that closes the
+   * bottom of the room, not on the floor in front of that row.
+   */
   'D': { ground: T.DOOR, collision: 0, tag: 'floor', step: 'stone' },
   '|': { ground: T.GRASS, over: T.FENCE_V, collision: 1, tag: 'grass' },
   '_': { ground: T.GRASS, over: T.FENCE_H, collision: 1, tag: 'grass' },

@@ -108,7 +108,7 @@
       "y": 16,
       "toMap": "route_3",
       "toX": 1,
-      "toY": 9,
+      "toY": 13,
       "facing": "right",
       "style": "edge"
     },
@@ -117,7 +117,7 @@
       "y": 16,
       "toMap": "route_3",
       "toX": 1,
-      "toY": 10,
+      "toY": 14,
       "facing": "right",
       "style": "edge"
     }

@@ -12,38 +12,38 @@
   "encounterTable": "route_2",
   "rows": [
     "TTTTTTTTTTTTTT--TTTTTTTTTTTTTT",
-    "TT............--............TT",
-    "TT...oo.......--.......oo...TT",
-    "TT............--............TT",
-    "TT..\"\"\"\"\"\"....--............TT",
-    "TT..\"\"\"\"\"\"....--....oo......TT",
-    "TT..\"\"\"\"\"\"....--............TT",
-    "TT............--............TT",
-    "TTLLLLLLLLLLLL--LLLLLLLLLLLLTT",
-    "TT............--............TT",
-    "TT...TTTTT....--............TT",
-    "TT...T~~~T....--............TT",
-    "TT...T~~~T....--............TT",
-    "TT...TTTTT....--............TT",
-    "TT............--............TT",
-    "TT......\"\"\"\"..--..\"\"\"\"......TT",
-    "TT......\"\"\"\"..--..\"\"\"\"......TT",
-    "TT............--............TT",
-    "TT.....o......--......o.....TT",
-    "TT............--TTTTTTTTTTTTTT",
-    "TT............--......X.....TT",
-    "TT............--TTTTTTTTTTTTTT",
-    "TT............--............TT",
-    "TT..\"\"\"\"\"\"....--....\"\"\"\"\"\"..TT",
-    "TT..\"\"\"\"\"\"....--....\"\"\"\"\"\"..TT",
-    "TT..\"\"\"\"\"\"....--....\"\"\"\"\"\"..TT",
-    "TT............--............TT",
-    "TT.....oo.....--.....oo.....TT",
-    "TT............--............TT",
-    "TT.CCCCC......--......CCCCC.TT",
-    "TT.ccccc......--......ccccc.TT",
-    "TT............--............TT",
-    "TT............--............TT",
+    "TT.\"\"\"\"....\"\".--,.......CCCCTT",
+    "TT.\"\"\"\".t..\"\"\"--..,.....CCCCTT",
+    "TT.\"\"\",....\"\"\"--o.......ccccTT",
+    "TT.....*.-------....*.t.....TT",
+    "TTt......-------........TTTTTT",
+    "TT.......--.,...!CCCCC.T.,..TT",
+    "TT.CCCCC.--......CCCCC......TT",
+    "TT,CCCCC.--.o....ccccc.T...*TT",
+    "TT.ccccc,--..o.....*.o..TTTTTT",
+    "TTCCCCoCC--CCC...CCCoC...CCCTT",
+    "TTccccccc--cccLLLcccccLLLcccTT",
+    "TT..t....--.\"\"\"\".......,....TT",
+    "TT.t.....--.\"\"\"\"\"o..,.....*.TT",
+    "TT....o.!--.\"\"\"\"\"o....t.....TT",
+    "TTsssssss-----------.....t..TT",
+    "TT~~~~~~s-----------........TT",
+    "TT~~~~~~~s..,.....--.TTTTTTTTT",
+    "TT~~~~~~~s...\"\"\"\".--!T....*.TT",
+    "TT~~~~~~~s..\"\"\"\"\".--.X..,...TT",
+    "TT~~~~~~ss..\"\"\"\",.--.T.,....TT",
+    "TTCCo....CCCC...CC--CCCCoCCCTT",
+    "TTcccLLLLcCccLLLcc--ccccccccTT",
+    "TT................--....TTTTTT",
+    "TT...........,....--....TTTTTT",
+    "TT................--.TTTTTt.TT",
+    "TT.TTT..TTTT.....!--.tTTTTT.TT",
+    "TT.T,....,.T..------....,...TT",
+    "TT.T.*o....T..------........TT",
+    "TT.\"\"\"\".TTTTt.--.....\"\"\"\"\",.TT",
+    "TT.\"\"\"\"\"......--.o...\"\"\"\"\"\".TT",
+    "TT.,\"\"\"\".....!--..o.t.\"\"\"\"\".TT",
+    "TT*.....,.....--...........,TT",
     "TTTTTTTTTTTTTT--TTTTTTTTTTTTTT"
   ],
   "warps": [
@@ -88,9 +88,9 @@
     {
       "id": "r2_dell",
       "sprite": "villager_f",
-      "x": 13,
-      "y": 30,
-      "facing": "right",
+      "x": 16,
+      "y": 26,
+      "facing": "down",
       "movement": {
         "kind": "static"
       },
@@ -98,22 +98,10 @@
       "sightRange": 3
     },
     {
-      "id": "r2_pike",
-      "sprite": "hiker",
-      "x": 16,
-      "y": 26,
-      "facing": "left",
-      "movement": {
-        "kind": "static"
-      },
-      "trainer": "r2_pike",
-      "sightRange": 3
-    },
-    {
       "id": "r2_juna",
       "sprite": "villager_m",
-      "x": 13,
-      "y": 22,
+      "x": 17,
+      "y": 24,
       "facing": "right",
       "movement": {
         "kind": "static"
@@ -122,22 +110,34 @@
       "sightRange": 3
     },
     {
+      "id": "r2_pike",
+      "sprite": "hiker",
+      "x": 11,
+      "y": 14,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r2_pike",
+      "sightRange": 3
+    },
+    {
       "id": "r2_wren",
       "sprite": "villager_f",
       "x": 13,
-      "y": 7,
-      "facing": "right",
+      "y": 3,
+      "facing": "down",
       "movement": {
         "kind": "static"
       },
       "trainer": "r2_wren",
-      "sightRange": 4
+      "sightRange": 3
     },
     {
       "id": "r2_walker",
       "sprite": "villager_m",
-      "x": 20,
-      "y": 3,
+      "x": 24,
+      "y": 12,
       "facing": "down",
       "movement": {
         "kind": "pace",
@@ -151,7 +151,7 @@
     {
       "kind": "sign",
       "x": 13,
-      "y": 32,
+      "y": 31,
       "text": [
         "ROUTE 2",
         "Ashgate south. Kellowmere north, uphill all the way.",
@@ -160,39 +160,71 @@
     },
     {
       "kind": "sign",
-      "x": 16,
-      "y": 19,
+      "x": 17,
+      "y": 26,
+      "text": [
+        "The stair starts here. One way up per shelf, and the ways up",
+        "are not above one another, so stop looking for a straight line."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 20,
+      "y": 18,
       "text": [
         "A stake in the ground, Concord-stamped.",
         "Beyond it: thorn, grown across in a single season."
       ]
     },
     {
+      "kind": "sign",
+      "x": 8,
+      "y": 14,
+      "text": [
+        "The way up the next shelf is west of here, not above it.",
+        "Follow the tarn. If the water is on your left you are going the right way."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 16,
+      "y": 6,
+      "text": [
+        "KELLOWMERE QUARRY - WORKINGS BEYOND",
+        "Loose stone. Mind your feet and mind the heaps."
+      ]
+    },
+    {
       "kind": "cuttable",
-      "x": 22,
-      "y": 20,
+      "x": 21,
+      "y": 19,
       "flag": "r2_thorn_cut"
+    },
+    {
+      "kind": "pushable",
+      "x": 24,
+      "y": 7
     },
     {
       "kind": "item",
       "x": 26,
-      "y": 20,
+      "y": 19,
       "item": "fine_vessel",
       "quantity": 2,
       "flag": "item_r2_alcove"
     },
     {
       "kind": "item",
-      "x": 6,
-      "y": 12,
+      "x": 8,
+      "y": 20,
       "item": "strong_potion",
       "quantity": 1,
       "flag": "item_r2_pond"
     },
     {
       "kind": "item",
-      "x": 20,
-      "y": 5,
+      "x": 26,
+      "y": 7,
       "item": "clearleaf",
       "quantity": 2,
       "flag": "item_r2_rocks"
@@ -200,7 +232,7 @@
     {
       "kind": "hiddenItem",
       "x": 5,
-      "y": 24,
+      "y": 28,
       "item": "tonic_berry",
       "quantity": 2,
       "flag": "item_r2_hidden"
@@ -208,10 +240,11 @@
     {
       "kind": "hiddenItem",
       "x": 25,
-      "y": 16,
+      "y": 30,
       "item": "ward_incense",
       "quantity": 1,
       "flag": "item_r2_hidden2"
     }
-  ]
+  ],
+  "_design": "Three shelves rising north, each closed by a rock band with one notch to climb and two ledges to come down. The notches are deliberately far apart, so the road zigzags to find them. The stone at 23,7 stays shut until Kellowmere -- at the top of this route -- hands over Shoulder."
 }

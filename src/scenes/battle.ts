@@ -234,7 +234,10 @@ type Anim =
   | { kind: 'flash'; side: SideId; frames: number; t: number; effectiveness: number }
   | { kind: 'shake'; side: SideId; frames: number; t: number }
   | { kind: 'faint'; side: SideId; frames: number; t: number }
-  | { kind: 'sendOut'; side: SideId; frames: number; t: number }
+  // Everything the arrival needs to draw itself is copied onto the step when
+  // the step is built, because the engine has already finished the turn by
+  // then: reading the live model here is reading the future.
+  | { kind: 'sendOut'; side: SideId; kin: Kin; hp: number; exp: number; level: number; frames: number; t: number }
   | { kind: 'withdraw'; side: SideId; frames: number; t: number }
   | { kind: 'windup'; side: SideId; self: boolean; frames: number; t: number }
   | { kind: 'moveFx'; side: SideId; anim: string; type: TypeId; frames: number; t: number }
@@ -492,7 +495,11 @@ export class BattleScene implements Scene {
           // being squeezed into the old budget -- an anticipation beat that
           // lasts one frame is not an anticipation beat.
           this.queue.push(e.t === 'sendOut'
-            ? { kind: 'sendOut', side: e.side, frames: this.frames(60, game), t: 0 }
+            ? {
+              kind: 'sendOut', side: e.side, kin: e.kin,
+              hp: e.hp, exp: e.exp, level: e.level,
+              frames: this.frames(60, game), t: 0,
+            }
             : { kind: 'withdraw', side: e.side, frames: this.frames(46, game), t: 0 });
           break;
         }
@@ -567,8 +574,16 @@ export class BattleScene implements Scene {
           break;
         }
         case 'expGain': {
+          // Both ends come off the event. `e.kin.exp` is the total AFTER the
+          // award -- the engine pays it before the scene ever sees the event
+          // -- so the old `e.kin.exp + e.amount` ran the bar to one whole
+          // award past the truth. The bar then started the next fight from
+          // that inflated figure, and the following knockout animated from
+          // exp+2a to exp+2a: the same number, so the bar did not move at
+          // all. That is the "won't get any xp" in the report; the kin was
+          // always paid, the meter just stopped showing it.
           this.queue.push({
-            kind: 'exp', kin: e.kin, from: -1, to: e.kin.exp + e.amount,
+            kind: 'exp', kin: e.kin, from: e.expBefore, to: e.expBefore + e.amount,
             frames: this.frames(34, game), t: 0,
           });
           break;
@@ -868,6 +883,12 @@ export class BattleScene implements Scene {
       }
       case 'exp': {
         a.t++;
+        // The panel belongs to whoever is stood on the pad. A benched
+        // participant is paid too, and running the on-field kin's bar up to a
+        // bench kin's total -- measured against the wrong level's thresholds
+        // -- is how one switch used to leave the meter parked somewhere
+        // meaningless for the rest of the fight. Same guard the HP bar has.
+        if (this.view.player.kin !== a.kin) { this.current = null; break; }
         const p = Math.min(1, a.t / a.frames);
         this.displayExp = Math.round(a.from + (a.to - a.from) * p);
         if (a.t >= a.frames || skip) { this.displayExp = a.to; this.current = null; }
@@ -1053,15 +1074,20 @@ export class BattleScene implements Scene {
         break;
       }
       case 'sendOut': {
-        const kin = a.side === 'player' ? this.battle.player.active : this.battle.foe.active;
+        // Off the STEP, not off the battle. The engine resolves a whole turn
+        // before the first frame of it is drawn, so by now the model's active
+        // kin has already taken the hit that lands four beats from here --
+        // and a kin that walks on holding a bar drained by an attack nobody
+        // has watched yet is the "it has taken damage from a future attack"
+        // the player reported.
         const v = this.view[a.side];
-        v.kin = kin;
-        v.displayHp = kin.currentHp;
+        v.kin = a.kin;
+        v.displayHp = a.hp;
         // A fresh kin arrives square on its pad and takes its first breath
         // there, rather than inheriting whatever the last one was mid-flinch.
         v.dash = 0; v.dashV = 0; v.dashTo = 0; v.idleT = 0;
         v.flash = 0; v.flashT = 0; v.clipY = null;
-        if (a.side === 'player') { this.displayExp = kin.exp; this.displayLevel = kin.level; }
+        if (a.side === 'player') { this.displayExp = a.exp; this.displayLevel = a.level; }
         // With animations off the whole performance collapses onto its last
         // frame. sendOutFrame still runs there, so the cry and the arrival
         // both still happen -- those are information, not spectacle.
@@ -1123,9 +1149,10 @@ export class BattleScene implements Scene {
       const share = Math.min(1, Math.abs(a.from - a.to) / Math.max(1, a.kin.maxHp));
       a.frames = Math.max(6, Math.round(a.frames * (0.35 + 0.75 * share)));
     }
-    if (a.kind === 'exp' && a.from < 0) a.from = this.displayExp;
     if (a.kind === 'sendOut' && a.side === 'foe') {
-      this.opts.state.markSeen(this.battle.foe.active.species);
+      // The step's own kin again: two foes can be sent out inside one drained
+      // batch, and the model only remembers the last of them.
+      this.opts.state.markSeen(a.kin.species);
     }
   }
 
@@ -1896,27 +1923,22 @@ export class BattleScene implements Scene {
      * design-grid step of height per seam, the feet stay planted, and every
      * pixel that survives is still exactly where the grid says.
      *
-     * WHERE THE SEAMS GO is the part that has been wrong twice, and the second
-     * time is the one worth recording. They were moved off a fixed percentage
-     * of the FRAME onto 66% and 86% of each creature's own INK, which is much
-     * better placed and still not measured: cinderpaw's ink runs rows 46..123
-     * and its legs start around row 98, so 66% is row 96 and 86% is row 112 and
-     * BOTH seams were in the legs. Every breath took four design rows out of a
-     * twenty-five-row leg and dropped the entire animal onto the stumps. That
-     * is the "top half is being smushed" the player reported -- the top half
-     * was not being compressed, it was being driven down into legs that were.
-     *
-     * kinbreath measures the barrel instead: the wide solid part of the
-     * silhouette, found from the sprite's own alpha, with limbs and tails
-     * excluded because they are thin. Seams go inside it and nowhere else, so
-     * the ribcage is the only thing that changes shape and the head and the
-     * legs are carried as rigid blocks.
+     * WHERE THE SEAMS GO has been wrong three times and the history is in
+     * kinbreath.ts, which is the only place that decides it. The short version:
+     * a percentage of the frame put the seam in the head, a percentage of the
+     * ink put it in the legs, and the widest-run "barrel" put it back in the
+     * head -- because on a creature drawn side-on the widest unbroken run of
+     * ink is the horizontal line through its nose, its back and its tail at
+     * once, which is the line through its eyes. kinbreath now picks the row
+     * where the drawing is most nearly the same as the rows above and below it,
+     * which is the definition of a row that can go missing without being seen.
+     * Nothing in here needs to know how it decided; it just takes the rows.
      *
      * A seam can also RUN THE OTHER WAY. A positive delta repeats one logical
-     * pixel of barrel instead of dropping one, which costs nothing -- the
-     * repeat is on the grid and inside a region of the drawing that was already
-     * uniform -- and it is what lets the resting pose sit in the middle of the
-     * range rather than at the top of it.
+     * pixel instead of dropping one, which costs nothing -- the repeat is on
+     * the grid and in a stretch of the drawing that was already uniform, by
+     * exactly the test that chose it -- and it is what lets the resting pose
+     * sit in the middle of the range rather than at the top of it.
      *
      * Only a whole, plainly-standing sprite is ever squashed: a clipped or
      * half-materialised one is drawn flat, and nothing is breathing during

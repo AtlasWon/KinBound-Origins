@@ -8,6 +8,55 @@ Add a new `## vX.Y.Z` heading above the others before running `npm run ship`.
 
 ---
 
+## v0.10.0
+
+### Three battle bugs, and two of them were not what they looked like
+
+- **A kin you switch to no longer arrives already hurt.** The whole turn is
+  worked out before any of it is drawn, and the send-out was reading the kin's
+  health at the end of the turn instead of at the moment it walked on. So it
+  arrived showing damage from an attack you had not watched yet.
+- **Experience was always being awarded correctly** -- the bar was lying about
+  it. It was drawn from the wrong starting number, so it overshot by one
+  award, and the next fight then animated from the wrong place to the same
+  place, which is a bar that does not move at all. That is why a kin you
+  switched away from looked like it got nothing.
+- **Breathing no longer damages faces.** The rule picked the widest solid line
+  across a creature, which on anything drawn side-on is the line through its
+  nose, back and tail at once -- in other words, the line through its eyes. It
+  now picks the row where a creature least notices losing one, and every one of
+  the 48 was checked by eye.
+
+### The world
+
+- **Routes are routes now.** All four were the same map: a straight dirt spine
+  from gate to gate with grass rectangles either side and trainers standing in
+  the open. Each is rebuilt around one idea -- a fork you choose between, a
+  shore, a terrace, a wood -- with ledges, pockets and things worth going out
+  of your way for.
+- **Tall grass is one clump per square** again, the way it should be, with
+  ground showing between.
+- Map edges are woodland unless the place is a mountain or a cave.
+- Interior doorways sit **in** the wall, and stairs fall away into the dark.
+- Transitions last about twice as long and ease in and out.
+- The lab door lines up with the actual door, and Dr. Vess is no longer
+  standing inside the kin behind him.
+- Your friend now heads **for the lab** after greeting you, rather than walking
+  the wrong way and vanishing in the open.
+
+### Battle effects
+
+Every attack was erasing the creature it hit -- the impact flared from the
+contact point outward, so for several frames the defender was a white flower at
+the exact moment you were meant to see what happened. Impacts now clear the
+creature's silhouette and read as force rather than as a flash.
+
+### Opening
+
+The cinematic and the main menu are one continuous piece now, and the flying kin
+read as flying rather than as standing in the air, which is what they had
+started doing once real artwork replaced the drawn-in-code sprites.
+
 ## v0.9.0
 
 ### Twenty-seven kin drawn

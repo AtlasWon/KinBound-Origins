@@ -11,11 +11,19 @@
     "IkfffffKf/fI",
     "IfrrfAAffrfI",
     "IffffEEffVfI",
-    "IPffffDffffI",
-    "IIIIIIIIIIII"
+    "IPfffffffffI",
+    "IIIIIIDIIIII"
   ],
   "warps": [
-    { "x": 6, "y": 6, "toMap": "marrow_hollow", "toX": 6, "toY": 15, "facing": "down", "style": "door" }
+    {
+      "x": 6,
+      "y": 7,
+      "toMap": "marrow_hollow",
+      "toX": 6,
+      "toY": 15,
+      "facing": "down",
+      "style": "door"
+    }
   ],
   "npcs": [
     {
@@ -24,7 +32,9 @@
       "x": 8,
       "y": 3,
       "facing": "left",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "mh_ollet"
     },
     {
@@ -33,7 +43,9 @@
       "x": 3,
       "y": 4,
       "facing": "right",
-      "movement": { "kind": "lookAround" },
+      "movement": {
+        "kind": "lookAround"
+      },
       "script": "mh_ollet_child"
     }
   ],

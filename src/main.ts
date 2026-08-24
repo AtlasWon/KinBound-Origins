@@ -6,6 +6,7 @@ import { TitleScene } from './scenes/title.js';
 import { validateFont } from './gfx/font.js';
 import { registry } from './data/registry.js';
 import { loadKinArt } from './gfx/kinart.js';
+import { loadItemArt } from './gfx/itemart.js';
 import { clearSpriteCache } from './gfx/kinsprite.js';
 import { audio, type TrackData } from './audio/audio.js';
 import { migrateLegacySaves } from './systems/save.js';
@@ -64,6 +65,16 @@ async function boot(): Promise<void> {
      */
     await loadKinArt([...registry.species.keys()]);
     clearSpriteCache();
+
+    /*
+     * Hand-drawn item art, decoded here for the same reason and under the same
+     * rule: the accessors in gfx/itemart.ts are synchronous and called from
+     * render ticks, so every image has to be flat pixels before the first
+     * frame. Keyed on the `icon` field rather than the item id -- that field is
+     * the name of the drawing, and two items may share one. An item with no
+     * file, or with a bad one, keeps the icon generated in code.
+     */
+    await loadItemArt([...registry.items.values()].map((i) => i.icon).filter(Boolean));
 
     const tracks = await game.assets
       .loadJson<TrackData[]>('data/audio/tracks.json')

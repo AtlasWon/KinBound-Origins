@@ -10,39 +10,39 @@
     "y": 27
   },
   "encounterTable": "route_1",
-  "_design": "Two grass belts either side of a straight spine, one pond branch west, one hedge branch east to an item, and two ledges that only pay off on the walk home.",
+  "_design": "Three rooms stacked: the gate field forks two ways north, the hollow keeps those two ways apart (grass hollow west, pond shore east), and the terrace lets them meet again under the two harder trainers. Two southbound ledges: y24 x14-15 drops out of the hollow onto the road home, y18 x3-5 cuts the shelf inside the west lane.",
   "rows": [
     "TTTTTTTTTTTTTT--TTTTTTTTTTTTTT",
-    "TT..........,.--.,..........TT",
-    "TT............--............TT",
-    "TT...\"\"\"\"\"\"...--............TT",
-    "TT...\"\"\"\"\"\"...--...oo.......TT",
-    "TT...\"\"\"\"\"\"...--............TT",
-    "TT............--............TT",
-    "TTLLLLLLLLLLLL--............TT",
-    "TT............--............TT",
-    "TT.....TTTTTT.--.TTTTT......TT",
-    "TT.....T~~~~T.--.T~~~T......TT",
-    "TT.....T~~~~T.--.T~~~T......TT",
-    "TT.....TTTTTT.--.TTTTT......TT",
-    "TT............--............TT",
-    "TT......\"\"\"\"..--..\"\"\"\"......TT",
-    "TT......\"\"\"\"..--..\"\"\"\"......TT",
-    "TT............--............TT",
-    "TT............---------.....TT",
-    "TT............--......*.....TT",
-    "TT............--............TT",
-    "TT..\"\"\"\"\"\"....--............TT",
-    "TT..\"\"\"\"\"\"....--............TT",
-    "TT..\"\"\"\"\"\"....--............TT",
-    "TT............--............TT",
-    "TT..........LL--LL..........TT",
-    "TT............--............TT",
-    "TT.....oo.....--.....oo.....TT",
-    "TT............--............TT",
-    "TT...\"\"\"\"\"\"\"..--..\"\"\"\"\"\"\"...TT",
-    "TT...\"\"\"\"\"\"\"..--..\"\"\"\"\"\"\"...TT",
-    "TT............--............TT",
+    "TT...,..t..*.=--=.TTTTtTo.,.TT",
+    "TT.\"\"\"\",.t*..=--=.TTTTTo....TT",
+    "TT..\"\"\"\"....,.--..tTTTT..t..TT",
+    "TTTTTTTTTT....--..........TTTT",
+    "TTT\"\"\"\"\"\"T....--.,..tTTT..TTTT",
+    "TTT\"\"\"\"\"\"T.,..--..*.TTTT,.TTTT",
+    "TTT\"\"\"\"\"\"T....--....TTTt..TTTT",
+    "TT.tt...o.....--.!......TTTTTT",
+    "TT,...*.o....,..TTTt....tTTTTT",
+    "TTTTTt...tTTT...tTTT..,.....TT",
+    "TTTTTT...TTTt,...,..pp...*..TT",
+    "TTTTtT..TtTTTTTTTTTtTTssTTtTTT",
+    "TT..........tTTTt.o.....\"\"\".TT",
+    "TT.......o..TTTTT.sssssssss.TT",
+    "TT.\"\"\"\"\"..o.TTTTTss~~~~~~~ssTT",
+    "TT.\"\"\"\"\"\"..*TTTTTs~~~~~~~~~sTT",
+    "TT..\"\"\"\"\"...TTTTTs~~~~~~~~~sTT",
+    "TTTLLLTTT...TTTTTs~~~~~~~~ssTT",
+    "TT.,...,....TTTTTss~~~~~~~s.TT",
+    "TT\"\"\"\"\"..\"\".TTTTT.ss~~~~~ss.TT",
+    "TT\"\"\"\"\".\"\"\",TTTTT..ssssssss.TT",
+    "TT\"\"\"\"..\"\"\".tTTTt.\"\"\"!.....,TT",
+    "TT,..,...........*.......,..TT",
+    "TTTTTTTTT..TtTLLTtT..TTtTTTTTT",
+    "TT....*..--.,.,....--.......TT",
+    "TT..oo...------------.,.....TT",
+    "TT.......------------TTTTTTTTT",
+    "TT..\"\"\"\",...t.--.!...T....*.TT",
+    "TT.\"\"\"\"\"...t.!--\"\"\"\".T..,...TT",
+    "TT.\"\"\"\",*..,..--\"\"\"\"\".,.....TT",
     "TTTTTTTTTTTTTT--TTTTTTTTTTTTTT"
   ],
   "warps": [
@@ -85,6 +85,31 @@
   ],
   "npcs": [
     {
+      "id": "r1_madden",
+      "sprite": "hiker",
+      "x": 12,
+      "y": 25,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r1_madden",
+      "sightRange": 4,
+      "script": "r1_walker"
+    },
+    {
+      "id": "r1_ottel",
+      "sprite": "villager_m",
+      "x": 17,
+      "y": 25,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r1_ottel",
+      "sightRange": 4
+    },
+    {
       "id": "r1_cale",
       "sprite": "hiker",
       "x": 13,
@@ -98,35 +123,10 @@
       "script": "r1_watcher"
     },
     {
-      "id": "r1_ottel",
-      "sprite": "villager_m",
-      "x": 13,
-      "y": 13,
-      "facing": "right",
-      "movement": {
-        "kind": "static"
-      },
-      "trainer": "r1_ottel",
-      "sightRange": 2
-    },
-    {
-      "id": "r1_madden",
-      "sprite": "hiker",
-      "x": 18,
-      "y": 26,
-      "facing": "left",
-      "movement": {
-        "kind": "static"
-      },
-      "trainer": "r1_madden",
-      "sightRange": 4,
-      "script": "r1_walker"
-    },
-    {
       "id": "r1_surveyor",
       "sprite": "concord",
       "x": 16,
-      "y": 3,
+      "y": 2,
       "facing": "left",
       "movement": {
         "kind": "static"
@@ -139,7 +139,7 @@
     {
       "kind": "sign",
       "x": 13,
-      "y": 30,
+      "y": 29,
       "text": [
         "ROUTE 1",
         "Marrow Hollow south. Ashgate north.",
@@ -147,25 +147,53 @@
       ]
     },
     {
+      "kind": "sign",
+      "x": 17,
+      "y": 28,
+      "text": [
+        "The road splits here and joins up again at the top.",
+        "West is the hollow. East is the tarn and the long way round.",
+        "Somebody has scratched underneath: BOTH ARE THE SAME LENGTH. LIARS."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 21,
+      "y": 22,
+      "text": [
+        "STILL WATER. Deeper than it looks and colder than that.",
+        "Rilltails winter in it. Do not stand on the edge and lean."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 17,
+      "y": 8,
+      "text": [
+        "ASHGATE - one mile",
+        "Waystation, provisioner, and the road on to Kellowmere."
+      ]
+    },
+    {
       "kind": "item",
-      "x": 22,
-      "y": 18,
+      "x": 25,
+      "y": 29,
       "item": "potion",
       "quantity": 1,
       "flag": "item_r1_potion"
     },
     {
       "kind": "item",
-      "x": 20,
-      "y": 4,
+      "x": 4,
+      "y": 6,
       "item": "field_vessel",
       "quantity": 3,
       "flag": "item_r1_vessels"
     },
     {
       "kind": "hiddenItem",
-      "x": 8,
-      "y": 10,
+      "x": 27,
+      "y": 19,
       "item": "tonic_berry",
       "quantity": 1,
       "flag": "item_r1_hidden"

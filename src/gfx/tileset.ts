@@ -728,98 +728,155 @@ export class Tileset {
   }
 
   /**
-   * Tall grass.
+   * Tall grass: one clump to a tile, standing on the field's own turf.
    *
-   * Its first job is not to look like grass, it is to be *unmistakable*: the
-   * player has to know which tiles hide encounters at a glance and at speed.
+   * The cut before this one filled the cell edge to edge and tiled seamlessly,
+   * which is the right answer to the wrong question. It made a technically
+   * flawless field that read as a dark rectangle laid over the map -- a lawn,
+   * not grass you walk between. The reference games have never done that: a
+   * tall grass tile there is a *discrete tuft* with ground showing on every
+   * side of it, and a patch is a scatter of them rather than a mass.
    *
-   * It used to be a band of blade tips laid over plain turf, which cost it both
-   * jobs at once. The mass began a third of the way down the cell, so a field
-   * three rows deep came out as venetian blinds -- dark band, lawn stripe, dark
-   * band -- and the mass itself was a flat fill with a sawtooth cut into the
-   * top, so there was nothing in it a player could read as a blade.
+   * So the tile is a single clump rooted at the bottom of the cell, two units
+   * of turf clear at each side and four above, giving every clump a visible gap
+   * from its neighbours in both directions. The turf under it is the ordinary
+   * field weave, unchanged, so the gaps are the same grass as the tile next
+   * door and a patch sits *on* the map instead of being pasted over it.
    *
-   * Now the whole cell is grass. A dark understory first, because the gaps
-   * between stems are shadow and painting lawn there is exactly what made the
-   * old tile read as a hedge sitting on a field. Then two layers of individual
-   * blades over it: a back layer, taller and duller, and a front layer, shorter
-   * and lit, on an offset lattice. Two layers rather than one is what gives the
-   * patch depth instead of making it a row of stalks standing on a mat.
-   *
-   * Every write wraps at the cell edge, so a block of these fuses into one
-   * field with no seam and no banding, and the dark base against pale turf
-   * still separates a patch from the lawn at a glance.
-   *
-   * Rows 0-5 stay behind the player and rows 6-15 are repainted in front of
-   * them (TileMap.renderGrassFrontRow), so the blades that swallow a
-   * character's legs are the same pixels already on the ground. Which is one
-   * more reason the mass has to fill the cell: lift it off the top edge again
-   * and that pass has flat turf to cut them off with.
+   * One constraint shapes the rest. Rows 6-15 of this cell are repainted in
+   * front of a character wading through it (TileMap.renderGrassFrontRow and
+   * renderGrassSkirt), so anything drawn in that band lands on the player as
+   * well as on the ground -- and pale lawn there prints a stripe of turf across
+   * their chest. Hence the shading: the ground between the clumps is lit only
+   * in the top rows, the ones that stay behind the player, and falls away into
+   * the tuft's own shadow from the wading line down. That shadow is what gives
+   * each clump its footing anyway, so the constraint and the drawing want the
+   * same thing.
    */
   private tallGrass(px: Px, fill: (c: string) => void, rng: Rng): void {
     const P = this.unit(px);
     const S = TILE_SIZE;
-    const wrap = (v: number) => ((v % S) + S) % S;
     const h = (x: number, y: number, seed: number) => hash2(x, y, seed);
 
-    // Understory: shadow between the stems, a full step below the canopy ramp.
-    fill(PAL.leafDeep);
-    for (let y = 0; y < S; y++) {
-      for (let x = 0; x < S; x++) {
-        const n = h(x, y, 5) * 0.6 + h(x >> 1, y >> 1, 9) * 0.4;
-        if (n > 0.7) P(x, y, PAL.leafDark);
+    this.turf(px, fill, 3);
+
+    // Clump bounds. L..R is the tuft; everything outside it is ground.
+    //
+    // Nudged and squatted per alternate: three cuts of the same clump in the
+    // same place is still a stamp, and a patch of stamps is a grid however
+    // good the stamp is. The nudge is kept to a unit so the gap to the clump
+    // next door never closes on one side.
+    const nudge = Math.floor(h(0, 0, 91) * 3) - 1;
+    const squat = Math.floor(h(1, 0, 93) * 2);
+    const L = 2 + nudge, R = 13 + nudge, ROOT = 14;
+    const mid = (L + R) / 2;
+    const half = (R - L) / 2;
+
+    // The clump is composed into a grid first, not painted straight down: the
+    // shadow has to know where the blades ended up.
+    const cell: (string | null)[] = new Array(S * S).fill(null);
+    const put = (x: number, y: number, c: string) => {
+      if (x < L || x > R || y < 0 || y >= S) return;
+      cell[y * S + x] = c;
+    };
+
+    // Understory: the dark, dense heart of the tuft the blades rise out of,
+    // striped by column so it reads as packed stems rather than as a mound.
+    for (let y = 10; y <= ROOT; y++) {
+      for (let x = L; x <= R; x++) {
+        const stem = (x * 3 + Math.floor(h(x, 0, 13) * 3)) % 4;
+        put(x, y, y >= ROOT - 1 || stem === 0 ? PAL.leafDeep
+          : h(x, y, 5) > 0.55 ? PAL.leafDark : PAL.leafDeep);
       }
     }
 
     /** One blade, drawn root upward, leaning as it rises. */
-    const blade = (
-      bx: number, by: number, len: number, lean: number,
-      deep: string, mid: string, hi: string, tip: string,
-    ) => {
+    const blade = (bx: number, by: number, len: number, lean: number, ramp: string[]) => {
       for (let i = 0; i < len; i++) {
-        const y = wrap(by - i);
-        const x = wrap(bx + Math.round((lean * i) / 2));
-        P(x, y, i === len - 1 ? tip : i === len - 2 ? hi : i * 2 > len ? mid : deep);
+        const y = by - i;
+        if (y < 0) break;
+        const x = bx + Math.round((lean * i) / 3);
+        put(x, y, ramp[i === len - 1 ? 3 : i === len - 2 ? 2 : i * 2 > len ? 1 : 0]!);
       }
     };
 
-    // Blades come in threes and twos from a shared root rather than one to a
-    // lattice cell: a clump has a silhouette, evenly spaced stalks are a comb.
-    // Back tufts, on a 3x3 lattice, staying inside the dark half of the ramp.
-    for (let gy = 0; gy < 3; gy++) {
-      for (let gx = 0; gx < 3; gx++) {
-        const rx = gx * 5 + Math.floor(h(gx, gy, 31) * 5);
-        const ry = gy * 5 + 3 + Math.floor(h(gx, gy, 37) * 4);
-        for (let k = -1; k <= 1; k++) {
-          blade(
-            rx + k, ry, 5 + Math.floor(h(gx * 4 + k + 1, gy, 41) * 4), k,
-            PAL.leafDeep, PAL.leafMid, PAL.grassDeep, PAL.grassDark,
-          );
-        }
-      }
+    const back = [PAL.leafDeep, PAL.leafDark, PAL.leafMid, PAL.leafLight];
+    const front = [PAL.leafDark, PAL.leafMid, PAL.leafLight, PAL.leafHi];
+
+    // Back layer: one blade per column, tallest at the crown and falling away
+    // at the shoulders, leaning outward. That arch is the tuft's silhouette,
+    // and it is the only thing that tells a player where one clump stops.
+    // The shoulders stay long on purpose: the whole clump has to be standing by
+    // the wading line at row 6, or the band repainted in front of a character
+    // has holes in it exactly where their legs are.
+    for (let x = L; x <= R; x++) {
+      const t = (x - mid) / half;
+      const len = 7 - squat + Math.round((1 - t * t) * 4) + Math.floor(h(x, 3, 41) * 2);
+      blade(x, ROOT - Math.floor(h(x, 7, 43) * 2), len, t < -0.3 ? -1 : t > 0.3 ? 1 : 0,
+        (x & 1) === 0 ? back : front);
     }
-    // Front tufts, offset off the back lattice and carrying the light.
-    for (let gy = 0; gy < 3; gy++) {
-      for (let gx = 0; gx < 3; gx++) {
-        const rx = gx * 5 + 2 + Math.floor(h(gx, gy, 61) * 4);
-        const ry = gy * 5 + 6 + Math.floor(h(gx, gy, 67) * 4);
-        for (let k = 0; k < 2; k++) {
-          blade(
-            rx + k * 2 - 1, ry, 4 + Math.floor(h(gx + k * 7, gy, 71) * 3), k === 0 ? -1 : 1,
-            PAL.leafMid, PAL.grassDeep, PAL.grassMid, PAL.grassHi,
-          );
+    // Front layer: shorter, lit, leaning the other way so the two cross. One
+    // layer alone is a comb; two crossing layers are a clump.
+    for (let x = L + 1; x <= R; x += 2) {
+      const t = (x - mid) / half;
+      const len = 4 + Math.round((1 - t * t) * 4) + Math.floor(h(x, 11, 47) * 2);
+      blade(x, ROOT, len, t < 0 ? 1 : -1, front);
+    }
+
+    // Two seed heads catching the light, up in the crown where they show.
+    for (let i = 0; i < 2; i++) {
+      const sx = L + 2 + rng.below(R - L - 3);
+      const sy = 4 + rng.below(5);
+      put(sx, sy, PAL.grassHi);
+      put(sx, sy - 1, PAL.grassTip);
+    }
+
+    // The tuft's own shadow on the ground around it.
+    //
+    // Cast from the clump's silhouette rather than laid down as a band across
+    // the bottom of the cell: a band is a rectangle, and a field of rectangles
+    // is the checkerboard this tile is trying to stop being. So each column
+    // remembers how high its blades reach, and a patch of ground is shaded by
+    // how close it is to a column standing over it -- which leaves the turf
+    // above the crown lit, darkens the slot between two clumps from both sides
+    // evenly, and puts the deepest shade right where the stems meet the earth.
+    const skyline = new Array<number>(S).fill(S);
+    for (let x = 0; x < S; x++) {
+      for (let y = 0; y < S; y++) if (cell[y * S + x]) { skyline[x] = y; break; }
+    }
+    const REACH = 3;
+    /** Row the renderer starts painting this tile in front of a character. */
+    const WADE = 6;
+    const ramp = [PAL.grassMid, PAL.grassDark, PAL.grassDeep];
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        if (cell[y * S + x]) continue;
+        let near = REACH + 1;
+        for (let dx = -REACH; dx <= REACH; dx++) {
+          const c = x + dx;
+          if (c < 0 || c >= S) continue;
+          if (y >= skyline[c]! && Math.abs(dx) < near) near = Math.abs(dx);
         }
+        // 0 columns away is the gap inside the tuft, REACH away is open field.
+        let f = near > REACH ? 0 : (1 - near / (REACH + 1)) * 2;
+        // ...but nothing below the wading line may be left at full turf
+        // brightness whatever the silhouette does, because that band is
+        // repainted in front of the player (GRASS_BLADE_TOP in TileMap) and a
+        // pale pixel there prints a stripe of lawn across their chest. In
+        // practice this only catches the few units the shoulders leave open.
+        if (y >= WADE) f = Math.max(f, 1);
+        if (f <= 0) continue;
+        f = Math.min(1.999, f);
+        const i0 = Math.floor(f);
+        cell[y * S + x] = dither(x, y, f - i0) ? ramp[i0 + 1]! : ramp[i0]!;
       }
     }
 
-    // Two seed heads catching the light, placed off the lattice so the field
-    // has something in it that is not on a grid.
-    for (let i = 0; i < 2; i++) {
-      const sx = rng.below(S);
-      const sy = rng.below(S);
-      P(sx, wrap(sy - 1), PAL.grassHi);
-      P(sx, wrap(sy - 2), PAL.grassTip);
-      P(wrap(sx + 1), wrap(sy - 2), PAL.grassTip);
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const c = cell[y * S + x];
+        if (c) P(x, y, c);
+      }
     }
   }
 
@@ -2432,16 +2489,59 @@ export class Tileset {
 
 
 
+  /**
+   * Stairs.
+   *
+   * A flight has to say two things at once: this is floor, walk onto it -- and
+   * it goes somewhere. The old tile said only the first. Four evenly lit treads
+   * ran flat to the top edge of the cell, so a stairway read as a step ladder
+   * lying on the floorboards and stopping dead where the tile did.
+   *
+   * So the flight is lit where it meets the room and falls away into black
+   * inside its own cell, dark by about halfway up. The treads keep their
+   * structure the whole way -- riser, nosing, tread -- and are simply
+   * multiplied down towards nothing as they recede, which is what makes the
+   * darkness read as distance rather than as a black rectangle painted on. A
+   * jamb down each side turns the flight into an opening in the room instead of
+   * an object standing in it.
+   */
   private stairs(px: Px, fill: (c: string) => void): void {
-    fill(PAL.stoneMid);
-    for (let i = 0; i < 4; i++) {
-      const y = i * 8;
-      for (let x = 0; x < TILE_PX; x++) {
-        px(x, y, PAL.stoneDeep);
-        px(x, y + 1, PAL.stonePale);
-        px(x, y + 2, PAL.stoneLight);
-        for (let k = 3; k < 8; k++) px(x, y + k, k > 6 ? PAL.stoneDark : PAL.stoneMid);
-      }
+    const P = this.unit(px);
+    fill('#05070b');
+
+    /** One colour taken down towards black. */
+    const dim = (hex: string, k: number): string => {
+      const n = parseInt(hex.slice(1), 16);
+      const c = (s: number) => Math.max(0, Math.min(255, Math.round(((n >> s) & 255) * k)));
+      return `#${((c(16) << 16) | (c(8) << 8) | c(0)).toString(16).padStart(6, '0')}`;
+    };
+
+    // How much light reaches a row: full where the flight meets the room, half
+    // gone by the middle of the cell, nothing at all a quarter from the top.
+    // The bottom tread has to stay bright or the tile reads as a hole in the
+    // floorboards rather than as a stairway with its lights off further up.
+    const lit = (y: number): number => {
+      const t = Math.max(0, Math.min(1, (y - 3) / 8));
+      return Math.pow(t, 1.25);
+    };
+
+    // Four treads, four units each: the riser in its own shadow, the nosing
+    // catching the light off it, then the tread falling away behind it.
+    for (let y = 0; y < TILE_SIZE; y++) {
+      const step = y % 4;
+      const base = step === 0 ? PAL.stoneDeep
+        : step === 1 ? PAL.trimPale
+          : step === 2 ? PAL.stonePale : PAL.stoneLight;
+      const k = lit(y);
+      const tread = dim(base, k);
+      for (let x = 1; x < TILE_SIZE - 1; x++) P(x, y, tread);
+      // Jambs. The left one is turned into the light, the right one away from
+      // it, so the shaft has a direction rather than two identical black lines.
+      // Both keep a floor under the fade: a pair of faint walls running up into
+      // the dark is what gives the darkness a shape, and without them the top
+      // of the tile is an unreadable black square sitting on the floorboards.
+      P(0, y, dim(PAL.stoneDark, Math.max(k * 0.6, 0.15)));
+      P(TILE_SIZE - 1, y, dim(PAL.stoneDeep, Math.max(k * 0.4, 0.13)));
     }
   }
 

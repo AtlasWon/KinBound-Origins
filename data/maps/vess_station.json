@@ -15,13 +15,13 @@
     "IFFFFFFFFFFFFFFI",
     "IFrrrFFFFFFF$$$I",
     "IF/rrFFFFFFF$FFI",
-    "IFFFFFFFDFFFFFFI",
-    "IIIIIIIIIIIIIIII"
+    "IFFFFFFFFFFFFFFI",
+    "IIIIIIIIDIIIIIII"
   ],
   "warps": [
     {
-      "x": 7,
-      "y": 9,
+      "x": 8,
+      "y": 10,
       "toMap": "marrow_hollow",
       "toX": 22,
       "toY": 7,
@@ -34,7 +34,7 @@
       "id": "vess",
       "sprite": "professor",
       "x": 7,
-      "y": 2,
+      "y": 3,
       "facing": "down",
       "movement": {
         "kind": "static"
@@ -117,7 +117,7 @@
     {
       "kind": "kin",
       "species": "sprigling",
-      "x": 7,
+      "x": 5,
       "y": 1,
       "hiddenIfFlag": "starter_sprigling"
     },
@@ -131,7 +131,7 @@
     {
       "kind": "kin",
       "species": "rilltail",
-      "x": 9,
+      "x": 11,
       "y": 1,
       "hiddenIfFlag": "starter_rilltail"
     }

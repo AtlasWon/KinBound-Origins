@@ -12,13 +12,13 @@
     "IFFFFFFFFFFI",
     "IF;;;FFF;;FI",
     "IFFFFFFFFFFI",
-    "IPFFFFDFF;;I",
-    "IIIIIIIIIIII"
+    "IPFFFFFFF;;I",
+    "IIIIIIDIIIII"
   ],
   "warps": [
     {
       "x": 6,
-      "y": 6,
+      "y": 7,
       "toMap": "kellowmere",
       "toX": 11,
       "toY": 20,

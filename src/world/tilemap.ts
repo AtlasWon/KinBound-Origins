@@ -45,19 +45,31 @@ export interface AsciiMapFile {
  * How deep a character wades in tall grass, as a row inside the tile, in
  * authoring units. Everything from here down is drawn in front of them.
  *
- * Six of sixteen puts the line just under the ribs on a 24-unit sprite: head,
- * shoulders and a band of chest stay above the grass, which is the silhouette
- * the era used and the one that still reads at 1x. Deeper and the character is
- * a floating head; shallower and the effect stops being legible at all.
+ * Eight of sixteen. A sprite is 24 units tall with its feet on the foot of the
+ * tile, so a cut here hides the bottom eight of them: both legs and a little of
+ * the hips, leaving head, shoulders, chest and arms above the blades. That is
+ * the era's silhouette, and it is a third of the body rather than half.
+ *
+ * It used to be six, which was right for the tile it was tuned against -- a
+ * continuous field, solid to the top of the cell, where the only question was
+ * taste. The tile is now a discrete clump with bare turf at its shoulders, and
+ * that changes what the number is for. Two things now pin it from both sides.
+ * Too shallow and the band repainted in front reaches up into the clump's crown
+ * where the blades are single pixels with air between them -- a chest hidden
+ * behind that is still a visible chest, and the character is a head floating on
+ * a tuft. Too deep and the band is nothing but the clump's dark understory, a
+ * flat mass with no tips in it, and the character reads as standing behind a
+ * low hedge rather than in the grass. Eight is the last row that still catches
+ * the tops of the short front blades while covering every pixel of leg.
  */
-const GRASS_BLADE_TOP = 6;
+const GRASS_BLADE_TOP = 8;
 
 /**
  * How far apart stacked copies of that band sit when it is lifted to a
  * character's waist.
  *
- * The band is ten units tall, so any step below ten leaves no seam; six keeps
- * the count down while staying well clear, and matters because the top edge of
+ * The band is eight units tall, so any step below eight leaves no seam; six
+ * keeps the count down while staying clear, and matters because the top edge of
  * a band is the ragged one -- a copy that peeked out above the copy over it
  * would print a line of tips through the middle of the mass.
  */

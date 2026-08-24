@@ -13,13 +13,13 @@
     "IfrrrEEEErrrfI",
     "IkffffffffffPI",
     "Iff/ffff/fffkI",
-    "IfffffDffffffI",
-    "IIIIIIIIIIIIII"
+    "IffffffffffffI",
+    "IIIIIIDIIIIIII"
   ],
   "warps": [
     {
       "x": 6,
-      "y": 8,
+      "y": 9,
       "toMap": "tanners_rest",
       "toX": 7,
       "toY": 17,

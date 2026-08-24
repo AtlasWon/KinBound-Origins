@@ -3,7 +3,7 @@ const d = window.dev;
 const top = () => d.game.scenes.top;
 const out = [];
 await d.loadWait(1400);
-d.key('Enter', 4); d.key('Enter', 30); d.key('Enter', 60);
+for (let i = 0; i < 12 && typeof top().rows !== 'function'; i++) d.key('Enter', 30);
 for (let i = 0; i < 30; i++) {
   const rows = top().rows();
   if ((rows[top().sel] || {}).action === 'begin') break;

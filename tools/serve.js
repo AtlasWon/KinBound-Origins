@@ -63,33 +63,38 @@ async function handleShot(req, res, name) {
 }
 
 /**
- * The creature-art listing, read off the disk on every request.
+ * The hand-drawn art listings, read off the disk on every request.
  *
- * The game will not hunt for 96 image files that mostly do not exist, so it
- * asks for this index instead. Answering it live means a PNG dropped into
- * assets/kin is picked up on the next reload with no build step in between,
- * which is the whole point during an art pass. `tools/kinart.js` writes the
- * same file for hosts that cannot do this. The Electron scheme handler in
- * launcher/main.cjs answers it the same way.
+ * The game will not hunt for image files that mostly do not exist -- 96 of them
+ * for creatures, one per icon key for items -- so it asks for an index instead.
+ * Answering it live means a PNG dropped into the folder is picked up on the
+ * next reload with no build step in between, which is the whole point during an
+ * art pass. `tools/kinart.js` and `tools/itemart.js` write the same files for
+ * hosts that cannot do this. The Electron scheme handler in launcher/main.cjs
+ * answers them the same way.
  */
-const KIN_ART_INDEX = '/assets/kin/index.json';
+const ART_INDEXES = new Map([
+  ['/assets/kin/index.json', 'kin'],
+  ['/assets/items/index.json', 'items'],
+]);
 
-async function handleKinIndex(res) {
+async function handleArtIndex(res, folder) {
   let files = [];
   try {
-    const all = await readdir(resolve(ROOT, 'assets', 'kin'));
+    const all = await readdir(resolve(ROOT, 'assets', folder));
     files = all.filter((f) => f.toLowerCase().endsWith('.png')).sort();
   } catch {
     // No folder yet: an empty listing is the correct answer, not an error.
   }
-  const body = JSON.stringify({ note: 'served live from assets/kin', files });
+  const body = JSON.stringify({ note: `served live from assets/${folder}`, files });
   res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });
   res.end(body);
 }
 
 const server = createServer(async (req, res) => {
-  if (req.url && req.url.split('?')[0] === KIN_ART_INDEX) {
-    await handleKinIndex(res);
+  const artFolder = req.url && ART_INDEXES.get(req.url.split('?')[0]);
+  if (artFolder) {
+    await handleArtIndex(res, artFolder);
     return;
   }
   if (req.url && req.url.startsWith('/__shot')) {

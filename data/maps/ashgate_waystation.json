@@ -14,13 +14,13 @@
     "IF/rr/FF/rr/FI",
     "IFFrrFFFFrrFPI",
     "IFFFFFFFFFFFFI",
-    "IFFFFFDFFFFFFI",
-    "IIIIIIIIIIIIII"
+    "IFFFFFFFFFFFFI",
+    "IIIIIIDIIIIIII"
   ],
   "warps": [
     {
       "x": 6,
-      "y": 8,
+      "y": 9,
       "toMap": "ashgate",
       "toX": 6,
       "toY": 7,

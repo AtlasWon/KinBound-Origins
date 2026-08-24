@@ -10,7 +10,11 @@ const out = [];
 
 await d.loadWait(1400);
 d.key('Enter', 4);
-d.key('Enter', 30);
+d.key('Enter', 4);
+// NEW JOURNEY no longer cuts to the film. The title screen plays a 64-tick
+// departure of its own first -- see the header of src/scenes/title.ts -- so a
+// fixed settle is not enough to land in the cinematic any more.
+for (let i = 0; i < 60 && top().name !== 'opening'; i++) d.tick(4);
 out.push('scene:' + top().name);
 
 // Two frames per shot: one early, once it has faded in, and one late.

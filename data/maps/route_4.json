@@ -13,28 +13,28 @@
   "rows": [
     "TTTTTTTTTTTTTT--TTTTTTTTTTTTTT",
     "TT............--............TT",
-    "TT............--........oo..TT",
-    "TT...\"\"\"\"\"\"...--............TT",
-    "TT...\"\"\"\"\"\"...--............TT",
-    "TT...\"\"\"\"\"\"...--............TT",
-    "TT............--............TT",
-    "TTLLLLLLLLLLLL--LLLLLLLLLLLLTT",
-    "TT............--............TT",
-    "TT............--....ssssssssTT",
-    "TT............--...ssssss~~~TT",
-    "TT.....TTTT...--...sssss~~~~TT",
-    "TT.....T~~T...--...ssss~~~~~TT",
-    "TT.....TTTT...--...ssss~~~~~TT",
-    "TT............--...ssss~~~~~TT",
-    "TT............--ssssWWWWWWWWTT",
-    "TT....\"\"\"\"\"\"\"\"--sssWWWWWWWWWTT",
-    "TT....\"\"\"\"\"\"\"\"--sssWWWWWWWWWTT",
-    "TT....\"\"\"\"\"\"\"\"--sssWWWWWWWWWTT",
-    "TT............--sssWWWWWWWWWTT",
-    "TT......oo....--ssssWWWWWWWWTT",
-    "TT............--sssssWWWWWWWTT",
-    "TT............ssssssssWWWWWWTT",
-    "TTssssssssssssssssssssWWWWWWTT",
+    "TT*\"\"\"\"\"...t..--!..\"\"\"\"\"\"...TT",
+    "TT.,\"\"\"\"\".,...--.,.\"\"\"\"\"\".,.TT",
+    "TT.......-------...,\"\"\"\"\"...TT",
+    "TT.......-------............TT",
+    "TT.......--TTt....o.....TTTTTT",
+    "TT.......--TTT.....o.,..TTTTTT",
+    "TTTLLLLLL--tTT..........tTTTTT",
+    "TT*......--.........!.s~WWWWTT",
+    "TTCCCCCCC-----------.s~WWWWWTT",
+    "TTCCCCCCC-----------s~WWWWWWTT",
+    "TTCCCCCCC..t......--sssWWWWWTT",
+    "TTccccccc.o.......--sssWWWWWTT",
+    "TT,...............--sssWWWWWTT",
+    "TT..\"\"\"\"\".........--WWsWWWWWTT",
+    "TT..\"\"\"\"\"\".,.....!--WWWWWWWWTT",
+    "TTTTTLLLLLLTTT------~WWWWWWWTT",
+    "TT............------~WWWWWWWTT",
+    "TT.\"\"\"\"\"....o!--sssss~~~~~ssTT",
+    "TT.\"\"\"\"\"\".....--ssssssssss~sTT",
+    "TT.,\"\"\"\"\"...ss--sssss~~~~~ssTT",
+    "TT.........t~s--~~ssssssssssTT",
+    "TT..,.......s~--ss~~~~ssssssTT",
     "TTTTTTTTTTTTTT--TTTTTTTTTTTTTT"
   ],
   "warps": [
@@ -79,9 +79,9 @@
     {
       "id": "r4_teal",
       "sprite": "villager_f",
-      "x": 13,
-      "y": 4,
-      "facing": "right",
+      "x": 16,
+      "y": 3,
+      "facing": "left",
       "movement": {
         "kind": "static"
       },
@@ -91,9 +91,9 @@
     {
       "id": "r4_gorse",
       "sprite": "hiker",
-      "x": 16,
+      "x": 17,
       "y": 9,
-      "facing": "left",
+      "facing": "down",
       "movement": {
         "kind": "static"
       },
@@ -103,21 +103,21 @@
     {
       "id": "r4_nesh",
       "sprite": "villager_m",
-      "x": 13,
-      "y": 17,
-      "facing": "right",
+      "x": 20,
+      "y": 14,
+      "facing": "left",
       "movement": {
         "kind": "static"
       },
       "trainer": "r4_nesh",
-      "sightRange": 4
+      "sightRange": 3
     },
     {
       "id": "r4_bay",
       "sprite": "villager_f",
-      "x": 16,
-      "y": 21,
-      "facing": "left",
+      "x": 13,
+      "y": 20,
+      "facing": "right",
       "movement": {
         "kind": "static"
       },
@@ -127,9 +127,9 @@
     {
       "id": "r4_watcher",
       "sprite": "hiker",
-      "x": 20,
-      "y": 23,
-      "facing": "down",
+      "x": 19,
+      "y": 21,
+      "facing": "right",
       "movement": {
         "kind": "static"
       },
@@ -139,8 +139,8 @@
   "objects": [
     {
       "kind": "sign",
-      "x": 13,
-      "y": 1,
+      "x": 16,
+      "y": 2,
       "text": [
         "ROUTE 4",
         "Tanners Rest north. Brackwater south, at the water.",
@@ -149,41 +149,68 @@
     },
     {
       "kind": "sign",
-      "x": 19,
-      "y": 15,
+      "x": 20,
+      "y": 9,
+      "text": [
+        "The shelf. Sand over stone, and stone over nothing much.",
+        "The path down is west of here. It is not down from here."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 17,
+      "y": 16,
       "text": [
         "DEEP WATER. NO WADING.",
         "Under it someone has scratched: NOT THAT YOU COULD."
       ]
     },
     {
+      "kind": "sign",
+      "x": 13,
+      "y": 19,
+      "text": [
+        "THE TIDELINE",
+        "Channels fill from the east on the turn.",
+        "What is a path in the morning is a channel by noon."
+      ]
+    },
+    {
       "kind": "item",
-      "x": 8,
-      "y": 4,
+      "x": 5,
+      "y": 3,
       "item": "great_potion",
       "quantity": 1,
       "flag": "item_r4_grass"
     },
     {
       "kind": "item",
-      "x": 22,
-      "y": 10,
+      "x": 25,
+      "y": 20,
       "item": "net_vessel",
       "quantity": 3,
       "flag": "item_r4_sand"
     },
     {
       "kind": "item",
-      "x": 7,
+      "x": 4,
       "y": 20,
       "item": "full_heal",
       "quantity": 1,
       "flag": "item_r4_rocks"
     },
     {
+      "kind": "item",
+      "x": 21,
+      "y": 13,
+      "item": "dusk_vessel",
+      "quantity": 1,
+      "flag": "item_r4_shelf"
+    },
+    {
       "kind": "hiddenItem",
       "x": 6,
-      "y": 18,
+      "y": 16,
       "item": "deep_vessel",
       "quantity": 1,
       "flag": "item_r4_hidden"
@@ -196,5 +223,6 @@
       "quantity": 1,
       "flag": "item_r4_hidden2"
     }
-  ]
+  ],
+  "_design": "The land runs out. Grass, then a rock shoulder, then sand, then a beach cut into pockets by tide channels nobody can wade yet. The spit at y20 is the only way to what sits on the end of it, and it is in plain sight from the road for half the walk down."
 }

@@ -11,31 +11,39 @@
   },
   "encounterTable": "route_3",
   "rows": [
-    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
-    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
-    "T........\"\"\"\"\"\"\"\"......oo..............T",
-    "T........\"\"\"\"\"\"\"\"......................T",
-    "T........\"\"\"\"\"\"\"\".....TTTTTT...........T",
-    "T......................T~~~~T..........T",
-    "T......................T~~~~T..........T",
-    "T......................TTTTTT..........T",
-    "T......................................T",
-    "------------------BBBB------------------",
-    "------------------BBBB------------------",
-    "T......................................T",
-    "T.....LLLLLLLLLLLL.....................T",
-    "T......................................T",
-    "T..........\"\"\"\"\"\"\"\"\"\"....O.............T",
-    "T..........\"\"\"\"\"\"\"\"\"\"..................T",
-    "T..........\"\"\"\"\"\"\"\"\"\"....TTTTTTTT......T",
-    "T........................TTTTTTTT......T",
-    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
-    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT"
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+    "TT.t.\"\"\"\"\",...t...~~~...,.........TT",
+    "TT...\"\"\"\"\"\".o.....~~~~.t...CCCCC..TT",
+    "TT*............,.~~~~.....CCCCCCt.TT",
+    "TT.-----------...~~~~....CCCCCCCC.TT",
+    "TT.-----------....~~~~..occccccco.TT",
+    "TT.--t.....o--....~~~~...........,TT",
+    "TT.--___.___--.....~~~~..\"\"\".o....TT",
+    "TT.--|,,,*,|--.....~~~~.\"\"\"\"....*.TT",
+    "TT.--|,pp,,|--....~~~~..\"\"\"\"..,...TT",
+    "TT.--|,,,,,|--...~~~~~.o.......tTTTT",
+    "TT!--_,___*_--..!~~~~~.....!...TTTTT",
+    "-----.......-----BBBBB----....------",
+    "-----.......-----BBBBB----!...------",
+    "TT............LLLL~~~...--t.TT--..TT",
+    "TT.o.......,..!..~~~~..,--T..T--..TT",
+    "TT..o........\"\"\"..~~~~..--T.,T--.tTT",
+    "TT...\"\"\"\"\"\"..\"\"\"\".~~~~~.--T..T--..TT",
+    "TT..\"\"\"\"\"\"\"..\"\"\"\"..~~~~.--T..T--,.TT",
+    "TT,.\"\"\"\"\"\"\"........~~~o.--TTTt--..TT",
+    "TT..\"\"\"\"\"\",.t.....~~~~..--------\"\"TT",
+    "TT\"\"\"\",...........~~~~..--------\"\"TT",
+    "TT\"\"\"\"\".tTTTT,...~~~~....LLL.....,TT",
+    "TT\"\"\"\"\".TTTTT..*.~~~~..t..........TT",
+    "TT......TTTTt....~~~~.....*....,..TT",
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT"
   ],
   "warps": [
     {
       "x": 0,
-      "y": 9,
+      "y": 13,
       "toMap": "kellowmere",
       "toX": 28,
       "toY": 16,
@@ -44,7 +52,7 @@
     },
     {
       "x": 0,
-      "y": 10,
+      "y": 14,
       "toMap": "kellowmere",
       "toX": 28,
       "toY": 16,
@@ -52,8 +60,8 @@
       "style": "edge"
     },
     {
-      "x": 39,
-      "y": 9,
+      "x": 35,
+      "y": 13,
       "toMap": "tanners_rest",
       "toX": 2,
       "toY": 12,
@@ -61,8 +69,8 @@
       "style": "edge"
     },
     {
-      "x": 39,
-      "y": 10,
+      "x": 35,
+      "y": 14,
       "toMap": "tanners_rest",
       "toX": 2,
       "toY": 13,
@@ -75,7 +83,7 @@
       "id": "r3_bram",
       "sprite": "hiker",
       "x": 8,
-      "y": 8,
+      "y": 4,
       "facing": "down",
       "movement": {
         "kind": "static"
@@ -86,9 +94,9 @@
     {
       "id": "r3_sill",
       "sprite": "villager_f",
-      "x": 24,
-      "y": 12,
-      "facing": "up",
+      "x": 14,
+      "y": 10,
+      "facing": "left",
       "movement": {
         "kind": "static"
       },
@@ -98,9 +106,9 @@
     {
       "id": "r3_holt",
       "sprite": "villager_m",
-      "x": 31,
-      "y": 8,
-      "facing": "down",
+      "x": 23,
+      "y": 17,
+      "facing": "right",
       "movement": {
         "kind": "static"
       },
@@ -110,8 +118,8 @@
     {
       "id": "r3_ivo",
       "sprite": "concord",
-      "x": 14,
-      "y": 12,
+      "x": 29,
+      "y": 23,
       "facing": "up",
       "movement": {
         "kind": "static"
@@ -122,9 +130,9 @@
     {
       "id": "r3_drover",
       "sprite": "villager_m",
-      "x": 33,
+      "x": 6,
       "y": 13,
-      "facing": "left",
+      "facing": "right",
       "movement": {
         "kind": "pace",
         "axis": "y",
@@ -136,8 +144,8 @@
   "objects": [
     {
       "kind": "sign",
-      "x": 3,
-      "y": 8,
+      "x": 2,
+      "y": 12,
       "text": [
         "ROUTE 3",
         "Kellowmere west. Tanners Rest east.",
@@ -146,57 +154,87 @@
     },
     {
       "kind": "sign",
+      "x": 16,
+      "y": 12,
+      "text": [
+        "The only crossing for a day in either direction.",
+        "Under the boards someone has carved a waterline and a date.",
+        "The water is four hands above it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 14,
+      "y": 16,
+      "text": [
+        "DROVE ROAD - stock have right of way",
+        "Below the ledge is pasture. Below that is more pasture."
+      ]
+    },
+    {
+      "kind": "sign",
       "x": 26,
       "y": 14,
       "text": [
-        "A stone the size of a cart, sat in the middle of good pasture.",
+        "A gatepost with no gate, and a stone in the gap where a gate went.",
         "It did not roll here. There is no slope."
       ]
     },
     {
+      "kind": "sign",
+      "x": 27,
+      "y": 12,
+      "text": [
+        "THE SHOULDER - loose above, loose below.",
+        "Kellowmere took its stone out of this hill for two hundred years",
+        "and then stopped, and nobody who stopped will say why."
+      ]
+    },
+    {
       "kind": "pushable",
-      "x": 26,
-      "y": 14
+      "x": 27,
+      "y": 16
     },
     {
       "kind": "item",
-      "x": 27,
-      "y": 14,
+      "x": 28,
+      "y": 19,
       "item": "strong_potion",
       "quantity": 2,
       "flag": "item_r3_stone"
     },
     {
       "kind": "item",
-      "x": 20,
-      "y": 3,
+      "x": 9,
+      "y": 10,
       "item": "fine_vessel",
       "quantity": 3,
       "flag": "item_r3_grass"
     },
     {
       "kind": "item",
-      "x": 25,
-      "y": 6,
+      "x": 26,
+      "y": 9,
       "item": "coolsalve",
       "quantity": 2,
       "flag": "item_r3_stream"
     },
     {
       "kind": "hiddenItem",
-      "x": 12,
-      "y": 15,
+      "x": 6,
+      "y": 20,
       "item": "great_potion",
       "quantity": 1,
       "flag": "item_r3_hidden"
     },
     {
       "kind": "hiddenItem",
-      "x": 35,
-      "y": 3,
+      "x": 29,
+      "y": 25,
       "item": "escape_line",
       "quantity": 1,
       "flag": "item_r3_hidden2"
     }
-  ]
+  ],
+  "_design": "One stream the full height of the map and one bridge, so the route has a middle. The road reaches it the long way: up the west half, down to cross, down the east half, up to leave -- an S with the bridge at its waist. A fenced pasture is boxed in by the road on all four sides."
 }

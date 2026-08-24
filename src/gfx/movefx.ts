@@ -137,6 +137,25 @@ interface Slash {
   color: string; width: number;
   /** Perpendicular bow of the arc's midpoint. Zero is a straight cut. */
   bow: number;
+  /**
+   * Width multiplier on the outermost halo pass.
+   *
+   * The halo is drawn at 2.6x the line width, so a width-2.6 spoke lays down
+   * nearly seven logical pixels of glow. Half a dozen of those fanned around a
+   * defender is what buried the sprite in white at every impact in the game.
+   * Spokes that are meant to frame a silhouette rather than sit on it pass a
+   * smaller number here.
+   */
+  glow: number;
+  /**
+   * Whether to lay a pure-white core down the middle.
+   *
+   * White is the loudest thing this module can draw and it overrides the move's
+   * own colour wherever it lands. It belongs on the one or two strokes that say
+   * *contact* and nowhere else -- when every stroke in a burst had it, fire,
+   * ice and thunder all landed as the same white flower.
+   */
+  core: boolean;
 }
 
 /** A split in the ground running from the attacker toward the defender. */
@@ -146,6 +165,33 @@ interface Crack {
   color: string;
   width: number;
   seed: number;
+}
+
+/**
+ * A tapering whip that lashes out along a path.
+ *
+ * Nothing else in this module can draw a long connected body. A vine built out
+ * of particles is a dotted line, and built out of slash arcs it is a row of
+ * disconnected dashes -- which is exactly what `vine` was, and why it was
+ * indistinguishable from the leaf volley it borrowed. A lash is one object with
+ * a root, a length that extends over several frames, a travelling wave running
+ * down it and a tip that arrives last.
+ */
+interface Lash {
+  from: FxPoint; to: FxPoint;
+  t: number; frames: number;
+  color: string;
+  /** Thickness at the root. The tip always tapers to one pixel. */
+  width: number;
+  /** Peak sideways amplitude of the wave, at the tip. */
+  wave: number;
+  /** Frames spent extending before the whole length is out. */
+  reach: number;
+  /** Overshoot past the destination, so the tip cracks past the target. */
+  over: number;
+  seed: number;
+  /** Leaf nubs sprouting along the body, for a vine rather than a rope. */
+  leaves: boolean;
 }
 
 /** A polygonal shield that snaps into place and then flickers. */
@@ -401,6 +447,7 @@ export class MoveFx {
   private bolts: Bolt[] = [];
   private slashes: Slash[] = [];
   private cracks: Crack[] = [];
+  private lashes: Lash[] = [];
   private barriers: Barrier[] = [];
   private timers: Timer[] = [];
   private t = 0;
@@ -426,7 +473,7 @@ export class MoveFx {
   get busy(): boolean {
     return this.particles.length > 0 || this.rings.length > 0 || this.beams.length > 0
       || this.bolts.length > 0 || this.slashes.length > 0 || this.cracks.length > 0
-      || this.barriers.length > 0 || this.timers.length > 0;
+      || this.lashes.length > 0 || this.barriers.length > 0 || this.timers.length > 0;
   }
 
   clear(): void {
@@ -436,6 +483,7 @@ export class MoveFx {
     this.bolts.length = 0;
     this.slashes.length = 0;
     this.cracks.length = 0;
+    this.lashes.length = 0;
     this.barriers.length = 0;
     this.timers.length = 0;
     this.shakeAmp = 0;
@@ -477,7 +525,31 @@ export class MoveFx {
 
   private cut(s: Partial<Slash> & { x: number; y: number; angle: number; len: number }): void {
     this.slashes.push({
-      t: 0, frames: 11, color: '#ffffff', width: 2, bow: 0, ...s,
+      t: 0, frames: 11, color: '#ffffff', width: 2, bow: 0,
+      glow: 2.6, core: true, ...s,
+    });
+  }
+
+  /**
+   * A stroke that radiates OUTWARD from a point, starting clear of it.
+   *
+   * The difference between an effect that hits a creature and one that deletes
+   * it is whether the bright strokes cross the silhouette. `cut` centres its
+   * arc on the coordinate it is given, so a spoke aimed at a defender runs
+   * straight through the sprite; this places the near end of the stroke on a
+   * clearance radius and grows it away from there, which frames the target
+   * instead of covering it.
+   */
+  private spoke(
+    at: FxPoint, angle: number, inner: number, len: number,
+    o: { color: string; width: number; frames: number; glow?: number; core?: boolean; bow?: number },
+  ): void {
+    const mid = inner + len / 2;
+    this.cut({
+      x: at.x + Math.cos(angle) * mid,
+      y: at.y + Math.sin(angle) * mid * 0.86,
+      angle, len, frames: o.frames, color: o.color, width: o.width,
+      glow: o.glow ?? 1.7, core: o.core ?? false, bow: o.bow ?? 0,
     });
   }
 
@@ -570,12 +642,33 @@ export class MoveFx {
     // what made umbral read as a light move wearing a black costume.
     const flare = opts.dark ? '#d6dbe8' : '#ffffff';
 
+    /**
+     * The defender's silhouette, in logical units.
+     *
+     * Nothing bright starts inside this radius. Every version of this finisher
+     * before now centred its spokes, its chips and its white core on the point
+     * of contact, which meant the loudest six frames of every offensive move in
+     * the game were spent painting over the creature the move had just hit --
+     * at 1x the defender simply vanished into a white flower and came back.
+     * The reference never does this: the blow is drawn AROUND the sprite, the
+     * sprite stays readable, and the recoil is what tells you it connected.
+     */
+    const CLEAR = 10 * k;
+
     // The freeze holds the burst's FIRST frame on screen, so whatever that
     // frame looks like is what the player actually sees for an eighth of a
     // second. Everything below therefore has to be spread out at birth: thirty
     // particles all spawned on the exact hit point and then frozen is one
     // white blob sitting where the defender used to be.
-    this.hitStop = Math.round(3 + 2.5 * k);
+    // Hit-stop, but measured.
+    //
+    // At `3 + 2.5k` even the weakest move in the game froze the entire battle
+    // presentation on one picture for six consecutive frames -- an eighth of a
+    // second in which literally nothing on screen changes. Stepped through
+    // frame by frame that does not read as weight, it reads as the game
+    // hanging, and it was spending a seventh of the move's whole budget doing
+    // it. Short enough to punctuate, not long enough to stall.
+    this.hitStop = Math.round(2 + 2 * k);
     this.shakeAmp = Math.max(this.shakeAmp, (phys ? 7.5 : 5.5) * k);
     // A dark move dims the field instead of blooming it. Umbral landing on a
     // white flash was the one effect that fought its own type outright.
@@ -589,8 +682,13 @@ export class MoveFx {
       this.flashColor = mix(c, '#ffffff', 0.22);
     }
 
-    // Contact: small, hard, gone in four frames.
-    this.ring({ x: to.x, y: to.y, r0: 2, r1: 13 * k, squash: 0.85, frames: 5, color: flare, width: 3 });
+    // Contact: a hard rim that is already open on its first frame.
+    //
+    // Hit-stop freezes frame zero on screen for several ticks, so a ring that
+    // starts at radius two is held as a bright dot on the defender's chest for
+    // an eighth of a second. Starting it open means the frame the player
+    // actually stares at is a rim around the target rather than a blob on it.
+    this.ring({ x: to.x, y: to.y, r0: 7 * k, r1: 17 * k, squash: 0.85, frames: 5, color: flare, width: 3 });
     // Kind: the two that are left once the white has cleared, in the move's
     // own colour, and squashed along the direction of travel so even the
     // shockwave leans the way the blow was going.
@@ -605,27 +703,28 @@ export class MoveFx {
       color: opts.dark ? darken(c, 0.4) : lighten(c, 0.2), width: 2,
     });
 
-    // Spokes, fanned forward. The two closest to the line of travel take the
-    // flare and run long; the rest carry the colour, and three short ones
-    // spray back the way the blow came from.
-    for (let i = 0; i < 5; i++) {
-      const off = (i - 2) * 0.42;
+    // Spokes, fanned forward and all of them starting clear of the target.
+    //
+    // Four rather than eight, none of them carrying a white core, and every
+    // one launched from the clearance radius outward. The read is a blow
+    // throwing its force past the defender, which is what the previous
+    // symmetric white star was trying and failing to say.
+    for (let i = 0; i < 4; i++) {
+      const off = (i - 1.5) * 0.5;
       const a = dir + off;
-      const len = (40 - Math.abs(i - 2) * 6) * k;
-      this.cut({
-        x: to.x + Math.cos(a) * len * 0.42,
-        y: to.y + Math.sin(a) * len * 0.34,
-        angle: a, len, frames: Math.abs(off) < 0.5 ? 10 : 8,
-        color: Math.abs(off) < 0.5 ? flare : hot,
-        width: Math.abs(off) < 0.5 ? 2.6 : 1.8,
+      const lead = Math.abs(off) < 0.4;
+      this.spoke(to, a, CLEAR, (30 - Math.abs(off) * 14) * k, {
+        color: lead ? flare : hot,
+        width: lead ? 2 : 1.4,
+        frames: lead ? 9 : 7,
+        glow: lead ? 1.9 : 1.4,
       });
     }
-    for (let i = 0; i < 3; i++) {
-      const a = dir + Math.PI + (i - 1) * 0.5;
-      const len = 17 * k;
-      this.cut({
-        x: to.x + Math.cos(a) * len * 0.4, y: to.y + Math.sin(a) * len * 0.3,
-        angle: a, len, frames: 7, color: hot, width: 1.5,
+    // Two short ones spraying back the way the blow came from, so the point of
+    // contact is somewhere force came out of and not just somewhere it passed.
+    for (let i = 0; i < 2; i++) {
+      this.spoke(to, dir + Math.PI + (i - 0.5) * 0.7, CLEAR * 0.8, 13 * k, {
+        color: hot, width: 1.2, frames: 6, glow: 1.3,
       });
     }
 
@@ -635,12 +734,17 @@ export class MoveFx {
       const a = dir + rand(-0.85, 0.85);
       const sp = rand(3.4, 9) * k;
       return {
-        x: to.x + Math.cos(a) * rand(1, 7), y: to.y + Math.sin(a) * rand(1, 6),
+        x: to.x + Math.cos(a) * rand(CLEAR * 0.5, CLEAR), y: to.y + Math.sin(a) * rand(CLEAR * 0.4, CLEAR * 0.85),
         vx: Math.cos(a) * sp, vy: Math.sin(a) * sp * 0.8 - 1.4,
         ay: 0.24, drag: 0.9,
         life: Math.round(rand(10, 22)), max: 22,
         size: rand(1, 2.6), kind: 'streak',
-        c0: flare, c1: hot,
+        // Not the flare. Thirteen streaks that all open on pure white are, in
+        // aggregate, a white shape -- and hit-stop holds exactly that opening
+        // frame on screen. Starting them a step down the ramp keeps the debris
+        // reading as the move's own colour from the first frame the player
+        // sees, which is the whole reason the burst is coloured at all.
+        c0: mix(flare, hot, 0.5), c1: hot,
       };
     });
     // A thinner spray straight back out of the wound, so the point of contact
@@ -649,7 +753,7 @@ export class MoveFx {
       const a = dir + Math.PI + rand(-0.7, 0.7);
       const sp = rand(1.4, 3.6) * k;
       return {
-        x: to.x + Math.cos(a) * rand(1, 7), y: to.y + Math.sin(a) * rand(1, 6),
+        x: to.x + Math.cos(a) * rand(CLEAR * 0.5, CLEAR), y: to.y + Math.sin(a) * rand(CLEAR * 0.4, CLEAR * 0.8),
         vx: Math.cos(a) * sp, vy: Math.sin(a) * sp * 0.7 - 0.9,
         ay: 0.22, drag: 0.91,
         life: Math.round(rand(9, 18)), max: 18,
@@ -663,7 +767,7 @@ export class MoveFx {
       const a = rand(0, Math.PI * 2);
       const sp = rand(1.0, 3.4) * k;
       return {
-        x: to.x + Math.cos(a) * rand(1, 7), y: to.y + Math.sin(a) * rand(1, 6),
+        x: to.x + Math.cos(a) * rand(CLEAR * 0.6, CLEAR * 1.1), y: to.y + Math.sin(a) * rand(CLEAR * 0.5, CLEAR * 0.9),
         vx: Math.cos(a) * sp, vy: Math.sin(a) * sp * 0.6 - 0.4,
         ay: 0.12, drag: 0.93,
         life: Math.round(rand(16, 32)), max: 32,
@@ -687,6 +791,126 @@ export class MoveFx {
     // The rebound. A blow that lands and leaves the attacker standing where it
     // finished has no follow-through; this bounces it back out of the hit.
     if (phys) this.after(3, () => { this.lunge = -3.4 * k; });
+
+    this.settle(to, c, k, dir, opts.dark === true);
+    // Anything above the mid tier gets the whole field, not just the defender.
+    if (k > 1.2) this.fieldShock(to, c, k, opts.dark === true);
+  }
+
+  /**
+   * What is still happening a third of a second after the blow.
+   *
+   * Every archetype in this module used to end on the same frame: the rings
+   * expired, the chips expired, and the picture went back to two creatures
+   * standing on grass all at once. Real impacts have a tail -- grit that was
+   * thrown up comes back down, dust that was pushed out keeps drifting, one
+   * last spark falls. Scheduling that tail well after the burst is most of the
+   * difference between a hit that reads as an event and one that reads as a
+   * sprite effect being switched off.
+   */
+  private settle(to: FxPoint, c: string, k: number, dir: number, dark: boolean): void {
+    const dust = dark ? darken(c, 0.5) : lighten(c, 0.2);
+
+    // Grit raining back down through where the blow landed, arriving in two
+    // loose waves rather than one so it does not read as a scheduled event.
+    for (let w = 0; w < 2; w++) {
+      this.after(7 + w * 6, () => {
+        this.emit(Math.round(4 * k), () => ({
+          x: to.x + rand(-22, 22) * k, y: to.y - rand(6, 20),
+          vx: Math.cos(dir) * rand(0.1, 0.7), vy: rand(0.4, 1.3),
+          ay: 0.12, drag: 0.99,
+          life: Math.round(rand(14, 26)), max: 26,
+          size: rand(1, 1.8), kind: 'dot',
+          c0: dust, c1: darken(c, 0.35), add: false,
+        }));
+      });
+    }
+    // The dust cloud opening and drifting off the way the blow was going, low
+    // and slow, long after everything bright has gone.
+    this.after(10, () => {
+      this.emit(Math.round(4 * k), () => ({
+        x: to.x + rand(-16, 16) * k, y: to.y + rand(6, 13),
+        vx: Math.cos(dir) * rand(0.4, 1.5) + rand(-0.4, 0.4), vy: rand(-0.5, -0.1),
+        drag: 0.965, grow: 1.05,
+        life: Math.round(rand(20, 34)), max: 34,
+        size: rand(1.8, 3.2) * k, kind: 'smoke',
+        c0: dust, c1: darken(c, 0.6), add: false,
+      }));
+    });
+    // One last low rim on the floor, well after the shockwave, so the ground
+    // is still reacting when nothing else is.
+    this.after(9, () => {
+      this.ring({
+        x: to.x, y: to.y + 9, r0: 14 * k, r1: 40 * k, squash: 0.2,
+        frames: 20, color: dust, width: 1.5,
+      });
+    });
+  }
+
+  /**
+   * A heavy move's effect on the whole arena.
+   *
+   * The brief the reference sets is that a big move is not an event at the
+   * defender, it is an event on the field: the shockwave leaves the target and
+   * keeps going, debris is thrown up from ground the move never touched, and
+   * the far edge of the screen knows something happened. Nothing in this module
+   * did any of that -- every archetype's arrival fitted inside a forty-pixel
+   * box centred on one creature, which is why the big tier only ever read as
+   * the small tier drawn slightly larger.
+   */
+  private fieldShock(to: FxPoint, c: string, k: number, dark: boolean): void {
+    const pale = dark ? mix(c, '#c8cfe0', 0.5) : lighten(c, 0.5);
+    const floor = to.y + 10;
+
+    // The wave leaves the target and crosses the arena. Very flat, very wide,
+    // and slow enough to still be travelling once the burst has gone.
+    this.after(1, () => {
+      this.ring({
+        x: to.x, y: floor, r0: 10 * k, r1: SCREEN_W * 0.62, squash: 0.13,
+        frames: 26, color: pale, width: 2,
+      });
+    });
+
+    // Grass and grit lifted off the floor as the wave passes over it, each
+    // column timed to when the wave actually reaches that far, so the eye
+    // reads one thing travelling rather than a field-wide puff.
+    const cols = 7;
+    for (let i = 0; i < cols; i++) {
+      const x = to.x + (i / (cols - 1) - 0.5) * SCREEN_W * 1.15;
+      const reach = Math.abs(x - to.x) / (SCREEN_W * 0.62);
+      this.after(1 + Math.round(reach * 22), () => {
+        this.emit(2, () => ({
+          x: x + rand(-9, 9), y: floor + rand(-2, 4),
+          vx: Math.sign(x - to.x || 1) * rand(0.3, 1.4), vy: -rand(1.2, 3.2),
+          ay: 0.22, drag: 0.97,
+          life: Math.round(rand(12, 22)), max: 22,
+          size: rand(1.2, 2.2), kind: 'streak',
+          c0: pale, c1: c,
+        }));
+        this.emit(1, () => ({
+          x: x + rand(-11, 11), y: floor + rand(0, 4),
+          vx: rand(-0.5, 0.5), vy: rand(-0.5, -0.1),
+          drag: 0.94, grow: 1.07,
+          life: Math.round(rand(14, 24)), max: 24,
+          size: rand(1.6, 2.8), kind: 'smoke',
+          c0: dark ? darken(c, 0.4) : lighten(c, 0.25), c1: darken(c, 0.6), add: false,
+        }));
+      });
+    }
+
+    // The sky answers too: a pair of long streaks torn across the upper field
+    // at the moment of the hit, pulling away from the impact.
+    for (let i = 0; i < 3; i++) {
+      this.after(2 + i, () => {
+        const y = rand(10, 46);
+        const away = to.x > SCREEN_W / 2 ? -1 : 1;
+        this.spoke(
+          { x: to.x + away * rand(30, 80), y },
+          away > 0 ? 0.12 : Math.PI - 0.12, 0, rand(34, 62),
+          { color: pale, width: 1.4, frames: 10, glow: 1.5 },
+        );
+      });
+    }
   }
 
   /* -------------------------------------------------------------- entry */
@@ -712,11 +936,16 @@ export class MoveFx {
       case 'flame': this.flame(from, to, c, scale, anim); break;
       case 'water': this.water(from, to, c, scale, anim); break;
       case 'leaf': this.leaf(from, to, c, scale, anim); break;
+      case 'vine': this.vine(from, to, c, scale); break;
+      case 'powder': this.powder(from, to, c, scale); break;
       case 'bolt': this.bolt(from, to, c, scale); break;
       case 'frost': this.frost(from, to, c, scale); break;
       case 'venom': this.venom(from, to, c, scale, anim); break;
       case 'quake': this.quake(from, to, c, scale, anim); break;
       case 'wind': this.wind(from, to, c, scale, anim); break;
+      case 'aerial': this.aerial(from, to, c, scale); break;
+      case 'hazard': this.hazard(from, to, c, scale); break;
+      case 'status': this.status(to, c); break;
       case 'psy': this.psy(from, to, c, scale); break;
       case 'swarm': this.swarm(from, to, c, scale); break;
       case 'iron': this.iron(from, to, c, scale); break;
@@ -737,16 +966,27 @@ export class MoveFx {
     const arch = archetypeOf(anim);
     const land = IMPACT_AT[arch];
     if (land !== undefined) {
+      // Which way round the move actually runs.
+      //
+      // A drain and a water pull travel from the defender to the USER -- the
+      // archetypes already swap their source and destination -- but the shared
+      // finisher was hard-wired to the defender, so both moves detonated at
+      // both ends: a green swirl closing on the user's sprite and, at the same
+      // instant, a full white impact on a foe nothing had touched. Two impacts
+      // for one move reads as a bug, and it was one.
+      const back = REVERSED.has(anim);
+      const src = back ? to : from;
+      const hit = back ? from : to;
       // The line the blow travelled along. Everything the burst throws is
       // fanned around this, so a hit from the left throws its debris right.
       // Measured from the *user* to the target rather than from wherever the
       // archetype happened to put its muzzle, because that is the line the
       // player watched the move cross.
-      const dir = Math.hypot(to.x - from.x, to.y - from.y) < 1
-        ? 0 : Math.atan2(to.y - from.y, to.x - from.x);
+      const dir = Math.hypot(hit.x - src.x, hit.y - src.y) < 1
+        ? 0 : Math.atan2(hit.y - src.y, hit.x - src.x);
       const physical = PHYSICAL.has(arch);
       const dark = arch === 'umbral';
-      this.after(land, () => this.impactBurst(to, c, scale, { dir, physical, dark }));
+      this.after(land, () => this.impactBurst(hit, c, scale, { dir, physical, dark }));
     }
   }
 
@@ -830,29 +1070,38 @@ export class MoveFx {
       this.flash = Math.max(this.flash, heavy ? 0.22 : 0.12);
       this.flashColor = lighten(c, 0.45);
 
-      // One flattened wall, perpendicular to the blow: the compression.
+      // The compression, perpendicular to the blow -- but drawn as two halves
+      // pushed out to either side of the defender rather than three strokes
+      // laid through the middle of it. The shape the eye reads is the same
+      // flattened wall; the difference is that the creature being compressed
+      // is still on screen while it happens.
       const across = Math.atan2(to.y - from.y, to.x - from.x) + Math.PI / 2;
-      for (let i = 0; i < 3; i++) {
-        this.cut({
-          x: to.x + Math.cos(across) * (i - 1) * 3,
-          y: to.y + Math.sin(across) * (i - 1) * 3,
-          angle: across + rand(-0.14, 0.14),
-          len: (34 - Math.abs(i - 1) * 10) * k, frames: 9,
-          color: i === 1 ? '#ffffff' : lighten(c, 0.6),
-          width: i === 1 ? 3 : 2,
+      for (let s = -1; s <= 1; s += 2) {
+        this.spoke(to, across + (s > 0 ? 0 : Math.PI), 8 * k, 15 * k, {
+          color: '#ffffff', width: 2.6, frames: 9, glow: 1.9, bow: s * 3,
+        });
+        this.spoke(to, across + (s > 0 ? 0 : Math.PI) + s * 0.3, 10 * k, 10 * k, {
+          color: lighten(c, 0.6), width: 1.8, frames: 8, glow: 1.5,
         });
       }
       // Rubble knocked out from UNDER the target, not through it. Spawned at
       // chest height and full size these were half a dozen brown boulders
       // parked over the defender for twenty frames.
-      this.emit(Math.round(4 * k), () => ({
-        x: to.x + rand(-9, 9), y: to.y + rand(8, 14),
-        vx: rand(-1.4, 1.4) + dirX * 1.4, vy: rand(-3.4, -1.8),
-        ay: 0.3, spin: rand(-0.3, 0.3), rot: rand(0, 6),
-        life: Math.round(rand(14, 24)), max: 24,
-        size: rand(1.6, 2.6) * k, kind: 'rock',
-        c0: lighten(c, 0.3), c1: darken(c, 0.45), add: false,
-      }));
+      // Thrown clear rather than piled up. Spawned in a nine-pixel box at the
+      // defender's feet at full size, four of these were a brown lump sitting
+      // on the sprite for twenty frames -- rubble is supposed to be leaving
+      // the impact, not decorating it.
+      this.emit(Math.round(4 * k), () => {
+        const side = Math.random() < 0.5 ? -1 : 1;
+        return {
+          x: to.x + side * rand(9, 20), y: to.y + rand(9, 15),
+          vx: side * rand(1.2, 3) + dirX * 1.2, vy: rand(-3.4, -1.8),
+          ay: 0.3, spin: rand(-0.3, 0.3), rot: rand(0, 6),
+          life: Math.round(rand(14, 24)), max: 24,
+          size: rand(1.4, 2.2) * k, kind: 'rock',
+          c0: lighten(c, 0.3), c1: darken(c, 0.45), add: false,
+        };
+      });
     });
     // The recoil: a short bounce back out of the hit.
     this.after(17, () => { this.lunge = -3 * k; });
@@ -880,6 +1129,7 @@ export class MoveFx {
           x: p.x, y: p.y + rand(-6, 6),
           angle: Math.atan2(to.y - from.y, to.x - from.x),
           len: 26 * k, frames: 7, color: edge, width: 1.6,
+          glow: 1.8, core: false,
         });
       });
     }
@@ -887,12 +1137,20 @@ export class MoveFx {
     // Arrival: three cuts, offset in time and bowed so the eye follows them.
     // Tight in time and short-lived: three forty-pixel arcs each held for
     // twelve frames overlapped into one pale smear across the defender.
+    // A cut DOES cross the body -- that is the whole read of the archetype, and
+    // pushing these out to a clearance radius would turn a slash into a
+    // firework. What has to go is the overlap: three arcs each eight frames
+    // long and two frames apart put all three on the defender at once, each
+    // with its own pure-white core and a glow nearly seven pixels wide, and
+    // three of those stacked is a white sheet. Shorter and further apart, only
+    // one blade is ever really on the sprite, and only the middle one is white.
     for (let i = 0; i < 3; i++) {
-      this.after(11 + i * 2, () => {
+      this.after(11 + i * 3, () => {
         this.cut({
           x: to.x + rand(-6, 6), y: to.y + rand(-8, 8),
           angle: -0.8 + i * 0.5, len: 44 * k, bow: (i % 2 ? 7 : -7) * k,
-          frames: 8, color: edge, width: 2.4,
+          frames: 6, color: edge, width: 2,
+          glow: 1.6, core: i === 1,
         });
         this.shakeAmp = 2.6 * k;
         this.emit(5, () => {
@@ -1201,6 +1459,191 @@ export class MoveFx {
         };
       });
     });
+  }
+
+  /**
+   * Vine: a tendril whipped out of the ground, cracked across the target, and
+   * withdrawn.
+   *
+   * This used to be the leaf volley -- the same fan of spinning blades that
+   * `leaf_small`, `leaf_big`, `drain` and `powder` all played, so five ids in
+   * one type shared one performance and none of them was a vine. The whole
+   * point of a vine is that it is ATTACHED: it reaches, it connects the two
+   * creatures for a moment, and it is pulled back. Nothing thrown can say that.
+   */
+  private vine(from: FxPoint, to: FxPoint, c: string, k: number): void {
+    const pale = lighten(c, 0.3);
+    const deep = darken(c, 0.25);
+    const root = { x: from.x + (to.x - from.x) * 0.1, y: from.y + 6 };
+    const ground = from.y + 10;
+
+    // Wind-up: the ground stirs and shoots break the surface at the user's feet.
+    this.windUp(root, pale, 7, { kind: 'dot', rate: 1, radius: 18, ring: false, curl: 0.18 });
+    for (let i = 0; i < 5; i++) {
+      this.after(i * 1.2, () => {
+        const off = rand(-16, 16);
+        this.emit(1, () => ({
+          x: from.x + off, y: ground + rand(-1, 3),
+          vy: -rand(1.2, 2.4), curl: rand(-0.06, 0.06), drag: 0.9,
+          life: Math.round(rand(7, 12)), max: 12,
+          size: rand(2, 3) * k, kind: 'blade',
+          rot: -Math.PI / 2 + rand(-0.4, 0.4), spin: rand(-0.1, 0.1),
+          c0: pale, c1: deep, add: false,
+        }));
+        this.emit(1, () => ({
+          x: from.x + off + rand(-3, 3), y: ground + rand(0, 3),
+          vx: rand(-0.7, 0.7), vy: rand(-0.6, -0.1),
+          drag: 0.92, grow: 1.07,
+          life: Math.round(rand(9, 15)), max: 15,
+          size: rand(1.6, 2.6), kind: 'smoke',
+          c0: '#8a7a5e', c1: '#4a3f30', add: false,
+        }));
+      });
+    }
+    this.after(5, () => {
+      this.ring({
+        x: from.x, y: ground, r0: 3, r1: 22 * k, squash: 0.24,
+        frames: 10, color: pale, width: 2,
+      });
+    });
+
+    // Travel: the lash. It extends over seven frames, so the tip genuinely
+    // arrives last and the eye can follow it across.
+    this.after(7, () => {
+      this.lashes.push({
+        from: root, to: { x: to.x + 4, y: to.y + 2 },
+        t: 0, frames: 26, color: c, width: Math.max(5, Math.round(5 * k)),
+        wave: 11 * k, reach: 7, over: 1, seed: rand(0, 6.3), leaves: true,
+      });
+    });
+    // A second, thinner one a beat later from a different root, so the target
+    // is caught rather than tapped.
+    this.after(10, () => {
+      this.lashes.push({
+        from: { x: from.x - 6, y: ground - 2 }, to: { x: to.x - 3, y: to.y - 6 },
+        t: 0, frames: 22, color: deep, width: Math.max(3, Math.round(3.4 * k)),
+        wave: 15 * k, reach: 6, over: 1, seed: rand(0, 6.3), leaves: true,
+      });
+    });
+
+    // Arrival: the crack. Leaf litter torn off the tip and thrown past the
+    // target, plus a constricting ring as the vine cinches.
+    this.after(14, () => {
+      this.shakeAmp = 3.4 * k;
+      this.ring({ x: to.x, y: to.y, r0: 30 * k, r1: 9 * k, squash: 0.9, frames: 11, color: pale, width: 2 });
+      this.emit(Math.round(9 * k), () => {
+        const a = rand(-2.4, 0.6);
+        return {
+          x: to.x + Math.cos(a) * rand(8, 13), y: to.y + Math.sin(a) * rand(6, 11),
+          vx: Math.cos(a) * rand(1.6, 4), vy: Math.sin(a) * rand(1.6, 4) - 0.6,
+          ay: 0.16, drag: 0.95, curl: 0.05,
+          life: Math.round(rand(14, 26)), max: 26,
+          size: rand(2.2, 3.2), kind: 'blade',
+          rot: a, spin: rand(-0.3, 0.3),
+          c0: pale, c1: deep, add: false,
+        };
+      });
+    });
+    // The withdrawal: the vine snaps back and the shoots at the user's feet
+    // sink out of sight, so the move closes where it opened.
+    this.after(20, () => {
+      this.emit(Math.round(4 * k), () => ({
+        x: from.x + rand(-14, 14), y: ground + rand(-2, 2),
+        vy: rand(0.3, 0.9), drag: 0.96,
+        life: Math.round(rand(8, 14)), max: 14,
+        size: rand(1.4, 2.4), kind: 'dot',
+        c0: pale, c1: deep, add: false,
+      }));
+    });
+  }
+
+  /**
+   * Powder: a dense cloud of spores that drifts across and settles.
+   *
+   * The old powder was the leaf volley at scale 1.0 -- a dozen dark blades
+   * spinning past the defender, which at 1x is a scatter of specks the player
+   * cannot see and which says nothing about powder at all. A powder move has no
+   * projectile and no impact: what it has is VOLUME, drift, and a target that
+   * ends the move visibly coated in something.
+   */
+  private powder(from: FxPoint, to: FxPoint, c: string, k: number): void {
+    const pale = lighten(c, 0.5);
+    const deep = darken(c, 0.3);
+    const dx = to.x - from.x;
+    const dy = to.y - from.y;
+
+    // A puff off the user, shaken loose rather than fired.
+    this.crouch(3, 4, 3, 10);
+    for (let f = 0; f < 5; f++) {
+      this.after(2 + f, () => {
+        this.emit(4, () => ({
+          x: from.x + rand(-10, 10), y: from.y + rand(-8, 8),
+          vx: dx / 34 + rand(-0.5, 0.5), vy: rand(-0.9, 0.2),
+          drag: 0.97, grow: 1.055,
+          life: Math.round(rand(20, 30)), max: 30,
+          size: rand(2.4, 4), kind: 'smoke',
+          c0: pale, c1: deep, add: false,
+        }));
+      });
+    }
+
+    // The cloud crosses: a wide, slow front rather than a stream. Each puff is
+    // given its own crossing time, so the front has depth instead of arriving
+    // as one wall.
+    for (let f = 0; f < 14; f++) {
+      this.after(4 + f, () => {
+        this.emit(3, () => {
+          const life = Math.round(rand(22, 36));
+          const speed = rand(0.7, 1.25);
+          return {
+            x: from.x + rand(-9, 9), y: from.y + rand(-12, 10),
+            vx: (dx / 20) * speed, vy: (dy / 20) * speed - rand(0.15, 0.6),
+            ay: 0.012, drag: 0.985, grow: 1.045,
+            life, max: life,
+            size: rand(2.2, 4.2) * k, kind: 'smoke',
+            c0: pale, c1: deep, add: false,
+          };
+        });
+        // Glinting spores caught in the cloud, so it sparkles rather than
+        // reading as plain smoke.
+        if (f % 2 === 0) {
+          this.emit(1, () => {
+            const t = rand(0.1, 0.9);
+            const p = this.at(from, to, t);
+            return {
+              x: p.x + rand(-10, 10), y: p.y + rand(-12, 12),
+              vx: dx / 30, vy: rand(-0.5, 0.3),
+              life: Math.round(rand(14, 26)), max: 26,
+              size: rand(1, 2), kind: 'star',
+              c0: '#ffffff', c1: pale,
+            };
+          });
+        }
+      });
+    }
+
+    // Settling: the target ends up under it. A low haze that sinks and holds,
+    // and motes drifting down out of the cloud long after it has stopped
+    // moving -- the beat that says the powder is ON the defender now.
+    this.after(18, () => {
+      this.flash = 0.14; this.flashColor = pale;
+      this.ring({
+        x: to.x, y: to.y + 8, r0: 6, r1: 30 * k, squash: 0.26,
+        frames: 26, color: pale, width: 2, fill: 0.2, hold: 0.4, add: false,
+      });
+    });
+    for (let f = 0; f < 16; f++) {
+      this.after(18 + f, () => {
+        this.emit(2, () => ({
+          x: to.x + rand(-20, 20) * k, y: to.y + rand(-14, 4),
+          vx: rand(-0.3, 0.3), vy: rand(0.3, 1.1),
+          drag: 0.985, grow: 1.02,
+          life: Math.round(rand(16, 30)), max: 30,
+          size: rand(1.4, 2.8) * k, kind: 'smoke',
+          c0: pale, c1: deep, add: false,
+        }));
+      });
+    }
   }
 
   /** Lightning: a forked path that re-forks every frame, blooming at both ends. */
@@ -1668,6 +2111,308 @@ export class MoveFx {
     });
   }
 
+  /**
+   * Aerial: the user leaves the field, the sky goes quiet, and the strike
+   * comes down out of the top of the screen.
+   *
+   * `dive` and `sky` used to be the sideways gust with a bigger lunge number
+   * attached, which the battle scene then clamped away -- so the two moves in
+   * the game whose whole idea is that the attacker goes UP were visually
+   * identical to a breeze. The sprite cannot actually leave its pad from here,
+   * but nothing says "it went up" like the field losing it: the departure is a
+   * dust blast and a column of streaks climbing off the empty pad, then several
+   * frames in which the only thing on screen is the target and a shadow
+   * growing under it, then a near-vertical strike.
+   */
+  private aerial(from: FxPoint, to: FxPoint, c: string, k: number): void {
+    const pale = lighten(c, 0.62);
+    const dirX = Math.sign(to.x - from.x) || 1;
+    const ground = 10;
+
+    // Wind-up: air gathers, then the launch. A hard flat ring on the pad and a
+    // column of streaks going straight up off it.
+    this.windUp(from, pale, 5, { kind: 'dot', rate: 2, radius: 24, ring: false, curl: 0.22 });
+    this.crouch(4, 3, 2, 7);
+    this.after(5, () => {
+      this.shakeAmp = 2.6 * k;
+      this.ring({
+        x: from.x, y: from.y + ground, r0: 2, r1: 26 * k, squash: 0.22,
+        frames: 12, color: pale, width: 2,
+      });
+      this.emit(Math.round(9 * k), () => ({
+        x: from.x + rand(-11, 11), y: from.y + rand(4, 12),
+        vx: rand(-1.6, 1.6), vy: -rand(3.4, 6.4),
+        ay: 0.1, drag: 0.97,
+        life: Math.round(rand(9, 16)), max: 16,
+        size: rand(1.4, 2.6), kind: 'streak',
+        c0: '#ffffff', c1: c,
+      }));
+      this.emit(Math.round(6 * k), () => ({
+        x: from.x + rand(-13, 13), y: from.y + ground + rand(-2, 3),
+        vx: rand(-2.6, 2.6), vy: rand(-0.7, 0.1),
+        drag: 0.92, grow: 1.07,
+        life: Math.round(rand(12, 20)), max: 20,
+        size: rand(1.8, 3) * k, kind: 'smoke',
+        c0: lighten(c, 0.3), c1: darken(c, 0.5), add: false,
+      }));
+    });
+
+    // The quiet. Nothing at all for five frames except one crescent crossing
+    // the top of the screen -- the anticipation the brief asks for, and the
+    // only beat in this module that is deliberately empty.
+    this.after(10, () => {
+      this.cut({
+        x: to.x - dirX * 40, y: 14, angle: 0.1 * dirX, len: 54 * k,
+        frames: 9, color: pale, width: 1.6, glow: 1.6, core: false,
+      });
+    });
+
+    // The shadow. It grows on the ground under the target as the thing
+    // overhead gets closer, which is what tells the player where to look.
+    for (let i = 0; i < 5; i++) {
+      this.after(12 + i * 2, () => {
+        // A shadow, not a hole. At half opacity in near-black this read as a
+        // pit opening in the grass; the ground has to stay visible through it
+        // or the effect stops being a shadow and starts being a hazard.
+        this.ring({
+          x: to.x, y: to.y + ground, r0: (5 + i * 3) * k, r1: (7 + i * 3.4) * k,
+          squash: 0.3, frames: 4, color: '#241d2e', width: 1,
+          fill: 0.1 + i * 0.045, hold: 0.6, add: false,
+        });
+      });
+    }
+
+    // The descent: a steep streak coming in from above the field, arriving on
+    // the frame the burst fires.
+    this.after(18, () => {
+      const enter = { x: to.x - dirX * 22, y: -10 };
+      for (let i = 0; i < 3; i++) {
+        this.spoke(
+          { x: enter.x + dirX * i * 7, y: enter.y + i * 22 },
+          Math.atan2(to.y - enter.y, to.x - enter.x), 0, 30 * k,
+          { color: i === 1 ? '#ffffff' : pale, width: i === 1 ? 2.6 : 1.6, frames: 7, glow: 1.8 },
+        );
+      }
+      this.emit(Math.round(10 * k), () => {
+        const t = rand(0, 1);
+        return {
+          x: enter.x + (to.x - enter.x) * t + rand(-5, 5),
+          y: enter.y + (to.y - enter.y) * t + rand(-5, 5),
+          vx: dirX * rand(1.4, 3), vy: rand(3.4, 6),
+          drag: 0.95,
+          life: Math.round(rand(5, 10)), max: 10,
+          size: rand(1.4, 2.6), kind: 'streak',
+          c0: '#ffffff', c1: c,
+        };
+      });
+    });
+
+    // Landing: the air the dive brought down with it, blown outward along the
+    // floor rather than up into the target.
+    this.after(22, () => {
+      this.shakeAmp = Math.max(this.shakeAmp, 6 * k);
+      this.ring({
+        x: to.x, y: to.y + ground, r0: 4, r1: 44 * k, squash: 0.2,
+        frames: 15, color: pale, width: 2.5,
+      });
+      this.emit(Math.round(8 * k), () => ({
+        x: to.x + rand(-8, 8), y: to.y + ground + rand(-2, 3),
+        vx: rand(-4.4, 4.4) * k, vy: rand(-0.8, 0.1),
+        drag: 0.92, grow: 1.07,
+        life: Math.round(rand(14, 24)), max: 24,
+        size: rand(2, 3.4) * k, kind: 'smoke',
+        c0: lighten(c, 0.3), c1: darken(c, 0.5), add: false,
+      }));
+      this.emit(Math.round(5 * k), () => {
+        const a = rand(-2.7, -0.5);
+        return {
+          x: to.x + Math.cos(a) * 12 * k, y: to.y + Math.sin(a) * 9 * k,
+          vx: Math.cos(a) * rand(2.4, 5), vy: Math.sin(a) * rand(2.4, 5),
+          curl: 0.06, drag: 0.985,
+          life: Math.round(rand(10, 18)), max: 18,
+          size: rand(4.5, 6), kind: 'crescent',
+          rot: a, spin: 0.2,
+          c0: pale, c1: c, add: false,
+        };
+      });
+    });
+  }
+
+  /**
+   * A hazard laid on the ground rather than an explosion at a creature.
+   *
+   * `hazard` was routed to the quake archetype, so a move whose entire meaning
+   * is "this is still here next turn" played as a one-off eruption and then
+   * left nothing behind. What a hazard needs is the opposite shape: scatter
+   * first, settle second, and finish with something visibly RESTING on the
+   * field under the target.
+   */
+  private hazard(from: FxPoint, to: FxPoint, c: string, k: number): void {
+    const lip = lighten(c, 0.4);
+    const deep = darken(c, 0.45);
+    const ground = 10;
+    const spread = 34 * k;
+
+    // The user scatters a handful, low and flat.
+    this.crouch(3, 4, 4, 9);
+    for (let i = 0; i < 10; i++) {
+      this.after(4 + i * 0.7, () => {
+        const t = rand(0.25, 1);
+        const land = { x: to.x + rand(-spread, spread), y: to.y + ground + rand(-3, 4) };
+        const life = Math.round(rand(9, 14));
+        this.emit(1, () => ({
+          x: from.x + rand(-4, 4), y: from.y + rand(-2, 6),
+          vx: (land.x - from.x) / life,
+          vy: (land.y - from.y) / life - rand(1.6, 2.8),
+          ay: 0.26, life, max: life,
+          size: rand(2.2, 3.4) * k, kind: 'rock',
+          rot: rand(0, 6.3), spin: rand(-0.3, 0.3),
+          c0: lip, c1: deep, add: false,
+        }));
+        void t;
+        // Each one kicks a small puff where it lands, a beat after it gets
+        // there, so the field is peppered over time instead of at once.
+        this.after(life, () => {
+          this.emit(1, () => ({
+            x: land.x, y: land.y,
+            vx: rand(-0.6, 0.6), vy: rand(-0.5, -0.1),
+            drag: 0.92, grow: 1.06,
+            life: Math.round(rand(8, 14)), max: 14,
+            size: rand(1.4, 2.4), kind: 'smoke',
+            c0: '#9c8d74', c1: '#4a4033', add: false,
+          }));
+          this.ring({
+            x: land.x, y: land.y, r0: 1, r1: 7 * k, squash: 0.3,
+            frames: 8, color: lip, width: 1.5,
+          });
+        });
+      });
+    }
+
+    // The field the hazard now covers: a low band under the target that opens
+    // and then STAYS, which is the whole read of the move.
+    this.after(16, () => {
+      this.ring({
+        x: to.x, y: to.y + ground, r0: 6, r1: spread, squash: 0.22,
+        frames: 34, color: deep, width: 2, fill: 0.22, hold: 0.55, add: false,
+      });
+      this.ring({
+        x: to.x, y: to.y + ground, r0: 6, r1: spread + 3, squash: 0.22,
+        frames: 16, color: lip, width: 2,
+      });
+      this.shakeAmp = 2 * k;
+    });
+    // Spikes standing up out of it, arriving one at a time.
+    for (let i = 0; i < 7; i++) {
+      this.after(17 + i * 1.3, () => {
+        const x = to.x + (i / 6 - 0.5) * spread * 1.7;
+        this.emit(1, () => ({
+          x, y: to.y + ground + rand(-2, 2),
+          vy: -0.35, drag: 1, grow: 1.03,
+          life: Math.round(rand(20, 30)), max: 30,
+          size: rand(2.6, 3.8) * k, kind: 'shard',
+          rot: -Math.PI / 2 + rand(-0.25, 0.25), spin: 0,
+          c0: lip, c1: deep, add: false,
+        }));
+      });
+    }
+  }
+
+  /**
+   * A lasting affliction: something takes hold of the target and stays.
+   *
+   * `status` was routed to the stat-drop arrows, so being poisoned, burned or
+   * paralysed showed the player a pair of downward chevrons and finished in
+   * twenty-four frames. An affliction is not a number going down -- it is
+   * something CLIMBING the defender and refusing to leave, which means it has
+   * to start at the feet, work upward, and still be there when the effect ends.
+   */
+  private status(at: FxPoint, c: string): void {
+    const pale = lighten(c, 0.45);
+    const deep = darken(c, 0.35);
+    const ground = 10;
+
+    // It comes up out of the ground under the target.
+    this.after(0, () => {
+      this.ring({
+        x: at.x, y: at.y + ground, r0: 4, r1: 26, squash: 0.26,
+        frames: 30, color: deep, width: 2, fill: 0.3, hold: 0.5, add: false,
+      });
+    });
+    for (let f = 0; f < 22; f++) {
+      this.after(f, () => {
+        // The band the motes are born in climbs the body as the effect runs,
+        // so the affliction visibly takes hold rather than hanging in the air.
+        const climb = f / 22;
+        // Wisps, not globs. A glob is opaque, and forty-odd opaque blobs
+        // stacked over a creature is not an affliction taking hold, it is the
+        // creature being painted out -- the exact failure this module has been
+        // committing at every impact. A wisp is translucent and tailed, so the
+        // defender stays visible underneath the thing that is climbing it.
+        this.emit(1, () => ({
+          x: at.x + rand(-15, 15), y: at.y + ground - climb * 26 + rand(-4, 4),
+          vx: rand(-0.35, 0.35), vy: -rand(0.5, 1.3),
+          curl: rand(-0.05, 0.05), grow: 1.035,
+          life: Math.round(rand(14, 24)), max: 24,
+          size: rand(2, 3.4), kind: 'wisp',
+          c0: pale, c1: deep,
+        }));
+        // One opaque bead every few frames, so the cloud still has something
+        // solid in it to read against the soft mass.
+        if (f % 3 === 0) {
+          this.emit(1, () => ({
+            x: at.x + rand(-13, 13), y: at.y + ground - climb * 24 + rand(-3, 3),
+            vy: -rand(0.6, 1.2), grow: 1.03,
+            life: Math.round(rand(10, 18)), max: 18,
+            size: rand(1.4, 2.2), kind: 'glob',
+            c0: pale, c1: deep, add: false,
+          }));
+        }
+      });
+    }
+    // Three rings closing in on the body, each tighter than the last: the grip.
+    for (let i = 0; i < 3; i++) {
+      this.after(3 + i * 5, () => {
+        this.ring({
+          x: at.x, y: at.y + 4 - i * 5, r0: 26 - i * 3, r1: 11,
+          squash: 0.42, frames: 13, color: pale, width: 2,
+        });
+      });
+    }
+    // Marks orbiting the head, held rather than thrown.
+    for (let i = 0; i < 6; i++) {
+      this.after(8 + i * 1.5, () => {
+        const a = (i / 6) * Math.PI * 2;
+        this.emit(1, () => ({
+          x: at.x + Math.cos(a) * 15, y: at.y - 10 + Math.sin(a) * 5,
+          vx: -Math.sin(a) * 1.1, vy: Math.cos(a) * 0.4,
+          curl: 0.16, drag: 0.995,
+          life: Math.round(rand(20, 30)), max: 30,
+          size: rand(2.6, 3.6), kind: 'glyph',
+          rot: a, spin: 0.05,
+          c0: '#ffffff', c1: c, add: false,
+        }));
+      });
+    }
+    this.after(9, () => {
+      this.flash = 0.18;
+      this.flashColor = deep;
+    });
+    // The tail: it is still bubbling off the defender well after the rest has
+    // gone, because a status is a thing that persists.
+    for (let f = 0; f < 14; f++) {
+      this.after(22 + f, () => {
+        this.emit(1, () => ({
+          x: at.x + rand(-13, 13), y: at.y + rand(-8, 8),
+          vy: -rand(0.4, 0.9), grow: 1.05,
+          life: Math.round(rand(14, 24)), max: 24,
+          size: rand(1.4, 2.6), kind: 'glob',
+          c0: pale, c1: deep, add: false,
+        }));
+      });
+    }
+  }
+
   /** Psychic: distortion rings and slow-turning glyphs closing on the target. */
   private psy(from: FxPoint, to: FxPoint, c: string, k: number): void {
     const pale = lighten(c, 0.55);
@@ -1768,7 +2513,15 @@ export class MoveFx {
     });
   }
 
-  /** Bugs: a cloud of individual insects, each with its own wing flicker. */
+  /**
+   * Bugs: a cloud of individual insects, each with its own wing flicker.
+   *
+   * Every insect used to be born at `lighten(c, 0.45)`, which the bug renderer
+   * then lightened again for the wings -- so a swarm arrived as thirty
+   * near-white specks with no bodies in them. Starting each one at its own type
+   * colour keeps the renderer's pale wing / dark body split intact, and it is
+   * that split, not the count, that makes a speck read as an insect.
+   */
   private swarm(from: FxPoint, to: FxPoint, c: string, k: number): void {
     const n = Math.round(34 * k);
 
@@ -1782,7 +2535,7 @@ export class MoveFx {
           curl: 0.2, drag: 0.99,
           life: Math.round(rand(10, 16)), max: 16,
           size: 2.4, kind: 'bug', phase: rand(0, 6.3),
-          c0: lighten(c, 0.45), c1: c, add: false,
+          c0: c, c1: darken(c, 0.25), add: false,
         }));
       });
     }
@@ -1795,20 +2548,48 @@ export class MoveFx {
     // thing a swarm has to have is *density*. Three tight departures with the
     // wobble cut to a fifth of the crossing speed gives the eye three clumps
     // to track, and clumps are what read as a swarm.
+    // Each insect is given a crossing time and a velocity that gets it to the
+    // target in exactly that time, then dies there. They used to be launched
+    // at a fixed speed with a life a third longer than the crossing took, so
+    // most of the swarm sailed straight past the defender and off the top
+    // corner of the screen -- a cloud of bugs leaving the arena in the middle
+    // of the move it was supposed to be delivering.
     const wave = Math.ceil(n / 3);
     for (let w = 0; w < 3; w++) {
       for (let i = 0; i < wave; i++) {
-        this.after(9 + w * 3 + i * 0.16, () => {
+        this.after(9 + w * 3.5 + i * 0.1, () => {
           const wob = rand(0, Math.PI * 2);
-          const life = Math.round(rand(15, 20));
+          const life = Math.round(rand(13, 16));
+          // The aim point is scattered over the defender's body rather than
+          // its centre, which is what turns a converging line into a cloud
+          // wrapping around something.
+          const tx = to.x + rand(-9, 9);
+          const ty = to.y + rand(-10, 10);
           this.emit(1, () => ({
             x: from.x + rand(-7, 7), y: from.y + rand(-7, 7),
-            vx: (to.x - from.x) / 14 + Math.cos(wob) * 0.85,
-            vy: (to.y - from.y) / 14 + Math.sin(wob) * 0.85,
-            curl: (i % 2 ? 1 : -1) * 0.07, drag: 0.99,
+            vx: (tx - from.x) / life + Math.cos(wob) * 0.5,
+            vy: (ty - from.y) / life + Math.sin(wob) * 0.5,
+            curl: (i % 2 ? 1 : -1) * 0.05, drag: 0.995,
             life, max: life,
             size: 2.4, kind: 'bug', phase: rand(0, 6.3),
-            c0: lighten(c, 0.45), c1: c, add: false,
+            c0: c, c1: darken(c, 0.25), add: false,
+          }));
+        });
+      }
+      // A soft dark mass moving with each wave. Thirty individually drawn
+      // five-pixel insects are, at 1x, thirty specks -- the thing that reads
+      // as a swarm at this size is the shadow they make together, and every
+      // version of this before now was missing it entirely.
+      for (let i = 0; i < 4; i++) {
+        this.after(9 + w * 3.5 + i * 1.2, () => {
+          const life = 15;
+          this.emit(1, () => ({
+            x: from.x + rand(-6, 6), y: from.y + rand(-6, 6),
+            vx: (to.x - from.x) / life, vy: (to.y - from.y) / life,
+            drag: 0.995, grow: 1.03,
+            life, max: life,
+            size: rand(3.4, 5) * k, kind: 'smoke',
+            c0: darken(c, 0.3), c1: darken(c, 0.55), add: false,
           }));
         });
       }
@@ -1837,7 +2618,7 @@ export class MoveFx {
           curl: 0.24, drag: 0.99,
           life: Math.round(rand(12, 20)), max: 20,
           size: 2.4, kind: 'bug', phase: rand(0, 6.3),
-          c0: lighten(c, 0.45), c1: c, add: false,
+          c0: c, c1: darken(c, 0.25), add: false,
         }));
       });
     }
@@ -1852,7 +2633,7 @@ export class MoveFx {
           curl: 0.12, drag: 0.97,
           life: Math.round(rand(14, 24)), max: 24,
           size: 2.4, kind: 'bug', phase: rand(0, 6.3),
-          c0: lighten(c, 0.45), c1: c, add: false,
+          c0: c, c1: darken(c, 0.25), add: false,
         };
       });
     });
@@ -1950,32 +2731,43 @@ export class MoveFx {
     this.after(18, () => {
       this.flash = 0.36; this.flashColor = lighten(c, 0.5);
       this.shakeAmp = 7.5 * k;
-      this.ring({ x: to.x, y: to.y, r0: 2, r1: 15 * k, squash: 0.6, frames: 5, color: '#ffffff', width: 3 });
-      this.ring({ x: to.x, y: to.y, r0: 5, r1: 34 * k, squash: 0.55, frames: 12, color: steel, width: 2 });
-      for (let i = 0; i < 2; i++) {
-        this.cut({
-          x: to.x, y: to.y, angle: -0.9 + i * 1.8, len: 40 * k,
-          frames: 9, color: steel, width: 3,
+      this.ring({ x: to.x, y: to.y, r0: 9 * k, r1: 20 * k, squash: 0.6, frames: 5, color: '#ffffff', width: 3 });
+      this.ring({ x: to.x, y: to.y, r0: 12 * k, r1: 40 * k, squash: 0.55, frames: 12, color: steel, width: 2 });
+      // The forged X. Four half-strokes radiating off the rim rather than two
+      // full ones drawn through the middle -- the same shape to the eye, and it
+      // leaves the creature it just hit visible underneath.
+      for (let i = 0; i < 4; i++) {
+        this.spoke(to, -0.9 + i * (Math.PI / 2), 9 * k, 22 * k, {
+          color: steel, width: 2.4, frames: 9, glow: 1.8,
         });
       }
       // Sparks behave like metal on metal: fast along the blow, then gravity.
-      this.emit(Math.round(24 * k), () => {
-        const ang = a + rand(-1.5, 1.5) - 0.5;
-        const s = rand(2.6, 8) * k;
+      //
+      // A cone, not a sphere, and struck from the rim rather than the middle.
+      // Two dozen streaks born on a small radius all opening on pure white is
+      // an additive disc the size of the creature -- the sparks were the thing
+      // erasing the defender, not the rings. Fanned forward off the contact
+      // edge they read as metal shearing, and the sprite survives them.
+      this.emit(Math.round(18 * k), () => {
+        const ang = a + rand(-1.05, 1.05) - 0.35;
+        const s = rand(3.4, 9) * k;
+        const r = rand(10, 17) * k;
         return {
-          x: to.x, y: to.y,
+          x: to.x + Math.cos(ang) * r, y: to.y + Math.sin(ang) * r * 0.8,
           vx: Math.cos(ang) * s, vy: Math.sin(ang) * s - 1,
           ay: 0.36, drag: 0.97,
           life: Math.round(rand(12, 26)), max: 26,
           size: rand(1, 2), kind: 'streak',
-          c0: '#ffffff', c1: spark,
+          // Struck steel throws yellow-hot sparks, not white ones. The pure
+          // white was both wrong and the loudest colour available.
+          c0: '#fff3c4', c1: spark,
         };
       });
       // Shrapnel: a couple of teeth knocked loose, tumbling.
       this.emit(Math.round(5 * k), () => {
         const ang = a + rand(-1.2, 1.2) - 0.4;
         return {
-          x: to.x, y: to.y,
+          x: to.x + Math.cos(ang) * 9 * k, y: to.y + Math.sin(ang) * 7 * k,
           vx: Math.cos(ang) * rand(2, 4.4), vy: Math.sin(ang) * rand(2, 4.4) - 0.8,
           ay: 0.3,
           life: Math.round(rand(16, 26)), max: 26,
@@ -2069,18 +2861,24 @@ export class MoveFx {
     for (let i = 0; i < 7; i++) {
       this.after(20 + i * 0.8, () => {
         const spread = (i / 6 - 0.5) * 2;
-        this.cut({
-          x: to.x + spread * 16 * k, y: to.y + 2,
-          angle: -Math.PI / 2 + spread * 0.5,
-          len: rand(26, 42) * k, bow: spread * 8,
-          frames: 13, color: pale, width: 2.6,
-        });
+        // They GROW UP OUT OF THE POOL. Centred on the target's chest, as
+        // these were, a sixty-pixel vertical stroke reaches thirty pixels above
+        // and thirty below -- so seven of them made a cage of white bars over
+        // the defender for the last third of the move. Rooted on the floor and
+        // climbing, the same seven strokes frame the creature instead.
+        this.spoke(
+          { x: to.x + spread * 16 * k, y: to.y + 9 },
+          -Math.PI / 2 + spread * 0.5, 0, rand(22, 34) * k,
+          { color: pale, width: 2.4, frames: 13, glow: 1.7, bow: spread * 7 },
+        );
         this.emit(2, () => ({
-          x: to.x + spread * 16 * k + rand(-3, 3), y: to.y + rand(-4, 6),
-          vx: spread * rand(0.4, 1.4), vy: rand(-3, -1.2),
+          // Kept out at the tendrils' own spread and low, so the smoke is what
+          // the pool is giving off rather than a lid over the target.
+          x: to.x + spread * 19 * k + rand(-3, 3), y: to.y + rand(2, 11),
+          vx: spread * rand(0.5, 1.6), vy: rand(-2.4, -0.9),
           ay: 0.18, grow: 1.04,
           life: Math.round(rand(12, 22)), max: 22,
-          size: rand(2.4, 4) * k, kind: 'smoke',
+          size: rand(2, 3.2) * k, kind: 'smoke',
           c0: pale, c1: '#140f1e', add: false,
         }));
       });
@@ -2090,10 +2888,13 @@ export class MoveFx {
       // The snap shut is a *darkening*, not a bloom. This was the single line
       // that made every dark move in the game finish looking like a light one.
       this.flash = Math.min(this.flash, -0.34); this.flashColor = '#000000';
-      this.ring({ x: to.x, y: to.y, r0: 30 * k, r1: 2, frames: 10, color: pale, width: 3 });
+      this.ring({ x: to.x, y: to.y, r0: 30 * k, r1: 9 * k, frames: 10, color: pale, width: 3 });
+      // The closing shadow is an annulus, not a disc: `fill` on a ring that
+      // collapses to radius six paints a solid dark blob over the defender at
+      // the exact moment the move is meant to be readable.
       this.ring({
-        x: to.x, y: to.y, r0: 6, r1: 26 * k, squash: 0.9, frames: 9,
-        color: body, width: 3, fill: 0.34, add: false,
+        x: to.x, y: to.y, r0: 10 * k, r1: 30 * k, squash: 0.9, frames: 9,
+        color: body, width: 3, fill: 0.16, add: false,
       });
     });
   }
@@ -2116,8 +2917,16 @@ export class MoveFx {
 
     // Travel: the beam, with motes streaming along it toward the target so the
     // light reads as moving rather than as a painted line.
+    // The beam STOPS at the target rather than passing through it. A seven-wide
+    // additive column whose far end is the defender's centre paints the sprite
+    // out for the whole eighteen frames it is held; ending it on the near edge
+    // reads as the light being stopped by something, which is the thing that
+    // actually happened.
+    const span = Math.hypot(to.x - head.x, to.y - head.y) || 1;
+    const stop = Math.max(0, 1 - (11 * k) / span);
+    const land = this.at(head, to, stop);
     this.after(12, () => {
-      this.beams.push({ from: { x: head.x, y: head.y }, to, t: 0, frames: 18, color: hot, width: 7 * k });
+      this.beams.push({ from: { x: head.x, y: head.y }, to: land, t: 0, frames: 18, color: hot, width: 7 * k });
       this.flash = 0.5; this.flashColor = '#fffbe8';
       this.shakeAmp = 4 * k;
     });
@@ -2140,21 +2949,27 @@ export class MoveFx {
 
     // Arrival: the bloom, with rays fanning out and holding.
     this.after(17, () => {
-      this.ring({ x: to.x, y: to.y, r0: 2, r1: 40 * k, frames: 15, color: '#ffffff', width: 3 });
+      this.ring({ x: to.x, y: to.y, r0: 11 * k, r1: 46 * k, frames: 15, color: '#ffffff', width: 3 });
+      // The corona. Ten rays that begin at the rim of the target and shine
+      // away from it -- a sun behind the creature rather than a sun painted
+      // over the top of it. Drawn through the centre, as they were, they made
+      // the defender disappear for the twelve loudest frames of the move.
       for (let i = 0; i < 10; i++) {
         const ang = (i / 10) * Math.PI * 2 + 0.15;
         const long = i % 2 === 0;
-        this.cut({
-          x: to.x, y: to.y, angle: ang,
-          len: (long ? 44 : 26) * k, frames: long ? 16 : 12,
-          color: long ? '#fffbe8' : hot, width: long ? 2.4 : 1.6,
+        this.spoke(to, ang, 10 * k, (long ? 30 : 17) * k, {
+          color: long ? '#fffbe8' : hot,
+          width: long ? 2.2 : 1.5,
+          frames: long ? 16 : 12,
+          glow: long ? 2 : 1.5,
         });
       }
       this.emit(Math.round(16 * k), () => {
         const ang = rand(0, Math.PI * 2);
         const sp = rand(1.6, 5) * k;
+        const r = rand(7, 13) * k;
         return {
-          x: to.x, y: to.y,
+          x: to.x + Math.cos(ang) * r, y: to.y + Math.sin(ang) * r * 0.85,
           vx: Math.cos(ang) * sp, vy: Math.sin(ang) * sp,
           drag: 0.93,
           life: Math.round(rand(14, 28)), max: 28,
@@ -2171,6 +2986,15 @@ export class MoveFx {
     // already desaturated, and lightening it lands on the same neutral the
     // dust and smoke effects use.
     const pale = mix(c, '#d9c6ff', 0.55);
+    // The dark the wisps are read AGAINST.
+    //
+    // Every wisp in this effect used to run pale -> type colour, and the type
+    // colour is itself a muted violet-grey, so the whole move lived inside a
+    // three-step value range and came out as a drift of soap bubbles. A spirit
+    // needs a hole in the middle of it: pushing the far end of every ramp down
+    // to a near-black violet gives each wisp an interior, and an interior is
+    // the difference between a ghost and a puff of smoke.
+    const void_ = darken(mix(c, '#2a1840', 0.6), 0.45);
 
     // Wind-up: something detaches from the user.
     this.windUp(from, pale, 8, { kind: 'wisp', rate: 1, radius: 24, curl: -0.1 });
@@ -2181,7 +3005,7 @@ export class MoveFx {
           vy: rand(-1.2, -0.5), curl: rand(-0.05, 0.05), grow: 1.04,
           life: Math.round(rand(12, 20)), max: 20,
           size: rand(2.4, 4) * k, kind: 'wisp',
-          c0: pale, c1: c,
+          c0: pale, c1: void_,
         }));
       });
     }
@@ -2197,8 +3021,8 @@ export class MoveFx {
           curl: side * 0.06,
           life, max: life,
           size: rand(3, 4.6) * k, kind: 'wisp',
-          c0: pale, c1: c,
-          trail: { every: 3, kind: 'dot', size: 1.2, life: 8, c0: pale, c1: c, add: true, rise: -0.2 },
+          c0: pale, c1: void_,
+          trail: { every: 3, kind: 'dot', size: 1.2, life: 8, c0: '#ffffff', c1: pale, add: true, rise: -0.2 },
         }));
       });
     }
@@ -2219,7 +3043,7 @@ export class MoveFx {
           ax: rand(-0.05, 0.05), drag: 0.995, grow: 1.02,
           life: Math.round(rand(12, 22)), max: 22,
           size: rand(2.2, 4) * k, kind: 'wisp',
-          c0: pale, c1: c,
+          c0: pale, c1: void_,
         }));
       });
     }
@@ -2245,40 +3069,97 @@ export class MoveFx {
 
   /* ------------------------------------------------------ support moves */
 
-  /** A build-up with no impact, for two-turn moves. */
+  /**
+   * A build-up with no impact, for two-turn moves.
+   *
+   * The old core was an opaque `flame` blob parked on the user's chest, which
+   * in any type but fire came out as a grey pebble sitting on the sprite -- a
+   * charge that reads as the creature having swallowed a rock. What a charge
+   * actually needs is ACCELERATION: the gathering has to get faster and
+   * tighter as it fills, the field has to notice, and the release has to arrive
+   * as an outward event rather than as the blob switching off.
+   */
   private charge(at: FxPoint, c: string): void {
-    // Motes spiral in tighter and faster as the charge fills.
-    for (let f = 0; f < 22; f++) {
+    const hot = lighten(c, 0.6);
+    const ground = 11;
+
+    // Motes spiral in, and the rate climbs as the charge fills. A constant
+    // rate is a decoration; a rising one is a thing being wound up.
+    for (let f = 0; f < 24; f++) {
       this.after(f, () => {
-        const tight = 1 - (f / 22) * 0.6;
-        this.emit(3, () => {
+        const p = f / 24;
+        const tight = 1 - p * 0.62;
+        this.emit(2 + Math.round(p * 3), () => {
           const a = rand(0, Math.PI * 2);
-          const r = rand(20, 46) * tight;
-          const life = Math.round(rand(10, 16));
+          const r = rand(22, 52) * tight;
+          // Later motes arrive faster, so the swarm visibly speeds up rather
+          // than simply getting denser.
+          const life = Math.round(rand(10, 16) * (1 - p * 0.45));
           return {
             x: at.x + Math.cos(a) * r, y: at.y + Math.sin(a) * r * 0.85,
             vx: -Math.cos(a) * r / life, vy: -Math.sin(a) * r * 0.85 / life,
-            curl: 0.16, life, max: life,
+            curl: 0.16 + p * 0.14, life, max: life,
             size: rand(1.4, 3), kind: 'star',
             c0: '#ffffff', c1: c,
           };
         });
       });
     }
-    // The core pulses three times, each pulse tighter than the last.
-    for (let i = 0; i < 3; i++) {
-      this.after(4 + i * 6, () => {
-        this.ring({ x: at.x, y: at.y, r0: (34 - i * 8), r1: 3, frames: 10, color: lighten(c, 0.6), width: 2 });
+    // Dust dragged in off the floor, so the ground is being pulled at too.
+    for (let f = 0; f < 20; f += 2) {
+      this.after(f, () => {
+        const side = f % 4 === 0 ? 1 : -1;
         this.emit(1, () => ({
-          x: at.x, y: at.y, life: 8, max: 8,
-          size: 3 + i, kind: 'flame', grow: 1.05,
-          c0: '#ffffff', c1: c, add: false,
+          x: at.x + side * rand(16, 30), y: at.y + ground + rand(-2, 3),
+          vx: -side * rand(0.8, 1.8), vy: rand(-0.5, -0.1),
+          drag: 0.96, grow: 1.04,
+          life: Math.round(rand(10, 18)), max: 18,
+          size: rand(1.6, 2.6), kind: 'smoke',
+          c0: lighten(c, 0.3), c1: darken(c, 0.5), add: false,
         }));
       });
     }
-    this.after(22, () => {
-      this.flash = 0.26; this.flashColor = lighten(c, 0.6);
-      this.ring({ x: at.x, y: at.y, r0: 4, r1: 40, frames: 14, color: '#ffffff', width: 3 });
+    // Four pulses, each tighter and closer together than the last -- the
+    // acceleration made audible in the picture.
+    const beats = [3, 9, 14, 18];
+    for (let i = 0; i < beats.length; i++) {
+      this.after(beats[i]!, () => {
+        this.ring({
+          x: at.x, y: at.y, r0: 38 - i * 8, r1: 5, frames: 9 - i,
+          color: hot, width: 2 + i * 0.3,
+        });
+        this.ring({
+          x: at.x, y: at.y + ground, r0: (30 - i * 5), r1: 4, squash: 0.24,
+          frames: 9, color: lighten(c, 0.35), width: 1.6,
+        });
+        this.shakeAmp = Math.max(this.shakeAmp, 0.8 + i * 0.8);
+      });
+    }
+
+    // Release: outward, not a blob going out. An open ring, a short corona
+    // clear of the sprite, and motes thrown off the charge that was held.
+    this.after(23, () => {
+      this.flash = 0.3; this.flashColor = hot;
+      this.shakeAmp = 4;
+      this.ring({ x: at.x, y: at.y, r0: 6, r1: 46, frames: 15, color: '#ffffff', width: 3 });
+      this.ring({ x: at.x, y: at.y, r0: 10, r1: 62, frames: 20, color: c, width: 2 });
+      for (let i = 0; i < 6; i++) {
+        this.spoke(at, (i / 6) * Math.PI * 2 + 0.3, 12, 18, {
+          color: hot, width: 1.8, frames: 11, glow: 1.7,
+        });
+      }
+      this.emit(14, () => {
+        const a = rand(0, Math.PI * 2);
+        const sp = rand(1.6, 4.4);
+        return {
+          x: at.x + Math.cos(a) * 10, y: at.y + Math.sin(a) * 8,
+          vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 0.6,
+          ay: 0.1, drag: 0.94,
+          life: Math.round(rand(14, 26)), max: 26,
+          size: rand(1.4, 2.8), kind: 'star',
+          c0: '#ffffff', c1: c,
+        };
+      });
     });
   }
 
@@ -2331,42 +3212,78 @@ export class MoveFx {
     });
   }
 
-  /** Stat changes: chunky arrows climbing or sinking around the target. */
+  /**
+   * Stat changes: chunky arrows climbing or sinking around the target.
+   *
+   * The arrows are the entire message of this effect and they were losing to
+   * their own garnish. Two dozen white sparkle-crosses were sharing the same
+   * volume of air with seven arrows drawn at radius four -- a size at which
+   * the automatic outline eats most of the shape -- so what a player actually
+   * saw was a shimmer, and no player has ever read "attack rose" off a
+   * shimmer. The arrows are now bigger than anything else on screen, they run
+   * in ordered waves rather than at random heights, and the sparkles are a
+   * thin trail behind them instead of a competing cloud.
+   */
   private statField(at: FxPoint, c: string, dir: 'up' | 'down'): void {
-    const sign = dir === 'up' ? -1 : 1;
-    for (let i = 0; i < 7; i++) {
-      this.after(i * 2.5, () => {
+    const up = dir === 'up';
+    const sign = up ? -1 : 1;
+    const lane = [-19, 0, 19, -10, 10, 0];
+
+    // Three waves of arrows in fixed lanes. Ordered motion reads as a
+    // deliberate signal; scattered motion reads as debris.
+    for (let i = 0; i < 6; i++) {
+      this.after(2 + i * 3, () => {
         this.emit(1, () => ({
-          x: at.x + rand(-22, 22),
-          y: at.y + (dir === 'up' ? rand(10, 18) : rand(-26, -16)),
-          vy: sign * rand(1.1, 1.9),
-          life: Math.round(rand(16, 24)), max: 24,
-          size: rand(3.4, 4.6), kind: 'arrow',
+          x: at.x + lane[i]! + rand(-2, 2),
+          y: at.y + (up ? rand(14, 20) : rand(-28, -22)),
+          vy: sign * rand(1.3, 1.8),
+          drag: 0.995,
+          life: Math.round(rand(20, 26)), max: 26,
+          // Floored well above the size at which the outline pass turns an
+          // arrow into a blob.
+          size: rand(6, 7.2), kind: 'arrow',
           // The mask bakes the arrow pointing up; a debuff just flips it.
-          rot: dir === 'up' ? 0 : Math.PI,
+          rot: up ? 0 : Math.PI,
           c0: '#ffffff', c1: c, add: false,
+          // A short trail so each arrow has a wake and the eye can tell which
+          // way it is going even on the frame it appears.
+          trail: {
+            every: 2, kind: 'dot', size: 1.2, life: 7,
+            c0: lighten(c, 0.6), c1: c, add: true, rise: -sign * 0.2,
+          },
         }));
       });
     }
-    for (let f = 0; f < 16; f++) {
+    // A thin sparkle bed, deliberately sparse: it frames the arrows now
+    // instead of burying them.
+    for (let f = 0; f < 16; f += 2) {
       this.after(f, () => {
-        this.emit(2, () => ({
+        this.emit(1, () => ({
           x: at.x + rand(-24, 24),
-          y: at.y + (dir === 'up' ? rand(8, 18) : rand(-30, -16)),
-          vx: rand(-0.3, 0.3), vy: sign * rand(0.8, 2),
-          life: Math.round(rand(14, 24)), max: 24,
-          size: rand(1.4, 2.8), kind: 'star',
+          y: at.y + (up ? rand(10, 18) : rand(-28, -16)),
+          vx: rand(-0.25, 0.25), vy: sign * rand(0.8, 1.6),
+          life: Math.round(rand(14, 22)), max: 22,
+          size: rand(1.4, 2.2), kind: 'star',
           c0: '#ffffff', c1: c,
         }));
       });
     }
-    this.ring({ x: at.x, y: at.y + 10, r0: 4, r1: 30, squash: 0.35, frames: 18, color: c, width: 2 });
+    // A column of light the arrows travel inside, so the change has a place
+    // as well as a direction.
+    for (let i = 0; i < 3; i++) {
+      this.after(1 + i * 5, () => {
+        this.ring({
+          x: at.x, y: at.y + (up ? 11 - i * 9 : -7 + i * 9),
+          r0: 26 - i * 2, r1: 20 - i * 2, squash: 0.3,
+          frames: 15, color: i === 1 ? lighten(c, 0.5) : c, width: 2,
+        });
+      });
+    }
     this.after(6, () => {
-      this.ring({ x: at.x, y: at.y + 10, r0: 4, r1: 24, squash: 0.35, frames: 18, color: lighten(c, 0.4), width: 2 });
       // A stat change had no field tint at all, which left it the only thing in
       // a battle that happens without the screen acknowledging it.
       this.flash = 0.16;
-      this.flashColor = dir === 'up' ? lighten(c, 0.6) : darken(c, 0.3);
+      this.flashColor = up ? lighten(c, 0.6) : darken(c, 0.3);
     });
   }
 
@@ -2456,6 +3373,8 @@ export class MoveFx {
     if (this.slashes.length) this.slashes = this.slashes.filter((x) => x.t < x.frames);
     for (const x of this.cracks) x.t++;
     if (this.cracks.length) this.cracks = this.cracks.filter((x) => x.t < x.frames);
+    for (const x of this.lashes) x.t++;
+    if (this.lashes.length) this.lashes = this.lashes.filter((x) => x.t < x.frames);
     for (const x of this.barriers) x.t++;
     if (this.barriers.length) this.barriers = this.barriers.filter((x) => x.t < x.frames);
 
@@ -2568,7 +3487,12 @@ export class MoveFx {
       const mx = (s.x - Math.sin(s.angle) * bow) * D;
       const my = (s.y + Math.cos(s.angle) * bow) * D;
       c.globalCompositeOperation = 'lighter';
-      for (const [mul, col] of [[2.6, rgba(s.color, 0.22 * a)], [1, rgba(s.color, 0.8 * a)], [0.4, rgba('#ffffff', a)]] as const) {
+      const passes: [number, string][] = [
+        [s.glow, rgba(s.color, 0.22 * a)],
+        [1, rgba(s.color, 0.8 * a)],
+      ];
+      if (s.core) passes.push([0.4, rgba('#ffffff', a)]);
+      for (const [mul, col] of passes) {
         c.strokeStyle = col;
         c.lineWidth = Math.max(1, s.width * mul * a * D);
         c.beginPath();
@@ -2578,6 +3502,9 @@ export class MoveFx {
         c.stroke();
       }
     }
+
+    /* whips sit under the particles, which are the debris they knock loose */
+    for (const L of this.lashes) this.drawLash(c, L, D);
 
     /* particles */
     for (const p of this.particles) this.drawParticle(c, p, D);
@@ -2771,21 +3698,140 @@ export class MoveFx {
     const shown = Math.min(1, p / 0.45);
     const a = p < 0.6 ? 1 : 1 - (p - 0.6) / 0.4;
     const dx = k.to.x - k.from.x, dy = k.to.y - k.from.y;
-    const steps = 30;
+    const span = Math.hypot(dx, dy) || 1;
+    // One sample per logical pixel of run. Thirty fixed samples across a
+    // hundred-pixel field puts nearly four pixels between neighbours, and each
+    // block was only two wide -- so a "crack" came out as a row of separated
+    // dark posts with grass showing between them. A fissure has to be
+    // CONTINUOUS or it is a fence.
+    const steps = Math.max(30, Math.ceil(span));
     c.globalCompositeOperation = 'source-over';
     const core = rgba('#120e16', a);
     const lip = rgba(k.color, a * 0.9);
-    for (let i = 0; i <= steps * shown; i++) {
+    const dark = rgba(darken(k.color, 0.55), a * 0.9);
+    const top = Math.ceil(steps * shown);
+    for (let i = 0; i <= top; i++) {
       const t = i / steps;
       const x = Math.round(k.from.x + dx * t);
-      const y = Math.round(k.from.y + dy * t + (noise(k.seed + i * 7) - 0.5) * 4);
+      const y = Math.round(k.from.y + dy * t + (noise(k.seed + i * 7) - 0.5) * 3);
       // Widening toward the target is what makes the split read as travelling
-      // rather than as a line that was always there.
-      const w = Math.max(1, Math.round(1 + t * k.width));
+      // rather than as a line that was always there -- but a split in the
+      // ground is seen at a shallow angle, so it opens to a few pixels, not to
+      // a third of the creature's height.
+      const w = Math.max(1, Math.round(1 + t * k.width * 0.45));
+      // Two wide so consecutive samples overlap even where the jitter steps
+      // the line sideways.
       c.fillStyle = core;
-      c.fillRect(x * D, (y - (w >> 1)) * D, 2 * D, w * D);
+      c.fillRect((x - 1) * D, (y - (w >> 1)) * D, 3 * D, w * D);
+      // Lit lip above, shadowed lip below: the two edges of an opening in the
+      // floor, which is what makes it read as depth rather than as a stripe.
       c.fillStyle = lip;
-      c.fillRect(x * D, (y - (w >> 1) - 1) * D, 2 * D, D);
+      c.fillRect((x - 1) * D, (y - (w >> 1) - 1) * D, 3 * D, D);
+      c.fillStyle = dark;
+      c.fillRect((x - 1) * D, (y - (w >> 1) + w) * D, 3 * D, D);
+    }
+  }
+
+  /**
+   * A whip cracking out along its path.
+   *
+   * Drawn as stacked blocks down a sampled centreline rather than as a stroked
+   * path, so the taper lands on the design grid and the body keeps the hard
+   * edge everything else in the game is drawn with. Three things make it read
+   * as a living thing rather than a bent line: the length ARRIVES over several
+   * frames so the tip is last to get there, a wave travels down the body from
+   * root to tip rather than the whole thing waving in place, and the amplitude
+   * grows toward the tip the way a real whip's does.
+   */
+  private drawLash(c: CanvasRenderingContext2D, L: Lash, D: number): void {
+    const p = L.t / L.frames;
+    // Out fast, hold, then whip back. Not linear anywhere: the crack is the
+    // point of the move and a linear extension has no crack in it.
+    const ext = L.t < L.reach
+      ? easeOut(L.t / L.reach)
+      : 1 + L.over * Math.sin((L.t - L.reach) / Math.max(1, L.frames - L.reach) * Math.PI) * 0.14;
+    const a = p < 0.62 ? 1 : 1 - (p - 0.62) / 0.38;
+    if (a <= 0) return;
+
+    const dx = L.to.x - L.from.x, dy = L.to.y - L.from.y;
+    const len = Math.hypot(dx, dy) || 1;
+    const nx = -dy / len, ny = dx / len;
+    const N = 34;
+    const body = rgba(L.color, a);
+    const lit = rgba(lighten(L.color, 0.45), a);
+    // The hard border every other shape in this game carries. A vine is green
+    // and the field is grass: without an outline the body simply disappears
+    // into the background it is crossing, which is exactly what the first cut
+    // of this did.
+    const edge = rgba(darken(L.color, 0.72), a);
+    const along = Math.atan2(dy, dx);
+
+    c.globalCompositeOperation = 'source-over';
+
+    // Two passes over the same centreline: the outline first, then the body
+    // inside it. Drawing them per-sample instead would let each segment's
+    // border cut into the segment before it and leave the vine looking chewed.
+    const trace = (grow: number, style: string): void => {
+      c.fillStyle = style;
+      let px = 0, py = 0;
+      for (let i = 0; i <= N; i++) {
+        const s = (i / N) * ext;
+        if (s > 1.14) break;
+        // The wave runs DOWN the body: the phase term carries `i`, so a crest
+        // born at the root travels to the tip instead of the whole vine
+        // shivering in unison.
+        const swing = Math.sin(L.t * 0.5 - i * 0.26 + L.seed) * L.wave * (i / N) ** 1.4;
+        const x = Math.round(L.from.x + dx * s + nx * swing);
+        const y = Math.round(L.from.y + dy * s + ny * swing);
+        // Taper toward the tip, but never below one solid pixel plus border.
+        const w = Math.max(1, Math.round(L.width * (1 - (i / N) * 0.7))) + grow;
+        const h = w >> 1;
+        c.fillRect((x - h) * D, (y - h) * D, w * D, w * D);
+        // Fill the gap to the previous sample so a fast wave cannot break the
+        // body into beads.
+        if (i > 0) {
+          const gx = x - px, gy = y - py;
+          const steps = Math.max(Math.abs(gx), Math.abs(gy));
+          for (let g = 1; g < steps; g++) {
+            const mx = Math.round(px + (gx * g) / steps);
+            const my = Math.round(py + (gy * g) / steps);
+            c.fillRect((mx - h) * D, (my - h) * D, w * D, w * D);
+          }
+        }
+        px = x; py = y;
+      }
+    };
+
+    trace(2, edge);
+    trace(0, body);
+
+    // Highlight and leaves, once, on top of the finished body.
+    for (let i = 0; i <= N; i++) {
+      const s = (i / N) * ext;
+      if (s > 1.14) break;
+      const swing = Math.sin(L.t * 0.5 - i * 0.26 + L.seed) * L.wave * (i / N) ** 1.4;
+      const x = Math.round(L.from.x + dx * s + nx * swing);
+      const y = Math.round(L.from.y + dy * s + ny * swing);
+      const w = Math.max(1, Math.round(L.width * (1 - (i / N) * 0.7)));
+      const h = w >> 1;
+      // Lit along the top edge -- the same upper-left light the tiles and the
+      // creature sprites are drawn to.
+      if (w >= 3) {
+        c.fillStyle = lit;
+        c.fillRect((x - h) * D, (y - h) * D, (w - 1) * D, D);
+      }
+      // Leaf nubs, alternating sides, so the thing is a vine and not a cable.
+      // They only sprout on the length that has already been paid out, which
+      // makes the vine read as growing rather than as being revealed.
+      // Big enough to survive the automatic outline. The blade mask marks every
+      // filled cell that touches empty space, so at radius three a leaf is all
+      // border and lands as a dark speck -- which is what these were.
+      if (L.leaves && i % 5 === 3 && i < N - 3) {
+        const side = (i % 10 === 3) ? 1 : -1;
+        const off = 3 + h;
+        drawMask(c, 'blade', x + nx * side * off, y + ny * side * off,
+          5, along + side * 1.2, lighten(L.color, 0.2), a);
+      }
     }
   }
 
@@ -2868,9 +3914,11 @@ function noise(n: number): number {
 /* --------------------------------------------------------- archetypes */
 
 type Archetype =
-  | 'impact' | 'slash' | 'flame' | 'water' | 'leaf' | 'bolt' | 'frost' | 'venom'
-  | 'quake' | 'wind' | 'psy' | 'swarm' | 'iron' | 'umbral' | 'radiant' | 'spirit'
-  | 'charge' | 'heal' | 'shield' | 'buff' | 'debuff' | 'weather';
+  | 'impact' | 'slash' | 'flame' | 'water' | 'leaf' | 'vine' | 'powder'
+  | 'bolt' | 'frost' | 'venom'
+  | 'quake' | 'hazard' | 'wind' | 'aerial'
+  | 'psy' | 'swarm' | 'iron' | 'umbral' | 'radiant' | 'spirit'
+  | 'charge' | 'heal' | 'shield' | 'buff' | 'debuff' | 'status' | 'weather';
 
 /**
  * Map a move's animation id to a performance. Keeping this a lookup rather than
@@ -2887,13 +3935,15 @@ const ARCHETYPES: Record<string, Archetype> = {
 
   flame_small: 'flame', flame_whip: 'flame', flame_big: 'flame', flame_dive: 'flame',
   water_small: 'water', water_pull: 'water', water_big: 'water',
-  leaf_small: 'leaf', leaf_big: 'leaf', vine: 'leaf', drain: 'leaf', powder: 'leaf',
+  leaf_small: 'leaf', leaf_big: 'leaf', drain: 'leaf',
+  vine: 'vine', powder: 'powder',
   spark_small: 'bolt', spark_mid: 'bolt', spark_big: 'bolt',
   frost_small: 'frost', frost_mid: 'frost', frost_big: 'frost',
   venom_small: 'venom', venom_cloud: 'venom',
   earth_small: 'quake', earth_mid: 'quake', earth_big: 'quake',
-  rock_small: 'quake', rock_mid: 'quake', rock_big: 'quake', hazard: 'quake',
-  wind_small: 'wind', dive: 'wind', sky: 'wind',
+  rock_small: 'quake', rock_mid: 'quake', rock_big: 'quake',
+  hazard: 'hazard',
+  wind_small: 'wind', dive: 'aerial', sky: 'aerial',
   psy_small: 'psy', psy_mid: 'psy', psy_big: 'psy',
   bug_small: 'swarm', bug_swarm: 'swarm',
   iron_small: 'iron', iron_mid: 'iron', iron_big: 'iron',
@@ -2902,7 +3952,7 @@ const ARCHETYPES: Record<string, Archetype> = {
   spirit_small: 'spirit', spirit_mid: 'spirit', spirit_big: 'spirit',
 
   charge: 'charge', heal: 'heal', shield: 'shield',
-  buff: 'buff', debuff: 'debuff', status: 'debuff', weather: 'weather',
+  buff: 'buff', debuff: 'debuff', status: 'status', weather: 'weather',
 };
 
 /**
@@ -2917,6 +3967,14 @@ const ARCHETYPES: Record<string, Archetype> = {
 const PHYSICAL: ReadonlySet<Archetype> = new Set<Archetype>(['impact', 'slash']);
 
 /**
+ * Moves whose payload travels from the defender back to the user.
+ *
+ * Their archetypes swap source and destination internally, so the shared
+ * finisher has to swap with them or the move lands twice in two places.
+ */
+const REVERSED: ReadonlySet<string> = new Set(['drain', 'water_pull']);
+
+/**
  * The frame at which each archetype's payload arrives.
  *
  * These are tuned against the battle scene's 46-frame budget for a move: the
@@ -2929,9 +3987,12 @@ const PHYSICAL: ReadonlySet<Archetype> = new Set<Archetype>(['impact', 'slash'])
  * move having hurt somebody.
  */
 const IMPACT_AT: Partial<Record<Archetype, number>> = {
-  impact: 14, slash: 13, flame: 22, water: 21, leaf: 20, bolt: 12,
-  frost: 22, venom: 22, quake: 22, wind: 18, psy: 22, swarm: 25,
+  impact: 14, slash: 13, flame: 22, water: 21, leaf: 20, vine: 14, bolt: 12,
+  frost: 22, venom: 22, quake: 22, wind: 18, aerial: 22, psy: 22, swarm: 25,
   iron: 19, umbral: 24, radiant: 18, spirit: 17,
+  // Powder and the status cloud are absent on purpose. Neither one strikes
+  // anybody: layering a directional debris burst on a drifting cloud is what
+  // made every non-damaging move in the game look like a punch in fancy dress.
 };
 
 function archetypeOf(anim: string): Archetype {

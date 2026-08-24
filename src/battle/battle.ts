@@ -31,7 +31,19 @@ export type BattleEvent =
   | { t: 'message'; text: string }
   /** A sound the presentation layer should play at this point in the script. */
   | { t: 'sfx'; id: string }
-  | { t: 'sendOut'; side: SideId; kin: Kin; fromTrainer?: string }
+  /**
+   * A kin walks on.
+   *
+   * hp/exp/level are the arriving kin's numbers AT THE MOMENT IT ARRIVES, and
+   * they are on the event for a reason. A turn is simulated to the end before
+   * a single frame of it is played back, so by the time the presentation gets
+   * to this step the live Kin already carries everything that happened after
+   * it -- including the blow the opponent landed on it the instant it landed.
+   * A replay that read `side.active.currentHp` here therefore showed a fresh
+   * arrival standing on its pad already hurt, with the attack that hurt it
+   * still several beats away. Read these, never the model.
+   */
+  | { t: 'sendOut'; side: SideId; kin: Kin; hp: number; exp: number; level: number; fromTrainer?: string }
   | { t: 'withdraw'; side: SideId; kin: Kin }
   | { t: 'useMove'; side: SideId; kin: Kin; move: MoveData }
   | { t: 'damage'; side: SideId; kin: Kin; amount: number; hpAfter: number; effectiveness: number; critical: boolean }
@@ -46,7 +58,12 @@ export type BattleEvent =
   | { t: 'weather'; weather: WeatherId; starting: boolean }
   | { t: 'throwVessel'; item: string; shakes: number; caught: boolean; kin: Kin }
   | { t: 'useItem'; side: SideId; item: string; kin?: Kin }
-  | { t: 'expGain'; kin: Kin; amount: number }
+  /** expBefore is the total the kin held before this award, for the same
+   *  reason sendOut carries its own HP: by playback time k.exp has already
+   *  been paid, so an exp bar that reads the model runs to the wrong number
+   *  -- and on the second knockout of a fight, to the number it is already
+   *  showing, which looks exactly like a kin being paid nothing. */
+  | { t: 'expGain'; kin: Kin; amount: number; expBefore: number }
   | { t: 'levelUp'; kin: Kin; level: number }
   | { t: 'learnMove'; kin: Kin; move: string }
   | { t: 'evolutionReady'; kin: Kin; into: string }
@@ -182,6 +199,18 @@ export class Battle {
     this.emit({ t: 'message', text });
   }
 
+  /**
+   * The one place a send-out is announced, so the snapshot on the event can
+   * never be forgotten at one of the four call sites.
+   */
+  private emitSendOut(id: SideId, kin: Kin, fromTrainer?: string): void {
+    this.emit({
+      t: 'sendOut', side: id, kin,
+      hp: kin.currentHp, exp: kin.exp, level: kin.level,
+      ...(fromTrainer !== undefined ? { fromTrainer } : {}),
+    });
+  }
+
   /** Drains and returns everything queued since the last drain. */
   drainEvents(): BattleEvent[] {
     const out = this.events;
@@ -206,12 +235,12 @@ export class Battle {
       if (!this.config.skipIntroLines) {
         for (const line of this.foe.trainer.intro) this.msg(line);
       }
-      this.emit({ t: 'sendOut', side: 'foe', kin: this.foe.active, fromTrainer: this.foe.trainer.name });
+      this.emitSendOut('foe', this.foe.active, this.foe.trainer.name);
     }
     if (!this.isWild) {
       this.msg(`${this.foe.trainer?.name ?? 'The opponent'} sent out ${this.foe.active.name}!`);
     }
-    this.emit({ t: 'sendOut', side: 'player', kin: this.player.active });
+    this.emitSendOut('player', this.player.active);
     this.msg(`Go, ${this.player.active.name}!`);
     if (this.weather !== 'clear') {
       this.emit({ t: 'weather', weather: this.weather, starting: true });
@@ -314,7 +343,7 @@ export class Battle {
     side.resetOnSwitch();
     side.activeIndex = partyIndex;
     side.participants.add(target.uid);
-    this.emit({ t: 'sendOut', side: id, kin: target });
+    this.emitSendOut(id, target);
     this.msg(id === 'player' ? `Go, ${target.name}!` : `${side.trainer?.name ?? 'The opponent'} sent out ${target.name}!`);
     this.applyEntryHazards(id);
     return true;
@@ -1077,7 +1106,7 @@ export class Battle {
     this.foe.resetOnSwitch();
     this.foe.activeIndex = idx;
     this.foe.participants.add(this.foe.active.uid);
-    this.emit({ t: 'sendOut', side: 'foe', kin: this.foe.active });
+    this.emitSendOut('foe', this.foe.active);
     this.msg(this.isWild
       ? `Another ${this.foe.active.name} appeared!`
       : `${this.foe.trainer?.name ?? 'The opponent'} sent out ${this.foe.active.name}!`);
@@ -1099,7 +1128,7 @@ export class Battle {
         outsider: k.originalTrainer !== undefined && k.originalTrainer !== 'player',
       });
       const before = k.level;
-      this.emit({ t: 'expGain', kin: k, amount });
+      this.emit({ t: 'expGain', kin: k, amount, expBefore: k.exp });
       this.msg(`${k.name} gained ${amount} EXP.`);
       const res = k.gainExp(amount);
       k.gainEvs(defeated.data?.evYield ?? {});

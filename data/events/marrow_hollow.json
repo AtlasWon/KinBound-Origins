@@ -3,7 +3,7 @@
     "id": "mh_perrin_meet",
     "trigger": "step",
     "map": "marrow_hollow",
-    "_note": "The player's front door drops them on (6,7), and (6,8) is the only tile they can step to from there, so this always fires with Perrin's landing tile (7,8) free. (7,8) is deliberately NOT a trigger: firing from there walked Perrin straight into the player.",
+    "_note": "The player's front door drops them on (6,7), and (6,8) is the only tile they can step to from there, so this always fires with Perrin's landing tile (7,8) free. (7,8) is deliberately NOT a trigger: firing from there walked Perrin straight into the player. THE EXIT: Perrin leaves for the laboratory rather than evaporating on the lawn two tiles from the player, which is what the old right-right-up-up did. From (7,8) the route is east along the y=8 road to x=18, up onto the verge, east across the lab's stone forecourt (19..25 at y=7), then one walked step up into the left leaf of the double door at (22,6). It climbs at x=18 for two reasons: hollow_hiker stands on (20,8) and scripted movers ignore collision, so a straight run along the road walks Perrin through him; and (17,7) is a sign, so 18 is the first column where the verge is clear. He is off the right edge of a 240x160 view by x=15 but stays visible all the way to the door on a wide one, which is why the door sound plays on arrival -- at the small size it is the only report the player gets that he went inside.",
     "at": [
       { "x": 6, "y": 8 },
       { "x": 5, "y": 8 }
@@ -81,11 +81,22 @@
           }
         ]
       },
-      { "kind": "move", "who": "mh_perrin", "steps": ["right", "right", "up", "up"], "speed": "run" },
+      { "kind": "wait", "frames": 12 },
+      { "kind": "face", "who": "mh_perrin", "dir": "right" },
+      { "kind": "wait", "frames": 12 },
+      { "kind": "move", "who": "mh_perrin", "steps": [
+        "right", "right", "right", "right", "right", "right",
+        "right", "right", "right", "right", "right",
+        "up",
+        "right", "right", "right", "right"
+      ], "speed": "run" },
+      { "kind": "face", "who": "mh_perrin", "dir": "up" },
+      { "kind": "sfx", "sound": "door" },
+      { "kind": "move", "who": "mh_perrin", "steps": ["up"], "speed": "walk" },
       { "kind": "removeNpc", "who": "mh_perrin" },
       {
         "kind": "say",
-        "lines": ["Perrin is already halfway up the road."]
+        "lines": ["Perrin is through the laboratory doors before you have moved."]
       }
     ]
   },

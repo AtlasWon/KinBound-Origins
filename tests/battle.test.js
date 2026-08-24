@@ -540,3 +540,85 @@ test('a knockout is announced once, and pays experience once', () => {
   assert.equal(faints.length, 1, 'one knockout, one faint event');
   assert.equal(exp.length, 1, 'one knockout, one payout');
 });
+
+test('a send-out carries the HP the arriving kin had when it walked on', () => {
+  // A whole turn is simulated before the battle scene plays back a frame of
+  // it. The player switches, the opponent attacks the newcomer, and both are
+  // resolved by the time the send-out is animated -- so a replay that read the
+  // live model showed the arrival already bloodied by an attack the player had
+  // not watched yet. The snapshot has to be on the event.
+  const rng = new Rng('sendout-hp');
+  const fighter = mk('cinderpaw', 24, rng);
+  const bench = mk('sprigling', 24, rng);
+  const foe = mk('menhir', 24, rng);
+
+  const battle = new Battle({
+    playerParty: [fighter, bench], foeParty: [foe], isWild: true, seed: 'sendout-hp',
+  });
+  battle.begin();
+
+  const events = battle.takeTurn({ kind: 'switch', partyIndex: 1 }, { kind: 'move', index: 0 });
+  const sent = events.find((e) => e.t === 'sendOut' && e.side === 'player');
+  assert.ok(sent, 'switching should send a kin out');
+  assert.equal(sent.kin, bench);
+  assert.ok(bench.currentHp < bench.maxHp, 'the foe should have hit the newcomer this turn');
+  assert.equal(sent.hp, bench.maxHp,
+    'the send-out must carry the HP at arrival, not the HP after the turn resolved');
+  assert.equal(sent.exp, bench.exp);
+  assert.equal(sent.level, bench.level);
+});
+
+test('an experience award carries the total the kin held before it', () => {
+  // The engine pays the experience before the scene ever sees the event, so an
+  // exp bar built from k.exp runs to one whole award past the truth -- and the
+  // NEXT knockout then animates from the inflated figure to the same inflated
+  // figure, which on screen is a bar that does not move at all.
+  const rng = new Rng('exp-before');
+  const fighter = mk('volcatrix', 50, rng, { moves: ['kilnburst'] });
+  const foe = mk('nibbet', 10, rng, { moves: ['brace'] });
+  const before = fighter.exp;
+
+  const battle = new Battle({
+    playerParty: [fighter], foeParty: [foe, mk('nibbet', 10, rng, { moves: ['brace'] })],
+    isWild: false, seed: 'exp-before',
+  });
+  battle.begin();
+  const events = battle.takeTurn({ kind: 'move', index: 0 }, { kind: 'move', index: 0 });
+  const gain = events.find((e) => e.t === 'expGain');
+  assert.ok(gain, 'a knockout should pay experience');
+  assert.equal(gain.expBefore, before, 'expBefore is the total from before the award');
+  assert.equal(gain.expBefore + gain.amount, fighter.exp,
+    'the two ends of the bar must bracket exactly the experience that was paid');
+});
+
+test('a kin that fought and was switched out is still paid for the knockout', () => {
+  // The player uses one kin, swaps to another, and the second lands the blow.
+  // Both fought, so both are paid -- and the payout has to name them on the
+  // event, since that is all the scene has to put a line on the screen with.
+  const rng = new Rng('switched-out-exp');
+  const first = mk('cinderpaw', 30, rng);
+  const second = mk('sprigling', 30, rng);
+  const foe = mk('nibbet', 20, rng, { moves: ['brace'] });
+  const firstBefore = first.exp;
+  const secondBefore = second.exp;
+
+  const battle = new Battle({
+    playerParty: [first, second], foeParty: [foe], isWild: true, seed: 'switched-out-exp',
+  });
+  battle.begin();
+  battle.takeTurn({ kind: 'move', index: 0 }, { kind: 'move', index: 0 });
+  assert.ok(!foe.fainted, 'the first kin should not have finished the fight on its own');
+  battle.takeTurn({ kind: 'switch', partyIndex: 1 }, { kind: 'move', index: 0 });
+  assert.equal(battle.player.active, second);
+
+  let paid = [];
+  for (let i = 0; i < 12 && !foe.fainted; i++) {
+    paid = battle.takeTurn({ kind: 'move', index: 0 }, { kind: 'move', index: 0 })
+      .filter((e) => e.t === 'expGain');
+  }
+  assert.ok(foe.fainted, 'the second kin should have finished the foe');
+  assert.ok(first.exp > firstBefore, 'the kin that was switched out fought, so it is paid');
+  assert.ok(second.exp > secondBefore, 'the kin that landed the knockout is paid');
+  assert.deepEqual(paid.map((e) => e.kin), [first, second],
+    'both participants are named on the payout events');
+});

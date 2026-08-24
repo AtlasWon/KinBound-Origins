@@ -48,6 +48,23 @@ interface Shot {
   captions: string[];
   /** The letterbox pulls back: the film is over and the frame opens up. */
   open?: boolean;
+  /**
+   * How this shot arrives and how it leaves, in ticks of black. Default FADE.
+   *
+   * These exist because eight identical dips to black is not a cut, it is a
+   * metronome -- and the last cut of this film had exactly one transition,
+   * repeated seven times, at the same length every time, which flattened a
+   * storm and a drowned town into the same beat as a meadow. A montage gets its
+   * rhythm from its joins, so the joins are authored per shot:
+   *
+   *   0 is a hard cut, and a hard cut is loud. Use it where the film wants the
+   *     audience to flinch -- and set BOTH sides of the join, since a shot that
+   *     fades out into a shot that starts hard still fades.
+   *   A short number is a blink. It keeps two shots in the same paragraph.
+   *   A long number is a full stop, and only the ends of the film get one.
+   */
+  fadeIn?: number;
+  fadeOut?: number;
   draw(r: Renderer, t: number, p: number): void;
 }
 
@@ -98,6 +115,66 @@ function kin(
   }
   scaledCache.set(key, cv);
   return cv;
+}
+
+/**
+ * A creature drawn backlit: a warm edge with a dark body sitting on top of it.
+ *
+ * This exists because of what a kin sprite actually IS. Every one of them --
+ * generated or hand-drawn -- is a portrait of a creature standing up, framed on
+ * a ground line. That is exactly what battle wants and exactly what a bird in
+ * an empty sky does not: at any size where the detail is legible, a standing
+ * portrait in mid-air reads as a creature perched on nothing, and adding the
+ * hand-drawn art made it worse, because the art has more detail to give away.
+ *
+ * A silhouette has no pose to disagree with. It has an outline, and an outline
+ * of a bird against a dawn sky is a bird. The rim is the whole trick: one unit
+ * of the sun's colour showing past the dark shape on the side the light is
+ * coming from, so it reads as a thing with light behind it rather than as a
+ * hole cut in the picture.
+ */
+function rimKin(
+  r: Renderer, id: string, size: number, x: number, y: number,
+  turn: number, squash: number, flip: boolean,
+): void {
+  // The sun in this film is always low and to the right of frame, so the light
+  // spills round the bottom-right edge. One unit, never two: two is a halo.
+  r.image(kin(id, size, '#ffbe82', turn, squash), x + 1, y + 1,
+    0, 0, undefined, undefined, flip, false, 0.85);
+  // Darker than anything it can fly across. This was one shade off the near
+  // headland's own fill for a pass, and the result was a bird that dissolved
+  // into the coast every time it crossed one, leaving its rim behind as a
+  // squiggle hanging in mid-air. A silhouette only works while it is the
+  // darkest thing in the frame -- which, being the nearest thing to the lens,
+  // is what it ought to be anyway.
+  r.image(kin(id, size, '#080d1c', turn, squash), x, y,
+    0, 0, undefined, undefined, flip);
+}
+
+/**
+ * A creature graded into the water it is swimming in.
+ *
+ * The two underwater shots are each built on a single hue -- one blue, one
+ * green -- and the reason they look like water and not like a blue rectangle is
+ * that NOTHING in either of them escapes that hue. Every building, every frond,
+ * every shaft of light is a value of the one colour.
+ *
+ * The creatures were the exception, and once hand-drawn art landed they became
+ * a loud one: an orange kin at full saturation forty feet under is a sticker on
+ * the picture, and it is also a lie, because red is the first thing the water
+ * takes. So the sprite is drawn, and then a silhouette of itself is laid over
+ * it in the colour of the water at partial alpha. Shape and internal value
+ * survive; the palette does not. It is a colour grade, done with the two
+ * operations this renderer actually has.
+ */
+function washKin(
+  r: Renderer, id: string, size: number, x: number, y: number,
+  turn: number, squash: number, flip: boolean, water: string, depth: number,
+): void {
+  const s = kin(id, size, null, turn, squash);
+  r.image(s, x, y, 0, 0, undefined, undefined, flip);
+  r.image(kin(id, size, water, turn, squash), x, y,
+    0, 0, undefined, undefined, flip, false, depth);
 }
 
 /**
@@ -351,28 +428,76 @@ function shotSea(r: Renderer, t: number, p: number): void {
   }
 
   // The lead. It banks through the shot instead of holding one pose, and it is
-  // the only bird in the frame with its own colour on it. One creature the eye
-  // can actually follow is worth six more silhouettes.
+  // the one bird in the frame with an edge of light on it -- which is what the
+  // eye follows here, not colour.
+  //
+  // It used to be drawn full colour at 42 units, and that stopped working the
+  // day half the roster became hand-drawn art: every sprite in this game, drawn
+  // or generated, is a creature STANDING, and a standing portrait blown up to a
+  // quarter of the screen height in an empty sky reads as a bird perched on
+  // nothing. Backlit is both the truth of the shot -- the sun is behind
+  // everything up there -- and the one treatment that reads the same whichever
+  // route the sprite came down. See rimKin.
   const bankPhase = Math.sin(t * 0.03);
   const leadX = wrap(t * 0.95, SCREEN_W, 52);
   const leadY = 28 + par(0.9) + bankPhase * 9 + Math.sin(t * 0.09) * 2;
   // The bank is authored for a bird facing left and then mirrored with it, so
   // the nose still leads into the climb once the flip is on.
-  r.image(kin('kestrelle', 42, null, bankPhase * 0.32, Math.sin(t * 0.2) * 0.8),
-    leadX, leadY, 0, 0, undefined, undefined, facing(1));
+  rimKin(r, 'kestrelle', 32, leadX, leadY, bankPhase * 0.32, Math.sin(t * 0.2) * 0.8, true);
 
-  // One flyer down on the deck, close enough to the water to drag a wake out of
-  // it. Nothing else in the shot ties the sky to the sea.
+  // One flyer down on the deck. It does not slide across the water: it drops
+  // onto it on a fixed clock, touches, and climbs away leaving a ring that goes
+  // on opening after it has gone. A creature doing one thing is worth three
+  // crossing the frame, and the touch is the only moment in the shot that ties
+  // the sky to the sea.
+  const DIVE = 112;
+  const dive = (t % DIVE) / DIVE;
+  // Down over the first two fifths, away over the remaining three: a bird
+  // pulling out of a dip climbs slower than it fell.
+  const drop = dive < 0.4 ? smooth(dive / 0.4) : 1 - smooth((dive - 0.4) / 0.6);
+  // Where the bird's feet meet the water, and the sprite hung off it: a kin
+  // sprite is drawn from its top-left with its feet on the bottom row, so the
+  // touch is `skimY + size === seaY` and nothing else.
+  //
+  // It works the water just under the horizon, and that is a lighting decision
+  // rather than a staging one: down on the open blue a dark bird is a dark bird
+  // on dark water and simply disappears. The band immediately below the horizon
+  // is the sky's reflection, it is the brightest water in the frame, and a
+  // silhouette laid across it reads from the back of the room.
+  const SKIM = 22;
+  const seaY = hz + 13;
   const skimX = wrap(t * 1.35 - 120, SCREEN_W, 44);
-  const skimY = hz + 4 + Math.sin(t * 0.08) * 2;
-  for (let i = 1; i < 9; i++) {
-    const a = 0.26 * (1 - i / 9);
-    r.rect(skimX - i * 5, skimY + 12 + i * 0.5, 5, 1, `rgba(255,236,206,${a.toFixed(2)})`);
+  const skimY = seaY - SKIM - 13 + drop * 13;
+  // Ticks since the last touch, and where along the water that touch happened.
+  const since = ((dive - 0.4 + 1) % 1) * DIVE;
+  const ringX = skimX + SKIM * 0.42 - since * 1.35;
+  if (since < 54 && ringX > -30 && ringX < SCREEN_W + 30) {
+    const age = since / 54;
+    for (let k = 0; k < 2; k++) {
+      const rr = (2 + age * 15) * (1 - k * 0.42);
+      if (rr < 1) continue;
+      r.ellipsePixel(ringX * DETAIL, (seaY - 1) * DETAIL, rr * DETAIL, rr * 0.34 * DETAIL,
+        `rgba(255,238,208,${(0.34 * (1 - age) * (1 - k * 0.4)).toFixed(2)})`);
+    }
+    // The splash itself: a handful of specks thrown up out of the ring and
+    // falling back, alive for well under a second.
+    if (since < 16) {
+      for (let k = 0; k < 7; k++) {
+        const u = since / 16;
+        const vx = (hash(k + 480) - 0.5) * 9;
+        r.rect(ringX + vx * u * 2, seaY - 3 - (1 - (2 * u - 1) ** 2) * (4 + hash(k + 520) * 5),
+          1, 1, `rgba(255,244,216,${(0.7 * (1 - u)).toFixed(2)})`);
+      }
+    }
   }
-  r.ellipsePixel((skimX + 7) * DETAIL, (skimY + 13) * DETAIL, 7 * DETAIL, 2 * DETAIL,
-    'rgba(10,24,42,0.34)');
-  r.image(kin('gullswift', 26, null, -0.1, Math.sin(t * 0.26 + 1) * 0.85),
-    skimX, skimY, 0, 0, undefined, undefined, facing(1));
+  // The shadow lives on the WATER, not under the bird: it stays at the surface
+  // and tightens as the bird comes down. A blob pinned to the feet is what made
+  // this look like a wader standing in the shallows.
+  const gap = Math.max(0, 1 - drop);
+  r.ellipsePixel((skimX + SKIM * 0.42) * DETAIL, seaY * DETAIL,
+    (4 + gap * 6) * DETAIL, 1.4 * DETAIL, `rgba(10,24,42,${(0.3 - gap * 0.16).toFixed(2)})`);
+  rimKin(r, 'gullswift', SKIM, skimX, skimY, -0.1 - drop * 0.12,
+    Math.sin(t * 0.26 + 1) * 0.85, true);
 
   // The closest thing to the lens: a swell crossing at twice the camera's own
   // rate. Depth in a flat drawing comes from things crossing at different
@@ -750,8 +875,16 @@ function shotDeep(r: Renderer, t: number, p: number): void {
           `rgba(176,220,244,${a.toFixed(2)})`);
       }
     }
-    r.image(kin(id, size, far ? '#0a1e33' : null, lean, Math.sin(t * 0.12 + i * 1.7) * 0.5),
-      x, y, 0, 0, undefined, undefined, facing(dir));
+    if (far) {
+      r.image(kin(id, size, '#0a1e33', lean, Math.sin(t * 0.12 + i * 1.7) * 0.5),
+        x, y, 0, 0, undefined, undefined, facing(dir));
+    } else {
+      // Graded into the water rather than drawn on top of it, and graded harder
+      // the deeper in the frame it is: this shot sinks, and the light it is
+      // losing has to be lost off the creatures too or they float free of it.
+      washKin(r, id, size, x, y, lean, Math.sin(t * 0.12 + i * 1.7) * 0.5,
+        facing(dir), '#2a5c86', 0.42 + smooth(p) * 0.24);
+    }
   }
 
   // Kelp at the lens, swaying on its own clock and growing as the floor comes
@@ -788,22 +921,48 @@ function shotDeep(r: Renderer, t: number, p: number): void {
  *
  * The whole frame rides the swell -- one vertical offset applied to every
  * layer. A storm shot with the camera bolted down is a painting of a storm.
- * The two lightning strikes are on a fixed clock, because a storm that flashes
- * at random reads as a fault in the display rather than as weather.
+ * The lightning is on a fixed clock, because a storm that flashes at random
+ * reads as a fault in the display rather than as weather.
+ *
+ * THE SHOT ALSO HAS TO REVERSE, because that is what the caption over it says
+ * and for a whole cut it did not: this was the one shot in the film with no arc
+ * in it -- four seconds of a looping storm that ended in the same place it
+ * started, under a line promising the sea turns over. So the water now leaves.
+ * `withdraw` drags the whole sea DOWN the frame through the first half of the
+ * shot, uncovering the foot of the cape and forty units of nothing, and then
+ * `surge` brings it back past where it began with the swell twice the size it
+ * was. Out, and then back over the top. That is the Turning, and it is the same
+ * behaviour the shore shot cashes in three cuts later when the flats are dry.
  */
 function shotTurning(r: Renderer, t: number, p: number): void {
-  const heave = Math.sin(t * 0.035) * 5 + Math.sin(t * 0.021 + 1.2) * 3;
+  // Out over the first 46% of the shot, back over the rest -- an ebb is slow
+  // and a surge is not, so the return runs on a shorter clock and arrives late.
+  const withdraw = smooth(Math.min(1, p / 0.46));
+  const surge = smooth(Math.max(0, (p - 0.46) / 0.54));
+  // The swell grows with the surge: the sea that comes back is not the sea that
+  // left. Everything downstream of this multiplies by it.
+  const rage = 0.72 + surge * 1.15;
+
+  const heave = (Math.sin(t * 0.035) * 5 + Math.sin(t * 0.021 + 1.2) * 3) * rage;
   const roll = Math.sin(t * 0.027) * 4;
-  const hz = 78 + heave;
+  const hz = 78 + heave + withdraw * 21 - surge * 32;
 
   let flash = 0;
   let bolt = -1;
-  for (const s of [96, 214]) {
+  // Three strikes, and they build: one distant at the top of the shot, one as
+  // the water goes, and one timed so the film cuts out of this shot in the
+  // middle of it. The last one is the point -- there is no fade off the end of
+  // the Turning, the picture is at its brightest on the last frame and the next
+  // thing on screen is a town seventy years underwater. A hard cut needs
+  // something to cut ON, and lightning is what this shot has.
+  for (const s of [40, 118, 221]) {
     const d = t - s;
-    if (d < 0 || d >= 28) continue;
+    if (d < 0 || d >= 30) continue;
     // A double blink: bright, gone, bright again, then decay.
-    flash = Math.max(flash, d < 3 ? 1 : d < 6 ? 0.25 : d < 10 ? 0.85 : Math.max(0, 1 - (d - 10) / 18));
-    if (d < 12) bolt = s;
+    const scale = s < 60 ? 0.5 : s < 160 ? 0.8 : 1;
+    flash = Math.max(flash, scale
+      * (d < 3 ? 1 : d < 6 ? 0.25 : d < 10 ? 0.85 : Math.max(0, 1 - (d - 10) / 20)));
+    if (d < 14) bolt = s;
   }
 
   sky(r, '#2c3252', '#6d7290', -14 + heave, hz, 12);
@@ -837,6 +996,40 @@ function shotTurning(r: Renderer, t: number, p: number): void {
     }
   }
 
+  // Where the water stood when the shot opened. The land is measured off THIS
+  // and not off `hz`, because rock does not go up and down with the tide: pin
+  // the cape to the waterline and the whole headland sinks as the sea leaves,
+  // which is the exact opposite of what is happening.
+  const shore = 78 + heave;
+
+  // The ground the sea has walked off. It is only there while the water is out,
+  // it is wet, and it holds what light there is -- which is what makes the
+  // withdrawal read as ground uncovering rather than as the camera tilting up.
+  const bare = hz - shore;
+  if (bare > 1) {
+    r.rect(0, shore - 1, SCREEN_W, bare + 3, '#252c46');
+    for (let i = 0; i < 22; i++) {
+      const y = shore + hash(i + 1600) * bare;
+      r.rect(wrap(hash(i + 1640) * SCREEN_W * 1.3 - t * 0.5, SCREEN_W, 30), y,
+        10 + hash(i + 1680) * 30, 1,
+        i % 3 === 0 ? 'rgba(174,192,226,0.26)' : 'rgba(70,84,118,0.5)');
+    }
+    // Things that were under the sea an hour ago and are not now. Five stones
+    // uncovering is the difference between a band of a different colour and
+    // ground: the eye needs an object on it before it will accept it as floor.
+    for (let i = 0; i < 5; i++) {
+      const sy2 = shore + 2 + hash(i + 1720) * Math.max(0, bare - 3);
+      if (sy2 > hz - 1) continue;
+      const sw = 5 + hash(i + 1760) * 11;
+      const sh = 2 + hash(i + 1800) * 3;
+      const sx2 = hash(i + 1840) * SCREEN_W;
+      r.rect(sx2, sy2 - sh, sw, sh + 1, '#11172a');
+      r.rect(sx2, sy2 - sh, sw, 1, '#39435f');
+    }
+    // The lip the water left behind, brightest the moment it has just gone.
+    r.rect(0, shore - 1, SCREEN_W, 1, 'rgba(206,222,248,0.42)');
+  }
+
   // A headland with a light on it, so the storm has something to be a threat
   // to. The dome carries a broken crest: a clean parabola reads as a hill in a
   // diagram rather than as rock in weather.
@@ -846,13 +1039,15 @@ function shotTurning(r: Renderer, t: number, p: number): void {
     const h = (1 - d * d) * 32
       + (Math.abs(d) < 1 ? Math.sin(x * 0.21) * 2 + Math.sin(x * 0.07 + 2) * 3 : 0);
     if (h <= 1) continue;
-    r.rect(x, hz - h, 1, h + 6, '#0c1020');
-    r.rect(x, hz - h, 1, 1, flash > 0.3 ? '#4b5780' : '#1a2036');
+    // Top on the land, foot carried down to wherever the water is now: as the
+    // sea goes out the cape does not move, it gets taller.
+    r.rect(x, shore - h, 1, h + Math.max(6, hz - shore + 6), '#0c1020');
+    r.rect(x, shore - h, 1, 1, flash > 0.3 ? '#4b5780' : '#1a2036');
   }
   // A tower on the crest, and the light on it turning. The halo is a stack of
   // rings, not one translucent disc: a single ellipse at a readable alpha draws
   // a hard-edged egg on the hillside instead of a glow.
-  const towerY = hz - 34;
+  const towerY = shore - 34;
   if (Math.sin(t * 0.05) > 0.35) {
     const lamp = 0.55 + 0.45 * Math.sin(t * 0.05);
     for (let k = 6; k >= 1; k--) {
@@ -895,9 +1090,12 @@ function shotTurning(r: Renderer, t: number, p: number): void {
   const rank = (i: number): void => {
     const u = i / (RANKS - 1);
     const y = hz + 4 + u * 14 + u * u * 62;
-    const amp = 2 + u * 9;
+    // Both scale with the surge. The sea that comes back is bigger and faster
+    // than the sea that left, and the water is where the shot has to say so --
+    // the sky is the same sky either side of the reversal.
+    const amp = (2 + u * 9) * rage;
     const wl = 0.06 - u * 0.035;
-    const sp = 0.6 + u * 3.4;
+    const sp = (0.6 + u * 3.4) * (0.7 + surge * 0.8);
     const fill = band('#16273f', '#071322', u);
     const lip = band('#335072', '#12283f', u);
     for (let x = 0; x < SCREEN_W; x += 2) {
@@ -914,19 +1112,25 @@ function shotTurning(r: Renderer, t: number, p: number): void {
   for (let i = 0; i < 4; i++) rank(i);
 
   // Something the size of the shot rolling over under the swell. It never
-  // surfaces: a shape you cannot resolve is larger than one you can.
+  // surfaces: a shape you cannot resolve is larger than one you can. It comes
+  // up with the surge, though -- close enough to press the crests out of shape
+  // and no closer, because the moment it has an edge it stops being enormous.
   const bulgeX = SCREEN_W * 0.5 + Math.sin(t * 0.008) * 64;
   for (let i = 0; i < 54; i++) {
-    const w = Math.sin((i / 54) * Math.PI) * 104;
+    const w = Math.sin((i / 54) * Math.PI) * (104 + surge * 40);
     if (w < 2) continue;
-    r.rect(bulgeX - w / 2, hz + 16 + i * 0.8, w, 1, 'rgba(3,10,20,0.28)');
+    r.rect(bulgeX - w / 2, hz + 16 - surge * 9 + i * 0.8, w, 1,
+      `rgba(3,10,20,${(0.28 + surge * 0.14).toFixed(2)})`);
   }
 
   for (let i = 4; i < RANKS; i++) rank(i);
 
   // Rain at two depths. The far layer is a haze of short marks; the near one is
-  // long, fast and crosses the whole frame in half a second.
+  // long, fast and crosses the whole frame in half a second. It thickens across
+  // the shot: the front is still arriving.
+  const wet = 0.55 + 0.45 * smooth(p);
   for (let i = 0; i < 96; i++) {
+    if (hash(i + 1900) > wet) continue;
     const near = i >= 62;
     const sp = near ? 11 : 6;
     // Slanted the way the wind is blowing everything else -- left. Rain that
@@ -940,15 +1144,18 @@ function shotTurning(r: Renderer, t: number, p: number): void {
     for (let k = 0; k < steps; k++) r.rect(x + k * slant, y + k * 2, 1, 2, c);
   }
 
-  // Spray torn off the near ranks and blown across the lens.
+  // Spray torn off the near ranks and blown across the lens. It goes with the
+  // surge too, and harder than anything else does: the last second of this shot
+  // is mostly water in the air.
   for (let i = 0; i < 26; i++) {
-    const x = wrap(hash(i + 1200) * SCREEN_W * 1.5 - t * 4.4, SCREEN_W, 28);
-    const y = 108 + hash(i + 1240) * 48 + Math.sin(t * 0.06 + i) * 4;
-    r.rect(x, y, 6 + hash(i + 1280) * 16, 1, 'rgba(226,240,252,0.16)');
+    const x = wrap(hash(i + 1200) * SCREEN_W * 1.5 - t * (4.4 + surge * 3.4), SCREEN_W, 28);
+    const y = 108 - surge * 22 + hash(i + 1240) * (48 + surge * 26)
+      + Math.sin(t * 0.06 + i) * 4;
+    r.rect(x, y, 6 + hash(i + 1280) * 16, 1,
+      `rgba(226,240,252,${(0.16 + surge * 0.14).toFixed(2)})`);
   }
 
   if (flash > 0.02) r.tint('#cfe0f4', flash * 0.34);
-  void p;
 }
 
 /**
@@ -1192,9 +1399,12 @@ function shotDrowned(r: Renderer, t: number, p: number): void {
     const raw = wrap(t * speed + hash(i + 950) * 320, SCREEN_W, 44);
     const x = dir > 0 ? raw : SCREEN_W - raw;
     const y = 62 + drop(0.8) + hash(i + 980) * 44 + Math.sin(t * 0.035 + i * 1.7) * 7;
-    r.image(kin(id, size, null, 0.12 + Math.sin(t * 0.05 + i) * 0.07,
-      Math.sin(t * 0.13 + i * 1.9) * 0.5),
-      x, y, 0, 0, undefined, undefined, facing(dir));
+    // Graded hard into the green. This shot is the most single-hued picture in
+    // the film -- the whole town is one colour at nine values -- and a kin at
+    // full palette in the middle of it does not read as a creature living down
+    // there, it reads as a sticker somebody put on the drowned town.
+    washKin(r, id, size, x, y, 0.12 + Math.sin(t * 0.05 + i) * 0.07,
+      Math.sin(t * 0.13 + i * 1.9) * 0.5, facing(dir), '#2c6b72', 0.6);
   }
 
   // Weed rooted in what used to be somebody's doorway, and silt tearing past
@@ -2126,26 +2336,45 @@ function shotTitle(r: Renderer, t: number, p: number): void {
  * The two long shots in the middle carry two beats of caption each because they
  * are the two carrying the plot. Everything else gets one line, and the title
  * card gets none.
+ *
+ * THE RHYTHM OF THE JOINS. The first three shots are one paragraph -- here is
+ * the sea, here is what lives beside it, here is what lives under it -- so they
+ * blink between one another at half the old length. Then the Turning arrives on
+ * a proper fade, because it is a change of subject, and it LEAVES on nothing at
+ * all: a lightning strike lands four frames before the end of it and the film
+ * cuts on the white, straight into a town that has been underwater for seventy
+ * years. That is the only hard cut in the picture, and it is the moment the
+ * film stops describing a place and starts describing a disaster. Everything
+ * after it slows back down: the town fades out properly, the archive fades in
+ * properly, and the last two joins are the longest in the film because the
+ * shore and the logo are each meant to land as an ending.
  */
 const SHOTS: Shot[] = [
   {
     frames: 230,
     captions: ['Veldras. A ring of land around a sea with no bottom.'],
+    fadeOut: 16,
     draw: shotSea,
   },
   {
     frames: 210,
     captions: ['Herds swim, flocks turn, whole species walk to the far shore.'],
+    fadeIn: 16,
+    fadeOut: 16,
     draw: shotPlains,
   },
   {
     frames: 200,
     captions: ['The kin have crossed it longer than anyone has counted.'],
+    fadeIn: 16,
+    fadeOut: 26,
     draw: shotDeep,
   },
   {
     frames: 230,
     captions: ['Every seventy years the sea reverses. They call it the Turning.'],
+    fadeIn: 26,
+    fadeOut: 0,
     draw: shotTurning,
   },
   {
@@ -2154,6 +2383,8 @@ const SHOTS: Shot[] = [
       'The last one took a town called Old Tidefall.',
       'One night. By morning there was only water.',
     ],
+    fadeIn: 0,
+    fadeOut: 30,
     draw: shotDrowned,
   },
   {
@@ -2170,17 +2401,31 @@ const SHOTS: Shot[] = [
       'She needs somebody out in it, writing down what they see.',
       'North shore. One light on. You are asleep under it.',
     ],
+    fadeOut: 38,
     draw: shotShore,
   },
   {
     frames: 180,
     captions: [],
     open: true,
+    fadeIn: 38,
     draw: shotTitle,
   },
 ];
 
 const FADE = 30;
+
+/**
+ * How the cinematic was reached.
+ *
+ * `cold` is the film starting on its own: black screen, bars slide in, fade up.
+ * `handed` is the title screen having already done all of that -- it closed its
+ * own letterbox over the logo, took the picture to black, and started this
+ * scene on the last frame of its own move. In that case the opening must NOT
+ * play the same move again, or the bars slide in twice and the player watches
+ * the film start over the top of itself.
+ */
+export type OpeningEntry = 'cold' | 'handed';
 
 export class OpeningScene implements Scene {
   readonly name = 'opening';
@@ -2190,8 +2435,10 @@ export class OpeningScene implements Scene {
   /** 0 = clear, 1 = black. Doubles as the cross-fade between shots. */
   private veil = 1;
   private leaving = false;
+  /** Whether `leaving` was the player's doing or the film running out. */
+  private skipped = false;
 
-  constructor(private state: GameState) {}
+  constructor(private state: GameState, private entry: OpeningEntry = 'cold') {}
 
   enter(): void {
     audio.playMusic('opening_theme');
@@ -2214,7 +2461,13 @@ export class OpeningScene implements Scene {
     this.t++;
 
     if (this.leaving) {
-      this.veil = Math.min(1, this.veil + 0.025);
+      // Two different exits, because they mean two different things. A player
+      // who pressed skip has told you they want out and every extra frame is an
+      // insult: a third of a second and gone. A film that has reached its own
+      // end has earned the other kind of exit -- the title card stays alive
+      // under the fade for the best part of a second while it goes. Running
+      // both at the same rate made the ending feel like an interruption.
+      this.veil = Math.min(1, this.veil + (this.skipped ? 0.06 : 0.019));
       if (this.veil >= 1) game.scenes.replaceAll(new CreatorScene(this.state));
       return;
     }
@@ -2222,14 +2475,18 @@ export class OpeningScene implements Scene {
     if (game.input.pressed('confirm') || game.input.pressed('cancel')
       || game.input.pressed('menu') || game.input.mouse.leftPressed) {
       this.leaving = true;
+      this.skipped = true;
       audio.playSfx('confirm', { volume: 0.4 });
       return;
     }
 
     const shot = SHOTS[this.shot]!;
-    if (this.t < FADE) this.veil = 1 - this.t / FADE;
-    else if (this.t > shot.frames - FADE) this.veil = (this.t - (shot.frames - FADE)) / FADE;
-    else this.veil = 0;
+    const fin = shot.fadeIn ?? FADE;
+    const fout = shot.fadeOut ?? FADE;
+    if (fin > 0 && this.t < fin) this.veil = 1 - this.t / fin;
+    else if (fout > 0 && this.t > shot.frames - fout) {
+      this.veil = (this.t - (shot.frames - fout)) / fout;
+    } else this.veil = 0;
 
     if (this.t >= shot.frames) {
       this.t = 0;
@@ -2254,7 +2511,11 @@ export class OpeningScene implements Scene {
     // head of the film and pull back for the title card: the frame opening up
     // is the signal that the cinematic has handed over.
     let bars = 1;
-    if (this.shot === 0) bars = Math.min(1, this.t / 34);
+    // Only when the film starts cold. Reached from the title screen the bars
+    // are already shut -- that screen closed them itself, in shot, before it
+    // handed over, and sliding them in a second time would be the film
+    // announcing a beginning the player has just watched happen.
+    if (this.shot === 0 && this.entry === 'cold') bars = Math.min(1, this.t / 34);
     if (shot.open) bars = Math.max(0, 1 - this.t / 46);
     const topH = 14 * bars;
     const botH = 22 * bars;
