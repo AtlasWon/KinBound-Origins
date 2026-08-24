@@ -33,17 +33,24 @@ export const BODY_H = 9;
  * There is no sprint. There used to be a run key and an "always run" setting,
  * and both are gone -- but the walk they sat on top of was written knowing the
  * run existed, and simply deleting the key would have left the game at the slow
- * half of a pair. 1.6 is a little under halfway back up: six tiles a second
- * against the old walk's four and the old run's seven and a half. Fast enough
- * that crossing a route never feels like a chore, slow enough that the walk
- * cycle still reads as walking and that stopping on the tile you meant to stop
- * on is easy.
+ * half of a pair. The first attempt at putting that back overcorrected: 1.6 is
+ * six tiles a second, which is nearer the old *run* (seven and a half) than the
+ * old walk (four and a quarter), and it read as a character who is late for
+ * something. It also outpaced every NPC in the game by forty per cent, so the
+ * townsfolk looked like they were wading.
+ *
+ * 1.3 is where it settles. Four and seven eighths tiles a second: still clearly
+ * quicker than the grid walk this replaced, so no route feels like a chore, but
+ * back inside walking pace -- close enough to the NPCs that a street reads as
+ * one crowd, and slow enough that stopping on the tile you aimed at, and
+ * turning in a doorway, are things you do rather than things you attempt.
  *
  * Nothing about the animation needs retuning when this changes: the cycle is
  * driven by distance covered, not by a timer, so the feet stay planted at any
- * speed.
+ * speed. A tile is 16px, so a tile now takes 16 / 1.3 = 12.31 ticks -- which is
+ * the number any test driver stepping in whole tiles has to use.
  */
-export const WALK_SPEED = 1.6;
+export const WALK_SPEED = 1.3;
 
 /**
  * Scripted urgency -- a cutscene actor told to hurry. Not available to the

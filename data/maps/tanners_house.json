@@ -9,7 +9,7 @@
     "IfNQJffffkkI",
     "IfKKKfffffPI",
     "If/ffffAAffI",
-    "IfrrfffEEffI",
+    "IfrrfffEEfSI",
     "IfVffffffkfI",
     "IPfffffffffI",
     "IIIIIIDIIIII"
@@ -23,6 +23,15 @@
       "toY": 17,
       "facing": "down",
       "style": "door"
+    },
+    {
+      "x": 10,
+      "y": 4,
+      "toMap": "tanners_house_up",
+      "toX": 10,
+      "toY": 4,
+      "facing": "down",
+      "style": "stairs"
     }
   ],
   "npcs": [

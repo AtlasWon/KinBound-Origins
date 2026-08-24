@@ -45,12 +45,12 @@
     "mh_villager": [
       {
         "ifFlags": [
-          "seen_turning_talk"
+          "seal_2_taken"
         ],
         "lines": [
-          "Still humming. Louder now.",
-          "My gran said the well only talks before a Turning.",
-          "She also said fish could hold a grudge, so. Grain of salt."
+          "You've been out to the coast. Then you can tell me something.",
+          "Well's been dry four weeks and there's no drought. Ask anyone.",
+          "Something is holding the water somewhere. It isn't holding it here."
         ]
       },
       {

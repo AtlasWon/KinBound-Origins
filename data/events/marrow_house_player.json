@@ -43,6 +43,10 @@
                 "kind": "healParty"
               },
               {
+                "kind": "wait",
+                "frames": 10
+              },
+              {
                 "kind": "say",
                 "lines": [
                   "Your kin were looked after."
@@ -57,21 +61,11 @@
                 ],
                 "yes": [
                   {
-                    "kind": "fade",
-                    "to": "black",
-                    "frames": 16
-                  },
-                  {
                     "kind": "healParty"
                   },
                   {
                     "kind": "wait",
-                    "frames": 20
-                  },
-                  {
-                    "kind": "fade",
-                    "to": "clear",
-                    "frames": 16
+                    "frames": 10
                   },
                   {
                     "kind": "say",

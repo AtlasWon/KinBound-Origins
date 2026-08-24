@@ -9,8 +9,8 @@
     "IbfffffNQJfI",
     "IefffffKKKfI",
     "IPfffffffPfI",
-    "IffrrAAffffI",
-    "IffrrEEffkfI",
+    "IffrAAfffffI",
+    "IffrEEfffkfI",
     "IffffffffPfI",
     "IIIIIIDIIIII"
   ],
@@ -29,9 +29,9 @@
     {
       "id": "brackwater_house_resident",
       "sprite": "villager_f",
-      "x": 4,
+      "x": 3,
       "y": 4,
-      "facing": "down",
+      "facing": "right",
       "movement": {
         "kind": "lookAround"
       },

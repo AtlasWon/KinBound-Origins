@@ -9,7 +9,7 @@
     "IKKKffffJQNI",
     "IffffffffKKI",
     "IPfffff/fffI",
-    "IffffffrfffI",
+    "IffffffrffSI",
     "IfAAfffVffkI",
     "IfEEffffffPI",
     "IIIIIIDIIIII"
@@ -23,6 +23,15 @@
       "toY": 23,
       "facing": "down",
       "style": "door"
+    },
+    {
+      "x": 10,
+      "y": 4,
+      "toMap": "kellowmere_house_b_up",
+      "toX": 9,
+      "toY": 3,
+      "facing": "down",
+      "style": "stairs"
     }
   ],
   "npcs": [

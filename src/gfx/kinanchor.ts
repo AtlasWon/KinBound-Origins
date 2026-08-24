@@ -54,31 +54,22 @@ export interface KinAnchor {
    */
   hitX: number; hitY: number;
   /**
-   * Rows the breathing squash removes, low one last.
+   * DEAD. Always empty.
    *
-   * A breath moves the barrel and the haunches; the skull is a box of bone and
-   * does not deform. So the seams sit deliberately low in the body -- at 66%
-   * and 86% of the way down the ink -- and everything above a seam is dropped
-   * onto the row below it as a rigid block. The head travels; it is never
-   * compressed.
-   *
-   * There are two of them so the compression can be spread over two places in
-   * the lower body rather than taken out of one row twice, and a creature only
-   * gets the second if it is tall enough to spare the pixels: the length of
-   * this array IS the deepest squash that creature can take. Every entry is an
-   * even row, so the two halves of a split blit stay on the same 2x2 phase as
-   * each other and the design grid survives.
+   * This used to carry the rows the breathing squash removed, and the comment
+   * that stood here described that technique at length. There is no squash any
+   * more -- the idle moves the whole sprite as one rigid block, and kinbreath.ts
+   * carries the postmortem on why four attempts at choosing a seam each ended
+   * up landing on some creature's face. Nothing in src/ has read this field
+   * since. It survives only so that the seam-audit drivers in tools/shots
+   * report "no seams" rather than throwing; delete it with them.
    */
   seams: readonly number[];
 }
 
 const cache = new Map<string, KinAnchor>();
 
-/** Even, and inside [lo, hi]. Rounds down, so a seam never drifts into the feet. */
-function evenClamp(v: number, lo: number, hi: number): number {
-  const e = Math.floor(Math.max(lo, Math.min(hi, v)) / 2) * 2;
-  return Math.max(0, e);
-}
+const NO_SEAMS: readonly number[] = [];
 
 /** The whole cell, for anything we could not measure. Never throws in a render. */
 function wholeFrame(): KinAnchor {
@@ -86,7 +77,7 @@ function wholeFrame(): KinAnchor {
   return {
     x0: 0, y0: 0, x1: s - 1, y1: s - 1, w: s, h: s,
     hitX: s / 2, hitY: s * 0.45,
-    seams: [evenClamp(s * 0.66, 4, s - 8), evenClamp(s * 0.86, 4, s - 8)],
+    seams: NO_SEAMS,
   };
 }
 
@@ -119,23 +110,7 @@ function measure(cv: HTMLCanvasElement): KinAnchor | null {
   const hitY = Math.max(y0 + h * 0.15, Math.min(y1 - h * 0.08,
     cym - h * (0.06 + 0.14 * tall)));
 
-  // Both seams have to leave a body above them and feet below them, and the
-  // upper one has to leave room for the lower one's blit in between.
-  const seams: number[] = [];
-  // Something under eight logical pixels tall has no lower body to breathe
-  // with, and an empty list simply means this one does not breathe.
-  const low = h >= 20 ? evenClamp(y0 + h * 0.86, y0 + 8, y1 - 6) : -1;
-  if (low < 0) return { x0, y0, x1, y1, w, h, hitX: cxm, hitY, seams };
-  // Under about thirty logical pixels of creature there is nothing to take a
-  // second pixel out of, and a two-pixel breath on a small animal reads as a
-  // stamped foot rather than as breathing.
-  if (h >= 64) {
-    const high = evenClamp(y0 + h * 0.66, y0 + 6, low - 6);
-    if (high >= y0 + 6 && high <= low - 6) seams.push(high);
-  }
-  seams.push(low);
-
-  return { x0, y0, x1, y1, w, h, hitX: cxm, hitY, seams };
+  return { x0, y0, x1, y1, w, h, hitX: cxm, hitY, seams: NO_SEAMS };
 }
 
 /**

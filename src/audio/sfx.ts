@@ -194,9 +194,72 @@ export const SFX: Record<string, SfxLayer[]> = {
     n(0.34, 900, 0.06),
   ],
   save: [...arp([523, 784, 1047], 0.08, 0.1, 0.16), t(0.4, 262, 0.1, { at: 0.16 })],
+  /**
+   * Picking something up.
+   *
+   * Struck rather than held: this was a pair of rectangles, which is the
+   * flat-envelope mistake the header of this file is about, and it fires on
+   * every ball of berries in a route.
+   *
+   * The three scraps of noise behind the notes are the pouch. They are here
+   * because without them this was a rising run of struck blips landing on a
+   * held note -- which is exactly what `confirm` is, and the two measured 0.95
+   * alike. A dialogue box does not rattle; a bag does, and that is the whole
+   * difference the ear needs when both fire within a second of each other.
+   */
   item: [
-    p(0.08, 784, 0.17, { duty: 0.25 }),
-    p(0.14, 1175, 0.17, { at: 0.09, duty: 0.25 }),
+    nk(0.016, 4200, 0.08, { curve: 0.18 }),
+    pk(0.055, 698, 0.13, { duty: 0.25, curve: 0.30 }),
+    pk(0.055, 1047, 0.13, { at: 0.052, duty: 0.25, curve: 0.30 }),
+    pk(0.26, 1397, 0.14, { at: 0.104, duty: 0.25, curve: 0.38 }),
+    tk(0.28, 349, 0.09, { at: 0.104, curve: 0.40 }),
+    nk(0.030, 3400, 0.07, { at: 0.13, to: 1800, curve: 0.20 }),
+    nk(0.025, 4600, 0.055, { at: 0.19, to: 2400, curve: 0.20 }),
+    nk(0.020, 2600, 0.04, { at: 0.25, to: 1400, curve: 0.20 }),
+  ],
+
+  /**
+   * A potion, and every other item that gives health back.
+   *
+   * Three things were asked of it and each one is a measurable property rather
+   * than a taste:
+   *
+   *   restorative  bright and open, not the 769Hz thud the old `heal` was. A
+   *                wash of high noise over the notes is the difference between
+   *                medicine and a doorbell.
+   *   lands quickly  the first sound is at zero and the melody has arrived by
+   *                100ms. Nothing here waits for the player.
+   *   resolves      C - G - C. The figure climbs to the octave and stops on
+   *                it, over its own triad, and the decay is fast enough that
+   *                under a fifth of the cue's energy is in its last third. The
+   *                old one hung on for half a second after the last note, which
+   *                is what "trails off" sounds like.
+   *
+   * Ending on the root, not the third, is the whole difference between this
+   * and `levelup`: a level is a promise of more, a potion is a thing finished.
+   */
+  item_heal: [
+    nk(0.018, 5200, 0.075, { curve: 0.16 }),
+    ns(0.13, 2600, 0.055, { at: 0.008, to: 6400, attack: 0.40, curve: 0.24 }),
+    pk(0.085, 523, 0.14, { duty: 0.25, curve: 0.30 }),
+    pk(0.085, 784, 0.14, { at: 0.048, duty: 0.25, curve: 0.30 }),
+    // The landing, on the octave above where it started.
+    pk(0.30, 1047, 0.145, { at: 0.096, duty: 0.25, curve: 0.26 }),
+    pk(0.28, 659, 0.075, { at: 0.100, duty: 0.5, curve: 0.26 }),
+    tk(0.30, 262, 0.105, { at: 0.096, curve: 0.28 }),
+    ns(0.17, 5600, 0.042, { at: 0.10, to: 9000, attack: 0.40, curve: 0.22 }),
+  ],
+  /**
+   * Curing a status, or giving PP back: something lifted off rather than
+   * something poured in. The figure dips before it rises, which is the only
+   * reliable way to say "that has been taken away" in half a second.
+   */
+  item_cure: [
+    nk(0.022, 3400, 0.07, { to: 6400, curve: 0.20 }),
+    pk(0.10, 880, 0.13, { to: 622, duty: 0.25, curve: 0.32 }),
+    pk(0.24, 1319, 0.135, { at: 0.088, duty: 0.25, curve: 0.32 }),
+    tk(0.24, 440, 0.09, { at: 0.088, curve: 0.34 }),
+    ns(0.18, 4200, 0.042, { at: 0.06, to: 8000, attack: 0.40, curve: 0.26 }),
   ],
   key_item: [...arp([659, 880, 1047, 1319], 0.07, 0.11, 0.17), t(0.35, 330, 0.09, { at: 0.2 })],
   badge: [
@@ -218,10 +281,67 @@ export const SFX: Record<string, SfxLayer[]> = {
     p(0.07, 880, 0.15, { at: 0.05, duty: 0.25 }),
   ],
   no_money: [p(0.1, 260, 0.16, { to: 150, duty: 0.5 }), n(0.08, 300, 0.06)],
-  heal: [
-    ...[523, 659, 784, 1047].map((f, i) => tk(0.12, f, 0.15, { at: i * 0.09, curve: 0.4 })),
-    tk(0.42, 1047, 0.10, { at: 0.36, curve: 0.42 }),
-    tk(0.46, 523, 0.07, { at: 0.36, curve: 0.42 }),
+  /**
+   * The Waystation, and the player's mother: the two places the whole party is
+   * put right at once.
+   *
+   * It is two cues rather than one because the event is two things. The screen
+   * fades out, the work happens behind it, and the screen comes back -- so the
+   * player spends the better part of a second looking at black, and a single
+   * chime fired into the middle of that says nothing about what is going on.
+   *
+   *   heal_cycle  while it happens. Quiet enough to sit under the fade, warm,
+   *               and -- the important part -- unresolved: three soft bells
+   *               climbing to the *fifth* over a held hum, which is the sound
+   *               of a thing still in progress. Play it once as the screen
+   *               goes dark, or loop it; it starts and ends at silence.
+   *   heal_done   when it completes. The payoff, and the one the player is
+   *               actually waiting for.
+   *
+   * `heal_done` is deliberately the warmer of the two big jingles: it leads on
+   * a triangle where `vessel_caught` leads on a pulse, and it lands most of a
+   * kilohertz darker. A catch is a trophy and should ring; this is relief, and
+   * relief is round. Both land on the root, because both are finished.
+   */
+  /*
+   * The levels here look low next to the pulse-led jingles and are not. A
+   * triangle is very nearly a sine: almost all of its energy sits in the
+   * fundamental, where a 25% pulse spreads the same written amplitude across a
+   * dozen harmonics the limiter and the ear both discount. Written at the
+   * numbers `levelup` uses, this pair measured half again as loud as the catch
+   * -- the most-repeated errand in the game drowning out its biggest moment.
+   */
+  heal_cycle: [
+    t(0.62, 131, 0.045, { env: 'swell', attack: 0.30, curve: 0.34 }),
+    t(0.58, 196, 0.030, { at: 0.03, env: 'swell', attack: 0.32, curve: 0.32 }),
+    tk(0.20, 523, 0.10, { at: 0.04, curve: 0.40 }),
+    tk(0.20, 659, 0.10, { at: 0.20, curve: 0.40 }),
+    // Stops on G, not C. Nothing has been concluded yet.
+    tk(0.26, 784, 0.10, { at: 0.36, curve: 0.42 }),
+    // A needle on each bell. Three soft triangles inside a held hum smear into
+    // one rising tone; the consonants are what make them read as three steps
+    // of a job being done rather than as a drone that wanders upward.
+    nk(0.010, 5600, 0.05, { at: 0.04 }),
+    nk(0.010, 6000, 0.05, { at: 0.20 }),
+    nk(0.010, 6400, 0.05, { at: 0.36 }),
+    ns(0.24, 4200, 0.035, { at: 0.30, to: 7600, attack: 0.44, curve: 0.28 }),
+  ],
+  heal_done: [
+    nk(0.014, 5000, 0.05, { curve: 0.18 }),
+    tk(0.11, 392, 0.115, { curve: 0.36 }),
+    tk(0.11, 523, 0.115, { at: 0.075, curve: 0.36 }),
+    tk(0.14, 659, 0.12, { at: 0.150, curve: 0.38 }),
+    // A cymbal swelling in from before the landing, so the arrival is prepared.
+    ns(0.16, 2800, 0.045, { at: 0.160, to: 7000, attack: 0.72, curve: 0.22 }),
+    // The landing. Staggered by a few milliseconds each, or six attacks on one
+    // sample sum in phase into a spike the limiter then ducks the chord to
+    // catch -- see the note on `vessel_caught`.
+    tk(0.70, 1047, 0.12, { at: 0.300, curve: 0.46 }),
+    pk(0.62, 784, 0.06, { at: 0.306, duty: 0.5, curve: 0.44 }),
+    tk(0.66, 523, 0.075, { at: 0.311, curve: 0.46 }),
+    pk(0.54, 1568, 0.038, { at: 0.304, duty: 0.125, curve: 0.36 }),
+    tk(0.74, 131, 0.105, { at: 0.294, curve: 0.48 }),
+    nk(0.44, 6000, 0.035, { at: 0.298, to: 2800, curve: 0.34 }),
   ],
   rain: [n(0.7, 5200, 0.035)],
   thunder: [n(0.6, 200, 0.14, { to: 60 }), t(0.7, 55, 0.12, { to: 35 })],
@@ -255,8 +375,31 @@ export const SFX: Record<string, SfxLayer[]> = {
     p(0.42, 180, 0.12, { to: 1400, duty: 0.125, env: 'swell', attack: 0.5, curve: 0.20 }),
     t(0.34, 90, 0.12, { at: 0.1, to: 300, env: 'swell', attack: 0.45, curve: 0.2 }),
   ],
-  send_out: [p(0.16, 500, 0.16, { to: 950, duty: 0.25 }), n(0.1, 2400, 0.05, { at: 0.12 })],
-  withdraw: [p(0.16, 900, 0.15, { to: 420, duty: 0.25 }), n(0.08, 1800, 0.04)],
+  /**
+   * Sending out and calling back.
+   *
+   * Between them these fire eight or ten times a battle, and both were a held
+   * pulse glide with a rectangle of noise stapled to it -- a slide whistle in
+   * each direction. They keep the gesture, which is the only part the player
+   * reads: up for out, down for back. What is new is a transient at the front
+   * (the seal letting go) and a beam that opens or closes behind it.
+   *
+   * `withdraw` also doubles as the vessel opening in the recall animation, so
+   * it has to stand next to `vessel_open` without being it: this one falls,
+   * that one rises.
+   */
+  send_out: [
+    nk(0.016, 5600, 0.10, { curve: 0.16 }),
+    p(0.17, 480, 0.15, { to: 1020, duty: 0.25, env: 'swell', attack: 0.26, curve: 0.28 }),
+    ns(0.18, 1600, 0.08, { at: 0.02, to: 5600, attack: 0.36, curve: 0.26 }),
+    tk(0.14, 200, 0.10, { at: 0.10, curve: 0.30 }),
+  ],
+  withdraw: [
+    nk(0.014, 6400, 0.09, { curve: 0.14 }),
+    pk(0.16, 1150, 0.15, { to: 430, duty: 0.25, curve: 0.30 }),
+    ns(0.16, 5200, 0.07, { to: 1400, attack: 0.30, curve: 0.26 }),
+    tk(0.12, 230, 0.09, { at: 0.08, curve: 0.28 }),
+  ],
   // Sinking. The decay is what makes it a collapse: the old one held its level
   // all the way down and then stopped, which reads as a slide whistle rather
   // than as something running out of strength.
@@ -426,35 +569,160 @@ export const SFX: Record<string, SfxLayer[]> = {
     pk(0.10, 320, 0.12, { to: 175, duty: 0.5, tone: 850, curve: 0.30 }),
   ],
 
+  /**
+   * Capture, in the five parts the animation actually has: the throw, the lid
+   * springing, the vessel dropping to the ground, each wobble, and then either
+   * the latch or the burst. The sequence is the most dramatic thirty seconds
+   * the game has, and it used to be told with three sounds -- the recall cue
+   * standing in for the lid, silence where the vessel lands, and a wobble that
+   * measured quieter than a cursor tick.
+   *
+   * The arc across them is deliberate. Bright and rising on the way out, then
+   * dark, low and slow through the wobbles where nothing is decided, then
+   * bright and sharp again at the click. Tension is the absence of the top end.
+   */
+
+  /**
+   * Off the hand and through the air.
+   *
+   * The flick is the front transient; without it this measured as `menu_open`.
+   * The two noise stages after it are the arc -- one opening as the vessel
+   * comes up, a smaller darker one as it goes away -- and that second stage is
+   * what keeps it clear of `send_out`, which is the same length and the same
+   * rising gesture and was measuring 0.92 alike. A throw recedes; a send-out
+   * arrives, so one of them has to have somewhere to go afterwards.
+   *
+   * The pitched layer is kept low and quiet on purpose. There is nothing
+   * melodic about a thrown object.
+   */
   vessel_throw: [
-    p(0.16, 300, 0.17, { to: 800, duty: 0.25, env: 'swell', attack: 0.4, curve: 0.24 }),
-    nk(0.06, 2600, 0.06, { at: 0.14, to: 5200, curve: 0.3 }),
+    nk(0.03, 2200, 0.15, { to: 900, curve: 0.16 }),
+    ns(0.17, 700, 0.17, { at: 0.015, to: 3600, attack: 0.44, curve: 0.24 }),
+    ns(0.11, 3000, 0.09, { at: 0.15, to: 900, attack: 0.30, curve: 0.24 }),
+    p(0.16, 300, 0.10, { to: 620, duty: 0.125, env: 'swell', attack: 0.42, curve: 0.24 }),
   ],
+  // The lid springing and the light coming out. A hinge, not a beam: the catch
+  // releasing is the loudest twelve milliseconds in the whole sequence.
+  vessel_open: [
+    nk(0.012, 8000, 0.26, { curve: 0.12 }),
+    nk(0.055, 2600, 0.17, { at: 0.004, q: 7, curve: 0.18 }),
+    pk(0.10, 1100, 0.19, { to: 2600, duty: 0.125, curve: 0.26 }),
+    ns(0.22, 1800, 0.11, { at: 0.02, to: 6600, attack: 0.36, curve: 0.26 }),
+    tk(0.10, 200, 0.13, { curve: 0.22 }),
+  ],
+  /**
+   * It falls and settles.
+   *
+   * Dry, and over in eighty milliseconds: this is the only beat in the capture
+   * that carries no information at all, so it exists to punctuate rather than
+   * to be listened to. It is deliberately a *clack* against the ground where
+   * the wobble that follows it is a low creak -- the two used to measure as
+   * near-identical low knocks, which turned the pause before the first wobble
+   * into a stutter instead of a silence.
+   */
+  vessel_land: [
+    nk(0.022, 2600, 0.21, { to: 1100, curve: 0.14 }),
+    nk(0.05, 420, 0.20, { curve: 0.20 }),
+    tk(0.075, 150, 0.17, { to: 96, curve: 0.20 }),
+  ],
+  /**
+   * One wobble.
+   *
+   * The whole point of this cue is that the player does not know yet, so it is
+   * the darkest thing in the sequence: a knock, a strained tone bending flat
+   * under a lowpass, and the shell rocking underneath. It used to be a 69ms
+   * pluck at 520Hz with a centroid brighter than the latch -- which meant the
+   * three most suspenseful beats in the game sounded like a menu cursor, and
+   * the ear could not tell a wobble from the click that resolves it.
+   */
   vessel_shake: [
-    pk(0.07, 520, 0.21, { duty: 0.125, curve: 0.36 }),
-    nk(0.04, 700, 0.10, { curve: 0.3 }),
+    nk(0.025, 520, 0.17, { curve: 0.22 }),
+    pk(0.13, 300, 0.13, { to: 232, duty: 0.125, vibrato: 60, tone: 2000, curve: 0.34 }),
+    nk(0.10, 1500, 0.12, { at: 0.02, to: 700, q: 5, curve: 0.28 }),
+    tk(0.15, 110, 0.13, { to: 88, curve: 0.30 }),
   ],
-  // The moment the catch lands. All transient: this is a latch closing.
+  // The moment the catch lands. All transient: this is a latch closing. The
+  // low knock under it is the seal seating -- without it the click is a hat.
   vessel_click: [
     nk(0.014, 7000, 0.22, { curve: 0.14 }),
     nk(0.06, 3000, 0.14, { at: 0.004, q: 8, curve: 0.24 }),
     pk(0.06, 1600, 0.18, { duty: 0.125, curve: 0.3 }),
+    tk(0.09, 190, 0.12, { curve: 0.22 }),
   ],
+  /**
+   * Caught.
+   *
+   * The largest cue in the game, and the one the whole capture sequence exists
+   * to arrive at, so it is built like `levelup` and then given more of
+   * everything: longer, later-peaking, and with a proper cadence instead of an
+   * even run. The old version was four equal notes 90ms apart followed by a
+   * held one -- the shape the levelup note calls out as the thing that cannot
+   * arrive anywhere, and it was never wired up in the first place.
+   *
+   *   pickup     A, D -- a rising fourth, two fast notes, 65ms apart
+   *   statement  F#, held twice as long, hanging
+   *   breath     a cymbal swelling in from a beat before the landing
+   *   landing    D over the full triad, bass, sparkle, ringing three quarters
+   *              of a second
+   *
+   * It is in D where `levelup` is in C, and -- the part that matters -- it
+   * lands on the *root* where `levelup` lands on the third. A level is a
+   * promise of more; a catch is a thing completed and owned, and the ear reads
+   * a tonic as ownership. That difference is why these two can sit forty
+   * seconds apart in the same battle without sounding like one another.
+   */
   vessel_caught: [
-    nk(0.05, 5600, 0.10, { to: 8000, curve: 0.3 }),
-    ...[659, 831, 1109, 1319].map((f, i) => pk(0.13, f, 0.18, {
-      at: i * 0.09, duty: 0.25, curve: 0.38,
-    })),
-    // Held, then allowed to ring out rather than stopped -- the jingle used to
-    // end by having its last note switched off, which is audibly a cut.
-    pk(0.55, 1661, 0.14, { at: 0.36, duty: 0.25, curve: 0.44 }),
-    tk(0.60, 330, 0.11, { at: 0.34, curve: 0.46 }),
-    nk(0.30, 5000, 0.04, { at: 0.36, to: 2600, curve: 0.34 }),
+    // Light rushing into the shell as it seals.
+    nk(0.014, 9000, 0.16, { curve: 0.12 }),
+    ns(0.16, 2600, 0.10, { to: 8200, attack: 0.30, curve: 0.22 }),
+
+    pk(0.07, 440, 0.18, { at: 0.040, duty: 0.25, curve: 0.32 }),
+    pk(0.07, 587, 0.18, { at: 0.105, duty: 0.25, curve: 0.32 }),
+    // A needle on each step, so the pickup has consonants.
+    nk(0.010, 6400, 0.07, { at: 0.040 }),
+    nk(0.010, 6800, 0.07, { at: 0.105 }),
+
+    pk(0.16, 740, 0.19, { at: 0.170, duty: 0.25, curve: 0.36 }),
+    nk(0.010, 7200, 0.07, { at: 0.170 }),
+
+    // Prepared, not sudden.
+    ns(0.14, 3200, 0.08, { at: 0.200, to: 7400, attack: 0.76, curve: 0.20 }),
+
+    // Spread across eleven milliseconds rather than struck together. Six
+    // layers whose attacks land on the same sample sum in phase, and the
+    // result was a single excursion four times the height of the note that
+    // followed it -- inaudible as a note and plainly there as a spike in the
+    // plot, with the master limiter ducking the front of the chord to catch it.
+    pk(0.72, 1175, 0.18, { at: 0.335, duty: 0.25, curve: 0.42, vibrato: 16 }),
+    pk(0.70, 880, 0.09, { at: 0.341, duty: 0.5, curve: 0.42 }),
+    pk(0.70, 587, 0.08, { at: 0.346, duty: 0.5, curve: 0.42 }),
+    pk(0.60, 2349, 0.05, { at: 0.339, duty: 0.125, curve: 0.34 }),
+    tk(0.76, 147, 0.17, { at: 0.328, curve: 0.46 }),
+    nk(0.56, 7600, 0.07, { at: 0.333, to: 3000, curve: 0.30 }),
   ],
+  /**
+   * It got out.
+   *
+   * This measured a third as loud as a cursor tick, which is a strange thing
+   * for a sealed container bursting apart to be. It is now a real pop -- seal,
+   * shell, body -- with the light falling *down* out of it and three fragments
+   * behind, because a downward glide is the shortest way to say "no".
+   *
+   * The balance leans bright and the fragments are spread further out than a
+   * hit's debris would be. Written with the weight in the low end it measured
+   * as `fx_hit`, which is the generic move impact and fires a dozen times in
+   * the same battle -- so a failed catch read as the wild kin taking a hit
+   * rather than as the wild kin getting away.
+   */
   vessel_break: [
-    nk(0.02, 6000, 0.14, { curve: 0.12 }),
-    nk(0.12, 1800, 0.15, { to: 800, curve: 0.24 }),
-    pk(0.14, 700, 0.13, { to: 260, duty: 0.125, curve: 0.3 }),
+    nk(0.014, 7000, 0.26, { curve: 0.11 }),
+    nk(0.13, 2600, 0.26, { at: 0.004, to: 900, curve: 0.24 }),
+    nk(0.18, 300, 0.17, { at: 0.006, curve: 0.28 }),
+    tk(0.22, 180, 0.20, { to: 88, curve: 0.28 }),
+    pk(0.20, 1100, 0.17, { to: 260, duty: 0.125, curve: 0.30 }),
+    nk(0.05, 3200, 0.13, { at: 0.10, to: 1400, curve: 0.20 }),
+    nk(0.045, 2200, 0.10, { at: 0.17, to: 950, curve: 0.20 }),
+    nk(0.04, 4000, 0.07, { at: 0.24, to: 1800, curve: 0.20 }),
   ],
 
   /* ---------------------------------------------------- move archetypes */
@@ -711,6 +979,14 @@ export const SFX: Record<string, SfxLayer[]> = {
     t(0.100, 247, 0.12, { to: 330 }),
   ],
 };
+
+/**
+ * `heal` is the older, vaguer name for the completion cue, kept pointing at the
+ * same recipe so a caller that reaches for the obvious word gets the right
+ * sound rather than silence. New code should say which half it means:
+ * `heal_cycle` while the party is being seen to, `heal_done` when it is over.
+ */
+SFX.heal = SFX.heal_done!;
 
 /** Every id the library knows, for tests and for the debug sound browser. */
 export const SFX_IDS = Object.keys(SFX);

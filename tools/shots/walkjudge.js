@@ -6,8 +6,10 @@ const out = [];
 const clear = () => { for (let i = 0; i < 20 && top().name === 'dialogue'; i++) d.key('Enter', 10); };
 
 await d.loadWait(1400);
-d.key('Enter', 4); d.key('Enter', 30);
-d.key('Enter', 60);
+// Press through the title, the menu and the cinematic until the creator is
+// actually on top. A fixed count of Enters broke when the menu gained a
+// transition into the cinematic and moved the beat this landed on.
+for (let i = 0; i < 80 && top().name !== 'creator'; i++) d.key('Enter', 12);
 for (let i = 0; i < 30; i++) {
   const rows = top().rows();
   if ((rows[top().sel] || {}).action === 'begin') break;

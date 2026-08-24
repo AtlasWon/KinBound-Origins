@@ -10,12 +10,12 @@
     "I+++?@@KKK$$$kkI",
     "I::::::::::::::I",
     "IFFFFFFFFFFFFFFI",
-    "IkFFFAAAAFFFFFPI",
-    "IkFFFEFFEFFFFFFI",
-    "IFFFFFFFFFFFFFFI",
-    "IFrrrFFFFFFF$$$I",
-    "IF/rrFFFFFFF$FFI",
-    "IFFFFFFFFFFFFFFI",
+    "IFFFKKKKKKKFFFFI",
+    "IkFFFFFFFFFFFFPI",
+    "IkFAAAAFFFFFFFFI",
+    "IFFEFFEFFFFF$$$I",
+    "IFrrrFFFFFFF$FFI",
+    "IF/rrFFFFFFFFFFI",
     "IIIIIIIIDIIIIIII"
   ],
   "warps": [
@@ -33,8 +33,8 @@
     {
       "id": "vess",
       "sprite": "professor",
-      "x": 7,
-      "y": 3,
+      "x": 11,
+      "y": 4,
       "facing": "down",
       "movement": {
         "kind": "static"
@@ -96,12 +96,32 @@
     },
     {
       "kind": "sign",
-      "x": 5,
+      "x": 6,
       "y": 4,
       "text": [
-        "The centre table. Three sets of field notes wait",
-        "here in Dr. Vess's cramped hand -- one for each of",
-        "the kin he keeps up on the counter behind him."
+        "A table on its own in the middle of the floor, and",
+        "nothing is allowed on it but the three sitting up there.",
+        "Dr. Vess dragged it out here himself and cleared it twice."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 4,
+      "text": [
+        "Three sets of field notes lie side by side on the table,",
+        "one for each of the three sitting above them.",
+        "Somebody has been awake a long time getting this right."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 4,
+      "y": 6,
+      "text": [
+        "The working desks, pushed over to one side to clear",
+        "the middle of the room. There are four long scrapes",
+        "on the tile where something heavy was dragged out."
       ]
     },
     {
@@ -111,28 +131,28 @@
       "text": [
         "The long counter. Scrubbed pale, warm from the",
         "lamp above it, and worn smooth in three places",
-        "where something small has been sitting all morning."
+        "where something small used to sit all morning."
       ]
     },
     {
       "kind": "kin",
       "species": "sprigling",
       "x": 5,
-      "y": 1,
+      "y": 4,
       "hiddenIfFlag": "starter_sprigling"
     },
     {
       "kind": "kin",
       "species": "cinderpaw",
-      "x": 8,
-      "y": 1,
+      "x": 7,
+      "y": 4,
       "hiddenIfFlag": "starter_cinderpaw"
     },
     {
       "kind": "kin",
       "species": "rilltail",
-      "x": 11,
-      "y": 1,
+      "x": 9,
+      "y": 4,
       "hiddenIfFlag": "starter_rilltail"
     }
   ]

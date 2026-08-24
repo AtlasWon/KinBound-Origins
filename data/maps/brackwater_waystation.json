@@ -8,7 +8,7 @@
     "IIIUIIIIIIUIII",
     "I+++++kkF?FFkI",
     "IPKKFKKKFFFFFI",
-    "IFFFFFFFFFFFFI",
+    "IFFFFFFFFFFFSI",
     "IFFFFFFFFFFFFI",
     "IF/rr/FF/rr/FI",
     "IFFrrFFFFrrFFI",
@@ -25,6 +25,15 @@
       "toY": 5,
       "facing": "down",
       "style": "door"
+    },
+    {
+      "x": 12,
+      "y": 3,
+      "toMap": "brackwater_waystation_up",
+      "toX": 12,
+      "toY": 4,
+      "facing": "down",
+      "style": "stairs"
     }
   ],
   "npcs": [

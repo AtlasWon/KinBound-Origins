@@ -18,6 +18,8 @@
  * Step 3 is the only place this differs from `kinseat.js`, and it is the whole
  * difference between an item and a creature: there is no ground line and there
  * is no contact shadow.
+ *
+ * `seatGroup` is step 2 done over a whole key at once -- see the note on it.
  */
 
 export const CELL = 32;
@@ -25,6 +27,59 @@ export const ICON_SIZE = CELL / 2;
 export const ALPHA_CUT = 128;
 /** Below this fraction of flat 2x2 blocks, the 16px list icon looks soft. */
 export const SOFT_ICON = 0.6;
+
+/* ------------------------------------------------------------- the frames */
+
+/**
+ * The state suffixes an icon key may have a second drawing for.
+ *
+ * The same list as `FRAME_STATES` in src/gfx/itemart.ts, and it has to stay the
+ * same list -- a state the tools accept and the game ignores is a file that
+ * looks delivered and never appears on screen. `npm run item:check` compares
+ * the two and says so if they have drifted.
+ *
+ *   what   -- for the report and the spec
+ *   used   -- who asks for it, so a state with no reader is visibly dead
+ *   said   -- the words a delivered file might use for this state instead
+ *   align  -- how the frame registers against the icon when the two drawings
+ *             arrive separately, which only `npm run item:import` has to know:
+ *             'bottom' means they share a bottom edge. A lid opens upward and
+ *             the body of the vessel stays exactly where it was, so lining the
+ *             two up by their centres would drop the whole vessel two pixels
+ *             at the moment it opens.
+ */
+export const FRAME_STATES = {
+  open: {
+    what: 'the vessel split open, lid clear of the body',
+    used: 'the send-out and capture throws in src/scenes/battle.ts',
+    said: ['open', 'opened', 'opening'],
+    align: 'bottom',
+  },
+};
+
+/** Words that mean "this is the icon itself", not a state. A pair delivered as
+ *  closed/open should land as <key>.png and <key>-open.png, and the artist
+ *  naming the closed one "closed" is the natural thing to do, not a mistake. */
+export const BASE_WORDS = ['closed', 'shut', 'base', 'idle', 'default', 'normal', 'still'];
+
+/** Split `vessel_field-open` into its key and its state. A stem with no known
+ *  state suffix is a plain icon key, dashes and all -- so a mistyped state is
+ *  reported as an unknown KEY, which is the message that names the real fault. */
+export function splitFrameName(stem) {
+  const cut = stem.lastIndexOf('-');
+  if (cut > 0) {
+    const tail = stem.slice(cut + 1);
+    if (Object.prototype.hasOwnProperty.call(FRAME_STATES, tail)) {
+      return { key: stem.slice(0, cut), state: tail };
+    }
+  }
+  return { key: stem, state: null };
+}
+
+/** The file a key's frame is drawn by. One place, so nothing spells it twice. */
+export function frameFile(key, state) {
+  return state ? `${key}-${state}.png` : `${key}.png`;
+}
 
 /** Flatten every part-transparent pixel, and say how many there were and where.
  *  An interior soft pixel is a different mistake from a soft edge -- one is a
@@ -131,35 +186,86 @@ export function gridScore(data, w = CELL, h = CELL, step = 2) {
  * the loader also refuses.
  */
 export function seat(px) {
-  const softness = hardenAlpha(px);
-  const b = inkBounds(px);
-  if (!b) return null;
+  return seatGroup([{ state: null, px }])[0] ?? null;
+}
 
-  const iw = b.w, ih = b.h;
-  const scale = Math.min(1, CELL / iw, CELL / ih);
-  const dw = Math.max(1, Math.round(iw * scale));
-  const dh = Math.max(1, Math.round(ih * scale));
-  const baseX = Math.round((CELL - dw) / 2);
-  const baseY = Math.round((CELL - dh) / 2);
-
-  let best = { x: 0, y: 0 }, bestScore = -1, restScore = -1;
-  for (const y of [0, 1]) {
-    for (const x of [0, 1]) {
-      const test = new Uint8ClampedArray(CELL * CELL * 4);
-      paint(px, b, scale, dw, dh, baseX - x, baseY - y, test);
-      const s = gridScore(test);
-      if (!x && !y) restScore = s;
-      if (s > bestScore + 1e-9) { bestScore = s; best = { x, y }; }
-    }
+/**
+ * Seat every frame of one icon key together.
+ *
+ * The frames of a key are one object doing two things, and they have to stay
+ * registered: centre each of them on its own ink and the vessel's base jumps
+ * the instant the lid comes off, because the open drawing is taller and its
+ * centre is somewhere else. So the UNION of every frame's ink is what gets
+ * centred and scaled, and every frame is then sampled out of that same union
+ * box -- which leaves each one where it was drawn relative to the others.
+ *
+ * With one frame the union is that frame's own ink, so this is exactly the old
+ * `seat` and `seat` is now a call to it. Frames on different canvas sizes have
+ * no shared coordinate to be registered in; those are seated one at a time and
+ * `grouped: false` says so.
+ *
+ * Every `px` is mutated (alpha hardened), as `seat` always did.
+ */
+export function seatGroup(frames) {
+  const prepared = [];
+  for (const f of frames) {
+    const softness = hardenAlpha(f.px);
+    const b = inkBounds(f.px);
+    if (!b) continue;
+    prepared.push({ state: f.state ?? null, px: f.px, b, softness });
   }
-  const shift = (best.x || best.y) && bestScore - restScore < 0.05 ? { x: 0, y: 0 } : best;
+  if (!prepared.length) return [];
 
-  const out = new Uint8ClampedArray(CELL * CELL * 4);
-  paint(px, b, scale, dw, dh, baseX - shift.x, baseY - shift.y, out);
-  const grid = gridScore(out);
-  const placed = inkBounds({ w: CELL, h: CELL, data: out }) ?? { x0: 0, y0: 0, x1: 0, y1: 0, w: 0, h: 0 };
+  const grouped = new Set(prepared.map((p) => `${p.px.w}x${p.px.h}`)).size === 1;
+  const union = grouped ? prepared.reduce((a, p) => ({
+    x0: Math.min(a.x0, p.b.x0), y0: Math.min(a.y0, p.b.y0),
+    x1: Math.max(a.x1, p.b.x1), y1: Math.max(a.y1, p.b.y1),
+  }), prepared[0].b) : null;
+  if (union) { union.w = union.x1 - union.x0 + 1; union.h = union.y1 - union.y0 + 1; }
 
-  return { data: out, w: CELL, h: CELL, source: b, scale, shift, gridScore: grid, placed, softness };
+  const out = [];
+  let shared = null;
+  for (const p of prepared) {
+    const box = union ?? p.b;
+    let fit = shared;
+    if (!fit) {
+      const scale = Math.min(1, CELL / box.w, CELL / box.h);
+      const dw = Math.max(1, Math.round(box.w * scale));
+      const dh = Math.max(1, Math.round(box.h * scale));
+      const baseX = Math.round((CELL - dw) / 2);
+      const baseY = Math.round((CELL - dh) / 2);
+
+      // The grid phase is chosen once, on the first frame -- the base drawing,
+      // the one the bag halves. Letting each frame pick its own would move them
+      // a pixel apart for the sake of a percentage nobody sees.
+      let best = { x: 0, y: 0 }, bestScore = -1, restScore = -1;
+      for (const y of [0, 1]) {
+        for (const x of [0, 1]) {
+          const test = new Uint8ClampedArray(CELL * CELL * 4);
+          paint(p.px, box, scale, dw, dh, baseX - x, baseY - y, test);
+          const s = gridScore(test);
+          if (!x && !y) restScore = s;
+          if (s > bestScore + 1e-9) { bestScore = s; best = { x, y }; }
+        }
+      }
+      const shift = (best.x || best.y) && bestScore - restScore < 0.05 ? { x: 0, y: 0 } : best;
+      fit = { box, scale, dw, dh, baseX, baseY, shift };
+      if (union) shared = fit;
+    }
+
+    const data = new Uint8ClampedArray(CELL * CELL * 4);
+    paint(p.px, fit.box, fit.scale, fit.dw, fit.dh,
+      fit.baseX - fit.shift.x, fit.baseY - fit.shift.y, data);
+    const placed = inkBounds({ w: CELL, h: CELL, data })
+      ?? { x0: 0, y0: 0, x1: 0, y1: 0, w: 0, h: 0 };
+    out.push({
+      state: p.state, data, w: CELL, h: CELL,
+      source: p.b, union: fit.box, grouped: grouped && prepared.length > 1,
+      scale: fit.scale, shift: fit.shift, gridScore: gridScore(data),
+      placed, softness: p.softness,
+    });
+  }
+  return out;
 }
 
 /**
@@ -217,4 +323,118 @@ export function iconKeys(items) {
     map.set(key, slot);
   }
   return [...map.values()].sort((a, b) => (a.items[0].sort - b.items[0].sort) || a.key.localeCompare(b.key));
+}
+
+/* ------------------------------------------------------------ the naming */
+
+/**
+ * Words for a thing that are not the thing's icon key.
+ *
+ * Small on purpose. A family name -- `vessel`, `cure`, `key` -- is worked out
+ * from the key list itself, so this only carries the cases where the artist's
+ * word and the game's word are genuinely different nouns.
+ */
+const ALIASES = {
+  ball: 'vessel_field',
+  capsule: 'vessel_field',
+  orb: 'vessel_field',
+  flask: 'potion',
+  bottle: 'potion',
+  feather: 'revive',
+  incense: 'repel',
+  rope: 'escape',
+  anchor: 'escape',
+  book: 'key_vellum',
+  vellum: 'key_vellum',
+  map: 'key_map',
+};
+
+function levenshtein(a, b) {
+  const prev = Array.from({ length: b.length + 1 }, (_, i) => i);
+  for (let i = 1; i <= a.length; i++) {
+    let last = prev[0];
+    prev[0] = i;
+    for (let j = 1; j <= b.length; j++) {
+      const tmp = prev[j];
+      prev[j] = Math.min(prev[j] + 1, prev[j - 1] + 1, last + (a[i - 1] === b[j - 1] ? 0 : 1));
+      last = tmp;
+    }
+  }
+  return prev[b.length];
+}
+
+/**
+ * Work out which icon a delivered file is meant to be.
+ *
+ * This is the single commonest way an art delivery fails, and it failed on the
+ * first one: three files called `Potion.png`, `Vessel-closed.png` and
+ * `Vessel-open.png`, and the game asks for `potion`, `vessel_field` ... and
+ * does not have an "open vessel" at all. Nobody could have guessed those names
+ * from the outside, so both the importer and the checker resolve them the same
+ * way and both say out loud what they decided and why.
+ *
+ * The order matters, and every step returns a `why` so the report can explain
+ * itself rather than appearing to guess:
+ *
+ *   1. peel off a trailing state word   Vessel-open -> vessel + the open frame
+ *      or a word that means "not a state" at all: Vessel-closed -> vessel
+ *   2. the icon key itself              potion
+ *   3. an item id                       field_vessel -> vessel_field
+ *   4. a family name                    vessel -> the first of the six
+ *   5. a different noun for it          ball -> vessel_field
+ *   6. a spelling guess, flagged as one
+ *
+ * Returns { ok, key, state, why, members, notes, body }. `body` is what was
+ * left after the state came off, which is the string to quote in an error.
+ */
+export function nameResolver(items) {
+  const keys = iconKeys(items).map((k) => k.key);
+  const known = new Set(keys);
+  const byItemId = new Map(items.map((i) => [i.id, i.icon]));
+
+  const family = (word) => {
+    const members = keys.filter((k) => k === word || k.startsWith(word + '_'));
+    return members.length ? members : null;
+  };
+
+  return function resolveName(stem) {
+    let body = String(stem).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    let state = null;
+    const notes = [];
+
+    const cut = body.lastIndexOf('-');
+    if (cut > 0) {
+      const tail = body.slice(cut + 1);
+      const named = Object.entries(FRAME_STATES).find(([, v]) => v.said.includes(tail));
+      if (named) {
+        state = named[0];
+        body = body.slice(0, cut);
+        notes.push(`"${tail}" is the ${state} frame, not an item of its own`);
+      } else if (BASE_WORDS.includes(tail)) {
+        body = body.slice(0, cut);
+        notes.push(`"${tail}" means the icon itself, not a frame`);
+      }
+    }
+
+    const under = body.replace(/-/g, '_');
+    const miss = { ok: false, body: under, state, notes };
+    if (known.has(under)) return { ok: true, key: under, state, why: 'exact', notes, body: under };
+    if (byItemId.has(under) && known.has(byItemId.get(under))) {
+      return { ok: true, key: byItemId.get(under), state, why: 'item-id', notes, body: under };
+    }
+    const fam = family(under);
+    if (fam) return { ok: true, key: fam[0], state, why: 'family', members: fam, notes, body: under };
+    if (ALIASES[under] && known.has(ALIASES[under])) {
+      return { ok: true, key: ALIASES[under], state, why: 'alias', notes, body: under };
+    }
+    let best = null, bestD = Infinity;
+    for (const k of known) {
+      const d = levenshtein(under, k);
+      if (d < bestD) { bestD = d; best = k; }
+    }
+    if (best && bestD <= Math.max(2, Math.floor(best.length / 4))) {
+      return { ok: true, key: best, state, why: 'typo', notes, body: under };
+    }
+    return miss;
+  };
 }

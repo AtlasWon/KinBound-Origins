@@ -15,20 +15,20 @@ export const GLYPH_H = 7;
 /** Each glyph: 7 rows of 5 characters, '#' on, '.' off. */
 const GLYPHS: Record<string, string> = {
   ' ': '..... ..... ..... ..... ..... ..... .....',
-  '!': '..#.. ..#.. ..#.. ..#.. ..#.. ..... ..#..',
+  '!': '.#... .#... .#... .#... .#... ..... .#...',
   '"': '.#.#. .#.#. ..... ..... ..... ..... .....',
   '#': '.#.#. .#.#. ##### .#.#. ##### .#.#. .#.#.',
   '$': '..#.. .#### #.#.. .###. ..#.# ####. ..#..',
   '%': '##..# ##..# ...#. ..#.. .#... #..## #..##',
   '&': '.##.. #..#. #.#.. .#... #.#.# #..#. .##.#',
-  "'": '..#.. ..#.. ..... ..... ..... ..... .....',
-  '(': '...#. ..#.. .#... .#... .#... ..#.. ...#.',
-  ')': '.#... ..#.. ...#. ...#. ...#. ..#.. .#...',
+  "'": '.#... .#... ..... ..... ..... ..... .....',
+  '(': '..#.. .#... #.... #.... #.... .#... ..#..',
+  ')': '#.... .#... ..#.. ..#.. ..#.. .#... #....',
   '*': '..... #.#.# .###. ##### .###. #.#.# .....',
   '+': '..... ..#.. ..#.. ##### ..#.. ..#.. .....',
-  ',': '..... ..... ..... ..... ..##. ..#.. .#...',
+  ',': '..... ..... ..... ..... .##.. .#... #....',
   '-': '..... ..... ..... ##### ..... ..... .....',
-  '.': '..... ..... ..... ..... ..... ..##. ..##.',
+  '.': '..... ..... ..... ..... ..... .##.. .##..',
   '/': '....# ...#. ...#. ..#.. .#... .#... #....',
   '0': '.###. #...# #..## #.#.# ##..# #...# .###.',
   '1': '..#.. .##.. ..#.. ..#.. ..#.. ..#.. .###.',
@@ -40,8 +40,8 @@ const GLYPHS: Record<string, string> = {
   '7': '##### ....# ...#. ..#.. .#... .#... .#...',
   '8': '.###. #...# #...# .###. #...# #...# .###.',
   '9': '.###. #...# #...# .#### ....# ...#. .##..',
-  ':': '..... ..##. ..##. ..... ..##. ..##. .....',
-  ';': '..... ..##. ..##. ..... ..##. ..#.. .#...',
+  ':': '..... .##.. .##.. ..... .##.. .##.. .....',
+  ';': '..... .##.. .##.. ..... .##.. .#... #....',
   '<': '...#. ..#.. .#... #.... .#... ..#.. ...#.',
   '=': '..... ..... ##### ..... ##### ..... .....',
   '>': '.#... ..#.. ...#. ....# ...#. ..#.. .#...',
@@ -73,7 +73,7 @@ const GLYPHS: Record<string, string> = {
   'X': '#...# #...# .#.#. ..#.. .#.#. #...# #...#',
   'Y': '#...# #...# .#.#. ..#.. ..#.. ..#.. ..#..',
   'Z': '##### ....# ...#. ..#.. .#... #.... #####',
-  '[': '..### ..#.. ..#.. ..#.. ..#.. ..#.. ..###',
+  '[': '###.. #.... #.... #.... #.... #.... ###..',
   '\\': '#.... .#... .#... ..#.. ...#. ...#. ....#',
   ']': '###.. ..#.. ..#.. ..#.. ..#.. ..#.. ###..',
   '^': '..#.. .#.#. #...# ..... ..... ..... .....',
@@ -85,12 +85,12 @@ const GLYPHS: Record<string, string> = {
   'd': '....# ....# .#### #...# #...# #...# .####',
   'e': '..... ..... .###. #...# ##### #.... .###.',
   'f': '..##. .#..# .#... ###.. .#... .#... .#...',
-  'g': '..... ..... .###. #...# .#### ....# .###.',
+  'g': '..... ..... .###. #...# .#### ....# ####.',
   'h': '#.... #.... ####. #...# #...# #...# #...#',
-  'i': '..#.. ..... .##.. ..#.. ..#.. ..#.. .###.',
+  'i': '.#... ..... ##... .#... .#... .#... ###..',
   'j': '...#. ..... ..##. ...#. ...#. #..#. .##..',
   'k': '#.... #.... #..#. #.#.. ##... #.#.. #..#.',
-  'l': '.##.. ..#.. ..#.. ..#.. ..#.. ..#.. .###.',
+  'l': '##... .#... .#... .#... .#... .#... ###..',
   'm': '..... ..... ##.#. #.#.# #.#.# #.#.# #.#.#',
   'n': '..... ..... ####. #...# #...# #...# #...#',
   'o': '..... ..... .###. #...# #...# #...# .###.',
@@ -106,7 +106,7 @@ const GLYPHS: Record<string, string> = {
   'y': '..... ..... #...# #...# .#### ....# .###.',
   'z': '..... ..... ##### ...#. ..#.. .#... #####',
   '{': '...## ..#.. ..#.. .##.. ..#.. ..#.. ...##',
-  '|': '..#.. ..#.. ..#.. ..#.. ..#.. ..#.. ..#..',
+  '|': '.#... .#... .#... .#... .#... .#... .#...',
   '}': '##... ..#.. ..#.. ..##. ..#.. ..#.. ##...',
   '~': '..... ..... .#..# #.#.# #..#. ..... .....',
 
@@ -173,19 +173,69 @@ export function glyphKeys(): string[] {
  * Per-character advance. Narrow glyphs get a tighter advance so text reads as
  * proportional rather than as a rigid grid, which is what makes long dialogue
  * comfortable at this size.
+ *
+ * THE RULE THIS TABLE MUST OBEY: a glyph's advance has to leave at least one
+ * blank column to the right of its own rightmost lit pixel. An ordinary letter
+ * fills columns 0-4 and advances 6, so every pair of ordinary letters is
+ * separated by exactly one column. That single column is the entire letter
+ * spacing of this face -- there is nothing spare in it. A narrow glyph that
+ * advances past its own ink spends the column, and the two letters touch.
+ *
+ * That is what had happened here. The narrow glyphs are all drawn centred in
+ * the 5-wide cell -- `i` lit columns 1-3 -- while their advances had been
+ * chosen as if the ink were flush left. `i` advanced 3 and lit column 3, so its
+ * foot serif landed ON the next letter's first column: Cinderpaw, Sprigling,
+ * Rimehound and 27 other names had two letters sharing a pixel. `l`, `j`, `.`,
+ * `,`, `:`, `;`, `(`, `)`, `[` and `|` ended one column short of the same
+ * fault, which is a butt joint with no gap at all.
+ *
+ * The fix was to move the ink flush left rather than to widen the advances, so
+ * the strings the layouts were tuned against did not all change length. `i` and
+ * `j` gained a unit and the two brackets lost one; every other glyph keeps the
+ * advance it had and merely stops overhanging it, so the longest name in the
+ * game grew by a single pixel. `tests/font.test.js` re-checks the whole rule,
+ * glyph by glyph and pair by pair, against the names the player reads.
  */
 const NARROW: Record<string, number> = {
-  // Sentence punctuation is deliberately NOT as tight as it looks like it
-  // should be. The ink in a full stop sits at columns 2-3 of its cell, so a
-  // 2-unit advance leaves only three pixels between the dot and the next
-  // word -- against five for an ordinary letter gap. The eye reads that as no
-  // gap at all, and every sentence in the game ran into the next one.
   ' ': 4, '!': 3, "'": 2, '.': 3, ',': 3, ':': 3, ';': 3, '|': 2,
-  'i': 2, 'l': 3, 'j': 3, '1': 4, '(': 3, ')': 3, '[': 4, ']': 4,
+  'i': 3, 'l': 3, 'j': 4, '1': 4, '(': 3, ')': 3, '[': 3, ']': 3,
 };
 
 export function advanceOf(ch: string): number {
   return (NARROW[ch] ?? GLYPH_W) + 1;
+}
+
+/** Columns of blank cell to the right of a glyph's ink, at its own advance. */
+export function rightBearing(ch: string): number {
+  const g = getGlyph(ch);
+  if (!g) return 0;
+  let ink = -1;
+  for (let y = 0; y < GLYPH_H; y++) {
+    for (let x = 0; x < GLYPH_W; x++) if (g.bits[y * GLYPH_W + x] && x > ink) ink = x;
+  }
+  if (ink < 0) return advanceOf(ch);
+  return advanceOf(ch) - ink - 1;
+}
+
+/**
+ * The narrowest column gap between two glyphs set side by side, counted only
+ * on the rows where both of them have ink. Below 1 the letters touch.
+ */
+export function pairGap(a: string, b: string): number {
+  const ga = getGlyph(a), gb = getGlyph(b);
+  if (!ga || !gb) return GLYPH_W;
+  const adv = advanceOf(a);
+  let min = Infinity;
+  for (let y = 0; y < GLYPH_H; y++) {
+    let right = -1, left = GLYPH_W;
+    for (let x = 0; x < GLYPH_W; x++) {
+      if (ga.bits[y * GLYPH_W + x]) right = x;
+      if (gb.bits[y * GLYPH_W + x] && x < left) left = x;
+    }
+    if (right < 0 || left >= GLYPH_W) continue;
+    min = Math.min(min, adv + left - right - 1);
+  }
+  return min === Infinity ? GLYPH_W : min;
 }
 
 /**

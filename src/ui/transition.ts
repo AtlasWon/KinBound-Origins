@@ -110,6 +110,32 @@ function smooth(t: number): number {
   return t * t * (3 - 2 * t);
 }
 
+/** Distance covered by a smoothstep ramp of unit length and unit top speed. */
+function rampArea(x: number): number {
+  return x * x * x - 0.5 * x * x * x * x;
+}
+
+/**
+ * A constant middle with short eased ramps at either end.
+ *
+ * `ramp` is the fraction of the run spent getting up to speed, and the same
+ * again slowing down; the rest travels flat out. What this buys over blending a
+ * line into a smoothstep is that it genuinely arrives at rest. `0.4t + 0.6 *
+ * smooth(t)` -- the route seam's old curve -- still carries four tenths of its
+ * top speed on the final frame, and a cover that is still moving on the frame
+ * it stops reads as a snap no matter how measured the rest of the move was.
+ * That is the "choppy at the end" a seam was giving away.
+ */
+function ramped(t: number, ramp: number): number {
+  const travel = 1 - ramp;
+  const a = t <= ramp
+    ? ramp * rampArea(t / ramp)
+    : t >= 1 - ramp
+      ? travel - ramp * rampArea((1 - t) / ramp)
+      : ramp * 0.5 + (t - ramp);
+  return a / travel;
+}
+
 /**
  * The curve each style's cover runs on.
  *
@@ -121,9 +147,11 @@ function smooth(t: number): number {
  */
 function ease(style: AreaStyle, t: number): number {
   switch (style) {
-    // A route seam is a continuation, not an event, so this one keeps most of
-    // a constant travelling speed and only softens the two ends.
-    case 'edge': return 0.4 * t + 0.6 * smooth(t);
+    // A route seam is a continuation, not an event, so this one holds a
+    // constant travelling speed for most of its length and only softens the two
+    // ends -- but it does soften them all the way down to nothing, which the
+    // linear/smooth blend it replaced never did.
+    case 'edge': return ramped(t, 0.3);
     // Stairs and cave mouths are the floor going out from under you: the same
     // eased shape weighted late, so it leans in slowly and then drops.
     case 'stairs':

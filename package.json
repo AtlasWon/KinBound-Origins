@@ -19,6 +19,7 @@
     "kin:check": "node tools/kin-check.js",
     "kin:sheet": "node tools/kin-sheet.js",
     "itemart": "node tools/itemart.js",
+    "item:import": "node tools/item-import.js",
     "item:check": "node tools/item-check.js",
     "item:list": "node tools/item-check.js --list",
     "item:placeholders": "node tools/item-placeholders.js",

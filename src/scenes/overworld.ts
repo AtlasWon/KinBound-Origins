@@ -38,7 +38,14 @@ import type { Battle } from '../battle/battle.js';
 import type { AiTier, EncounterMethod, EncounterTable } from '../data/schema.js';
 
 type Fade = {
-  active: boolean; t: number; dir: 'out' | 'in'; frames: number; then?: () => void;
+  active: boolean; t: number; dir: 'out' | 'in'; frames: number;
+  then?: () => void | Promise<void>;
+  /**
+   * Set once an out-fade has finished closing and its callback is still
+   * working. The cover stays pinned at full while this is true, which is what
+   * stops the world underneath being shown mid-transition.
+   */
+  holding: boolean;
   /** How the cover is drawn. 'warp' is the plain black tint every other caller wants. */
   style?: AreaStyle;
   wipeDir?: WipeDir;
@@ -74,7 +81,7 @@ export class OverworldScene implements Scene {
   private camTargetX = 0;
   private camTargetY = 0;
 
-  private fade: Fade = { active: false, t: 0, dir: 'in', frames: 20 };
+  private fade: Fade = { active: false, t: 0, dir: 'in', frames: 20, holding: false };
   private banner = { text: '', t: 0 };
 
   /** Steps since the last wild encounter, used to smooth out the RNG. */
@@ -634,6 +641,11 @@ export class OverworldScene implements Scene {
     noCapture?: boolean;
     /** The challenge lines have already been delivered in the field. */
     skipIntroLines?: boolean;
+    /**
+     * Losing this fight must NOT trigger the standard blackout, because the
+     * script that started it carries on regardless -- see onBattleFinished.
+     */
+    noWhiteout?: boolean;
     /** Called after the post-battle handling, for scripted battles. */
     onResolved?: (result: string) => void;
   }): void {
@@ -665,7 +677,10 @@ export class OverworldScene implements Scene {
 
   private onBattleFinished(
     game: Game, result: string, battle: Battle,
-    opts: { foeParty: Kin[]; isWild: boolean; trainerId?: string; onResolved?: (r: string) => void },
+    opts: {
+      foeParty: Kin[]; isWild: boolean; trainerId?: string;
+      noWhiteout?: boolean; onResolved?: (r: string) => void;
+    },
   ): void {
     this.busy = false;
     // Scripts resume after the standard handling below has run.
@@ -698,7 +713,26 @@ export class OverworldScene implements Scene {
     }
 
     if (result === 'loss') {
-      this.whiteout(game);
+      /*
+       * A LOSS IS NOT ALWAYS A BLACKOUT, and assuming it was is what froze the
+       * game solid after the first battle in Marrow Hollow.
+       *
+       * That fight is authored `onLoss: "continue"`: the script is meant to
+       * carry on with Perrin's commiseration and then walk the player home to
+       * be patched up, which is the game's entire teaching pass on healing.
+       * The blackout ran anyway, so two owners were driving the overworld at
+       * once -- the blackout holding `busy` until its own fade called back, and
+       * the script running its scene and eventually warping. `beginFade`
+       * overwrites one fade with the next, callback and all, so whichever
+       * started second silently deleted the other's completion callback. When
+       * the warp won, `busy` was never cleared again: the player stood in their
+       * own bedroom, unable to move, with nothing left running to release them.
+       *
+       * Two owners is the bug; the fade collision is only how it presented. So
+       * the fight that said not to blackout does not blackout, and the script
+       * is the only thing driving the field.
+       */
+      if (!opts.noWhiteout) this.whiteout(game);
       resume();
       return;
     }
@@ -715,7 +749,9 @@ export class OverworldScene implements Scene {
     ], {
       onDone: () => {
         this.state.healParty();
+        const warmed = this.prefetch(game, this.state.respawnMap);
         this.beginFade('out', 24, async () => {
+          await warmed;
           await this.loadMap(game, this.state.respawnMap, this.state.respawnX, this.state.respawnY, 'down');
           this.snapCamera();
           this.beginFade('in', 24, () => { this.busy = false; });
@@ -1101,11 +1137,50 @@ export class OverworldScene implements Scene {
     // the same black square. The style comes from the warp itself.
     const st = areaStyleOf(warp.style);
     const f = areaFrames(st);
+    // Start pulling the next map in now, in parallel with the cover closing.
+    // Twenty frames is a third of a second of time the game was spending on an
+    // animation and then spending again on a fetch; done this way the fetch is
+    // usually finished before the screen is even black, and the hold at the end
+    // of the out-fade costs nothing at all.
+    const warmed = this.prefetch(game, warp.toMap);
     this.beginFade('out', f, async () => {
+      await warmed;
       await this.loadMap(game, warp.toMap, warp.toX, warp.toY, warp.facing ?? this.player.facing);
       this.snapCamera();
       this.beginFade('in', f, () => { this.busy = false; }, st, this.player.facing);
     }, st, this.player.facing);
+  }
+
+  /**
+   * Warm the asset cache for a map about to be walked into.
+   *
+   * Strictly a cache fill: it must not touch the live map, the registry or the
+   * scene, because the place being left is still the thing on screen and will
+   * be for the length of the out-fade. `loadMap` then finds everything already
+   * in memory and completes within the frame.
+   *
+   * Only files the manifest actually lists are asked for. A fetch that 404s
+   * leaves a rejected promise cached under its path, so speculatively probing
+   * for a dialogue file that does not exist would poison the entry for the
+   * real load later.
+   */
+  private prefetch(game: Game, id: string): Promise<void> {
+    return (async () => {
+      try {
+        if (!registry.has('maps', id)) return;
+        const file = await game.assets.loadJson<AsciiMapFile>(`data/maps/${id}.json`);
+        const jobs: Promise<unknown>[] = [];
+        if (registry.has('dialogue', id)) jobs.push(game.assets.loadJson(`data/dialogue/${id}.json`));
+        if (registry.has('events', id)) jobs.push(game.assets.loadJson(`data/events/${id}.json`));
+        const table = file.encounterTable;
+        if (table && registry.has('encounters', table)) {
+          jobs.push(game.assets.loadJson(`data/encounters/${table}.json`));
+        }
+        await Promise.all(jobs);
+      } catch {
+        // A warm-up never reports: the real load is what owns the error.
+      }
+    })();
   }
 
   /**
@@ -1139,20 +1214,80 @@ export class OverworldScene implements Scene {
   }
 
   beginFade(
-    dir: 'out' | 'in', frames: number, then?: () => void,
+    dir: 'out' | 'in', frames: number, then?: () => void | Promise<void>,
     style: AreaStyle = 'warp', wipeDir: WipeDir = 'down',
   ): void {
-    this.fade = { active: true, t: 0, dir, frames, then, style, wipeDir };
+    // A fade started on top of one that still owes a callback silently drops
+    // it, and a dropped callback is how `busy` gets stranded -- the player
+    // stands there unable to move and nothing in the log says why. Nothing in
+    // the game should do this; say so loudly if something starts.
+    if (this.fade.active && this.fade.then) {
+      console.warn('overworld: a fade replaced one with a pending callback; that callback is lost');
+    }
+    this.fade = { active: true, t: 0, dir, frames, then, style, wipeDir, holding: false };
   }
 
+  /**
+   * Advance the cover, and hold it shut while the next map is being built.
+   *
+   * The old version simply switched the fade off on the frame it completed and
+   * called back. But every out-fade's callback is `async` -- it loads a map --
+   * so the work it does lands one or more frames *later*, and in between the
+   * scene rendered with no cover on it at all. Cold, that is the outgoing map
+   * at full brightness for as long as the fetch takes; warm, it is still a
+   * one-frame flash, because an awaited value resolves after the frame that
+   * started it has already been drawn. That flash is the "laggy and choppy at
+   * the end": the transition does its whole graceful close and then the world
+   * blinks back on before the new room appears.
+   *
+   * So an out-fade now stays active, pinned at full cover, until its callback
+   * says it is finished. The callback normally finishes by starting the
+   * incoming fade, which replaces this one outright; if it finishes without
+   * doing that -- or throws -- the cover is released here rather than being
+   * left over the game forever.
+   */
   private updateFade(): void {
-    if (!this.fade.active) return;
-    this.fade.t++;
-    if (this.fade.t >= this.fade.frames) {
-      this.fade.active = false;
-      const cb = this.fade.then;
-      this.fade.then = undefined;
+    const fade = this.fade;
+    if (!fade.active || fade.holding) return;
+    fade.t++;
+    if (fade.t < fade.frames) return;
+    fade.t = fade.frames;
+
+    const cb = fade.then;
+    fade.then = undefined;
+    if (!cb || fade.dir === 'in') {
+      fade.active = false;
       cb?.();
+      return;
+    }
+
+    // Only release the cover if this same fade is still the current one: the
+    // usual outcome is that the callback has already handed over to the
+    // incoming half, and clearing then would undo it.
+    fade.holding = true;
+    const release = (): void => {
+      if (this.fade !== fade) return;
+      fade.holding = false;
+      fade.active = false;
+    };
+    const failed = (e: unknown): void => {
+      console.error('overworld: transition callback failed', e);
+      release();
+      // Whatever went wrong, the player must not be left unable to move.
+      this.busy = false;
+    };
+
+    let result: void | Promise<void>;
+    try {
+      result = cb();
+    } catch (e) {
+      failed(e);
+      return;
+    }
+    if (result && typeof (result as Promise<void>).then === 'function') {
+      (result as Promise<void>).then(release, failed);
+    } else {
+      release();
     }
   }
 

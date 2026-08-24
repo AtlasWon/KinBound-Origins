@@ -5,7 +5,10 @@ const out = [];
 const KEY={up:'KeyW',down:'KeyS',left:'KeyA',right:'KeyD'};
 const go=(dir,tiles)=>{d.down(KEY[dir]);d.tick(Math.ceil(tiles*10)+1);d.up(KEY[dir]);d.tick(3);};
 await d.loadWait(1400);
-d.key('Enter', 4); d.key('Enter', 30); d.key('Enter', 60);
+// Press through the title, the menu and the cinematic until the creator is
+// actually on top. A fixed count of Enters broke when the menu gained a
+// transition into the cinematic and moved the beat this landed on.
+for (let i = 0; i < 80 && top().name !== 'creator'; i++) d.key('Enter', 12);
 for (let i = 0; i < 30; i++) {
   const rows = top().rows();
   if ((rows[top().sel] || {}).action === 'begin') break;

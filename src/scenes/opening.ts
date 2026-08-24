@@ -118,37 +118,211 @@ function kin(
 }
 
 /**
- * A creature drawn backlit: a warm edge with a dark body sitting on top of it.
+ * Where the creature actually is inside its own sprite, as fractions of the
+ * sprite box.
  *
- * This exists because of what a kin sprite actually IS. Every one of them --
- * generated or hand-drawn -- is a portrait of a creature standing up, framed on
- * a ground line. That is exactly what battle wants and exactly what a bird in
- * an empty sky does not: at any size where the detail is legible, a standing
- * portrait in mid-air reads as a creature perched on nothing, and adding the
- * hand-drawn art made it worse, because the art has more detail to give away.
+ * A kin icon is a square with a creature somewhere in it, and how much of that
+ * square the creature fills is not a constant: a generated sprite is planned to
+ * the cell, while the hand-drawn art in assets/kin is fitted from whatever the
+ * artist exported and routinely leaves a wide margin on one side. Anything that
+ * has to attach to the ANIMAL rather than to the picture of it -- a tail on the
+ * back of a body, a wing on a shoulder -- has to measure, or it ends up bolted
+ * to empty space. The first pass of the swimmers' tails did exactly that and
+ * swam a detached dark wedge alongside every fish in the shot.
+ *
+ * Measured once per species and cached, off the icon rather than off a scaled
+ * copy, so the numbers hold at every size the film draws.
+ */
+const inkCache = new Map<string, { x: number; y: number; w: number; h: number }>();
+
+function ink(id: string): { x: number; y: number; w: number; h: number } {
+  const hit = inkCache.get(id);
+  if (hit) return hit;
+  // Whole-sprite is the honest fallback, and the one this has to land on if the
+  // canvas ever comes back tainted: a fin an inch out of place beats a crash in
+  // the first thing anybody sees.
+  let box = { x: 0, y: 0, w: 1, h: 1 };
+  try {
+    const src = iconSprite(id);
+    const px = src.getContext('2d')!.getImageData(0, 0, src.width, src.height).data;
+    let x0 = src.width, y0 = src.height, x1 = -1, y1 = -1;
+    for (let y = 0; y < src.height; y++) {
+      for (let x = 0; x < src.width; x++) {
+        if (px[(y * src.width + x) * 4 + 3]! <= 8) continue;
+        if (x < x0) x0 = x;
+        if (x > x1) x1 = x;
+        if (y < y0) y0 = y;
+        if (y > y1) y1 = y;
+      }
+    }
+    if (x1 >= 0) {
+      box = {
+        x: x0 / src.width, y: y0 / src.height,
+        w: (x1 - x0 + 1) / src.width, h: (y1 - y0 + 1) / src.height,
+      };
+    }
+  } catch { /* tainted or unreadable: keep the whole-sprite box */ }
+  inkCache.set(id, box);
+  return box;
+}
+
+/**
+ * A point on the creature, in buffer pixels, given as fractions along and down
+ * its INK -- and mirrored with the sprite, so `along` always means "from the
+ * nose" whichever way the thing is pointed.
+ */
+function onKin(
+  id: string, size: number, x: number, y: number,
+  along: number, down: number, flip: boolean,
+): { px: number; py: number; w: number; h: number } {
+  const b = ink(id);
+  const fx = b.x + b.w * along;
+  return {
+    px: x * DETAIL + (flip ? 1 - fx : fx) * size,
+    py: y * DETAIL + (b.y + b.h * down) * size,
+    w: b.w * size,
+    h: b.h * size,
+  };
+}
+
+/**
+ * One wing, rooted on the shoulder and beating.
+ *
+ * A kin sprite is a portrait of a creature STANDING. That is what battle wants,
+ * it is what every planner in gfx/kinsprite builds, and it is what the
+ * hand-drawn art in assets/kin follows. Hang one in an empty sky and the pose is
+ * the entire problem: legs under it, weight on them, nothing beating. A previous
+ * pass fixed the biggest bird in the film by flattening it to a silhouette,
+ * which throws away the DETAIL that disagrees but keeps the SHAPE that does --
+ * and at 3x on the title card the flock still read as five perched creatures
+ * being slid sideways through a sunrise.
+ *
+ * A wing is the missing piece and a wing is cheap: a swept arc whose tip throws
+ * several times as far as its root. Two of them, the far one lagging a fifth of
+ * a stroke and drawn behind the body, and the same sprite reads as flight from
+ * the back of the room. It also MOVES, which no amount of squash on a standing
+ * portrait ever did -- and motion is the difference between a creature doing
+ * something and a sticker travelling across a background.
+ *
+ * Drawn in buffer pixels rather than logical units, because it is bolted to a
+ * sprite that lands on the device grid: a wing rounded to the logical grid opens
+ * a seam along the shoulder on every other frame.
+ */
+function wingStroke(
+  r: Renderer, rootX: number, rootY: number, span: number,
+  beat: number, back: number, col: string, bias = 0.26,
+): void {
+  // Oversampled deliberately. The tip moves furthest per step, and a wing
+  // sampled once per pixel of span comes apart into dashes at the end of a hard
+  // downbeat -- which is the exact frame anyone looking at it will freeze on.
+  const steps = Math.max(6, Math.round(span * 2.2));
+  // Wings live ABOVE the body far more of the time than below it, and that bias
+  // is most of what separates a bird from a fish. The first pass of this had
+  // none, and every bird in the sky grew a horizontal spike out of its back --
+  // which is to say, grew a tail. Pass 0 and the same machinery draws exactly
+  // that on purpose: a caudal fin, symmetrical about the spine. See washKin.
+  const rise = beat * 0.72 + bias;
+  for (let k = 0; k <= steps; k++) {
+    const u = k / steps;
+    // Reach BACK about as far as it reaches up. Steeper than that and the wing
+    // is a shark fin standing on a bird's back -- which is what this looked like
+    // when the vertical throw was half again the horizontal one. A wing is a
+    // crescent, and a crescent is a shape that is wider than it is tall.
+    const px = rootX + back * span * (u * 0.55 + u * u * 0.45);
+    // The tip throws and the root does not, and the curve between them is the
+    // camber. A wing rotating rigidly about the shoulder is a pair of scissors
+    // opening and closing.
+    const py = rootY - rise * u ** 1.5 * span * 0.8;
+    // Squared, so the wing holds its depth through the middle and only gives it
+    // up at the tip. Tapered linearly it comes to a point too early and reads as
+    // a spar with nothing stretched over it.
+    const chord = Math.max(1, Math.round((1 - u * u * 0.86) * span * 0.62));
+    r.pixel(px, py - chord * 0.5, 2, chord, col);
+  }
+}
+
+/**
+ * A kin in the air: far wing, body, near wing, in one flat colour.
+ *
+ * `phase` is the stroke in radians and every caller must hand each bird its own.
+ * A flock beating in unison is a mobile, not a flock.
+ *
+ * Colours come in as rgba rather than as a hex plus an alpha argument, so the
+ * wings and the body it grows out of are laid down at one opacity in one pass.
+ * Fading the sprite with r.image's alpha and the wing with its own would show
+ * the join every time the two overlapped.
+ */
+/**
+ * How much of a kin sprite survives into the air. The bottom sixth is feet, and
+ * a flying creature has them tucked. Anything that needs to know where an
+ * airborne sprite's belly actually is has to measure with this.
+ */
+const TUCK = 0.84;
+
+function airKin(
+  r: Renderer, id: string, size: number, x: number, y: number,
+  phase: number, turn: number, squash: number, flip: boolean,
+  col: string, rim: string | null = null, amp = 1,
+): void {
+  const back = flip ? -1 : 1;
+  // As long as the creature. A wing shorter than the body it is bolted to reads
+  // as a fin, which is what the first pass of this looked like: the silhouette
+  // has to get WIDER when the wing goes out, or nothing has happened. Measured
+  // off the ink, so a hand-drawn sprite sitting in a corner of its cell gets a
+  // wing to match itself rather than to match the empty square around it.
+  const shoulder = onKin(id, size, x, y, 0.56, 0.34, flip);
+  const span = shoulder.w * 1.05;
+  const pass = (ox: number, oy: number, c: string): void => {
+    // Behind the middle of the body and a little above it, which is where a
+    // wing joins a bird -- and `back` puts it behind whichever way this one is
+    // pointed, since every sprite in the game is drawn facing left and the flip
+    // is what turns it round.
+    const rx = shoulder.px + ox * DETAIL;
+    const ry = shoulder.py + oy * DETAIL;
+    // The far wing runs a quarter of a stroke behind and is rooted well back and
+    // high, so it clears the near one instead of hiding under it. Two wings on
+    // one clock along one line is one wing drawn twice, which was the first
+    // version of this and cost a draw for nothing.
+    wingStroke(r, rx + back * size * 0.2, ry - size * 0.16, span * 0.78,
+      Math.sin(phase - 0.8) * amp, back, c);
+    // The legs come off. A kin sprite stands on them, and a bird in the air does
+    // not have them hanging: cropping the bottom sixth of the source is the
+    // whole of tucking your feet up, and it is the single change that stops
+    // these reading as creatures being carried through a sky by a crane.
+    r.image(kin(id, size, c, turn, squash), x + ox, y + oy,
+      0, 0, size, Math.round(size * TUCK), flip);
+    wingStroke(r, rx, ry, span, Math.sin(phase) * amp, back, c);
+  };
+  // The rim goes down first as a whole bird, wings included, offset toward the
+  // light. Rimming the body alone left the wings as holes cut in the sky.
+  if (rim) pass(1, 1, rim);
+  pass(0, 0, col);
+}
+
+/**
+ * A creature drawn backlit: a warm edge with a dark body sitting on top of it.
  *
  * A silhouette has no pose to disagree with. It has an outline, and an outline
  * of a bird against a dawn sky is a bird. The rim is the whole trick: one unit
  * of the sun's colour showing past the dark shape on the side the light is
  * coming from, so it reads as a thing with light behind it rather than as a
  * hole cut in the picture.
+ *
+ * The sun in this film is always low and to the right of frame, so the light
+ * spills round the bottom-right edge. One unit, never two: two is a halo. And
+ * the body is darker than anything it can fly across -- this was one shade off
+ * the near headland's own fill for a pass, and the result was a bird that
+ * dissolved into the coast every time it crossed one, leaving its rim behind as
+ * a squiggle in mid-air.
  */
+const RIM_LIT = 'rgba(255,190,130,0.85)';
+const RIM_DARK = '#080d1c';
+
 function rimKin(
   r: Renderer, id: string, size: number, x: number, y: number,
-  turn: number, squash: number, flip: boolean,
+  phase: number, turn: number, squash: number, flip: boolean, amp = 1,
 ): void {
-  // The sun in this film is always low and to the right of frame, so the light
-  // spills round the bottom-right edge. One unit, never two: two is a halo.
-  r.image(kin(id, size, '#ffbe82', turn, squash), x + 1, y + 1,
-    0, 0, undefined, undefined, flip, false, 0.85);
-  // Darker than anything it can fly across. This was one shade off the near
-  // headland's own fill for a pass, and the result was a bird that dissolved
-  // into the coast every time it crossed one, leaving its rim behind as a
-  // squiggle hanging in mid-air. A silhouette only works while it is the
-  // darkest thing in the frame -- which, being the nearest thing to the lens,
-  // is what it ought to be anyway.
-  r.image(kin(id, size, '#080d1c', turn, squash), x, y,
-    0, 0, undefined, undefined, flip);
+  airKin(r, id, size, x, y, phase, turn, squash, flip, RIM_DARK, RIM_LIT, amp);
 }
 
 /**
@@ -169,10 +343,33 @@ function rimKin(
  */
 function washKin(
   r: Renderer, id: string, size: number, x: number, y: number,
-  turn: number, squash: number, flip: boolean, water: string, depth: number,
+  phase: number, turn: number, squash: number, flip: boolean,
+  water: string, depth: number, lit: string, fin: string,
 ): void {
-  const s = kin(id, size, null, turn, squash);
-  r.image(s, x, y, 0, 0, undefined, undefined, flip);
+  // The tail, sweeping, rooted on the back of the body and drawn behind it.
+  //
+  // The grade fixed the COLOUR of a creature in open water and left the other
+  // half of the problem alone: a kin sprite is a portrait of something standing
+  // still, and forty feet down a portrait of something standing still is a
+  // stuffed animal being towed sideways. A tail is what a fish moves with, and
+  // it is the same stroke as a wing with the bias taken out -- so the two
+  // underwater shots now have something in them that is swimming rather than
+  // drifting, on the same twenty lines that got the sky flying.
+  // Rooted three quarters of the way down the body and halfway through its
+  // depth -- on the ANIMAL, measured, not on the corner of the square it was
+  // drawn in. See ink().
+  const back = flip ? -1 : 1;
+  const root = onKin(id, size, x, y, 0.76, 0.52, flip);
+  wingStroke(r, root.px, root.py, root.w * 0.42, Math.sin(phase), back, fin, 0);
+  // Underwater the light comes from straight up, so the edge that catches it is
+  // the TOP one -- the opposite of every backlit bird in the sky shots, and the
+  // reason this is its own function rather than rimKin with a different colour.
+  // Without it a hard grade turns a creature into a flat patch of water-coloured
+  // nothing; with it, the same patch has a back and a belly.
+  r.image(kin(id, size, lit, turn, squash), x, y - 0.5,
+    0, 0, undefined, undefined, flip);
+  r.image(kin(id, size, null, turn, squash), x, y,
+    0, 0, undefined, undefined, flip);
   r.image(kin(id, size, water, turn, squash), x, y,
     0, 0, undefined, undefined, flip, false, depth);
 }
@@ -400,31 +597,38 @@ function shotSea(r: Renderer, t: number, p: number): void {
     r.rect(x + w * 0.3, y + 1, w * 0.4, 1, 'rgba(18,38,64,0.26)');
   }
 
-  const beat = (i: number, rate: number): number => Math.sin(t * rate + i * 2.1) * 0.7;
+  // The stroke, per bird. A wing is the only clock in the sky that has to be
+  // fast: the body bob it replaces is now a fraction of what it was, because a
+  // bird that pumps its chest AND beats its wings is a bird having a fit.
+  const beat = (i: number, rate: number): number => Math.sin(t * rate + i * 2.1) * 0.24;
 
   // A far skein in loose formation, travelling as one shape. It is what makes
   // the two nearer layers read as individual birds rather than more of these.
   // The whole skein flies right, so the whole skein is flipped -- a vee where
   // the leader faces the way it is going and the wing does not is a mess.
+  //
+  // The stroke runs DOWN the vee rather than across it: each bird is a fifth of
+  // a beat behind the one ahead, so the flap travels back through the formation
+  // the way it does over a real skein. Seven birds on one phase is a machine.
   const skein = wrap(t * 0.24 - 60, SCREEN_W, 46);
   for (let i = 0; i < 7; i++) {
     const lane = i - 3;
-    const s = kin(FLYERS[i % FLYERS.length]!, 10, '#28375c', 0, beat(i, 0.3));
-    r.image(
-      s,
+    airKin(
+      r, FLYERS[i % FLYERS.length]!, 10,
       // The vee trails BEHIND the leader, so with the flock heading right the
       // stragglers sit to its left.
       skein - Math.abs(lane) * 7 + lane * 1.5,
       12 + par(0.5) + Math.abs(lane) * 3.5 + Math.sin(t * 0.035 + i * 0.8) * 1.5,
-      0, 0, undefined, undefined, facing(1), false, 0.8,
+      t * 0.3 - Math.abs(lane) * 0.42, 0, beat(i, 0.3), facing(1),
+      'rgba(40,55,92,0.8)',
     );
   }
 
   for (let i = 0; i < 5; i++) {
-    const s = kin(FLYERS[(i + 2) % FLYERS.length]!, 20, '#3a4d78', 0, beat(i, 0.26));
     const x = wrap(t * 0.5 + SEA_SEEDS[i + 7]! * 320, SCREEN_W, 34);
     const y = 20 + par(0.7) + SEA_SEEDS[i + 12]! * 26 + Math.sin(t * 0.055 + i * 2) * 3;
-    r.image(s, x, y, 0, 0, undefined, undefined, facing(1));
+    airKin(r, FLYERS[(i + 2) % FLYERS.length]!, 20, x, y,
+      t * 0.26 + i * 2.1, 0, beat(i, 0.26), facing(1), '#3a4d78');
   }
 
   // The lead. It banks through the shot instead of holding one pose, and it is
@@ -437,13 +641,19 @@ function shotSea(r: Renderer, t: number, p: number): void {
   // quarter of the screen height in an empty sky reads as a bird perched on
   // nothing. Backlit is both the truth of the shot -- the sun is behind
   // everything up there -- and the one treatment that reads the same whichever
-  // route the sprite came down. See rimKin.
+  // route the sprite came down. See rimKin and wingStroke.
   const bankPhase = Math.sin(t * 0.03);
   const leadX = wrap(t * 0.95, SCREEN_W, 52);
   const leadY = 28 + par(0.9) + bankPhase * 9 + Math.sin(t * 0.09) * 2;
-  // The bank is authored for a bird facing left and then mirrored with it, so
-  // the nose still leads into the climb once the flip is on.
-  rimKin(r, 'kestrelle', 32, leadX, leadY, bankPhase * 0.32, Math.sin(t * 0.2) * 0.8, true);
+  // Beats to climb, then holds the wings out and rides. A big bird does not
+  // row continuously and one that does looks like a wind-up toy: the stroke
+  // dies away at the top and bottom of the bank, which is exactly where a
+  // soaring bird is coasting, and comes back hardest through the middle where
+  // it is working. `amp` is that -- three or four beats, a long glide, repeat.
+  const workRate = Math.abs(Math.cos(t * 0.03));
+  rimKin(r, 'kestrelle', 32, leadX, leadY,
+    t * 0.115, bankPhase * 0.32, Math.sin(t * 0.115) * 0.22, true,
+    0.2 + workRate * 0.9);
 
   // One flyer down on the deck. It does not slide across the water: it drops
   // onto it on a fixed clock, touches, and climbs away leaving a ring that goes
@@ -455,9 +665,14 @@ function shotSea(r: Renderer, t: number, p: number): void {
   // Down over the first two fifths, away over the remaining three: a bird
   // pulling out of a dip climbs slower than it fell.
   const drop = dive < 0.4 ? smooth(dive / 0.4) : 1 - smooth((dive - 0.4) / 0.6);
-  // Where the bird's feet meet the water, and the sprite hung off it: a kin
-  // sprite is drawn from its top-left with its feet on the bottom row, so the
-  // touch is `skimY + size === seaY` and nothing else.
+  // Where the bird's belly meets the water, and the sprite hung off it.
+  //
+  // This used to subtract SKIM -- the sprite's size in BUFFER pixels -- from a
+  // waterline in LOGICAL units, so at the bottom of its arc the bird still hung
+  // eleven units clear of the ring it was supposed to be making. The touch is
+  // the only thing this whole beat exists for, so it is measured properly now:
+  // the drawn height of a tucked sprite is `SKIM * TUCK / DETAIL`, and the bird
+  // reaches the water when its bottom edge does.
   //
   // It works the water just under the horizon, and that is a lighting decision
   // rather than a staging one: down on the open blue a dark bird is a dark bird
@@ -467,7 +682,7 @@ function shotSea(r: Renderer, t: number, p: number): void {
   const SKIM = 22;
   const seaY = hz + 13;
   const skimX = wrap(t * 1.35 - 120, SCREEN_W, 44);
-  const skimY = seaY - SKIM - 13 + drop * 13;
+  const skimY = seaY - (SKIM * TUCK) / DETAIL - 15 * (1 - drop);
   // Ticks since the last touch, and where along the water that touch happened.
   const since = ((dive - 0.4 + 1) % 1) * DIVE;
   const ringX = skimX + SKIM * 0.42 - since * 1.35;
@@ -496,8 +711,18 @@ function shotSea(r: Renderer, t: number, p: number): void {
   const gap = Math.max(0, 1 - drop);
   r.ellipsePixel((skimX + SKIM * 0.42) * DETAIL, seaY * DETAIL,
     (4 + gap * 6) * DETAIL, 1.4 * DETAIL, `rgba(10,24,42,${(0.3 - gap * 0.16).toFixed(2)})`);
-  rimKin(r, 'gullswift', SKIM, skimX, skimY, -0.1 - drop * 0.12,
-    Math.sin(t * 0.26 + 1) * 0.85, true);
+  // Two behaviours, not one loop. Coming down it does not row: the wings are
+  // cocked high and still and it falls on them, which is what makes the drop
+  // read as a decision rather than as a sprite descending. The moment it has
+  // touched, it hauls -- hard and fast, and the stroke fades back to a hold as
+  // it gets its height. A bird that beats at one rate through a dive is a bird
+  // that has not noticed the water.
+  const climbing = dive >= 0.4;
+  const haul = climbing ? Math.min(1, (dive - 0.4) / 0.3) : 0;
+  rimKin(r, 'gullswift', SKIM, skimX, skimY,
+    climbing ? t * 0.34 : Math.PI / 2, -0.1 - drop * 0.12,
+    Math.sin(t * 0.34) * 0.22 * haul, true,
+    climbing ? 1.25 - haul * 0.55 : 0.62);
 
   // The closest thing to the lens: a swell crossing at twice the camera's own
   // rate. Depth in a flat drawing comes from things crossing at different
@@ -559,8 +784,9 @@ function shotPlains(r: Renderer, t: number, p: number): void {
   for (let i = 0; i < 3; i++) {
     const x = wrap(hash(i + 20) * SCREEN_W * 2 - t * 0.16, SCREEN_W, 20);
     const y = 12 + par(0.35) + hash(i + 26) * 16 + Math.sin(t * 0.03 + i) * 2;
-    r.image(kin(FLYERS[(i + 1) % FLYERS.length]!, 8, '#7d9ec4', 0, Math.sin(t * 0.3 + i) * 0.7),
-      x, y, 0, 0, undefined, undefined, facing(-1), false, 0.7);
+    airKin(r, FLYERS[(i + 1) % FLYERS.length]!, 8, x, y,
+      t * 0.24 + i * 2.4, 0, Math.sin(t * 0.24 + i) * 0.2, facing(-1),
+      'rgba(125,158,196,0.7)');
   }
 
   // Two ridgelines and then the treeline. The ridges are landform; the trees
@@ -603,6 +829,53 @@ function shotPlains(r: Renderer, t: number, p: number): void {
       r.rect(x + k, base - lift, 1, lift + 2, '#33553f');
       r.rect(x + bw - k, base - lift, 1, lift + 2, '#2c4a37');
     }
+  }
+
+  // THE COLUMN. The line over this shot says whole species walk to the far
+  // shore, and for three cuts the picture under it was nine animals spread over
+  // an empty field -- which is nine animals, not a species. So there is a mass
+  // of them strung along the foot of the treeline: small enough to be shape
+  // rather than creature, dense enough to read as one body moving, and drawn
+  // dark against the light grass so the eye takes them as a single dark stripe
+  // crossing the field before it takes them as anything else.
+  //
+  // It is the same job the skein does in the sea shot and the school does in the
+  // deep. The individuals in the near lanes cannot read as members of something
+  // until there is a something for them to be members of, and once there is, the
+  // three big ones in the foreground stop being the whole population and start
+  // being the ones the camera happened to catch.
+  for (let i = 0; i < 22; i++) {
+    const file = i % 2;
+    const size = 10 + Math.round(hash(i + 1200) * 3) * 2;
+    const half = size / DETAIL / 2;
+    // Down off the treeline and out into the open grass. Sat at its foot they
+    // were the same value, the same size and the same colour as the bushes and
+    // simply became more shrubbery: a distant animal only reads as an animal
+    // while there is clear ground under it.
+    const feet = gy + 6 + file * 4 + Math.round(hash(i + 1240) * 2);
+    // Bunched rather than sprinkled evenly across the belt. Twenty-two animals
+    // spaced at regular intervals is a fence of animals; the same twenty-two
+    // crowded into two thirds of the belt is a column with a head and a tail.
+    // Barely faster than the ridge behind them and far slower than the near
+    // lanes: distance is speed in a flat drawing and nothing else.
+    const x = wrap(hash(i + 1280) * SCREEN_W * 0.85 + t * (0.26 + file * 0.07),
+      SCREEN_W, 22);
+    const ph = t * 0.3 + hash(i + 1320) * 6.283;
+    const air = Math.max(0, Math.sin(ph));
+    r.ellipsePixel((x + half) * DETAIL, feet * DETAIL,
+      half * DETAIL * 0.95, 1.2 * DETAIL, 'rgba(30,58,32,0.34)');
+    // Dusty brown, not another green. Every plant in this frame is a value of
+    // the field; the column has to be the one dark thing on it that is not.
+    r.image(kin(RUNNERS[i % RUNNERS.length]!, size, '#4e4432', 0, Math.cos(ph) * 0.32),
+      x, feet - half * 2 - air * 1.4, 0, 0, undefined, undefined, facing(1));
+  }
+  // The dust the column is raising, hanging over it and drifting back. A mass of
+  // animals crossing dry ground is visible from a mile off because of this and
+  // not because of the animals.
+  for (let i = 0; i < 12; i++) {
+    const x = wrap(hash(i + 1360) * SCREEN_W * 0.9 + t * 0.19, SCREEN_W, 30);
+    const y = gy + 3 + hash(i + 1400) * 5 + Math.sin(t * 0.03 + i) * 1.2;
+    r.rect(x, y, 16 + hash(i + 1440) * 26, 2, 'rgba(226,232,198,0.13)');
   }
 
   // The ground takes four passes, because one flat slab of green is exactly
@@ -713,24 +986,33 @@ function shotPlains(r: Renderer, t: number, p: number): void {
   // what this layer looked like on the last pass.
   for (let rank = 0; rank < 2; rank++) {
     const tall = rank === 1;
-    const clumps = tall ? 4 : 9;
+    const clumps = tall ? 5 : 9;
     const speed = tall ? 2.3 : 4.6;
     const shade = tall ? '#152a1c' : '#1c3122';
     for (let i = 0; i < clumps; i++) {
       const s = i + rank * 40 + 1000;
       const cx = wrap(hash(s) * SCREEN_W * 1.5 - t * speed, SCREEN_W, 30);
-      const blades = tall ? 7 : 4;
+      // More blades, each thinner. A clump of four fat ones is a set of spears
+      // and a clump of nine narrow ones is grass, and the difference between
+      // those two readings is the difference between a camera standing in a
+      // field and a camera looking at a fence.
+      const blades = tall ? 9 : 5;
       for (let b = 0; b < blades; b++) {
         const q = hash(s * 11 + b);
         const lean = (b - (blades - 1) / 2) / blades;
         const x = cx + lean * (tall ? 15 : 8);
         // Every blade a different length, and the outer ones shorter: a clump
         // of equal blades is a comb.
-        // Tall enough to clear the letterbox. Blades that top out level with
-        // the bottom bar do all this work below the visible frame.
-        const bh = (tall ? 36 + q * 24 : 14 + q * 12) * (1 - Math.abs(lean) * 0.55);
-        const sway = Math.sin(t * 0.11 + i * 1.3 + b * 0.7) * (tall ? 6 : 3) + lean * 10;
-        const base = Math.max(1, Math.round((tall ? 5 : 3) * (1 - Math.abs(lean) * 0.8)));
+        // Tall enough to clear the letterbox by a wide margin. Blades that top
+        // out level with the bottom bar do all their work below the visible
+        // frame -- the bar is 22 units deep, so 36 units of blade was fourteen
+        // units of visible grass, which is why this layer read as a handful of
+        // scratches on the picture. Sixty was the over-correction: it put a
+        // hedge across half the frame. This clears the bar by about a fifth of
+        // the picture, which is a near layer rather than a wall.
+        const bh = (tall ? 38 + q * 20 : 22 + q * 14) * (1 - Math.abs(lean) * 0.55);
+        const sway = Math.sin(t * 0.11 + i * 1.3 + b * 0.7) * (tall ? 6 : 3) + lean * 9;
+        const base = Math.max(1, Math.round((tall ? 4 : 3) * (1 - Math.abs(lean) * 0.8)));
         for (let k = 0; k < bh; k++) {
           const u = k / bh;
           r.rect(x + sway * u * u, SCREEN_H + 8 - k,
@@ -796,7 +1078,14 @@ function shotDeep(r: Renderer, t: number, p: number): void {
   // The Warden. Drawn as one flat silhouette with a single rim light: detail on
   // something this size would only make it look near, and the whole point of
   // the shot is that it is far away and still does not fit in the frame.
-  const wx = SCREEN_W * 1.45 - smooth(p) * SCREEN_W * 2.1;
+  // It used to clear frame left at about seventy percent, and the last second of
+  // the shot was then empty water with kelp in it -- a dead tail on the shot
+  // immediately before the film's only hard cut, which is the worst place in the
+  // picture to run out of things to look at. It now travels far enough to have
+  // passed the lens and no further: at the fade it is still filling the left of
+  // the frame while the camera keeps sinking past it, so the last thing the deep
+  // does is go UP and out rather than sideways and away.
+  const wx = SCREEN_W * 1.45 - smooth(p) * SCREEN_W * 1.55;
   const wy = 96 + par(0.5) + Math.sin(t * 0.011) * 6;
   const flex = Math.sin(t * 0.018);
   const lift = (u: number): number => Math.sin(u * Math.PI * 0.9) * (10 + flex * 7) - u * u * 6;
@@ -882,8 +1171,14 @@ function shotDeep(r: Renderer, t: number, p: number): void {
       // Graded into the water rather than drawn on top of it, and graded harder
       // the deeper in the frame it is: this shot sinks, and the light it is
       // losing has to be lost off the creatures too or they float free of it.
-      washKin(r, id, size, x, y, lean, Math.sin(t * 0.12 + i * 1.7) * 0.5,
-        facing(dir), '#2a5c86', 0.42 + smooth(p) * 0.24);
+      // The grade got harder. At 0.42 an orange kin forty feet down was still
+      // orange enough to be the brightest thing in a blue frame, which is both
+      // a sticker on the picture and a lie -- red is the first colour the water
+      // takes, and it takes it in the first ten feet.
+      washKin(r, id, size, x, y, t * 0.15 + i * 1.7, lean,
+        Math.sin(t * 0.15 + i * 1.7) * 0.28,
+        facing(dir), '#2a5c86', 0.66 + smooth(p) * 0.24,
+        'rgba(154,214,244,0.55)', 'rgba(12,44,72,0.82)');
     }
   }
 
@@ -945,7 +1240,11 @@ function shotTurning(r: Renderer, t: number, p: number): void {
 
   const heave = (Math.sin(t * 0.035) * 5 + Math.sin(t * 0.021 + 1.2) * 3) * rage;
   const roll = Math.sin(t * 0.027) * 4;
-  const hz = 78 + heave + withdraw * 21 - surge * 32;
+  // The reveal used to be twenty-one units on a hundred-and-sixty unit frame,
+  // which is a tide going out by a hand's width. The caption over this shot
+  // promises a sea that reverses; the picture has to give up enough ground for
+  // that to be a thing that happened.
+  const hz = 78 + heave + withdraw * 34 - surge * 44;
 
   let flash = 0;
   let bolt = -1;
@@ -1007,27 +1306,58 @@ function shotTurning(r: Renderer, t: number, p: number): void {
   // withdrawal read as ground uncovering rather than as the camera tilting up.
   const bare = hz - shore;
   if (bare > 1) {
-    r.rect(0, shore - 1, SCREEN_W, bare + 3, '#252c46');
-    for (let i = 0; i < 22; i++) {
-      const y = shore + hash(i + 1600) * bare;
-      r.rect(wrap(hash(i + 1640) * SCREEN_W * 1.3 - t * 0.5, SCREEN_W, 30), y,
-        10 + hash(i + 1680) * 30, 1,
-        i % 3 === 0 ? 'rgba(174,192,226,0.26)' : 'rgba(70,84,118,0.5)');
+    // Nothing about this band may be the colour of the sea, or the whole beat
+    // reads as the camera tilting up rather than as the water leaving. The last
+    // pass filled it with #252c46 against a #16273f sea -- two dark blues one
+    // step apart -- and the ground it was meant to uncover was invisible.
+    //
+    // Wet sand under a storm sky is the BRIGHTEST thing on this side of the
+    // frame, because it is a mirror lying flat under the only light there is,
+    // and it is grey where the water is blue. It also grades: darker at the
+    // waterline where it is still awash, paler up by the old shore where it has
+    // had a minute to drain.
+    for (let i = 0; i < Math.ceil(bare) + 3; i++) {
+      const u = i / Math.max(1, bare);
+      r.rect(0, shore - 1 + i, SCREEN_W, 1, band('#4b4d5e', '#2b3247', Math.min(1, u)));
     }
-    // Things that were under the sea an hour ago and are not now. Five stones
-    // uncovering is the difference between a band of a different colour and
-    // ground: the eye needs an object on it before it will accept it as floor.
-    for (let i = 0; i < 5; i++) {
+    // Runnels: the water finding its way off the flat. They point down the
+    // slope, they are brighter than what they cross, and they are what turns a
+    // grey band into a surface with a fall on it.
+    for (let i = 0; i < 30; i++) {
+      const y = shore + hash(i + 1600) * bare;
+      const w = 10 + hash(i + 1680) * 34;
+      const x = wrap(hash(i + 1640) * SCREEN_W * 1.3 - t * 0.5, SCREEN_W, 40);
+      r.rect(x, y, w, 1, i % 3 === 0 ? 'rgba(226,236,255,0.4)' : 'rgba(58,64,88,0.55)');
+      if (i % 3 === 0) r.rect(x + 2, y + 1, w - 4, 1, 'rgba(30,34,52,0.35)');
+    }
+    // Things that were under the sea an hour ago and are not now. The eye will
+    // not accept a band of colour as floor until there is an object standing on
+    // it, and one that CASTS -- a shadow pulling away from the light on the cape
+    // is what fixes a stone to the ground instead of onto it.
+    for (let i = 0; i < 9; i++) {
       const sy2 = shore + 2 + hash(i + 1720) * Math.max(0, bare - 3);
       if (sy2 > hz - 1) continue;
-      const sw = 5 + hash(i + 1760) * 11;
-      const sh = 2 + hash(i + 1800) * 3;
+      const sw = 6 + hash(i + 1760) * 16;
+      const sh = 3 + hash(i + 1800) * 5;
       const sx2 = hash(i + 1840) * SCREEN_W;
-      r.rect(sx2, sy2 - sh, sw, sh + 1, '#11172a');
-      r.rect(sx2, sy2 - sh, sw, 1, '#39435f');
+      r.rect(sx2 - 3, sy2, sw + 5, 1, 'rgba(18,22,38,0.5)');
+      r.rect(sx2, sy2 - sh, sw, sh + 1, '#141a2c');
+      r.rect(sx2, sy2 - sh, sw, 1, flash > 0.3 ? '#6b779c' : '#4a5474');
     }
-    // The lip the water left behind, brightest the moment it has just gone.
-    r.rect(0, shore - 1, SCREEN_W, 1, 'rgba(206,222,248,0.42)');
+    // Weed the sea left lying, which is the one thing out here that could not
+    // be a rock and could not be a wave.
+    for (let i = 0; i < 6; i++) {
+      const wy2 = shore + 3 + hash(i + 1880) * Math.max(0, bare - 4);
+      if (wy2 > hz - 1) continue;
+      const wx2 = hash(i + 1920) * SCREEN_W;
+      for (let k = 0; k < 5; k++) {
+        r.rect(wx2 + k * 3, wy2 + Math.round(Math.sin(k * 1.4 + i) * 1.6), 4, 1, '#232b2e');
+      }
+    }
+    // The lip the water left behind, brightest the moment it has just gone, and
+    // a second line of foam still draining off it a unit below.
+    r.rect(0, shore - 1, SCREEN_W, 1, 'rgba(216,230,252,0.5)');
+    r.rect(0, hz - 3, SCREEN_W, 1, 'rgba(198,218,246,0.3)');
   }
 
   // A headland with a light on it, so the storm has something to be a threat
@@ -1069,13 +1399,19 @@ function shotTurning(r: Renderer, t: number, p: number): void {
   // drift, and deliberately: the rain leans left, so the gale is going left, so
   // a bird beating into it points RIGHT while losing ground. Facing the way
   // they are sliding would make them look like they had given up.
+  // And they BEAT, harder than anything else in the film: this is the only
+  // sky in it where flying is work. The stroke rate is nearly double the sea
+  // shot's and the throw is over-driven, so the pair look like they are being
+  // held up rather than carried -- and the wings stall for a moment at the top
+  // of each gust, where the wind has taken the air out from under them.
   for (let i = 0; i < 2; i++) {
     const gust = Math.sin(t * 0.09 + i * 2) * 12 + Math.sin(t * 0.031 + i) * 20;
     const x = 56 + i * 96 + gust - t * 0.12;
     const y = 30 + heave * 0.5 + Math.sin(t * 0.07 + i * 1.6) * 7;
-    r.image(kin(i ? 'slatewing' : 'craglide', 24, '#0b1222',
-      Math.sin(t * 0.09 + i * 2) * 0.3, Math.sin(t * 0.3 + i) * 0.9),
-      x, y, 0, 0, undefined, undefined, facing(1));
+    const stall = 0.55 + 0.45 * Math.sin(t * 0.031 + i + 1.6);
+    airKin(r, i ? 'slatewing' : 'craglide', 24, x, y,
+      t * 0.42 + i * 2.6, Math.sin(t * 0.09 + i * 2) * 0.3,
+      Math.sin(t * 0.42 + i) * 0.24, facing(1), '#0b1222', null, 0.5 + stall * 0.75);
   }
 
   // Seven ranks of swell. Each rank is a full-width sine at its own wavelength,
@@ -1403,8 +1739,10 @@ function shotDrowned(r: Renderer, t: number, p: number): void {
     // the film -- the whole town is one colour at nine values -- and a kin at
     // full palette in the middle of it does not read as a creature living down
     // there, it reads as a sticker somebody put on the drowned town.
-    washKin(r, id, size, x, y, 0.12 + Math.sin(t * 0.05 + i) * 0.07,
-      Math.sin(t * 0.13 + i * 1.9) * 0.5, facing(dir), '#2c6b72', 0.6);
+    washKin(r, id, size, x, y, t * 0.16 + i * 1.9,
+      0.12 + Math.sin(t * 0.05 + i) * 0.07,
+      Math.sin(t * 0.16 + i * 1.9) * 0.28, facing(dir), '#2c6b72', 0.76,
+      'rgba(142,222,224,0.5)', 'rgba(8,44,52,0.82)');
   }
 
   // Weed rooted in what used to be somebody's doorway, and silt tearing past
@@ -2011,12 +2349,16 @@ function shotShore(r: Renderer, t: number, p: number): void {
       sx(wX), sy(wY) - size / DETAIL - Math.max(0, gait) * 1.6,
       0, 0, undefined, undefined, facing(1));
   }
+  // Flyers going the same way the herd is walking. They beat slowly -- this is
+  // the calm before, and nothing in this frame is panicking yet; the storm shot
+  // three cuts back is where the sky is work.
   for (let i = 0; i < 3; i++) {
     const gX = -40 + hash(i + 660) * 300 + t * 0.5;
     const gY = 40 + hash(i + 700) * 14 + Math.sin(t * 0.06 + i) * 3;
     const size = Math.max(8, Math.round((12 + i * 3) * z / 4) * 4);
-    r.image(kin(FLYERS[(i + 3) % FLYERS.length]!, size, '#1b2338', 0, Math.sin(t * 0.26 + i) * 0.8),
-      sx(gX), sy(gY), 0, 0, undefined, undefined, facing(1), false, 0.85);
+    airKin(r, FLYERS[(i + 3) % FLYERS.length]!, size, sx(gX), sy(gY),
+      t * 0.2 + i * 2.3, 0, Math.sin(t * 0.2 + i) * 0.2, facing(1),
+      'rgba(27,35,56,0.85)');
   }
 
   // One swimmer caught in a pool, waiting it out. Its tail flicks and the water

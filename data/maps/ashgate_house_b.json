@@ -6,11 +6,11 @@
   "indoor": true,
   "rows": [
     "IIIUIIIUIIII",
-    "IkkkfffJQNfI",
-    "IkfffffKKKfI",
+    "IkkkffJQNfSI",
+    "IkffffKKKffI",
     "I/fffffffPfI",
-    "IrfffAAffffI",
-    "IVfffEEfrrfI",
+    "IrffAAfffffI",
+    "IVffEEffrrfI",
     "IPffffffffkI",
     "IIIIIIDIIIII"
   ],
@@ -23,15 +23,24 @@
       "toY": 16,
       "facing": "down",
       "style": "door"
+    },
+    {
+      "x": 10,
+      "y": 1,
+      "toMap": "ashgate_house_b_up",
+      "toX": 10,
+      "toY": 4,
+      "facing": "down",
+      "style": "stairs"
     }
   ],
   "npcs": [
     {
       "id": "ashgate_house_b_resident",
       "sprite": "villager_f",
-      "x": 4,
+      "x": 3,
       "y": 4,
-      "facing": "down",
+      "facing": "right",
       "movement": {
         "kind": "lookAround"
       },

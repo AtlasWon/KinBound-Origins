@@ -6,7 +6,9 @@
  * The items' counterpart to tools/kinart.js, and it does the same two jobs.
  *
  * 1. Writes assets/items/index.json -- the list of image files that are
- *    actually there. The game reads it instead of probing one URL per icon key
+ *    actually there: <icon-key>.png, and <icon-key>-<state>.png for an icon
+ *    that also ships a frame of itself (see FRAME_STATES in lib/itemseat.js).
+ *    The game reads it instead of probing one URL per icon key and per frame
  *    and collecting a pile of 404s. Both the dev server and the Electron
  *    scheme handler also synthesise this listing on the fly from the folder, so
  *    a file dropped in mid-session is picked up on the next launch without
@@ -31,7 +33,9 @@ import { resolve, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { decodePng } from './lib/kinpng.js';
-import { seat, icon, iconKeys, CELL, SOFT_ICON } from './lib/itemseat.js';
+import {
+  seatGroup, icon, iconKeys, splitFrameName, frameFile, FRAME_STATES, CELL, SOFT_ICON,
+} from './lib/itemseat.js';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DIR = join(ROOT, 'assets', 'items');
@@ -47,13 +51,18 @@ const present = readdirSync(DIR).filter((f) => f.toLowerCase().endsWith('.png'))
 const files = [];
 const problems = [];
 const rows = [];
+const pending = [];
 const hashes = new Map();
 
 for (const name of present) {
-  const key = name.replace(/\.png$/i, '').toLowerCase();
+  const stem = name.replace(/\.png$/i, '').toLowerCase();
+  const { key, state } = splitFrameName(stem);
   if (!known.has(key)) {
-    problems.push(`${name}: "${key}" is not an icon key. The name of the file is the "icon" `
-      + 'field in data/items/items.json, not the item id -- run "npm run item:check" for the list');
+    problems.push(`${name}: "${stem}" is not an icon key, and "${key}" is not one either. The `
+      + 'name of a file is the "icon" field in data/items/items.json -- not the item id, not '
+      + `the item name, and not a family name. A frame is <icon-key>-<state>.png for one of `
+      + `[${Object.keys(FRAME_STATES).join(', ')}]. Run "npm run item:check" for the list, or `
+      + '"npm run item:import" to have the renaming done for you');
     continue;
   }
   if (name !== name.toLowerCase()) {
@@ -74,7 +83,27 @@ for (const name of present) {
   }
 
   const px = { w: img.w, h: img.h, data: img.rgba };
-  const seated = seat(px);
+  // The frames of a key are seated together, so this file cannot be measured
+  // until its whole group has been read. Park it and come back.
+  pending.push({ name, key, state, px, img, colours: null });
+}
+
+/* Seat each key's files as one group, exactly as the loader does. */
+{
+  const byGroup = new Map();
+  for (const p of pending) {
+    const g = byGroup.get(p.key) ?? [];
+    g.push(p);
+    byGroup.set(p.key, g);
+  }
+  for (const g of byGroup.values()) {
+    g.sort((a, b) => Number(a.state !== null) - Number(b.state !== null));
+    const seated = seatGroup(g.map((p) => ({ state: p.state, px: p.px })));
+    g.forEach((p, i) => { p.seated = seated[i]; });
+  }
+}
+
+for (const { name, key, state, px, img, seated } of pending) {
   if (!seated) {
     problems.push(`${name}: has no opaque pixels at all`);
     continue;
@@ -89,9 +118,13 @@ for (const name of present) {
     problems.push(`${name}: the drawing is ${seated.source.w}x${seated.source.h}, too big for the `
       + `${CELL}x${CELL} cell; it will be shrunk and lose crispness`);
   }
-  if (seated.gridScore < SOFT_ICON) {
+  // Only the ICON is ever halved -- a frame is drawn at 32px in a scene and
+  // never appears in a list -- so the 2-pixel grid is not a fact about it.
+  if (!state && seated.gridScore < SOFT_ICON) {
     problems.push(`${name}: only ${(seated.gridScore * 100).toFixed(0)}% of it is on a 2-pixel grid, `
-      + 'so the 16px bag-row icon will look soft');
+      + 'so the 16px bag-row icon is a per-block vote rather than an exact halving. That is '
+      + 'deliberate on anything built by "npm run item:import" -- see the note under that '
+      + 'heading in "npm run item:check"');
   }
 
   let colours = 0;
@@ -104,7 +137,7 @@ for (const name of present) {
   }
 
   rows.push({
-    name, key,
+    name, key, state,
     size: `${img.w}x${img.h}`,
     ink: `${seated.placed.w}x${seated.placed.h}`,
     grid: seated.gridScore,
@@ -126,16 +159,19 @@ writeFileSync(INDEX, JSON.stringify({
   files,
 }, null, 2) + '\n');
 
-console.log(`itemart: ${files.length} image(s) of ${known.size} icon key(s); `
-  + 'index written to assets/items/index.json');
+const frames = rows.filter((r) => r.state);
+console.log(`itemart: ${rows.length - frames.length} icon(s) of ${known.size} icon key(s)`
+  + (frames.length ? ` and ${frames.length} extra frame(s)` : '')
+  + '; index written to assets/items/index.json');
 if (rows.length) {
   console.log('');
-  console.log('  file                        size      drawing   on-grid  icon    colours');
+  console.log('  file                        size      drawing   on-grid  icon    colours  is');
   for (const r of rows.sort((a, b) => a.name.localeCompare(b.name))) {
     console.log('  ' + r.name.padEnd(28) + r.size.padEnd(10) + r.ink.padEnd(10)
       + `${(r.grid * 100).toFixed(0)}%`.padStart(6)
       + (r.exact ? '  exact ' : '  soft  ').padStart(8)
-      + String(r.colours).padStart(9));
+      + String(r.colours).padStart(9)
+      + '  ' + (r.state ? `${r.state} frame of ${r.key}` : 'the icon'));
   }
 }
 if (problems.length) {

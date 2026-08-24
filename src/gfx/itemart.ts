@@ -17,13 +17,42 @@
  *
  * WHERE THE FILES LIVE
  *
- *   assets/items/<icon-key>.png
+ *   assets/items/<icon-key>.png            the icon
+ *   assets/items/<icon-key>-<state>.png    a frame of it, see below
  *
  * 32x32, hard alpha, one file per icon. The icon key is the `icon` field in
  * `data/items/items.json`, NOT the item id -- `field_vessel` is drawn by
  * `vessel_field.png`. The indirection is in the schema already and it is worth
  * keeping: it lets two items share one drawing, which the vessel family and
  * any future re-skin will want.
+ *
+ * FRAMES: THE SAME OBJECT DOING SOMETHING
+ *
+ * A vessel is not only a row in the bag. It is thrown, it splits open, it takes
+ * a creature and shuts. The battle scene has always drawn that itself, and when
+ * the art for a vessel arrives it arrives as a PAIR -- closed and open -- which
+ * is not two items and must not become two icon keys: "open vessel" is nothing
+ * a player can hold, buy or count.
+ *
+ * So an icon key may own extra FRAMES, named by a state suffix. The state list
+ * is closed (`FRAME_STATES` below) rather than open-ended, because a suffix
+ * nobody reads is worse than a missing file: it looks delivered and never
+ * appears. Ask for one with `itemArt(key, state)`, which returns null when that
+ * frame was not drawn -- the caller then keeps whatever it was drawing before,
+ * so a half-delivered family never half-breaks an animation.
+ *
+ * FRAMES ARE SEATED AS A GROUP, and that is the whole reason this is not just
+ * "another icon with a longer name". Seating centres a drawing by its own ink.
+ * Do that to each frame separately and the vessel's base JUMPS the instant the
+ * lid comes off, because the open drawing is taller and its centre is somewhere
+ * else. So all the frames of one key are measured together: the union of their
+ * ink is what gets centred and scaled, and each frame keeps its place inside
+ * it. Which means the rule for whoever is drawing is simply
+ *
+ *   draw every frame on the same canvas with the object in the same place,
+ *
+ * and the loader will not move them relative to each other. With one frame the
+ * union is that frame's own ink and this is exactly the old behaviour.
  *
  * WHY 32 AND NOT 128
  *
@@ -43,6 +72,13 @@
  * the creature spec applies here too. Every generated design below is authored
  * on a 16x16 grid at 2x, so its halving is exact by construction; a hand-drawn
  * file has to earn that, and `npm run item:check` says whether it did.
+ *
+ * The halving is a per-block PLURALITY VOTE, not an average, and that is what
+ * makes the rule advice rather than law. Art that is not on the grid still
+ * reduces to colours that are really in the drawing -- it invents nothing -- so
+ * art recovered from a high-resolution original by `npm run item:import` is
+ * deliberately left at full resolution. Both were rendered and compared; the
+ * block version lost. See the header of tools/item-import.js.
  *
  * WHAT THE LOADER DOES TO AN IMAGE
  *
@@ -93,6 +129,47 @@ const MAX_SOURCE = 1024;
 /** A load that never settles must not hold the boot open forever. */
 const LOAD_TIMEOUT_MS = 8000;
 
+/**
+ * The states an icon key may have a second drawing for.
+ *
+ * Deliberately a list and not "any suffix". Every entry here has to be asked
+ * for by name somewhere in the game, so a file named after a state that is not
+ * on this list is a mistake the checker can name -- rather than a drawing that
+ * silently never appears.
+ *
+ * `open` is the vessel coming apart. It is used by the send-out and the capture
+ * throw in `src/scenes/battle.ts`, which draw a vessel that splits; when a
+ * vessel ships an `open` frame those animations can show the drawing instead of
+ * the shape the scene plots itself.
+ *
+ * tools/lib/itemseat.js carries the same list for the offline tools. If you add
+ * one here, add it there, and say what it is for in docs/ITEM-SPEC.md -- that
+ * document is what the person drawing reads.
+ */
+export const FRAME_STATES = ['open'] as const;
+export type ItemFrameState = (typeof FRAME_STATES)[number];
+
+const FRAME_STATE_SET: ReadonlySet<string> = new Set<string>(FRAME_STATES);
+
+/** Split `vessel_field-open` into its key and its state. A stem with no known
+ *  state suffix is a plain icon key, dashes and all -- so a mistyped state is
+ *  reported as an unknown KEY, which is the message that names the real fault. */
+export function splitFrameName(stem: string): { key: string; state: ItemFrameState | null } {
+  const cut = stem.lastIndexOf('-');
+  if (cut > 0) {
+    const tail = stem.slice(cut + 1);
+    if (FRAME_STATE_SET.has(tail)) {
+      return { key: stem.slice(0, cut), state: tail as ItemFrameState };
+    }
+  }
+  return { key: stem, state: null };
+}
+
+/** The file a key's frame is drawn by. One place, so nothing spells it twice. */
+export function frameFile(key: string, state?: ItemFrameState | null): string {
+  return state ? `${key}-${state}.png` : `${key}.png`;
+}
+
 export type ItemArtLevel = 'error' | 'warn' | 'info';
 
 export interface ItemArtNote {
@@ -105,6 +182,8 @@ export interface ItemArtNote {
 export interface ItemArtEntry {
   /** The `icon` field from items.json, which is the filename stem. */
   key: string;
+  /** null for the icon itself; a state for one of its extra frames. */
+  state: ItemFrameState | null;
   file: string;
   /** Size of the file as delivered. */
   sourceW: number;
@@ -134,9 +213,14 @@ export interface ItemArtReport {
   /** Keys the game asked for that have a generated design and no drawing.
    *  Not a fault -- the to-do list. */
   generated: string[];
+  /** Every extra frame that shipped, so a scene can ask what it may animate. */
+  frames: { key: string; state: ItemFrameState }[];
 }
 
 const art = new Map<string, HTMLCanvasElement>();
+/** Extra frames, keyed `<icon-key>:<state>`. Kept apart from `art` on purpose:
+ *  a frame is never an icon, so nothing that lists icons can pick one up. */
+const frames = new Map<string, HTMLCanvasElement>();
 const entries: ItemArtEntry[] = [];
 const notes: ItemArtNote[] = [];
 const cache = new Map<string, HTMLCanvasElement>();
@@ -206,9 +290,37 @@ export function itemIcon(iconKey: string, category?: ItemCategory): HTMLCanvasEl
   return cv;
 }
 
+/**
+ * The hand-drawn 32x32 art for an icon key, or for one of its frames -- and
+ * NULL when that drawing has not shipped.
+ *
+ * This is the one accessor that tells the truth about what is on disk, and it
+ * is what an animation wants. `itemSprite` can never say no: it falls back to
+ * the generated design, which is right for a bag row and wrong for a scene that
+ * is choosing between drawing the art and plotting its own shape. Ask here,
+ * take both frames or neither, and a vessel whose `open` frame has not been
+ * drawn yet keeps the animation the scene already had rather than opening into
+ * a copy of its closed self.
+ *
+ *   itemArt('vessel_field')            the icon as delivered, or null
+ *   itemArt('vessel_field', 'open')    the open frame, or null
+ *
+ * Both frames of a key are seated together, so they may be drawn one over the
+ * other at the same position with nothing to line up: the object does not move
+ * between them unless the drawing moves it.
+ */
+export function itemArt(iconKey: string, state?: ItemFrameState | null): HTMLCanvasElement | null {
+  return (state ? frames.get(`${iconKey}:${state}`) : art.get(iconKey)) ?? null;
+}
+
 /** True if this key is drawn by hand rather than generated. */
 export function hasItemArt(iconKey: string): boolean {
   return art.has(iconKey);
+}
+
+/** The extra frames this key shipped, in FRAME_STATES order. Empty for most. */
+export function itemFrameStates(iconKey: string): ItemFrameState[] {
+  return FRAME_STATES.filter((s) => frames.has(`${iconKey}:${s}`));
 }
 
 /** True if the generated route has a design of its own for this key, rather
@@ -228,8 +340,10 @@ export function itemDesignKeys(): string[] {
 }
 
 export function itemArtReport(): ItemArtReport {
+  // Icons only. A frame is drawn at 32px by a scene and never appears in a
+  // list, so it is never halved and the 2-pixel grid says nothing about it.
   const soft = entries
-    .filter((e) => e.gridScore < 0.6)
+    .filter((e) => e.state === null && e.gridScore < 0.6)
     .sort((a, b) => a.gridScore - b.gridScore)
     .map((e) => ({ key: e.key, gridScore: Number(e.gridScore.toFixed(3)) }));
   return {
@@ -239,12 +353,16 @@ export function itemArtReport(): ItemArtReport {
     notes: [...notes],
     softIcons: soft,
     generated: wanted.filter((k) => !art.has(k)).sort(),
+    frames: entries
+      .filter((e): e is ItemArtEntry & { state: ItemFrameState } => e.state !== null)
+      .map((e) => ({ key: e.key, state: e.state })),
   };
 }
 
 /** For tests and for re-running a load after the folder changed. */
 export function resetItemArt(): void {
   art.clear();
+  frames.clear();
   cache.clear();
   entries.length = 0;
   notes.length = 0;
@@ -277,8 +395,12 @@ async function readIndex(base: string, keys: string[]): Promise<string[]> {
     return body.files.filter((f): f is string => typeof f === 'string');
   } catch {
     const found: string[] = [];
-    await Promise.all(keys.map(async (key) => {
-      const name = `${key}.png`;
+    const probes: string[] = [];
+    for (const key of keys) {
+      probes.push(frameFile(key));
+      for (const state of FRAME_STATES) probes.push(frameFile(key, state));
+    }
+    await Promise.all(probes.map(async (name) => {
       const ok = await fetch(base + `${ITEM_ART_DIR}/${name}`, { method: 'HEAD' })
         .then((r) => r.ok).catch(() => false);
       if (ok) found.push(name);
@@ -333,43 +455,65 @@ export async function loadItemArt(keys: string[], base = ''): Promise<ItemArtRep
   }
 
   const known = new Set(wanted);
-  const jobs: { key: string; file: string }[] = [];
+  /* One job per file, gathered into one group per icon key -- because the
+   * frames of a key are seated together and a group cannot be measured until
+   * every one of its images has arrived. */
+  const groups = new Map<string, { key: string; state: ItemFrameState | null; file: string }[]>();
   for (const raw of files) {
     const name = raw.replace(/^.*[\\/]/, '');
     const m = /^(.+)\.png$/i.exec(name);
     if (!m) continue;
-    const key = m[1]!.toLowerCase();
+    const stem = m[1]!.toLowerCase();
+    const { key, state } = splitFrameName(stem);
     if (!known.has(key)) {
-      note(key, name, 'warn', `ignored: "${key}" is not an icon key used by any item`);
+      note(stem, name, 'warn', `ignored: "${key}" is not an icon key used by any item`);
       continue;
     }
     if (name !== name.toLowerCase()) {
       // Windows does not care. A case-sensitive web host does, and the file
       // that worked all through the art pass 404s the day it is published.
-      note(key, name, 'warn', 'has capital letters in its name; rename it all-lowercase');
+      note(stem, name, 'warn', 'has capital letters in its name; rename it all-lowercase');
     }
-    jobs.push({ key, file: name });
+    const g = groups.get(key) ?? [];
+    g.push({ key, state, file: name });
+    groups.set(key, g);
   }
 
-  await Promise.all(jobs.map(async ({ key, file }) => {
-    const img = await loadImage(base + `${ITEM_ART_DIR}/${file}`);
-    if (!img) {
-      note(key, file, 'error', 'could not be loaded or decoded; using the generated icon');
-      return;
-    }
-    let seated: { canvas: HTMLCanvasElement; entry: ItemArtEntry } | null = null;
+  await Promise.all([...groups.values()].map(async (jobs) => {
+    const ready: { state: ItemFrameState | null; file: string; img: HTMLImageElement }[] = [];
+    await Promise.all(jobs.map(async (job) => {
+      const img = await loadImage(base + `${ITEM_ART_DIR}/${job.file}`);
+      if (!img) {
+        note(job.key, job.file, 'error', 'could not be loaded or decoded; using the generated icon');
+        return;
+      }
+      ready.push({ state: job.state, file: job.file, img });
+    }));
+    if (!ready.length) return;
+    // Base first, so the grid phase is chosen on the drawing the bag shows.
+    ready.sort((a, b) => Number(a.state !== null) - Number(b.state !== null));
+
+    const key = jobs[0]!.key;
+    let seated: { canvas: HTMLCanvasElement; entry: ItemArtEntry }[] = [];
     try {
-      seated = seat(img, key, file);
+      seated = seatGroup(key, ready);
     } catch (e) {
-      note(key, file, 'error', `failed while being prepared (${(e as Error).message})`);
+      note(key, ready[0]!.file, 'error', `failed while being prepared (${(e as Error).message})`);
       return;
     }
-    if (!seated) return;
-    art.set(key, seated.canvas);
-    entries.push(seated.entry);
+    for (const s of seated) {
+      if (s.entry.state) frames.set(`${key}:${s.entry.state}`, s.canvas);
+      else art.set(key, s.canvas);
+      entries.push(s.entry);
+    }
+    if (seated.length && !seated.some((s) => s.entry.state === null)) {
+      note(key, seated[0]!.entry.file, 'warn',
+        `is the "${seated[0]!.entry.state}" frame of ${key}, but ${frameFile(key)} itself is not `
+        + 'there. The frame is loaded, but the item still shows its generated icon.');
+    }
   }));
 
-  entries.sort((a, b) => a.key.localeCompare(b.key));
+  entries.sort((a, b) => a.key.localeCompare(b.key) || (a.state ?? '').localeCompare(b.state ?? ''));
   // Anything already handed out came from the generated route. Drop it, or an
   // item drawn once before boot finished keeps its crate forever.
   cache.clear();
@@ -381,7 +525,11 @@ function announce(): void {
   const report = itemArtReport();
   if (!report.keys.length && !report.notes.length) return;
   console.info(`[itemart] ${report.keys.length} item icon(s) drawn by hand; `
-    + `${report.generated.length} generated.`);
+    + `${report.generated.length} generated`
+    + (report.frames.length
+      ? `; ${report.frames.length} extra frame(s): `
+        + report.frames.map((f) => `${f.key} ${f.state}`).join(', ')
+      : '') + '.');
   for (const n of report.notes) {
     const line = `[itemart] ${n.file}: ${n.message}`;
     if (n.level === 'error') console.error(line);
@@ -389,14 +537,25 @@ function announce(): void {
     else console.info(line);
   }
   if (report.softIcons.length) {
-    console.warn('[itemart] these will have a soft 16px list icon -- the drawing is not on '
-      + 'a 2-pixel grid: ' + report.softIcons.map((s) => s.key).join(', '));
+    // Not necessarily a fault: art recovered from a high-resolution original by
+    // `npm run item:import` is deliberately off this grid, and its halving is a
+    // vote over colours that are really in the drawing rather than a blur. See
+    // the note under that heading in `npm run item:check`.
+    console.info('[itemart] the 16px list icon is a per-block vote rather than an exact '
+      + 'halving for: ' + report.softIcons.map((s) => s.key).join(', '));
   }
 }
 
 /* ----------------------------------------------------------- the seating */
 
 interface Pixels { w: number; h: number; data: Uint8ClampedArray }
+interface Box { x0: number; y0: number; x1: number; y1: number }
+/** One measurement, shared by every frame of a key: where the union box lands
+ *  in the cell, how far it was reduced, and which grid phase won. */
+interface Fit {
+  box: Box; scale: number; dw: number; dh: number;
+  baseX: number; baseY: number; shift: { x: number; y: number };
+}
 
 function surface(w: number, h: number): HTMLCanvasElement {
   const cv = document.createElement('canvas');
@@ -412,91 +571,140 @@ function scratch(w: number, h: number): CanvasRenderingContext2D {
 }
 
 /**
- * Turn a delivered PNG into a 32x32 icon centred in its cell.
+ * Turn one icon key's delivered PNGs into 32x32 canvases seated in their cell.
  *
  * Centred, not floored -- see the note at the top of the file. An item icon is
  * always drawn inside a box that has no floor, so the only thing that makes a
  * list of them look deliberate is that they all sit in the middle of the same
  * square.
+ *
+ * One key, all its frames, ONE measurement. The union of every frame's ink is
+ * what is centred and scaled, and each frame is then sampled out of that same
+ * union box -- so a frame contributes to where the group sits and keeps its own
+ * position inside it. Seating the frames one at a time would centre each of
+ * them separately, which is exactly the bug: the vessel would jolt sideways and
+ * down on the frame the lid comes off.
  */
-function seat(img: HTMLImageElement, key: string, file: string):
-{ canvas: HTMLCanvasElement; entry: ItemArtEntry } | null {
-  const sw = img.naturalWidth || img.width;
-  const sh = img.naturalHeight || img.height;
-  if (!sw || !sh) {
-    note(key, file, 'error', 'decoded to a zero-sized image; using the generated icon');
-    return null;
+function seatGroup(key: string,
+  imgs: { state: ItemFrameState | null; file: string; img: HTMLImageElement }[],
+): { canvas: HTMLCanvasElement; entry: ItemArtEntry }[] {
+  const prepared: {
+    state: ItemFrameState | null; file: string; src: Pixels; b: Box; soft: number;
+  }[] = [];
+
+  for (const { state, file, img } of imgs) {
+    const sw = img.naturalWidth || img.width;
+    const sh = img.naturalHeight || img.height;
+    if (!sw || !sh) {
+      note(key, file, 'error', 'decoded to a zero-sized image; using the generated icon');
+      continue;
+    }
+    if (sw > MAX_SOURCE || sh > MAX_SOURCE) {
+      note(key, file, 'error',
+        `is ${sw}x${sh}, which is far larger than the ${ITEM_ART_SIZE}x${ITEM_ART_SIZE} the game `
+        + 'expects; using the generated icon');
+      continue;
+    }
+    if (sw !== ITEM_ART_SIZE || sh !== ITEM_ART_SIZE) {
+      note(key, file, 'warn',
+        `is ${sw}x${sh}, not ${ITEM_ART_SIZE}x${ITEM_ART_SIZE}; it has been fitted, which may cost detail`);
+    }
+
+    const cx = scratch(sw, sh);
+    cx.drawImage(img, 0, 0);
+    const src: Pixels = { w: sw, h: sh, data: cx.getImageData(0, 0, sw, sh).data };
+
+    // Hard alpha, first thing. Everything below counts ink, and a fringe of
+    // half-transparent anti-aliasing would widen every bounding box and wreck
+    // every grid measurement.
+    let soft = 0;
+    for (let i = 3; i < src.data.length; i += 4) {
+      const a = src.data[i]!;
+      if (a === 0 || a === 255) continue;
+      soft++;
+      src.data[i] = a >= ALPHA_CUT ? 255 : 0;
+    }
+    if (soft > 0) {
+      note(key, file, 'warn',
+        `has ${soft} part-transparent pixel(s); the edge was flattened to hard alpha. `
+        + 'Export with no anti-aliasing to control exactly where it lands.');
+    }
+
+    const b = inkBounds(src);
+    if (!b) {
+      note(key, file, 'error',
+        'has no opaque pixels -- it is empty, or the file is truncated; using the generated icon');
+      continue;
+    }
+    prepared.push({ state, file, src, b, soft });
   }
-  if (sw > MAX_SOURCE || sh > MAX_SOURCE) {
-    note(key, file, 'error',
-      `is ${sw}x${sh}, which is far larger than the ${ITEM_ART_SIZE}x${ITEM_ART_SIZE} the game `
-      + 'expects; using the generated icon');
-    return null;
-  }
-  if (sw !== ITEM_ART_SIZE || sh !== ITEM_ART_SIZE) {
-    note(key, file, 'warn',
-      `is ${sw}x${sh}, not ${ITEM_ART_SIZE}x${ITEM_ART_SIZE}; it has been fitted, which may cost detail`);
-  }
+  if (!prepared.length) return [];
 
-  const cx = scratch(sw, sh);
-  cx.drawImage(img, 0, 0);
-  const src: Pixels = { w: sw, h: sh, data: cx.getImageData(0, 0, sw, sh).data };
-
-  // Hard alpha, first thing. Everything below counts ink, and a fringe of
-  // half-transparent anti-aliasing would widen every bounding box and wreck
-  // every grid measurement.
-  let soft = 0;
-  for (let i = 3; i < src.data.length; i += 4) {
-    const a = src.data[i]!;
-    if (a === 0 || a === 255) continue;
-    soft++;
-    src.data[i] = a >= ALPHA_CUT ? 255 : 0;
-  }
-  if (soft > 0) {
-    note(key, file, 'warn',
-      `has ${soft} part-transparent pixel(s); the edge was flattened to hard alpha. `
-      + 'Export with no anti-aliasing to control exactly where it lands.');
+  // Frames of different canvas sizes cannot be registered against each other:
+  // "the same place on the canvas" stops meaning anything. Say so and seat each
+  // on its own rather than lining them up against a coordinate they do not share.
+  const canvases = new Set(prepared.map((p) => `${p.src.w}x${p.src.h}`));
+  const grouped = canvases.size === 1;
+  if (!grouped && prepared.length > 1) {
+    note(key, prepared.map((p) => p.file).join(', '), 'warn',
+      `frames are on different canvas sizes (${[...canvases].join(', ')}), so they cannot be `
+      + 'lined up against each other; each was centred on its own and the item will shift '
+      + 'between frames. Draw every frame on one canvas.');
   }
 
-  const b = inkBounds(src);
-  if (!b) {
-    note(key, file, 'error',
-      'has no opaque pixels -- it is empty, or the file is truncated; using the generated icon');
-    return null;
+  // The union: the box every frame is sampled out of.
+  const u: Box | null = grouped
+    ? prepared.reduce<Box>((a, p) => ({
+      x0: Math.min(a.x0, p.b.x0), y0: Math.min(a.y0, p.b.y0),
+      x1: Math.max(a.x1, p.b.x1), y1: Math.max(a.y1, p.b.y1),
+    }), prepared[0]!.b)
+    : null;
+
+  const out: { canvas: HTMLCanvasElement; entry: ItemArtEntry }[] = [];
+  let shared: Fit | null = null;
+
+  for (const p of prepared) {
+    const box: Box = u ?? p.b;
+    let fit: Fit | null = shared;
+    if (!fit) {
+      const iw = box.x1 - box.x0 + 1, ih = box.y1 - box.y0 + 1;
+      const scale = Math.min(1, ITEM_ART_SIZE / iw, ITEM_ART_SIZE / ih);
+      if (scale < 1) {
+        note(key, p.file, 'warn',
+          `draws an item ${iw}x${ih}, which is bigger than the ${ITEM_ART_SIZE}x${ITEM_ART_SIZE} `
+          + `cell; it was reduced to ${Math.round(scale * 100)}% and will lose crispness`);
+      }
+      const dw = Math.max(1, Math.round(iw * scale));
+      const dh = Math.max(1, Math.round(ih * scale));
+      const baseX = Math.round((ITEM_ART_SIZE - dw) / 2);
+      const baseY = Math.round((ITEM_ART_SIZE - dh) / 2);
+      // The phase is chosen once, on the first frame, which is the base drawing
+      // -- the one the bag halves. Letting each frame pick its own would move
+      // them a pixel apart for the sake of a percentage nobody sees.
+      fit = { box, scale, dw, dh, baseX, baseY,
+        shift: bestGridShift(p.src, box, scale, dw, dh, baseX, baseY) };
+      if (u) shared = fit;
+    }
+
+    const surf = scratch(ITEM_ART_SIZE, ITEM_ART_SIZE);
+    const dest = surf.createImageData(ITEM_ART_SIZE, ITEM_ART_SIZE);
+    paint(p.src, fit.box, fit.scale, fit.dw, fit.dh,
+      fit.baseX - fit.shift.x, fit.baseY - fit.shift.y, dest);
+    surf.putImageData(dest, 0, 0);
+
+    const placed = inkBounds({ w: ITEM_ART_SIZE, h: ITEM_ART_SIZE, data: dest.data })
+      ?? { x0: 0, y0: 0, x1: 0, y1: 0 };
+    out.push({
+      canvas: surf.canvas,
+      entry: {
+        key, state: p.state, file: p.file,
+        sourceW: p.src.w, sourceH: p.src.h,
+        ink: placed, scale: fit.scale, gridScore: gridScore(dest),
+        gridShift: fit.shift, softPixels: p.soft,
+      },
+    });
   }
-
-  const iw = b.x1 - b.x0 + 1, ih = b.y1 - b.y0 + 1;
-  const scale = Math.min(1, ITEM_ART_SIZE / iw, ITEM_ART_SIZE / ih);
-  if (scale < 1) {
-    note(key, file, 'warn',
-      `draws an item ${iw}x${ih}, which is bigger than the ${ITEM_ART_SIZE}x${ITEM_ART_SIZE} cell; `
-      + `it was reduced to ${Math.round(scale * 100)}% and will lose crispness`);
-  }
-
-  const dw = Math.max(1, Math.round(iw * scale));
-  const dh = Math.max(1, Math.round(ih * scale));
-  const baseX = Math.round((ITEM_ART_SIZE - dw) / 2);
-  const baseY = Math.round((ITEM_ART_SIZE - dh) / 2);
-
-  const shift = bestGridShift(src, b, scale, dw, dh, baseX, baseY);
-  const out = scratch(ITEM_ART_SIZE, ITEM_ART_SIZE);
-  const dest = out.createImageData(ITEM_ART_SIZE, ITEM_ART_SIZE);
-  paint(src, b, scale, dw, dh, baseX - shift.x, baseY - shift.y, dest);
-  out.putImageData(dest, 0, 0);
-
-  const grid = gridScore(dest);
-  const placed = inkBounds({ w: ITEM_ART_SIZE, h: ITEM_ART_SIZE, data: dest.data })
-    ?? { x0: 0, y0: 0, x1: 0, y1: 0 };
-
-  return {
-    canvas: out.canvas,
-    entry: {
-      key, file,
-      sourceW: sw, sourceH: sh,
-      ink: placed, scale, gridScore: grid,
-      gridShift: shift, softPixels: soft,
-    },
-  };
+  return out;
 }
 
 function inkBounds(p: Pixels): { x0: number; y0: number; x1: number; y1: number } | null {

@@ -28,27 +28,67 @@
  *
  * If the first two come back clean and the third comes back with exactly those
  * complaints, the whole path works.
+ *
+ * IT WILL NOT TOUCH REAL ART. It used to write those three names unconditionally
+ * and `--clean` used to delete them unconditionally, which was fine for exactly
+ * as long as no drawing had ever arrived -- and then it silently overwrote the
+ * imported potion and vessel and deleted them a minute later. Now every file it
+ * writes is recorded by hash: it refuses to overwrite anything it did not write
+ * itself, moves the test to another key in the same family if it can, and
+ * `--clean` removes only the files that are still byte-for-byte its own.
  */
 
-import { writeFileSync, mkdirSync, existsSync, rmSync } from 'node:fs';
+import { writeFileSync, readFileSync, mkdirSync, existsSync, rmSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { resolve, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { encodePng } from './lib/kinpng.js';
+import { iconKeys } from './lib/itemseat.js';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DIR = join(ROOT, 'assets', 'items');
+/** What this tool wrote last time, by hash. Kept out of assets/ so it can never
+ *  be mistaken for art or end up in the installer. */
+const LEDGER = join(ROOT, 'build', 'item-placeholders.json');
 const SIZE = 32;
 
-const NAMES = ['potion.png', 'vessel_field.png', 'key_map.png'];
+const sha = (p) => createHash('sha1').update(readFileSync(p)).digest('hex');
+
+function ledger() {
+  try {
+    return JSON.parse(readFileSync(LEDGER, 'utf8'));
+  } catch {
+    return {};
+  }
+}
+
+/** True if this file on disk is one this tool wrote and nobody has changed. */
+function isOurs(name) {
+  const p = join(DIR, name);
+  if (!existsSync(p)) return false;
+  const was = ledger()[name];
+  return Boolean(was) && was === sha(p);
+}
 
 if (process.argv.includes('--clean')) {
-  let n = 0;
-  for (const f of NAMES) {
-    const p = join(DIR, f);
-    if (existsSync(p)) { rmSync(p); n++; }
+  const book = ledger();
+  let n = 0, kept = 0;
+  for (const name of Object.keys(book)) {
+    const p = join(DIR, name);
+    if (!existsSync(p)) continue;
+    if (sha(p) !== book[name]) {
+      kept++;
+      console.log(`  LEFT  ${name}: it is not the file this tool wrote. Nothing was deleted.`);
+      continue;
+    }
+    rmSync(p);
+    n++;
   }
-  console.log(`item placeholders: removed ${n} file(s). Run "npm run itemart" to rewrite the index.`);
+  if (existsSync(LEDGER)) rmSync(LEDGER);
+  console.log(`item placeholders: removed ${n} file(s)`
+    + (kept ? `, left ${kept} alone` : '')
+    + '. Run "npm run itemart" to rewrite the index.');
   process.exit(0);
 }
 
@@ -183,21 +223,61 @@ function drawBad() {
 /* ------------------------------------------------------------------- write */
 
 if (!existsSync(DIR)) mkdirSync(DIR, { recursive: true });
+mkdirSync(dirname(LEDGER), { recursive: true });
 
-const written = [
-  ['potion.png', drawFlask(0, 0)],
-  ['vessel_field.png', drawDisc(1, 1)],
-  ['key_map.png', drawBad()],
+const KEYS = iconKeys(JSON.parse(readFileSync(join(ROOT, 'data', 'items', 'items.json'), 'utf8')))
+  .map((k) => k.key);
+
+/**
+ * Where to put each test file.
+ *
+ * The preferred key first, because these three shapes were chosen to look like
+ * the items they stand in for. If real art has arrived for one, the test moves
+ * to another key in the same family rather than either destroying the drawing
+ * or losing the coverage -- the point of the file is the pixels in it, not
+ * which item it happens to be filed under.
+ */
+const WANT = [
+  { key: 'potion', draw: () => drawFlask(0, 0) },
+  { key: 'vessel_field', draw: () => drawDisc(1, 1) },
+  { key: 'key_map', draw: () => drawBad() },
 ];
 
-for (const [name, rgba] of written) {
-  writeFileSync(join(DIR, name), encodePng(SIZE, SIZE, rgba));
+const taken = new Set();
+const written = [];
+const skipped = [];
+for (const want of WANT) {
+  const family = want.key.split('_')[0];
+  const candidates = [want.key, ...KEYS.filter((k) => k === family || k.startsWith(family + '_'))];
+  const free = candidates.find((k) =>
+    !taken.has(k) && (!existsSync(join(DIR, `${k}.png`)) || isOurs(`${k}.png`)));
+  if (!free) {
+    skipped.push(want.key);
+    continue;
+  }
+  taken.add(free);
+  written.push({ name: `${free}.png`, instead: free === want.key ? null : want.key, rgba: want.draw() });
 }
 
+const book = {};
+for (const w of written) {
+  const bytes = encodePng(SIZE, SIZE, w.rgba);
+  writeFileSync(join(DIR, w.name), bytes);
+  book[w.name] = createHash('sha1').update(bytes).digest('hex');
+}
+writeFileSync(LEDGER, JSON.stringify(book, null, 2) + '\n');
+
 console.log(`item placeholders: wrote ${written.length} file(s) into assets/items.`);
+for (const w of written) {
+  console.log(`  ${w.name}` + (w.instead ? `   (${w.instead}.png is real art, so this went elsewhere)` : ''));
+}
+for (const s of skipped) {
+  console.log(`  SKIPPED ${s}: every key in that family already has real art. Nothing was overwritten.`);
+}
 console.log('');
 console.log('  npm run itemart      write the index so the game can see them');
-console.log('  npm run item:check   the report -- potion and vessel_field should be clean,');
-console.log('                       key_map should be complained about three ways');
+console.log('  npm run item:check   the report -- the flask and the disc should be clean,');
+console.log('                       the third one should be complained about three ways');
 console.log('');
-console.log('  node tools/item-placeholders.js --clean    when you are done');
+console.log('  node tools/item-placeholders.js --clean    when you are done. It removes only');
+console.log('                       the files it wrote and only if they are unchanged.');

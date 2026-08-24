@@ -24,8 +24,16 @@ export const LINE_TIGHT = 9;
 /**
  * Minimum clear space between two pieces of text on the same row.
  *
- * Five units is one ordinary letter gap. Anything less and the eye joins the
- * two strings into one word, which is what "changes a valueX switches tab" was.
+ * Five units, plus the blank column every glyph carries on its right, is six --
+ * exactly the clearance a typed space produces. That is the number to hold it
+ * against, and it is worth being precise about which gap is meant: a *letter*
+ * gap in this face is one single column, and five of them between two words
+ * would be enormous. Anything less than a word's worth here and the eye joins
+ * the two strings, which is what "changes a valueX switches tab" was.
+ *
+ * Letters sitting too close INSIDE a word is a different fault with a different
+ * home -- it is the glyph advances in `gfx/font.ts`, not this constant. Two
+ * spacing passes were spent here before that was understood.
  */
 export const GAP = 5;
 

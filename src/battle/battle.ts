@@ -364,6 +364,11 @@ export class Battle {
       const dmg = Math.max(1, Math.floor(kin.maxHp / frac));
       kin.damage(dmg);
       this.emit({ t: 'damage', side: id, kin, amount: dmg, hpAfter: kin.currentHp, effectiveness: 1, critical: false });
+      // Grit said so and this did not, which meant a kin could walk on and lose
+      // a quarter of its health with nothing on screen accounting for it. A
+      // switch that costs health silently is indistinguishable, from the
+      // player's side of the glass, from the switch itself doing the damage.
+      this.msg(`${this.label(id)} is hurt by the spikes!`);
     }
   }
 

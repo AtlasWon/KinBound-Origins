@@ -9,8 +9,8 @@
     "IkkkkfffNQJI",
     "IfffffffKKKI",
     "IkffffffffPI",
-    "IkfffAAff/fI",
-    "IfrrfEEffrfI",
+    "IkffAAfff/fI",
+    "IfrrEEfffrfI",
     "IPfffffffVfI",
     "IIIIIIDIIIII"
   ],
@@ -29,9 +29,9 @@
     {
       "id": "kellowmere_house_a_resident",
       "sprite": "villager_m",
-      "x": 4,
+      "x": 3,
       "y": 4,
-      "facing": "down",
+      "facing": "right",
       "movement": {
         "kind": "lookAround"
       },

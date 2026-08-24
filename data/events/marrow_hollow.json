@@ -103,6 +103,7 @@
 
   {
     "id": "mh_perrin_first",
+    "_note2": "THE CODA. After Perrin goes, the script warps the player home and has their mother put the party back together. This is the game's only teaching pass on where healing happens, and it is deliberately not a line of instruction: the first battle is also the first time the player's kin are hurt, so being taken home and fixed at exactly that moment is the lesson. The landing tile is (5,5), directly below the mother's (5,4), and the player faces up -- so the pair are face to face on the frame the fade lifts with nobody having to walk. NOBODY WALKS HERE ON PURPOSE. `move who:\"player\"` cannot be used inside a cutscene at all: the player body is only ticked by updatePlayer, which overworld.update skips for the whole time an event is running, so a scripted player walk never completes and hangs the script. Moving the mother is possible but would name an NPC from another map inside a marrow_hollow script, which tests/content.test.js rejects. Standing them where they need to be is cheaper than either. mom_rest is set here rather than left to her own script, which hands her 'interact' dialogue straight to the repeatable 'Do you want to rest before you go?' branch -- so the very next time the player talks to her, the thing they were just shown is offered again on a button press. The healParty is followed by a wait because healParty does not block; see OverworldEventHost.healParty.",
     "_note": "Fires on the road tiles directly below the laboratory door -- the only stretch of ground a player leaving the lab can reach. Perrin is NOT on the map at this point: mh_perrin_meet ran removeNpc on him and its onceFlag hides him for good, which is why this scene used to be delivered by a disembodied voice with nobody on screen. He is spawned again here at y=17, which is below the bottom of the view at every size the renderer hands out (240x160 up to 432x240), and runs up the road into frame before a word is said. The removeNpc before the spawn is belt and braces: spawnNpc is a no-op if an actor with that id already exists.",
     "trigger": "step",
     "map": "marrow_hollow",
@@ -200,8 +201,8 @@
             "kind": "say",
             "who": "PERRIN",
             "lines": [
-              "Ha! Yes! Sorry. Sorry.",
-              "That was mostly the matchup and we both know it. Get them patched up."
+              "Sorry. Sorry, that was — no. No, I am not sorry at all, actually.",
+              "It was mostly the matchup and we both know it. Go and get them patched up."
             ]
           }
         ]
@@ -230,7 +231,50 @@
       ], "speed": "run" },
       { "kind": "removeNpc", "who": "mh_perrin" },
       { "kind": "say", "lines": ["Perrin is off up the north road before you can answer."] },
-      { "kind": "setVar", "var": "act", "value": 1 }
+      { "kind": "setVar", "var": "act", "value": 1 },
+
+      { "kind": "wait", "frames": 18 },
+      {
+        "kind": "say",
+        "lines": [
+          "That took more out of them than you expected.",
+          "The house is two minutes back down the road."
+        ]
+      },
+      { "kind": "warp", "map": "marrow_house_player", "x": 5, "y": 5, "facing": "up" },
+      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "say",
+        "who": "MOM",
+        "lines": ["Back already? You have not even been gone an hour.", "...Oh. Oh, come here."]
+      },
+      { "kind": "wait", "frames": 10 },
+      {
+        "kind": "say",
+        "who": "MOM",
+        "lines": ["Give them here. Don't argue with me about it."]
+      },
+      { "kind": "healParty" },
+      { "kind": "wait", "frames": 12 },
+      { "kind": "setFlag", "flag": "mom_rest" },
+      {
+        "kind": "say",
+        "who": "MOM",
+        "lines": ["There. Warm, cross, and entirely fine."]
+      },
+      {
+        "kind": "say",
+        "who": "MOM",
+        "lines": [
+          "{name}. This house does not move, and neither do I.",
+          "Whenever they get into that state, you bring them home. I will do that again. Every time."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "MOM",
+        "lines": ["Now go. Perrin will be halfway to Ashgate telling people he won."]
+      }
     ]
   }
 ]

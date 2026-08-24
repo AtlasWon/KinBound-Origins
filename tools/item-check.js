@@ -29,7 +29,8 @@ import { fileURLToPath } from 'node:url';
 
 import { decodePng } from './lib/kinpng.js';
 import {
-  seat, icon, inkBounds, hardenAlpha, iconKeys,
+  seatGroup, icon, inkBounds, hardenAlpha, iconKeys, nameResolver,
+  splitFrameName, frameFile, FRAME_STATES,
   CELL, ALPHA_CUT, SOFT_ICON,
 } from './lib/itemseat.js';
 
@@ -64,11 +65,34 @@ const items = JSON.parse(readFileSync(join(ROOT, 'data', 'items', 'items.json'),
 const KEYS = iconKeys(items);
 const KNOWN = new Map(KEYS.map((k) => [k.key, k]));
 const ORDER = new Map(KEYS.map((k, i) => [k.key, i]));
-const ITEM_ID_TO_KEY = new Map(items.map((i) => [i.id, i.icon]));
+const resolveName = nameResolver(items);
 
 if (LIST_ONLY) {
   for (const k of KEYS) console.log(k.key);
   process.exit(0);
+}
+
+/**
+ * The frame states the GAME knows about, read out of src/gfx/itemart.ts.
+ *
+ * `tools/lib/itemseat.js` carries its own copy of the list because the tools
+ * cannot import a .ts file, and two copies of a list drift. A state the tools
+ * accept and the game ignores is the worst kind of bug for an art pass: the
+ * file imports, the report says it is fine, and it never once appears on
+ * screen. So the two are compared, here, every run.
+ */
+function frameStateDrift() {
+  let src;
+  try {
+    src = readFileSync(join(ROOT, 'src', 'gfx', 'itemart.ts'), 'utf8');
+  } catch {
+    return null;                       // not a source checkout; nothing to compare
+  }
+  const m = /FRAME_STATES\s*=\s*\[([^\]]*)\]/.exec(src);
+  if (!m) return { game: null, tools: Object.keys(FRAME_STATES) };
+  const game = [...m[1].matchAll(/'([^']+)'/g)].map((q) => q[1]).sort();
+  const tools = Object.keys(FRAME_STATES).sort();
+  return game.join(',') === tools.join(',') ? null : { game, tools };
 }
 
 /* ------------------------------------------------------------- utilities */
@@ -88,37 +112,47 @@ function wrap(text, width, indent) {
   return lines.map((l) => indent + l).join('\n');
 }
 
-function levenshtein(a, b) {
-  const prev = Array.from({ length: b.length + 1 }, (_, i) => i);
-  for (let i = 1; i <= a.length; i++) {
-    let last = prev[0];
-    prev[0] = i;
-    for (let j = 1; j <= b.length; j++) {
-      const tmp = prev[j];
-      prev[j] = Math.min(prev[j] + 1, prev[j - 1] + 1, last + (a[i - 1] === b[j - 1] ? 0 : 1));
-      last = tmp;
-    }
-  }
-  return prev[b.length];
-}
-
 /**
- * The icon key a badly named file was probably meant to be.
+ * What to tell someone whose file the game will never read.
  *
- * The commonest mistake by a mile is naming the file after the item id --
- * `field_vessel.png` instead of `vessel_field.png` -- so that is checked first
- * and named explicitly, before falling back to a spelling guess.
+ * This is the finding that matters most, because it is the one the FIRST art
+ * delivery hit and the one the next one will hit too. The names that arrived
+ * were `Potion.png`, `Vessel-closed.png` and `Vessel-open.png`; the game asks
+ * for `potion` and `vessel_field`, and it has no "open vessel" at all. None of
+ * that is guessable from outside, so the answer here is never "unknown key" on
+ * its own -- it is the exact filename to use and the reason, worked out by the
+ * same resolver `npm run item:import` uses, so the two can never disagree.
  */
-function nearestKey(text) {
-  const bare = text.toLowerCase().replace(/[^a-z0-9_]/g, '');
-  if (!bare) return null;
-  if (ITEM_ID_TO_KEY.has(bare)) return { key: ITEM_ID_TO_KEY.get(bare), why: 'item-id' };
-  let best = null, bestD = Infinity;
-  for (const k of KNOWN.keys()) {
-    const d = levenshtein(bare, k);
-    if (d < bestD) { bestD = d; best = k; }
+function explainName(stem) {
+  const r = resolveName(stem);
+  if (!r.ok) {
+    return {
+      why: `"${r.body}" is not an icon key, an item id or a family name`,
+      fix: 'nothing in the game is called that. The list of every key is at the bottom '
+        + 'of this report, and "npm run item:list" prints it bare.',
+    };
   }
-  return best && bestD <= Math.max(2, Math.floor(best.length / 4)) ? { key: best, why: 'typo' } : null;
+  const to = frameFile(r.key, r.state);
+  const lead = {
+    'exact': 'the key is right; only the capitals or the punctuation are wrong',
+    'item-id': `"${r.body}" is an ITEM ID, and a file is named after the "icon" field in `
+      + 'data/items/items.json rather than the id',
+    'family': `"${r.body}" is a FAMILY, not an item: the game has `
+      + `${(r.members ?? []).length} of them (${(r.members ?? []).join(', ')}), and the basic `
+      + 'one is the first',
+    'alias': `"${r.body}" is another word for ${r.key}`,
+    'typo': `the nearest icon key is ${r.key} -- check that is the one you meant`,
+  }[r.why] ?? `the nearest icon key is ${r.key}`;
+  const state = r.state
+    ? ` It is the "${r.state}" FRAME of that icon rather than an icon of its own -- `
+      + `${FRAME_STATES[r.state].what} -- which is why the name has the state on the end.`
+    : '';
+  return {
+    why: `"${stem}" is not one of the ${KEYS.length} icon keys`,
+    fix: `${lead}, so rename it ${to}.${state}`
+      + '  "npm run item:import" does this renaming for you, along with fitting the'
+      + ' art to the cell.',
+  };
 }
 
 /* --------------------------------------------------------- image measures */
@@ -223,25 +257,16 @@ if (existsSync(DIR)) {
       badNames.push({ name, why: 'is not a .png, so the game never looks at it', fix: null });
       continue;
     }
-    const key = lower.replace(/\.png$/, '');
+    const stem = lower.replace(/\.png$/, '');
+    const { key, state } = splitFrameName(stem);
     if (!KNOWN.has(key)) {
-      const guess = nearestKey(key);
-      badNames.push({
-        name,
-        why: `"${key}" is not one of the ${KEYS.length} icon keys`,
-        fix: guess && guess.why === 'item-id'
-          ? `"${key}" is an item id, not an icon key. The file has to be named after the `
-            + `"icon" field, so rename it ${guess.key}.png`
-          : guess
-            ? `did you mean ${guess.key}.png?`
-            : 'check the key against the list at the bottom of this report',
-      });
+      badNames.push({ name, ...explainName(name.replace(/\.png$/i, '')) });
       continue;
     }
 
     const bytes = readFileSync(join(DIR, name));
     const rec = {
-      name, key,
+      name, key, state,
       bytes: bytes.length,
       sha: createHash('sha1').update(bytes).digest('hex'),
       capitals: name !== lower,
@@ -297,19 +322,40 @@ if (existsSync(DIR)) {
       ink.y0 === 0 ? 'top' : null, ink.y1 === px.h - 1 ? 'bottom' : null,
     ].filter(Boolean);
 
-    const seated = seat({ w: px.w, h: px.h, data: Uint8ClampedArray.from(px.data) });
-    rec.scale = seated.scale;
-    rec.grid = seated.gridScore;
-    rec.shift = seated.shift;
-    rec.placed = seated.placed;
-    rec.iconExact = icon(seated).exact;
-    rec.blocky = evenTransitions(seated.data, CELL, CELL);
-
+    // Seating waits until every file has been read: the frames of one key are
+    // measured together, so a key is not ready until its whole group is in.
+    rec.px = { w: px.w, h: px.h, data: Uint8ClampedArray.from(px.data) };
     records.push(rec);
   }
 }
 
-const byKey = new Map(records.map((r) => [r.key, r]));
+/* Seat each key's files as one group, exactly as the loader does. */
+{
+  const groups = new Map();
+  for (const r of records) {
+    const g = groups.get(r.key) ?? [];
+    g.push(r);
+    groups.set(r.key, g);
+  }
+  for (const g of groups.values()) {
+    g.sort((a, b) => Number(a.state !== null) - Number(b.state !== null));
+    const seated = seatGroup(g.map((r) => ({ state: r.state, px: r.px })));
+    g.forEach((r, i) => {
+      const s = seated[i];
+      r.scale = s.scale;
+      r.grid = s.gridScore;
+      r.shift = s.shift;
+      r.placed = s.placed;
+      r.grouped = s.grouped;
+      r.iconExact = icon(s).exact;
+      r.blocky = evenTransitions(s.data, CELL, CELL);
+      delete r.px;
+    });
+  }
+}
+
+const byKey = new Map(records.filter((r) => !r.state).map((r) => [r.key, r]));
+const frameRecords = records.filter((r) => r.state);
 const drawn = [...byKey.keys()].sort((a, b) => ORDER.get(a) - ORDER.get(b));
 const generated = KEYS.map((k) => k.key).filter((k) => !byKey.has(k));
 
@@ -408,8 +454,14 @@ group('unusable', 1,
       fix: r.w < CELL
         ? `the art is fitted, so its pixels end up ${(CELL / r.w).toFixed(1)}x the size of every `
           + 'other pixel on screen -- a chunky icon in a row of fine ones.'
-        : 'the art is nearest-neighbour shrunk to fit, which costs crispness and almost '
-          + 'certainly costs the 2-pixel grid with it. Redraw at ' + CELL + 'x' + CELL + '.',
+        : r.w > CELL * 4
+          ? 'this is an original as it came out of the art tool, not an icon. The loader '
+            + 'nearest-neighbour shrinks it at load time, which turns pixel art to mush. Put '
+            + 'it back in assets/items/ and run "npm run item:import": that fits a palette at '
+            + 'full resolution and takes a per-block vote, which is a completely different '
+            + 'answer, and it preserves your original under assets/items/source/.'
+          : 'the art is nearest-neighbour shrunk to fit, which costs crispness and almost '
+            + 'certainly costs the 2-pixel grid with it. Redraw at ' + CELL + 'x' + CELL + '.',
     });
   }
   group('canvas', 4, 'Wrong canvas size',
@@ -434,7 +486,9 @@ group('oversize', 5, 'Drawing too big for the cell',
 {
   const list = [];
   for (const r of records) {
-    if (r.background) continue;
+    // Only an ICON is ever halved. A frame is drawn at 32px by a scene and
+    // never appears in a list, so the 2-pixel grid says nothing about it.
+    if (r.background || r.state) continue;
     const offBlock = r.blocky < BLOCKY;
     if (r.grid >= 0.98 && !offBlock) continue;
     const bad = r.grid < SOFT_ICON || offBlock;
@@ -448,20 +502,28 @@ group('oversize', 5, 'Drawing too big for the cell',
             + 'detail in it is 1 or 3 pixels wide, whatever the big flat areas score'
           : ''),
       fix: bad
-        ? 'the 16px icon is what the bag and the shop list show, which is where this item is '
-          + `seen most. Draw it at ${CELL / 2}x${CELL / 2} and scale up 2x with nearest-neighbour, `
-          + 'or work with a 2x2 pencil.'
+        ? 'if you are DRAWING this icon: the 16px version is what the bag and the shop list '
+          + `show, which is where the item is seen most. Draw it at ${CELL / 2}x${CELL / 2} and `
+          + 'scale up 2x with nearest-neighbour, or work with a 2x2 pencil. If this file came '
+          + 'out of "npm run item:import", ignore it -- see the note under this list.'
         : 'close. The halving is nearly clean; the blocks that are not flat are usually a '
           + 'stray outline pixel or a one-pixel highlight.',
     });
   }
-  group('grid', 6, 'Off the 2-pixel grid, so the 16px list icon will be soft',
+  group('grid', 6, 'Off the 2-pixel grid, so the 16px list icon may be soft',
     'The bag row and the shop row show the icon halved. Art built from 2x2 blocks halves '
     + 'exactly -- every icon pixel is a colour that was really there. Art that is not gets '
-    + 'the majority colour of each block instead, and at 16px that is the difference between '
-    + 'a potion and a smudge. The loader will shift a drawing by up to one pixel to find the '
-    + 'grid, so the alignment to the canvas does not matter; the block size does. 100% is '
-    + 'the target, and every generated icon already hits it.',
+    + 'the majority colour of each block instead, and at 16px that can be the difference '
+    + 'between a potion and a smudge. The loader will shift a drawing by up to one pixel to '
+    + 'find the grid, so the alignment to the canvas does not matter; the block size does. '
+    + '100% is the target for a HAND-DRAWN icon, and every generated icon hits it. '
+    + 'BUT: art recovered from a high-resolution original by "npm run item:import" scores low '
+    + 'here on purpose. The halving takes the DOMINANT colour of each block, not an average, '
+    + 'so a 16px icon reduced from full-resolution art still contains only colours that are '
+    + 'really in the drawing -- it invents nothing. Both were built and looked at and the '
+    + 'block version lost badly (build/item-compare/). This number measures block alignment, '
+    + 'which is a proxy for softness; on an imported file the softness it stands in for did '
+    + 'not happen. Judge those at 1x on the contact sheet, not by this percentage.',
     list);
 }
 
@@ -579,11 +641,33 @@ group('oversize', 5, 'Drawing too big for the cell',
 
 // 10. Files the game will never look at.
 group('names', 10, 'Files in the folder the game will never read',
-  'The loader reads <icon-key>.png and nothing else. The icon key is the "icon" field in '
-  + 'data/items/items.json -- NOT the item id. They are deliberately different, because the '
-  + 'key is the name of the drawing and several items may want the same one. The full list '
-  + 'is at the bottom of this report.',
+  'This is the one that catches every delivery, so read the fix line rather than the '
+  + 'heading. The loader reads <icon-key>.png, and <icon-key>-<state>.png for the states '
+  + `listed at the bottom (${Object.keys(FRAME_STATES).join(', ')}), and nothing else. The `
+  + 'icon key is the "icon" field in data/items/items.json -- NOT the item id, NOT the item '
+  + 'name, and NOT the name of a family: "vessel" is six different icons. They are '
+  + 'deliberately separate because the key is the name of a DRAWING and several items may '
+  + 'want the same one. Every line below says the exact filename to use, and '
+  + '"npm run item:import" will do the renaming for you.',
   badNames.map((b) => ({ file: b.name, sort: 1, line: b.why, fix: b.fix })));
+
+// 10b. A frame with no icon under it.
+{
+  const list = [];
+  for (const r of frameRecords) {
+    if (byKey.has(r.key)) continue;
+    list.push({
+      file: r.name, sort: 5,
+      line: `is the "${r.state}" frame of ${r.key}, but ${frameFile(r.key)} is not here`,
+      fix: 'the frame loads and a scene can ask for it, but the item itself still shows the '
+        + 'icon generated in code -- so the bag row and the animation are two different '
+        + `drawings. Deliver ${frameFile(r.key)} as well.`,
+    });
+  }
+  group('orphan', 5.5, 'A frame with no icon under it',
+    'A frame is a state of an icon, not an icon. It never appears in the bag, and on its '
+    + 'own it leaves the item drawn by two different hands.', list);
+}
 
 // 11. One drawing doing two jobs.
 {
@@ -612,18 +696,22 @@ if (WANT_JSON) {
   console.log(JSON.stringify({
     folder: 'assets/items',
     keys: KEYS.map((k) => ({ key: k.key, items: k.items.map((i) => i.id) })),
+    frameStates: Object.fromEntries(
+      Object.entries(FRAME_STATES).map(([s, d]) => [s, { what: d.what, used: d.used }])),
+    frameStateDrift: frameStateDrift(),
     expected: KEYS.length,
     present: records.length,
     unreadable: failures.length,
     drawn,
     generated,
+    frames: frameRecords.map((r) => ({ key: r.key, state: r.state, file: r.name })),
     findings: groups.map((g) => ({
       key: g.key, title: g.title,
       items: g.items.sort((a, b) => b.sort - a.sort)
         .map((i) => ({ file: i.file, problem: i.line, fix: i.fix ?? null })),
     })),
     files: records.map((r) => ({
-      file: r.name, icon: r.key, items: r.items.map((i) => i.id),
+      file: r.name, icon: r.key, state: r.state, items: r.items.map((i) => i.id),
       canvas: [r.w, r.h], depth: r.depth, interlaced: r.interlaced,
       inkSource: r.ink, seated: r.placed, scale: r.scale,
       gridScore: Number(r.grid.toFixed(4)), iconExact: r.iconExact,
@@ -644,12 +732,19 @@ line(`  files       ${String(records.length).padStart(3)} readable`
   + (failures.length ? `, ${failures.length} unreadable` : '')
   + `   of ${KEYS.length} icon key(s) the game asks for`);
 line(`  icons       ${String(drawn.length).padStart(3)} hand-drawn, ${generated.length} still generated in code`);
+if (frameRecords.length) {
+  line(`  frames      ${String(frameRecords.length).padStart(3)} extra frame(s), not items: `
+    + frameRecords.map((r) => `${r.key} ${r.state}`).join(', '));
+}
 if (records.length) {
   const clean = records.filter((r) => !groups.some((g) => g.items.some((i) => i.file.includes(r.name))));
   line(`  quality     ${String(clean.length).padStart(3)} file(s) with nothing to report`
     + `, ${records.length - clean.length} with something`);
-  const exact = records.filter((r) => r.iconExact).length;
-  line(`  halving     ${String(exact).padStart(3)} of ${records.length} halve exactly to a clean 16px list icon`);
+  // Icons only: a frame is drawn at 32px by a scene and never halved.
+  const icons = records.filter((r) => !r.state);
+  const exact = icons.filter((r) => r.iconExact).length;
+  line(`  halving     ${String(exact).padStart(3)} of ${icons.length} icon(s) halve exactly to a 16px list`
+    + ' icon; the rest take a per-block vote');
 }
 line();
 
@@ -690,7 +785,8 @@ if (records.length) {
   line('EVERY FILE');
   line('-'.repeat(W));
   line('  file                      canvas   drawing  on-grid   soft  colours  draws');
-  const sorted = [...records].sort((a, b) => ORDER.get(a.key) - ORDER.get(b.key));
+  const sorted = [...records].sort((a, b) =>
+    (ORDER.get(a.key) - ORDER.get(b.key)) || (a.state ?? '').localeCompare(b.state ?? ''));
   for (const r of sorted) {
     const flag = r.grid < SOFT_ICON || r.blocky < BLOCKY ? '!' : r.grid < 0.98 ? '?' : ' ';
     line('  ' + r.name.padEnd(26)
@@ -699,12 +795,22 @@ if (records.length) {
       + (`${Math.floor(r.grid * 100)}%${flag}`).padStart(7)
       + String(r.softness.soft).padStart(7)
       + String(r.colours).padStart(9)
-      + '  ' + r.items.map((i) => i.name).join(', '));
+      + '  ' + (r.state
+        ? `${r.state} frame of ${r.key}`
+        : r.items.map((i) => i.name).join(', ')));
   }
   line();
   line('  drawing = the ink in the file, after centring.  on-grid 100% means the 16px');
-  line('  list icon is an exact halving; "!" means it will be soft.  soft = part-');
-  line('  transparent pixels, which should be 0.');
+  line('  list icon is an exact halving; "!" means the halving is a per-block vote --');
+  line('  read the note under that heading before treating it as a fault.  soft =');
+  line('  part-transparent pixels, which should be 0.');
+  if (records.some((r) => r.grouped)) {
+    line();
+    line('  Keys with more than one frame were seated TOGETHER: the union of every');
+    line('  frame\'s ink is what was centred, so the object does not move between them.');
+    line('  A frame\'s "drawing" size can differ from its icon\'s -- that is the part');
+    line('  that moves.');
+  }
   line();
 }
 
@@ -726,6 +832,31 @@ for (const k of KEYS) {
 line();
 line(`  ${KEYS.length} icon keys for ${items.length} items. The full data is data/items/items.json.`);
 line();
+
+/* The other half of the naming, which is the half nobody knows about. */
+line(`EXTRA FRAMES AN ICON MAY ALSO HAVE   (${Object.keys(FRAME_STATES).length})`);
+line('-'.repeat(W));
+line(wrap('A frame is the same object doing something, not a second item. It is named after '
+  + 'the icon it belongs to with the state on the end, it never appears in the bag, and it is '
+  + 'seated together with its icon so the object does not move between them. Deliver it on '
+  + 'the same canvas, in the same place, as the icon.', W - 2, '  '));
+line();
+for (const [state, def] of Object.entries(FRAME_STATES)) {
+  const have = frameRecords.filter((r) => r.state === state).map((r) => r.key);
+  line(`  <icon-key>-${state}.png`.padEnd(26) + def.what);
+  line(''.padEnd(26) + `used by ${def.used}`);
+  line(''.padEnd(26) + (have.length ? `drawn for: ${have.join(', ')}` : 'not drawn for any icon yet'));
+  line();
+}
+const drift = frameStateDrift();
+if (drift) {
+  line('  WARNING: the frame states in tools/lib/itemseat.js and src/gfx/itemart.ts have');
+  line(`  drifted apart -- tools say [${drift.tools.join(', ')}], the game says `
+    + `[${drift.game ? drift.game.join(', ') : 'could not be read'}].`);
+  line('  A state the tools accept and the game ignores is a file that imports cleanly');
+  line('  and never appears on screen. Make the two lists match.');
+  line();
+}
 line('  To look at the whole set rather than read about it -- generated icons and');
 line('  drawn ones side by side, at 1x and blown up -- run the capture driver:');
 line();

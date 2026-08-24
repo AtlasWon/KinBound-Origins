@@ -245,9 +245,52 @@ type Anim =
   | { kind: 'exp'; kin: Kin; from: number; to: number; frames: number; t: number }
   | { kind: 'levelUp'; kin: Kin; level: number; frames: number; t: number }
   | { kind: 'weather'; weather: WeatherId; frames: number; t: number }
+  // Using something out of the bag. Short on the queue on purpose -- it only
+  // owns the beat where the light arrives; the flourish itself runs on the
+  // scene's clock and is still going while the bar fills. See renderItemFx.
+  | { kind: 'item'; side: SideId; flavour: ItemFlavour; frames: number; t: number }
   | { kind: 'wait'; frames: number; t: number }
   | { kind: 'sfx'; id: string }
   | { kind: 'end' };
+
+/**
+ * What an item LOOKS like when it is used, which is not the same question as
+ * what it does.
+ *
+ * Four families, and the split that matters is the direction. A potion, a cure
+ * and a revive are all something arriving from outside and being given to the
+ * creature, so their light comes DOWN onto it. A stat item is the creature's
+ * own strength coming up, so it rises -- the same argument the level-up
+ * flourish makes about its climbing rings, applied in the other direction.
+ */
+type ItemFlavour = 'heal' | 'cure' | 'revive' | 'boost';
+
+const ITEM_FX: Record<ItemFlavour, {
+  /** Bright core of the rings and motes, as an "r,g,b" triple. */
+  core: string;
+  /** The wash on the pad and the trailing half of each ring. */
+  glow: string;
+  /** True when the light climbs the creature instead of falling onto it. */
+  rise: boolean;
+  /** The cue played on the frame the light reaches the creature. */
+  sfx: string;
+}> = {
+  heal: { core: '244,255,240', glow: '110,224,138', rise: false, sfx: 'item_heal' },
+  cure: { core: '242,251,255', glow: '121,200,236', rise: false, sfx: 'item_cure' },
+  revive: { core: '255,253,240', glow: '255,216,106', rise: false, sfx: 'item_revive' },
+  boost: { core: '255,246,228', glow: '240,145,60', rise: true, sfx: 'stat_up' },
+};
+
+/** Which family an item belongs to, read off what it actually does. */
+function itemFlavour(itemId: string): ItemFlavour {
+  const item = registry.getItem(itemId);
+  for (const eff of item?.effects ?? []) {
+    if (eff.kind === 'revive') return 'revive';
+    if (eff.kind === 'healHp') return 'heal';
+    if (eff.kind === 'battleStat') return 'boost';
+  }
+  return 'cure';
+}
 
 type Phase =
   | 'anim' | 'menu' | 'moves' | 'party' | 'bag' | 'forcedSwitch' | 'finished';
@@ -355,6 +398,16 @@ export class BattleScene implements Scene {
    */
   private levelFx = 0;
   private levelFxLen = 1;
+  /**
+   * The item flourish, on the same terms as the level-up one: counted down by
+   * update() rather than by the queue step that starts it, so the light is
+   * still arriving while the bar fills underneath it and while the line that
+   * names the item types. Nothing waits for it.
+   */
+  private itemFx = 0;
+  private itemFxLen = 1;
+  private itemFxSide: SideId = 'player';
+  private itemFxFlavour: ItemFlavour = 'heal';
   /** The vessel currently on the field, if any. Written by whichever of the
    *  send-out, recall or capture steps is running; read only by the renderer. */
   private capsule: Capsule | null = null;
@@ -605,6 +658,24 @@ export class BattleScene implements Scene {
           this.pushText(line, game, 52);
           break;
         }
+        case 'useItem': {
+          // Nothing at all used to happen here. The engine emitted the event,
+          // the scene fell through `default`, and using a potion was a line of
+          // text followed by a bar quietly filling -- the one action in a
+          // battle with no performance attached to it whatsoever.
+          //
+          // Same lift as useMove and sendOut: the engine puts the event in
+          // front of the line that narrates it, and "You used the Potion." has
+          // to be on screen before the light arrives or the effect happens to
+          // nobody.
+          const next = events[i + 1];
+          if (next && next.t === 'message') { this.pushText(next.text, game, 10); i++; }
+          this.queue.push({
+            kind: 'item', side: e.side, flavour: itemFlavour(e.item),
+            frames: this.frames(26, game), t: 0,
+          });
+          break;
+        }
         case 'weather':
           this.queue.push({ kind: 'weather', weather: e.weather, frames: this.frames(20, game), t: 0 });
           break;
@@ -644,6 +715,7 @@ export class BattleScene implements Scene {
     this.lowHpWarning(game);
 
     this.levelStep();
+    this.itemStep();
 
     for (const side of ['player', 'foe'] as SideId[]) {
       const v = this.view[side];
@@ -735,6 +807,41 @@ export class BattleScene implements Scene {
     const p = 1 - this.levelFx / this.levelFxLen;
     v.bloom = Math.max(0, ramp(p, 0, 0.09) - ramp(p, 0.40, 0.92)) * 0.95;
     if (this.levelFx === 0) v.bloom = 0;
+  }
+
+  /**
+   * The item flourish, one frame on.
+   *
+   * Same contract as levelStep, and for the same reasons: it borrows `bloom`
+   * so the creature glows with its own silhouette rather than being covered by
+   * a shape drawn near it, it never touches colour, and it gives the sprite
+   * back the moment anything with a stronger claim -- a recall, a knockout, a
+   * capture -- takes hold of it.
+   *
+   * The glow is late here, where the level-up's is immediate. A level-up is the
+   * creature doing something; an item is something being brought TO it, so the
+   * light has to visibly travel before the creature answers it. The cue that
+   * matters is timed to that moment rather than to the frame the item was
+   * chosen.
+   */
+  private itemStep(): void {
+    if (this.itemFx <= 0) return;
+    this.itemFx--;
+    const v = this.view[this.itemFxSide];
+    if (!v.visible || v.alpha < 1 || v.ghost > 0 || v.clipY !== null) {
+      this.itemFx = 0;
+      v.bloom = 0;
+      return;
+    }
+    const p = 1 - this.itemFx / this.itemFxLen;
+    // The frame the light reaches the creature: the sound of the effect
+    // landing, which is a different event from the sound of opening the bag.
+    if (this.itemFx === Math.round(this.itemFxLen * 0.62)) {
+      audio.playSfx(ITEM_FX[this.itemFxFlavour].sfx);
+      audio.playSfx('fx_heal', { volume: 0.45 });
+    }
+    v.bloom = Math.max(0, ramp(p, 0.34, 0.48) - ramp(p, 0.62, 0.98)) * 0.9;
+    if (this.itemFx === 0) v.bloom = 0;
   }
 
   /**
@@ -1016,6 +1123,13 @@ export class BattleScene implements Scene {
         if (a.t >= a.frames || skip) this.current = null;
         break;
       }
+      case 'item': {
+        a.t++;
+        // The step is only the delivery beat. itemStep owns the rest and
+        // outlives it, so skipping here never cuts the flourish short.
+        if (a.t >= a.frames || skip) this.current = null;
+        break;
+      }
       case 'wait': {
         a.t++;
         if (a.t >= a.frames || skip) this.current = null;
@@ -1052,6 +1166,11 @@ export class BattleScene implements Scene {
       // of the fight -- and a kin with bloom on it never breathes again.
       this.levelFx = 0;
       this.view.player.bloom = 0;
+      // The item flourish borrows the same channel, on either side, so it has
+      // to be given back here too or a kin recalled mid-potion keeps its halo
+      // -- and a kin with bloom on it never breathes again.
+      this.itemFx = 0;
+      this.view.foe.bloom = 0;
     }
     switch (a.kind) {
       case 'levelUp': {
@@ -1130,8 +1249,32 @@ export class BattleScene implements Scene {
           a.frames = 5 + a.shakes * 2;
         }
         break;
-      case 'heal' as never:
+      case 'item': {
+        this.itemFxSide = a.side;
+        this.itemFxFlavour = a.flavour;
+        // The uncork, then the effect itself a beat later. Two cues rather than
+        // one because using an item is two events -- you do something, and then
+        // something happens to the kin -- and collapsing them onto one frame is
+        // most of why it read as nothing happening at all.
+        audio.playSfx('item');
+        if (game.settings.battleAnimations) {
+          // Deliberately not scaled all the way down by the speed setting, for
+          // the same reason the level-up flourish is not: fast battles are a
+          // request to skip the waiting, not to be denied the moment.
+          this.itemFxLen = Math.max(52, this.frames(76, game));
+          this.itemFx = this.itemFxLen;
+        } else {
+          // With the performance switched off there is no "moment the light
+          // lands" for itemStep to hang the cue on, so it goes here instead.
+          // The sound is information -- it says the item did something -- and
+          // turning animations off is a request to skip spectacle, not to be
+          // told less.
+          a.frames = 1;
+          this.itemFx = 0;
+          audio.playSfx(ITEM_FX[a.flavour].sfx);
+        }
         break;
+      }
       default:
         break;
     }
@@ -1156,12 +1299,48 @@ export class BattleScene implements Scene {
     }
   }
 
+  /**
+   * Put the readouts back on the model, now that nothing is left to draw.
+   *
+   * THE BAR IS ALLOWED TO LAG. That is the whole design: a turn is resolved in
+   * full before a frame of it is drawn, so mid-turn the meter is deliberately
+   * behind the truth and walks toward it. What it is NOT allowed to do is stay
+   * behind once the queue is empty -- and one dropped step used to poison the
+   * rest of the fight, because every drain takes its starting value from
+   * whatever the bar currently reads (`a.from = view.displayHp`). Lose one step
+   * and the error is inherited by the next drain, and the next, so a bar that
+   * slipped once reads low for the rest of the battle. That is what "health
+   * depleted when it shouldn't be" looks like from the sofa.
+   *
+   * Steps do get dropped, legitimately: a damage step whose kin has since been
+   * recalled is skipped rather than dragged onto the wrong meter, and `end`
+   * empties the queue outright. Rather than trying to prove no path can ever
+   * drop one, the readouts are simply reconciled at the only moments the player
+   * is asked to read them. In a healthy fight every line here is a no-op.
+   */
+  private reconcileDisplay(): void {
+    for (const side of ['player', 'foe'] as SideId[]) {
+      const v = this.view[side];
+      const live = this.battle[side].active;
+      // Only for the kin actually stood on the pad. A side whose kin has
+      // fainted and not been replaced is mid-sequence and owns its own numbers.
+      if (!v.kin || v.kin !== live) continue;
+      v.displayHp = live.currentHp;
+    }
+    const shown = this.view.player.kin;
+    if (shown && shown === this.battle.player.active) {
+      this.displayExp = shown.exp;
+      this.displayLevel = shown.level;
+    }
+  }
+
   /** Runs once the queue empties: decide what the player should be doing. */
   private afterAnimations(game: Game): void {
     if (this.battle.over) {
       this.phase = 'finished';
       return;
     }
+    this.reconcileDisplay();
     if (this.battle.awaitingFoeReplacement) {
       this.enqueue(this.battle.sendNextFoe(), game);
       return;
@@ -1342,6 +1521,18 @@ export class BattleScene implements Scene {
   }
 
   /* ------------------------------------------------------- vessel beats */
+
+  /**
+   * A knock to the field, on the effects system's own shake channel.
+   *
+   * Raised rather than assigned, so a jolt never cuts short a bigger one that
+   * is still decaying, and clamped well under what a heavy blow asks for: a
+   * vessel hitting the ground is weight, not violence.
+   */
+  private jolt(amp: number): void {
+    if (!this.fx) return;
+    this.fx.shakeAmp = Math.max(this.fx.shakeAmp, Math.min(2.4, amp));
+  }
 
   /** Everything a side looks like once it is simply stood on its pad. */
   private arrive(side: SideId): void {
@@ -1578,9 +1769,27 @@ export class BattleScene implements Scene {
     v.offsetY = 0;
 
     if (t <= ph.settle) {
-      // Falls to the ground with the kin inside it, accelerating.
+      /*
+       * IT HAS TO WEIGH SOMETHING. The vessel used to slide down a squared
+       * curve and simply stop, which is the motion of an object being placed
+       * rather than one being dropped. It now lands: it accelerates in, bites
+       * the ground with a thud and a puff of dust, and bounces once by a single
+       * pixel before it settles. One pixel is the whole bounce -- two reads as
+       * a ball -- and the ground cue is a sound the library already had and
+       * nothing was playing.
+       */
       const q = t / ph.settle;
-      this.capsule = capsuleAt(open.x, Math.round(open.y + (rest - open.y) * q * q));
+      const hit = 0.72;
+      if (t === Math.max(1, Math.round(ph.settle * hit))) {
+        audio.playSfx('vessel_land');
+        this.jolt(1.4);
+      }
+      const drop = q < hit
+        ? Math.pow(q / hit, 2)
+        : 1 - Math.sin((q - hit) / (1 - hit) * Math.PI) * 0.10;
+      this.capsule = capsuleAt(open.x, Math.round(open.y + (rest - open.y) * drop), {
+        dust: pop(q, hit, 0.30),
+      });
       return;
     }
     t -= ph.settle;
@@ -1588,7 +1797,13 @@ export class BattleScene implements Scene {
     const shaking = a.shakes * ph.wobble;
     if (t <= shaking) {
       const local = (t - 1) % ph.wobble;
-      if (local === 0) audio.playSfx('vessel_shake');
+      // Each rock is the thing inside pushing, so it gets a knock of its own
+      // and the field jolts with it. Silent wobbles were the other half of
+      // "the throw does not feel like anything".
+      if (local === 0) {
+        audio.playSfx('vessel_shake');
+        this.jolt(0.9);
+      }
       const q = local / ph.wobble;
       this.capsule = capsuleAt(
         pad.x + Math.round(Math.sin(q * Math.PI * 2) * 3),
@@ -1600,7 +1815,13 @@ export class BattleScene implements Scene {
 
     const q = Math.min(1, t / ph.finish);
     if (a.caught) {
-      if (t === 1) audio.playSfx('vessel_click');
+      // The lock, then the flourish. `vessel_caught` was written for exactly
+      // this beat and had never once been played.
+      if (t === 1) {
+        audio.playSfx('vessel_click');
+        audio.playSfx('vessel_caught');
+        this.jolt(2.0);
+      }
       this.capsule = capsuleAt(pad.x, rest, {
         burst: pop(q, 0, 0.55), flare: pop(q, 0, 0.16),
       });
@@ -1719,9 +1940,11 @@ export class BattleScene implements Scene {
     // was delivering, and that is the last thing a materialise needs.
     this.renderBeam(r);
     this.renderLevelUp(r, true);
+    this.renderItemFx(r, true);
     this.renderKin(r, 'foe');
     this.renderKin(r, 'player');
     this.renderLevelUp(r, false);
+    this.renderItemFx(r, false);
     this.fx.render(r);
     this.renderVessel(r);
     c.restore();
@@ -1738,6 +1961,16 @@ export class BattleScene implements Scene {
       const lp = 1 - this.levelFx / this.levelFxLen;
       const k = Math.max(0, ramp(lp, 0, 0.04) - ramp(lp, 0.06, 0.22)) * 0.40;
       if (k > 0) r.tint('#fff4c0', k);
+    }
+
+    // The same one-frame pulse for an item, timed to the beat the light
+    // reaches the creature rather than to the frame it was chosen -- that is
+    // the moment the player is meant to feel, and half the reason using a
+    // potion used to register as nothing happening.
+    if (this.itemFx > 0) {
+      const ip = 1 - this.itemFx / this.itemFxLen;
+      const k = Math.max(0, ramp(ip, 0.36, 0.42) - ramp(ip, 0.44, 0.60)) * 0.30;
+      if (k > 0) r.tint(`rgb(${ITEM_FX[this.itemFxFlavour].core})`, k);
     }
 
     this.renderInfo(r, 'foe');
@@ -1839,39 +2072,36 @@ export class BattleScene implements Scene {
 
 
   /**
-   * Idle breathing: a signed whole-pixel change at each of the creature's own
-   * breath seams, in the order kinbreath lists them (lowest seam first).
+   * Idle breathing: how many whole logical pixels this side is lifted off its
+   * pad right now.
    *
-   * +1 is a pixel of barrel GAINED, -1 a pixel lost, 0 the resting pose.
+   * The creature rises and settles as ONE RIGID BLOCK. It used to be squashed
+   * instead -- cut at a seam, with the rows at the seam dropped or repeated --
+   * and four different ways of choosing that seam each ended up landing on some
+   * creature's face. kinbreath.ts has the full history; the short version is
+   * that a whole-sprite move cannot distort a face, because nothing inside the
+   * drawing moves relative to anything else.
    *
-   * WHY IT IS SIGNED, which it was not before. The old cycle only ever squashed:
-   * rest was the creature's full height, it stood there for most of the cycle,
-   * and then it lost two pixels. Whatever the seams were doing, a shape that
-   * only ever gets shorter is a shape being crushed, and "smushed" is what the
-   * player called it. Rest is now the middle of the range and the creature
-   * spends the cycle a pixel either side of it, so the same amount of movement
-   * reads as a chest going in and out instead of as a body settling.
-   *
-   * WHY THE SEAMS LAG EACH OTHER. A creature with two of them would otherwise
-   * shut both at once, which is one big compression in two places rather than a
-   * breath. Half a radian of lag sends it up the body as a wave.
+   * THE SHAPE OF THE CYCLE is what makes a lift read as a breath rather than as
+   * a hover. It is not a smooth ride up and down: the creature sits planted for
+   * well over half the cycle, rises, holds at the top, and comes back. The long
+   * beat at the bottom is the whole trick, and it is the same one the
+   * overworld's people have always used (actor.ts, idleBob).
    *
    * The two sides run a little over half a cycle apart so they never pulse
-   * together, which would read as one shared heartbeat rather than two animals.
-   * Zero has to be the resting pose: a side whose clock is frozen sits at
-   * idleT 0 and must not be caught mid-squash, and sin(0) and sin(1.15*PI) are
-   * both inside the dead band.
+   * together, which would read as one shared heartbeat rather than as two
+   * animals. Zero has to be the resting pose: a side whose clock is frozen sits
+   * at idleT 0 and must not be caught mid-breath, and sin(0) and sin(1.15*PI)
+   * are both below the lowest threshold.
    */
-  private breath(side: SideId, seams: number): number[] {
-    if (seams <= 0) return [];
+  private breath(side: SideId, lift: number): number {
+    if (lift <= 0) return 0;
     const v = this.view[side];
     const base = side === 'foe' ? Math.PI * 1.15 : 0;
-    const out: number[] = [];
-    for (let i = 0; i < seams; i++) {
-      const p = Math.sin(v.idleT / 27 + base - i * 0.55);
-      out.push(p > 0.65 ? 1 : p < -0.65 ? -1 : 0);
-    }
-    return out;
+    // ~2.2 seconds a breath. Slower than a heartbeat, quicker than a sigh.
+    const s = Math.sin(v.idleT / 21 + base);
+    if (lift >= 2) return s > 0.72 ? 2 : s > 0.10 ? 1 : 0;
+    return s > 0.30 ? 1 : 0;
   }
 
   private renderKin(r: Renderer, side: SideId): void {
@@ -1913,76 +2143,45 @@ export class BattleScene implements Scene {
     }
 
     /*
-     * Squashing without scaling.
+     * Breathing without deforming.
      *
-     * Nothing in this game is ever resampled -- a sprite drawn at 63/64 height
-     * would land half its rows off the design grid and read as blur. So the
-     * compressed pose is a split blit instead: everything above a seam is
-     * dropped a whole logical pixel onto the row below it and the source rows
-     * at the seam are simply not drawn. The silhouette loses exactly one
-     * design-grid step of height per seam, the feet stay planted, and every
-     * pixel that survives is still exactly where the grid says.
+     * THE SPRITE IS NEVER CUT ANY MORE. It used to be: the idle dropped a row
+     * out of the drawing at a measured seam, so the creature lost a whole
+     * logical pixel of height without anything being resampled. Four different
+     * ways of choosing that seam each ended up landing on some creature's face
+     * -- the last of them stretched and squeezed chalkid's eye once every two
+     * seconds -- and kinbreath.ts carries the whole postmortem. The conclusion
+     * that matters here is that ANY seam is a feature on some drawing, so the
+     * blit no longer has one.
      *
-     * WHERE THE SEAMS GO has been wrong three times and the history is in
-     * kinbreath.ts, which is the only place that decides it. The short version:
-     * a percentage of the frame put the seam in the head, a percentage of the
-     * ink put it in the legs, and the widest-run "barrel" put it back in the
-     * head -- because on a creature drawn side-on the widest unbroken run of
-     * ink is the horizontal line through its nose, its back and its tail at
-     * once, which is the line through its eyes. kinbreath now picks the row
-     * where the drawing is most nearly the same as the rows above and below it,
-     * which is the definition of a row that can go missing without being seen.
-     * Nothing in here needs to know how it decided; it just takes the rows.
+     * What is left is a whole-sprite lift of a whole logical pixel or two. The
+     * drawing is rigid: every pixel keeps its neighbours, so nothing inside the
+     * creature can be squashed, stretched or eaten, on any species, in any
+     * frame. It is also one `r.image` call again instead of four.
      *
-     * A seam can also RUN THE OTHER WAY. A positive delta repeats one logical
-     * pixel instead of dropping one, which costs nothing -- the repeat is on
-     * the grid and in a stretch of the drawing that was already uniform, by
-     * exactly the test that chose it -- and it is what lets the resting pose
-     * sit in the middle of the range rather than at the top of it.
-     *
-     * Only a whole, plainly-standing sprite is ever squashed: a clipped or
-     * half-materialised one is drawn flat, and nothing is breathing during
-     * either of those anyway.
+     * Only a whole, plainly-standing sprite breathes: a clipped or
+     * half-materialised one is drawn flat, and nothing should be breathing
+     * during either of those anyway.
      */
     const settled = drawH === size && v.clipY === null && v.ghost === 0
       && v.bloom === 0 && v.alpha >= 1;
     const br = kinBreath(kin.species, back);
-    const deltas = settled ? this.breath(side, br.seams.length) : [];
-    // kinbreath lists its seams lowest-first, because that is priority order;
-    // a split blit walks the sprite downward and needs them the other way up.
-    const cuts = br.seams
-      .map((seam, i) => ({ seam, d: deltas[i] ?? 0 }))
-      .sort((a, b) => a.seam - b.seam);
-    const moving = cuts.some((cs) => cs.d !== 0);
+    /*
+     * Headroom. The tallest back sprites -- craglide, lantric, slatewing --
+     * already reach within a couple of units of the foe's status panel while
+     * stood still, so a two-pixel breath slid the tips of their crests under
+     * it. A creature that disappears into the UI once every two seconds is a
+     * worse artefact than a slightly shallower breath, so the lift is measured
+     * against the creature's own ink and cut short rather than allowed to
+     * collide.
+     */
+    const inkTop = y + br.y0 / DETAIL;
+    const ceiling = back ? FOE_BOX.y + FOE_BOX.h : 1;
+    const room = Math.max(0, Math.floor(inkTop - ceiling));
+    const lift = settled ? Math.min(room, this.breath(side, br.lift)) : 0;
 
     const blit = (img: CanvasImageSource, alpha: number, ox = 0, oy = 0) => {
-      if (!moving) {
-        r.image(img, x + ox, y + oy, 0, 0, size, drawH, false, false, alpha);
-        return;
-      }
-      // The feet are the fixed end, so the block below the lowest seam is drawn
-      // where it always is and every block above it carries the running total
-      // of everything the seams beneath it have done.
-      let shift = 0;
-      for (const cs of cuts) shift -= cs.d;
-      let from = 0;
-      for (const cs of cuts) {
-        const end = cs.d < 0 ? cs.seam - DETAIL : cs.seam;
-        const h = end - from;
-        if (h > 0) {
-          r.image(img, x + ox, y + oy + from / DETAIL + shift, 0, from, size, h,
-            false, false, alpha);
-        }
-        if (cs.d > 0) {
-          // The pixel the stretch just opened, filled with the barrel row above
-          // it drawn a second time.
-          r.image(img, x + ox, y + oy + cs.seam / DETAIL + shift, 0, cs.seam - DETAIL,
-            size, DETAIL, false, false, alpha);
-        }
-        shift += cs.d;
-        from = cs.seam;
-      }
-      r.image(img, x + ox, y + oy + from / DETAIL, 0, from, size, size - from, false, false, alpha);
+      r.image(img, x + ox, y + oy - lift, 0, 0, size, drawH, false, false, alpha);
     };
 
     const white = v.ghost > 0 || v.bloom > 0 || v.flash > 0
@@ -2117,6 +2316,119 @@ export class BattleScene implements Scene {
 
     // The plate is interface, not field: it is drawn outside the shake by
     // render(), so a screen-shaking hit never wobbles the words.
+  }
+
+  /* ------------------------------------------------------------- items */
+
+  /**
+   * Using something out of the bag.
+   *
+   * Built to the level-up flourish's pattern -- a pool of light on the pad, a
+   * column of rings, motes with grain -- because the player asked for that
+   * treatment by name, and because it is the shape this screen already uses to
+   * say "something good is happening to this creature".
+   *
+   * THE DIRECTION IS THE WHOLE DESIGN, and it is the opposite one. A level-up
+   * climbs: it is the creature growing, so the rings leave the ground and
+   * narrow as they rise. A potion is not something the creature does, it is
+   * something brought to it, so its light FALLS -- three rings dropping out of
+   * the air onto the animal, widening as they come, settling into a pool at its
+   * feet. Run the level-up's arcs backwards and the reading changes from "this
+   * kin is rising" to "this kin is being given something", which is exactly the
+   * distinction the two moments need. A stat item is the only one that climbs,
+   * because a stat item really is the creature's own strength coming up.
+   *
+   * Four beats: the fall, the moment it reaches the animal (the glow in
+   * itemStep, the cue, and a short screen pulse), the pool spreading under it,
+   * and the motes still winking out while the bar fills underneath. The bar is
+   * deliberately not waited for -- health arriving and health being counted are
+   * the same event and should overlap.
+   */
+  private renderItemFx(r: Renderer, behind: boolean): void {
+    if (this.itemFx <= 0) return;
+    const side = this.itemFxSide;
+    const v = this.view[side];
+    const kin = v.kin;
+    if (!kin || !v.visible) return;
+
+    const style = ITEM_FX[this.itemFxFlavour];
+    const p = 1 - this.itemFx / this.itemFxLen;
+    const back = side === 'player';
+    const pad = back ? PLAYER_PAD : FOE_PAD;
+    const pos = back ? PLAYER_SPRITE : FOE_SPRITE;
+    // The creature's own ink, not its frame: every cell is mostly empty above
+    // whatever is drawn in it, and a column that starts at the top of the frame
+    // starts in the sky.
+    const top = pos.y + kinAnchor(kin.species, back).y0 / DETAIL;
+    const span = Math.max(20, pad.y - top + 8);
+    const wide = back ? 26 : 21;
+
+    if (behind) {
+      // The pool. It arrives as the light does rather than in front of it, so
+      // the ground lights up because something landed on it.
+      const glow = Math.max(0, ramp(p, 0.48, 0.62) - ramp(p, 0.80, 1));
+      if (glow > 0) {
+        r.ellipsePixel(pad.x * DETAIL, pad.y * DETAIL,
+          (wide * 0.55 + glow * wide * 0.5) * DETAIL, (4 + glow * 4) * DETAIL,
+          `rgba(${style.glow},${(0.34 * glow).toFixed(3)})`);
+        r.ellipsePixel(pad.x * DETAIL, pad.y * DETAIL,
+          (7 + glow * 6) * DETAIL, (2 + glow * 2) * DETAIL,
+          `rgba(${style.core},${(0.50 * glow).toFixed(3)})`);
+      }
+      return;
+    }
+
+    /*
+     * The rings. Three of them, staggered, each crossing the creature once.
+     *
+     * Two units wide per dot and two rows deep on the near side, for the reason
+     * the level-up's rings are: a one-pixel dot at 240x160 against a busy field
+     * is dust, not a hoop.
+     */
+    for (let i = 0; i < 3; i++) {
+      const q = ramp(p, 0.04 + i * 0.13, 0.04 + i * 0.13 + 0.44);
+      if (q <= 0 || q >= 1) continue;
+      // Falling: out of the air, down onto the pad, opening as it comes.
+      // Rising: the level-up's shape, because a stat boost is the same claim.
+      const y = style.rise ? pad.y - span * q : (pad.y - span) + span * q;
+      const rad = style.rise ? wide - 12 * q : wide * (0.45 + 0.55 * q);
+      const a = Math.min(1, (style.rise ? 1 - q : Math.min(q * 3, 1 - q * 0.9)) * 2.0);
+      if (a <= 0) continue;
+      const dots = 24;
+      for (let k = 0; k < dots; k++) {
+        const ang = (k / dots) * Math.PI * 2 + q * (style.rise ? 1.4 : -1.4);
+        const px = Math.round(pad.x + Math.cos(ang) * rad);
+        const py = Math.round(y + Math.sin(ang) * rad * 0.30);
+        if (Math.sin(ang) > 0) {
+          r.rect(px - 1, py, 2, 2, `rgba(${style.core},${a.toFixed(3)})`);
+          r.rect(px - 1, py + 2, 2, 1, `rgba(${style.glow},${(a * 0.55).toFixed(3)})`);
+        } else {
+          r.rect(px - 1, py, 2, 1, `rgba(${style.glow},${(a * 0.72).toFixed(3)})`);
+        }
+      }
+    }
+
+    // Motes, on their own spiral, drawn as short streaks rather than points:
+    // a point that moves several pixels a frame is a point, a streak is a
+    // spark. They twinkle, because sixteen dots on fixed paths read as a
+    // diagram rather than as light.
+    const motes = 16;
+    for (let i = 0; i < motes; i++) {
+      const q = ramp(p, 0.02 + (i % 8) * 0.05, 0.02 + (i % 8) * 0.05 + 0.56);
+      if (q <= 0 || q >= 1) continue;
+      const ang = i * 2.39 + q * (style.rise ? 3.4 : -3.0);
+      const spread = style.rise ? 18 - 10 * q : 8 + 12 * q;
+      const px = pad.x + Math.cos(ang) * spread;
+      const py = style.rise
+        ? pad.y + 2 - (span + 10) * q + Math.sin(ang * 2) * 1.5
+        : pad.y + 2 - (span + 10) * (1 - q) + Math.sin(ang * 2) * 1.5;
+      if ((this.ticks + i * 3) % 9 < 6) {
+        const a = Math.min(1, (style.rise ? 1 - q : Math.min(q * 4, 1 - q)) * 1.8);
+        if (a <= 0) continue;
+        r.rect(Math.round(px), Math.round(py), 1, 2, `rgba(${style.core},${a.toFixed(3)})`);
+        r.rect(Math.round(px), Math.round(py) + 2, 1, 1, `rgba(${style.glow},${(a * 0.5).toFixed(3)})`);
+      }
+    }
   }
 
   /**

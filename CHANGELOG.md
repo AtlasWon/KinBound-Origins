@@ -8,6 +8,57 @@ Add a new `## vX.Y.Z` heading above the others before running `npm run ship`.
 
 ---
 
+## v0.11.0
+
+### You can't get stuck any more
+
+Losing to your friend on the road below the lab left you frozen in place,
+permanently. The script that was meant to carry on after that loss and the
+blackout that normally follows one were both driving the field at the same
+time, and the world only has room for one of them -- so whichever started
+second quietly deleted the other, and nothing was left to give you back control.
+
+### Breathing no longer touches the artwork
+
+Four different rules for where to compress a creature have now been tried, and
+every one of them landed on somebody's face -- the eye, the beak, the muzzle.
+There is no row that is safe on all forty-eight drawings, so the technique is
+gone. A kin now bobs on the spot as a whole, exactly as people in the world
+already do. Nothing inside the drawing can move relative to anything else, so
+nothing can be squashed or stretched, on any creature, ever.
+
+### Letters have room
+
+Names were running their letters together -- the double L in Rilltail, the
+double L in Wallshield. This was the font itself rather than the layout, which
+is why two previous passes did not fix it.
+
+### Items do something now
+
+- **Using a potion had no effect at all** -- no animation, no sound, nothing.
+  Now light falls onto the creature and settles at its feet while its health
+  climbs.
+- **The vessel has weight.** It used to glide down and stop, like something
+  being placed. It now accelerates in, bites the ground, jolts the field on
+  every wobble and locks with a snap.
+- Your drawn Potion and Vessel are in the game, and the open vessel is used for
+  the throw.
+
+### The world
+
+- Every route re-tuned so difficulty climbs gently rather than in a step. Route
+  2 no longer out-levels a player who has just finished Route 1.
+- The player walks a little slower.
+- Transitions no longer stutter at the end.
+- More detail and more colour everywhere -- grass, trees, water, paths, houses,
+  fences, furniture.
+- Some buildings have an upstairs.
+- Nothing blocks a doorway any more.
+- The starters sit on their own table in the lab rather than on the equipment.
+- NPCs have something to say worth reading.
+- Beat your friend and you are taken home, where your mother patches your kin
+  up -- so you know where to do that when you need it.
+
 ## v0.10.0
 
 ### Three battle bugs, and two of them were not what they looked like

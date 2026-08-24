@@ -13,10 +13,8 @@
             "lines": ["Back again, {name}. Shall I have a look at them?"],
             "yes": [
               { "kind": "setRespawn" },
-              { "kind": "fade", "to": "black", "frames": 16 },
               { "kind": "healParty" },
-              { "kind": "wait", "frames": 24 },
-              { "kind": "fade", "to": "clear", "frames": 16 },
+              { "kind": "wait", "frames": 10 },
               { "kind": "say", "who": "KEEPER", "lines": ["There. Right as rain, the lot of them."] }
             ],
             "no": [
@@ -41,10 +39,8 @@
             "lines": ["Well then. May I see them?"],
             "yes": [
               { "kind": "setRespawn" },
-              { "kind": "fade", "to": "black", "frames": 16 },
               { "kind": "healParty" },
-              { "kind": "wait", "frames": 24 },
-              { "kind": "fade", "to": "clear", "frames": 16 },
+              { "kind": "wait", "frames": 10 },
               { "kind": "say", "who": "KEEPER", "lines": ["There. All patched up. Try to keep them that way."] },
               {
                 "kind": "say",

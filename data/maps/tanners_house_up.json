@@ -1,0 +1,80 @@
+{
+  "id": "tanners_house_up",
+  "name": "Upstairs",
+  "displayName": "THE BOOT ROOM",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIUIIIIIUIII",
+    "IbffffKKKKfI",
+    "IefffffffPfI",
+    "IffAAffffffI",
+    "IffEEfffffSI",
+    "IPffffffffkI",
+    "IffrrrfffffI",
+    "IIIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 10,
+      "y": 4,
+      "toMap": "tanners_house",
+      "toX": 10,
+      "toY": 4,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 1,
+      "text": [
+        "A bench of lasts, all sizes, worn shiny at the toe.",
+        "At the end of the row: four left boots, in order,",
+        "each one closer to being a boot than the last."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 3,
+      "y": 3,
+      "text": [
+        "The cutting table. Chalk lines on a hide, drawn twice",
+        "because the first set was wrong, and a pattern book",
+        "held open with a hammer."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "A narrow bed under the eaves, made up tight.",
+        "Whoever sleeps here has put the window on the side",
+        "away from the tannery, which tells you everything."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 5,
+      "text": [
+        "A shelf of thread, wax and awls, and a jar of coins",
+        "labelled RIGHT FOOT FUND.",
+        "There is not much in it yet."
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 4,
+      "y": 6,
+      "item": "potion",
+      "quantity": 1,
+      "flag": "item_tr_house_up"
+    }
+  ]
+}

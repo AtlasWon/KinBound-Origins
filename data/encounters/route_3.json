@@ -1,56 +1,57 @@
 {
   "mapId": "route_3",
+  "$comment": "Lowered with the rest of the curve, from 12-17 to 11-15, and the weights pulled towards the two neutral Beast and Terra slots. Mossback is the reason the old table punished an unevolved starter: it is a 412-point second-stage kin standing in first-route grass, so it keeps its place but at the lowest weight. Measured at the level a player really arrives with (16): a solo starter went from 38/30 percent of fights won to 86/81.",
   "methods": {
     "tallGrass": {
       "rate": 175,
       "slots": [
         {
           "species": "tuftail",
-          "minLevel": 13,
-          "maxLevel": 16,
-          "weight": 18
+          "minLevel": 12,
+          "maxLevel": 14,
+          "weight": 23
         },
         {
           "species": "gravelet",
-          "minLevel": 13,
-          "maxLevel": 16,
+          "minLevel": 11,
+          "maxLevel": 13,
           "weight": 16
         },
         {
           "species": "chalkid",
-          "minLevel": 13,
-          "maxLevel": 16,
-          "weight": 15
+          "minLevel": 12,
+          "maxLevel": 14,
+          "weight": 13
         },
         {
           "species": "pipwing",
-          "minLevel": 12,
-          "maxLevel": 15,
+          "minLevel": 11,
+          "maxLevel": 13,
           "weight": 12
         },
         {
           "species": "spinnet",
-          "minLevel": 13,
-          "maxLevel": 16,
-          "weight": 12
-        },
-        {
-          "species": "slatewing",
-          "minLevel": 14,
-          "maxLevel": 17,
+          "minLevel": 12,
+          "maxLevel": 14,
           "weight": 10
         },
         {
+          "species": "slatewing",
+          "minLevel": 12,
+          "maxLevel": 14,
+          "weight": 9
+        },
+        {
           "species": "mossback",
-          "minLevel": 15,
-          "maxLevel": 17,
-          "weight": 7
+          "minLevel": 13,
+          "maxLevel": 15,
+          "weight": 5
         },
         {
           "species": "frostnip",
-          "minLevel": 14,
-          "maxLevel": 17,
-          "weight": 6,
+          "minLevel": 12,
+          "maxLevel": 14,
+          "weight": 7,
           "time": [
             "morning",
             "evening",
@@ -59,9 +60,9 @@
         },
         {
           "species": "emberbore",
-          "minLevel": 15,
-          "maxLevel": 17,
-          "weight": 4
+          "minLevel": 13,
+          "maxLevel": 15,
+          "weight": 5
         }
       ]
     },
@@ -70,20 +71,20 @@
       "slots": [
         {
           "species": "rillfry",
-          "minLevel": 12,
-          "maxLevel": 16,
+          "minLevel": 10,
+          "maxLevel": 13,
           "weight": 55
         },
         {
           "species": "rilltail",
-          "minLevel": 13,
-          "maxLevel": 17,
+          "minLevel": 11,
+          "maxLevel": 14,
           "weight": 35
         },
         {
           "species": "currentail",
-          "minLevel": 16,
-          "maxLevel": 18,
+          "minLevel": 13,
+          "maxLevel": 15,
           "weight": 10
         }
       ]
@@ -92,8 +93,8 @@
       "slots": [
         {
           "species": "rillfry",
-          "minLevel": 10,
-          "maxLevel": 16,
+          "minLevel": 9,
+          "maxLevel": 13,
           "weight": 100
         }
       ]

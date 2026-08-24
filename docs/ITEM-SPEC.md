@@ -13,6 +13,41 @@ npm run item:check
 
 ---
 
+## If the art did not come out of a pixel editor, start here
+
+Everything below describes the file the **game** wants: 32 × 32, hard edges,
+drawn in 2 × 2 blocks. If you are hand-placing pixels, make that file and skip
+this section.
+
+If the art came out of an image generator or a painting tool, it will arrive
+large — 1254 × 1254, say — with tens of thousands of colours and a soft fringe
+round every edge. **Do not shrink it yourself.** Drop it in `assets/items/` at
+whatever size it came out at, under whatever name it came out with, and run:
+
+```bash
+npm run item:import
+```
+
+which does three things you cannot easily do by hand:
+
+1. **Preserves your originals** in `assets/items/source/`, which is never
+   written to again and is excluded from the installer. Everything downstream
+   is repeatable from there, so a setting can be changed and the whole import
+   re-run against untouched input.
+2. **Recovers the drawing.** It fits a colour palette at full resolution — the
+   encoder's noise is scattered symmetrically around each true colour, so an
+   average finds the original — and then reduces by a per-block **plurality
+   vote** rather than an average, so flat areas stay flat and edges stay hard
+   instead of blending. Nearest-neighbour shrinking a lossy 1254 px file, which
+   is what happens if you just drop it in the folder, gives a completely
+   different and much worse answer.
+3. **Renames it.** See the next section — this is the part that catches
+   everybody, and the importer prints what it decided and why.
+
+`npm run item:import -- --dry` says what it would do without writing anything.
+
+---
+
 ## The essentials
 
 | | |
@@ -23,6 +58,7 @@ npm run item:check
 | **Edges** | Hard. No anti-aliasing, no soft or partly-transparent pixels. |
 | **Views** | One per item. Items do not turn round. |
 | **Names** | `<icon-key>.png`, e.g. `vessel_field.png` — **not** the item id, see below. |
+| **Frames** | `<icon-key>-<state>.png`, e.g. `vessel_field-open.png`, for an object that also has to be drawn doing something. Same canvas, same place. |
 
 Drop the files in `assets/items/`. Nothing has to be delivered in batches and
 nothing has to be delivered at once: an item with no file keeps the icon the
@@ -47,8 +83,68 @@ They are deliberately separate so that two items can share one drawing — point
 both at the same `icon` and there is one file to make. The full list of keys is
 at the bottom of this document, and `npm run item:list` prints it.
 
-If you name a file after the item id by mistake, `npm run item:check` says so and
-tells you the name it should have had. It will not guess silently.
+**A family name is not a key either.** `Vessel.png` cannot be imported as it
+stands, because the game has six vessels and `vessel` is not one of them. The
+importer resolves a bare family name to the **basic** member — `vessel` becomes
+`vessel_field` — and says so; if you meant a different one, name the file
+`vessel_deep.png`.
+
+Both `npm run item:import` and `npm run item:check` resolve names the same way,
+in this order, and both print the reason rather than guessing silently:
+
+| what you sent | what it becomes | why |
+|---|---|---|
+| `Potion.png` | `potion.png` | it is the key, with the capital taken off |
+| `field_vessel.png` | `vessel_field.png` | that is an item **id**, not an icon key |
+| `Vessel.png` | `vessel_field.png` | a **family**; the basic one is the first of six |
+| `Ball.png` | `vessel_field.png` | a known other word for it |
+| `pottion.png` | `potion.png` | nearest key — flagged as a guess, check it |
+| `Vessel-closed.png` | `vessel_field.png` | "closed" means *the icon itself*, not a state |
+| `Vessel-open.png` | `vessel_field-open.png` | "open" is a **frame** — see below |
+
+---
+
+## Frames: the same object doing something
+
+Some of these are not only a row in the bag. A vessel is thrown, splits open,
+takes a creature and shuts. When a vessel is drawn it wants to arrive as a
+**pair** — shut and open — and the open one is not a second item: no player can
+hold, buy or count an open vessel, and it must never appear in the bag.
+
+So an icon key may own extra **frames**, named with a state on the end:
+
+```
+assets/items/vessel_field.png          the icon
+assets/items/vessel_field-open.png     its open frame
+```
+
+The states are a fixed list, not anything you like — a suffix nobody reads is
+worse than a missing file, because it looks delivered and never appears. Today
+there is one:
+
+| file | what it is | who uses it |
+|---|---|---|
+| `<icon-key>-open.png` | the vessel split open, lid clear of the body | the send-out and capture throws in battle |
+
+`npm run item:check` prints that table with the frames you have actually
+delivered against it, so it is never out of date.
+
+**Draw every frame on the same canvas, with the object in the same place.**
+This is the one rule frames add, and it is the whole reason they are not just
+"another icon with a longer name". A single icon is *centred* in its cell by its
+own outline. Do that to each frame separately and the vessel's base jumps
+sideways and down at the instant the lid comes off, because the open drawing is
+taller and its centre is somewhere else. So the frames of one key are measured
+**together**: the union of all their outlines is what gets centred, and each
+frame keeps its place inside it. Draw them registered and they stay registered.
+
+If you are sending originals through `npm run item:import`, it does this for
+you: it lines the frames up by their **bottom edge** — a lid opens upward and
+the body of the vessel does not go anywhere — and gives every frame of a key one
+palette, so the vessel does not change colour when it opens.
+
+The other six vessels want the same treatment: `Vessel-fine-closed.png` and
+`Vessel-fine-open.png`, and so on down the family.
 
 ---
 
@@ -114,8 +210,19 @@ nudges the whole drawing by up to a pixel to find the grid. You just have to wor
 in blocks.
 
 `npm run item:check` prints an on-grid percentage per file. **100% is the
-target**, and every icon the game generates already hits it, so anything less is
-a step down from what is on screen today.
+target** for a hand-drawn icon, and every icon the game generates already hits
+it, so anything less is a step down from what is on screen today.
+
+**This rule does not apply to art that came through `npm run item:import`,** and
+those files will score 3–20% here. That is deliberate and was decided by
+building it both ways and looking at the result (`item:import -- --compare`
+rebuilds the evidence in `build/item-compare/`). The halving takes the
+**dominant** colour of each block, not an average, so a 16 px icon reduced from
+full-resolution art still contains only colours that were really in the drawing
+— it invents nothing. Forced into 2 × 2 blocks the recovered vessel loses its
+silver frame and reads as a dark lump, and the potion stops being round; at full
+resolution both keep their outline and their 16 px icons are *better*, not
+worse. Judge those on the contact sheet at 1×, not by the percentage.
 
 One-pixel detail — a single-pixel highlight, a hairline, a one-pixel outline —
 does not survive to 16 px in any form. If a detail matters at list size, it has
@@ -188,6 +295,9 @@ pressure. The generated icons already do this and it is worth keeping:
 
 ```bash
 npm run item:list          just the icon keys, one per line
+npm run item:import        fit, recover and rename delivered originals
+npm run item:import -- --dry       say what it would do, write nothing
+npm run item:import -- --compare   also write build/item-compare/
 npm run item:check         the full report: what is wrong and what to change
 npm run item:check -- --json     the same findings as JSON
 npm run itemart            rewrite assets/items/index.json after adding files
@@ -246,3 +356,20 @@ Those descriptions are what the game's own data says each item is, so the shop
 lines and the bag text already assume them. You are free to reinterpret any of
 them — just say which, and the data will be updated to match rather than leaving
 the two out of step.
+
+### What has arrived so far, and what it changed
+
+| file | frames | note |
+|---|---|---|
+| `vessel_field.png` | `-open` | drawn as a **hinged blue-and-silver tech chest**, not the "plain clay-and-copper capsule" the shop line describes |
+| `potion.png` | — | drawn as a **glowing cyan flask with a metal collar**, not the pond-and-pine brown the bag text describes |
+
+Both are reinterpretations, and good ones — but two things are now out of step
+and want a decision rather than drifting:
+
+1. **The words.** `data/items/items.json` still says clay and copper, and pond
+   and pine. Either the drawings or the descriptions should move.
+2. **The family.** The other five vessels are still the generated capsules, so
+   the shelf currently holds one chest and five capsules. They want the same
+   treatment — `Vessel-fine-closed.png` / `Vessel-fine-open.png` and so on — or
+   the generated ones want redrawing as chests.
