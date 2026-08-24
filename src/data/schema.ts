@@ -366,13 +366,18 @@ export interface MapNpc {
 }
 
 export interface MapObject {
-  kind: 'item' | 'hiddenItem' | 'sign' | 'script' | 'cuttable' | 'pushable' | 'switch' | 'ledgeHint';
+  kind: 'item' | 'hiddenItem' | 'sign' | 'script' | 'cuttable' | 'pushable' | 'switch' | 'ledgeHint' | 'kin';
   x: number; y: number;
   item?: string;
   quantity?: number;
   flag?: string;
   script?: string;
   text?: string[];
+  /** kind 'kin': the species sitting here, drawn at icon size. */
+  species?: string;
+  /** kind 'kin': stop drawing it once this flag is set -- how a taken starter
+   *  leaves the counter while the two it was chosen over stay put. */
+  hiddenIfFlag?: string;
 }
 
 export interface MapData {

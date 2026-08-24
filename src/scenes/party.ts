@@ -24,7 +24,8 @@ import type { Scene } from '../core/scene.js';
 import { DETAIL, Renderer, SCREEN_H, SCREEN_W } from '../engine/renderer.js';
 import { iconSprite, frontSprite } from '../gfx/kinsprite.js';
 import { registry } from '../data/registry.js';
-import { ListMenu } from '../ui/menu.js';
+import { ListMenu, navDown, navUp } from '../ui/menu.js';
+import { fit, inside, para, typeChips, GAP, LINE_TIGHT } from '../ui/layout.js';
 import { say } from '../ui/dialogue.js';
 import { audio } from '../audio/audio.js';
 import type { GameState } from '../systems/state.js';
@@ -107,8 +108,8 @@ export class PartyScene implements Scene {
       }
     }
 
-    if (game.input.repeated('down')) this.index = (this.index + 1) % n;
-    if (game.input.repeated('up')) this.index = (this.index - 1 + n) % n;
+    if (navDown(game)) this.index = (this.index + 1) % n;
+    if (navUp(game)) this.index = (this.index - 1 + n) % n;
     // Left/right hop between the lead column and the bench column.
     if (game.input.pressed('left')) this.index = 0;
     if (game.input.pressed('right') && n > 1 && this.index === 0) this.index = 1;
@@ -209,19 +210,28 @@ export class PartyScene implements Scene {
 
   private renderFooter(r: Renderer): void {
     r.window(FOOTER.x, FOOTER.y, FOOTER.w, FOOTER.h);
-    r.text(this.message, FOOTER.x + 7, FOOTER.y + 4, { color: '#282838' });
+    const fx = FOOTER.x + 7;
+    const fw = FOOTER.w - 14;
 
     const kin = this.party[this.index];
     let detail = '';
     if (kin) {
       if (kin.heldItem) detail = `Holding ${registry.itemName(kin.heldItem)}`;
-      else if (kin.fainted) detail = 'Out cold -- it needs reviving.';
+      else if (kin.fainted) detail = 'Out cold -- needs reviving.';
       else if (kin.nickname) detail = kin.speciesName;
       else detail = registry.abilities.get(kin.ability)?.name ?? '';
     }
-    r.text(fit(r, detail, 150), FOOTER.x + 7, FOOTER.y + 13, { color: '#6a7490' });
-    r.text(this.pickMode ? 'Enter pick   Esc cancel' : 'Enter options   Esc back',
-      FOOTER.x + FOOTER.w - 7, FOOTER.y + 13, { color: '#8a93ab', align: 'right' });
+    // The hint is stacked into two short lines down the right rather than laid
+    // out as one long one across the bottom. Written as a single string it
+    // claimed 135 of the footer's 220 units and squeezed the held-item line to
+    // "Holding Warde."; split, each half only has to clear the line it shares.
+    const hints = this.pickMode ? ['Enter pick', 'Esc cancel'] : ['Enter options', 'Esc back'];
+    const wide = Math.max(...hints.map((h) => r.textWidth(h)));
+    r.text(hints[0]!, fx + fw, FOOTER.y + 4, { color: '#8a93ab', align: 'right' });
+    r.text(hints[1]!, fx + fw, FOOTER.y + 13, { color: '#8a93ab', align: 'right' });
+
+    r.text(fit(r, this.message, fw - wide - GAP), fx, FOOTER.y + 4, { color: '#282838' });
+    r.text(fit(r, detail, fw - wide - GAP), fx, FOOTER.y + 13, { color: '#6a7490' });
   }
 
   private renderEmpty(r: Renderer, i: number): void {
@@ -274,8 +284,11 @@ export class PartyScene implements Scene {
     r.rect(c.x + 2, c.y + 2, c.w - 4, 13, skin.band);
     r.pixel((c.x + 2) * DETAIL, (c.y + 2) * DETAIL, (c.w - 4) * DETAIL, 1, skin.bandLip);
     r.rect(c.x + 2, c.y + 14, c.w - 4, 1, skin.edge);
-    r.text(fit(r, kin.name, 66), c.x + 5, c.y + 4, { color: '#ffffff', shadow: 'rgba(10,14,24,0.55)' });
-    genderMark(r, kin, c.x + c.w - 3, c.y + 4);
+    const bandRight = c.x + c.w - 3;
+    const nameMax = bandRight - (c.x + 5) - (kin.gender === 'none' ? 0 : r.textWidth('oF') + GAP);
+    r.text(fit(r, kin.name, nameMax), c.x + 5, c.y + 4,
+      { color: '#ffffff', shadow: 'rgba(10,14,24,0.55)' });
+    genderMark(r, kin, bandRight, c.y + 4);
 
     // Contact shadow under the portrait, so the creature stands on the card.
     r.ellipsePixel((c.x + c.w / 2) * DETAIL, (c.y + 76) * DETAIL, 26 * DETAIL, 3 * DETAIL,
@@ -335,9 +348,14 @@ export class PartyScene implements Scene {
 
     const tx = wx + WELL.w + 4;
     const right = c.x + c.w - 4;
-    const name = fit(r, kin.name, 56);
+    // Measure the level and the gender mark, then give the name the remainder.
+    // A hard 56 units cut "Bramblehusk" down to "Bramblehu." on a row with
+    // twelve units of unused space in it.
+    const lvW = r.textWidth(`Lv${kin.level}`);
+    const gW = kin.gender === 'none' ? 0 : r.textWidth('oF') + GAP;
+    const name = fit(r, kin.name, right - lvW - GAP - gW - tx);
     r.text(name, tx, c.y + 3, { color: skin.ink });
-    genderMark(r, kin, tx + r.textWidth(name) + 8, c.y + 3);
+    genderMark(r, kin, tx + r.textWidth(name) + GAP + r.textWidth('oF'), c.y + 3);
     r.text(`Lv${kin.level}`, right, c.y + 3, { color: skin.ink, align: 'right' });
 
     hpBar(r, tx, c.y + 12, 56, 7, kin);
@@ -388,14 +406,6 @@ function chipFor(kin: Kin): { label: string; color: string } | undefined {
   if (kin.fainted) return { label: 'FNT', color: '#7a8298' };
   if (kin.status === 'none') return undefined;
   return STATUS_CHIP[kin.status];
-}
-
-/** Truncate rather than wrap: a card row has one line and no more. */
-function fit(r: Renderer, text: string, maxWidth: number): string {
-  if (r.textWidth(text) <= maxWidth) return text;
-  let out = text;
-  while (out.length > 1 && r.textWidth(`${out}.`) > maxWidth) out = out.slice(0, -1);
-  return `${out}.`;
 }
 
 const STATUS_CHIP: Partial<Record<StatusId, { label: string; color: string }>> = {
@@ -581,6 +591,11 @@ export class SummaryScene implements Scene {
     if (game.input.mouse.wheel !== 0) this.page = (this.page + (game.input.mouse.wheel > 0 ? 1 : 2)) % 3;
   }
 
+  /** The right-hand page, measured once so all three pages agree on it. */
+  private get pageBox(): { x: number; y: number; w: number; h: number } {
+    return inside(88, 20, SCREEN_W - 92, SCREEN_H - 48, 2);
+  }
+
   render(_game: Game, r: Renderer): void {
     const k = this.kin;
     const sp = k.data;
@@ -588,7 +603,8 @@ export class SummaryScene implements Scene {
 
     r.window(2, 2, 84, 92, { fill: '#e8eefa' });
     r.image(frontSprite(k.species), 10, 8);
-    r.text(k.name, 6, 74, { color: '#282838' });
+    // The name is the one string here that can be twelve characters long.
+    r.text(fit(r, k.name, 74), 6, 74, { color: '#282838' });
     r.text(`Lv${k.level}`, 6, 84, { color: '#282838' });
     if (k.gender !== 'none') {
       r.text(k.gender === 'female' ? 'oF' : 'oM', 78, 84, {
@@ -596,17 +612,15 @@ export class SummaryScene implements Scene {
       });
     }
 
-    // Type chips.
-    let tx = 90;
-    for (const t of k.types) {
-      const meta = registry.typeChart?.meta?.[t];
-      r.rect(tx, 6, 44, 10, meta?.color ?? '#888');
-      r.outline(tx, 6, 44, 10, '#282838');
-      r.text((meta?.name ?? t).toUpperCase(), tx + 4, 7, { color: '#ffffff' });
-      tx += 48;
-    }
+    // Type chips, each sized to its own word. VERDANT is 41 units wide and the
+    // fixed chip was 44 with 4 of padding, so it sat on its own outline.
+    const meta = registry.typeChart?.meta;
+    typeChips(r, 90, 5, k.types.map((t) => meta?.[t]?.name ?? t),
+      k.types.map((t) => meta?.[t]?.color ?? '#888'), 11);
 
-    r.window(88, 20, SCREEN_W - 92, 74, { fill: '#e8eefa' });
+    // The page runs down to the tab bar. It used to stop 66 units short of it
+    // and the overflow was simply drawn on the backdrop underneath.
+    r.window(88, 20, SCREEN_W - 92, SCREEN_H - 48, { fill: '#e8eefa' });
 
     if (this.page === 0) this.renderStats(r);
     else if (this.page === 1) this.renderMoves(r);
@@ -614,52 +628,110 @@ export class SummaryScene implements Scene {
 
     r.window(2, SCREEN_H - 24, SCREEN_W - 4, 20);
     const tabs = ['STATS', 'MOVES', 'RECORD'];
+    const back = 'Esc back';
+    // Spread the tabs across whatever is left once the back hint has its space,
+    // rather than stepping them 52 units apart and hoping.
+    const strip = SCREEN_W - 4 - 20 - r.textWidth(back) - GAP;
+    const step = Math.floor(strip / tabs.length);
     tabs.forEach((t, i) => {
-      r.text(t, 12 + i * 52, SCREEN_H - 18, { color: i === this.page ? '#282838' : '#9aa4bc' });
+      r.text(t, 10 + i * step, SCREEN_H - 17, {
+        color: i === this.page ? '#282838' : '#9aa4bc',
+      });
     });
-    r.text('Esc back', SCREEN_W - 10, SCREEN_H - 18, { color: '#6a7490', align: 'right' });
+    r.text(back, SCREEN_W - 10, SCREEN_H - 17, { color: '#6a7490', align: 'right' });
   }
 
   private renderStats(r: Renderer): void {
     const k = this.kin;
+    const box = this.pageBox;
     const rows: [string, number][] = [
       ['HP', k.maxHp], ['ATTACK', k.atk], ['DEFENCE', k.def],
       ['SP.ATK', k.spa], ['SP.DEF', k.spd], ['SPEED', k.spe],
     ];
+    // The nature line is a footer for this page, so the rows are given the room
+    // above it and never the room it is standing in.
+    const footY = box.y + box.h - 7;
+    const step = Math.floor((footY - 4 - box.y) / rows.length);
+    // The widest number the game can produce decides the value column, once,
+    // rather than every row assuming three digits.
+    const numW = Math.max(...rows.map(([, v]) => r.textWidth(String(v))));
+    const labelW = Math.max(...rows.map(([l]) => r.textWidth(l)));
+    const barX = box.x + labelW + GAP * 2;
+    const barW = Math.max(8, box.w - labelW - GAP * 2 - numW - GAP * 2);
+    // Scaled against the biggest stat this kin actually has, floored at the
+    // old 200. A level-100 card pinned every bar to full against a fixed cap,
+    // which is six identical bars saying nothing.
+    const top = Math.max(200, ...rows.map(([, v]) => v));
+
     rows.forEach(([label, value], i) => {
-      const y = 26 + i * 10;
-      r.text(label, 94, y, { color: '#3a4258' });
-      r.text(String(value), SCREEN_W - 10, y, { color: '#282838', align: 'right' });
+      const y = box.y + i * step;
+      r.text(label, box.x, y, { color: '#3a4258' });
+      r.text(String(value), box.x + box.w, y, { color: '#282838', align: 'right' });
       // A bar behind the number turns six numbers into a readable shape.
-      const frac = Math.min(1, value / 200);
-      r.rect(140, y + 2, Math.round(frac * 52), 3, '#7f9ad0');
+      r.rect(barX, y + 2, Math.max(1, Math.round((value / top) * barW)), 3, '#7f9ad0');
     });
+
     const nature = registry.natures.find((n) => n.id === k.nature);
-    r.text(`${nature?.name ?? k.nature} nature`, 94, 86, { color: '#6a7490' });
+    r.text(fit(r, `${nature?.name ?? k.nature} nature`, box.w), box.x, footY, { color: '#6a7490' });
   }
 
+  /**
+   * The four moves.
+   *
+   * Each move's description was wrapped at 122 units with no height limit and
+   * the rows were stepped 16 apart, so a two-line description was written
+   * across the next move's name and a four-line one covered the rest of the
+   * page. The block is divided by how many moves there are and each
+   * description is given the leftover of its own slot, which is the only
+   * arrangement that survives the wordiest move in the data.
+   */
   private renderMoves(r: Renderer): void {
     const k = this.kin;
+    const box = this.pageBox;
+    const n = Math.max(1, k.moves.length);
+    const slotH = Math.floor(box.h / n);
+
     k.moves.forEach((slot, i) => {
       const md = registry.moves.get(slot.id);
-      const y = 26 + i * 16;
+      const y = box.y + i * slotH;
       const meta = md ? registry.typeChart?.meta?.[md.type] : undefined;
-      r.rect(94, y, 8, 8, meta?.color ?? '#888');
-      r.outline(94, y, 8, 8, '#282838');
-      r.text(md?.name ?? slot.id, 106, y, { color: '#282838' });
-      r.text(`${slot.pp}/${slot.maxPp}`, SCREEN_W - 10, y, { color: '#485068', align: 'right' });
-      if (md) r.text(md.description, 106, y + 8, { color: '#7a8398', maxWidth: 122 });
+      r.rect(box.x, y, 8, 8, meta?.color ?? '#888');
+      r.outline(box.x, y, 8, 8, '#282838');
+
+      const nameX = box.x + 12;
+      const pp = `${slot.pp}/${slot.maxPp}`;
+      const ppW = r.textWidth(pp);
+      r.text(fit(r, md?.name ?? slot.id, box.x + box.w - nameX - ppW - GAP), nameX, y,
+        { color: '#282838' });
+      r.text(pp, box.x + box.w, y, { color: '#485068', align: 'right' });
+
+      if (!md) return;
+      // Two units of air under the slot keep neighbouring moves from reading as
+      // one paragraph even when both descriptions run full.
+      para(r, md.description,
+        { x: nameX, y: y + 9, w: box.x + box.w - nameX, h: slotH - 11 },
+        { color: '#7a8398', lineHeight: 8 });
     });
   }
 
   private renderVellum(r: Renderer, entry: string): void {
     const k = this.kin;
     const sp = k.data;
-    r.text(`No. ${String(sp?.num ?? 0).padStart(3, '0')}`, 94, 26, { color: '#485068' });
-    r.text(sp?.category ?? '', 94, 36, { color: '#3a4258' });
-    r.text(`${sp?.height ?? 0}m   ${sp?.weight ?? 0}kg`, 94, 46, { color: '#485068' });
-    r.text(entry, 94, 58, { color: '#282838', maxWidth: SCREEN_W - 104, lineHeight: 9 });
+    const box = this.pageBox;
     const next = expForLevel(k.growthRate, Math.min(100, k.level + 1)) - k.exp;
-    r.text(k.level >= 100 ? 'At its peak.' : `${next} EXP to next level`, 94, 86, { color: '#6a7490' });
+    const foot = k.level >= 100 ? 'At its peak.' : `${next} EXP to next level`;
+    const footY = box.y + box.h - 7;
+
+    let y = box.y;
+    r.text(`No. ${String(sp?.num ?? 0).padStart(3, '0')}`, box.x, y, { color: '#485068' });
+    y += 10;
+    r.text(fit(r, sp?.category ?? '', box.w), box.x, y, { color: '#3a4258' });
+    y += 10;
+    r.text(`${sp?.height ?? 0}m   ${sp?.weight ?? 0}kg`, box.x, y, { color: '#485068' });
+    y += 12;
+    // Clamped to stop above the footer instead of writing over it.
+    para(r, entry, { x: box.x, y, w: box.w, h: footY - 4 - y },
+      { color: '#282838', lineHeight: LINE_TIGHT });
+    r.text(fit(r, foot, box.w), box.x, footY, { color: '#6a7490' });
   }
 }

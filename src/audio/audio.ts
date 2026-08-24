@@ -11,7 +11,7 @@
  */
 
 import { SFX } from './sfx.js';
-import { Synth, noteToHz, type VoiceKind } from './synth.js';
+import { Synth, noteToHz, type NoteOptions, type VoiceKind } from './synth.js';
 import { Rng } from '../core/rng.js';
 
 export interface TrackChannel {
@@ -49,6 +49,74 @@ interface LiveChannel {
 
 const LOOKAHEAD_MS = 25;
 const SCHEDULE_AHEAD = 0.15;
+
+export interface SfxOptions {
+  /** Multiplies every layer's frequency. */
+  pitch?: number;
+  /** Scales the whole stack. */
+  volume?: number;
+  /**
+   * How hard this instance landed, 0..1, with 0.5 as the recipe as written.
+   *
+   * A hit for four damage and a hit for half a health bar should not be the
+   * same sound at the same level. Rather than write three recipes per impact,
+   * the weight tilts one: a heavy hit pushes the low layers down in pitch, up
+   * in level and out in length -- the three things that actually make a sound
+   * feel big -- while the transient stays where it is, because the crack of a
+   * blow does not move with its force, only what follows it does.
+   */
+  weight?: number;
+}
+
+/**
+ * Turns a recipe into scheduled notes, with `at` relative to the trigger.
+ *
+ * Separate from playback so the offline scope (tools/shots/sfxscope.js) renders
+ * exactly what the game plays. Every sound bug on this project has been
+ * invisible in the table and obvious in the waveform, and a plot of something
+ * adjacent to the real signal path is worse than no plot at all.
+ */
+export function sfxNotes(id: string, opts: SfxOptions = {}): NoteOptions[] | null {
+  const recipe = SFX[id];
+  if (!recipe) return null;
+
+  const pitch = opts.pitch ?? 1;
+  const gain = opts.volume ?? 1;
+  const w = opts.weight === undefined ? null : Math.max(0, Math.min(1, opts.weight));
+  // How far this instance sits from the recipe as written, -0.5..+0.5.
+  const lift = w === null ? 0 : w - 0.5;
+  const bulk = w === null ? 1 : 0.86 + 0.28 * w;
+
+  const out: NoteOptions[] = [];
+  for (const l of recipe) {
+    // "Low" is where the weight of a sound lives: the triangle body and any
+    // noise dark enough to be a thud rather than a crack.
+    const low = l.kind === 'triangle' || (l.kind === 'noise' && l.freq < 700);
+    const bright = l.kind === 'noise' && l.freq >= 3000;
+    const levels = bulk * (low ? 1 + lift * 0.45 : bright ? 1 + lift * 0.18 : 1);
+    const drop = low ? Math.pow(2, (-lift * 4) / 12) : 1;
+    const stretch = low ? (w === null ? 1 : 0.84 + 0.32 * w) : 1;
+
+    out.push({
+      at: l.at ?? 0,
+      duration: Math.min(1.2, l.dur * stretch),
+      frequency: l.freq * pitch * drop,
+      glideTo: l.to === undefined ? undefined : l.to * pitch * drop,
+      // Clamped: several layers already stack on one bus, and a weighted hit
+      // that overshoots turns the soft limiter into an audible pump.
+      volume: Math.min(0.36, l.vol * gain * levels),
+      kind: l.kind,
+      duty: l.duty,
+      vibrato: l.vibrato,
+      env: l.env,
+      curve: l.curve,
+      attack: l.attack,
+      noiseQ: l.q,
+      tone: l.tone,
+    });
+  }
+  return out;
+}
 
 export class AudioManager {
   private synth: Synth | null = null;
@@ -295,32 +363,20 @@ export class AudioManager {
    * Play a named effect from the library.
    *
    * `pitch` multiplies every layer's frequency, which is what lets one talk
-   * blip cover a whole cast, and `volume` scales the whole stack so a sound
-   * the player hears constantly can be ducked without editing the recipe.
+   * blip cover a whole cast, `volume` scales the whole stack so a sound the
+   * player hears constantly can be ducked without editing the recipe, and
+   * `weight` says how hard this particular instance landed -- see sfxNotes.
    */
-  playSfx(id: string, opts: { pitch?: number; volume?: number } = {}): void {
+  playSfx(id: string, opts: SfxOptions = {}): void {
     if (this.shutDown) return;
     const s = this.ensure();
     if (!s || s.ctx.state === 'suspended') return;
 
-    const recipe = SFX[id];
-    if (!recipe) return;
+    const notes = sfxNotes(id, opts);
+    if (!notes) return;
 
-    const pitch = opts.pitch ?? 1;
-    const gain = opts.volume ?? 1;
     const t = s.currentTime;
-    for (const l of recipe) {
-      s.play({
-        at: t + (l.at ?? 0),
-        duration: l.dur,
-        frequency: l.freq * pitch,
-        glideTo: l.to === undefined ? undefined : l.to * pitch,
-        volume: l.vol * gain,
-        kind: l.kind,
-        duty: l.duty,
-        vibrato: l.vibrato,
-      }, 'sfx');
-    }
+    for (const note of notes) s.play({ ...note, at: t + note.at }, 'sfx');
   }
 
   /**

@@ -3,9 +3,10 @@
  *
  * Two coordinate systems, deliberately:
  *
- *  - **Logical units** (240x160) are what every scene lays out in. This is the
- *    native field of the hardware the game is modelled on, and keeping it fixed
- *    means composition, camera framing and text size stay era-correct.
+ *  - **Logical units** are what every scene lays out in. 240x160 is the native
+ *    field of the hardware the game is modelled on, and it is still the floor:
+ *    the view never gets *smaller* than that, so composition, camera framing
+ *    and text size stay era-correct.
  *  - **Buffer pixels** are `DETAIL` times denser. Art -- tiles, characters,
  *    creatures, the font -- is authored at that density, so the picture carries
  *    roughly four times the detail of the reference hardware while framing the
@@ -14,19 +15,277 @@
  * Everything a scene passes in is logical; the renderer multiplies. The buffer
  * is then blitted to the canvas at an integer scale with smoothing off, so the
  * pixel grid survives all the way to the screen.
+ *
+ * ## The shape problem
+ *
+ * 240x160 is 3:2. Almost every screen sold this decade is 16:9. A 3:2 picture
+ * on a 16:9 display has a margin down both sides however it is scaled, and the
+ * ways out are all trades:
+ *
+ *  - a whole-number scale is perfectly sharp and leaves the most margin
+ *    (240 pixels a side on a 1920x1080 screen);
+ *  - an exact scale reaches the top and bottom and cuts the side margin to 150,
+ *    at the price of a scale factor that is not a whole number;
+ *  - cropping to fill would cut a third of the height off and take the dialogue
+ *    box with it, so it is not on the table;
+ *  - stretching to fill would make every creature 18% wider than it was drawn,
+ *    so neither is that;
+ *  - framing *more world* -- a view as wide as the display's own shape -- is the
+ *    only thing that clears the margin outright.
+ *
+ * `ScreenFit` below offers the first, the second and the last of those. The
+ * default is the second. The reasoning for each is on the type.
+ *
+ * ## Why the view size is decided once, at module load
+ *
+ * Scenes capture layout constants at import time (`battle.ts` has
+ * `w: SCREEN_W` in a module-level object; `arena.ts` bakes its backdrops into
+ * canvases sized `BUFFER_W` x `BUFFER_H` and caches them). A view size that
+ * changed underneath them would leave half the game laid out for the old one.
+ * So the size is worked out here, before anything imports it, and is then
+ * constant for the life of the page. Resizing the window afterwards changes the
+ * blit scale and nothing else.
  */
 
 import { getGlyph, GLYPH_H, GLYPH_W, advanceOf, measureText, tokenize } from '../gfx/font.js';
 
-/** Logical layout units. */
-export const SCREEN_W = 240;
-export const SCREEN_H = 160;
-
 /** Buffer pixels per logical unit. */
 export const DETAIL = 2;
 
+/**
+ * The authored view: the reference hardware's field, and the smallest the view
+ * is ever allowed to be. Every layout in the game is known to fit in this.
+ */
+export const AUTHORED_W = 240;
+export const AUTHORED_H = 160;
+
+/**
+ * The widest and tallest the view may grow to.
+ *
+ * Not a technical limit -- a ceiling on how much extra world an unusually shaped
+ * display is allowed to reveal. 432x240 covers 16:9 and 16:10 outright and
+ * leaves only a sliver on a 21:9 ultrawide, while stopping a very wide monitor
+ * from turning every interior into a small room in a large void.
+ */
+const MAX_VIEW_W = 432;
+const MAX_VIEW_H = 240;
+
+/**
+ * The default, and the reasoning.
+ *
+ * 240x160 is 3:2 and the screen this was asked for is 16:9, so a picture that
+ * keeps the authored shape cannot reach both pairs of edges however it is
+ * scaled -- `sharp` leaves 240 pixels of margin a side on a 1080p display and
+ * `fit` still leaves 150. Only `wide` clears them, and `wide` is not finished
+ * until the fixed-coordinate layouts follow the view.
+ *
+ * So the default is `fit`: the largest the authored picture can be drawn, top
+ * and bottom margins gone, side margins cut by well over a third, and a scaling
+ * path good enough that the result still reads as pixel art rather than as a
+ * blurred upscale.
+ */
+const DEFAULT_SCREEN_FIT: ScreenFit = 'fit';
+
+/**
+ * How the picture is fitted to the display.
+ *
+ *  - `sharp`  -- whole-number scale of the authored 240x160 view. Every pixel is
+ *    exactly square and exactly the same size as its neighbours. On a 1920x1080
+ *    screen that is a scale of 3, so the picture is 1440x960 and there is a
+ *    margin all the way round.
+ *  - `fit`    -- the same 240x160 view, scaled to touch the top and bottom of the
+ *    display exactly. 1620x1080 on that same screen: the horizontal margin drops
+ *    from 240 pixels a side to 150 and the vertical margin disappears, at the
+ *    cost of a scale factor that is no longer a whole number. See `present()`
+ *    for what is done about that, which is more than nearest-neighbour.
+ *  - `wide`   -- whole-number scale of a view grown to the display's own shape,
+ *    which is the only setting that removes the margin entirely. Every scene
+ *    that lays out against `SCREEN_W`/`SCREEN_H` follows it correctly; the ones
+ *    that pin panels at fixed coordinates authored for 240x160 do not, so the
+ *    battle HUD and the full-screen menus sit in the top-left of a larger field
+ *    rather than filling it. Offered, and honestly labelled, until those are
+ *    anchored.
+ */
+export type ScreenFit = 'sharp' | 'fit' | 'wide';
+
+const SCREEN_FITS: readonly ScreenFit[] = ['sharp', 'fit', 'wide'];
+
+function asScreenFit(value: unknown): ScreenFit | null {
+  // 'classic' was the name this setting had while it only had two values.
+  if (value === 'classic') return 'sharp';
+  return SCREEN_FITS.includes(value as ScreenFit) ? value as ScreenFit : null;
+}
+
+/** Where the game's window sits, when the host has a say in it. */
+export type DisplayMode = 'borderless' | 'windowed';
+
+/** The key `src/core/settings.ts` stores under, read here without importing it. */
+const SETTINGS_KEY = 'kinbound.settings.v1';
+const LEGACY_SETTINGS_KEY = 'tideward.settings.v1';
+
+interface StoredDisplaySettings {
+  screenFit?: unknown;
+  displayMode?: unknown;
+}
+
+/**
+ * Read the two display settings straight out of storage.
+ *
+ * Deliberately not `loadSettings()`: this runs at module-evaluation time, and
+ * importing the settings module here would put the renderer downstream of a
+ * module that is itself downstream of half the game. A malformed or missing
+ * value simply falls back to the default.
+ */
+function storedDisplaySettings(): StoredDisplaySettings {
+  try {
+    const raw = localStorage.getItem(SETTINGS_KEY) ?? localStorage.getItem(LEGACY_SETTINGS_KEY);
+    if (!raw) return {};
+    const parsed: unknown = JSON.parse(raw);
+    return (parsed && typeof parsed === 'object') ? parsed as StoredDisplaySettings : {};
+  } catch {
+    return {};
+  }
+}
+
+function queryOverride(name: string): string | null {
+  try {
+    return new URLSearchParams(location.search).get(name);
+  } catch {
+    return null;
+  }
+}
+
+export function currentScreenFit(): ScreenFit {
+  // The query string wins so a capture run is reproducible whatever the machine
+  // it runs on happens to have stored.
+  const q = asScreenFit(queryOverride('view'));
+  if (q) return q;
+  // The screenshot harness gets the authored view at a whole-number scale unless
+  // it asks otherwise. Every driver in tools/shots frames its shot in 240x160
+  // units and every reference image in build/shots is 480x320; a view that
+  // quietly followed the size of whatever window the harness happened to open
+  // would make the whole set of them incomparable from one run to the next.
+  if (queryOverride('dev') !== null) return 'sharp';
+  return asScreenFit(storedDisplaySettings().screenFit) ?? DEFAULT_SCREEN_FIT;
+}
+
+export function currentDisplayMode(): DisplayMode {
+  const q = queryOverride('window');
+  if (q === 'windowed' || q === 'borderless') return q;
+  const stored = storedDisplaySettings().displayMode;
+  return stored === 'windowed' ? 'windowed' : 'borderless';
+}
+
+/**
+ * Work out the logical view for this session.
+ *
+ * Pick the largest whole-number blit scale at which the authored 240x160 still
+ * fits, then hand back however many logical units that scale divides the
+ * viewport into. Widths and heights are rounded down to even numbers so that
+ * `SCREEN_W / 2` -- which a great many layouts use to centre things -- stays a
+ * whole unit.
+ */
+function chooseView(): { w: number; h: number } {
+  // Node runs the test suite against the compiled modules; there is no window
+  // there, and the authored size is the only sensible answer.
+  if (typeof window === 'undefined') return { w: AUTHORED_W, h: AUTHORED_H };
+  if (currentScreenFit() !== 'wide') return { w: AUTHORED_W, h: AUTHORED_H };
+
+  const availW = Math.max(1, Math.floor(window.innerWidth));
+  const availH = Math.max(1, Math.floor(window.innerHeight));
+
+  let scale = 1;
+  for (let s = 1; s <= 16; s++) {
+    const fitsW = Math.floor(availW / (s * DETAIL)) >= AUTHORED_W;
+    const fitsH = Math.floor(availH / (s * DETAIL)) >= AUTHORED_H;
+    if (fitsW && fitsH) scale = s; else break;
+  }
+
+  const even = (n: number): number => n - (n % 2);
+  const clamp = (n: number, lo: number, hi: number): number => Math.max(lo, Math.min(hi, n));
+  return {
+    w: clamp(even(Math.floor(availW / (scale * DETAIL))), AUTHORED_W, MAX_VIEW_W),
+    h: clamp(even(Math.floor(availH / (scale * DETAIL))), AUTHORED_H, MAX_VIEW_H),
+  };
+}
+
+const VIEW = chooseView();
+
+/** Logical layout units for this session. Never below 240x160. */
+export const SCREEN_W = VIEW.w;
+export const SCREEN_H = VIEW.h;
+
 export const BUFFER_W = SCREEN_W * DETAIL;
 export const BUFFER_H = SCREEN_H * DETAIL;
+
+/* ------------------------------------------------------- the host window */
+
+/**
+ * Borderless-fullscreen versus windowed, in two very different hosts.
+ *
+ * In the desktop build the launcher's main process owns the BrowserWindow and
+ * is the only thing that can resize it, so the page asks over the small bridge
+ * `launcher/preload.cjs` exposes. In a browser there is no window to own: the
+ * closest honest equivalent is the Fullscreen API, which needs a user gesture,
+ * so a page that wants to start borderless arms itself and goes fullscreen on
+ * the first key or click instead of failing silently at load.
+ */
+
+interface GameBridge {
+  setDisplayMode?(mode: DisplayMode): Promise<unknown>;
+}
+
+function bridge(): GameBridge | null {
+  if (typeof window === 'undefined') return null;
+  const w = window as unknown as { kinbound?: GameBridge };
+  return (w.kinbound && typeof w.kinbound.setDisplayMode === 'function') ? w.kinbound : null;
+}
+
+function documentFullscreen(): boolean {
+  return typeof document !== 'undefined' && document.fullscreenElement !== null;
+}
+
+/**
+ * Put the host window into `mode`.
+ *
+ * Safe to call when the window is already in that state, and safe to call in a
+ * host that cannot honour it -- a browser that refuses the fullscreen request
+ * leaves the game running in the tab, which is the right way to degrade.
+ */
+export function applyDisplayMode(mode: DisplayMode): void {
+  const desktop = bridge();
+  if (desktop) {
+    void desktop.setDisplayMode!(mode);
+    return;
+  }
+  if (typeof document === 'undefined') return;
+  if (mode === 'borderless') {
+    if (!documentFullscreen()) void document.documentElement.requestFullscreen?.().catch(() => {});
+  } else if (documentFullscreen()) {
+    void document.exitFullscreen?.().catch(() => {});
+  }
+}
+
+let armed = false;
+
+/**
+ * A browser cannot be sent fullscreen at load; it can be sent fullscreen the
+ * moment the player touches anything. One shot, and only when the setting asks
+ * for it -- nothing here ever surprises a player who chose windowed.
+ */
+function armBorderlessOnFirstGesture(): void {
+  if (armed || typeof window === 'undefined' || typeof document === 'undefined') return;
+  armed = true;
+  const go = (): void => {
+    window.removeEventListener('keydown', go, true);
+    window.removeEventListener('pointerdown', go, true);
+    if (currentDisplayMode() === 'borderless' && !documentFullscreen()) {
+      void document.documentElement.requestFullscreen?.().catch(() => {});
+    }
+  };
+  window.addEventListener('keydown', go, true);
+  window.addEventListener('pointerdown', go, true);
+}
 
 export type Align = 'left' | 'center' | 'right';
 
@@ -84,21 +343,67 @@ export class Renderer {
 
     this.resize();
     window.addEventListener('resize', () => this.resize());
+
+    // The renderer owns the surface the game is drawn on, and on the desktop
+    // that surface is a window: putting it into the mode the player asked for
+    // belongs here rather than in whichever scene happens to boot first.
+    const mode = currentDisplayMode();
+    // Never in the capture harness: a screenshot run that resizes its own
+    // window halfway through is photographing the wrong thing.
+    if (queryOverride('dev') === null) {
+      if (bridge()) applyDisplayMode(mode);
+      else if (mode === 'borderless') armBorderlessOnFirstGesture();
+    }
   }
 
-  /** Fit the buffer to the window at the largest whole-number scale. */
+  /**
+   * Which of the three fits this session is running.
+   *
+   * Change it through `applyScreenFit`, which knows which changes can be made
+   * on the spot and which need the page reloaded.
+   */
+  fit: ScreenFit = currentScreenFit();
+
+  /**
+   * Switch fit at runtime.
+   *
+   * Returns false when the change cannot take full effect until the game is
+   * restarted -- which is exactly when `wide` is on one side of it and not the
+   * other, because `wide` is the only fit that changes `SCREEN_W`/`SCREEN_H`,
+   * and those are read once at module load by every scene in the game. Between
+   * `sharp` and `fit` nothing but the blit changes, so those swap instantly.
+   */
+  applyScreenFit(next: ScreenFit): boolean {
+    const viewChanges = (next === 'wide') !== (this.fit === 'wide');
+    this.fit = next;
+    this.resize();
+    return !viewChanges;
+  }
+
+  /**
+   * Fit the buffer to the window.
+   *
+   * `sharp` and `wide` take the largest whole-number scale that fits. `fit`
+   * takes the exact one, so the picture touches whichever pair of edges is
+   * tighter -- on any normal display that is the top and bottom.
+   */
   resize(): void {
     const availW = Math.floor(window.innerWidth);
     const availH = Math.floor(window.innerHeight);
-    const scale = Math.max(1, Math.floor(Math.min(availW / BUFFER_W, availH / BUFFER_H)));
-    this.scale = scale;
+    const exact = Math.min(availW / BUFFER_W, availH / BUFFER_H);
+    this.scale = this.fit === 'fit' ? Math.max(1, exact) : Math.max(1, Math.floor(exact));
     this.canvas.width = availW;
     this.canvas.height = availH;
     this.canvas.style.width = `${window.innerWidth}px`;
     this.canvas.style.height = `${window.innerHeight}px`;
-    this.offsetX = Math.floor((availW - BUFFER_W * scale) / 2);
-    this.offsetY = Math.floor((availH - BUFFER_H * scale) / 2);
+    this.offsetX = Math.round((availW - BUFFER_W * this.scale) / 2);
+    this.offsetY = Math.round((availH - BUFFER_H * this.scale) / 2);
     this.ctx.imageSmoothingEnabled = false;
+  }
+
+  /** True when the picture does not reach every edge of the canvas. */
+  get letterboxed(): boolean {
+    return this.offsetX >= 1 || this.offsetY >= 1;
   }
 
   /** Mapping the input layer needs to turn client pixels into logical units. */
@@ -121,18 +426,95 @@ export class Renderer {
     this.bctx.imageSmoothingEnabled = false;
   }
 
+  /**
+   * The surround, for the displays the view cannot divide exactly.
+   *
+   * On a 16:9 or 16:10 screen the picture reaches every edge and none of this
+   * is drawn. On an oddly-shaped one there is a remainder, and a remainder
+   * filled with pure black reads as the game having failed to fill the screen.
+   * A very dark graded field with a hairline around the picture reads instead
+   * as a frame somebody chose. Cached, because it only changes on a resize.
+   */
+  private surround: CanvasGradient | null = null;
+  private surroundFor = -1;
+
+  private paintSurround(): void {
+    const c = this.ctx;
+    const h = this.canvas.height;
+    if (this.surroundFor !== h || !this.surround) {
+      const g = c.createLinearGradient(0, 0, 0, h);
+      g.addColorStop(0, '#0b0f18');
+      g.addColorStop(0.55, '#070a11');
+      g.addColorStop(1, '#04050a');
+      this.surround = g;
+      this.surroundFor = h;
+    }
+    c.fillStyle = this.surround;
+    c.fillRect(0, 0, this.canvas.width, h);
+
+    const w = BUFFER_W * this.scale;
+    const ph = BUFFER_H * this.scale;
+    c.fillStyle = 'rgba(150,172,208,0.18)';
+    c.fillRect(this.offsetX - 1, this.offsetY - 1, w + 2, 1);
+    c.fillRect(this.offsetX - 1, this.offsetY + ph, w + 2, 1);
+    c.fillRect(this.offsetX - 1, this.offsetY - 1, 1, ph + 2);
+    c.fillRect(this.offsetX + w, this.offsetY - 1, 1, ph + 2);
+  }
+
+  /**
+   * The intermediate canvas that keeps a fractional scale looking like pixel
+   * art. Only ever built in `fit`, and only when the scale is not whole.
+   */
+  private prescale: HTMLCanvasElement | null = null;
+  private prescaleAt = 0;
+
+  /**
+   * Enlarge the buffer by a whole number, then shrink that to the target.
+   *
+   * Drawing the buffer straight to a fractional size is the thing this project
+   * refuses to do: at 3.375x some buffer pixels land on three screen pixels and
+   * their neighbours on four, and a scrolling tilemap turns that into a visible
+   * crawl along every edge. Going up to 4x first with smoothing off keeps every
+   * pixel square and identical, and the smoothed step down from 4x to 3.375x is
+   * a gentle resample of an already-correct picture rather than a staircase.
+   * The picture stays crisp and the edges stop shimmering -- which is the whole
+   * argument for whole-number scales, honoured by a different route.
+   */
+  private drawScaled(dx: number, dy: number, w: number, h: number): void {
+    const c = this.ctx;
+    const up = Math.ceil(this.scale);
+    if (this.prescaleAt !== up || !this.prescale) {
+      const cv = document.createElement('canvas');
+      cv.width = BUFFER_W * up;
+      cv.height = BUFFER_H * up;
+      this.prescale = cv;
+      this.prescaleAt = up;
+    }
+    const pc = this.prescale.getContext('2d', { alpha: false })!;
+    pc.imageSmoothingEnabled = false;
+    pc.drawImage(this.buffer, 0, 0, this.prescale.width, this.prescale.height);
+
+    c.imageSmoothingEnabled = true;
+    c.imageSmoothingQuality = 'high';
+    c.drawImage(this.prescale, dx, dy, w, h);
+    c.imageSmoothingEnabled = false;
+  }
+
   present(): void {
     const c = this.ctx;
     c.imageSmoothingEnabled = false;
-    c.fillStyle = '#000';
-    c.fillRect(0, 0, this.canvas.width, this.canvas.height);
-    c.drawImage(
-      this.buffer,
-      this.offsetX + this.shakeX * this.scale * DETAIL,
-      this.offsetY + this.shakeY * this.scale * DETAIL,
-      BUFFER_W * this.scale,
-      BUFFER_H * this.scale,
-    );
+    if (this.letterboxed) {
+      this.paintSurround();
+    } else {
+      c.fillStyle = '#000';
+      c.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+    const dx = this.offsetX + this.shakeX * this.scale * DETAIL;
+    const dy = this.offsetY + this.shakeY * this.scale * DETAIL;
+    const w = BUFFER_W * this.scale;
+    const h = BUFFER_H * this.scale;
+    if (Number.isInteger(this.scale)) c.drawImage(this.buffer, dx, dy, w, h);
+    else this.drawScaled(dx, dy, w, h);
   }
 
   shake(frames: number, power = 2): void {

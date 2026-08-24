@@ -10,7 +10,19 @@
  *    triangle carries weight and warmth;
  *  - a downward glide reads as failure, an upward glide as success;
  *  - anything the player hears hundreds of times stays under ~0.1s and quiet,
- *    anything they hear once a session can be longer and louder.
+ *    anything they hear once a session can be longer and louder;
+ *  - and, above all of it, the envelope. Anything struck uses `pk`/`tk`/`nk`
+ *    and anything that arrives uses `ns` or an explicit `env: 'swell'`. A
+ *    sound effect on the held music envelope is a beep no matter how carefully
+ *    its frequencies are chosen, which is what every impact in this file used
+ *    to be. See tools/shots/sfxscope.js -- it plots each cue's waveform, and
+ *    the difference is not subtle in the picture.
+ *
+ * Levels are written for the shape they are used with. An exponential decay
+ * carries roughly a third of the energy that a rectangle of the same height
+ * does, so a number moved from `n` to `nk` unchanged is a cue that got quieter
+ * for no reason; the scope's `pun` column (loudest 20ms) is the one to compare
+ * two cues by, not the peak.
  *
  * "Quiet" means restrained, not inaudible, and that is a distinction this file
  * once got wrong: the blips and ticks were set so low they vanished under the
@@ -19,19 +31,31 @@
  * front and a little body underneath -- rather than with gain.
  */
 
-import type { VoiceKind } from './synth.js';
+import type { EnvShape, VoiceKind } from './synth.js';
 
 export interface SfxLayer {
   /** Offset from the trigger, in seconds. */
   at?: number;
   dur: number;
   freq: number;
-  /** Glide target; a fall reads as failure, a rise as success. */
+  /** Glide target; a fall reads as failure, a rise as success. On a noise
+   * layer this sweeps the filter, which is how a swoosh opens and a crash
+   * darkens. */
   to?: number;
   vol: number;
   kind: VoiceKind;
   duty?: number;
   vibrato?: number;
+  /** Amplitude shape: `perc` is struck, `swell` is arriving, `flat` is held. */
+  env?: EnvShape;
+  /** Decay rate for `perc`/`swell`, as a fraction of the layer's length. */
+  curve?: number;
+  /** Attack, as a fraction of the layer's length. */
+  attack?: number;
+  /** Noise filter resonance. Above ~6 the filter starts to ring in pitch. */
+  q?: number;
+  /** Lowpass cutoff for a pitched layer, in Hz. */
+  tone?: number;
 }
 
 /** Shorthand so the table below stays readable. */
@@ -41,6 +65,21 @@ const t = (dur: number, freq: number, vol: number, extra: Partial<SfxLayer> = {}
   ({ dur, freq, vol, kind: 'triangle', ...extra });
 const n = (dur: number, freq: number, vol: number, extra: Partial<SfxLayer> = {}): SfxLayer =>
   ({ dur, freq, vol, kind: 'noise', ...extra });
+
+/**
+ * Struck versions of the same three. Everything percussive goes through these,
+ * so a hit cannot be written with a held envelope by accident -- which is the
+ * mistake the whole impact half of this library used to be built on.
+ */
+const pk = (dur: number, freq: number, vol: number, extra: Partial<SfxLayer> = {}): SfxLayer =>
+  ({ dur, freq, vol, kind: 'pulse', duty: 0.5, env: 'perc', ...extra });
+const tk = (dur: number, freq: number, vol: number, extra: Partial<SfxLayer> = {}): SfxLayer =>
+  ({ dur, freq, vol, kind: 'triangle', env: 'perc', ...extra });
+const nk = (dur: number, freq: number, vol: number, extra: Partial<SfxLayer> = {}): SfxLayer =>
+  ({ dur, freq, vol, kind: 'noise', env: 'perc', ...extra });
+/** A noise layer that arrives rather than strikes: wash, hiss, wind. */
+const ns = (dur: number, freq: number, vol: number, extra: Partial<SfxLayer> = {}): SfxLayer =>
+  ({ dur, freq, vol, kind: 'noise', env: 'swell', ...extra });
 
 /** An arpeggio, the workhorse of every jingle on this hardware. */
 const arp = (freqs: number[], step: number, dur: number, vol: number, extra: Partial<SfxLayer> = {}): SfxLayer[] =>
@@ -54,56 +93,86 @@ export const SFX: Record<string, SfxLayer[]> = {
   // -- so its crispness has to come from the transient instead: a needle of
   // high noise in front of the pulse reads as "sharp" at any level.
   select: [
-    n(0.012, 5600, 0.09),
-    p(0.038, 988, 0.15, { duty: 0.25, to: 1046 }),
-    t(0.05, 494, 0.08),
+    nk(0.012, 5600, 0.10),
+    pk(0.042, 988, 0.16, { duty: 0.25, to: 1046, curve: 0.34 }),
+    tk(0.055, 494, 0.10, { curve: 0.4 }),
   ],
+  /**
+   * Confirm, and every dialogue box the player advances -- so this is arguably
+   * the single most-heard sound in the game.
+   *
+   * It used to measure louder than a battle hit and twice as long, which is the
+   * wrong way round for a sound the player triggers several times a minute
+   * against one they hear a handful of times a battle. It is now two struck
+   * blips instead of two held tones: the same interval, half the energy, and it
+   * gets out of the way of the line of dialogue it introduced.
+   */
   confirm: [
-    n(0.014, 6000, 0.10),
-    p(0.05, 784, 0.20, { duty: 0.25 }),
-    p(0.09, 1175, 0.20, { at: 0.045, duty: 0.25 }),
-    t(0.14, 392, 0.12, { at: 0.045 }),
+    nk(0.014, 6000, 0.10),
+    pk(0.05, 784, 0.16, { duty: 0.25, curve: 0.34 }),
+    pk(0.08, 1175, 0.16, { at: 0.045, duty: 0.25, curve: 0.34 }),
+    tk(0.13, 392, 0.10, { at: 0.045, curve: 0.42 }),
   ],
   cancel: [
-    n(0.02, 1400, 0.07),
-    p(0.09, 494, 0.19, { to: 262, duty: 0.5 }),
-    t(0.11, 165, 0.11, { to: 110 }),
+    nk(0.02, 1400, 0.07),
+    pk(0.09, 494, 0.16, { to: 262, duty: 0.5, curve: 0.34 }),
+    tk(0.11, 165, 0.10, { to: 110, curve: 0.4 }),
   ],
   menu_open: [
-    n(0.05, 3400, 0.07),
-    p(0.035, 587, 0.16, { duty: 0.25 }),
-    p(0.07, 880, 0.16, { at: 0.032, duty: 0.25 }),
-    t(0.10, 220, 0.10, { at: 0.032 }),
+    nk(0.05, 3400, 0.08, { to: 5200, curve: 0.3 }),
+    pk(0.035, 587, 0.17, { duty: 0.25, curve: 0.34 }),
+    pk(0.07, 880, 0.17, { at: 0.032, duty: 0.25, curve: 0.34 }),
+    tk(0.10, 220, 0.11, { at: 0.032, curve: 0.4 }),
   ],
   menu_close: [
-    n(0.04, 2600, 0.06),
-    p(0.04, 784, 0.16, { duty: 0.25 }),
-    p(0.08, 466, 0.16, { at: 0.036, duty: 0.25 }),
-    t(0.10, 175, 0.09, { at: 0.036 }),
+    nk(0.04, 2600, 0.07, { to: 1400, curve: 0.3 }),
+    pk(0.04, 784, 0.17, { duty: 0.25, curve: 0.34 }),
+    pk(0.08, 466, 0.17, { at: 0.036, duty: 0.25, curve: 0.34 }),
+    tk(0.10, 175, 0.10, { at: 0.036, curve: 0.4 }),
   ],
   // Two noise bursts, bright then dull: the flick of the page and the settle
-  // after it. One burst alone is a hiss, two are a sheet of paper.
+  // after it. One burst alone is a hiss, two are a sheet of paper -- and both
+  // are struck, because paper is.
   page_turn: [
-    n(0.035, 4200, 0.12),
-    n(0.06, 1600, 0.08, { at: 0.02 }),
-    p(0.05, 1245, 0.13, { at: 0.015, duty: 0.125, to: 1568 }),
-    t(0.09, 330, 0.08, { at: 0.015 }),
+    nk(0.035, 4200, 0.14, { to: 2200, curve: 0.26 }),
+    nk(0.06, 1600, 0.09, { at: 0.02, to: 900, curve: 0.3 }),
+    pk(0.05, 1245, 0.14, { at: 0.015, duty: 0.125, to: 1568, curve: 0.3 }),
+    tk(0.09, 330, 0.09, { at: 0.015, curve: 0.4 }),
   ],
-  tab: [p(0.04, 1046, 0.13, { duty: 0.125 }), p(0.04, 1318, 0.11, { at: 0.03, duty: 0.125 })],
+  tab: [
+    pk(0.04, 1046, 0.14, { duty: 0.125, curve: 0.3 }),
+    pk(0.04, 1318, 0.12, { at: 0.03, duty: 0.125, curve: 0.3 }),
+  ],
   denied: [
-    p(0.07, 300, 0.16, { duty: 0.5 }),
-    p(0.11, 200, 0.16, { at: 0.07, duty: 0.5, to: 140 }),
+    pk(0.07, 300, 0.17, { duty: 0.5, curve: 0.4, tone: 1200 }),
+    pk(0.11, 200, 0.17, { at: 0.07, duty: 0.5, to: 140, curve: 0.4, tone: 900 }),
   ],
 
   /* ------------------------------------------------------------- world */
 
-  bump: [n(0.06, 160, 0.15), t(0.07, 90, 0.1)],
-  step_grass: [n(0.05, 2600, 0.055)],
-  step_stone: [n(0.04, 1400, 0.05), t(0.04, 150, 0.04)],
-  step_dirt: [n(0.05, 1900, 0.05), t(0.05, 130, 0.045)],
-  step_wood: [n(0.045, 900, 0.05), t(0.05, 190, 0.05)],
-  step_sand: [n(0.07, 3600, 0.045)],
-  step_water: [n(0.08, 1800, 0.06), p(0.07, 620, 0.04, { to: 900, duty: 0.125 })],
+  bump: [nk(0.06, 160, 0.24, { curve: 0.36 }), tk(0.08, 90, 0.16, { curve: 0.38 })],
+  /**
+   * Footsteps.
+   *
+   * Struck, like everything else percussive here, but with a slow curve: a
+   * footfall on grass is a "shff" rather than a click, and a fast decay throws
+   * away most of the sound's energy along with its length.
+   *
+   * The levels are higher than they look next to the old flat versions and end
+   * up in the same place. An exponential decay holds roughly a third of the
+   * energy a rectangle of the same height does, so keeping the written number
+   * the same would have quietly halved every footstep in the game -- which is
+   * the sort of change that is impossible to notice and impossible to miss.
+   */
+  step_grass: [nk(0.05, 2600, 0.13, { to: 1500, curve: 0.5 })],
+  step_stone: [nk(0.04, 1400, 0.12, { curve: 0.44 }), tk(0.045, 150, 0.10, { curve: 0.5 })],
+  step_dirt: [nk(0.05, 1900, 0.12, { to: 1100, curve: 0.5 }), tk(0.05, 130, 0.10, { curve: 0.5 })],
+  step_wood: [nk(0.045, 900, 0.12, { curve: 0.44 }), tk(0.05, 190, 0.12, { curve: 0.5 })],
+  step_sand: [nk(0.07, 3600, 0.12, { to: 2200, curve: 0.55 })],
+  step_water: [
+    nk(0.08, 1800, 0.15, { to: 3600, curve: 0.55 }),
+    pk(0.07, 620, 0.10, { to: 900, duty: 0.125, curve: 0.5 }),
+  ],
   ledge_hop: [
     p(0.09, 420, 0.14, { to: 760, duty: 0.25 }),
     n(0.05, 1200, 0.06, { at: 0.2 }),
@@ -150,8 +219,9 @@ export const SFX: Record<string, SfxLayer[]> = {
   ],
   no_money: [p(0.1, 260, 0.16, { to: 150, duty: 0.5 }), n(0.08, 300, 0.06)],
   heal: [
-    ...[523, 659, 784, 1047].map((f, i) => t(0.1, f, 0.15, { at: i * 0.09 })),
-    t(0.4, 1047, 0.09, { at: 0.36 }),
+    ...[523, 659, 784, 1047].map((f, i) => tk(0.12, f, 0.15, { at: i * 0.09, curve: 0.4 })),
+    tk(0.42, 1047, 0.10, { at: 0.36, curve: 0.42 }),
+    tk(0.46, 523, 0.07, { at: 0.36, curve: 0.42 }),
   ],
   rain: [n(0.7, 5200, 0.035)],
   thunder: [n(0.6, 200, 0.14, { to: 60 }), t(0.7, 55, 0.12, { to: 35 })],
@@ -181,40 +251,116 @@ export const SFX: Record<string, SfxLayer[]> = {
   ],
   /** The wipe that carries the field into the battle screen. */
   battle_swoosh: [
-    n(0.42, 900, 0.13, { to: 5200 }),
-    p(0.42, 180, 0.12, { to: 1400, duty: 0.125 }),
-    t(0.34, 90, 0.12, { at: 0.1, to: 300 }),
+    ns(0.44, 800, 0.14, { to: 5600, attack: 0.5, curve: 0.20 }),
+    p(0.42, 180, 0.12, { to: 1400, duty: 0.125, env: 'swell', attack: 0.5, curve: 0.20 }),
+    t(0.34, 90, 0.12, { at: 0.1, to: 300, env: 'swell', attack: 0.45, curve: 0.2 }),
   ],
   send_out: [p(0.16, 500, 0.16, { to: 950, duty: 0.25 }), n(0.1, 2400, 0.05, { at: 0.12 })],
   withdraw: [p(0.16, 900, 0.15, { to: 420, duty: 0.25 }), n(0.08, 1800, 0.04)],
+  // Sinking. The decay is what makes it a collapse: the old one held its level
+  // all the way down and then stopped, which reads as a slide whistle rather
+  // than as something running out of strength.
   faint: [
-    p(0.55, 620, 0.18, { to: 62, duty: 0.25 }),
-    t(0.55, 280, 0.12, { to: 38 }),
-    n(0.10, 260, 0.07, { at: 0.46 }),
+    p(0.55, 620, 0.19, { to: 62, duty: 0.25, env: 'perc', curve: 0.42, attack: 0.02 }),
+    t(0.55, 280, 0.13, { to: 38, env: 'perc', curve: 0.42, attack: 0.02 }),
+    nk(0.12, 240, 0.09, { at: 0.44, curve: 0.3 }),
   ],
   flee: [
     n(0.22, 3000, 0.08),
     p(0.22, 900, 0.13, { to: 1800, duty: 0.125 }),
   ],
+  // A critical is `hit` with a shard of something ringing off it. The high-Q
+  // noise layer is the shard: a narrow band of noise reads as a struck edge,
+  // and it is the one part of the impact set allowed to hang on afterwards.
   crit: [
-    n(0.04, 7000, 0.16),
-    n(0.13, 2200, 0.13, { at: 0.02 }),
-    p(0.18, 1900, 0.17, { to: 420, duty: 0.125 }),
-    p(0.22, 2600, 0.08, { at: 0.05, to: 1300, duty: 0.125 }),
-    t(0.24, 150, 0.16, { to: 60 }),
+    nk(0.018, 9200, 0.25, { curve: 0.13 }),
+    nk(0.12, 2400, 0.16, { at: 0.012, to: 900, curve: 0.18 }),
+    nk(0.26, 210, 0.20, { at: 0.008, curve: 0.30 }),
+    tk(0.28, 160, 0.21, { to: 55, curve: 0.26 }),
+    nk(0.30, 3100, 0.10, { at: 0.02, q: 14, curve: 0.30 }),
+    pk(0.16, 2000, 0.15, { to: 520, duty: 0.125, curve: 0.26 }),
+    pk(0.22, 2600, 0.07, { at: 0.04, to: 1300, duty: 0.125, curve: 0.30 }),
   ],
-  miss: [n(0.14, 4000, 0.07), p(0.14, 700, 0.1, { to: 380, duty: 0.125 })],
-  block: [n(0.07, 900, 0.12), t(0.14, 240, 0.12, { to: 200 })],
+  // A whiff has no transient at all -- it is the one battle sound that never
+  // hits anything, and the swell shape is what says so.
+  miss: [
+    ns(0.16, 1100, 0.11, { to: 5400, attack: 0.42, curve: 0.28 }),
+    p(0.14, 700, 0.10, { to: 360, duty: 0.125, env: 'swell', attack: 0.36, curve: 0.3 }),
+  ],
+  // The opposite: all transient and no tail. A blocked blow stops dead, and the
+  // very short decay is the entire message.
+  block: [
+    nk(0.018, 4600, 0.14, { curve: 0.12 }),
+    nk(0.06, 900, 0.15, { to: 480, curve: 0.16 }),
+    tk(0.12, 240, 0.15, { to: 205, curve: 0.18 }),
+    pk(0.08, 420, 0.09, { duty: 0.5, tone: 1000, curve: 0.18 }),
+  ],
   stat_up: [...arp([523, 659, 880], 0.06, 0.08, 0.14)],
   stat_down: [...arp([880, 659, 494], 0.06, 0.09, 0.14)],
-  exp_tick: [p(0.03, 1600, 0.05, { duty: 0.125 })],
-  hp_low: [p(0.07, 1200, 0.1, { duty: 0.5 })],
+  // The exp bar filling. It fires many times a second, so it is a tick rather
+  // than a note -- but the old one measured a hundredth of full scale, which is
+  // below the music and therefore no sound at all. A struck envelope buys the
+  // audibility that raw gain would have paid for in fatigue.
+  exp_tick: [
+    nk(0.008, 6400, 0.06),
+    pk(0.028, 1568, 0.13, { duty: 0.25, curve: 0.30 }),
+  ],
+  /**
+   * The low-health warning, once every 34 ticks for as long as it lasts -- so
+   * of everything in this file, this is the cue with the most opportunity to
+   * become hateful. It has to be noticed and it cannot grate.
+   *
+   * A bare square wave at 1200Hz did both jobs badly: piercing enough to
+   * annoy, dull enough to ignore. This is a triangle with a pulse on top of
+   * it, struck and short: the attack does the alerting and the tone is soft
+   * enough to hear a hundred times.
+   */
+  hp_low: [
+    pk(0.05, 1046, 0.09, { duty: 0.5, curve: 0.30, tone: 2600 }),
+    tk(0.09, 523, 0.10, { curve: 0.36 }),
+  ],
+  /**
+   * Levelling up.
+   *
+   * One of the two or three most-repeated rewards in the game, so it gets the
+   * most structure of anything in this file. Three parts, and the shape matters
+   * more than any individual note:
+   *
+   *   a flourish   four fast plucked steps up the tonic triad, 48ms apart
+   *   a statement  two longer notes, climbing to the octave and past it
+   *   a resolve    the whole tonic triad struck together under a held third,
+   *                with a bass note and a cymbal, ringing out for half a second
+   *
+   * The rhythm is what makes it recognisable: everything else in the reward
+   * family (badge, victory, caught) is an even run of equal notes, and an even
+   * run cannot *arrive* anywhere. Fast-fast-fast-fast, slow, slow, LAND is a
+   * cadence, and the ear hears the landing as the thing that was earned.
+   *
+   * The melody only ever rises -- G, C, E, G, C, D, E -- and the last note is
+   * the third of the chord underneath it rather than the root, which is why it
+   * sounds pleased rather than merely finished.
+   */
   levelup: [
-    ...arp([523, 659, 784, 1047, 1319], 0.07, 0.11, 0.17),
-    p(0.42, 1568, 0.15, { at: 0.34, duty: 0.25 }),
-    p(0.42, 1047, 0.09, { at: 0.34, duty: 0.5 }),
-    t(0.5, 262, 0.12, { at: 0.32 }),
-    n(0.22, 5200, 0.035, { at: 0.34 }),
+    ...[392, 523, 659, 784].map((f, i) => pk(0.075, f, 0.17, {
+      at: i * 0.048, duty: 0.25, curve: 0.34,
+    })),
+    // A needle of noise on each step of the run, so the flourish has
+    // consonants and does not smear into one rising tone.
+    ...[6000, 6400, 6800, 7200].map((f, i) => nk(0.010, f, 0.07, { at: i * 0.048 })),
+
+    pk(0.11, 1047, 0.18, { at: 0.196, duty: 0.25, curve: 0.40 }),
+    // The lift: one step above the octave, short, unresolved on purpose.
+    pk(0.075, 1175, 0.18, { at: 0.306, duty: 0.25, curve: 0.34 }),
+
+    // The landing. A held third over the triad, and a cymbal swelling into it
+    // from a beat earlier so the arrival is prepared rather than sudden.
+    ns(0.13, 3000, 0.07, { at: 0.25, to: 7000, attack: 0.75, curve: 0.2 }),
+    pk(0.52, 1319, 0.17, { at: 0.381, duty: 0.25, curve: 0.42, vibrato: 18 }),
+    pk(0.50, 784, 0.085, { at: 0.381, duty: 0.5, curve: 0.42 }),
+    pk(0.50, 523, 0.075, { at: 0.385, duty: 0.5, curve: 0.42 }),
+    pk(0.44, 2637, 0.06, { at: 0.381, duty: 0.125, curve: 0.34 }),
+    tk(0.56, 131, 0.16, { at: 0.375, curve: 0.45 }),
+    nk(0.42, 7000, 0.065, { at: 0.381, to: 3200, curve: 0.30 }),
   ],
   learn_move: [...arp([659, 831, 988, 1319], 0.08, 0.11, 0.16)],
   evolve: [
@@ -238,184 +384,274 @@ export const SFX: Record<string, SfxLayer[]> = {
    * off, and a resisted one is the same hit with the crack stripped out.
    * Noise below 400Hz is lowpassed by the synth into a thud, above 3000 into a
    * crack, so the frequency numbers here are choosing a percussion part.
+   *
+   * All of it is struck (`nk`/`tk`/`pk`): the peak lands in two milliseconds
+   * and everything after it is falling away. These were previously written on
+   * the held music envelope, which meant a punch was a two-hundred-millisecond
+   * rectangle of noise that stopped -- audibly a beep, and visible as a brick
+   * in tools/shots/sfxscope.js. Nothing else about them mattered until that
+   * was fixed.
+   *
+   * The falling filter on each body layer (`to`) is the other half: real debris
+   * gets duller as it settles, and a hit whose spectrum never moves sounds
+   * synthetic no matter how sharp its attack is.
    */
   hit: [
-    n(0.02, 7000, 0.20),
-    n(0.10, 1100, 0.22),
-    n(0.16, 260, 0.16, { at: 0.01 }),
-    t(0.22, 200, 0.19, { to: 90 }),
-    p(0.07, 620, 0.10, { to: 300, duty: 0.25 }),
+    nk(0.016, 8000, 0.28, { curve: 0.16 }),
+    nk(0.10, 1300, 0.28, { to: 640, curve: 0.22 }),
+    nk(0.17, 250, 0.24, { at: 0.004, curve: 0.30 }),
+    tk(0.21, 200, 0.26, { to: 84, curve: 0.28 }),
+    pk(0.07, 580, 0.13, { to: 280, duty: 0.25, curve: 0.22, tone: 2200 }),
   ],
   hit_super: [
-    n(0.025, 8600, 0.24),
-    n(0.20, 1500, 0.26),
-    n(0.30, 220, 0.20, { at: 0.02 }),
-    t(0.36, 190, 0.24, { to: 48 }),
-    p(0.20, 880, 0.16, { at: 0.02, to: 2100, duty: 0.125 }),
-    p(0.30, 320, 0.11, { at: 0.06, to: 130, duty: 0.5 }),
-    // A second, duller crack behind the first: debris, and the thing that
-    // stops a big hit sounding like a loud small one.
-    n(0.12, 3000, 0.14, { at: 0.14 }),
+    nk(0.02, 9600, 0.30, { curve: 0.14 }),
+    nk(0.24, 1700, 0.30, { to: 520, curve: 0.20 }),
+    nk(0.34, 210, 0.28, { at: 0.008, curve: 0.30 }),
+    tk(0.40, 185, 0.30, { to: 44, curve: 0.26 }),
+    // The shriek up and the groan down, together: a big hit is both.
+    pk(0.18, 900, 0.18, { at: 0.012, to: 2400, duty: 0.125, curve: 0.34 }),
+    pk(0.30, 300, 0.12, { at: 0.05, to: 118, duty: 0.5, curve: 0.32, tone: 1100 }),
+    // Debris. Two duller cracks behind the first, arriving late and unevenly
+    // -- the thing that stops a big hit sounding like a loud small one.
+    nk(0.14, 1800, 0.14, { at: 0.13, to: 700, curve: 0.24 }),
+    nk(0.10, 1200, 0.10, { at: 0.24, to: 500, curve: 0.24 }),
   ],
-  // No bright crack at all. Absence is the clearest way to say "that barely
-  // landed" -- a quieter version of `hit` just sounds further away.
+  // No bright crack at all, and the shortest tail of the three. Absence is the
+  // clearest way to say "that barely landed" -- a quieter version of `hit`
+  // just sounds further away.
   hit_weak: [
-    n(0.05, 380, 0.14),
-    n(0.08, 800, 0.09, { at: 0.015 }),
-    t(0.18, 150, 0.14, { to: 85 }),
-    p(0.13, 330, 0.09, { to: 180, duty: 0.5 }),
+    nk(0.05, 350, 0.20, { curve: 0.30 }),
+    nk(0.07, 760, 0.13, { at: 0.008, to: 380, curve: 0.26 }),
+    tk(0.16, 150, 0.20, { to: 88, curve: 0.30 }),
+    pk(0.10, 320, 0.12, { to: 175, duty: 0.5, tone: 850, curve: 0.30 }),
   ],
 
-  vessel_throw: [p(0.16, 300, 0.17, { to: 800, duty: 0.25 }), n(0.06, 2600, 0.04, { at: 0.14 })],
-  vessel_shake: [p(0.07, 520, 0.15, { duty: 0.125 }), n(0.04, 700, 0.05)],
-  vessel_click: [n(0.05, 5200, 0.1), p(0.06, 1600, 0.12, { duty: 0.125 })],
-  vessel_caught: [
-    n(0.05, 5600, 0.09),
-    ...arp([659, 831, 1109, 1319], 0.09, 0.12, 0.18),
-    p(0.55, 1661, 0.14, { at: 0.36, duty: 0.25 }),
-    t(0.6, 330, 0.11, { at: 0.34 }),
-    n(0.3, 5000, 0.03, { at: 0.36 }),
+  vessel_throw: [
+    p(0.16, 300, 0.17, { to: 800, duty: 0.25, env: 'swell', attack: 0.4, curve: 0.24 }),
+    nk(0.06, 2600, 0.06, { at: 0.14, to: 5200, curve: 0.3 }),
   ],
-  vessel_break: [n(0.12, 1800, 0.14), p(0.14, 700, 0.13, { to: 260, duty: 0.125 })],
+  vessel_shake: [
+    pk(0.07, 520, 0.21, { duty: 0.125, curve: 0.36 }),
+    nk(0.04, 700, 0.10, { curve: 0.3 }),
+  ],
+  // The moment the catch lands. All transient: this is a latch closing.
+  vessel_click: [
+    nk(0.014, 7000, 0.22, { curve: 0.14 }),
+    nk(0.06, 3000, 0.14, { at: 0.004, q: 8, curve: 0.24 }),
+    pk(0.06, 1600, 0.18, { duty: 0.125, curve: 0.3 }),
+  ],
+  vessel_caught: [
+    nk(0.05, 5600, 0.10, { to: 8000, curve: 0.3 }),
+    ...[659, 831, 1109, 1319].map((f, i) => pk(0.13, f, 0.18, {
+      at: i * 0.09, duty: 0.25, curve: 0.38,
+    })),
+    // Held, then allowed to ring out rather than stopped -- the jingle used to
+    // end by having its last note switched off, which is audibly a cut.
+    pk(0.55, 1661, 0.14, { at: 0.36, duty: 0.25, curve: 0.44 }),
+    tk(0.60, 330, 0.11, { at: 0.34, curve: 0.46 }),
+    nk(0.30, 5000, 0.04, { at: 0.36, to: 2600, curve: 0.34 }),
+  ],
+  vessel_break: [
+    nk(0.02, 6000, 0.14, { curve: 0.12 }),
+    nk(0.12, 1800, 0.15, { to: 800, curve: 0.24 }),
+    pk(0.14, 700, 0.13, { to: 260, duty: 0.125, curve: 0.3 }),
+  ],
 
   /* ---------------------------------------------------- move archetypes */
 
   /**
    * Every element gets the same three-part construction -- an attack transient,
-   * a sustained middle that carries the element's character, and a tail that
-   * says what the move left behind (crackle, spray, rubble, ringing). Skipping
-   * the tail is what made these sound like they stopped rather than finished.
+   * a middle that carries the element's character, and a tail that says what
+   * the move left behind (crackle, spray, rubble, ringing). Skipping the tail
+   * is what made these sound like they stopped rather than finished.
+   *
+   * What separates them is not their pitches, which nobody can hear under a
+   * layer of noise, but their *shape*: whether the sound is struck or arrives,
+   * how fast it falls away, and which direction its spectrum moves.
+   *
+   *   struck and dead    stone, iron, a body blow      the tail is debris
+   *   struck then hiss   fire, venom                   the tail is a reaction
+   *   arriving           gale, spirit, psy, swarm      there is no impact
+   *   struck then ring   spark, frost, a critical      the tail is resonance
+   *
+   * A tail that is a handful of short struck bursts (rubble, crackle, drips)
+   * beats one long noise layer every time: separate events read as separate
+   * objects, and one sustained hiss reads as tape.
    */
   fx_hit: [
-    n(0.02, 5000, 0.15),
-    n(0.09, 1100, 0.17),
-    t(0.14, 170, 0.13, { to: 100 }),
+    nk(0.016, 5400, 0.15, { curve: 0.16 }),
+    nk(0.08, 1200, 0.17, { to: 620, curve: 0.22 }),
+    tk(0.13, 175, 0.14, { to: 100, curve: 0.28 }),
   ],
   fx_heavy: [
-    n(0.03, 3000, 0.16),
-    n(0.18, 420, 0.22),
-    t(0.30, 105, 0.20, { to: 48 }),
-    p(0.12, 240, 0.11, { to: 110, duty: 0.125 }),
-    n(0.14, 900, 0.10, { at: 0.12 }),
+    nk(0.03, 3400, 0.16, { to: 1500, curve: 0.18 }),
+    nk(0.20, 380, 0.23, { curve: 0.30 }),
+    tk(0.30, 100, 0.23, { to: 44, curve: 0.30 }),
+    pk(0.12, 240, 0.11, { to: 104, duty: 0.125, tone: 900, curve: 0.28 }),
+    nk(0.16, 900, 0.10, { at: 0.10, to: 380, curve: 0.30 }),
   ],
+  // Ignition, then a hiss that opens up underneath a low roar, then crackle.
+  // The hiss is the only part that swells; everything else was struck.
   fx_fire: [
-    n(0.06, 900, 0.16),
-    n(0.40, 2600, 0.16),
-    n(0.34, 300, 0.14, { at: 0.02 }),
-    p(0.34, 380, 0.13, { to: 170, duty: 0.125 }),
-    t(0.34, 140, 0.14, { to: 80 }),
-    n(0.16, 1400, 0.12, { at: 0.30 }),
+    nk(0.055, 700, 0.29, { to: 300, curve: 0.22 }),
+    ns(0.40, 1300, 0.12, { to: 3600, attack: 0.26, curve: 0.30 }),
+    nk(0.30, 260, 0.16, { at: 0.008, curve: 0.30 }),
+    pk(0.30, 360, 0.11, { to: 150, duty: 0.125, vibrato: 45, curve: 0.40 }),
+    tk(0.32, 130, 0.14, { to: 72, curve: 0.34 }),
+    nk(0.05, 2600, 0.09, { at: 0.22, curve: 0.20 }),
+    nk(0.045, 3400, 0.08, { at: 0.29, curve: 0.20 }),
+    nk(0.05, 2100, 0.07, { at: 0.36, curve: 0.20 }),
   ],
+  // Slap, wash, drips. The wash sweeps its filter upward as it opens, which is
+  // the difference between spray and static.
   fx_water: [
-    n(0.05, 600, 0.14),
-    n(0.34, 2000, 0.14),
-    p(0.28, 780, 0.13, { to: 340, duty: 0.25 }),
-    t(0.32, 200, 0.13, { to: 110 }),
-    n(0.20, 4400, 0.12, { at: 0.28 }),
-    // One rising droplet in the spray. A single pitched voice in a wash of
-    // noise is what makes it water rather than static.
-    p(0.12, 520, 0.08, { at: 0.30, to: 900, duty: 0.125 }),
+    nk(0.045, 520, 0.29, { to: 950, curve: 0.24 }),
+    ns(0.34, 900, 0.14, { to: 4400, attack: 0.28, curve: 0.30 }),
+    pk(0.26, 800, 0.12, { to: 320, duty: 0.25, tone: 2000, curve: 0.40 }),
+    tk(0.30, 210, 0.17, { to: 105, curve: 0.32 }),
+    ns(0.20, 3400, 0.055, { at: 0.26, to: 7000, attack: 0.34, curve: 0.26 }),
+    // Rising droplets in the spray. A pitched voice in a wash of noise is what
+    // makes it water rather than weather.
+    pk(0.09, 560, 0.055, { at: 0.28, to: 1150, duty: 0.125, curve: 0.22 }),
+    pk(0.07, 900, 0.045, { at: 0.37, to: 1600, duty: 0.125, curve: 0.22 }),
   ],
+  // Snap and ring: the shortest transient in the library, a resonant zap, and
+  // an after-buzz that keeps ringing once the pitch has gone.
   fx_spark: [
-    n(0.03, 8000, 0.20),
-    p(0.26, 1900, 0.18, { to: 300, duty: 0.125, vibrato: 110 }),
-    p(0.22, 2700, 0.12, { at: 0.03, to: 520, duty: 0.125 }),
-    n(0.22, 2400, 0.13, { at: 0.08 }),
-    t(0.22, 160, 0.12, { at: 0.02, to: 70 }),
+    nk(0.014, 9600, 0.30, { curve: 0.10 }),
+    nk(0.16, 4200, 0.17, { at: 0.004, to: 2400, q: 9, curve: 0.14 }),
+    pk(0.22, 2400, 0.20, { to: 340, duty: 0.125, vibrato: 140, curve: 0.28 }),
+    pk(0.20, 3100, 0.13, { at: 0.02, to: 600, duty: 0.125, curve: 0.28 }),
+    tk(0.20, 155, 0.17, { to: 70, curve: 0.26 }),
+    nk(0.26, 5400, 0.09, { at: 0.05, q: 16, curve: 0.32 }),
+    nk(0.03, 7000, 0.11, { at: 0.14, curve: 0.14 }),
+    nk(0.03, 6000, 0.08, { at: 0.20, curve: 0.14 }),
   ],
   fx_frost: [
-    n(0.04, 5200, 0.12),
-    p(0.32, 2500, 0.13, { to: 1400, duty: 0.125 }),
+    nk(0.035, 6600, 0.28, { curve: 0.16 }),
+    pk(0.30, 2600, 0.13, { to: 1450, duty: 0.125, curve: 0.44 }),
     // The second slide sits a few semitones under the first and lands at the
     // same time; two glides beating against each other is the shiver.
-    p(0.32, 1900, 0.08, { at: 0.03, to: 1050, duty: 0.125 }),
-    n(0.16, 6400, 0.11, { at: 0.26 }),
-    t(0.24, 280, 0.11, { at: 0.24, to: 190 }),
+    pk(0.30, 1960, 0.08, { at: 0.03, to: 1090, duty: 0.125, curve: 0.44 }),
+    nk(0.26, 3600, 0.085, { at: 0.02, q: 12, curve: 0.28 }),
+    tk(0.22, 300, 0.075, { at: 0.16, to: 190, curve: 0.26 }),
+    // Splintering, after the freeze rather than during it.
+    nk(0.05, 7200, 0.06, { at: 0.24, curve: 0.16 }),
+    nk(0.05, 8400, 0.045, { at: 0.31, curve: 0.16 }),
   ],
   fx_leaf: [
-    n(0.30, 4600, 0.11),
-    n(0.10, 2200, 0.09, { at: 0.02 }),
-    p(0.22, 940, 0.11, { to: 620, duty: 0.25 }),
-    t(0.20, 190, 0.08, { at: 0.06, to: 130 }),
+    ns(0.30, 3600, 0.11, { to: 7000, attack: 0.36, curve: 0.30 }),
+    nk(0.08, 2000, 0.09, { at: 0.008, to: 4200, curve: 0.24 }),
+    pk(0.20, 940, 0.10, { to: 620, duty: 0.25, tone: 2600, curve: 0.40 }),
+    tk(0.18, 190, 0.08, { at: 0.05, to: 130, curve: 0.30 }),
+    nk(0.04, 5200, 0.07, { at: 0.20, curve: 0.20 }),
+    nk(0.04, 4200, 0.06, { at: 0.27, curve: 0.20 }),
   ],
+  // Stone cracks and stops. The boom is long, but nothing about it rings --
+  // and the tail is four separate pieces of rubble landing, not a rumble.
   fx_quake: [
-    n(0.04, 2400, 0.13),
-    t(0.60, 66, 0.24, { to: 36 }),
-    n(0.55, 230, 0.17),
-    t(0.34, 115, 0.15, { at: 0.18, to: 55 }),
-    n(0.22, 700, 0.13, { at: 0.34 }),
-    n(0.18, 1600, 0.09, { at: 0.42 }),
+    nk(0.03, 2200, 0.14, { to: 800, curve: 0.15 }),
+    tk(0.46, 62, 0.25, { to: 36, curve: 0.30 }),
+    nk(0.40, 220, 0.20, { curve: 0.34 }),
+    tk(0.30, 112, 0.15, { at: 0.14, to: 54, curve: 0.30 }),
+    nk(0.06, 800, 0.15, { at: 0.26, curve: 0.18 }),
+    nk(0.05, 1500, 0.13, { at: 0.33, curve: 0.18 }),
+    nk(0.05, 560, 0.12, { at: 0.41, curve: 0.18 }),
+    nk(0.04, 1100, 0.09, { at: 0.48, curve: 0.18 }),
   ],
+  // Three overlapping waves rather than one bloom. A single rising swell is
+  // what fx_light is, and the two were measuring as the same sound with
+  // different pitches; a psychic move should throb, and the ripple in the
+  // envelope is the only thing that says so at this length.
   fx_psy: [
-    p(0.40, 480, 0.13, { to: 1500, duty: 0.125, vibrato: 70 }),
-    p(0.40, 723, 0.10, { at: 0.05, to: 2260, duty: 0.125, vibrato: 40 }),
-    t(0.34, 240, 0.10, { at: 0.04, to: 620 }),
-    n(0.18, 5200, 0.07, { at: 0.30 }),
+    ns(0.12, 700, 0.08, { to: 1600, attack: 0.5, curve: 0.3 }),
+    p(0.20, 480, 0.13, { to: 900, duty: 0.125, vibrato: 90, env: 'swell', attack: 0.30, curve: 0.24 }),
+    p(0.20, 640, 0.12, { at: 0.13, to: 1200, duty: 0.125, vibrato: 90, env: 'swell', attack: 0.30, curve: 0.24 }),
+    p(0.26, 860, 0.12, { at: 0.26, to: 1700, duty: 0.125, vibrato: 90, env: 'swell', attack: 0.30, curve: 0.28 }),
+    t(0.34, 240, 0.10, { at: 0.04, to: 620, env: 'swell', attack: 0.30, curve: 0.30 }),
+    nk(0.24, 2600, 0.09, { at: 0.30, q: 10, curve: 0.32 }),
   ],
+  // Metal: an almost instantaneous transient and a long inharmonic ring. Two
+  // resonances rather than one, because a single one is a bell and two are a
+  // struck plate.
   fx_iron: [
-    n(0.03, 9000, 0.18),
-    n(0.10, 2600, 0.13, { at: 0.01 }),
-    p(0.26, 2300, 0.14, { to: 720, duty: 0.125 }),
-    p(0.26, 1730, 0.09, { at: 0.02, to: 540, duty: 0.125 }),
-    t(0.26, 145, 0.15, { to: 85 }),
+    nk(0.012, 10000, 0.22, { curve: 0.10 }),
+    nk(0.36, 2400, 0.13, { at: 0.004, q: 18, curve: 0.34 }),
+    nk(0.30, 3550, 0.08, { at: 0.006, q: 22, curve: 0.32 }),
+    pk(0.30, 2300, 0.13, { to: 900, duty: 0.125, curve: 0.40 }),
+    pk(0.30, 1730, 0.08, { at: 0.02, to: 670, duty: 0.125, curve: 0.40 }),
+    tk(0.22, 150, 0.16, { to: 88, curve: 0.26 }),
   ],
   fx_dark: [
-    n(0.05, 300, 0.12),
-    t(0.44, 150, 0.17, { to: 55 }),
-    t(0.40, 224, 0.10, { at: 0.02, to: 82 }),
-    n(0.36, 420, 0.11),
-    p(0.24, 300, 0.10, { at: 0.22, to: 130, duty: 0.5, vibrato: 50 }),
+    nk(0.06, 200, 0.13, { curve: 0.25 }),
+    t(0.44, 150, 0.17, { to: 52, env: 'swell', attack: 0.20, curve: 0.36 }),
+    t(0.40, 224, 0.10, { at: 0.02, to: 80, env: 'swell', attack: 0.24, curve: 0.34 }),
+    ns(0.36, 420, 0.11, { to: 170, attack: 0.34, curve: 0.34 }),
+    pk(0.24, 300, 0.10, { at: 0.20, to: 122, duty: 0.5, vibrato: 60, tone: 900, curve: 0.38 }),
   ],
   fx_light: [
-    n(0.05, 7000, 0.10),
-    p(0.44, 700, 0.14, { to: 2100, duty: 0.25 }),
+    nk(0.03, 7200, 0.10, { curve: 0.18 }),
+    p(0.42, 700, 0.14, { to: 2100, duty: 0.25, env: 'swell', attack: 0.22, curve: 0.30 }),
     // A clean octave above, so the rise reads as radiant rather than as a siren.
-    p(0.44, 1050, 0.11, { at: 0.04, to: 3150, duty: 0.25 }),
-    t(0.40, 350, 0.11, { at: 0.02, to: 1050 }),
-    n(0.24, 6000, 0.09, { at: 0.28 }),
+    p(0.42, 1050, 0.11, { at: 0.04, to: 3150, duty: 0.25, env: 'swell', attack: 0.22, curve: 0.30 }),
+    t(0.38, 350, 0.11, { at: 0.02, to: 1050, env: 'swell', attack: 0.26, curve: 0.30 }),
+    ns(0.26, 4000, 0.09, { at: 0.24, to: 8600, attack: 0.40, curve: 0.30 }),
   ],
+  // No transient anywhere in this one. It was already happening.
   fx_spirit: [
-    p(0.46, 420, 0.12, { to: 235, duty: 0.125, vibrato: 130 }),
-    p(0.46, 628, 0.07, { at: 0.03, to: 350, duty: 0.125, vibrato: 90 }),
-    t(0.40, 105, 0.11, { to: 70 }),
-    n(0.32, 1600, 0.06),
+    p(0.46, 420, 0.12, { to: 235, duty: 0.125, vibrato: 130, env: 'swell', attack: 0.32, curve: 0.34 }),
+    p(0.46, 628, 0.07, { at: 0.03, to: 350, duty: 0.125, vibrato: 90, env: 'swell', attack: 0.32, curve: 0.34 }),
+    t(0.40, 105, 0.11, { to: 70, env: 'swell', attack: 0.30, curve: 0.34 }),
+    ns(0.34, 1200, 0.07, { to: 480, attack: 0.40, curve: 0.34 }),
+    ns(0.24, 4200, 0.05, { at: 0.16, to: 1900, attack: 0.40, curve: 0.30 }),
   ],
   fx_venom: [
-    n(0.05, 1800, 0.10),
-    p(0.32, 260, 0.13, { to: 430, duty: 0.5, vibrato: 80 }),
-    t(0.30, 130, 0.11, { at: 0.02, to: 200 }),
-    n(0.28, 1200, 0.08, { at: 0.04 }),
+    nk(0.04, 1600, 0.11, { to: 700, curve: 0.20 }),
+    p(0.30, 250, 0.12, { to: 430, duty: 0.5, vibrato: 90, tone: 1400, env: 'swell', attack: 0.18, curve: 0.40 }),
+    t(0.28, 125, 0.11, { at: 0.02, to: 200, env: 'swell', attack: 0.20, curve: 0.36 }),
+    ns(0.24, 1200, 0.07, { at: 0.05, to: 2600, attack: 0.40, curve: 0.30 }),
+    // Bubbles: short, pitched, rising, unevenly spaced.
+    pk(0.05, 400, 0.08, { at: 0.13, to: 700, duty: 0.125, curve: 0.20 }),
+    pk(0.05, 520, 0.07, { at: 0.21, to: 880, duty: 0.125, curve: 0.20 }),
+    pk(0.045, 340, 0.06, { at: 0.30, to: 610, duty: 0.125, curve: 0.20 }),
   ],
   fx_swarm: [
-    n(0.42, 3200, 0.10),
-    n(0.36, 1400, 0.07, { at: 0.03 }),
-    p(0.38, 1300, 0.09, { to: 1080, duty: 0.125, vibrato: 170 }),
-    p(0.36, 660, 0.07, { at: 0.04, to: 560, duty: 0.125, vibrato: 200 }),
+    ns(0.40, 3000, 0.10, { to: 1500, attack: 0.34, curve: 0.34 }),
+    ns(0.34, 1300, 0.07, { at: 0.03, to: 2800, attack: 0.40, curve: 0.30 }),
+    p(0.38, 1300, 0.09, { to: 1080, duty: 0.125, vibrato: 170, env: 'swell', attack: 0.30, curve: 0.32 }),
+    p(0.36, 660, 0.07, { at: 0.04, to: 560, duty: 0.125, vibrato: 200, env: 'swell', attack: 0.30, curve: 0.32 }),
+    // One bite at the end, so the swarm arrives somewhere.
+    nk(0.05, 2400, 0.11, { at: 0.34, to: 1100, curve: 0.20 }),
   ],
+  // A gale passes: the filter sweeps up as it comes and falls as it goes, which
+  // is the whole sound. It is the one archetype with no impact in it at all.
   fx_wind: [
-    n(0.40, 2400, 0.13),
-    n(0.22, 5000, 0.08, { at: 0.14 }),
-    p(0.34, 800, 0.09, { to: 1600, duty: 0.125 }),
-    t(0.30, 190, 0.08, { at: 0.04, to: 420 }),
+    ns(0.38, 800, 0.14, { to: 5200, attack: 0.44, curve: 0.32 }),
+    ns(0.26, 5400, 0.08, { at: 0.20, to: 1100, attack: 0.30, curve: 0.30 }),
+    p(0.34, 800, 0.09, { to: 1700, duty: 0.125, env: 'swell', attack: 0.36, curve: 0.30 }),
+    t(0.28, 190, 0.08, { at: 0.04, to: 420, env: 'swell', attack: 0.36, curve: 0.30 }),
   ],
+  // A wind-up, so it is all swell and no landing -- and it ends on a tick that
+  // says the charge is ready rather than simply stopping.
   fx_charge: [
-    p(0.62, 200, 0.12, { to: 1250, duty: 0.125 }),
-    p(0.58, 300, 0.07, { at: 0.04, to: 1870, duty: 0.125 }),
-    n(0.62, 1400, 0.07),
-    t(0.50, 100, 0.09, { at: 0.06, to: 300 }),
+    p(0.60, 200, 0.12, { to: 1250, duty: 0.125, env: 'swell', attack: 0.55, curve: 0.14 }),
+    p(0.56, 300, 0.07, { at: 0.04, to: 1870, duty: 0.125, env: 'swell', attack: 0.55, curve: 0.14 }),
+    ns(0.60, 1200, 0.07, { to: 3000, attack: 0.6, curve: 0.14 }),
+    t(0.48, 100, 0.09, { at: 0.06, to: 300, env: 'swell', attack: 0.5, curve: 0.16 }),
+    nk(0.06, 6000, 0.10, { at: 0.60, curve: 0.18 }),
   ],
   fx_heal: [
-    ...[659, 831, 988].map((f, i) => t(0.14, f, 0.14, { at: i * 0.08 })),
-    t(0.34, 330, 0.10, { at: 0.02 }),
-    n(0.20, 6200, 0.05, { at: 0.14 }),
+    ...[659, 831, 988].map((f, i) => t(0.16, f, 0.12, { at: i * 0.08, env: 'perc', curve: 0.45 })),
+    t(0.34, 330, 0.09, { at: 0.02, env: 'perc', curve: 0.5 }),
+    ns(0.20, 6200, 0.05, { at: 0.14, to: 9000, attack: 0.4, curve: 0.3 }),
   ],
   fx_buff: [...arp([523, 698, 880], 0.07, 0.10, 0.14), t(0.26, 262, 0.10, { at: 0.12 })],
   fx_debuff: [...arp([740, 587, 466], 0.07, 0.11, 0.14), t(0.28, 233, 0.10, { at: 0.12 })],
   fx_weather: [
-    n(0.62, 1800, 0.11),
-    n(0.34, 4200, 0.06, { at: 0.24 }),
-    t(0.62, 120, 0.10, { to: 85 }),
-    p(0.40, 300, 0.06, { at: 0.10, to: 220, duty: 0.125, vibrato: 40 }),
+    ns(0.62, 1400, 0.12, { to: 2600, attack: 0.40, curve: 0.26 }),
+    ns(0.34, 4200, 0.07, { at: 0.24, to: 6000, attack: 0.4, curve: 0.26 }),
+    t(0.62, 120, 0.11, { to: 85, env: 'swell', attack: 0.36, curve: 0.26 }),
+    p(0.40, 300, 0.06, { at: 0.10, to: 220, duty: 0.125, vibrato: 40, env: 'swell', attack: 0.4, curve: 0.26 }),
   ],
 
   /* -------------------------------------------------------------- talk */

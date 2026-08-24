@@ -43,6 +43,7 @@ const ui = {
 
   btnPlay: el('btn-play'),
   btnCheck: el('btn-check'),
+  modeButtons: [el('btn-mode-borderless'), el('btn-mode-windowed')],
   btnFolder: el('btn-folder'),
   btnRefreshNotes: el('btn-refresh-notes'),
 
@@ -228,8 +229,18 @@ async function refresh() {
   ui.sLast.textContent = relativeTime(state.play?.lastPlayed);
   ui.shelfSize.textContent = fileSize(state.install?.bytes);
 
+  renderDisplayMode(state.display?.mode);
   renderUpdate(state.update);
   updateNotesDot();
+}
+
+/* --------------------------------------------------------- display mode */
+
+function renderDisplayMode(mode) {
+  const chosen = mode === 'windowed' ? 'windowed' : 'borderless';
+  for (const btn of ui.modeButtons) {
+    btn.setAttribute('aria-pressed', String(btn.dataset.mode === chosen));
+  }
 }
 
 /* ---------------------------------------------------------- patch notes */
@@ -418,6 +429,15 @@ ui.btnUpdate.addEventListener('click', async () => {
 ui.btnBarNotes.addEventListener('click', () => showView('notes'));
 ui.btnBarClose.addEventListener('click', () => { dismissed = true; ui.bar.hidden = true; });
 ui.btnRefreshNotes.addEventListener('click', () => loadNotes(true));
+for (const btn of ui.modeButtons) {
+  btn.addEventListener('click', async () => {
+    // Paint the choice immediately; the main process is the authority and its
+    // answer corrects the guess if it disagreed.
+    renderDisplayMode(btn.dataset.mode);
+    renderDisplayMode(await window.launcher.setDisplayMode(btn.dataset.mode));
+  });
+}
+
 ui.btnFolder.addEventListener('click', () => window.launcher.openGameFolder());
 
 el('btn-min').addEventListener('click', () => window.launcher.minimize());

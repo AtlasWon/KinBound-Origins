@@ -106,6 +106,16 @@
           </div>
 
           <div class="actions">
+            <!-- How the game opens. Lives next to Play because that is the
+                 moment the choice matters, and because it is the way back if a
+                 borderless window ever leaves somebody stuck. -->
+            <div class="seg" role="group" aria-label="How the game opens">
+              <span class="seg-k">Display</span>
+              <button id="btn-mode-borderless" class="seg-btn" data-mode="borderless"
+                      aria-pressed="false" title="Fill the whole screen, no window frame">Fullscreen</button>
+              <button id="btn-mode-windowed" class="seg-btn" data-mode="windowed"
+                      aria-pressed="false" title="Run in a resizable window">Windowed</button>
+            </div>
             <button id="btn-check" class="btn btn-ghost" title="Check for updates">Check for updates</button>
             <button id="btn-play" class="btn btn-play">PLAY</button>
           </div>

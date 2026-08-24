@@ -10,6 +10,7 @@ import type { Game } from '../core/game.js';
 import type { Scene } from '../core/scene.js';
 import { Renderer, SCREEN_H, SCREEN_W } from '../engine/renderer.js';
 import { ListMenu, type MenuItem } from '../ui/menu.js';
+import { fit, inside, pair, para, LINE } from '../ui/layout.js';
 import { ask, say } from '../ui/dialogue.js';
 import { formatPlayTime, type GameState } from '../systems/state.js';
 import { listHeaders, save, MANUAL_SLOTS } from '../systems/save.js';
@@ -68,28 +69,49 @@ export class SaveScene implements Scene {
     r.clear('#2c3450');
     for (let y = 0; y < SCREEN_H; y += 4) r.rect(0, y, SCREEN_W, 1, '#323a58');
 
+    // Four units taller than it was. The "Now:" line wraps to two when the map
+    // name is long, and at 36 the play time under it was written on the frame.
+    const footerH = 40;
+    const footerY = SCREEN_H - footerH - 4;
+    const panelH = footerY - 8;
     r.window(4, 4, 96, this.menu.height({ rowHeight: 13 }));
     this.menu.render(r, 4, 4, 96, { rowHeight: 13, frame: false });
 
     // Detail panel for the highlighted slot.
     const slot = this.menu.selectedValue ?? 1;
     const header = listHeaders().find((h) => h.slot === slot)?.header;
-    r.window(104, 4, SCREEN_W - 108, 92);
+    r.window(104, 4, SCREEN_W - 108, panelH);
+    const box = inside(104, 4, SCREEN_W - 108, panelH);
     if (header) {
-      r.text(header.name, 110, 10, { color: '#282838' });
-      r.text(header.mapName, 110, 22, { color: '#485068', maxWidth: 116 });
-      r.text(`Seals   ${header.seals}/8`, 110, 38, { color: '#282838' });
-      r.text(`Vellum  ${header.vellumCaught}`, 110, 50, { color: '#282838' });
-      r.text(`Time    ${formatPlayTime(header.playTime)}`, 110, 62, { color: '#282838' });
-      r.text(new Date(header.savedAt).toLocaleDateString(), 110, 78, { color: '#6a7490' });
+      let y = box.y;
+      r.text(fit(r, header.name, box.w), box.x, y, { color: '#282838' });
+      y += 10;
+      // The place name is the one line here that can wrap, so the block under
+      // it starts where the wrap actually ended rather than 16 units down.
+      // "Cinderfall Works Approach" took two lines and the Seals row was
+      // written across the second one.
+      y += para(r, header.mapName, { x: box.x, y, w: box.w, h: 30 },
+        { color: '#485068', lineHeight: LINE }) + 6;
+      for (const [label, value] of [
+        ['Seals', `${header.seals}/8`],
+        ['Vellum', String(header.vellumCaught)],
+        ['Time', formatPlayTime(header.playTime)],
+      ] as [string, string][]) {
+        pair(r, box.x, y, box.w, label, value, { color: '#282838', detailColor: '#282838' });
+        y += 12;
+      }
+      r.text(new Date(header.savedAt).toLocaleDateString(), box.x, box.y + box.h - 7,
+        { color: '#6a7490' });
     } else {
-      r.text('Empty slot.', 110, 40, { color: '#7a8398' });
+      r.text('Empty slot.', box.x, box.y + 34, { color: '#7a8398' });
     }
 
-    r.window(4, SCREEN_H - 40, SCREEN_W - 8, 36);
-    r.text(`Now: ${this.state.playerName} at ${this.mapName}`, 10, SCREEN_H - 34, {
-      color: '#282838', maxWidth: SCREEN_W - 24,
-    });
-    r.text(`${formatPlayTime(game.playTime)} played`, 10, SCREEN_H - 16, { color: '#485068' });
+    r.window(4, footerY, SCREEN_W - 8, footerH);
+    const foot = inside(4, footerY, SCREEN_W - 8, footerH);
+    const used = para(r, `Now: ${this.state.playerName} at ${this.mapName}`,
+      { x: foot.x, y: foot.y, w: foot.w, h: 20 },
+      { color: '#282838', lineHeight: LINE, maxLines: 2 });
+    r.text(`${formatPlayTime(game.playTime)} played`, foot.x, foot.y + Math.max(used, 10) + 5,
+      { color: '#485068' });
   }
 }

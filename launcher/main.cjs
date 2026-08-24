@@ -17,7 +17,15 @@ const { pathToFileURL } = require('node:url');
 
 const { Updater } = require('./updater.cjs');
 
-/** Logical size of the game's back buffer, from src/engine/renderer.ts. */
+/**
+ * The game's authored back buffer, from src/engine/renderer.ts.
+ *
+ * A windowed game window is always a whole multiple of this, whichever way the
+ * player has the picture fitted. The renderer has three fits and two of them
+ * draw exactly this buffer, so a window of this shape has no margin at all; the
+ * third grows the view to match whatever it is given, and given a 3:2 window it
+ * comes back to 240x160 and fills it too. One shape is right for all three.
+ */
 const BUFFER_W = 480;
 const BUFFER_H = 320;
 
@@ -159,11 +167,13 @@ function createLauncherWindow() {
 }
 
 /**
- * Size the game window to an exact whole-number scale of the back buffer.
+ * Size a windowed game window to an exact whole-number scale of the back buffer.
  *
  * The renderer only ever blits at integer scales, so any other size just adds
- * letterboxing. Picking the largest scale that fits comfortably on the display
- * means the window is pixel-perfect and full the moment it opens.
+ * letterboxing. The buffer is derived from the *display*, not from the window,
+ * which is what makes the two agree: the page computes the same view from its
+ * own viewport, and a viewport that is a whole multiple of the display-derived
+ * buffer comes back to the very same answer.
  */
 function bestGameSize() {
   const { workAreaSize } = screen.getPrimaryDisplay();
@@ -177,10 +187,57 @@ function bestGameSize() {
   return { width: BUFFER_W * scale, height: BUFFER_H * scale, scale };
 }
 
+/* ----------------------------------------------------------- display mode */
+
+/**
+ * Borderless fullscreen, or a window.
+ *
+ * The default is borderless: this is a game, it is what the player asked for,
+ * and Electron's fullscreen on Windows is already the borderless kind rather
+ * than the exclusive kind, so alt-tabbing out of it stays instant.
+ *
+ * The choice is stored next to the play record, not in the game's own storage,
+ * because it has to be known *before* the window exists -- the page cannot tell
+ * us how to build the window it is about to be loaded into. The game's options
+ * screen writes it through the `game:display-mode` bridge, and the two
+ * fullscreen events below catch every other route into the same state (F11, the
+ * window buttons, the OS), so the file cannot drift out of step with reality.
+ */
+function readDisplayMode() {
+  return readPlayRecord().displayMode === 'windowed' ? 'windowed' : 'borderless';
+}
+
+function rememberDisplayMode(mode) {
+  const record = readPlayRecord();
+  if (record.displayMode === mode) return;
+  writePlayRecord({ ...record, displayMode: mode });
+}
+
+function setDisplayMode(mode) {
+  if (mode !== 'borderless' && mode !== 'windowed') return false;
+  rememberDisplayMode(mode);
+  if (!gameWindow) return true;
+  const wantFullscreen = mode === 'borderless';
+  if (gameWindow.isFullScreen() === wantFullscreen) return true;
+  gameWindow.setFullScreen(wantFullscreen);
+  if (!wantFullscreen) {
+    // Coming back out, land on a whole scale step rather than on whatever size
+    // the window happened to have before it went fullscreen.
+    const { width, height } = bestGameSize();
+    gameWindow.setContentSize(width, height);
+    gameWindow.center();
+  }
+  return true;
+}
+
 function createGameWindow() {
   if (gameWindow) { gameWindow.focus(); return; }
 
   const { width, height } = bestGameSize();
+  // A smoke run never goes fullscreen. It is meant to be unnoticeable -- the
+  // same reason it is silent and never takes focus -- and a window that throws
+  // itself over the whole display is the opposite of that.
+  const borderless = !SMOKE && readDisplayMode() === 'borderless';
   gameStartedAt = Date.now();
   gameWindow = new BrowserWindow({
     width,
@@ -189,6 +246,15 @@ function createGameWindow() {
     // a few pixels short of a whole scale step, and the renderer drops to the
     // next one down -- a visibly smaller picture for no reason.
     useContentSize: true,
+    // Borderless fullscreen, and it opens that way rather than snapping into
+    // it, so the very first frame the player sees already fills the display.
+    //
+    // The frame stays *declared* even in this mode. Electron's fullscreen on
+    // Windows is a borderless window covering the display -- the frame is not
+    // drawn while it is on -- and `frame` cannot be changed after the window is
+    // built, so declaring it false here would leave a player who later chooses
+    // windowed with a window that has no title bar to close or drag.
+    fullscreen: borderless,
     backgroundColor: '#05060a',
     title: 'KinBound - Amber Version',
     icon: path.join(__dirname, 'icon.png'),
@@ -196,8 +262,11 @@ function createGameWindow() {
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: false,
-      // The game is a plain web page and asks nothing of Node.
-      preload: undefined,
+      // One verb: "put my window into this display mode". The page cannot
+      // resize the window it lives in, and there is no web API that means
+      // "borderless fullscreen desktop window", so it has to ask.
+      preload: path.join(__dirname, 'preload.cjs'),
+      additionalArguments: ['--kinbound-game'],
       backgroundThrottling: false,
     },
   });
@@ -215,10 +284,15 @@ function createGameWindow() {
   // F11 toggles fullscreen; the game has no window management of its own.
   gameWindow.webContents.on('before-input-event', (event, input) => {
     if (input.type === 'keyDown' && input.key === 'F11') {
-      gameWindow.setFullScreen(!gameWindow.isFullScreen());
+      setDisplayMode(gameWindow.isFullScreen() ? 'windowed' : 'borderless');
       event.preventDefault();
     }
   });
+
+  // However the state changed -- our own call, F11, the title bar, the OS --
+  // this is where it is written down. One place, so it cannot go stale.
+  gameWindow.on('enter-full-screen', () => rememberDisplayMode('borderless'));
+  gameWindow.on('leave-full-screen', () => rememberDisplayMode('windowed'));
 
   gameWindow.on('closed', () => {
     if (gameStartedAt) {
@@ -406,14 +480,34 @@ function registerIpc() {
     play: readPlayRecord(),
     gameFolder: gameRoot(),
     install: { bytes: installSize() },
+    display: { mode: readDisplayMode() },
   }));
+
+  // The launcher can set it too. The game's own options screen is the natural
+  // home for this, but the launcher is where you are standing when you decide
+  // how the game should open, and it is the only place to change it back from
+  // if a borderless window ever leaves you somewhere awkward.
+  ipcMain.handle('launcher:set-display-mode', (_e, mode) => {
+    setDisplayMode(mode);
+    return readDisplayMode();
+  });
 
   ipcMain.handle('launcher:play', () => {
     const record = readPlayRecord();
-    writePlayRecord({ lastPlayed: Date.now(), launches: (record.launches ?? 0) + 1 });
+    // Spread, not replace: this file also carries the display mode and the
+    // "you have read these notes" flag, and pressing Play is not a reason to
+    // forget either of them.
+    writePlayRecord({ ...record, lastPlayed: Date.now(), launches: (record.launches ?? 0) + 1 });
     createGameWindow();
     return true;
   });
+
+  // The game asking for a display mode. Nothing else is exposed to it.
+  // Refused outright during a smoke run: the page reconciles itself to its
+  // stored setting on boot, and an automated screenshot pass is not allowed to
+  // throw a fullscreen window over whatever somebody is doing.
+  ipcMain.handle('game:display-mode', (_e, mode) => (SMOKE ? false : setDisplayMode(mode)));
+  ipcMain.handle('game:display-mode-get', () => readDisplayMode());
 
   ipcMain.handle('launcher:check-update', () => updater?.check(true));
   ipcMain.handle('launcher:download-update', () => updater?.download());
@@ -511,7 +605,9 @@ async function runSmokeTest() {
     const size = gameWindow?.getContentSize();
     const want = bestGameSize();
     console.log('  game window: ' + (size ? size.join('x') : 'none')
-      + '  wanted ' + want.width + 'x' + want.height + ' (scale ' + want.scale + ')'
+      + '  windowed size would be ' + want.width + 'x' + want.height + ' (scale ' + want.scale + ')'
+      + '  mode ' + (gameWindow && gameWindow.isFullScreen() ? 'borderless' : 'windowed')
+      + '  stored ' + readDisplayMode()
       + '  workArea ' + JSON.stringify(screen.getPrimaryDisplay().workAreaSize));
     // Audio state is part of the probe on purpose: the whole point of a silent
     // smoke run is that it makes no noise, and that is exactly the kind of

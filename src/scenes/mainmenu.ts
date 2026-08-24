@@ -10,6 +10,7 @@ import type { Game } from '../core/game.js';
 import type { Scene } from '../core/scene.js';
 import { Renderer, SCREEN_H, SCREEN_W } from '../engine/renderer.js';
 import { ListMenu } from '../ui/menu.js';
+import { fit } from '../ui/layout.js';
 import { formatPlayTime, type GameState } from '../systems/state.js';
 import { PartyScene } from './party.js';
 import { BagScene } from './bag.js';
@@ -19,11 +20,23 @@ import { SaveScene } from './saveScene.js';
 import { OptionsScene } from './options.js';
 import { say } from '../ui/dialogue.js';
 
+/**
+ * The right-hand column's budget, added up rather than eyeballed.
+ *
+ * Eight rows at a 13-unit pitch plus a 40-unit status strip came to 164 units
+ * on a 160-unit screen, so the clock at the bottom of the strip was drawn off
+ * the end of the display. Naming the band the column has to live in means the
+ * next entry added to this menu tightens the pitch instead of falling off.
+ */
+const MENU = { w: 88, top: 4, strip: 40, bottom: SCREEN_H - 8 };
+
 export class MainMenuScene implements Scene {
   readonly name = 'mainmenu';
   readonly transparent = true;
 
   private menu = new ListMenu<string>([], 8);
+  private rowH = 12;
+  private listH = 104;
 
   constructor(private state: GameState, private mapName: string) {}
 
@@ -48,6 +61,11 @@ export class MainMenuScene implements Scene {
       { label: 'CLOSE', value: 'close' },
     ], true);
     this.menu.index = Math.min(idx, this.menu.items.length - 1);
+    // Sized here rather than at render time, so the row count the cursor moves
+    // through is settled before the first update rather than after it.
+    this.rowH = Math.max(11, Math.min(13,
+      Math.floor((MENU.bottom - MENU.top - MENU.strip - 4 - 8) / this.menu.items.length)));
+    this.listH = this.menu.fitTo(MENU.bottom - MENU.top - MENU.strip - 4, { rowHeight: this.rowH });
   }
 
   update(game: Game, _dt: number): void {
@@ -91,20 +109,27 @@ export class MainMenuScene implements Scene {
     // Dim the world behind so the menu reads as an overlay, not a scene swap.
     r.tint('#101828', 0.35);
 
-    const w = 84;
+    const w = MENU.w;
     const x = SCREEN_W - w - 4;
-    const h = this.menu.height({ rowHeight: 13 });
-    this.menu.render(r, x, 4, w, { rowHeight: 13 });
+    const stripH = MENU.strip;
+
+    this.menu.render(r, x, MENU.top, w, { rowHeight: this.rowH });
 
     // Status strip: the three numbers a player checks constantly.
-    const sy = 4 + h + 4;
-    r.window(x, sy, w, 40);
-    r.text(`M~${this.state.money}`, x + 6, sy + 5, { color: '#282838' });
-    r.text(`SEALS ${this.state.sealCount}/8`, x + 6, sy + 15, { color: '#282838' });
-    r.text(formatPlayTime(game.playTime), x + 6, sy + 25, { color: '#485068' });
+    const sy = MENU.top + this.listH + 4;
+    r.window(x, sy, w, stripH);
+    const sx = x + 6;
+    const sw = w - 12;
+    r.text(fit(r, `M~${this.state.money}`, sw), sx, sy + 6, { color: '#282838' });
+    r.text(`SEALS ${this.state.sealCount}/8`, sx, sy + 17, { color: '#282838' });
+    r.text(formatPlayTime(game.playTime), sx, sy + 28, { color: '#485068' });
 
     // Location plate on the left, mirroring where the world banner appears.
-    r.window(4, SCREEN_H - 22, 96, 18);
-    r.text(this.mapName, 8, SCREEN_H - 17, { color: '#282838' });
+    // Sized to the name: "Cinderfall Works Approach" is half again as wide as
+    // the 96 units this used to be nailed to.
+    const plateMax = x - 12;
+    const plateW = Math.min(plateMax, r.textWidth(this.mapName) + 14);
+    r.window(4, SCREEN_H - 22, plateW, 18);
+    r.text(fit(r, this.mapName, plateW - 14), 11, SCREEN_H - 16, { color: '#282838' });
   }
 }

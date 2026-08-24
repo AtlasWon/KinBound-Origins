@@ -8,6 +8,64 @@ Add a new `## vX.Y.Z` heading above the others before running `npm run ship`.
 
 ---
 
+## v0.9.0
+
+### Twenty-seven kin drawn
+
+Nine more species arrived, so 27 of the 48 are now hand-drawn art and the rest
+still render as before.
+
+### The world
+
+- **Trees are trees.** They had no trunks -- a treeline was one unbroken sheet
+  of green cladding. Each tree now has a crown, a trunk, roots and ground you
+  can see between them.
+- **Tall grass** is a real mass of individual blades instead of a flat green
+  band with a sawtooth on top, and **walking into it hides your legs** the way
+  it should.
+- **The rock at the edge of the map** has strata, a lit top and shadowed
+  undercuts, instead of being grey noise stood on end.
+- **Water moves.** A slow swell and a glitter that twinkles rather than slides.
+- **Doorways inside buildings are dark openings** now, not a door drawn on the
+  wall.
+- Interior walls are one quiet colour with a pattern. Houses, fences, signs,
+  shelves and the rest of the furniture were all redrawn.
+
+### The lab
+
+The three starters sit on the counter behind Dr. Vess. Take one and it hops
+down and comes with you -- and the other two are still sitting exactly where
+they were, in the room and afterwards.
+
+### Battle
+
+- **The breathing bug is fixed, and it was the opposite of what it looked
+  like.** The compression was landing in the legs, so every breath dropped the
+  whole creature onto its own stumps -- the top was not being squashed, it was
+  being driven down. It now compresses the widest part of the body.
+- **Every attack used to open on the same white flower.** A zero-length arc
+  drawn with a round cap is a filled circle, so all eight impact spokes fired
+  as fat white dots and froze there. Fire, ice, thunder and steel all landed
+  identically. They are now distinct.
+- **Attack sounds have a shape.** Every impact was written on the music
+  envelope -- a flat rectangle of noise that stopped. They now hit and decay,
+  and heavier damage sounds heavier.
+- **Levelling up is a moment**, with an effect and a sound.
+- The kin currently fighting sits in the large slot on the swap screen.
+- Sending a kin out and calling it back were both rebuilt again.
+
+### Everything else
+
+- **The game fills more of the screen.** Three fits to choose from; the new
+  default gains 26% more picture with no bars top or bottom.
+- **Borderless fullscreen by default**, with a windowed option.
+- **Text no longer collides.** Names, moves, descriptions and menus all measure
+  themselves now, and a description that has to be cut says so.
+- Arrow keys and WASD both move up and down in menus.
+- Talking to someone no longer needs you to be perfectly lined up with them.
+- Sprint is gone. Walking is faster instead.
+- Doors, caves, stairs and route edges each get their own transition.
+
 ## v0.8.0
 
 ### The battlefield

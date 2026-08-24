@@ -27,8 +27,30 @@ import type { Direction } from '../data/schema.js';
 export const BODY_W = 11;
 export const BODY_H = 9;
 
-export const WALK_SPEED = 1.15;
-export const RUN_SPEED = 2.05;
+/**
+ * The one speed the player moves at, in pixels per tick.
+ *
+ * There is no sprint. There used to be a run key and an "always run" setting,
+ * and both are gone -- but the walk they sat on top of was written knowing the
+ * run existed, and simply deleting the key would have left the game at the slow
+ * half of a pair. 1.6 is a little under halfway back up: six tiles a second
+ * against the old walk's four and the old run's seven and a half. Fast enough
+ * that crossing a route never feels like a chore, slow enough that the walk
+ * cycle still reads as walking and that stopping on the tile you meant to stop
+ * on is easy.
+ *
+ * Nothing about the animation needs retuning when this changes: the cycle is
+ * driven by distance covered, not by a timer, so the feet stay planted at any
+ * speed.
+ */
+export const WALK_SPEED = 1.6;
+
+/**
+ * Scripted urgency -- a cutscene actor told to hurry. Not available to the
+ * player under any input; the only way in is a `move` event with speed 'run'.
+ */
+export const SCRIPT_RUN_SPEED = 2.4;
+
 /** Pixels of travel per walk-cycle frame. */
 const STRIDE = 6;
 
@@ -161,7 +183,7 @@ export class PlayerBody {
    * Advance one tick. `inputX`/`inputY` are -1..1; `solid` reports whether a
    * tile blocks movement arriving from a given direction.
    */
-  update(inputX: number, inputY: number, running: boolean, solid: SolidTest): void {
+  update(inputX: number, inputY: number, solid: SolidTest): void {
     this.updatedAt = performance.now();
 
     if (this.hop) {
@@ -203,10 +225,9 @@ export class PlayerBody {
       return;
     }
 
-    const speed = running ? RUN_SPEED : WALK_SPEED;
     const diag = inputX !== 0 && inputY !== 0 ? DIAGONAL : 1;
-    const stepX = inputX * speed * diag;
-    const stepY = inputY * speed * diag;
+    const stepX = inputX * WALK_SPEED * diag;
+    const stepY = inputY * WALK_SPEED * diag;
 
     // Facing follows the dominant axis, and prefers the vertical on a true
     // diagonal so that walking up-left still reads as facing up.
@@ -308,7 +329,17 @@ export class PlayerBody {
     return Math.floor(this.travelled / STRIDE) % CharSheet.CYCLE.length;
   }
 
-  render(r: Renderer, opts: { hideLegs?: boolean; alpha?: number } = {}): void {
+  /**
+   * Tall grass is not handled here any more.
+   *
+   * The body used to be drawn short -- twelve pixels chopped off the bottom --
+   * whenever it stood on a grass tile, which left the sprite ending in a flat
+   * horizontal line hanging in mid-air a few pixels above the blades, and only
+   * did it while the player was standing still. The grass itself now draws a
+   * second time on top of whoever is standing in it (TileMap.renderGrassFrontRow),
+   * so the body is always drawn whole and the world does the occluding.
+   */
+  render(r: Renderer, opts: { alpha?: number } = {}): void {
     if (!this.visible) return;
     const standing = this.standing;
     const src = this.sheet.src(this.facing as CharDir, standing ? 0 : this.animStep);
@@ -326,16 +357,10 @@ export class PlayerBody {
     // which is the only thing that makes the hop read as height -- and it is
     // left out of the idle bob for exactly the same reason: a shadow pinned to
     // the ground under a lifting body is what turns the bob into a breath.
-    if (!opts.hideLegs) {
-      const lift = this.liftHeight;
-      r.ellipsePixel(groundX, groundY - 2, 9 - lift * 0.2, 3.2, `rgba(16,20,28,${0.34 - lift * 0.012})`);
-    }
+    const lift = this.liftHeight;
+    r.ellipsePixel(groundX, groundY - 2, 9 - lift * 0.2, 3.2, `rgba(16,20,28,${0.34 - lift * 0.012})`);
 
-    // The tall-grass cut is pulled back down by the bob so the grass line stays
-    // put; letting it ride up with the body reads as climbing out of the grass
-    // rather than breathing in it.
-    let h = opts.hideLegs ? CHAR_H - 12 : CHAR_H;
-    if (opts.hideLegs) h -= bob;
+    const h = CHAR_H;
 
     const c = r.bctx;
     c.save();

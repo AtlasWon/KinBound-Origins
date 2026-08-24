@@ -16,6 +16,7 @@ import { TrainerAI } from '../battle/ai.js';
 import { registry } from '../data/registry.js';
 import { backSprite, frontSprite, ICON_SIZE, iconSprite, SPRITE_SIZE, whiteSprite } from '../gfx/kinsprite.js';
 import { kinAnchor } from '../gfx/kinanchor.js';
+import { kinBreath } from '../gfx/kinbreath.js';
 import { fxTargetsSelf, MoveFx } from '../gfx/movefx.js';
 import { ListMenu, type MenuItem } from '../ui/menu.js';
 import { battleSpeedScale, textDelayFrames } from '../core/settings.js';
@@ -106,12 +107,36 @@ function pop(x: number, at: number, span: number): number {
 
 /** A thrown vessel travels on a lob, never on a straight line. */
 function arcTo(
-  from: { x: number; y: number }, to: { x: number; y: number }, p: number,
+  from: { x: number; y: number }, to: { x: number; y: number }, p: number, lift = 30,
 ): { x: number; y: number } {
   return {
     x: Math.round(from.x + (to.x - from.x) * p),
-    y: Math.round(from.y + (to.y - from.y) * p - Math.sin(p * Math.PI) * 30),
+    y: Math.round(from.y + (to.y - from.y) * p - Math.sin(p * Math.PI) * lift),
   };
+}
+
+/**
+ * Two earlier points on the same arc, for the flight trail.
+ *
+ * Sampled rather than recorded, because the alternative is a ring buffer that
+ * has to be cleared every time the vessel teleports between beats -- and it
+ * teleports three times in a capture.
+ */
+function arcTrail(
+  from: { x: number; y: number }, to: { x: number; y: number }, p: number, lift = 30,
+): { x: number; y: number }[] {
+  const out: { x: number; y: number }[] = [];
+  for (const back of [0.055, 0.115]) {
+    const q = p - back;
+    if (q <= 0) break;
+    out.push(arcTo(from, to, q, lift));
+  }
+  return out;
+}
+
+/** Decelerating: a thrown thing arrives, it does not stop dead. */
+function easeOut(x: number): number {
+  return 1 - (1 - x) * (1 - x);
 }
 
 /**
@@ -131,7 +156,7 @@ interface Capsule {
   beam: number;
   /** Where the cone lands; null while the vessel is merely in flight. */
   beamTo: { x: number; y: number } | null;
-  /** Tumble phase across a throw, 0..1. */
+  /** Tumble phase across a throw, 0..1 per revolution and free to exceed 1. */
   spin: number;
   /** One-shot burst: 1 the instant it fires, 0 once it has expanded away. */
   burst: number;
@@ -144,12 +169,37 @@ interface Capsule {
    * out of a capsule.
    */
   land: number;
+  /**
+   * Where the vessel has just been, newest first.
+   *
+   * A thing that crosses a 240-unit screen in a quarter of a second is on any
+   * given pixel for one frame, and one frame of an eight-pixel object is not a
+   * throw -- it is a flicker. The trail is what makes the flight legible, and
+   * it is the cheapest possible version: the same icon, smaller and fainter, at
+   * two earlier points on the same arc.
+   */
+  trail: { x: number; y: number }[];
+  /**
+   * Phase of the light running along the cone. Signed: increasing pours light
+   * DOWN the beam for a send-out, decreasing draws it UP for a recall.
+   *
+   * Without it the cone is a static white wedge, and a static wedge is a shape
+   * sitting between two objects rather than something moving between them.
+   */
+  flow: number;
+  /** A flare cross at the vessel, one-shot, on the frame it splits. */
+  flare: number;
+  /** Feet arriving on the pad: a low ring of dust, one-shot. */
+  dust: number;
   /** The failure mark, drawn above the vessel. */
   tell: string | null;
 }
 
 function capsuleAt(x: number, y: number, o: Partial<Capsule> = {}): Capsule {
-  return { x, y, open: 0, beam: 0, beamTo: null, spin: 0, burst: 0, land: 0, tell: null, ...o };
+  return {
+    x, y, open: 0, beam: 0, beamTo: null, spin: 0, burst: 0, land: 0,
+    trail: [], flow: 0, flare: 0, dust: 0, tell: null, ...o,
+  };
 }
 
 /** Authored lengths of the capture performance, already speed-scaled. */
@@ -190,6 +240,7 @@ type Anim =
   | { kind: 'moveFx'; side: SideId; anim: string; type: TypeId; frames: number; t: number }
   | { kind: 'vessel'; shakes: number; caught: boolean; ph: VesselPhases; frames: number; t: number }
   | { kind: 'exp'; kin: Kin; from: number; to: number; frames: number; t: number }
+  | { kind: 'levelUp'; kin: Kin; level: number; frames: number; t: number }
   | { kind: 'weather'; weather: WeatherId; frames: number; t: number }
   | { kind: 'wait'; frames: number; t: number }
   | { kind: 'sfx'; id: string }
@@ -283,6 +334,24 @@ export class BattleScene implements Scene {
   };
 
   private displayExp = 0;
+  /**
+   * The level the player's panel is CURRENTLY showing, which lags the kin's
+   * real level until the level-up animation gets to it.
+   *
+   * Without this the number changed the instant the engine resolved the turn --
+   * so the "grew to level 15" line arrived under a panel that had said Lv15 for
+   * a second already -- and the experience bar was measured against a band the
+   * kin had not visibly reached yet, so it emptied and refilled in one frame
+   * instead of running up to the top and starting again. One number fixes both.
+   */
+  private displayLevel = 0;
+  /**
+   * The level-up flourish, counted down by update() rather than by the queue
+   * step that starts it, so the rings and the glow are still going while the
+   * line types underneath them. Nothing waits for it.
+   */
+  private levelFx = 0;
+  private levelFxLen = 1;
   /** The vessel currently on the field, if any. Written by whichever of the
    *  send-out, recall or capture steps is running; read only by the renderer. */
   private capsule: Capsule | null = null;
@@ -296,6 +365,20 @@ export class BattleScene implements Scene {
   /** Counts the opening shutters back off the screen. */
   private introWipe = 0;
   private readonly introFrames = 22;
+  /**
+   * The closing transition. -1 until the player has acknowledged the result;
+   * after that it counts up, and the scene pops when it runs out.
+   *
+   * It is deliberately not the intro run backwards. The way in is a pair of
+   * shutters, which is a shape that says "something is starting"; the way out
+   * has to say the opposite, and an aperture closing on the field and pinching
+   * the last of it into a line is the plainest way to say it. See renderOutro.
+   */
+  private outroT = -1;
+  private readonly outroLen = 44;
+  /** The winner's little celebration, in frames remaining. */
+  private cheer = 0;
+  private cheerLen = 1;
   private ticks = 0;
   /** Frames until the next low-HP beep, or 0 when the party lead is healthy. */
   private lowHpTimer = 0;
@@ -328,6 +411,7 @@ export class BattleScene implements Scene {
     this.view.player.displayHp = this.battle.player.active.currentHp;
     this.view.foe.displayHp = this.battle.foe.active.currentHp;
     this.displayExp = this.battle.player.active.exp;
+    this.displayLevel = this.battle.player.active.level;
 
     this.opts.state.markSeen(this.battle.foe.active.species);
     audio.playMusic(this.battleTrack(trainer));
@@ -403,9 +487,13 @@ export class BattleScene implements Scene {
           // sentence, the text is only its subject.
           const next = events[i + 1];
           if (next && next.t === 'message') { this.pushText(next.text, game, 8); i++; }
+          // Longer than they were. Both performances now have a hold in them
+          // and a beat where the vessel shuts, and neither of those survives
+          // being squeezed into the old budget -- an anticipation beat that
+          // lasts one frame is not an anticipation beat.
           this.queue.push(e.t === 'sendOut'
-            ? { kind: 'sendOut', side: e.side, frames: this.frames(52, game), t: 0 }
-            : { kind: 'withdraw', side: e.side, frames: this.frames(36, game), t: 0 });
+            ? { kind: 'sendOut', side: e.side, frames: this.frames(60, game), t: 0 }
+            : { kind: 'withdraw', side: e.side, frames: this.frames(46, game), t: 0 });
           break;
         }
         case 'useMove': {
@@ -485,6 +573,23 @@ export class BattleScene implements Scene {
           });
           break;
         }
+        case 'levelUp': {
+          // The engine puts the announcement AFTER the event, and a level-up
+          // that is announced before anything happens is the version the player
+          // said breezes past. So the flourish goes first, the line is lifted
+          // out of the event list and queued behind it, and the line is held a
+          // good long time -- the glow is still running underneath it.
+          const next = events[i + 1];
+          const line = next && next.t === 'message'
+            ? next.text : `${e.kin.name} grew to level ${e.level}!`;
+          if (next && next.t === 'message') i++;
+          this.queue.push({
+            kind: 'levelUp', kin: e.kin, level: e.level,
+            frames: this.frames(26, game), t: 0,
+          });
+          this.pushText(line, game, 52);
+          break;
+        }
         case 'weather':
           this.queue.push({ kind: 'weather', weather: e.weather, frames: this.frames(20, game), t: 0 });
           break;
@@ -501,6 +606,20 @@ export class BattleScene implements Scene {
 
   update(game: Game, _dt: number): void {
     this.ticks++;
+
+    // Once the aperture is closing, nothing else in the scene matters. The
+    // queue is empty by then and the simulation is over; all that is left is to
+    // finish the picture and hand control back.
+    if (this.outroT >= 0) {
+      this.outroT++;
+      this.cheerStep();
+      if (this.outroT >= this.outroLen + 5) {
+        game.scenes.pop();
+        this.opts.onFinish(this.battle.result ?? 'win', this.battle);
+      }
+      return;
+    }
+
     if (this.introWipe < this.introFrames) this.introWipe++;
     this.fx.update();
     // Hit-stop freezes the whole presentation, not just the particles: a blow
@@ -508,6 +627,8 @@ export class BattleScene implements Scene {
     // frame rather than as impact.
     if (this.fx.hitStop > 0) return;
     this.lowHpWarning(game);
+
+    this.levelStep();
 
     for (const side of ['player', 'foe'] as SideId[]) {
       const v = this.view[side];
@@ -542,9 +663,14 @@ export class BattleScene implements Scene {
         this.updatePartyMenu(game, true);
         break;
       case 'finished':
+        this.cheerStep();
+        // The result line is still on screen and the winner is still stood
+        // there celebrating; the press is the player saying they have read it.
+        // Only then does the field close -- and the closing is a beat of its
+        // own now, not the frame the scene disappears on.
         if (game.input.pressed('confirm') || game.input.mouse.leftPressed) {
-          game.scenes.pop();
-          this.opts.onFinish(this.battle.result ?? 'win', this.battle);
+          this.outroT = 0;
+          audio.playSfx('battle_swoosh');
         }
         break;
     }
@@ -568,6 +694,55 @@ export class BattleScene implements Scene {
     if (this.lowHpTimer > 0) { this.lowHpTimer--; return; }
     audio.playSfx('hp_low', { volume: 0.7 });
     this.lowHpTimer = 34;
+  }
+
+  /**
+   * The level-up flourish, one frame on.
+   *
+   * The only thing it touches on the creature itself is `bloom`, which is the
+   * halo channel the materialise already uses -- three offset copies of the
+   * sprite's own white silhouette. Borrowing it means a levelling kin glows
+   * with its own outline rather than being covered by a shape drawn near it,
+   * and it costs nothing new. Colour is never replaced: `ghost` stays at zero
+   * throughout, so the creature is plainly itself with light coming off it.
+   */
+  private levelStep(): void {
+    if (this.levelFx <= 0) return;
+    this.levelFx--;
+    const v = this.view.player;
+    // The moment anything else has taken hold of the sprite -- a recall, a
+    // knockout, a capture -- the flourish is over. It is a reward, not a claim.
+    if (!v.visible || v.alpha < 1 || v.ghost > 0 || v.clipY !== null) {
+      this.levelFx = 0;
+      v.bloom = 0;
+      return;
+    }
+    const p = 1 - this.levelFx / this.levelFxLen;
+    v.bloom = Math.max(0, ramp(p, 0, 0.09) - ramp(p, 0.40, 0.92)) * 0.95;
+    if (this.levelFx === 0) v.bloom = 0;
+  }
+
+  /**
+   * The winner's hop.
+   *
+   * Two of them, the second smaller than the first, off the same eased arc a
+   * jump uses everywhere else in the game. It is applied as offsetY, which
+   * nothing else is writing by this point -- the queue is empty and the battle
+   * is over -- and it deliberately does not stop the breathing underneath it.
+   */
+  private cheerStep(): void {
+    if (this.cheer <= 0) return;
+    this.cheer--;
+    const v = this.view.player;
+    if (!v.visible || !v.kin || v.kin.currentHp <= 0) { this.cheer = 0; v.offsetY = 0; return; }
+    const p = 1 - this.cheer / this.cheerLen;
+    // Two arcs, the first over the opening 45% and the second, shorter, after.
+    const first = ramp(p, 0, 0.45);
+    const second = ramp(p, 0.50, 0.86);
+    const a = first > 0 && first < 1 ? Math.sin(first * Math.PI) * 6 : 0;
+    const b = second > 0 && second < 1 ? Math.sin(second * Math.PI) * 3 : 0;
+    v.offsetY = -Math.round(Math.max(a, b));
+    if (this.cheer === 0) v.offsetY = 0;
   }
 
   /**
@@ -698,6 +873,14 @@ export class BattleScene implements Scene {
         if (a.t >= a.frames || skip) { this.displayExp = a.to; this.current = null; }
         break;
       }
+      case 'levelUp': {
+        a.t++;
+        // Short on the queue on purpose. This step only owns the beat between
+        // the burst and the line that names it; the flourish itself is on the
+        // scene's own clock and outlives the step by a second.
+        if (a.t >= a.frames || skip) this.current = null;
+        break;
+      }
       case 'flash': {
         a.t++;
         // Only the lead-in is on the queue's clock; flickerStep owns the rest.
@@ -819,6 +1002,16 @@ export class BattleScene implements Scene {
       }
       case 'end': {
         if (this.battle.result === 'win' && !this.opts.isWild) audio.playMusic('victory');
+        // The winner gets a moment. Two hops and its own cry is the whole of
+        // it -- a fight that simply stops the instant the last HP is gone has
+        // no punctuation, and the player asked for punctuation.
+        const v = this.view.player;
+        if (this.battle.result === 'win' && game.settings.battleAnimations
+          && v.visible && v.kin && v.kin.currentHp > 0) {
+          this.cheerLen = this.frames(52, game);
+          this.cheer = this.cheerLen;
+          audio.playCry(v.kin.species);
+        }
         this.phase = 'finished';
         this.current = null;
         this.queue.length = 0;
@@ -828,7 +1021,37 @@ export class BattleScene implements Scene {
   }
 
   private onAnimStart(a: Anim, game: Game): void {
+    // Anything that takes the creature off its pad owns the glow channel from
+    // here on, so a flourish still running is dropped rather than fought over.
+    if (a.kind === 'sendOut' || a.kind === 'withdraw' || a.kind === 'faint'
+      || a.kind === 'vessel') {
+      // The glow has to be put back too, and not only when the step is about
+      // the player's own side: a second foe walking on while the flourish is
+      // still running would otherwise leave the player's kin lit for the rest
+      // of the fight -- and a kin with bloom on it never breathes again.
+      this.levelFx = 0;
+      this.view.player.bloom = 0;
+    }
     switch (a.kind) {
+      case 'levelUp': {
+        // A benched participant can level too. It gets the line and the sound
+        // and nothing else -- there is no sprite on the field to put a ring
+        // around, and moving the panel's number would be a lie.
+        const shown = this.view.player.kin === a.kin;
+        if (shown) this.displayLevel = a.level;
+        audio.playSfx('levelup');
+        if (shown && game.settings.battleAnimations) {
+          // Deliberately NOT scaled all the way down by the speed setting. Fast
+          // battles are a request to skip the waiting, not a request to be
+          // denied the one moment in a fight that is purely a reward, and the
+          // cue itself runs the better part of a second whatever the setting.
+          this.levelFxLen = Math.max(58, this.frames(84, game));
+          this.levelFx = this.levelFxLen;
+        } else {
+          a.frames = 1;
+        }
+        break;
+      }
       case 'sendOut': {
         const kin = a.side === 'player' ? this.battle.player.active : this.battle.foe.active;
         const v = this.view[a.side];
@@ -838,7 +1061,7 @@ export class BattleScene implements Scene {
         // there, rather than inheriting whatever the last one was mid-flinch.
         v.dash = 0; v.dashV = 0; v.dashTo = 0; v.idleT = 0;
         v.flash = 0; v.flashT = 0; v.clipY = null;
-        if (a.side === 'player') this.displayExp = kin.exp;
+        if (a.side === 'player') { this.displayExp = kin.exp; this.displayLevel = kin.level; }
         // With animations off the whole performance collapses onto its last
         // frame. sendOutFrame still runs there, so the cry and the arrival
         // both still happen -- those are information, not spectacle.
@@ -967,11 +1190,35 @@ export class BattleScene implements Scene {
     this.moveMenu.visible = 4;
   }
 
+  /**
+   * The order the switch screen lays the party out in: whoever is out, first.
+   *
+   * The player asked for this and they are right. The big card on the left is
+   * the only slot on the screen with a full portrait on it, and until now it
+   * held party slot one -- which after two switches is very often a kin that is
+   * asleep in the back of the bag. A switch is a comparison, and the thing you
+   * are comparing everything AGAINST is the one currently taking the hits, so
+   * that is what belongs in the slot you can actually see.
+   *
+   * Nothing else reorders. This is a view of the party, not a change to it, so
+   * the values on the menu items stay real party indices and the engine is
+   * never told about any of this.
+   */
+  private partyOrder(): number[] {
+    const party = this.battle.player.party;
+    const active = this.battle.player.activeIndex;
+    const order: number[] = [];
+    if (party[active]) order.push(active);
+    for (let i = 0; i < party.length; i++) if (i !== active && party[i]) order.push(i);
+    return order;
+  }
+
   private buildPartyMenu(): void {
-    const items: MenuItem<number>[] = this.battle.player.party.map((k, i) => ({
-      label: k.name,
-      value: i,
-      enabled: !k.fainted && i !== this.battle.player.activeIndex,
+    const party = this.battle.player.party;
+    const items: MenuItem<number>[] = this.partyOrder().map((idx) => ({
+      label: party[idx]!.name,
+      value: idx,
+      enabled: !party[idx]!.fainted && idx !== this.battle.player.activeIndex,
     }));
     this.partyMenu.setItems(items, true);
     // The screen draws every kin at once, so the list must never scroll: a
@@ -1113,36 +1360,69 @@ export class BattleScene implements Scene {
     const open = this.openPoint(side);
     const pad = side === 'player' ? PLAYER_PAD : FOE_PAD;
 
-    const back = ramp(p, 0.84, 1);
-    const pos = back > 0 ? arcTo(open, home, back) : arcTo(home, open, ramp(p, 0, 0.30));
+    /*
+     * THE SHAPE OF THE SEQUENCE, and where the beats are.
+     *
+     *   .00 - .24   the throw. Fast, decelerating into the stop, with a trail.
+     *   .24 - .30   the hold. Six per cent of nothing, which is the single
+     *               cheapest thing in here: a vessel that stops and hangs for
+     *               three frames before it opens gives the eye somewhere to be
+     *               when the burst happens. Without it the flight and the flash
+     *               are one event and neither is legible.
+     *   .30         the split, the burst, the flare.
+     *   .32 - .58   the pour. Light runs down the cone, the pool spreads.
+     *   .38 - .56   the silhouette arrives inside it and brightens.
+     *   .56 - .80   colour comes back and it settles onto its feet.
+     *   .70         the feet land: dust.
+     *   .74 - .84   the vessel shuts.
+     *   .82 - 1.0   the vessel goes home, faster and flatter than it came.
+     */
+    const back = ramp(p, 0.82, 1);
+    const fly = easeOut(ramp(p, 0, 0.24));
+    const pos = back > 0
+      ? arcTo(open, home, back, 20)
+      : arcTo(home, open, fly, 32);
+    const trail = back > 0
+      ? arcTrail(open, home, back, 20)
+      : arcTrail(home, open, fly, 32);
 
-    this.capsule = capsuleAt(pos.x, pos.y, {
-      open: ramp(p, 0.30, 0.38) - ramp(p, 0.76, 0.86),
-      beam: ramp(p, 0.31, 0.42) - ramp(p, 0.72, 0.86),
-      beamTo: p > 0.30 && p < 0.86 ? { x: pad.x, y: pad.y } : null,
-      spin: p < 0.30 ? p / 0.30 : 0,
-      burst: pop(p, 0.30, 0.18),
+    // A one-frame cock upward the instant before it opens. Anticipation is the
+    // difference between a lid coming off and a lid having come off.
+    const cock = p >= 0.26 && p < 0.30 ? 1 : 0;
+
+    this.capsule = capsuleAt(pos.x, pos.y - cock, {
+      trail: p > 0.02 ? trail : [],
+      open: ramp(p, 0.30, 0.35) - ramp(p, 0.74, 0.84),
+      beam: ramp(p, 0.31, 0.40) - ramp(p, 0.70, 0.82),
+      beamTo: p > 0.30 && p < 0.84 ? { x: pad.x, y: pad.y } : null,
+      // Three and a bit turns on the way out and one and a bit on the way back:
+      // enough to read as tumbling, few enough that the phases are separable.
+      spin: back > 0 ? 1.4 * back : 3.4 * ramp(p, 0, 0.24),
+      burst: pop(p, 0.30, 0.20),
+      flare: pop(p, 0.30, 0.11),
+      flow: p * 7,
       // Light striking the ground, on the beat the silhouette appears in it.
-      land: pop(p, 0.36, 0.34),
+      land: pop(p, 0.34, 0.32),
+      dust: pop(p, 0.70, 0.26),
     });
 
     v.offsetX = 0;
     v.clipY = null;
-    // Poured, not stamped: it forms a couple of pixels high in the cone and
-    // settles onto its feet. Whole logical pixels, so it stays on the grid.
-    v.offsetY = -Math.round(2 * (1 - ramp(p, 0.48, 0.68)) * (p > 0.34 ? 1 : 0));
-    v.alpha = ramp(p, 0.34, 0.52);
-    v.ghost = 1 - ramp(p, 0.58, 0.82);
+    // Poured, not stamped: it forms a few pixels high in the cone and settles
+    // onto its feet. Whole logical pixels, so it stays on the grid.
+    v.offsetY = -Math.round(3 * (1 - ramp(p, 0.52, 0.70)) * (p > 0.36 ? 1 : 0));
+    v.alpha = ramp(p, 0.36, 0.50);
+    v.ghost = 1 - ramp(p, 0.56, 0.80);
     // Brightest while it is still nothing but light, gone by the time it is
     // flesh: the halo is what makes the difference between arriving and simply
     // fading in.
-    v.bloom = ramp(p, 0.34, 0.44) - ramp(p, 0.62, 0.84);
+    v.bloom = ramp(p, 0.36, 0.44) - ramp(p, 0.60, 0.82);
     v.visible = v.alpha > 0;
 
     // Keyed off the frame index rather than a latch, so a skip cannot leave a
     // cry owed. The max() is for the collapsed one-frame version.
     if (t === Math.max(1, Math.round(frames * 0.30))) audio.playSfx('send_out');
-    if (t === Math.max(1, Math.round(frames * 0.66)) && v.kin) audio.playCry(v.kin.species);
+    if (t === Math.max(1, Math.round(frames * 0.70)) && v.kin) audio.playCry(v.kin.species);
   }
 
   /**
@@ -1160,31 +1440,52 @@ export class BattleScene implements Scene {
     const open = this.openPoint(side);
     const pad = side === 'player' ? PLAYER_PAD : FOE_PAD;
 
+    /*
+     * The send-out with every arrow reversed, and reversed properly rather than
+     * merely reordered. The light in the cone runs UPWARD -- `flow` counts down
+     * -- the creature is lifted rather than settled, and the burst is at the
+     * END, on the vessel, because the thing that happens last in a recall is a
+     * capsule swallowing something and shutting.
+     *
+     *   .00 - .18   the vessel arrives, on a flatter, faster arc than a throw.
+     *   .20         it opens. No burst here: it is receiving, not delivering.
+     *   .22 - .60   the cone; the creature blanches, glows and is drawn up it.
+     *   .60         the catch: a burst at the vessel and the light snuffs out.
+     *   .62 - .72   it shuts.
+     *   .74 - 1.0   it goes home.
+     */
     const back = ramp(p, 0.74, 1);
-    const pos = back > 0 ? arcTo(open, home, back) : arcTo(home, open, ramp(p, 0, 0.22));
+    const fly = easeOut(ramp(p, 0, 0.18));
+    const pos = back > 0 ? arcTo(open, home, back, 20) : arcTo(home, open, fly, 26);
+    const trail = back > 0 ? arcTrail(open, home, back, 20) : arcTrail(home, open, fly, 26);
 
     this.capsule = capsuleAt(pos.x, pos.y, {
-      open: ramp(p, 0.22, 0.30) - ramp(p, 0.62, 0.72),
-      beam: ramp(p, 0.24, 0.34) - ramp(p, 0.62, 0.74),
-      beamTo: p > 0.22 && p < 0.74 ? { x: pad.x, y: pad.y } : null,
-      spin: p < 0.22 ? p / 0.22 : 0,
-      burst: pop(p, 0.64, 0.16),
-      land: pop(p, 0.30, 0.30),
+      trail: p > 0.02 ? trail : [],
+      open: ramp(p, 0.20, 0.27) - ramp(p, 0.62, 0.72),
+      beam: ramp(p, 0.22, 0.32) - ramp(p, 0.56, 0.64),
+      beamTo: p > 0.20 && p < 0.70 ? { x: pad.x, y: pad.y } : null,
+      spin: back > 0 ? 1.4 * back : 2.6 * ramp(p, 0, 0.18),
+      burst: pop(p, 0.60, 0.18),
+      flare: pop(p, 0.60, 0.10),
+      // Negative: the bands climb the cone instead of falling down it.
+      flow: -p * 7,
+      land: pop(p, 0.26, 0.26),
     });
 
     v.offsetX = 0;
     v.clipY = null;
-    v.ghost = ramp(p, 0.24, 0.42);
-    // Drawn up the cone. Six pixels is enough to say "leaving" and little
-    // enough that a heavy creature does not appear to jump.
-    v.offsetY = -Math.round(6 * ramp(p, 0.40, 0.70));
+    v.ghost = ramp(p, 0.22, 0.40);
+    // Drawn up the cone. Eight pixels is enough to say "leaving the ground" and
+    // little enough that a heavy creature does not appear to jump.
+    v.offsetY = -Math.round(8 * ramp(p, 0.36, 0.62));
     // The alpha trails the blanch so the light thins rather than snapping out,
     // and so the status panel -- which hides on alpha -- leaves with it.
-    v.alpha = 1 - ramp(p, 0.46, 0.70);
-    v.bloom = ramp(p, 0.22, 0.38) - ramp(p, 0.52, 0.72);
+    v.alpha = 1 - ramp(p, 0.42, 0.60);
+    v.bloom = ramp(p, 0.20, 0.34) - ramp(p, 0.46, 0.62);
     v.visible = v.alpha > 0;
 
-    if (t === Math.max(1, Math.round(frames * 0.24))) audio.playSfx('withdraw');
+    if (t === Math.max(1, Math.round(frames * 0.20))) audio.playSfx('withdraw');
+    if (t === Math.max(1, Math.round(frames * 0.62))) audio.playSfx('vessel_click');
   }
 
   /**
@@ -1206,8 +1507,11 @@ export class BattleScene implements Scene {
 
     if (t <= ph.throw) {
       const q = t / ph.throw;
-      const at = arcTo(THROW_FROM.player, open, q);
-      this.capsule = capsuleAt(at.x, at.y, { spin: q });
+      const at = arcTo(THROW_FROM.player, open, easeOut(q), 34);
+      this.capsule = capsuleAt(at.x, at.y, {
+        spin: 3.4 * q,
+        trail: arcTrail(THROW_FROM.player, open, easeOut(q), 34),
+      });
       return;
     }
     t -= ph.throw;
@@ -1219,9 +1523,14 @@ export class BattleScene implements Scene {
         open: ramp(q, 0, 0.22) - ramp(q, 0.72, 0.94),
         beam: ramp(q, 0.04, 0.26) - ramp(q, 0.70, 0.92),
         beamTo: { x: pad.x, y: pad.y },
+        // Upward, like a recall: this is a recall, of somebody else's kin.
+        // Leaving it at zero would freeze the bands in the cone as three static
+        // stripes, which is worse than having no bands at all.
+        flow: -q * 6,
         // Spent by the end of the phase: the next one builds a fresh capsule
         // and a burst still running would be cut off mid-expansion.
         burst: pop(q, 0.72, 0.28),
+        flare: pop(q, 0.72, 0.12),
         land: pop(q, 0.10, 0.30),
       });
       // Taken as light, exactly as a recall takes it: blanch, glow, lift, thin.
@@ -1265,7 +1574,9 @@ export class BattleScene implements Scene {
     const q = Math.min(1, t / ph.finish);
     if (a.caught) {
       if (t === 1) audio.playSfx('vessel_click');
-      this.capsule = capsuleAt(pad.x, rest, { burst: pop(q, 0, 0.55) });
+      this.capsule = capsuleAt(pad.x, rest, {
+        burst: pop(q, 0, 0.55), flare: pop(q, 0, 0.16),
+      });
       return;
     }
 
@@ -1277,8 +1588,11 @@ export class BattleScene implements Scene {
       open: ramp(q, 0, 0.18) - ramp(q, 0.62, 0.84),
       beam: ramp(q, 0.06, 0.26) - ramp(q, 0.62, 0.86),
       beamTo: { x: pad.x, y: pad.y },
+      flow: q * 6,
       burst: pop(q, 0, 0.26),
+      flare: pop(q, 0, 0.12),
       land: pop(q, 0.18, 0.32),
+      dust: pop(q, 0.52, 0.26),
       tell: q > 0.7 ? '!' : null,
     });
     // Given back the same way it would have been sent out.
@@ -1377,8 +1691,10 @@ export class BattleScene implements Scene {
     // used to be -- it put a hard white stripe down the middle of whatever it
     // was delivering, and that is the last thing a materialise needs.
     this.renderBeam(r);
+    this.renderLevelUp(r, true);
     this.renderKin(r, 'foe');
     this.renderKin(r, 'player');
+    this.renderLevelUp(r, false);
     this.fx.render(r);
     this.renderVessel(r);
     c.restore();
@@ -1388,8 +1704,18 @@ export class BattleScene implements Scene {
     if (this.fx.flash > 0) r.tint(this.fx.flashColor, this.fx.flash);
     else if (this.fx.flash < 0) r.tint('#000000', -this.fx.flash);
 
+    // One short warm pulse on the frame the level lands, and nothing after it.
+    // A tint that outstays its welcome washes the panels out and the panels are
+    // where the number the player is being shown actually is.
+    if (this.levelFx > 0) {
+      const lp = 1 - this.levelFx / this.levelFxLen;
+      const k = Math.max(0, ramp(lp, 0, 0.04) - ramp(lp, 0.06, 0.22)) * 0.40;
+      if (k > 0) r.tint('#fff4c0', k);
+    }
+
     this.renderInfo(r, 'foe');
     this.renderInfo(r, 'player');
+    if (this.levelFx > 0) this.renderLevelBanner(r, 1 - this.levelFx / this.levelFxLen);
     this.renderMessage(game, r);
 
     // The overworld left the screen closed; run the same shape backwards so
@@ -1397,35 +1723,128 @@ export class BattleScene implements Scene {
     if (this.introWipe < this.introFrames) {
       drawShutters(r, 1 - this.introWipe / this.introFrames);
     }
+    this.renderOutro(r);
+  }
+
+  /**
+   * The way out.
+   *
+   * An aperture, not a fade. A fade to black is what every scene in every game
+   * does when nothing has been decided about how it should end, and it is the
+   * reason the player said the fight "cuts away": a fade removes the picture
+   * without doing anything TO it.
+   *
+   * This closes ON the field. Four bars come in from the edges with a warm rim
+   * on their leading edge, so the eye follows the light rather than the dark;
+   * the opening squeezes down to a horizontal slit; and as the last of it goes
+   * the slit is replaced by a bright line that snaps shut and leaves nothing.
+   * The vertical bars are started a few frames after the horizontal ones and
+   * arrive a few frames later, which is what stops the whole thing reading as
+   * one rectangle scaling down -- the picture is pinched into a line first, and
+   * only then does the line go.
+   *
+   * Built here rather than in ui/transition.ts because that file belongs to the
+   * shutters the battle opens with, and the two are deliberately different
+   * shapes: shutters part to start something, an aperture closes to end it.
+   */
+  private renderOutro(r: Renderer): void {
+    if (this.outroT < 0) return;
+    const p = Math.min(1, this.outroT / this.outroLen);
+    const soft = (x: number) => x * x * (3 - 2 * x);
+
+    // The field loses its light before it loses its picture.
+    const dim = ramp(p, 0, 0.42) * 0.5;
+    if (dim > 0) r.tint('#05070e', dim);
+
+    const vy = soft(ramp(p, 0.02, 0.58));
+    const vx = soft(ramp(p, 0.16, 0.74));
+    const halfH = Math.round((SCREEN_H / 2) * vy);
+    const halfW = Math.round((SCREEN_W / 2) * vx);
+    const dark = '#04060c';
+
+    if (halfH > 0) {
+      r.rect(0, 0, SCREEN_W, halfH, dark);
+      r.rect(0, SCREEN_H - halfH, SCREEN_W, halfH, dark);
+    }
+    if (halfW > 0) {
+      r.rect(0, 0, halfW, SCREEN_H, dark);
+      r.rect(SCREEN_W - halfW, 0, halfW, SCREEN_H, dark);
+    }
+
+    // The rim. It only exists while a bar is actually travelling; a glowing
+    // edge sitting still is a border, and a border is not a transition.
+    const openW = SCREEN_W - halfW * 2;
+    const openH = SCREEN_H - halfH * 2;
+    const rimA = Math.max(0, Math.min(1, 1 - ramp(p, 0.56, 0.80)));
+    if (rimA > 0 && openW > 0 && openH > 0) {
+      const warm = `rgba(255,236,180,${(0.85 * rimA).toFixed(3)})`;
+      const faint = `rgba(255,206,120,${(0.35 * rimA).toFixed(3)})`;
+      if (halfH > 0) {
+        r.rect(halfW, halfH - 1, openW, 1, warm);
+        r.rect(halfW, SCREEN_H - halfH, openW, 1, warm);
+        r.rect(halfW, halfH - 2, openW, 1, faint);
+        r.rect(halfW, SCREEN_H - halfH + 1, openW, 1, faint);
+      }
+      if (halfW > 0) {
+        r.rect(halfW - 1, halfH, 1, openH, warm);
+        r.rect(SCREEN_W - halfW, halfH, 1, openH, warm);
+      }
+    }
+
+    // Belt and braces: the horizontal bars have covered the screen by now, but
+    // this guarantees black behind the line whatever the rounding did.
+    if (p >= 0.58) r.tint(dark, ramp(p, 0.58, 0.94));
+
+    // The pinch. A bright line the width of what is left, laid over the top of
+    // everything, shortening to nothing.
+    const shut = ramp(p, 0.52, 0.90);
+    if (shut > 0 && shut < 1) {
+      const w = Math.max(1, Math.round((SCREEN_W * 0.46) * (1 - shut)));
+      const h = shut < 0.7 ? 2 : 1;
+      const y = Math.round(SCREEN_H / 2) - Math.floor(h / 2);
+      const x = Math.round(SCREEN_W / 2 - w / 2);
+      r.rect(x, y, w, h, `rgba(255,250,226,${(1 - shut * 0.35).toFixed(3)})`);
+      r.rect(x, y - 1, w, 1, `rgba(255,224,150,${(0.4 * (1 - shut)).toFixed(3)})`);
+      r.rect(x, y + h, w, 1, `rgba(255,224,150,${(0.4 * (1 - shut)).toFixed(3)})`);
+    }
+
   }
 
 
   /**
-   * Idle breathing, as whole logical pixels of compression.
+   * Idle breathing: a signed whole-pixel change at each of the creature's own
+   * breath seams, in the order kinbreath lists them (lowest seam first).
    *
-   * A creature standing perfectly still is what makes a battle screen look like
-   * a screenshot of itself. Two things about this are deliberate.
+   * +1 is a pixel of barrel GAINED, -1 a pixel lost, 0 the resting pose.
    *
-   * **It is compression, not a lift.** The old cycle spent half its range
-   * raising the whole sprite by a pixel, feet included, which is a hop rather
-   * than a breath. Every pixel of movement now comes out of the lower body and
-   * the feet never leave the pad.
+   * WHY IT IS SIGNED, which it was not before. The old cycle only ever squashed:
+   * rest was the creature's full height, it stood there for most of the cycle,
+   * and then it lost two pixels. Whatever the seams were doing, a shape that
+   * only ever gets shorter is a shape being crushed, and "smushed" is what the
+   * player called it. Rest is now the middle of the range and the creature
+   * spends the cycle a pixel either side of it, so the same amount of movement
+   * reads as a chest going in and out instead of as a body settling.
    *
-   * **Two pixels, not one.** The player asked for more movement and one pixel
-   * on a sixty-four pixel creature is barely visible. The second pixel is only
-   * available to a creature with the body depth to spare it -- see the `seams`
-   * list in kinanchor, whose length is the deepest squash that species can take
-   * -- so a small one still breathes a single pixel and does not stamp.
+   * WHY THE SEAMS LAG EACH OTHER. A creature with two of them would otherwise
+   * shut both at once, which is one big compression in two places rather than a
+   * breath. Half a radian of lag sends it up the body as a wave.
    *
    * The two sides run a little over half a cycle apart so they never pulse
    * together, which would read as one shared heartbeat rather than two animals.
    * Zero has to be the resting pose: a side whose clock is frozen sits at
-   * idleT 0 and must not be caught mid-squash.
+   * idleT 0 and must not be caught mid-squash, and sin(0) and sin(1.15*PI) are
+   * both inside the dead band.
    */
-  private breath(side: SideId): number {
+  private breath(side: SideId, seams: number): number[] {
+    if (seams <= 0) return [];
     const v = this.view[side];
-    const p = Math.sin(v.idleT / 26 + (side === 'foe' ? Math.PI * 1.15 : 0));
-    return p < -0.75 ? 2 : p < -0.25 ? 1 : 0;
+    const base = side === 'foe' ? Math.PI * 1.15 : 0;
+    const out: number[] = [];
+    for (let i = 0; i < seams; i++) {
+      const p = Math.sin(v.idleT / 27 + base - i * 0.55);
+      out.push(p > 0.65 ? 1 : p < -0.65 ? -1 : 0);
+    }
+    return out;
   }
 
   private renderKin(r: Renderer, side: SideId): void {
@@ -1477,13 +1896,27 @@ export class BattleScene implements Scene {
      * design-grid step of height per seam, the feet stay planted, and every
      * pixel that survives is still exactly where the grid says.
      *
-     * WHERE THE SEAMS GO is the part that was wrong. They used to sit at a
-     * fixed 62% of the FRAME, which was mid-body on a generated sprite that
-     * filled its cell and is 45% of the way UP a drawn one -- straight through
-     * cinderpaw's chest and head. The head compressed and the legs did not
-     * move, which is backwards, and the player said so. They are now measured
-     * off the creature's own ink and sit low in its body, so a breath moves the
-     * haunches and carries the skull as a rigid block.
+     * WHERE THE SEAMS GO is the part that has been wrong twice, and the second
+     * time is the one worth recording. They were moved off a fixed percentage
+     * of the FRAME onto 66% and 86% of each creature's own INK, which is much
+     * better placed and still not measured: cinderpaw's ink runs rows 46..123
+     * and its legs start around row 98, so 66% is row 96 and 86% is row 112 and
+     * BOTH seams were in the legs. Every breath took four design rows out of a
+     * twenty-five-row leg and dropped the entire animal onto the stumps. That
+     * is the "top half is being smushed" the player reported -- the top half
+     * was not being compressed, it was being driven down into legs that were.
+     *
+     * kinbreath measures the barrel instead: the wide solid part of the
+     * silhouette, found from the sprite's own alpha, with limbs and tails
+     * excluded because they are thin. Seams go inside it and nowhere else, so
+     * the ribcage is the only thing that changes shape and the head and the
+     * legs are carried as rigid blocks.
+     *
+     * A seam can also RUN THE OTHER WAY. A positive delta repeats one logical
+     * pixel of barrel instead of dropping one, which costs nothing -- the
+     * repeat is on the grid and inside a region of the drawing that was already
+     * uniform -- and it is what lets the resting pose sit in the middle of the
+     * range rather than at the top of it.
      *
      * Only a whole, plainly-standing sprite is ever squashed: a clipped or
      * half-materialised one is drawn flat, and nothing is breathing during
@@ -1491,24 +1924,41 @@ export class BattleScene implements Scene {
      */
     const settled = drawH === size && v.clipY === null && v.ghost === 0
       && v.bloom === 0 && v.alpha >= 1;
-    const anchor = kinAnchor(kin.species, back);
-    const depth = settled ? Math.min(this.breath(side), anchor.seams.length) : 0;
-    const seams = depth > 0 ? anchor.seams.slice(anchor.seams.length - depth) : [];
+    const br = kinBreath(kin.species, back);
+    const deltas = settled ? this.breath(side, br.seams.length) : [];
+    // kinbreath lists its seams lowest-first, because that is priority order;
+    // a split blit walks the sprite downward and needs them the other way up.
+    const cuts = br.seams
+      .map((seam, i) => ({ seam, d: deltas[i] ?? 0 }))
+      .sort((a, b) => a.seam - b.seam);
+    const moving = cuts.some((cs) => cs.d !== 0);
 
     const blit = (img: CanvasImageSource, alpha: number, ox = 0, oy = 0) => {
-      if (seams.length === 0) {
+      if (!moving) {
         r.image(img, x + ox, y + oy, 0, 0, size, drawH, false, false, alpha);
         return;
       }
+      // The feet are the fixed end, so the block below the lowest seam is drawn
+      // where it always is and every block above it carries the running total
+      // of everything the seams beneath it have done.
+      let shift = 0;
+      for (const cs of cuts) shift -= cs.d;
       let from = 0;
-      let drop = seams.length;
-      for (const seam of seams) {
-        const h = seam - DETAIL - from;
+      for (const cs of cuts) {
+        const end = cs.d < 0 ? cs.seam - DETAIL : cs.seam;
+        const h = end - from;
         if (h > 0) {
-          r.image(img, x + ox, y + oy + from / DETAIL + drop, 0, from, size, h, false, false, alpha);
+          r.image(img, x + ox, y + oy + from / DETAIL + shift, 0, from, size, h,
+            false, false, alpha);
         }
-        from = seam;
-        drop--;
+        if (cs.d > 0) {
+          // The pixel the stretch just opened, filled with the barrel row above
+          // it drawn a second time.
+          r.image(img, x + ox, y + oy + cs.seam / DETAIL + shift, 0, cs.seam - DETAIL,
+            size, DETAIL, false, false, alpha);
+        }
+        shift += cs.d;
+        from = cs.seam;
       }
       r.image(img, x + ox, y + oy + from / DETAIL, 0, from, size, size - from, false, false, alpha);
     };
@@ -1545,6 +1995,138 @@ export class BattleScene implements Scene {
     }
   }
 
+  /* -------------------------------------------------------- level up */
+
+  /**
+   * The level-up flourish.
+   *
+   * Three parts, because one on its own always reads as a decoration sitting
+   * near the creature rather than as something happening TO it:
+   *
+   *  - a pool of light on the pad, drawn UNDER the sprite, so the creature is
+   *    standing in it rather than in front of it;
+   *  - rings that leave that pool and travel UP the body, narrowing as they go.
+   *    The direction is the whole point. Everything else in this battle screen
+   *    that puts a ring on a creature is a blow landing, and a blow expands
+   *    outward from a point of contact; a ring that climbs is the only shape
+   *    here that means "rising";
+   *  - motes carried up with them, on their own spiral, so the column has grain
+   *    and does not read as three clean geometric arcs.
+   *
+   * On top of that the sprite itself glows -- see levelStep -- and the panel's
+   * level number ticks over on the same frame. The player asked for this not to
+   * breeze past, so the whole thing runs about a second and a half and the line
+   * that names it is held underneath for most of that.
+   */
+  private renderLevelUp(r: Renderer, behind: boolean): void {
+    if (this.levelFx <= 0) return;
+    const v = this.view.player;
+    const kin = v.kin;
+    if (!kin || !v.visible) return;
+
+    const p = 1 - this.levelFx / this.levelFxLen;
+    const pad = PLAYER_PAD;
+    // The top of the creature's own ink, not the top of its frame: the column
+    // has to finish at the animal's head and every frame is mostly empty above
+    // whatever is drawn in it.
+    const top = PLAYER_SPRITE.y + kinAnchor(kin.species, true).y0 / DETAIL;
+    const rise = Math.max(18, pad.y - top + 6);
+
+    if (behind) {
+      // The pool. Swells fast, holds, and is gone before the rings are, so the
+      // light reads as having been released rather than as switched on.
+      const glow = Math.max(0, ramp(p, 0, 0.10) - ramp(p, 0.46, 0.9));
+      if (glow > 0) {
+        r.ellipsePixel(pad.x * DETAIL, pad.y * DETAIL,
+          (14 + glow * 12) * DETAIL, (4 + glow * 4) * DETAIL,
+          `rgba(255,236,168,${(0.40 * glow).toFixed(3)})`);
+        r.ellipsePixel(pad.x * DETAIL, pad.y * DETAIL,
+          (7 + glow * 6) * DETAIL, (2 + glow * 2) * DETAIL,
+          `rgba(255,252,232,${(0.55 * glow).toFixed(3)})`);
+      }
+      return;
+    }
+
+    // Rings. Two units wide per dot and two rows deep on the near side: a
+    // one-pixel dot at 240x160 against a busy field is not a ring, it is dust,
+    // and the first pass of this was exactly that -- invisible at 1x and fine
+    // when zoomed in, which is this project's oldest way of being wrong.
+    for (let i = 0; i < 3; i++) {
+      const q = ramp(p, 0.02 + i * 0.16, 0.02 + i * 0.16 + 0.46);
+      if (q <= 0 || q >= 1) continue;
+      const y = pad.y - rise * q;
+      const rad = 23 - 13 * q;
+      const a = Math.min(1, (1 - q) * 2.2);
+      const dots = 24;
+      for (let k = 0; k < dots; k++) {
+        const ang = (k / dots) * Math.PI * 2 + q * 1.4;
+        const px = Math.round(pad.x + Math.cos(ang) * rad);
+        const py = Math.round(y + Math.sin(ang) * rad * 0.30);
+        // The near half of the ring is brighter and thicker than the far half,
+        // which is what stops a flat ellipse of dots reading as a flat ellipse
+        // of dots and starts it reading as a hoop around something.
+        if (Math.sin(ang) > 0) {
+          r.rect(px - 1, py, 2, 2, `rgba(255,255,246,${a.toFixed(3)})`);
+          r.rect(px - 1, py + 2, 2, 1, `rgba(255,206,88,${(a * 0.55).toFixed(3)})`);
+        } else {
+          r.rect(px - 1, py, 2, 1, `rgba(255,222,120,${(a * 0.72).toFixed(3)})`);
+        }
+      }
+    }
+
+    // Motes: short vertical streaks rather than points, because a point that
+    // moves four pixels a frame is a point and a streak is a spark.
+    const motes = 16;
+    for (let i = 0; i < motes; i++) {
+      const q = ramp(p, 0.04 + (i % 8) * 0.055, 0.04 + (i % 8) * 0.055 + 0.54);
+      if (q <= 0 || q >= 1) continue;
+      const ang = i * 2.39 + q * 3.4;
+      const spread = 18 - 10 * q;
+      const px = pad.x + Math.cos(ang) * spread;
+      const py = pad.y + 2 - (rise + 10) * q + Math.sin(ang * 2) * 1.5;
+      // Twinkling: a mote that never blinks is a dot, and sixteen dots on
+      // fixed paths read as a diagram.
+      if ((this.ticks + i * 3) % 9 < 6) {
+        const a = Math.min(1, (1 - q) * 1.8);
+        r.rect(Math.round(px), Math.round(py), 1, 2, `rgba(255,252,226,${a.toFixed(3)})`);
+        r.rect(Math.round(px), Math.round(py) + 2, 1, 1, `rgba(255,214,110,${(a * 0.5).toFixed(3)})`);
+      }
+    }
+
+    // The plate is interface, not field: it is drawn outside the shake by
+    // render(), so a screen-shaking hit never wobbles the words.
+  }
+
+  /**
+   * The plate that says so in words.
+   *
+   * It arrives over the player's own panel because that is where the number it
+   * is about lives, and it slides rather than appearing: something that cuts in
+   * and cuts out at 240x160 is indistinguishable from a rendering fault.
+   */
+  private renderLevelBanner(r: Renderer, p: number): void {
+    const label = 'LEVEL UP!';
+    const w = r.textWidth(label) + 12;
+    const h = 13;
+    const restX = PLAYER_BOX.x + PLAYER_BOX.w - w;
+    const inP = ramp(p, 0.02, 0.16);
+    const outP = ramp(p, 0.80, 0.98);
+    if (inP <= 0) return;
+    // Overshoots by two units on the way in and settles, so it lands rather
+    // than stopping.
+    const ease = 1 - Math.pow(1 - inP, 3);
+    const x = Math.round(restX + (SCREEN_W + 8 - restX) * (1 - ease) + (SCREEN_W - restX) * outP);
+    if (x >= SCREEN_W) return;
+    const y = PLAYER_BOX.y - h - 2;
+
+    const lit = Math.floor(this.levelFx / 5) % 2 === 0;
+    r.rect(x, y, w, h, lit ? '#ffe89a' : '#f6c85a');
+    r.rect(x, y, w, 1, '#fffbe4');
+    r.rect(x, y + h - 1, w, 1, '#a87a24');
+    r.outline(x - 1, y - 1, w + 2, h + 2, UI.frame);
+    r.text(label, x + 6, y + 3, { color: '#4a3208', shadow: 'rgba(255,255,255,0.45)' });
+  }
+
   /** The half of the vessel's light that belongs behind the creature. */
   private renderBeam(r: Renderer): void {
     const c = this.capsule;
@@ -1557,8 +2139,28 @@ export class BattleScene implements Scene {
     const c = this.capsule;
     if (!c) return;
     if (c.land > 0 && c.beamTo) this.drawLanding(r, c.beamTo.x, c.beamTo.y, c.land, false);
+    if (c.dust > 0 && c.beamTo) this.drawDust(r, c.beamTo.x, c.beamTo.y, c.dust);
+    // Oldest first, so the newest streak sits on top of the older one and the
+    // trail thins away behind the vessel rather than in front of it.
+    //
+    // Ghosted copies of the icon are what this was, and at 0.42 alpha a copy
+    // with its own dark outline still reads as an OBJECT: the throw looked like
+    // three capsules in a row rather than one moving fast. A trail has to be
+    // light, not a second vessel.
+    for (let i = c.trail.length - 1; i >= 0; i--) {
+      const g = c.trail[i]!;
+      const a = 0.34 - i * 0.14;
+      const rad = 4 - i;
+      for (let dy = -rad; dy <= rad; dy++) {
+        const hw = Math.round(Math.sqrt(Math.max(0, rad * rad - dy * dy)));
+        if (hw <= 0) continue;
+        r.rect(g.x - hw, g.y + dy, hw * 2 + 1, 1, `rgba(255,232,168,${a.toFixed(3)})`);
+      }
+      r.rect(g.x - 1, g.y - 1, 2, 2, `rgba(255,250,224,${(a * 1.6).toFixed(3)})`);
+    }
     this.drawVesselIcon(r, c.x, c.y, c.open, c.spin);
     if (c.burst > 0) this.drawBurst(r, c.x, c.y, c.burst);
+    if (c.flare > 0) this.drawFlare(r, c.x, c.y, c.flare);
     if (c.tell) r.text(c.tell, c.x + 10, c.y - 22, { color: '#ffffff', shadow: '#000000' });
   }
 
@@ -1575,21 +2177,50 @@ export class BattleScene implements Scene {
   private drawLanding(r: Renderer, x: number, y: number, k: number, behind: boolean): void {
     const q = Math.max(0, Math.min(1, k));
     const grow = 1 - q;
-    const rad = 8 + grow * 22;
+    const rad = 7 + grow * 18;
     if (behind) {
-      // The pool goes under the feet, not over them.
-      r.ellipsePixel(x * DETAIL, y * DETAIL, rad * DETAIL, rad * 0.32 * DETAIL,
-        `rgba(255,252,226,${(0.42 * q).toFixed(3)})`);
+      // The pool goes under the feet, not over them. Two tones rather than one:
+      // a single flat ellipse at 0.42 alpha was a white smear the size of the
+      // pad, and it took the pad's own drawing with it.
+      r.ellipsePixel(x * DETAIL, y * DETAIL, rad * DETAIL, rad * 0.30 * DETAIL,
+        `rgba(255,236,168,${(0.30 * q).toFixed(3)})`);
+      r.ellipsePixel(x * DETAIL, y * DETAIL, rad * 0.55 * DETAIL, rad * 0.17 * DETAIL,
+        `rgba(255,252,232,${(0.42 * q).toFixed(3)})`);
       return;
     }
-    const col = `rgba(255,248,208,${q.toFixed(3)})`;
+    // Sparks leaving the pool along the ground, two units wide so they are
+    // still there at 240x160.
+    const col = `rgba(255,246,196,${q.toFixed(3)})`;
     for (let i = 0; i < 10; i++) {
       const ang = (i / 10) * Math.PI * 2;
       r.rect(
-        Math.round(x + Math.cos(ang) * rad * 1.15) - 1,
-        Math.round(y + Math.sin(ang) * rad * 0.34) - 1 - Math.round(grow * 6),
-        2, 2, col,
+        Math.round(x + Math.cos(ang) * rad * 1.2) - 1,
+        Math.round(y + Math.sin(ang) * rad * 0.32) - Math.round(grow * 5),
+        2, 1, col,
       );
+    }
+  }
+
+  /**
+   * Feet arriving.
+   *
+   * A low ring of dashes running outward along the floor and nothing above
+   * ankle height, because that is the whole point: the creature has been light
+   * for half a second and this is the frame it acquires weight. It is drawn in
+   * the pad's own dust colours rather than in the vessel's light, so it reads
+   * as ground being disturbed and not as more of the same effect.
+   */
+  private drawDust(r: Renderer, x: number, y: number, k: number): void {
+    const q = Math.max(0, Math.min(1, k));
+    const grow = 1 - q;
+    const rad = 6 + grow * 20;
+    const a = q * 0.8;
+    for (let i = 0; i < 8; i++) {
+      const ang = (i / 8) * Math.PI * 2 + 0.4;
+      const px = Math.round(x + Math.cos(ang) * rad);
+      const py = Math.round(y + Math.sin(ang) * rad * 0.30 - grow * 2);
+      r.rect(px - 1, py, 3, 1, `rgba(236,232,214,${a.toFixed(3)})`);
+      r.rect(px - 1, py + 1, 3, 1, `rgba(168,158,132,${(a * 0.5).toFixed(3)})`);
     }
   }
 
@@ -1604,61 +2235,169 @@ export class BattleScene implements Scene {
    */
   private drawBeam(r: Renderer, c: Capsule, to: { x: number; y: number }): void {
     const k = Math.max(0, Math.min(1, c.beam));
-    const span = Math.max(1, Math.round(to.y - c.y));
-    const soft = `rgba(255,255,255,${(0.30 * k).toFixed(3)})`;
-    const core = `rgba(255,252,224,${(0.85 * k).toFixed(3)})`;
+    // The light leaves from BETWEEN the halves, so the cone starts at the seam
+    // and the lower half sits inside the top of it -- which is what the shape
+    // is supposed to say: something is being poured out past the lid.
+    const top = c.y + 1 + Math.round(c.open * 4);
+    const span = Math.max(1, Math.round(to.y - top));
+    // Narrower than it was, by a lot. The old cone reached twenty-four units
+    // either side at the floor, which at 240x160 is a fifth of the screen: the
+    // creature it was supposed to be delivering formed inside a white slab and
+    // could not be seen until the slab went away. It is now about the width of
+    // the pad, and the reason it still reads as a beam is the core and the
+    // bands, not the acreage.
+    const soft = `rgba(255,250,230,${(0.24 * k).toFixed(3)})`;
+    const core = `rgba(255,252,224,${(0.62 * k).toFixed(3)})`;
     for (let i = 0; i <= span; i++) {
       const t = i / span;
       const x = Math.round(c.x + (to.x - c.x) * t);
-      const wide = Math.max(1, Math.round((2 + t * 24) * k));
-      r.rect(x - wide, c.y + i, wide * 2, 1, soft);
-      const hot = Math.max(1, Math.round(wide * 0.34));
-      r.rect(x - hot, c.y + i, hot * 2, 1, core);
+      const wide = Math.max(1, Math.round((2 + t * 10) * k));
+      r.rect(x - wide, top + i, wide * 2, 1, soft);
+      const hot = Math.max(1, Math.round(wide * 0.40));
+      r.rect(x - hot, top + i, hot * 2, 1, core);
     }
-    r.ellipsePixel(to.x * DETAIL, to.y * DETAIL, 26 * k * DETAIL, 7 * k * DETAIL, soft);
+
+    // Light actually travelling. Three bands walking the length of the cone,
+    // each a few rows of much brighter fill; the direction is the sign of
+    // `flow`, so the identical code pours a creature out and hauls one back.
+    for (let b = 0; b < 3; b++) {
+      const bt = ((c.flow + b / 3) % 1 + 1) % 1;
+      const i0 = Math.round(bt * span);
+      for (let d = 0; d < 4; d++) {
+        const i = i0 + d;
+        if (i < 0 || i > span) continue;
+        const t = i / span;
+        const x = Math.round(c.x + (to.x - c.x) * t);
+        const wide = Math.max(1, Math.round((2 + t * 10) * k));
+        const fade = (1 - d / 4) * k;
+        r.rect(x - wide, top + i, wide * 2, 1, `rgba(255,255,246,${(0.55 * fade).toFixed(3)})`);
+      }
+    }
   }
 
   /**
-   * The vessel itself, as two halves that come apart.
+   * The vessel itself: a round capsule, split by a band, that comes apart.
    *
-   * A tumbling one swaps its lit and dark bands instead of rotating: at eight
-   * design pixels across there is nothing in a rotation to see, and rotating
-   * would take the whole thing off the grid to say it.
+   * WHAT IT WAS. Two eight-by-four rectangles with a dark outline round each,
+   * which at 1x is a pair of beige crates. Every other object on this screen is
+   * either a creature or a panel; the one prop in the whole battle looked like
+   * neither, and since the send-out is a story about that prop, the prop had to
+   * be drawn properly.
+   *
+   * It is eleven units across, plotted from a scanline table so the silhouette
+   * is a real circle rather than a rounded rectangle, and it is rung in its own
+   * dark first so it reads against grass, sky and pad alike.
+   *
+   * THE TUMBLE is a rotation of the split line, not a swap of two colours. Per
+   * pixel, which side of the band a point falls on is decided by the rotated
+   * coordinate `dx*sin + dy*cos`, so at a quarter turn the light half is on the
+   * left and the band runs vertically. One hundred and twenty-one pixels a
+   * frame is nothing, and a capsule that visibly turns over is worth far more
+   * than the two colours flickering that stood in for it.
    */
-  private drawVesselIcon(r: Renderer, x: number, y: number, open = 0, spin = 0): void {
-    const gap = Math.round(open * 5);
-    const flipped = Math.floor(spin * 7) % 2 === 1;
-    const lit = flipped ? '#8a6a34' : '#e0c07a';
-    const dark = flipped ? '#e0c07a' : '#8a6a34';
+  private drawVesselIcon(r: Renderer, x: number, y: number, open = 0, spin = 0, alpha = 1): void {
+    const gap = Math.round(open * 6);
+    const a = Math.max(0, Math.min(1, alpha));
+    if (a <= 0) return;
+    const A = (hex: string, mul = 1) => (a >= 1 && mul >= 1 ? hex : this.fade(hex, a * mul));
 
-    const ty = y - 4 - gap;
-    r.rect(x - 4, ty, 8, 4, '#c8a05a');
-    r.rect(x - 4, ty, 8, 2, lit);
-    r.outline(x - 5, ty - 1, 10, 6, '#2a2018');
+    // Half-widths of an eleven-pixel disc, rows -5..5.
+    const HW = [2, 3, 4, 4, 5, 5, 5, 4, 4, 3, 2];
+    const ang = spin * Math.PI * 2;
+    const sa = Math.sin(ang), ca = Math.cos(ang);
 
-    const by = y + gap;
-    r.rect(x - 4, by, 8, 4, '#c8a05a');
-    r.rect(x - 4, by + 2, 8, 2, dark);
-    r.outline(x - 5, by - 1, 10, 6, '#2a2018');
+    const shell = A('#1c1409');
+    const lit = A('#f2cc78');
+    const litLow = A('#c9a14e');
+    // Deliberately not white. The lower half spends the whole of a send-out
+    // sitting in the top of a cone of white light, and the first version of
+    // this was cream: it vanished into the beam and left the open vessel
+    // looking like a lampshade on a stick.
+    const pale = A('#d2c8a8');
+    const paleLow = A('#9c9174');
+    const band = A('#3a2c18');
 
-    if (gap === 0) r.rect(x - 1, y - 1, 2, 2, '#f4f0e0');
+    for (let dy = -5; dy <= 5; dy++) {
+      // Open: the two halves travel apart and the band goes with the top piece,
+      // so the seam stays a seam instead of dissolving into the gap.
+      const shift = gap === 0 ? 0 : (dy <= 0 ? -gap : gap);
+      const hw = HW[dy + 5]!;
+      // The ring, drawn as a row one pixel proud on each side plus caps.
+      r.rect(x - hw - 1, y + dy + shift, hw * 2 + 3, 1, shell);
+      if (dy === -5) r.rect(x - hw, y + dy + shift - 1, hw * 2 + 1, 1, shell);
+      if (dy === 5) r.rect(x - hw, y + dy + shift + 1, hw * 2 + 1, 1, shell);
+    }
+    for (let dy = -5; dy <= 5; dy++) {
+      const shift = gap === 0 ? 0 : (dy <= 0 ? -gap : gap);
+      const hw = HW[dy + 5]!;
+      for (let dx = -hw; dx <= hw; dx++) {
+        // Which side of the split this pixel is on, in the capsule's own frame.
+        const d = gap === 0 ? dx * sa + dy * ca : dy;
+        let col: string;
+        if (d >= -0.6 && d <= 0.6) col = band;
+        else if (d < 0) col = dy < -2 || dx < -2 ? lit : litLow;
+        else col = dy > 3 || dx > 2 ? paleLow : pale;
+        r.rect(x + dx, y + dy + shift, 1, 1, col);
+      }
+    }
+    // The stud, and the highlight that tells the eye this thing is round. The
+    // highlight travels with the top half when it opens; without it the dome
+    // goes flat at exactly the moment it is largest on screen.
+    if (gap === 0) r.rect(x - 1, y, 2, 1, A('#f8f2dc'));
+    r.rect(x - 3, y - 3 - gap, 2, 1, A('#fffaea'));
+    r.rect(x - 4, y - 2 - gap, 1, 1, A('#fffaea'));
+    if (gap > 0) r.rect(x - 2, y + 4 + gap, 3, 1, A('#e6dcc0'));
   }
 
-  /** A one-shot starburst: a ring of sparks and a cross, expanding as it dies. */
+  /** `#rrggbb` at an alpha, for the ghosted trail copies. */
+  private fade(hex: string, a: number): string {
+    const n = parseInt(hex.slice(1), 16);
+    return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a.toFixed(3)})`;
+  }
+
+  /**
+   * A one-shot starburst: an expanding ring of sparks with a cross through it.
+   *
+   * The ring is drawn as dashes rather than dots and the cross tapers, so at
+   * the size this is played back it reads as an explosion of light instead of
+   * as eight pixels arranged in a circle.
+   */
   private drawBurst(r: Renderer, x: number, y: number, k: number): void {
-    const rad = 3 + (1 - k) * 20;
-    const col = `rgba(255,248,208,${k.toFixed(3)})`;
-    for (let i = 0; i < 8; i++) {
-      const ang = (i / 8) * Math.PI * 2;
-      r.rect(
-        Math.round(x + Math.cos(ang) * rad) - 1,
-        Math.round(y + Math.sin(ang) * rad * 0.8) - 1,
-        2, 2, col,
-      );
+    const grow = 1 - k;
+    const rad = 4 + grow * 22;
+    const col = `rgba(255,250,220,${k.toFixed(3)})`;
+    const warm = `rgba(255,206,96,${(k * 0.75).toFixed(3)})`;
+    for (let i = 0; i < 12; i++) {
+      const ang = (i / 12) * Math.PI * 2 + 0.26;
+      const cx = Math.cos(ang), cy = Math.sin(ang) * 0.86;
+      const px = Math.round(x + cx * rad);
+      const py = Math.round(y + cy * rad);
+      r.rect(px - 1, py, 2, 1, col);
+      r.rect(Math.round(x + cx * rad * 0.72) - 1, Math.round(y + cy * rad * 0.72), 2, 1, warm);
     }
-    const rx = Math.round(rad), ry = Math.round(rad * 0.8);
-    r.rect(x - rx, y, rx * 2, 1, col);
-    r.rect(x, y - ry, 1, ry * 2, col);
+    const rx = Math.round(rad * 1.25), ry = Math.round(rad * 0.95);
+    r.rect(x - rx, y, rx * 2, 1, warm);
+    r.rect(x, y - ry, 1, ry * 2, warm);
+    if (k > 0.55) r.rect(x - 2, y - 2, 4, 4, col);
+  }
+
+  /**
+   * The flare cross on the frame the vessel splits.
+   *
+   * Two lines, one long and horizontal and one short and vertical, both of them
+   * gone within a few frames. It exists to give the split a single unmissable
+   * frame -- a burst that expands is already fading by the time the eye finds
+   * it, and something has to be at full brightness exactly once.
+   */
+  private drawFlare(r: Renderer, x: number, y: number, k: number): void {
+    const w = Math.round(22 + 26 * k);
+    const h = Math.round(8 + 22 * k);
+    r.rect(x - w, y, w * 2, 1, `rgba(255,255,248,${(0.9 * k).toFixed(3)})`);
+    r.rect(x - Math.round(w * 0.6), y - 1, Math.round(w * 1.2), 1,
+      `rgba(255,232,160,${(0.5 * k).toFixed(3)})`);
+    r.rect(x - Math.round(w * 0.6), y + 1, Math.round(w * 1.2), 1,
+      `rgba(255,232,160,${(0.5 * k).toFixed(3)})`);
+    r.rect(x, y - h, 1, h * 2, `rgba(255,255,248,${(0.8 * k).toFixed(3)})`);
   }
 
   /**
@@ -1693,7 +2432,11 @@ export class BattleScene implements Scene {
     }
 
     const left = box.x + 7;
-    const levelText = `Lv${kin.level}`;
+    // The player's own panel counts up on the beat the flourish plays; the
+    // foe's has nothing to lag behind and reads its kin directly.
+    const shownLevel = side === 'player' && this.view.player.kin === kin
+      ? Math.max(1, Math.min(kin.level, this.displayLevel)) : kin.level;
+    const levelText = `Lv${shownLevel}`;
     const levelW = r.textWidth(levelText);
     const genderText = kin.gender === 'none' ? '' : kin.gender === 'female' ? 'oF' : 'oM';
     const genderW = genderText ? r.textWidth(genderText) + 2 : 0;
@@ -1730,11 +2473,17 @@ export class BattleScene implements Scene {
         color: UI.ink, align: 'right',
       });
       // Experience runs along the very bottom edge, full width, so it never
-      // competes with the HP bar for attention.
-      const cur = expForLevel(kin.growthRate, kin.level);
-      const next = expForLevel(kin.growthRate, Math.min(100, kin.level + 1));
+      // competes with the HP bar for attention. Measured against the level the
+      // PANEL is showing, so a gain that carries a level runs the bar up to the
+      // end of the band, stops there, and starts the next band on the beat the
+      // flourish fires -- instead of emptying in one frame the way it did when
+      // this asked the kin for a level it had already been given.
+      const cur = expForLevel(kin.growthRate, shownLevel);
+      const next = expForLevel(kin.growthRate, Math.min(100, shownLevel + 1));
       const prog = next > cur ? Math.max(0, Math.min(1, (this.displayExp - cur) / (next - cur))) : 1;
-      r.meter(box.x + 4, box.y + box.h - 5, box.w - 8, 2, prog, UI.exp, '#39415c', null);
+      const expLit = this.levelFx > 0 && Math.floor(this.levelFx / 4) % 2 === 0;
+      r.meter(box.x + 4, box.y + box.h - 5, box.w - 8, 2, prog,
+        expLit ? '#ffffff' : UI.exp, '#39415c', null);
     }
 
     if (kin.status !== 'none') this.renderStatusChip(r, left, barY + 8, kin.status);
@@ -1964,17 +2713,19 @@ export class BattleScene implements Scene {
    * units deep, so a full party ran a clear foot past the bottom of the screen
    * and the only picture on it was one icon bolted to the side.
    *
-   * Slot one gets the big card and the rest get rows, which is the same shape
-   * the party screen outside battle uses, and every one of them carries its own
-   * portrait, level, bar and status -- a switch is a decision about numbers and
-   * they all have to be on screen at once for it to be one.
+   * The kin in the fight gets the big card and the rest get rows, which is the
+   * same shape the party screen outside battle uses, and every one of them
+   * carries its own portrait, level, bar and status -- a switch is a decision
+   * about numbers and they all have to be on screen at once for it to be one.
    */
   private renderPartyMenu(game: Game, r: Renderer): void {
-    const party = this.battle.player.party;
     r.rect(0, 0, SCREEN_W, SCREEN_H, '#3c4664');
     for (let y = 0; y < SCREEN_H; y += 4) r.rect(0, y, SCREEN_W, 1, '#424d6e');
 
-    for (let i = 0; i < Math.min(6, party.length); i++) this.renderPartyCard(game, r, i);
+    const order = this.partyOrder();
+    for (let s = 0; s < Math.min(6, order.length); s++) {
+      this.renderPartyCard(game, r, s, order[s]!);
+    }
 
     r.window(2, 132, SCREEN_W - 4, 26, { fill: UI.fill, border: UI.frame, highlight: UI.shade });
     // No "press X to go back" hint: cancel does that on every other list in
@@ -1989,21 +2740,27 @@ export class BattleScene implements Scene {
     return { x: 99, y: 3 + (i - 1) * 25, w: 138, h: 23 };
   }
 
-  private renderPartyCard(game: Game, r: Renderer, i: number): void {
-    const kin = this.battle.player.party[i];
+  /**
+   * One card. `slot` is where on the screen it is drawn and which menu row it
+   * answers to; `idx` is which kin in the party it shows. They are not the same
+   * number any more -- see partyOrder -- and every lookup has to use the right
+   * one or the cursor stops pointing at the card it is drawn on.
+   */
+  private renderPartyCard(game: Game, r: Renderer, slot: number, idx: number): void {
+    const kin = this.battle.player.party[idx];
     if (!kin) return;
-    const c = this.partyCardRect(i);
-    const sel = this.partyMenu.index === i;
-    const active = i === this.battle.player.activeIndex;
+    const c = this.partyCardRect(slot);
+    const sel = this.partyMenu.index === slot;
+    const active = idx === this.battle.player.activeIndex;
     const down = kin.fainted;
-    const usable = this.partyMenu.items[i]?.enabled !== false;
+    const usable = this.partyMenu.items[slot]?.enabled !== false;
 
     // Hovering moves the cursor, the same as it does on the command pad, so
     // the two input methods never disagree about what is selected.
     const hovered = game.input.mouseOver(c.x, c.y, c.w, c.h);
-    if (hovered && game.input.mouse.idleFrames < 2 && usable) this.partyMenu.index = i;
+    if (hovered && game.input.mouse.idleFrames < 2 && usable) this.partyMenu.index = slot;
     if (hovered && game.input.mouse.leftPressed && usable) {
-      this.partyMenu.index = i;
+      this.partyMenu.index = slot;
       this.partyClick = true;
     }
 
@@ -2012,9 +2769,13 @@ export class BattleScene implements Scene {
       fill, border: UI.frame, highlight: sel ? '#8fa8d8' : UI.shade,
     });
     if (sel) {
-      // Dark ring on the card you are on and nothing on the ones you are not,
-      // matching the command pad. Same rule, same reason.
-      r.outline(c.x - 1, c.y - 1, c.w + 2, c.h + 2, UI.frame);
+      // A ring on the card you are on and nothing on the ones you are not,
+      // matching the command pad -- but LIGHT here, not dark. The pad's rings
+      // are dark because they sit on saturated colour; this screen's backdrop
+      // is a dark slate and a dark ring on it was very nearly invisible, which
+      // on the one screen in a battle where you are choosing between six things
+      // is the wrong thing to be subtle about.
+      r.outline(c.x - 1, c.y - 1, c.w + 2, c.h + 2, '#f2c94c');
       r.outline(c.x + 2, c.y + 2, c.w - 4, c.h - 4, 'rgba(255,255,255,0.75)');
     }
 
@@ -2023,7 +2784,7 @@ export class BattleScene implements Scene {
     const ink = down ? '#6e7488' : UI.ink;
     const art = down ? 0.4 : 1;
 
-    if (i === 0) {
+    if (slot === 0) {
       r.image(frontSprite(kin.species), c.x + Math.floor((c.w - 64) / 2), c.y + 4,
         0, 0, SPRITE_SIZE, SPRITE_SIZE, false, false, art);
       const tx = c.x + 6;

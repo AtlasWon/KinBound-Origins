@@ -7,7 +7,7 @@
   "indoor": true,
   "rows": [
     "IIIIUIIIIIIUIIII",
-    "I++++?@@$$$$$kkI",
+    "I+++?@@KKK$$$kkI",
     "I::::::::::::::I",
     "IFFFFFFFFFFFFFFI",
     "IkFFFAAAAFFFFFPI",
@@ -19,7 +19,15 @@
     "IIIIIIIIIIIIIIII"
   ],
   "warps": [
-    { "x": 7, "y": 9, "toMap": "marrow_hollow", "toX": 22, "toY": 7, "facing": "down", "style": "door" }
+    {
+      "x": 7,
+      "y": 9,
+      "toMap": "marrow_hollow",
+      "toX": 22,
+      "toY": 7,
+      "facing": "down",
+      "style": "door"
+    }
   ],
   "npcs": [
     {
@@ -28,7 +36,9 @@
       "x": 7,
       "y": 2,
       "facing": "down",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "vess_intro"
     },
     {
@@ -37,7 +47,9 @@
       "x": 13,
       "y": 8,
       "facing": "left",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "vess_aide"
     }
   ],
@@ -87,10 +99,41 @@
       "x": 5,
       "y": 4,
       "text": [
-        "The centre table. A padded case sits open on it,",
-        "shaped for three, and three sets of field notes",
-        "wait beside it in Dr. Vess's cramped hand."
+        "The centre table. Three sets of field notes wait",
+        "here in Dr. Vess's cramped hand -- one for each of",
+        "the kin he keeps up on the counter behind him."
       ]
+    },
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 1,
+      "text": [
+        "The long counter. Scrubbed pale, warm from the",
+        "lamp above it, and worn smooth in three places",
+        "where something small has been sitting all morning."
+      ]
+    },
+    {
+      "kind": "kin",
+      "species": "sprigling",
+      "x": 7,
+      "y": 1,
+      "hiddenIfFlag": "starter_sprigling"
+    },
+    {
+      "kind": "kin",
+      "species": "cinderpaw",
+      "x": 8,
+      "y": 1,
+      "hiddenIfFlag": "starter_cinderpaw"
+    },
+    {
+      "kind": "kin",
+      "species": "rilltail",
+      "x": 9,
+      "y": 1,
+      "hiddenIfFlag": "starter_rilltail"
     }
   ]
 }

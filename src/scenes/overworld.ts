@@ -13,7 +13,7 @@ import { DETAIL, Renderer, SCREEN_H, SCREEN_W } from '../engine/renderer.js';
 import { T, TILE_PX, TILE_SIZE, Tileset } from '../gfx/tileset.js';
 import { TileMap, type AsciiMapFile } from '../world/tilemap.js';
 import { Actor, DIR_VEC, WALK_FRAMES } from '../world/actor.js';
-import { PlayerBody, RUN_SPEED, WALK_SPEED } from '../world/body.js';
+import { PlayerBody, SCRIPT_RUN_SPEED, WALK_SPEED } from '../world/body.js';
 import { ask, say } from '../ui/dialogue.js';
 import type { Direction, MapNpc, MapObject, MapWarp } from '../data/schema.js';
 import { GameState } from '../systems/state.js';
@@ -27,13 +27,31 @@ import { EventRunner } from '../systems/eventvm.js';
 import { audio } from '../audio/audio.js';
 import { autosave } from '../systems/save.js';
 import { OverworldEventHost } from './eventHost.js';
-import { drawShutters } from '../ui/transition.js';
+import {
+  areaFrames, areaStyleOf, drawAreaCover, drawShutters,
+  type AreaStyle, type WipeDir,
+} from '../ui/transition.js';
+import { ICON_SIZE, iconSprite } from '../gfx/kinsprite.js';
 import { createKin, type Kin } from '../systems/kin.js';
 import { registry } from '../data/registry.js';
 import type { Battle } from '../battle/battle.js';
 import type { AiTier, EncounterMethod, EncounterTable } from '../data/schema.js';
 
-type Fade = { active: boolean; t: number; dir: 'out' | 'in'; frames: number; then?: () => void };
+type Fade = {
+  active: boolean; t: number; dir: 'out' | 'in'; frames: number; then?: () => void;
+  /** How the cover is drawn. 'warp' is the plain black tint every other caller wants. */
+  style?: AreaStyle;
+  wipeDir?: WipeDir;
+};
+
+/**
+ * How far off to one side an NPC may stand and still answer, in pixels.
+ *
+ * Three quarters of a tile. Wide enough that no reasonable attempt to talk to
+ * somebody misses; narrow enough that the person you are pointing at is always
+ * nearer than the one beside them, which is what decides a tie in a crowd.
+ */
+const TALK_SPREAD = 12;
 
 interface NpcInstance {
   data: MapNpc;
@@ -420,7 +438,7 @@ export class OverworldScene implements Scene {
   private updatePlayer(game: Game): void {
     // Scripted walks and ledge hops own the body until they finish.
     if (this.player.busy) {
-      this.player.update(0, 0, false, () => true);
+      this.player.update(0, 0, () => true);
       this.afterMove(game);
       return;
     }
@@ -428,7 +446,6 @@ export class OverworldScene implements Scene {
     const i = game.input;
     const ax = (i.down('right') ? 1 : 0) - (i.down('left') ? 1 : 0);
     const ay = (i.down('down') ? 1 : 0) - (i.down('up') ? 1 : 0);
-    const running = game.settings.autoRun !== i.down('run');
 
     if (ax !== 0 || ay !== 0) {
       // A ledge is entered by walking at it, and only from the right side.
@@ -437,10 +454,10 @@ export class OverworldScene implements Scene {
         audio.playSfx('ledge_hop');
         this.player.startHop(ledge);
       } else {
-        this.player.update(ax, ay, running, this.solidTest);
+        this.player.update(ax, ay, this.solidTest);
       }
     } else {
-      this.player.update(0, 0, false, this.solidTest);
+      this.player.update(0, 0, this.solidTest);
     }
 
     this.afterMove(game);
@@ -826,10 +843,61 @@ export class OverworldScene implements Scene {
     });
   }
 
+  /**
+   * The NPC the player is talking to, if any.
+   *
+   * The old rule was a single tile lookup: whoever was standing exactly on the
+   * tile in front of you, and nobody else. On a grid that is the whole story,
+   * because you are always parked on the middle of a tile -- but this game walks
+   * freely, so "in front of you" is a continuous thing and lining up on the tile
+   * grid by eye is a chore. Walk up to someone slightly off to one side, press
+   * the key, and nothing happens.
+   *
+   * So the two axes are treated differently, which is the point. *Forward* stays
+   * exactly as strict as it was: the row or column directly in front, one tile,
+   * no reaching across a gap. *Sideways* is measured in pixels instead of tiles,
+   * so being most of a tile off-centre is still close enough. Nothing that used
+   * to work stops working, and the near-misses now land.
+   *
+   * Two guards stop that generosity going wrong. The nearest candidate wins, so
+   * in a crowd the person you are actually pointing at answers rather than their
+   * neighbour; and the tile the sideways part of the reach passes through has to
+   * be open, so nobody gets talked to around the end of a counter or through the
+   * corner of a wall.
+   */
+  private npcInFront(): NpcInstance | undefined {
+    const v = DIR_VEC[this.player.facing];
+    const px = this.player.tileX;
+    const py = this.player.tileY;
+    const vertical = v.y !== 0;
+
+    let best: NpcInstance | undefined;
+    let bestOff = Infinity;
+    for (const n of this.npcs) {
+      const a = n.actor;
+      if (vertical ? a.tileY !== py + v.y : a.tileX !== px + v.x) continue;
+
+      const off = vertical
+        ? Math.abs(this.player.centerX - (a.pixelX + TILE_SIZE / 2))
+        : Math.abs(this.player.footY - (a.pixelY + TILE_SIZE - 1));
+      // Dead in line is always allowed, however the body happens to be sitting
+      // inside its tile: the tolerance only ever widens the old rule.
+      const inLine = vertical ? a.tileX === px : a.tileY === py;
+      if (!inLine && off > TALK_SPREAD) continue;
+
+      const cx = vertical ? a.tileX : px;
+      const cy = vertical ? py : a.tileY;
+      if (this.map.collisionAt(cx, cy) === 1) continue;
+
+      if (off < bestOff) { bestOff = off; best = n; }
+    }
+    return best;
+  }
+
   private interact(game: Game): void {
     const { x, y } = this.player.facingTile();
 
-    const npc = this.npcs.find((n) => n.actor.tileX === x && n.actor.tileY === y);
+    const npc = this.npcInFront();
     if (npc) {
       npc.actor.face(this.opposite(this.player.facing));
       const tid = npc.data.trainer;
@@ -897,7 +965,7 @@ export class OverworldScene implements Scene {
       let tx = this.player.tileX;
       let ty = this.player.tileY;
       for (const step of steps) { const v = DIR_VEC[step]; tx += v.x; ty += v.y; }
-      this.player.walkTo(tx, ty, speed === 'run' ? RUN_SPEED : WALK_SPEED, done);
+      this.player.walkTo(tx, ty, speed === 'run' ? SCRIPT_RUN_SPEED : WALK_SPEED, done);
       return;
     }
     const actor = this.actorFor(who);
@@ -1029,11 +1097,15 @@ export class OverworldScene implements Scene {
 
   private doWarp(game: Game, warp: MapWarp): void {
     this.busy = true;
-    this.beginFade('out', warp.style === 'edge' ? 12 : 18, async () => {
+    // A doorway, a cave mouth, a stairwell and a route edge should not all be
+    // the same black square. The style comes from the warp itself.
+    const st = areaStyleOf(warp.style);
+    const f = areaFrames(st);
+    this.beginFade('out', f, async () => {
       await this.loadMap(game, warp.toMap, warp.toX, warp.toY, warp.facing ?? this.player.facing);
       this.snapCamera();
-      this.beginFade('in', warp.style === 'edge' ? 12 : 18, () => { this.busy = false; });
-    });
+      this.beginFade('in', f, () => { this.busy = false; }, st, this.player.facing);
+    }, st, this.player.facing);
   }
 
   /**
@@ -1066,8 +1138,11 @@ export class OverworldScene implements Scene {
     drawShutters(r, p);
   }
 
-  beginFade(dir: 'out' | 'in', frames: number, then?: () => void): void {
-    this.fade = { active: true, t: 0, dir, frames, then };
+  beginFade(
+    dir: 'out' | 'in', frames: number, then?: () => void,
+    style: AreaStyle = 'warp', wipeDir: WipeDir = 'down',
+  ): void {
+    this.fade = { active: true, t: 0, dir, frames, then, style, wipeDir };
   }
 
   private updateFade(): void {
@@ -1109,22 +1184,53 @@ export class OverworldScene implements Scene {
 
     // Everything on foot is sorted by screen depth so overlaps look right.
     type Drawable = { depth: number; draw: () => void };
+    // Each character is followed immediately by the grass they are standing in,
+    // so a second character further down the screen still draws in front of
+    // both. See TileMap.renderGrassSkirt for why the grass has to follow the
+    // body rather than sit on the tile.
     const drawables: Drawable[] = this.npcs.map((n) => ({
       depth: n.actor.depth,
       draw: () => {
-        const t = this.map.terrainAt(n.actor.tileX, n.actor.tileY);
-        n.actor.render(r, { hideLegs: t.encounter && t.tag === 'tallGrass' && !n.actor.moving });
+        n.actor.render(r);
+        // Nobody there is nobody to hide: a lifted tuft with no character in it
+        // is just a block of grass standing off the tile grid.
+        if (!n.actor.visible) return;
+        this.map.renderGrassSkirt(r, this.tileset, n.actor.pixelX + TILE_SIZE / 2, n.actor.pixelY + TILE_SIZE - 1);
       },
     }));
     drawables.push({
       depth: this.player.footY - TILE_SIZE,
       draw: () => {
-        const t = this.map.terrainAt(this.player.tileX, this.player.tileY);
-        this.player.render(r, {
-          hideLegs: t.encounter && t.tag === 'tallGrass' && !this.player.moving,
-        });
+        this.player.render(r);
+        if (!this.player.visible) return;
+        this.map.renderGrassSkirt(r, this.tileset, this.player.centerX, this.player.footY);
       },
     });
+    /*
+     * Creatures standing in the world.
+     *
+     * Only the lab counter uses this so far: the three starters sit up there
+     * and the one the player takes stops being drawn, while the two they were
+     * chosen over stay exactly where they were. Icon size rather than the
+     * battle sprite -- a 128px sprite is five times the professor's height and
+     * destroys the scale of the room.
+     */
+    for (const o of this.map.objects) {
+      if (o.kind !== 'kin' || !o.species) continue;
+      if (o.hiddenIfFlag && this.state.hasFlag(o.hiddenIfFlag)) continue;
+      const sp = o.species;
+      drawables.push({
+        depth: o.y * TILE_SIZE + TILE_SIZE,
+        draw: () => {
+          const img = iconSprite(sp);
+          // Seated on the tile's surface, not floating over its top-left.
+          const px = r.worldPX(o.x * TILE_SIZE + TILE_SIZE / 2) - ICON_SIZE / 2;
+          const py = r.worldPY(o.y * TILE_SIZE + TILE_SIZE) - ICON_SIZE;
+          r.bctx.drawImage(img, px, py);
+        },
+      });
+    }
+
     for (const b of this.boulders) {
       drawables.push({
         depth: b.y * TILE_SIZE + b.offY,
@@ -1149,6 +1255,17 @@ export class OverworldScene implements Scene {
         depth: row * TILE_SIZE,
         draw: () => this.map.renderOverlayRow(r, this.tileset, row),
       });
+      // Tall grass joins the same sort. It is a ground tile, so it has already
+      // been drawn once underneath everybody; this second pass puts the blades
+      // of your own row back in front of you, which is what makes standing in a
+      // patch read as waist-deep rather than as standing on top of it. The row
+      // above stays behind you, because that grass is further from the camera.
+      if (this.map.rowHasTallGrass(r, row)) {
+        drawables.push({
+          depth: row * TILE_SIZE,
+          draw: () => this.map.renderGrassFrontRow(r, this.tileset, row),
+        });
+      }
     }
 
     drawables.sort((a, b) => a.depth - b.depth);
@@ -1184,7 +1301,8 @@ export class OverworldScene implements Scene {
     this.renderWipe(r);
     if (this.fade.active) {
       const p = this.fade.t / this.fade.frames;
-      r.tint('#000000', this.fade.dir === 'out' ? p : 1 - p);
+      drawAreaCover(r, this.fade.style ?? 'warp',
+        this.fade.dir === 'out' ? p : 1 - p, this.fade.wipeDir ?? 'down');
     }
 
     if (game.debug) this.renderDebugOverlay(r);

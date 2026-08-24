@@ -19,6 +19,18 @@ import { ShopScene } from './shop.js';
 import { RoostScene } from './roost.js';
 import { audio } from '../audio/audio.js';
 
+/**
+ * Frames per tile for a scripted NPC run.
+ *
+ * The overworld's own scripted mover walks every NPC at WALK_FRAMES (14)
+ * whatever the script asked for -- only the player is given a run speed -- so
+ * a cutscene that said "run" produced an amble at 1.1 pixels a frame, slower
+ * than the player's own walk. Eight frames is 2 pixels a frame, which is
+ * comfortably faster than walking and is what makes an entrance from off
+ * screen read as somebody sprinting to catch you.
+ */
+const RUN_FRAMES = 8;
+
 export class OverworldEventHost implements EventHost {
   constructor(private game: Game, private scene: OverworldScene) {}
 
@@ -29,10 +41,46 @@ export class OverworldEventHost implements EventHost {
   /* ------------------------------------------------------------- actors */
 
   moveActor(who: string, steps: Direction[], speed: 'walk' | 'run', done: () => void): void {
+    // A running NPC is stepped here rather than handed to the scene's walker,
+    // which has no way to be told a speed. Everything else takes the normal
+    // path, so a walk is still exactly the walk it always was.
+    if (speed === 'run' && who !== 'player' && this.scene.actorFor(who)) {
+      this.runActor(who, [...steps], done);
+      return;
+    }
     this.scene.scriptedMove(who, steps, speed, done);
   }
 
+  /**
+   * Walk an NPC through a path at run speed, one tile at a time.
+   *
+   * While an event is running the overworld only ticks its own scripted movers
+   * and its timers -- `updateNpcs` is skipped entirely -- so an actor driven
+   * from out here has to be advanced by hand. A one-frame timer is the tick.
+   * The actor is looked up again every frame because a script is allowed to
+   * remove it, or warp the map out from under it, mid-run.
+   */
+  private runActor(who: string, steps: Direction[], done: () => void): void {
+    let settled = false;
+    const finish = (): void => { if (!settled) { settled = true; done(); } };
+    const tick = (): void => {
+      const actor = this.scene.actorFor(who);
+      if (!actor) { finish(); return; }
+      actor.update();
+      if (actor.moving) { this.scene.scriptedWait(1, tick); return; }
+      const next = steps.shift();
+      if (next === undefined) { finish(); return; }
+      actor.step(next, RUN_FRAMES);
+      this.scene.scriptedWait(1, tick);
+    };
+    tick();
+  }
+
   faceActor(who: string, dir: Direction): void {
+    // 'player' is a reserved actor id everywhere else in the VM; it was the one
+    // place it did nothing, which is how a cutscene ended up being delivered to
+    // the back of the player's head.
+    if (who === 'player') { this.scene.player.facing = dir; return; }
     const actor = this.scene.actorFor(who);
     if (actor) actor.facing = dir;
   }

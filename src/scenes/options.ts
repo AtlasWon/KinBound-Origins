@@ -9,18 +9,33 @@
 import type { Game } from '../core/game.js';
 import type { Scene } from '../core/scene.js';
 import { Renderer, SCREEN_H, SCREEN_W } from '../engine/renderer.js';
-import { ListMenu, type MenuItem } from '../ui/menu.js';
-import { ACTIONS, InputManager, type Action } from '../core/input.js';
+import { ListMenu, navLeft, navRight, type MenuItem } from '../ui/menu.js';
+import { ACTIONS, DEFAULT_BINDINGS, InputManager, type Action } from '../core/input.js';
 import { audio } from '../audio/audio.js';
+import { fit, GAP } from '../ui/layout.js';
 
 type Tab = 'game' | 'keys';
+
+/**
+ * The measured slots this screen is built from.
+ *
+ * The list used to be told to show ten rows of twelve units in a gap 116 tall.
+ * It drew 128, so the bottom row was cut in half by its own frame and the last
+ * value bled into the hint bar underneath. Naming the bands here and asking the
+ * list to fit the one it has been given is what stops that recurring the next
+ * time a setting is added.
+ */
+const TAB_BAND = { y: 2, h: 16 };
+const LIST_Y = 22;
+const HINT = { h: 18, y: SCREEN_H - 22 };
+const LIST_H = HINT.y - LIST_Y - 3;
 
 const TEXT_SPEEDS = ['slow', 'normal', 'fast', 'instant'] as const;
 const BATTLE_SPEEDS = ['classic', 'brisk', 'fast'] as const;
 
 const ACTION_LABELS: Record<Action, string> = {
   up: 'Move up', down: 'Move down', left: 'Move left', right: 'Move right',
-  confirm: 'Confirm', cancel: 'Cancel', menu: 'Menu', run: 'Run',
+  confirm: 'Confirm', cancel: 'Cancel', menu: 'Menu',
   map: 'Region map', bag: 'Bag', party: 'Party', vellum: 'Vellum',
   nextTab: 'Next tab', prevTab: 'Previous tab',
   debug: 'Debug overlay', speedUp: 'Hold to speed up',
@@ -46,7 +61,6 @@ export class OptionsScene implements Scene {
         { label: 'Text speed', value: 'textSpeed', detail: s.textSpeed },
         { label: 'Battle speed', value: 'battleSpeed', detail: s.battleSpeed },
         { label: 'Battle effects', value: 'battleAnimations', detail: s.battleAnimations ? 'on' : 'off' },
-        { label: 'Always run', value: 'autoRun', detail: s.autoRun ? 'on' : 'off' },
         { label: 'Autosave', value: 'autosave', detail: s.autosave ? 'on' : 'off' },
         { label: 'Move hints', value: 'moveHints', detail: s.moveHints ? 'on' : 'off' },
         { label: 'Clock', value: 'useSystemClock', detail: s.useSystemClock ? 'system' : s.fixedTime },
@@ -64,7 +78,9 @@ export class OptionsScene implements Scene {
       ];
     this.menu.setItems(items, true);
     this.menu.index = Math.min(idx, items.length - 1);
-    this.menu.visible = this.tab === 'game' ? 10 : 9;
+    // However many rows the slot holds -- never however many someone hoped it
+    // would hold.
+    this.menu.fitTo(LIST_H, { rowHeight: 12 });
   }
 
   update(game: Game, _dt: number): void {
@@ -78,10 +94,11 @@ export class OptionsScene implements Scene {
       return;
     }
 
-    // Left/right cycles a value without opening anything.
+    // Left/right cycles a value without opening anything. Read through the nav
+    // helpers so A/D and the arrows both work even after a rebind.
     if (this.tab === 'game') {
-      if (game.input.repeated('left')) { this.cycle(game, -1); return; }
-      if (game.input.repeated('right')) { this.cycle(game, 1); return; }
+      if (navLeft(game)) { this.cycle(game, -1); return; }
+      if (navRight(game)) { this.cycle(game, 1); return; }
     }
 
     const res = this.menu.update(game);
@@ -98,11 +115,24 @@ export class OptionsScene implements Scene {
       const action = value.slice(4) as Action;
       this.rebinding = action;
       game.input.captureBinding((code) => {
-        // Remove the key from any other action so bindings stay unambiguous.
+        // Escape backs out of a rebind. Without this the only way to leave the
+        // prompt was to spend a key on the setting you had opened by mistake.
+        if (code === 'Escape' && !game.input.bindings[action].includes('Escape')) {
+          this.rebinding = null;
+          return;
+        }
+        // Remove the key from any other action so bindings stay unambiguous --
+        // but never to the point of leaving that action with nothing at all.
+        // Stripping the last key off "Move down" strands the player in this
+        // very list, unable to reach "Reset to defaults" to undo it, so an
+        // action that would be emptied falls back to its shipped keys instead.
         for (const a of ACTIONS) {
           if (a === action) continue;
           const next = game.input.bindings[a].filter((c) => c !== code);
-          if (next.length !== game.input.bindings[a].length) game.input.setBinding(a, next);
+          if (next.length === game.input.bindings[a].length) continue;
+          game.input.setBinding(a, next.length > 0
+            ? next
+            : DEFAULT_BINDINGS[a].filter((c) => c !== code));
         }
         game.input.setBinding(action, [code]);
         this.rebinding = null;
@@ -129,7 +159,6 @@ export class OptionsScene implements Scene {
         break;
       }
       case 'battleAnimations': s.battleAnimations = !s.battleAnimations; break;
-      case 'autoRun': s.autoRun = !s.autoRun; break;
       case 'autosave': s.autosave = !s.autosave; break;
       case 'moveHints': s.moveHints = !s.moveHints; break;
       case 'showFps': s.showFps = !s.showFps; break;
@@ -158,24 +187,44 @@ export class OptionsScene implements Scene {
     r.clear('#26304a');
     for (let y = 0; y < SCREEN_H; y += 4) r.rect(0, y, SCREEN_W, 1, '#2b3652');
 
-    (['game', 'keys'] as Tab[]).forEach((t, i) => {
-      const x = 6 + i * 70;
+    // Tabs are sized to their own captions and centred in them, so a longer
+    // word can never sit on the frame the way it did at a fixed 66 units.
+    const labels: [Tab, string][] = [['game', 'GAMEPLAY'], ['keys', 'CONTROLS']];
+    let tx = 6;
+    for (const [t, label] of labels) {
       const active = t === this.tab;
-      r.window(x, active ? 2 : 4, 66, active ? 16 : 14, { fill: active ? '#f0f2f8' : '#c8cede' });
-      r.text(t === 'game' ? 'GAMEPLAY' : 'CONTROLS', x + 8, active ? 7 : 8, {
-        color: active ? '#282838' : '#5a6274',
+      const w = r.textWidth(label) + 18;
+      const h = active ? TAB_BAND.h : TAB_BAND.h - 2;
+      const y = active ? TAB_BAND.y : TAB_BAND.y + 2;
+      r.window(tx, y, w, h, { fill: active ? '#f0f2f8' : '#c8cede' });
+      r.text(label, tx + Math.floor(w / 2), y + Math.floor((h - 7) / 2), {
+        color: active ? '#282838' : '#5a6274', align: 'center',
       });
+      tx += w + 6;
+    }
+
+    // The tab hint belongs up here beside the tabs it is talking about. It used
+    // to share the bottom bar with the contextual hint and the two ran into
+    // each other: the screen read "changes a valueX switches tab".
+    r.text('X switches tab', SCREEN_W - 6, TAB_BAND.y + 5, {
+      color: '#8894b4', align: 'right',
     });
 
-    this.menu.render(r, 6, 22, SCREEN_W - 12, { rowHeight: 12 });
+    this.menu.render(r, 6, LIST_Y, SCREEN_W - 12, { rowHeight: 12 });
 
-    r.window(6, SCREEN_H - 22, SCREEN_W - 12, 18);
+    r.window(6, HINT.y, SCREEN_W - 12, HINT.h);
+    const hintX = 12;
+    const hintW = SCREEN_W - 12 - 12 - 6;
+    const hintY = HINT.y + Math.floor((HINT.h - 7) / 2);
     if (this.rebinding) {
-      r.text(`Press a key for ${ACTION_LABELS[this.rebinding]}...`, 12, SCREEN_H - 17, { color: '#c04848' });
+      r.text(fit(r, `Press a key for ${ACTION_LABELS[this.rebinding]}, Esc to cancel`, hintW),
+        hintX, hintY, { color: '#c04848' });
     } else {
-      r.text(this.tab === 'game' ? 'Left/Right changes a value' : 'Enter to rebind',
-        12, SCREEN_H - 17, { color: '#485068' });
-      r.text('X switches tab', SCREEN_W - 14, SCREEN_H - 17, { color: '#6a7490', align: 'right' });
+      const back = 'Esc back';
+      const backW = r.textWidth(back);
+      r.text(fit(r, this.tab === 'game' ? 'Left/Right changes a value' : 'Enter to rebind',
+        hintW - backW - GAP), hintX, hintY, { color: '#485068' });
+      r.text(back, hintX + hintW, hintY, { color: '#6a7490', align: 'right' });
     }
   }
 }

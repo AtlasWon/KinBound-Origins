@@ -318,13 +318,56 @@ const VARIED: Partial<Record<number, number>> = {
   [T.FLOOR_WOOD]: 3,
   [T.CLIFF_FACE]: 3,
   [T.BRAMBLE]: 2,
+  // Appended rather than filed with the other ground tiles on purpose: the
+  // alternates are painted in this order from one shared Rng, so inserting a
+  // key above an existing one repaints every tile after it.
+  [T.TREE]: 3,
+  [T.CLIFF_TOP]: 3,
+  // Not texture, but the same mechanism used for a different reason: one door
+  // tile serves every enterable house in the world, so without alternates every
+  // frontage in every town has the identical front door.
+  [T.DOOR_PORCH]: 3,
 };
+
+/**
+ * Which tiles cycle, and how many frames they cycle through.
+ *
+ * The era animated water by rotating a few entries of the palette, which costs
+ * nothing on that hardware and is not something a canvas can do. The equivalent
+ * here is to bake the frames as extra atlas cells and pick between them by the
+ * clock -- same result on screen, same handful of frames, and the map renderer
+ * does not have to learn anything: it already asks the tileset for a source
+ * rectangle every time it draws a tile.
+ *
+ * Keep these counts small. Every frame is a whole extra cell of every variant.
+ */
+const ANIMATED: Partial<Record<number, number>> = {
+  [T.WATER]: 4,
+  [T.WATER_EDGE_N]: 4,
+  [T.WATER_DEEP]: 4,
+};
+
+/** How long one frame of an animated tile is held, in milliseconds. */
+const FRAME_MS = 190;
+
+/** Wall clock for the animation, guarded so a test host without one still runs. */
+function now(): number {
+  return typeof performance !== 'undefined' ? performance.now() : Date.now();
+}
 
 /**
  * Offset folded into every noise lookup while a variant is being drawn, so the
  * alternates differ in their texture and not only in their scattered detail.
  */
 let variantSeed = 0;
+
+/**
+ * Which frame of an animated tile is being drawn, for the tile functions to
+ * read. Threaded through a module variable rather than an argument for the same
+ * reason `variantSeed` is: every tile function would otherwise have to grow a
+ * parameter it does not use.
+ */
+let animFrame = 0;
 
 /** Deterministic value noise, so texture varies without looking like static. */
 function hash2(x: number, y: number, seed = 0): number {
@@ -370,6 +413,8 @@ export class Tileset {
 
   /** For each varied tile id, the atlas cells that may stand in for it. */
   private variants = new Map<number, number[]>();
+  /** For each animated tile id, [variant][frame] -> atlas cell. */
+  private frames = new Map<number, number[][]>();
   private cellCount: number;
 
   constructor(seed = 'kinbound-tiles') {
@@ -384,6 +429,19 @@ export class Tileset {
       const list = [id];
       for (let i = 1; i < n; i++) list.push(cells++);
       this.variants.set(id, list);
+    }
+    // Then the animation frames, last of all. Frame zero of every variant is
+    // the cell already allocated above, so a tile that stops animating still
+    // has its ordinary cell in its ordinary place.
+    for (const key of Object.keys(ANIMATED)) {
+      const id = Number(key);
+      const n = ANIMATED[id]!;
+      const base = this.variants.get(id) ?? [id];
+      this.frames.set(id, base.map((cell) => {
+        const row = [cell];
+        for (let f = 1; f < n; f++) row.push(cells++);
+        return row;
+      }));
     }
     this.cellCount = cells;
 
@@ -405,8 +463,19 @@ export class Tileset {
    */
   srcFor(id: number, tx: number, ty: number): { x: number; y: number } {
     const list = this.variants.get(id);
+    const anim = this.frames.get(id);
+    const pick = list
+      ? Math.floor(placeHash(tx, ty, 7777) * list.length) % list.length
+      : 0;
+    if (anim) {
+      // One clock for the whole surface. Offsetting the phase per tile would
+      // hide the loop, and would also stop a pond reading as one body of water
+      // -- the era cycled the palette, so every tile turned over together.
+      const row = anim[pick] ?? anim[0]!;
+      const f = Math.floor(now() / FRAME_MS) % row.length;
+      return this.src(row[f]!);
+    }
     if (!list) return this.src(id);
-    const pick = Math.floor(placeHash(tx, ty, 7777) * list.length) % list.length;
     return this.src(list[pick]!);
   }
 
@@ -419,7 +488,7 @@ export class Tileset {
   }
 
   private build(rng: Rng): void {
-    const paint = (cell: number, id: number, variant: number) => {
+    const paint = (cell: number, id: number, variant: number, frame = 0) => {
       const { x: ox, y: oy } = this.src(cell);
       /**
        * One pixel of the *authoring* grid, which is half the buffer's.
@@ -445,13 +514,22 @@ export class Tileset {
         this.ctx.fillRect(ox, oy, TILE_PX, TILE_PX);
       };
       variantSeed = variant;
+      animFrame = frame;
       this.drawTile(id, px, fill, rng);
       variantSeed = 0;
+      animFrame = 0;
     };
 
     for (let id = 1; id < T.COUNT; id++) paint(id, id, 0);
     for (const [id, list] of this.variants) {
       for (let i = 1; i < list.length; i++) paint(list[i]!, id, i);
+    }
+    // Frames last, so adding an animation does not repaint everything that used
+    // to come after it: the alternates are drawn from one shared Rng, in order.
+    for (const [id, table] of this.frames) {
+      for (let v = 0; v < table.length; v++) {
+        for (let f = 1; f < table[v]!.length; f++) paint(table[v]![f]!, id, v, f);
+      }
     }
     void this.cellCount;
   }
@@ -654,32 +732,95 @@ export class Tileset {
    *
    * Its first job is not to look like grass, it is to be *unmistakable*: the
    * player has to know which tiles hide encounters at a glance and at speed.
-   * So it is a solid mass with a jagged tip silhouette rather than scattered
-   * strokes -- a shape the eye separates from ordinary turf instantly, and one
-   * the player's legs can sink into.
+   *
+   * It used to be a band of blade tips laid over plain turf, which cost it both
+   * jobs at once. The mass began a third of the way down the cell, so a field
+   * three rows deep came out as venetian blinds -- dark band, lawn stripe, dark
+   * band -- and the mass itself was a flat fill with a sawtooth cut into the
+   * top, so there was nothing in it a player could read as a blade.
+   *
+   * Now the whole cell is grass. A dark understory first, because the gaps
+   * between stems are shadow and painting lawn there is exactly what made the
+   * old tile read as a hedge sitting on a field. Then two layers of individual
+   * blades over it: a back layer, taller and duller, and a front layer, shorter
+   * and lit, on an offset lattice. Two layers rather than one is what gives the
+   * patch depth instead of making it a row of stalks standing on a mat.
+   *
+   * Every write wraps at the cell edge, so a block of these fuses into one
+   * field with no seam and no banding, and the dark base against pale turf
+   * still separates a patch from the lawn at a glance.
+   *
+   * Rows 0-5 stay behind the player and rows 6-15 are repainted in front of
+   * them (TileMap.renderGrassFrontRow), so the blades that swallow a
+   * character's legs are the same pixels already on the ground. Which is one
+   * more reason the mass has to fill the cell: lift it off the top edge again
+   * and that pass has flat turf to cut them off with.
    */
   private tallGrass(px: Px, fill: (c: string) => void, rng: Rng): void {
-    this.turf(px, fill, 11);
     const P = this.unit(px);
+    const S = TILE_SIZE;
+    const wrap = (v: number) => ((v % S) + S) % S;
+    const h = (x: number, y: number, seed: number) => hash2(x, y, seed);
 
-    // A wrapping sawtooth of blade points across the top of the mass.
-    const tips = [3, 1, 4, 2, 5, 2, 4, 1, 3, 2, 5, 3, 4, 1, 3, 2];
-    for (let x = 0; x < TILE_SIZE; x++) {
-      const top = 5 + tips[x % tips.length]!;
-      for (let y = top; y < TILE_SIZE; y++) {
-        const shade = y === top ? PAL.grassTip
-          : y === top + 1 ? PAL.grassHi
-          : (x + y) % 5 === 0 ? PAL.grassDark : PAL.grassDeep;
-        P(x, y, shade);
+    // Understory: shadow between the stems, a full step below the canopy ramp.
+    fill(PAL.leafDeep);
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const n = h(x, y, 5) * 0.6 + h(x >> 1, y >> 1, 9) * 0.4;
+        if (n > 0.7) P(x, y, PAL.leafDark);
       }
     }
-    // A couple of blades standing clear of the mass, so the top edge is not a
-    // clean line across the tile.
-    for (let i = 0; i < 2; i++) {
-      const bx = 2 + rng.below(TILE_SIZE - 4);
-      P(bx, 4 + rng.below(2), PAL.grassHi);
+
+    /** One blade, drawn root upward, leaning as it rises. */
+    const blade = (
+      bx: number, by: number, len: number, lean: number,
+      deep: string, mid: string, hi: string, tip: string,
+    ) => {
+      for (let i = 0; i < len; i++) {
+        const y = wrap(by - i);
+        const x = wrap(bx + Math.round((lean * i) / 2));
+        P(x, y, i === len - 1 ? tip : i === len - 2 ? hi : i * 2 > len ? mid : deep);
+      }
+    };
+
+    // Blades come in threes and twos from a shared root rather than one to a
+    // lattice cell: a clump has a silhouette, evenly spaced stalks are a comb.
+    // Back tufts, on a 3x3 lattice, staying inside the dark half of the ramp.
+    for (let gy = 0; gy < 3; gy++) {
+      for (let gx = 0; gx < 3; gx++) {
+        const rx = gx * 5 + Math.floor(h(gx, gy, 31) * 5);
+        const ry = gy * 5 + 3 + Math.floor(h(gx, gy, 37) * 4);
+        for (let k = -1; k <= 1; k++) {
+          blade(
+            rx + k, ry, 5 + Math.floor(h(gx * 4 + k + 1, gy, 41) * 4), k,
+            PAL.leafDeep, PAL.leafMid, PAL.grassDeep, PAL.grassDark,
+          );
+        }
+      }
     }
-    void rng;
+    // Front tufts, offset off the back lattice and carrying the light.
+    for (let gy = 0; gy < 3; gy++) {
+      for (let gx = 0; gx < 3; gx++) {
+        const rx = gx * 5 + 2 + Math.floor(h(gx, gy, 61) * 4);
+        const ry = gy * 5 + 6 + Math.floor(h(gx, gy, 67) * 4);
+        for (let k = 0; k < 2; k++) {
+          blade(
+            rx + k * 2 - 1, ry, 4 + Math.floor(h(gx + k * 7, gy, 71) * 3), k === 0 ? -1 : 1,
+            PAL.leafMid, PAL.grassDeep, PAL.grassMid, PAL.grassHi,
+          );
+        }
+      }
+    }
+
+    // Two seed heads catching the light, placed off the lattice so the field
+    // has something in it that is not on a grid.
+    for (let i = 0; i < 2; i++) {
+      const sx = rng.below(S);
+      const sy = rng.below(S);
+      P(sx, wrap(sy - 1), PAL.grassHi);
+      P(sx, wrap(sy - 2), PAL.grassTip);
+      P(wrap(sx + 1), wrap(sy - 2), PAL.grassTip);
+    }
   }
 
   /**
@@ -761,34 +902,51 @@ export class Tileset {
    */
   private water(px: Px, fill: (c: string) => void, rng: Rng, edge: boolean): void {
     fill(PAL.waterMid);
-    for (let y = 0; y < TILE_PX; y++) {
-      for (let x = 0; x < TILE_PX; x++) {
+    const N = TILE_PX;
+    const TAU = Math.PI * 2;
+    // Whole periods per cell and a phase that closes over the loop: the swell
+    // has to be continuous from tile to tile and land back where it started on
+    // the last frame, or a pond flickers instead of moving.
+    const nf = ANIMATED[T.WATER] ?? 1;
+    const phase = (animFrame / nf) * TAU;
+
+    for (let y = 0; y < N; y++) {
+      for (let x = 0; x < N; x++) {
+        // The body of the surface is fixed. Only the swell over it moves --
+        // animating the noise as well makes the whole pond swim about.
         const n = wrapNoise(x, y, 16, 61) * 0.6 + wrapNoise(x, y, 8, 23) * 0.4;
-        if (n > 0.68) px(x, y, PAL.waterLight);
-        else if (n < 0.32) px(x, y, PAL.waterDark);
+        const w = Math.sin((x / N) * TAU + (y / N) * TAU * 2 - phase) * 0.5 + 0.5;
+        const v = n * 0.74 + w * 0.26;
+        if (v > 0.66) px(x, y, PAL.waterLight);
+        else if (v < 0.33) px(x, y, PAL.waterDark);
       }
     }
-    // Glitter: short pale dashes on a few rows, offset per row so they do not
-    // line up into columns.
+    // Glitter: short pale dashes that come and go rather than slide. Sparkle is
+    // what a water surface actually does at this scale, and a dash that travels
+    // has to jump back at the end of a four-frame loop.
     for (let i = 0; i < 4; i++) {
-      const gy = 3 + i * 8 + Math.floor(hash2(i, 0, 71) * 3);
-      const start = Math.floor(hash2(i, 1, 13) * TILE_PX);
+      const gy = 3 + i * 8 + Math.floor(hash2(i, animFrame, 71) * 4);
+      const start = Math.floor(hash2(i, animFrame + 1, 13) * N);
       for (let k = 0; k < 3; k++) {
-        const gx = (start + k * 11) % TILE_PX;
+        const gx = (start + k * 11) % N;
         px(gx, gy, PAL.waterPale);
-        px((gx + 1) % TILE_PX, gy, PAL.waterFoam);
-        px((gx + 2) % TILE_PX, gy, PAL.waterPale);
+        px((gx + 1) % N, gy, PAL.waterFoam);
+        px((gx + 2) % N, gy, PAL.waterPale);
       }
-    }
-    for (let i = 0; i < 3; i++) {
-      px(rng.below(TILE_PX), rng.below(TILE_PX), PAL.waterFoam);
     }
     if (edge) {
-      for (let x = 0; x < TILE_PX; x++) {
-        const h = 2 + Math.floor(wrapNoise(x, 0, 8, 41) * 3);
+      // Foam along a shoreline, breathing up and down the bank with the swell.
+      for (let x = 0; x < N; x++) {
+        const h = 2 + Math.floor(wrapNoise(x, 0, 8, 41) * 3)
+          + (Math.sin((x / N) * TAU * 2 + phase) > 0.5 ? 1 : 0);
         for (let y = 0; y < h; y++) px(x, y, y < h - 1 ? PAL.waterFoam : PAL.waterPale);
       }
     }
+    // Advance the shared Rng by the draws this tile used to take. Nothing in the
+    // water is placed from it any more -- a fleck rolled per frame would jitter
+    // rather than glint -- but every tile painted after this one comes out of
+    // the same stream, so swallowing them leaves the rest of the set untouched.
+    for (let i = 0; i < 6; i++) rng.below(N);
   }
 
   /**
@@ -798,21 +956,37 @@ export class Tileset {
    */
   private deepWater(px: Px, fill: (c: string) => void, rng: Rng): void {
     fill(PAL.waterDeep);
-    for (let y = 0; y < TILE_PX; y++) {
-      for (let x = 0; x < TILE_PX; x++) {
-        const w = Math.sin(x * 0.28 + y * 0.18) + Math.sin(x * 0.11 - y * 0.24);
-        if (w > 1.2) px(x, y, PAL.waterDark);
-        else if (w > 0.5) px(x, y, '#20416b');
-        else if (w < -1.2) px(x, y, '#12294a');
+    const N = TILE_PX;
+    const TAU = Math.PI * 2;
+    const nf = ANIMATED[T.WATER_DEEP] ?? 1;
+    // The swell here runs the other way from the shallows, so a coastline has
+    // two bodies of water moving against each other rather than one big sheet.
+    const phase = -(animFrame / nf) * TAU;
+
+    for (let y = 0; y < N; y++) {
+      for (let x = 0; x < N; x++) {
+        // The old surface interfered two sines whose periods did not divide the
+        // cell, which laid a row of identical comma shapes across every lake.
+        const n = wrapNoise(x, y, 16, 131) * 0.45
+          + wrapNoise(x, y, 8, 137) * 0.32 + wrapNoise(x, y, 4, 139) * 0.23;
+        const w = Math.sin((x / N) * TAU - (y / N) * TAU * 2 + phase) * 0.5 + 0.5;
+        const v = n * 0.82 + w * 0.18;
+        if (v > 0.7) px(x, y, PAL.waterDark);
+        else if (v > 0.55) px(x, y, '#20416b');
+        else if (v < 0.3) px(x, y, '#12294a');
       }
     }
+    // Two swell crests, undulating and travelling with the phase.
     for (let i = 0; i < 2; i++) {
-      const sy = 4 + rng.below(TILE_PX - 8);
-      for (let x = 0; x < TILE_PX; x++) {
-        const y = sy + Math.round(Math.sin(x * 0.25 + i) * 2);
+      const sy = 8 + i * 16;
+      for (let x = 0; x < N; x++) {
+        const y = (sy + Math.round(Math.sin((x / N) * TAU + phase + i * 2.1) * 3) + N) % N;
         if ((x + i * 3) % 9 < 5) px(x, y, '#2e5680');
       }
     }
+    // See `water`: the shared Rng is advanced, not read, so the frames of one
+    // tile match and the tiles painted after it are unaffected.
+    for (let i = 0; i < 2; i++) rng.below(N - 8);
   }
 
   private sand(px: Px, fill: (c: string) => void, rng: Rng): void {
@@ -841,78 +1015,104 @@ export class Tileset {
 
 
   /**
-   * Forest canopy.
+   * A tree.
    *
-   * Built as a cluster of overlapping round lobes rather than one silhouette,
-   * because that is what separates a treeline from a green wall: each lobe gets
-   * its own light, and the valleys where two lobes meet are darkened, so the
-   * mass reads as many bushes seen from above.
+   * This used to be a seamless canopy: four wrapping lobes with darkened
+   * valleys between them, tuned so a block of the tiles fused into one
+   * unbroken mass. It fused perfectly, and that was the whole problem -- with
+   * no trunk anywhere and no gap between one crown and the next, a treeline
+   * came out as lumpy green cladding. Nothing in it said *tree*.
    *
-   * Every lookup wraps in both axes, so a block of these tiles fuses into one
-   * continuous canopy with no seam and no visible grid -- which is how the
-   * reference art gets away with using trees as map borders everywhere.
+   * So each cell now holds one whole tree: a rounded crown with its own light
+   * and a dark rim, a trunk under it, and open ground either side of the trunk.
+   * Seeing the trunks and the ground between them is the entire difference
+   * between a hedge and a wood.
+   *
+   * The crown stops short of the cell corners and everything outside it is
+   * left transparent, so the turf the map put under the tree shows through. A
+   * first attempt filled that space with dark foliage instead, on the theory
+   * that a treeline must not have holes in it -- and every tree standing on its
+   * own then became a dark green square with a crown inside it. A wood made of
+   * separate trees with grass between them reads as a wood; a wood with no gaps
+   * in it reads as a wall, which is the complaint this rewrite started from.
+   *
+   * A ring of translucent shade just outside the crown keeps the gaps from
+   * going bright: the turf between the trees is turf in shadow, not lawn.
+   *
+   * The three variants move the centre, the radius and the wobble, so the trees
+   * along a border are not the same tree three hundred times.
    */
   private tree(px: Px, fill: (c: string) => void, rng: Rng, small: boolean): void {
     if (small) { this.smallTree(px, fill, rng); return; }
+    void fill;
 
-    const N = TILE_PX;
-    const lobes: { x: number; y: number; r: number }[] = [];
-    for (let ly = 0; ly < 2; ly++) {
-      for (let lx = 0; lx < 2; lx++) {
-        lobes.push({
-          x: lx * 16 + 8 + Math.round((hash2(lx, ly, 23) - 0.5) * 5),
-          y: ly * 16 + 8 + Math.round((hash2(lx, ly, 71) - 0.5) * 5),
-          r: 11 + Math.round(hash2(lx, ly, 5) * 3),
-        });
-      }
-    }
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    /** Per-variant constants; hash2 folds the variant seed, so these move. */
+    const v = (s: number) => hash2(s, s * 3 + 1, 917);
 
-    const wrapD = (a: number, b: number): number => {
-      let d = a - b;
-      if (d > N / 2) d -= N;
-      if (d < -N / 2) d += N;
-      return d;
-    };
+    const cx = 7.5 + (v(1) - 0.5) * 1.4;
+    const cy = 5.9 + (v(2) - 0.5) * 1.0;
+    const rx = 6.9 + v(3) * 0.9;
+    const ry = 6.1 + v(4) * 0.8;
+    const phase = v(5) * 6.283;
 
-    fill(PAL.leafMid);
-    for (let y = 0; y < N; y++) {
-      for (let x = 0; x < N; x++) {
-        let bx = 0, by = 0, br = 1, t0 = Infinity, t1 = Infinity;
-        for (const L of lobes) {
-          const dx = wrapD(x, L.x), dy = wrapD(y, L.y);
-          const t = (dx * dx + dy * dy) / (L.r * L.r);
-          if (t < t0) { t1 = t0; t0 = t; bx = dx; by = dy; br = L.r; }
-          else if (t < t1) { t1 = t; }
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const dx = x - cx, dy = y - cy;
+        const ang = Math.atan2(dy, dx);
+        // A wobbled radius: a true ellipse reads as a ball, foliage does not.
+        const wob = 1 + Math.sin(ang * 3 + phase) * 0.11 + Math.sin(ang * 5.4 - phase) * 0.07;
+        const d = (dx * dx + dy * dy * (rx * rx) / (ry * ry)) / (rx * rx * wob * wob);
+
+        if (d <= 1) {
+          // Light from the upper left, broken into 2x2 clumps so the crown has
+          // foliage in it rather than an airbrushed gradient.
+          const clump = (hash2(x >> 1, y >> 1, 131) - 0.5) * 0.34;
+          const lit = (-dx * 0.75 - dy) / ry + clump;
+          let c: string;
+          if (d > 0.88) c = lit > 0.3 ? PAL.leafDark : PAL.leafDeep;
+          else if (lit > 0.58) c = PAL.leafTip;
+          else if (lit > 0.3) c = PAL.leafHi;
+          else if (lit > 0.02) c = PAL.leafLight;
+          else if (lit > -0.32) c = PAL.leafMid;
+          else if (lit > -0.66) c = PAL.leafDark;
+          else c = PAL.leafDeep;
+          P(x, y, c);
+        } else {
+          // Ground in the tree's shade: a rim hugging the crown, and the shadow
+          // it casts down and to the right of itself. Both translucent, so they
+          // darken whatever the map put underneath rather than stamping one
+          // colour of forest floor over turf, sand and pond bank alike -- and
+          // both round, because a square of shade is a square however soft.
+          const sx = (dx - 1.1) / 7.2, sy = (dy - 4.6) / 5.2;
+          if (d < 1.45) P(x, y, 'rgba(22,42,20,0.34)');
+          else if (sx * sx + sy * sy < 1) P(x, y, 'rgba(22,42,20,0.28)');
         }
-        // Light comes from the upper left, weighted downward so the underside
-        // of every lobe goes properly dark.
-        const lit = (-bx - by * 1.25) / br;
-        let c: string;
-        if (lit > 0.55) c = PAL.leafTip;
-        else if (lit > 0.24) c = PAL.leafHi;
-        else if (lit > -0.02) c = PAL.leafLight;
-        else if (lit > -0.4) c = PAL.leafMid;
-        else c = PAL.leafDark;
-        // The crease between two lobes. Without it the cluster fuses back into
-        // a single blob and the whole effect is lost.
-        if (t1 - t0 < 0.22) c = t1 - t0 < 0.09 ? PAL.leafDeep : PAL.leafDark;
-        px(x, y, c);
       }
     }
 
-    // Individual leaves catching the light on the lit shoulder of each lobe.
+    // Trunk. Two units wide is four screen pixels: the smallest mark that still
+    // reads as a trunk and not as a smudge of bark colour.
+    const tx = Math.round(cx) - 1;
+    for (let y = 9; y < S; y++) {
+      P(tx, y, y < 11 ? PAL.trunkDark : PAL.trunkMid);
+      P(tx + 1, y, y < 11 ? PAL.trunkDeep : PAL.trunkDark);
+    }
+    // Root flare, and the shadow the trunk throws on the ground beside it.
+    P(tx - 1, 14, PAL.trunkDark); P(tx + 2, 14, PAL.trunkDeep);
+    P(tx - 2, 15, PAL.trunkDeep); P(tx - 1, 15, PAL.trunkDark);
+    P(tx + 2, 15, PAL.trunkDeep); P(tx + 3, 15, PAL.trunkDeep);
+    for (let y = 12; y < S; y++) P(tx + 2, y, 'rgba(22,42,20,0.40)');
+
+    // Leaves catching the light on the crown's upper-left shoulder.
     for (let i = 0; i < 14; i++) {
-      const lx = rng.below(N), ly = rng.below(N);
-      let bx = 0, by = 0, br = 1, t0 = Infinity;
-      for (const L of lobes) {
-        const dx = wrapD(lx, L.x), dy = wrapD(ly, L.y);
-        const t = (dx * dx + dy * dy) / (L.r * L.r);
-        if (t < t0) { t0 = t; bx = dx; by = dy; br = L.r; }
-      }
-      if ((-bx - by * 1.25) / br < 0.15) continue;
-      px(lx, ly, PAL.leafTip);
-      px(lx + 1, ly, PAL.leafHi);
-      px(lx, ly + 1, PAL.leafMid);
+      const lx = rng.below(S), ly = rng.below(S);
+      const dx = lx - cx, dy = ly - cy;
+      if ((dx * dx + dy * dy * (rx * rx) / (ry * ry)) / (rx * rx) > 0.66) continue;
+      if ((-dx * 0.75 - dy) / ry < 0.2) continue;
+      P(lx, ly, PAL.leafTip);
+      P(lx + 1, ly + 1, PAL.leafHi);
     }
   }
 
@@ -1019,40 +1219,146 @@ export class Tileset {
     if (ground) for (let x = -r; x <= r; x++) px(16 + x, cy + Math.floor(r * 0.8), PAL.grassDeep);
   }
 
+  /**
+   * The rock face at the edge of the world.
+   *
+   * The old one was grey value noise with vertical scribbles ruled down it. It
+   * had no form at all: no course, no lit edge, nothing casting a shadow on
+   * anything else, so a map boundary came out as a grey carpet standing on its
+   * end -- the wall read as floor.
+   *
+   * Rock reads as height because of strata, so the face is built as four bands
+   * of broken stone. The top row of a band catches the light, the bottom row is
+   * the undercut in shadow beneath the slab above it, and each band's boundary
+   * waves across the cell on its own phase -- shared phases give a wall with
+   * wavy courses, which is masonry, and independent ones give strata, which is
+   * rock. The joints inside a band are few and wide for the same reason: a
+   * cliff is broken slabs, and anything narrower turns straight into brickwork.
+   *
+   * Both axes wrap. Band heights add up to the cell, block widths add up to the
+   * cell, and every wave is a whole number of periods across it, so a cliff of
+   * any size and any shape -- the vertical wall down the side of Marrow Hollow,
+   * the horizontal shelf above Kellowmere -- has no seam in it anywhere.
+   */
   private cliff(px: Px, fill: (c: string) => void, rng: Rng, top: boolean): void {
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    const TAU = Math.PI * 2;
+    const wrap = (v: number) => ((v % S) + S) % S;
+
     fill(PAL.stoneMid);
-    for (let y = 0; y < TILE_PX; y++) {
-      for (let x = 0; x < TILE_PX; x++) {
-        const n = hash2(Math.floor(x / 2), Math.floor(y / 3), 83);
-        if (n > 0.7) px(x, y, PAL.stoneLight);
-        else if (n < 0.28) px(x, y, PAL.stoneDark);
-        else if (dither(x, y, 0.1)) px(x, y, PAL.stonePale);
+
+    /**
+     * How many strata cross one cell.
+     *
+     * Two, not four. Four gave bands of four rows, of which the lit top, its
+     * front and the undercut took three -- so the face came out as light, dark,
+     * light, dark every few pixels, which at map size is gravel. Eight rows to
+     * a band leaves a body of real stone between the edges, and the strata read
+     * as slabs the size of a person rather than as cobbles.
+     */
+    const BANDS = 2;
+    /** Block widths that add up to a cell, so a band closes on itself. */
+    const RUNS = [[7, 9], [9, 7], [6, 10], [5, 11], [8, 8], [6, 4, 6]];
+
+    // Per band: where the joints fall and which slab each column belongs to, so
+    // a slab can be tinted as one piece of stone rather than column by column.
+    const joints: Set<number>[] = [];
+    const slabOf: number[][] = [];
+    for (let c = 0; c < BANDS; c++) {
+      const run = RUNS[Math.floor(hash2(c, 1, 211) * RUNS.length) % RUNS.length]!;
+      const rot = Math.floor(hash2(c, 2, 223) * S);
+      const set = new Set<number>();
+      let acc = rot;
+      for (const w of run) { set.add(wrap(acc)); acc += w; }
+      const ids = new Array<number>(S).fill(0);
+      let id = 0;
+      for (let k = 0; k < S; k++) {
+        const x = wrap(rot + k);
+        if (k > 0 && set.has(x)) id++;
+        ids[x] = id;
       }
+      joints.push(set);
+      slabOf.push(ids);
     }
-    // Vertical strata: what makes a wall read as height rather than floor.
-    for (let i = 0; i < 6; i++) {
-      const x = 2 + i * 5 + rng.below(2);
-      for (let y = 0; y < TILE_PX; y++) {
-        if ((y + i * 3) % 11 > 1) {
-          px(x, y, PAL.stoneDeep);
-          px(x + 1, y, PAL.stoneDark);
-          px(x - 1, y, PAL.stoneLight);
+
+    const span = S / BANDS;
+    /**
+     * Row where band `c` starts in column `x`.
+     *
+     * Clamped either way at a quarter of the spacing: a boundary free to travel
+     * further than that would overtake its neighbour and the strata would tie
+     * themselves in a knot.
+     */
+    const bandTop = (c: number, x: number): number => {
+      const ph = hash2(c, 7, 401) * TAU;
+      const w = Math.sin((x / S) * TAU + ph) * 1.6 + Math.sin((x / S) * TAU * 2 + ph * 1.7) * 0.9;
+      const lim = span / 4;
+      return c * span + Math.max(-lim, Math.min(lim, Math.round(w)));
+    };
+
+    for (let x = 0; x < S; x++) {
+      for (let c = 0; c < BANDS; c++) {
+        const y0 = bandTop(c, x);
+        const y1 = c === BANDS - 1 ? bandTop(0, x) + S : bandTop(c + 1, x);
+        const h = y1 - y0;
+        const b = slabOf[c]![x]!;
+        // Slab tint, plus a slow wash across the whole face so a long cliff is
+        // not one flat value from end to end.
+        const tint = hash2(c * 9 + b, 3, 233) * 0.68
+          + wrapNoise(x * DETAIL, c * 6 * DETAIL, 16, 97) * 0.32;
+        const body = tint > 0.62 ? PAL.stoneMid : tint > 0.3 ? PAL.stoneDark : PAL.stoneDeep;
+
+        for (let k = 0; k < h; k++) {
+          // The four marks that make a band read as a slab seen edge on: a lit
+          // top face, its front falling away, the body of the rock, and the
+          // undercut where the next slab down lies in this one's shadow.
+          let col: string = body;
+          if (k === 0) col = tint > 0.62 ? PAL.stonePale : PAL.stoneLight;
+          else if (k === 1) col = tint > 0.3 ? PAL.stoneMid : PAL.stoneDark;
+          else if (k === h - 1) col = PAL.stoneDeep;
+          else if (k === h - 2) col = tint > 0.62 ? PAL.stoneDark : PAL.stoneDeep;
+          // The joint between two slabs: a dark cut that stops short of the lit
+          // top, with the broken edge beside it catching a little light.
+          if (joints[c]!.has(x) && k > 0 && k < h - 1) col = PAL.stoneDeep;
+          else if (joints[c]!.has(wrap(x - 1)) && k > 1 && k < h - 2) col = PAL.stoneMid;
+          P(x, wrap(y0 + k), col);
         }
       }
     }
-    for (let y = 6; y < TILE_PX; y += 9) {
-      for (let x = 0; x < TILE_PX; x++) {
-        px(x, y + Math.round(Math.sin(x * 0.2) * 1.2), PAL.stoneDeep);
+
+    // Fractures running down the face, each with a lit edge on its left so the
+    // crack reads as an opening rather than as a pencil line.
+    for (let i = 0; i < 3; i++) {
+      let fx = rng.below(S);
+      const fy = rng.below(S);
+      if (i === 2) continue;
+      for (let s = 0; s < 6 + i * 3; s++) {
+        P(wrap(fx), wrap(fy + s), PAL.stoneDeep);
+        P(wrap(fx - 1), wrap(fy + s), PAL.stoneDark);
+        if (hash2(fx, fy + s, 149) > 0.55) fx += hash2(fx, s, 151) > 0.5 ? 1 : -1;
       }
     }
+
     if (top) {
-      // Turf running over the lip of the cliff, with the odd tuft hanging on.
-      const P = this.unit(px);
-      for (let x = 0; x < TILE_SIZE; x++) {
-        const h = 3 + Math.floor(hash2(x, 3, 91) * 2);
-        for (let y = 0; y < h; y++) P(x, y, y < h - 1 ? PAL.grassMid : PAL.grassDark);
-        if (hash2(x, 9, 2) > 0.7) P(x, h - 1, PAL.grassHi);
+      // The lip. Turf on the shelf, a hard line where it stops, and two rows of
+      // undercut shadow under that: the three marks that turn a grey texture
+      // into an edge the player is standing above.
+      const ph = hash2(4, 4, 307) * TAU;
+      for (let x = 0; x < S; x++) {
+        const h = 5 + Math.round(
+          Math.sin((x / S) * TAU + ph) * 0.9 + Math.sin((x / S) * TAU * 3 + ph) * 0.6,
+        );
+        for (let y = 0; y < h; y++) {
+          const d = (x * 3 + y * 5) % 16;
+          P(x, y, y === h - 1 ? PAL.grassDark
+            : d === 1 ? PAL.grassLight : d === 9 ? PAL.grassDark : PAL.grassMid);
+        }
         P(x, h, PAL.outline);
+        P(x, h + 1, PAL.stoneDeep);
+        P(x, h + 2, PAL.stoneDark);
+        // The odd clump hanging over the edge, so the lip is not a ruled line.
+        if (hash2(x, 9, 2) > 0.62) { P(x, h + 1, PAL.grassDeep); P(x, h + 2, PAL.grassDeep); }
       }
     }
   }
@@ -1083,41 +1389,74 @@ export class Tileset {
 
   /* ------------------------------------------------------------ village */
 
+  /**
+   * Post-and-rail fence, in two directions that actually join.
+   *
+   * Three things were wrong with the old one and all three are about the run
+   * rather than the tile. It was drawn straight onto the buffer grid, so posts
+   * landed on half units and every stile came out a different width. It carried
+   * two posts per tile, close to the ends, so a long fence read as a row of
+   * separate H shapes rather than as one fence. And the two directions shared no
+   * geometry at all: the east-west rails and the north-south post sat at
+   * different offsets, so a corner was two fences passing each other.
+   *
+   * Now both are built around the same eight-to-eleven column. East-west: rails
+   * across the full width, one post standing in that column, drawn last so it
+   * passes in front of the rails. North-south: the rail runs down that same
+   * column for the full height of the cell, with one post crossing it. So a
+   * corner tile's post is where the next tile's rail arrives, from either
+   * direction, and a run of any length is continuous timber.
+   *
+   * Nothing is painted outside the fence itself: the cell is an overlay, and
+   * leaving it clear means the turf underneath keeps its own variation instead
+   * of being stamped flat wherever a fence happens to stand.
+   */
   private fence(px: Px, fill: (c: string) => void, rng: Rng, horizontal: boolean): void {
-    this.turf(px, fill, 53);
-    const rail = (x0: number, y0: number, x1: number, y1: number) => {
-      const steps = Math.max(Math.abs(x1 - x0), Math.abs(y1 - y0), 1);
-      for (let i = 0; i <= steps; i++) {
-        const x = Math.round(x0 + ((x1 - x0) * i) / steps);
-        const y = Math.round(y0 + ((y1 - y0) * i) / steps);
-        px(x, y - 1, PAL.woodPale);
-        px(x, y, PAL.woodLight);
-        px(x, y + 1, PAL.woodMid);
-        px(x, y + 2, PAL.woodDark);
+    const P = this.unit(px);
+
+    // One rail, seen side on: lit head, body, shadowed underside.
+    const railRow = (y: number, x0: number, x1: number) => {
+      for (let x = x0; x <= x1; x++) {
+        P(x, y, PAL.woodPale);
+        P(x, y + 1, PAL.woodMid);
+        P(x, y + 2, PAL.woodDark);
       }
     };
+
     if (horizontal) {
-      rail(0, 13, TILE_PX - 1, 13);
-      rail(0, 21, TILE_PX - 1, 21);
-      for (const x of [5, 25]) {
-        for (let y = 8; y < 28; y++) {
-          px(x - 1, y, PAL.woodLight);
-          px(x, y, PAL.woodMid);
-          px(x + 1, y, PAL.woodDeep);
-        }
-        px(x - 1, 7, PAL.woodPale); px(x, 7, PAL.woodLight);
-        px(x, 28, PAL.grassDeep);
+      railRow(4, 0, TILE_SIZE - 1);
+      railRow(9, 0, TILE_SIZE - 1);
+      // Post, in front of both rails.
+      for (let y = 2; y <= 14; y++) {
+        P(6, y, PAL.woodLight);
+        P(7, y, PAL.woodMid);
+        P(8, y, PAL.woodDark);
+        P(9, y, PAL.woodDeep);
       }
+      for (let x = 6; x <= 9; x++) P(x, 2, PAL.woodPale);   // chamfered cap
+      P(6, 2, PAL.woodLight);
+      for (let x = 6; x <= 9; x++) P(x, 15, PAL.outline);
+      this.footShadow(P, 5, 10, 15);
     } else {
-      for (let y = 0; y < TILE_PX; y++) {
-        px(14, y, PAL.woodPale);
-        px(15, y, PAL.woodLight);
-        px(16, y, PAL.woodMid);
-        px(17, y, PAL.woodDeep);
+      // The rail seen end on, running away from the viewer.
+      for (let y = 0; y < TILE_SIZE; y++) {
+        P(6, y, PAL.woodPale);
+        P(7, y, PAL.woodLight);
+        P(8, y, PAL.woodMid);
+        P(9, y, PAL.woodDark);
       }
-      for (const y of [6, 24]) rail(4, y, TILE_PX - 5, y);
+      // Post crossing it, one to a cell so a north-south run keeps the same
+      // rhythm as an east-west one.
+      for (let x = 2; x <= 13; x++) {
+        P(x, 6, PAL.woodPale);
+        P(x, 7, PAL.woodLight);
+        P(x, 8, PAL.woodMid);
+        P(x, 9, PAL.woodDark);
+      }
+      for (let y = 6; y <= 9; y++) { P(2, y, PAL.woodLight); P(13, y, PAL.woodDeep); }
+      this.footShadow(P, 2, 13, 10);
     }
-    void rng;
+    void fill; void rng;
   }
 
   /**
@@ -1129,33 +1468,73 @@ export class Tileset {
    * top and standing in front of a sign looks like standing in front of a sign.
    */
   private sign(px: Px, fill: (c: string) => void, rng: Rng): void {
-    this.turf(px, fill, 59);
+    // Left clear behind the post so the turf underneath keeps its own dapple
+    // rather than being replaced by one flat stamp of grass.
     const P = this.unit(px);
 
-    for (const lx of [6, 9]) {
-      for (let y = 8; y < 14; y++) {
-        P(lx, y, PAL.woodMid);
-        P(lx + 1, y, PAL.woodDeep);
+    // Posts, with the light on the left of each and a shadow down the right.
+    for (const lx of [5, 9]) {
+      for (let y = 7; y <= 14; y++) {
+        P(lx, y, PAL.woodLight);
+        P(lx + 1, y, PAL.woodDark);
       }
+      P(lx, 15, PAL.outline); P(lx + 1, 15, PAL.outline);
     }
-    for (let y = 1; y <= 8; y++) {
+    this.footShadow(P, 4, 11, 15);
+
+    // Board: a hard outline, a planked face and a mitred lit edge along the top
+    // and left, which is what gives it thickness at this size.
+    for (let y = 1; y <= 9; y++) {
       for (let x = 1; x <= 14; x++) {
-        const border = y === 1 || y === 8 || x === 1 || x === 14;
-        P(x, y, border ? PAL.woodDeep : (x + y) % 7 === 0 ? PAL.woodPale : PAL.woodLight);
+        const border = y === 1 || y === 9 || x === 1 || x === 14;
+        P(x, y, border ? PAL.outline : y % 3 === 0 ? PAL.woodMid : PAL.woodLight);
       }
     }
     for (let x = 2; x <= 13; x++) P(x, 2, PAL.woodPale);
-    // Two lines of writing, which is all that is legible at this size.
-    for (let x = 3; x <= 11; x++) P(x, 4, PAL.woodDeep);
-    for (let x = 3; x <= 9; x++) P(x, 6, PAL.woodDeep);
-    void rng;
+    for (let y = 2; y <= 8; y++) P(2, y, PAL.woodPale);
+    for (let x = 2; x <= 13; x++) P(x, 8, PAL.woodDark);
+    for (let y = 2; y <= 8; y++) P(13, y, PAL.woodDark);
+    // Two lines of writing, which is all that is legible at this size, and a
+    // nail at each corner so the board reads as fixed to the posts.
+    for (let x = 4; x <= 12; x++) P(x, 4, PAL.woodDeep);
+    for (let x = 4; x <= 10; x++) P(x, 6, PAL.woodDeep);
+    P(3, 3, PAL.woodDeep); P(12, 3, PAL.woodDeep);
+    P(3, 7, PAL.woodDeep); P(12, 7, PAL.woodDeep);
+    void fill; void rng;
+  }
+
+  /**
+   * The two rows every exterior wall tile starts and ends with.
+   *
+   * Head: the shadow the roof's overhang throws down the wall. Houses in this
+   * game are one row of roof over one row of wall, and with the two rows flush
+   * against each other the roof read as a coloured band pasted on rather than as
+   * something with a lip standing out over the front of the building. The
+   * shadow is the overhang.
+   *
+   * Foot: a plinth with a lit top edge and a hard line under it. Without it the
+   * boards run straight into the turf and the house floats.
+   */
+  private wallHead(P: Px, shade: string, deeper: string): void {
+    for (let x = 0; x < TILE_SIZE; x++) {
+      P(x, 0, deeper);
+      P(x, 1, shade);
+    }
+  }
+
+  private wallFoot(P: Px): void {
+    for (let x = 0; x < TILE_SIZE; x++) {
+      P(x, 13, PAL.stoneLight);
+      P(x, 14, PAL.stoneDark);
+      P(x, 15, PAL.outline);
+    }
   }
 
   /**
    * House wall.
    *
-   * Plaster over a timber base course, with the siding lines evenly spaced --
-   * the reference art never leaves a wall flat, but it never lets the texture
+   * Plaster over a stone plinth, with the siding lines evenly spaced -- the
+   * reference art never leaves a wall flat, but it never lets the texture
    * compete with the window either.
    */
   private wall(px: Px, fill: (c: string) => void, rng: Rng, window: boolean): void {
@@ -1168,11 +1547,8 @@ export class Tileset {
         else if ((x * 7 + y * 3) % 16 === 5) P(x, y, PAL.plasterLight);
       }
     }
-    // Where the wall meets the ground.
-    for (let x = 0; x < TILE_SIZE; x++) {
-      P(x, TILE_SIZE - 2, PAL.plasterDark);
-      P(x, TILE_SIZE - 1, PAL.woodDark);
-    }
+    this.wallHead(P, PAL.plasterDark, '#a89b7c');
+    this.wallFoot(P);
 
     if (window) {
       for (let y = 3; y <= 11; y++) {
@@ -1182,47 +1558,66 @@ export class Tileset {
           P(x, y, x + y < 12 ? PAL.glassHi : x + y < 18 ? PAL.glassLight : PAL.glass);
         }
       }
-      // Glazing bars, and a sill with a shadow under it.
+      // The glass is recessed, so the head and the left jamb fall across it.
+      for (let x = 4; x <= 11; x++) P(x, 4, '#4e78a0');
+      for (let y = 4; y <= 10; y++) P(4, y, '#5a86ae');
+      // Glazing bars, and a sill standing proud of the wall.
       for (let x = 4; x <= 11; x++) P(x, 7, PAL.trimMid);
       for (let y = 4; y <= 10; y++) P(8, y, PAL.trimMid);
-      for (let x = 2; x <= 13; x++) { P(x, 12, PAL.trimPale); P(x, 13, PAL.plasterDark); }
+      for (let x = 2; x <= 13; x++) { P(x, 12, PAL.trimPale); }
     }
     void rng;
   }
 
   /**
-   * Front door.
+   * The way out of a room: a dark opening, not a door.
    *
-   * Framed, panelled and given a step, because a door drawn as a brown
-   * rectangle is the single fastest way to make a town look unfinished.
+   * Every interior exit in the game is this tile. A drawn door leaf standing on
+   * a wall inside a room reads as furniture -- a wardrobe, a cupboard, some
+   * panelling -- and the player has to be told where the exit is. A dark gap
+   * needs no telling: a hole in a lit room is the one thing the eye is
+   * guaranteed to find, and the reference art has used exactly this since the
+   * first handheld generation.
+   *
+   * So: the tile's own doorcase in the wall's material, a hard head, and a void
+   * that runs off the bottom of the cell. The void is *graded* -- almost black
+   * under the lintel, opening out to a cold blue-grey at the threshold -- which
+   * is what turns a black rectangle into a passage with somewhere on the other
+   * end of it.
    */
   private door(px: Px, fill: (c: string) => void, rng: Rng): void {
-    this.wall(px, fill, rng, false);
+    this.interiorWall(px, fill, rng);
     const P = this.unit(px);
 
+    const caseLit = '#e2dac9';     // jamb turned into the light
+    const caseMid = '#c3b9a3';
+    const caseDim = '#9b917c';     // jamb turned away from it
+    const voidTop = '#12151d';
+    const voidMid = '#1b2029';
+    const voidLow = '#252c3a';
+
+    // The opening, cut down through the bottom of the cell so nothing closes it
+    // off: an exit with a floor drawn across its foot reads as an alcove.
     for (let y = 2; y <= 15; y++) {
       for (let x = 3; x <= 12; x++) {
-        const frame = x === 3 || x === 12 || y === 2;
-        P(x, y, frame ? PAL.trimShade : PAL.woodMid);
+        P(x, y, y <= 5 ? voidTop : y <= 10 ? voidMid : voidLow);
       }
     }
-    // Panels.
-    for (const [y0, y1] of [[4, 7], [9, 12]] as [number, number][]) {
-      for (let y = y0; y <= y1; y++) {
-        for (let x = 5; x <= 10; x++) {
-          const edge = y === y0 || y === y1 || x === 5 || x === 10;
-          P(x, y, edge ? PAL.woodDeep : PAL.woodLight);
-        }
-      }
+    // Reveal down the left of the opening: the wall has thickness, and the one
+    // lit edge inside the dark is what stops it reading as a painted rectangle.
+    for (let y = 3; y <= 15; y++) P(3, y, y <= 8 ? '#2c3446' : '#39435a');
+    for (let x = 4; x <= 12; x++) P(x, 2, '#0e1017');
+
+    // Doorcase.
+    for (let y = 1; y <= 15; y++) {
+      P(1, y, PAL.outline); P(2, y, caseLit);
+      P(13, y, caseDim); P(14, y, PAL.outline);
     }
-    P(4, 3, PAL.woodPale);
-    P(10, 8, '#e8c24a');           // handle
-    P(10, 9, PAL.woodDeep);
-    // Step.
-    for (let x = 2; x <= 13; x++) {
-      P(x, 14, PAL.stoneLight);
-      P(x, 15, PAL.stoneDark);
+    for (let x = 1; x <= 14; x++) {
+      P(x, 0, PAL.outline);
+      P(x, 1, x <= 2 ? caseLit : caseMid);
     }
+    P(13, 1, caseDim); P(14, 1, PAL.outline);
   }
 
 
@@ -1232,71 +1627,90 @@ export class Tileset {
     if (hue === 'red') return [PAL.redDeep, PAL.redDark, PAL.redMid, PAL.redLight, PAL.redPale];
     if (hue === 'blue') return [PAL.blueDeep, PAL.blueDark, PAL.blueMid, PAL.blueLight, PAL.bluePale];
     if (hue === 'slate') return [PAL.slateDeep, PAL.slateDark, PAL.slateMid, PAL.slateLight, PAL.slatePale];
-    if (hue === 'moss') return [PAL.mossDeep, PAL.mossDark, PAL.mossMid, PAL.mossLight, PAL.mossPale];
+    // Weathered copper, not the moss green the palette carries. The moss ramp
+    // sits inside the leaf ramp's range, and a green roof one tile from a tree
+    // line read as a hedge with windows under it -- which is the one thing a
+    // roof must never do. Verdigris keeps the "third material" this hue exists
+    // for and cannot be mistaken for foliage. The moss ramp still dresses the
+    // shutters, where being leafy is the point.
+    if (hue === 'moss') return ['#22423d', '#345c54', '#4a7c70', '#6a9e90', '#93c1b1'];
     return [PAL.roofDeep, PAL.roofDark, PAL.roofMid, PAL.roofLight, PAL.roofPale];
   }
 
   /**
-   * Roof.
+   * Pantiled roof.
    *
-   * Vertical slats with a lit ridge band and a hard eave at the bottom. Colour
-   * is the only thing that changes between a house, a Waystation and a
-   * Provisioner, and that is the whole point: the player should be able to pick
-   * the healing building out of a town from one screen away, by hue alone,
-   * before they can read a single sign.
+   * The old version drew wide vertical slats, randomly lit, straight onto the
+   * buffer grid -- five buffer pixels to a slat, so two and a half authoring
+   * units, so nothing lined up with anything. At a distance it read as a garden
+   * fence laid on its side.
+   *
+   * A pantile has two directions to it and both are needed: a rounded rib every
+   * four units running down the slope, and a lap every four rows running across
+   * it. Ribs alone are planks; laps alone are slate. Together, and with the
+   * whole field falling one step darker towards the eave, it reads as a tiled
+   * roof from a screen away -- which is what has to happen, because colour on
+   * this tile is how a player finds the Waystation.
    */
   private roof(
     px: Px, fill: (c: string) => void,
     part: 'mid' | 'left' | 'right' | 'peak',
     hue: RoofHue = 'tan',
   ): void {
-    const ramp = this.roofRamp(hue);
-    const deep = ramp[0], dark = ramp[1], mid = ramp[2], light = ramp[3], pale = ramp[4];
+    const [deep, dark, mid, light, pale] = this.roofRamp(hue);
     fill(mid);
+    const P = this.unit(px);
 
-    for (let x = 0; x < TILE_PX; x++) {
-      const slat = Math.floor(x / 5);
-      const inSlat = x % 5;
-      const n = hash2(slat, 0, 89);
-      let base: string = n > 0.66 ? light : n < 0.3 ? dark : mid;
-      if (inSlat === 0) base = deep;
-      else if (inSlat === 1) base = light;
-      for (let y = 0; y < TILE_PX; y++) {
-        // The roof darkens as it falls away from the ridge.
-        px(x, y, y > TILE_PX * 0.78 ? (base === light ? mid : dark) : base);
+    for (let y = 0; y < TILE_SIZE; y++) {
+      const inCourse = y % 4;
+      for (let x = 0; x < TILE_SIZE; x++) {
+        const rib = x % 4;
+        // Across one rib: the shaded channel, the lit crown, then the fall away.
+        let c: string = rib === 0 ? deep : rib === 1 ? light : rib === 2 ? mid : dark;
+        // Head of the course, where the tile above stops and the light gets in.
+        if (inCourse === 0) c = rib === 0 ? dark : rib === 1 ? pale : light;
+        // The lap itself, in the shadow of the course above it. Only the channel
+        // between two tiles goes fully dark here -- take the whole row down and
+        // the horizontal joint outweighs the ribs, and the roof reads as brick.
+        else if (inCourse === 3) c = rib === 0 ? deep : rib === 1 ? mid : dark;
+        // The slope falls away from the ridge, so the bottom of every tile is
+        // a step down from the top of it.
+        if (y >= 12 && c === light) c = mid;
+        else if (y >= 12 && c === pale) c = light;
+        P(x, y, c);
       }
     }
 
     if (part === 'peak') {
-      for (let x = 0; x < TILE_PX; x++) {
-        px(x, 0, PAL.outline);
-        px(x, 1, pale);
-        px(x, 2, pale);
-        px(x, 3, light);
-        px(x, 4, light);
+      // Ridge cap: a course of half-round tiles sitting over the join.
+      for (let x = 0; x < TILE_SIZE; x++) {
+        P(x, 0, PAL.outline);
+        P(x, 1, x % 4 === 0 ? light : pale);
+        P(x, 2, x % 4 === 0 ? dark : light);
       }
     }
     if (part === 'left') {
-      for (let y = 0; y < TILE_PX; y++) {
-        px(0, y, PAL.outline);
-        px(1, y, deep);
-        px(2, y, dark);
-        px(3, y, light);
+      // Barge board down the gable end, turned into the light.
+      for (let y = 0; y < TILE_SIZE; y++) {
+        P(0, y, PAL.outline);
+        P(1, y, pale);
+        P(2, y, light);
       }
     }
     if (part === 'right') {
-      for (let y = 0; y < TILE_PX; y++) {
-        px(TILE_PX - 1, y, PAL.outline);
-        px(TILE_PX - 2, y, deep);
-        px(TILE_PX - 3, y, dark);
-        px(TILE_PX - 4, y, light);
+      for (let y = 0; y < TILE_SIZE; y++) {
+        P(TILE_SIZE - 1, y, PAL.outline);
+        P(TILE_SIZE - 2, y, deep);
+        P(TILE_SIZE - 3, y, dark);
       }
     }
-    // Eave: the shadow the roof throws onto the wall below it.
-    for (let x = 0; x < TILE_PX; x++) {
-      px(x, TILE_PX - 3, deep);
-      px(x, TILE_PX - 2, PAL.outline);
-      px(x, TILE_PX - 1, PAL.outline);
+    // Eave. The overhang itself is sold by the shadow the wall tile below
+    // carries at its head, not by a bright fascia here: this row also lands in
+    // the middle of the two-row civic roofs, where a lit board would read as a
+    // seam across the building.
+    for (let x = 0; x < TILE_SIZE; x++) {
+      P(x, TILE_SIZE - 2, deep);
+      P(x, TILE_SIZE - 1, PAL.outline);
     }
   }
 
@@ -1351,11 +1765,15 @@ export class Tileset {
         if (wrapNoise(x, y, 16, 77) > 0.66) px(x, y, PAL.trimPale);
       }
     }
-    for (let x = 0; x < TILE_PX; x++) {
-      px(x, 0, PAL.trimShade);
-      px(x, TILE_PX - 3, PAL.trimShade);
-      px(x, TILE_PX - 2, PAL.stoneDark);
-      px(x, TILE_PX - 1, PAL.outline);
+    // Head: the shadow of the roof's overhang. Foot: the plinth the frontage
+    // stands on, so the building meets the paving instead of ending at it.
+    const U = this.unit(px);
+    for (let x = 0; x < TILE_SIZE; x++) {
+      U(x, 0, PAL.stoneDark);
+      U(x, 1, PAL.trimShade);
+      U(x, 13, PAL.trimShade);
+      U(x, 14, PAL.stoneDark);
+      U(x, 15, PAL.outline);
     }
 
     if (kind === 'door') {
@@ -1558,10 +1976,8 @@ export class Tileset {
         P(x, y, c);
       }
     }
-    for (let x = 0; x < TILE_SIZE; x++) {
-      P(x, 14, PAL.stoneMid);
-      P(x, 15, PAL.stoneDark);
-    }
+    this.wallHead(P, PAL.woodDark, PAL.woodDeep);
+    this.wallFoot(P);
   }
 
   /** Brick, laid in stretcher bond with mortar pale enough to draw the courses. */
@@ -1580,10 +1996,8 @@ export class Tileset {
         P(x, y, c);
       }
     }
-    for (let x = 0; x < TILE_SIZE; x++) {
-      P(x, 14, PAL.stoneMid);
-      P(x, 15, PAL.stoneDark);
-    }
+    this.wallHead(P, PAL.brickDark, PAL.brickDeep);
+    this.wallFoot(P);
   }
 
   /** A window with louvred shutters thrown open against the boards. */
@@ -1610,7 +2024,7 @@ export class Tileset {
         }
       }
     }
-    for (let x = 1; x <= 14; x++) { P(x, 12, PAL.woodPale); P(x, 13, PAL.woodDeep); }
+    for (let x = 1; x <= 14; x++) P(x, 12, PAL.woodPale);
   }
 
   /** A brick house's window, with a planted box under the sill. */
@@ -1646,42 +2060,84 @@ export class Tileset {
   }
 
   /**
-   * Front door under a striped awning.
+   * The front door of a house, in three cuts.
    *
-   * The awning is the one part of a house front allowed a saturated colour: it
-   * is small, it is up at eye level, and it tells the player which of four
-   * near-identical frontages they were told to knock on.
+   * Every enterable house in the world uses this one tile, so drawing one door
+   * meant nine identical front doors along nine different frontages -- and this
+   * game has already been told once that its houses look like the same house
+   * stamped out. The three cuts are chosen from the door's own position in the
+   * map, so a given house always has the same door and no two neighbours have
+   * to share one: a striped awning, a fanlight over a painted door, and a
+   * pitched hood on brackets.
+   *
+   * All three sit in the same opening, on the same step, with the light coming
+   * from the same corner. What changes is the head above the door and the
+   * colour of the leaf, which is as much as reads at sixteen units.
    */
   private porchDoor(px: Px, fill: (c: string) => void, rng: Rng): void {
     this.wall(px, fill, rng, false);
     const P = this.unit(px);
+    const cut = variantSeed % 3;
 
-    for (let y = 0; y <= 2; y++) {
-      for (let x = 1; x <= 14; x++) {
-        P(x, y, y === 0 ? PAL.outline : x % 4 < 2 ? PAL.redMid : PAL.trimPale);
+    // The leaf. Its colour is the loudest thing about a frontage at this size.
+    const leaf = cut === 0 ? PAL.woodMid : cut === 1 ? '#3f6a80' : '#7a4a6e';
+    const leafLit = cut === 0 ? PAL.woodLight : cut === 1 ? '#5c8ba2' : '#9a688c';
+    const leafDeep = cut === 0 ? PAL.woodDeep : cut === 1 ? '#27485a' : '#4e2c48';
+
+    if (cut === 0) {
+      // Striped awning, with a scalloped hem and the shadow it throws.
+      for (let y = 0; y <= 2; y++) {
+        for (let x = 1; x <= 14; x++) {
+          P(x, y, y === 0 ? PAL.outline : x % 4 < 2 ? PAL.redMid : PAL.trimPale);
+        }
       }
+      for (let x = 1; x <= 14; x++) if (x % 4 < 2) P(x, 3, PAL.redDark);
+      for (let x = 1; x <= 14; x++) P(x, 4, PAL.plasterDark);
+    } else if (cut === 1) {
+      // Fanlight: a lit half-round over the head, in its own frame.
+      for (let x = 3; x <= 12; x++) P(x, 1, PAL.outline);
+      for (let y = 2; y <= 3; y++) {
+        for (let x = 3; x <= 12; x++) {
+          const edge = x === 3 || x === 12;
+          P(x, y, edge ? PAL.trimShade : y === 2 ? PAL.glassHi : PAL.glassLight);
+        }
+      }
+      for (const bx of [6, 9]) for (let y = 2; y <= 3; y++) P(bx, y, PAL.trimMid);
+      for (let x = 2; x <= 13; x++) { P(x, 4, PAL.trimPale); P(x, 5, PAL.plasterDark); }
+    } else {
+      // Pitched hood on two brackets.
+      for (let x = 2; x <= 13; x++) P(x, 1, PAL.outline);
+      for (let x = 2; x <= 13; x++) P(x, 2, PAL.roofLight);
+      for (let x = 2; x <= 13; x++) P(x, 3, x % 3 === 0 ? PAL.roofDark : PAL.roofMid);
+      for (let x = 1; x <= 14; x++) P(x, 4, PAL.roofDeep);
+      for (let x = 1; x <= 14; x++) P(x, 5, PAL.plasterDark);
+      for (const bx of [3, 12]) { P(bx, 6, PAL.woodDark); P(bx, 7, PAL.woodDeep); }
     }
-    // Scalloped hem: only the coloured stripes hang the extra row.
-    for (let x = 1; x <= 14; x++) if (x % 4 < 2) P(x, 3, PAL.redDark);
-    for (let x = 1; x <= 14; x++) P(x, 4, PAL.plasterDark);   // shadow it throws
 
-    for (let y = 5; y <= 13; y++) {
+    const head = cut === 0 ? 5 : 6;
+    for (let y = head; y <= 13; y++) {
       for (let x = 4; x <= 11; x++) {
-        const frame = x === 4 || x === 11 || y === 5;
-        P(x, y, frame ? PAL.trimShade : PAL.woodMid);
+        const frame = x === 4 || x === 11 || y === head;
+        P(x, y, frame ? PAL.trimShade : leaf);
       }
     }
-    for (const [y0, y1] of [[7, 9], [10, 12]] as [number, number][]) {
-      for (let y = y0; y <= y1; y++) {
+    // Panels, and the light down the leading edge of the leaf.
+    for (const [y0, y1] of [[head + 2, head + 4], [head + 5, head + 7]] as [number, number][]) {
+      for (let y = y0; y <= Math.min(y1, 12); y++) {
         for (let x = 6; x <= 9; x++) {
           const edge = y === y0 || y === y1 || x === 6 || x === 9;
-          P(x, y, edge ? PAL.woodDeep : PAL.woodLight);
+          P(x, y, edge ? leafDeep : leafLit);
         }
       }
     }
-    P(10, 9, '#e8c24a');
-    P(10, 10, PAL.woodDeep);
-    for (let x = 3; x <= 12; x++) { P(x, 14, PAL.stoneLight); P(x, 15, PAL.stoneDark); }
+    for (let y = head + 1; y <= 13; y++) P(5, y, leafLit);
+    P(10, head + 4, '#e8c24a');                    // handle
+    P(10, head + 5, leafDeep);
+    // Step, worn pale in the middle where it is walked on.
+    for (let x = 3; x <= 12; x++) {
+      P(x, 14, x >= 5 && x <= 10 ? PAL.stonePale : PAL.stoneLight);
+      P(x, 15, PAL.stoneDark);
+    }
   }
 
   /* -------------------------------------------------------- laboratory */
@@ -1841,23 +2297,24 @@ export class Tileset {
    * the result read as woodchip rather than as a room.
    */
   private woodFloor(px: Px, fill: (c: string) => void, rng: Rng): void {
-    fill(PAL.woodPale);
+    // A near-white highlight on top of every board and a dark seam under it put
+    // a hard light/dark pair on a four-unit repeat, and a room floored with them
+    // read as a set of venetian blinds. One seam per board, one step down from
+    // the board it parts, is all a floor needs at this size.
+    const boardA = '#e0c69c';
+    const boardB = '#d7bb8e';
+    const seam = '#bd9d72';
+    const grain = '#e8d2ac';
+
+    fill(boardA);
     const P = this.unit(px);
     for (let y = 0; y < TILE_SIZE; y++) {
       const board = Math.floor(y / 4);
-      // Two close pale tones. A floor that is as dark as the furniture on it
-      // makes every room read as a cellar.
-      const base = board % 2 === 0 ? PAL.woodPale : PAL.woodLight;
+      const base = board % 2 === 0 ? boardA : boardB;
       for (let x = 0; x < TILE_SIZE; x++) {
-        if (y % 4 === 3) { P(x, y, PAL.woodMid); continue; }
+        if (y % 4 === 3) { P(x, y, seam); continue; }
         // A little grain, always along the board rather than across it.
-        P(x, y, (x * 5 + board * 7) % 11 === 0 ? PAL.woodPale : base);
-      }
-      // A soft highlight along the top of each board, and nothing across it:
-      // vertical joins at this size read as mortar, and a floor made of bricks
-      // is indistinguishable from the wall behind it.
-      if (y % 4 === 0) {
-        for (let x = 0; x < TILE_SIZE; x++) P(x, y, PAL.plasterPale);
+        P(x, y, (x * 5 + board * 7) % 11 === 0 ? grain : base);
       }
     }
     void rng;
@@ -1870,48 +2327,68 @@ export class Tileset {
    * of these reads as a single mat rather than as a grid of coasters.
    */
   private rug(px: Px, fill: (c: string) => void): void {
-    fill('#8a4a52');
+    // The old mat was a dark maroon with a dark motif on it, which at the size
+    // it is seen came out as one flat bruise on the floorboards. A woven rug
+    // wants a *pale* figure on a warm ground: the cream lozenges do the reading
+    // and the weave underneath only has to give the pile its direction.
+    const ground = '#9e5460';
+    const weft = '#b46a72';
+    const shade = '#7b3d4a';
+    const cream = '#e7d2ae';
+
+    fill(ground);
     const P = this.unit(px);
     for (let y = 0; y < TILE_SIZE; y++) {
       for (let x = 0; x < TILE_SIZE; x++) {
-        if ((x + y) % 4 === 0) P(x, y, '#a35c64');
-        else if ((x + y) % 8 === 4) P(x, y, '#5e2f36');
+        P(x, y, (x + y) % 4 === 0 ? weft : (x + y) % 8 === 4 ? shade : ground);
       }
     }
     // No border on the tile itself. A mat is several of these side by side, and
-    // a border drawn per tile turns one rug into a grid of doormats. The weave
-    // carries across the seam instead, so the whole thing reads as one piece.
-    for (let i = 0; i < TILE_SIZE; i += 4) {
+    // a border drawn per tile turns one rug into a grid of doormats. The figure
+    // is on an eight-unit lattice that divides the tile, so it carries across
+    // the seam and the whole thing reads as one piece.
+    for (let y = 0; y < TILE_SIZE; y++) {
       for (let x = 0; x < TILE_SIZE; x++) {
-        if ((x + i) % 8 < 4) P(x, i, '#5e2f36');
+        const d = Math.abs((x % 8) - 4) + Math.abs((y % 8) - 4);
+        if (d === 3) P(x, y, cream);
+        else if (d < 2) P(x, y, d === 0 ? cream : shade);
       }
     }
   }
 
   /**
-   * Interior wall.
+   * Interior wall: one papered colour, one quiet motif, nothing else.
    *
-   * Papered above, panelled below, with a rail between them: three flat bands
-   * read as a room, and a noisy wall reads as a cave.
+   * The old wall carried a dado rail and a band of dark panelling along its
+   * bottom edge. That is fine for the one row of wall at the back of a room and
+   * ruinous everywhere else: a room is walled on all four sides, so the left and
+   * right columns stacked that band once per tile and each side of every
+   * interior turned into a brown ladder. Whatever is drawn here is repeated in
+   * both directions, so it has to be *uniform* in both directions.
+   *
+   * So the tile is flat. A papered ground, a pinstripe on an eight-unit repeat
+   * and a small stencil between the stripes -- one step either side of the base
+   * colour, no more. It is a step darker and a good deal greyer than either
+   * floor in the game, which is what gives the room its edge without a line
+   * being drawn for it, and it sits far enough back that a character standing
+   * against it keeps their silhouette.
    */
   private interiorWall(px: Px, fill: (c: string) => void, rng: Rng): void {
-    fill(PAL.plasterLight);
+    const base = '#b9ae9a';
+    const stripe = '#c6bca9';
+    const motif = '#aa9f8b';
+
+    fill(base);
     const P = this.unit(px);
     for (let y = 0; y < TILE_SIZE; y++) {
       for (let x = 0; x < TILE_SIZE; x++) {
-        if (y >= 11) P(x, y, PAL.woodDark);                        // panelling
-        else if ((x + y * 2) % 8 === 0) P(x, y, PAL.plasterPale);  // paper motif
-        else if ((x * 3 + y) % 13 === 0) P(x, y, PAL.plasterMid);
+        if (x % 8 === 0) { P(x, y, stripe); continue; }
+        // A four-unit stencil, centred between the stripes. Both repeats divide
+        // sixteen, so the paper meets itself exactly at every seam.
+        const d = Math.abs((x % 8) - 4) + Math.abs((y % 8) - 4);
+        if (d === 2) P(x, y, motif);
+        else if (d === 0) P(x, y, stripe);
       }
-    }
-    for (let x = 0; x < TILE_SIZE; x++) {
-      P(x, 10, PAL.woodDark);                 // rail
-      P(x, 11, PAL.woodPale);
-      P(x, TILE_SIZE - 1, PAL.woodDeep);      // skirting shadow
-    }
-    // Vertical joints in the panelling.
-    for (let x = 3; x < TILE_SIZE; x += 5) {
-      for (let y = 12; y < TILE_SIZE - 1; y++) P(x, y, PAL.woodDeep);
     }
     void rng;
   }
@@ -1927,19 +2404,27 @@ export class Tileset {
    */
   private counter(px: Px): void {
     const P = this.unit(px);
-    for (let y = 0; y <= 14; y++) {
+    // The old front carried a diagonal grain on a six-unit repeat, which at
+    // this size read as hatching and turned a service counter into a packing
+    // crate. Framed panels on a four-unit repeat are what joinery actually
+    // looks like, and they wrap the tile so a run of counters is one counter.
+    for (let y = 0; y <= 15; y++) {
       for (let x = 0; x < TILE_SIZE; x++) {
-        if (y <= 1) P(x, y, PAL.woodPale);                 // top surface
-        else if (y <= 3) P(x, y, PAL.woodLight);
-        else if (y === 14) P(x, y, PAL.woodDeep);          // shadow at the foot
-        else P(x, y, (x + y) % 6 === 0 ? PAL.woodDark : PAL.woodMid);
+        if (y <= 1) P(x, y, PAL.woodPale);                 // worktop
+        else if (y === 2) P(x, y, PAL.woodDeep);           // its shadowed lip
+        else if (y === 3) P(x, y, PAL.woodLight);          // lit rail below it
+        else P(x, y, PAL.woodMid);
       }
     }
-    for (let x = 0; x < TILE_SIZE; x++) P(x, 2, PAL.woodDeep);
-    // Panel grooves down the front.
-    for (let x = 2; x < TILE_SIZE; x += 5) {
-      for (let y = 5; y <= 13; y++) P(x, y, PAL.woodDark);
+    // Framed panels: a sunk face with a lit head and a shadowed foot.
+    for (let px0 = 0; px0 < TILE_SIZE; px0 += 4) {
+      for (let y = 6; y <= 12; y++) {
+        for (let x = px0 + 1; x <= px0 + 2; x++) {
+          P(x, y, y === 6 ? PAL.woodDeep : y === 12 ? PAL.woodLight : PAL.woodDark);
+        }
+      }
     }
+    for (let x = 0; x < TILE_SIZE; x++) { P(x, 13, PAL.woodDark); P(x, 14, PAL.woodDeep); }
     this.footShadow(P, 0, TILE_SIZE - 1, 15);
   }
 
@@ -2061,15 +2546,19 @@ export class Tileset {
    */
   private table(px: Px): void {
     const P = this.unit(px);
-    // Top.
+    // Top, in three boards running across the table. The old version put a
+    // scattered pale grain on it, which at this size collapsed into a single
+    // diagonal streak and read as glare on a sheet of glass.
     for (let y = 2; y <= 10; y++) {
       for (let x = 1; x <= 14; x++) {
         const edge = y === 2 || x === 1 || x === 14;
-        P(x, y, edge ? PAL.outline : (x + y) % 7 === 0 ? PAL.plasterPale : PAL.woodLight);
+        P(x, y, edge ? PAL.outline : y % 3 === 1 ? PAL.woodMid : PAL.woodLight);
       }
     }
-    for (let x = 2; x <= 13; x++) P(x, 3, PAL.plasterPale);
-    for (let x = 2; x <= 13; x++) P(x, 10, PAL.woodDark);   // underside of the top
+    for (let x = 2; x <= 13; x++) P(x, 3, PAL.woodPale);     // lit front of the top
+    for (let y = 3; y <= 9; y++) P(2, y, PAL.woodPale);      // and its lit left edge
+    for (let x = 2; x <= 13; x++) P(x, 9, PAL.woodDark);
+    for (let x = 2; x <= 13; x++) P(x, 10, PAL.woodDeep);    // apron under the top
     for (let x = 1; x <= 14; x++) P(x, 11, PAL.outline);
     // Legs, and the shadow they cast.
     for (const lx of [3, 11]) {
@@ -2078,22 +2567,41 @@ export class Tileset {
     this.footShadow(P, 1, 14, 14);
   }
 
-  /** A chair, seen from the front: back, seat, two legs. */
+  /**
+   * A chair, seen from the front: back, cushioned seat, two legs.
+   *
+   * The seat is upholstered rather than more of the same brown. A chair drawn
+   * in one wood tone next to a table drawn in the same wood tone is a brown
+   * blob beside a brown blob; one patch of cloth is all it takes to separate
+   * them across a room.
+   */
   private chair(px: Px): void {
     const P = this.unit(px);
+    const cloth = '#8c5f74';
+    const clothLit = '#a9788c';
+
+    // Back: two stiles with rails between them.
     for (let y = 1; y <= 7; y++) {
       for (let x = 4; x <= 11; x++) {
         P(x, y, y === 1 || x === 4 || x === 11 ? PAL.outline : PAL.woodMid);
       }
     }
-    for (let x = 5; x <= 10; x++) P(x, 2, PAL.woodLight);
+    for (let x = 5; x <= 10; x++) { P(x, 2, PAL.woodPale); P(x, 5, PAL.woodDark); }
+    for (let y = 3; y <= 4; y++) for (let x = 6; x <= 9; x++) P(x, y, PAL.woodDark);
+    for (let y = 3; y <= 4; y++) P(5, y, PAL.woodLight);
+
+    // Seat.
     for (let y = 8; y <= 10; y++) {
       for (let x = 3; x <= 12; x++) {
-        P(x, y, x === 3 || x === 12 ? PAL.outline : y === 8 ? PAL.woodLight : PAL.woodMid);
+        P(x, y, x === 3 || x === 12 ? PAL.outline : y === 8 ? clothLit : cloth);
       }
     }
+    for (let x = 4; x <= 11; x++) P(x, 10, '#6b4356');
     for (let x = 3; x <= 12; x++) P(x, 11, PAL.outline);
-    for (const lx of [4, 11]) for (let y = 12; y <= 13; y++) P(lx, y, PAL.outline);
+    for (const lx of [4, 11]) {
+      for (let y = 12; y <= 13; y++) { P(lx, y, PAL.outline); }
+      P(lx === 4 ? 5 : 10, 12, PAL.woodDark);
+    }
     this.footShadow(P, 3, 12, 14);
   }
 
@@ -2126,25 +2634,42 @@ export class Tileset {
   /** Pot plant. Every house in the reference art has one. */
   private plant(px: Px): void {
     const P = this.unit(px);
-    // Fronds.
-    const leaf = (x0: number, y0: number, dx: number) => {
-      for (let i = 0; i < 5; i++) {
-        P(x0 + dx * i, y0 - i, i < 2 ? PAL.leafDark : PAL.leafMid);
-        P(x0 + dx * i, y0 - i + 1, PAL.leafDeep);
+
+    // Six fronds arching out of one crown rather than two thin sprigs. The
+    // plant is the only soft shape in a room full of boxes, so it has to have
+    // enough mass to be one -- and the ones on the outside are drawn a step
+    // darker, which is what gives the crown a front and a back.
+    const frond = (x0: number, y0: number, dx: number, len: number, tip: string) => {
+      for (let i = 0; i < len; i++) {
+        const x = x0 + Math.round(dx * i);
+        const y = y0 - i;
+        P(x, y, i >= len - 2 ? tip : i < 2 ? PAL.leafDeep : PAL.leafMid);
+        P(x, y + 1, PAL.leafDeep);
       }
     };
-    leaf(7, 8, -1); leaf(8, 8, 1);
-    for (let i = 0; i < 6; i++) P(7 + (i % 2), 8 - i, i > 3 ? PAL.leafLight : PAL.leafMid);
-    P(6, 2, PAL.leafHi); P(9, 3, PAL.leafHi);
-    // Pot, outlined so the terracotta keeps its shape against a pale floor.
-    for (let y = 9; y <= 13; y++) {
-      const inset = y >= 12 ? 1 : 0;
+    frond(7, 8, -1.0, 5, PAL.leafLight);
+    frond(8, 8, 1.0, 5, PAL.leafLight);
+    frond(7, 8, -0.5, 6, PAL.leafHi);
+    frond(8, 8, 0.5, 6, PAL.leafHi);
+    frond(7, 8, -1.4, 4, PAL.leafDark);
+    frond(8, 8, 1.4, 4, PAL.leafDark);
+    for (let i = 0; i < 7; i++) P(7 + (i % 2), 8 - i, i > 4 ? PAL.leafTip : PAL.leafLight);
+
+    // Pot: a rim standing proud of a tapered body, outlined so the terracotta
+    // keeps its shape against a pale floor.
+    for (let x = 3; x <= 12; x++) {
+      P(x, 9, PAL.outline);
+      P(x, 10, x < 6 ? '#c07a50' : x > 9 ? '#8a4830' : '#ac6642');
+    }
+    P(3, 10, PAL.outline); P(12, 10, PAL.outline);
+    for (let y = 11; y <= 14; y++) {
+      const inset = y >= 13 ? 1 : 0;
       for (let x = 4 + inset; x <= 11 - inset; x++) {
-        const edge = x === 4 + inset || x === 11 - inset || y === 13;
-        P(x, y, edge ? PAL.outline : y === 9 ? '#a05a3a' : x < 6 ? '#b06a44' : x > 9 ? '#7a4028' : '#96543a');
+        const edge = x === 4 + inset || x === 11 - inset || y === 14;
+        P(x, y, edge ? PAL.outline : x < 6 ? '#b06a44' : x > 9 ? '#7a4028' : '#96543a');
       }
     }
-    this.footShadow(P, 4, 11, 14);
+    this.footShadow(P, 4, 11, 15);
   }
 
   /** Fridge: a tall pale box with a seam and a handle. */
@@ -2199,21 +2724,37 @@ export class Tileset {
   private interiorWindow(px: Px, fill: (c: string) => void, rng: Rng): void {
     this.interiorWall(px, fill, rng);
     const P = this.unit(px);
+
+    // Curtain pole, then the reveal: the wall is thick, so the glass is set
+    // back and the head and the left jamb throw a shadow across it.
+    for (let x = 1; x <= 14; x++) P(x, 1, PAL.woodDark);
+    for (let x = 1; x <= 14; x++) P(x, 0, PAL.woodMid);
+
     for (let y = 2; y <= 9; y++) {
       for (let x = 3; x <= 12; x++) {
         const frame = y === 2 || y === 9 || x === 3 || x === 12;
-        if (frame) { P(x, y, PAL.trimPale); continue; }
+        if (frame) { P(x, y, y === 9 ? PAL.trimShade : PAL.trimPale); continue; }
         P(x, y, x + y < 10 ? PAL.glassHi : x + y < 15 ? PAL.glassLight : PAL.glass);
       }
     }
+    for (let x = 4; x <= 11; x++) P(x, 3, '#4e78a0');
+    for (let y = 3; y <= 8; y++) P(4, y, '#5a86ae');
+    // Glazing bars.
     for (let x = 4; x <= 11; x++) P(x, 6, PAL.trimMid);
     for (let y = 3; y <= 8; y++) P(8, y, PAL.trimMid);
-    for (let x = 2; x <= 13; x++) { P(x, 10, PAL.trimPale); P(x, 11, PAL.plasterDark); }
-    // Curtains.
-    for (let y = 1; y <= 9; y++) {
-      P(2, y, '#b8607a'); P(3, y === 1 ? y : y, y === 1 ? '#b8607a' : PAL.trimPale);
-      P(13, y, '#96485f');
+    // Sill, standing proud, with the wall's own shadow under it.
+    for (let x = 2; x <= 13; x++) { P(x, 10, PAL.trimPale); P(x, 11, '#8f8672'); }
+
+    // Curtains, gathered at each side: three folds apiece rather than one flat
+    // stripe, which is what made them read as painted stripes on the wall.
+    const folds = ['#c26e86', '#a8546c', '#8c3f56'];
+    for (let y = 1; y <= 10; y++) {
+      for (let i = 0; i < 3; i++) {
+        P(1 + i, y, folds[i]!);
+        P(14 - i, y, folds[i === 0 ? 2 : i === 2 ? 1 : 2]!);
+      }
     }
+    for (let i = 0; i < 3; i++) { P(1 + i, 10, '#6f2f44'); P(14 - i, 10, '#6f2f44'); }
   }
 
   /**
@@ -2513,26 +3054,45 @@ export class Tileset {
    */
   private flowerBed(px: Px): void {
     const P = this.unit(px);
-    for (let y = 0; y <= 12; y++) {
+
+    // Soil, and the planting that covers most of it. The old bed scattered
+    // eight single-pixel blooms in four colours across bare earth and read, at
+    // the size it is actually seen, as confetti dropped on a brown rectangle.
+    // A bed is mostly *leaf*: a low mound of foliage with a few flowers showing
+    // through it, and no more than two flower colours to a bed.
+    for (let y = 2; y <= 12; y++) {
       for (let x = 0; x < TILE_SIZE; x++) {
         const d = (x * 5 + y * 3) % 16;
         P(x, y, d === 2 ? PAL.dirtMid : d === 9 ? PAL.dirtDeep : PAL.dirtDark);
       }
     }
-    const blooms = ['#e8586a', '#f2c44c', '#f0e8d0', '#c47ad8'];
-    for (let i = 0; i < 8; i++) {
-      const row = i >> 2;
-      const fx = 1 + (i % 4) * 4 + row;
-      const fy = 4 + row * 5;
-      const c = blooms[(i + row) % blooms.length]!;
-      P(fx - 1, fy + 1, PAL.leafDark); P(fx, fy + 1, PAL.leafMid); P(fx + 1, fy + 1, PAL.leafDark);
-      P(fx, fy + 2, PAL.leafDeep);
-      P(fx - 1, fy, mixDown(c)); P(fx, fy, c); P(fx + 1, fy, mixDown(c));
-      P(fx, fy - 1, c);
+
+    // Two rows of clumps, on an eight-unit repeat so a run of beds keeps its
+    // rhythm across the seam instead of bunching wherever two tiles meet.
+    const clump = (cx: number, cy: number, bloom: string) => {
+      for (let y = cy - 1; y <= cy + 2; y++) {
+        for (let x = cx - 2; x <= cx + 2; x++) {
+          const r = Math.abs(x - cx) + Math.abs(y - cy);
+          if (r > 3) continue;
+          P(x, y, y >= cy + 1 ? PAL.leafDeep : r <= 1 ? PAL.leafMid : PAL.leafDark);
+        }
+      }
+      P(cx - 1, cy - 1, PAL.leafLight);
+      P(cx, cy - 1, bloom);
+      P(cx + 1, cy, bloom);
+      P(cx - 1, cy + 1, mixDown(bloom));
+    };
+    for (let i = 0; i < 2; i++) {
+      clump(3 + i * 8, 5, '#e8586a');
+      clump(7 + i * 8, 10, '#f2c44c');
     }
+
+    // Kerb: a lit capping stone front and back only, so a row joins into one
+    // long border rather than a line of separate troughs.
     for (let x = 0; x < TILE_SIZE; x++) {
-      P(x, 0, PAL.stoneLight); P(x, 1, PAL.stoneDark);
-      P(x, 13, PAL.stoneMid); P(x, 14, PAL.outline);
+      P(x, 0, PAL.stonePale); P(x, 1, PAL.stoneDark);
+      P(x, 13, PAL.stoneLight); P(x, 14, PAL.stoneDark);
+      P(x, 15, PAL.outline);
     }
     this.footShadow(P, 0, TILE_SIZE - 1, 15);
   }
@@ -2548,21 +3108,30 @@ export class Tileset {
   private lampPost(px: Px): void {
     const P = this.unit(px);
 
-    for (let y = 2; y <= 6; y++) {
+    // Lantern: four panes of warm glass in a leaded frame, brightest at the top
+    // left where the flame sits and falling away to the bottom right, so the box
+    // reads as something lit from inside rather than as a yellow rectangle.
+    for (let y = 2; y <= 7; y++) {
       for (let x = 4; x <= 11; x++) {
-        const frame = x === 4 || x === 11 || y === 2 || y === 6;
-        P(x, y, frame ? PAL.outline : y <= 3 ? '#fff2c0' : '#f6cf72');
+        const frame = x === 4 || x === 11 || y === 2 || y === 7;
+        P(x, y, frame ? PAL.outline : x + y < 9 ? '#fff6d4' : x + y < 13 ? '#ffe08e' : '#e8a842');
       }
     }
-    for (let y = 3; y <= 5; y++) P(8, y, '#e0a848');
-    for (let x = 3; x <= 12; x++) { P(x, 1, PAL.stoneDark); P(x, 2, PAL.outline); }
-    P(7, 0, PAL.stoneLight); P(8, 0, PAL.stoneDark);
+    for (let y = 3; y <= 6; y++) P(8, y, '#c98c34');       // glazing bar
+    for (let x = 5; x <= 10; x++) P(x, 5, '#c98c34');
+    // Cap and finial.
+    for (let x = 3; x <= 12; x++) { P(x, 1, PAL.stoneLight); P(x, 2, PAL.outline); }
+    for (let x = 4; x <= 11; x++) P(x, 0, PAL.stoneDark);
+    P(7, 0, PAL.stonePale); P(8, 0, PAL.stoneLight);
 
-    for (let y = 7; y <= 13; y++) { P(7, y, PAL.stoneLight); P(8, y, PAL.stoneDeep); }
-    for (let x = 6; x <= 9; x++) { P(x, 13, PAL.stoneMid); P(x, 14, PAL.stoneDark); }
-    for (let y = 7; y <= 12; y++) { P(6, y, PAL.outline); P(9, y, PAL.outline); }
-    P(5, 13, PAL.outline); P(10, 13, PAL.outline);
-    P(5, 14, PAL.outline); P(10, 14, PAL.outline);
+    // Column, with a swelling at the base.
+    for (let y = 8; y <= 12; y++) { P(7, y, PAL.stoneLight); P(8, y, PAL.stoneDeep); }
+    for (let y = 8; y <= 12; y++) { P(6, y, PAL.outline); P(9, y, PAL.outline); }
+    for (let x = 5; x <= 10; x++) { P(x, 13, PAL.stoneMid); P(x, 14, PAL.stoneDark); }
+    P(6, 13, PAL.stoneLight); P(7, 13, PAL.stoneLight);
+    for (let x = 5; x <= 10; x++) P(x, 15, PAL.outline);
+    P(4, 14, PAL.outline); P(11, 14, PAL.outline);
+    P(4, 15, PAL.outline); P(11, 15, PAL.outline);
     // The column stands on turf, path and paving alike, so the pool at its foot
     // has to tint the ground rather than replace it.
     this.footShadow(P, 4, 11, 15);

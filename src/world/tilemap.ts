@@ -9,7 +9,7 @@
  * nothing at render time.
  */
 
-import { Renderer } from '../engine/renderer.js';
+import { DETAIL, Renderer, SCREEN_H, SCREEN_W } from '../engine/renderer.js';
 import { T, TILE_PX, TILE_SIZE, Tileset } from '../gfx/tileset.js';
 import { donatesFloor, terrainFor, unknownChars, type TerrainDef } from './terrain.js';
 import type {
@@ -40,6 +40,28 @@ export interface AsciiMapFile {
   /** Shallow water here is crossable without the Wade art (gym puzzles). */
   freeWade?: boolean;
 }
+
+/**
+ * How deep a character wades in tall grass, as a row inside the tile, in
+ * authoring units. Everything from here down is drawn in front of them.
+ *
+ * Six of sixteen puts the line just under the ribs on a 24-unit sprite: head,
+ * shoulders and a band of chest stay above the grass, which is the silhouette
+ * the era used and the one that still reads at 1x. Deeper and the character is
+ * a floating head; shallower and the effect stops being legible at all.
+ */
+const GRASS_BLADE_TOP = 6;
+
+/**
+ * How far apart stacked copies of that band sit when it is lifted to a
+ * character's waist.
+ *
+ * The band is ten units tall, so any step below ten leaves no seam; six keeps
+ * the count down while staying well clear, and matters because the top edge of
+ * a band is the ragged one -- a copy that peeked out above the copy over it
+ * would print a line of tips through the middle of the mass.
+ */
+const GRASS_STACK_STEP = 6;
 
 export class TileMap {
   readonly id: string;
@@ -271,7 +293,7 @@ export class TileMap {
 
   private drawRow(r: Renderer, tiles: Uint16Array, tileset: Tileset, ty: number): void {
     const t0x = Math.max(0, Math.floor(r.camX / TILE_SIZE));
-    const t1x = Math.min(this.width - 1, Math.floor((r.camX + 240) / TILE_SIZE));
+    const t1x = Math.min(this.width - 1, Math.floor((r.camX + SCREEN_W) / TILE_SIZE));
     for (let tx = t0x; tx <= t1x; tx++) {
       const id = tiles[this.index(tx, ty)]!;
       if (id === 0) continue;
@@ -288,13 +310,113 @@ export class TileMap {
   visibleRows(r: Renderer): { first: number; last: number } {
     return {
       first: Math.max(0, Math.floor(r.camY / TILE_SIZE)),
-      last: Math.min(this.height - 1, Math.floor((r.camY + 160) / TILE_SIZE)),
+      last: Math.min(this.height - 1, Math.floor((r.camY + SCREEN_H) / TILE_SIZE)),
     };
   }
 
   /** Base terrain, drawn under everything. */
   renderGround(r: Renderer, tileset: Tileset): void {
     this.drawLayer(r, this.ground, tileset);
+  }
+
+  /**
+   * The blades of one row of tall grass, painted a second time so they land in
+   * front of whoever is standing in them.
+   *
+   * Tall grass is a ground tile, so the first pass has already drawn it under
+   * the actors. This pass repaints the lower part of the very same tile at the
+   * very same place, which is what makes it safe: the pixels are identical to
+   * the ones already there, so the tile cannot end up looking different from
+   * its neighbours. The only thing that changes is what is *behind* them -- a
+   * character whose sprite reaches down into this row is now cut off by the
+   * grass instead of standing on top of the patch.
+   *
+   * Handed out a row at a time so the caller can drop it into the actor sort:
+   * the grass on your own row is in front of you, the row above is behind you.
+   * Anything cheaper -- one pass over the whole layer -- and the patch two rows
+   * up starts swallowing your head.
+   */
+  renderGrassFrontRow(r: Renderer, tileset: Tileset, ty: number): void {
+    const t0x = Math.max(0, Math.floor(r.camX / TILE_SIZE));
+    const t1x = Math.min(this.width - 1, Math.floor((r.camX + SCREEN_W) / TILE_SIZE));
+    const top = GRASS_BLADE_TOP * DETAIL;
+    const h = TILE_PX - top;
+    for (let tx = t0x; tx <= t1x; tx++) {
+      if (this.ground[this.index(tx, ty)] !== T.TALL_GRASS) continue;
+      const s = tileset.srcFor(T.TALL_GRASS, tx, ty);
+      r.bctx.drawImage(
+        tileset.canvas, s.x, s.y + top, TILE_PX, h,
+        tx * TILE_PX - r.camPX, ty * TILE_PX + top - r.camPY,
+        TILE_PX, h,
+      );
+    }
+  }
+
+  /** True if this row has any tall grass on screen worth a second pass. */
+  rowHasTallGrass(r: Renderer, ty: number): boolean {
+    const t0x = Math.max(0, Math.floor(r.camX / TILE_SIZE));
+    const t1x = Math.min(this.width - 1, Math.floor((r.camX + SCREEN_W) / TILE_SIZE));
+    for (let tx = t0x; tx <= t1x; tx++) {
+      if (this.ground[this.index(tx, ty)] === T.TALL_GRASS) return true;
+    }
+    return false;
+  }
+
+  /**
+   * The grass immediately around one character's feet, drawn in front of them.
+   *
+   * The row pass above is not enough on its own, and the reason is that this
+   * game does not walk on a grid. The row pass can only ever cut at a fixed
+   * height inside a tile, so how deep a body stands depends on where in its tile
+   * the feet happen to be: a character walking south sinks to the chest over the
+   * back half of every tile and surfaces to the knees over the front half, once
+   * per tile, forever. On the original hardware the question never came up,
+   * because you were always parked dead centre on a tile.
+   *
+   * So the grass a character is wading through follows the character instead.
+   * A sprite-wide slice of the same tile is stacked from the foot of the tile up
+   * to their waist -- the grass they are standing in, drawn where they are
+   * standing in it, and sampled at the tile's own horizontal phase so the blades
+   * stay in step with the ones underneath. Stood still in the middle of a tile
+   * the lift is zero and the slice lands exactly on top of the pixels already
+   * there, so the patch looks untouched; step forward and the grass rides up
+   * with you and the character stays exactly as deep in it.
+   */
+  renderGrassSkirt(r: Renderer, tileset: Tileset, centerX: number, footY: number): void {
+    const ty = Math.floor(footY / TILE_SIZE);
+    if (ty < 0 || ty >= this.height) return;
+
+    // How far the feet sit above their resting place at the foot of the tile.
+    const lift = Math.max(0, (ty + 1) * TILE_SIZE - 2 - footY);
+
+    const left = Math.round(centerX - TILE_SIZE / 2);
+    const right = left + TILE_SIZE;
+    const sy = GRASS_BLADE_TOP * DETAIL;
+    const sh = TILE_PX - sy;
+
+    for (let tx = Math.floor(left / TILE_SIZE); tx <= Math.floor((right - 1) / TILE_SIZE); tx++) {
+      if (!this.inBounds(tx, ty)) continue;
+      if (this.ground[this.index(tx, ty)] !== T.TALL_GRASS) continue;
+
+      // Clipped to the part of the sprite's width that this tile actually
+      // covers, so the blades stay in step with the ones drawn underneath.
+      const x0 = Math.max(left, tx * TILE_SIZE);
+      const x1 = Math.min(right, (tx + 1) * TILE_SIZE);
+      const src = tileset.srcFor(T.TALL_GRASS, tx, ty);
+      const sx = src.x + (x0 - tx * TILE_SIZE) * DETAIL;
+      const sw = (x1 - x0) * DETAIL;
+      const dx = r.worldPX(x0);
+
+      // Bottom copy upwards, in steps short enough that each one buries the
+      // cut top edge of the one below it. Step further than the band is tall
+      // and the seams print as horizontal lines straight across the mass.
+      for (let l = 0; ; l += GRASS_STACK_STEP) {
+        const step = Math.min(l, lift);
+        const dy = r.worldPY(ty * TILE_SIZE + GRASS_BLADE_TOP - step);
+        r.bctx.drawImage(tileset.canvas, sx, src.y + sy, sw, sh, dx, dy, sw, sh);
+        if (step >= lift) break;
+      }
+    }
   }
 
   /**

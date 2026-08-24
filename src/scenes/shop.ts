@@ -9,7 +9,8 @@
 import type { Game } from '../core/game.js';
 import type { Scene } from '../core/scene.js';
 import { Renderer, SCREEN_H, SCREEN_W } from '../engine/renderer.js';
-import { ListMenu, type MenuItem } from '../ui/menu.js';
+import { ListMenu, navDown, navLeft, navRight, navUp, type MenuItem } from '../ui/menu.js';
+import { fit, inside, para, GAP, LINE } from '../ui/layout.js';
 import { registry } from '../data/registry.js';
 import { say } from '../ui/dialogue.js';
 import type { GameState } from '../systems/state.js';
@@ -73,7 +74,7 @@ export class ShopScene implements Scene {
         return {
           label: item.name,
           value: e.item,
-          detail: `x${e.count}  M~${item.sellPrice}`,
+          detail: `M~${item.sellPrice}`,
         };
       });
     if (items.length === 0) items.push({ label: 'Nothing worth selling.', value: '', enabled: false });
@@ -106,10 +107,12 @@ export class ShopScene implements Scene {
       case 'quantity': {
         const id = this.list.selectedValue!;
         const max = this.maxQuantity(id);
-        if (game.input.repeated('up')) this.quantity = Math.min(max, this.quantity + 1);
-        if (game.input.repeated('down')) this.quantity = Math.max(1, this.quantity - 1);
-        if (game.input.repeated('right')) this.quantity = Math.min(max, this.quantity + 10);
-        if (game.input.repeated('left')) this.quantity = Math.max(1, this.quantity - 10);
+        // Through the nav helpers, so arrows and WASD both drive the spinner
+        // whatever the player has rebound.
+        if (navUp(game)) this.quantity = Math.min(max, this.quantity + 1);
+        if (navDown(game)) this.quantity = Math.max(1, this.quantity - 1);
+        if (navRight(game)) this.quantity = Math.min(max, this.quantity + 10);
+        if (navLeft(game)) this.quantity = Math.max(1, this.quantity - 10);
         if (game.input.mouse.wheel !== 0) {
           this.quantity = Math.max(1, Math.min(max, this.quantity - game.input.mouse.wheel));
         }
@@ -156,42 +159,92 @@ export class ShopScene implements Scene {
   render(_game: Game, r: Renderer): void {
     r.tint('#101828', 0.45);
 
-    // Money plate is always visible: the number the player is reasoning about.
-    r.window(SCREEN_W - 86, 4, 82, 18);
-    r.text(`M~${this.state.money}`, SCREEN_W - 80, 9, { color: '#282838' });
+    // Money plate is always visible: the number the player is reasoning about,
+    // and it grows with the number rather than clipping six figures.
+    const money = `M~${this.state.money}`;
+    const moneyW = Math.max(70, r.textWidth(money) + 16);
+    r.window(SCREEN_W - moneyW - 4, 4, moneyW, 18);
+    r.text(money, SCREEN_W - 10, 11, { color: '#282838', align: 'right' });
+
+    // Six units taller than it was: the bar carries the shopkeeper's line and a
+    // three-line description, and at 40 the third line had nowhere to go. The
+    // list above still shows the same six rows, so nothing is paid for it.
+    const barH = 46;
+    const barY = SCREEN_H - barH - 4;
+    const barW = SCREEN_W - 12;
+    const inBar = inside(6, barY, barW, barH, 1);
 
     if (this.mode === 'root') {
       this.root.render(r, 6, 4, 74, { rowHeight: 13 });
-      r.window(6, SCREEN_H - 44, SCREEN_W - 12, 40);
-      r.text(this.greeting, 12, SCREEN_H - 38, { color: '#282838', maxWidth: SCREEN_W - 24 });
+      r.window(6, barY, barW, barH);
+      para(r, this.greeting, inBar, { color: '#282838', lineHeight: LINE });
       return;
     }
 
-    this.list.render(r, 6, 26, 140, { rowHeight: 12 });
+    // The description is a sentence and wants a line long enough to be one.
+    // Squeezed into a 72-unit side column it broke "clay-and-copper" across
+    // two lines and still ran off the bottom, so it now runs across the bar
+    // where it has 220 units, and the side panel carries the numbers instead.
+    const listW = 144;
+    const panelX = 6 + listW + 6;
+    const panelW = SCREEN_W - 6 - panelX;
+    const panelH = barY - 26 - 4;
+    this.list.render(r, 6, 26, listW, { rowHeight: 12 });
 
     const id = this.list.selectedValue;
     const item = id ? registry.getItem(id) : undefined;
-    r.window(150, 26, SCREEN_W - 156, 76);
+    r.window(panelX, 26, panelW, panelH);
     if (item) {
-      // Clamp to the panel: eight lines is all that fits.
-      const lines = r.wrapText(item.description, 72).slice(0, 8);
-      lines.forEach((line, i) => r.text(line, 154, 31 + i * 9, { color: '#3a4258' }));
+      const box = inside(panelX, 26, panelW, panelH, 1);
+      // The name wraps here rather than truncating: this is the one place on
+      // the screen where the player can read it in full.
+      let y = box.y + para(r, item.name, { x: box.x, y: box.y, w: box.w, h: 22 },
+        { color: '#282838', lineHeight: LINE }) + 4;
+      r.rect(box.x, y, box.w, 1, '#c2cadd');
+      y += 5;
+      // Which side of the counter we are on is the mode, not `pendingBuy` --
+      // that only means anything once a quantity is being chosen, and reading
+      // it here made the sell panel quote the buying price.
+      if (this.mode === 'buy' || (this.mode === 'quantity' && this.pendingBuy)) {
+        r.text('Price', box.x, y, { color: '#6a7490' });
+        r.text(`M~${item.price}`, box.x + box.w, y + 10, { color: '#282838', align: 'right' });
+      } else {
+        r.text('You have', box.x, y, { color: '#6a7490' });
+        r.text(`x${this.state.itemCount(item.id)}`, box.x + box.w, y + 10,
+          { color: '#282838', align: 'right' });
+        r.text('Each', box.x, y + 24, { color: '#6a7490' });
+        r.text(`M~${item.sellPrice ?? 0}`, box.x + box.w, y + 34,
+          { color: '#282838', align: 'right' });
+      }
     }
 
-    r.window(6, SCREEN_H - 44, SCREEN_W - 12, 40);
+    r.window(6, barY, barW, barH);
     if (this.mode === 'quantity' && item) {
       const unit = this.pendingBuy ? item.price : (item.sellPrice ?? 0);
-      r.text(`${item.name}  x${this.quantity}`, 12, SCREEN_H - 38, { color: '#282838' });
-      r.text(`${this.pendingBuy ? 'Cost' : 'Payout'}  M~${unit * this.quantity}`, 12, SCREEN_H - 26, {
-        color: '#282838',
-      });
-      r.text('Up/Down 1   Left/Right 10   Enter to confirm', SCREEN_W - 14, SCREEN_H - 14, {
+      r.text(fit(r, `${item.name}  x${this.quantity}`, inBar.w), inBar.x, inBar.y,
+        { color: '#282838' });
+      r.text(`${this.pendingBuy ? 'Cost' : 'Payout'}  M~${unit * this.quantity}`,
+        inBar.x, inBar.y + 11, { color: '#282838' });
+      // Written to be measured, not to be squeezed in: the old single line came
+      // to 250 units on a 240-unit screen and ran off both ends of its own
+      // window. Two short lines beat one that does not fit.
+      r.text('Up/Down  1', inBar.x + inBar.w, inBar.y, { color: '#6a7490', align: 'right' });
+      r.text('Left/Right  10', inBar.x + inBar.w, inBar.y + 11, {
         color: '#6a7490', align: 'right',
       });
+      r.text('Enter to confirm, Esc to go back', inBar.x, inBar.y + 23, { color: '#6a7490' });
     } else {
-      r.text(this.pendingBuy || this.mode === 'buy' ? 'What would you like?' : 'What are you selling?',
-        12, SCREEN_H - 38, { color: '#282838' });
-      r.text('Esc to go back', SCREEN_W - 14, SCREEN_H - 14, { color: '#6a7490', align: 'right' });
+      // `pendingBuy` still held whatever the last transaction was, so the sell
+      // list greeted the player with "What would you like?".
+      const prompt = this.mode === 'buy' ? 'What would you like?' : 'What are you selling?';
+      const back = 'Esc to go back';
+      r.text(fit(r, prompt, inBar.w - r.textWidth(back) - GAP), inBar.x, inBar.y,
+        { color: '#282838' });
+      r.text(back, inBar.x + inBar.w, inBar.y, { color: '#6a7490', align: 'right' });
+      if (item) {
+        para(r, item.description, { x: inBar.x, y: inBar.y + 11, w: inBar.w, h: inBar.h - 11 },
+          { color: '#3a4258', lineHeight: LINE });
+      }
     }
   }
 }

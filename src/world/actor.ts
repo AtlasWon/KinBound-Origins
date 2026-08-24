@@ -17,7 +17,6 @@ import { DETAIL, type Renderer } from '../engine/renderer.js';
 import type { Direction } from '../data/schema.js';
 
 export const WALK_FRAMES = 14;
-export const RUN_FRAMES = 8;
 export const CYCLE_FRAMES = 5;
 /** Frames a direction must be held before a turn becomes a step. */
 export const TURN_WINDOW = 4;
@@ -238,7 +237,12 @@ export class Actor {
     return !this.moving || worldPaused(this.updatedAt);
   }
 
-  render(r: Renderer, opts: { hideLegs?: boolean; alpha?: number } = {}): void {
+  /**
+   * Tall grass is not handled here any more -- see PlayerBody.render. The world
+   * repaints the blades of a row on top of whoever is standing in them, so an
+   * actor is always drawn whole.
+   */
+  render(r: Renderer, opts: { alpha?: number } = {}): void {
     if (!this.visible) return;
     const standing = this.standing;
     // The neutral frame is forced only for an actor caught mid-step by a pause.
@@ -258,17 +262,10 @@ export class Actor {
     // cue that says how high a hop actually is. It is deliberately not given the
     // idle bob -- a shadow pinned to the ground while the body lifts is the
     // whole reason the bob reads as a breath and not as the sprite sliding.
-    if (!opts.hideLegs) {
-      const lift = Math.max(0, this.hopHeight);
-      r.ellipsePixel(groundX, groundY - 2, 9 - lift * 0.2, 3.2, `rgba(16,20,28,${0.34 - lift * 0.012})`);
-    }
+    const lift = Math.max(0, this.hopHeight);
+    r.ellipsePixel(groundX, groundY - 2, 9 - lift * 0.2, 3.2, `rgba(16,20,28,${0.34 - lift * 0.012})`);
 
-    // Standing in tall grass hides the legs, which is what sells "waist-deep".
-    // The cut is pulled back down by the bob so the grass line stays put: let it
-    // ride up with the body and the character looks like they are climbing out
-    // of the grass once a second instead of breathing in it.
-    let h = opts.hideLegs ? CHAR_H - 12 : CHAR_H;
-    if (opts.hideLegs) h -= bob;
+    const h = CHAR_H;
 
     const c = r.bctx;
     c.save();

@@ -6,9 +6,14 @@
  * All bindings are remappable and persisted with the player's settings.
  */
 
+/**
+ * There is no 'run'. The game has one walking speed and no sprint key -- see
+ * WALK_SPEED in world/body.ts. Anything that still names a run action is a
+ * leftover from before that and should go.
+ */
 export const ACTIONS = [
   'up', 'down', 'left', 'right',
-  'confirm', 'cancel', 'menu', 'run',
+  'confirm', 'cancel', 'menu',
   'map', 'bag', 'party', 'vellum',
   'nextTab', 'prevTab',
   'debug', 'speedUp',
@@ -25,7 +30,6 @@ export const DEFAULT_BINDINGS: Bindings = {
   confirm: ['KeyE', 'Enter', 'Space'],
   cancel: ['Escape', 'Backspace', 'KeyQ'],
   menu: ['Tab'],
-  run: ['ShiftLeft', 'ShiftRight'],
   map: ['KeyM'],
   bag: ['KeyI'],
   party: ['KeyP'],
@@ -44,7 +48,6 @@ const GAMEPAD_MAP: Record<number, Action> = {
   3: 'party',       // Y / triangle
   4: 'prevTab',     // L
   5: 'nextTab',     // R
-  6: 'run',         // LT
   7: 'speedUp',     // RT
   8: 'map',         // select
   9: 'menu',        // start

@@ -23,7 +23,16 @@
     image-rendering: pixelated;
     image-rendering: crisp-edges;
     cursor: default;
+    background: #05060a;
   }
+  /*
+   * In the browser, "borderless fullscreen" is the Fullscreen API. The element
+   * that goes fullscreen is <html>, and the UA paints its own black behind it,
+   * so both it and the canvas are told what colour they are -- otherwise the
+   * surround the renderer draws is framed by a different black than its own.
+   */
+  html:fullscreen, html:fullscreen > body { background: #05060a; }
+  html:fullscreen #screen { width: 100vw; height: 100vh; }
   #loading {
     position: fixed; inset: 0; display: grid; place-items: center;
     font-size: 13px; letter-spacing: 0.18em; color: #6d7a92;

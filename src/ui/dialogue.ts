@@ -25,12 +25,23 @@ import { Renderer, SCREEN_H, SCREEN_W } from '../engine/renderer.js';
 import { textDelayFrames } from '../core/settings.js';
 import { audio } from '../audio/audio.js';
 import { resolveTokens } from '../core/tokens.js';
+import { fit } from './layout.js';
+import { navDown, navUp } from './menu.js';
 
 const BOX_H = 50;
 const BOX_MARGIN = 4;
 const TEXT_X = 10;
 const LINE_H = 11;
 const MAX_LINES = 3;
+
+/**
+ * Space kept clear on the right of every line for the bobbing advance arrow.
+ *
+ * The wrap width used to run to within a few units of the arrow, so any line
+ * that happened to fill the box was written straight through it. Reserving the
+ * column costs one short word on a full line and is invisible on every other.
+ */
+const ARROW_GUTTER = 18;
 
 /** Extra frames held after a character, so lines get phrasing. */
 const PUNCT_HOLD: Record<string, number> = {
@@ -113,7 +124,9 @@ export class DialogueScene implements Scene {
   enter(game: Game): void {
     // Re-wrap the authored lines into pages that fit the box.
     const r = game.renderer;
-    const maxW = SCREEN_W - TEXT_X - 16;
+    // Measured from the box, not from the screen: the box is inset by its
+    // margin and its own frame, and the arrow lives inside that.
+    const maxW = SCREEN_W - BOX_MARGIN * 2 - TEXT_X - ARROW_GUTTER;
     const wrapped: string[] = [];
     for (const line of this.lines) {
       // Resolved here rather than at the call site: every authored line in the
@@ -204,11 +217,11 @@ export class DialogueScene implements Scene {
 
   private updateChoice(game: Game): void {
     const n = this.opts.choices!.length;
-    if (game.input.repeated('down')) {
+    if (navDown(game)) {
       this.choiceIndex = (this.choiceIndex + 1) % n;
       audio.playSfx('select');
     }
-    if (game.input.repeated('up')) {
+    if (navUp(game)) {
       this.choiceIndex = (this.choiceIndex - 1 + n) % n;
       audio.playSfx('select');
     }
@@ -339,11 +352,14 @@ export class DialogueScene implements Scene {
 
     if (this.opts.who) {
       const plate = PLATE_COLORS[speakerHash(this.opts.who) % PLATE_COLORS.length]!;
-      const nameW = r.textWidth(this.opts.who) + 12;
+      // The plate is sized to the name, so a long one has to be shortened to
+      // the box rather than allowed to run off the side of the screen.
+      const who = fit(r, this.opts.who, w - 22);
+      const nameW = r.textWidth(who) + 12;
       r.rect(x + 5, y - 10, nameW, 13, plate);
       r.outline(x + 5, y - 10, nameW, 13, '#283048');
       r.rect(x + 6, y - 9, nameW - 2, 1, 'rgba(255,255,255,0.42)');
-      r.text(this.opts.who, x + 11, y - 6, { color: '#ffffff', shadow: 'rgba(0,0,0,0.35)' });
+      r.text(who, x + 11, y - 6, { color: '#ffffff', shadow: 'rgba(0,0,0,0.35)' });
     }
 
     const lines = this.pages[this.page] ?? [];
@@ -378,8 +394,11 @@ export class DialogueScene implements Scene {
   private renderChoices(r: Renderer, boxY: number): void {
     const choices = this.opts.choices!;
     const rowH = 13;
+    // 22 units is the cursor plus both insets; the panel is capped at the
+    // screen so a wordy answer shortens rather than hanging off the edge.
+    const maxCw = SCREEN_W - BOX_MARGIN * 2 - 2;
     let cw = 54;
-    for (const c of choices) cw = Math.max(cw, r.textWidth(c) + 22);
+    for (const c of choices) cw = Math.max(cw, Math.min(maxCw, r.textWidth(c) + 22));
     const h = choices.length * rowH + 6;
     const cx = SCREEN_W - cw - BOX_MARGIN - 2;
     const cy = boxY - h - 3;
@@ -395,7 +414,7 @@ export class DialogueScene implements Scene {
         r.rect(cx + 3, ry, cw - 6, rowH - 1, '#d4e0f6');
         r.cursor(cx + 4, ry + 1, '#283048');
       }
-      r.text(label, cx + 14, ry + 2, { color: sel ? '#28304a' : '#4a5474' });
+      r.text(fit(r, label, cw - 20), cx + 14, ry + 2, { color: sel ? '#28304a' : '#4a5474' });
     });
   }
 }

@@ -10,6 +10,7 @@
 import type { Game } from '../core/game.js';
 import type { Renderer } from '../engine/renderer.js';
 import { audio } from '../audio/audio.js';
+import { fit, GAP } from './layout.js';
 
 export interface MenuItem<T = unknown> {
   label: string;
@@ -23,6 +24,48 @@ export interface MenuItem<T = unknown> {
 }
 
 export type MenuResult = 'none' | 'select' | 'cancel' | 'move';
+
+/**
+ * Arrow keys and WASD always walk a list, whatever the bindings say.
+ *
+ * Both sets ship bound to `up`/`down`, so normally the action layer already
+ * covers this. The reason it is also wired to the raw keys is the controls
+ * screen: rebinding "Move up" replaces the binding outright, so a player who
+ * assigns it to the Up arrow loses W -- and one who assigns W to something else
+ * can be left with no way to move the cursor at all, including the cursor they
+ * would need to reach "Reset to defaults". Reading the physical keys as well
+ * means these four can never be taken away from the menus.
+ *
+ * The action is checked first and the raw key is only consulted when that
+ * direction is not currently held, so a key that *is* bound moves the cursor
+ * once rather than twice.
+ */
+const RAW_UP = ['ArrowUp', 'KeyW'];
+const RAW_DOWN = ['ArrowDown', 'KeyS'];
+const RAW_LEFT = ['ArrowLeft', 'KeyA'];
+const RAW_RIGHT = ['ArrowRight', 'KeyD'];
+
+function raw(game: Game, action: 'up' | 'down' | 'left' | 'right', codes: string[]): boolean {
+  if (game.input.down(action)) return false;
+  return codes.some((c) => game.input.keyPressed(c));
+}
+
+/** Repeat-aware "the player asked to go up", arrows and WASD included. */
+export function navUp(game: Game): boolean {
+  return game.input.repeated('up') || raw(game, 'up', RAW_UP);
+}
+
+export function navDown(game: Game): boolean {
+  return game.input.repeated('down') || raw(game, 'down', RAW_DOWN);
+}
+
+export function navLeft(game: Game): boolean {
+  return game.input.repeated('left') || raw(game, 'left', RAW_LEFT);
+}
+
+export function navRight(game: Game): boolean {
+  return game.input.repeated('right') || raw(game, 'right', RAW_RIGHT);
+}
 
 export interface MenuStyle {
   rowHeight?: number;
@@ -132,8 +175,8 @@ export class ListMenu<T = unknown> {
       return 'none';
     }
 
-    if (input.repeated('down')) { if (this.move(1)) result = 'move'; }
-    else if (input.repeated('up')) { if (this.move(-1)) result = 'move'; }
+    if (navDown(game)) { if (this.move(1)) result = 'move'; }
+    else if (navUp(game)) { if (this.move(-1)) result = 'move'; }
 
     // Page jumps: the wheel and the shoulder buttons move a screenful.
     if (input.mouse.wheel !== 0) {
@@ -185,6 +228,29 @@ export class ListMenu<T = unknown> {
     return this.visible * rowH + padY * 2;
   }
 
+  /**
+   * Set `visible` to the most rows that fit in `availH`, and report the height
+   * the list will then draw at.
+   *
+   * Every list in the game used to be told how many rows to show by a number
+   * someone typed, and the options screen's number was wrong: ten rows of 12
+   * came to 128 units in a slot 116 tall, so the last row was sliced by its own
+   * frame and the one under it. Asking the box how much room there is cannot
+   * get that wrong.
+   */
+  fitTo(availH: number, style: MenuStyle = {}): number {
+    const rowH = style.rowHeight ?? 12;
+    const padY = style.padY ?? 4;
+    this.visible = Math.max(1, Math.floor((availH - padY * 2) / rowH));
+    this.clampIndex();
+    return this.height(style);
+  }
+
+  /** True when the list is longer than the window, so arrows will be drawn. */
+  get scrollable(): boolean {
+    return this.items.length > this.visible;
+  }
+
   render(r: Renderer, x: number, y: number, w: number, style: MenuStyle = {}): void {
     const rowH = style.rowHeight ?? 12;
     const padX = style.padX ?? 10;
@@ -194,6 +260,15 @@ export class ListMenu<T = unknown> {
     if (style.frame !== false) r.window(x, y, w, h);
 
     this.box = { x: x + 2, y: y + padY, w: w - 4, h: h - padY * 2, rowH };
+
+    // The right-hand column. A scrolling list draws arrows over on the right,
+    // and they used to land on top of the first and last rows' detail -- the
+    // bag showed "x9v" where it meant "x99". Reserving the gutter for the whole
+    // list keeps the value column in one place as the player scrolls, which
+    // matters more than the eight units it costs.
+    const gutter = this.scrollable ? 10 : 0;
+    const rightEdge = x + w - 5 - gutter;
+    const labelX = x + padX;
 
     const count = Math.min(this.visible, this.items.length);
     for (let row = 0; row < count; row++) {
@@ -215,10 +290,15 @@ export class ListMenu<T = unknown> {
         ? (style.disabledColor ?? '#9098a8')
         : (item.color ?? style.color ?? '#282838');
 
-      r.text(item.label, x + padX, ry, { color });
+      // The value keeps its space and the label gives way. A shortened name is
+      // still recognisable; a shortened price is wrong.
+      const detail = item.detail ?? '';
+      const detailW = detail ? r.textWidth(detail) : 0;
+      const labelMax = rightEdge - labelX - (detailW ? detailW + GAP : 0);
+      r.text(fit(r, item.label, labelMax), labelX, ry, { color });
 
-      if (item.detail) {
-        r.text(item.detail, x + w - 6, ry, {
+      if (detail) {
+        r.text(detail, rightEdge, ry, {
           color: disabled ? (style.disabledColor ?? '#9098a8') : (style.detailColor ?? '#485068'),
           align: 'right',
         });
@@ -226,9 +306,13 @@ export class ListMenu<T = unknown> {
     }
 
     // Scroll affordances: without these a long list looks like a short one.
-    if (this.scroll > 0) r.text('^^', x + w - 10, y + 1, { color: '#485068' });
-    if (this.scroll + this.visible < this.items.length) {
-      r.text('vv', x + w - 10, y + h - 9, { color: '#485068' });
+    // They live in the gutter reserved above, so they never sit on a value.
+    if (gutter > 0) {
+      const ax = x + w - 9;
+      if (this.scroll > 0) r.text('^^', ax, y + 2, { color: '#485068' });
+      if (this.scroll + this.visible < this.items.length) {
+        r.text('vv', ax, y + h - 9, { color: '#485068' });
+      }
     }
   }
 }

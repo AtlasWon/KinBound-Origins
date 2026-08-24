@@ -7,19 +7,35 @@
  * pacing, and a veteran can strip out the dead time immediately.
  */
 
-import { DEFAULT_BINDINGS, type Bindings } from './input.js';
+import { ACTIONS, DEFAULT_BINDINGS, type Bindings } from './input.js';
 
 export type TextSpeed = 'slow' | 'normal' | 'fast' | 'instant';
 export type BattleSpeed = 'classic' | 'brisk' | 'fast';
 export type BattleStyle = 'switch' | 'set';
+
+/**
+ * How the 240x160 picture is fitted to the display.
+ *
+ * The screen is 3:2 and most displays are 16:9, so there is no fit that is
+ * both pixel-perfect and edge-to-edge -- the bars are an aspect problem, not
+ * only an integer-scale one. Hence three honest choices rather than one
+ * compromise.
+ *
+ *   sharp  whole-number scale. Crispest, and the largest border.
+ *   fit    scaled to touch top and bottom exactly. No bars above or below,
+ *          narrower ones at the sides. The default.
+ *   wide   fills the display completely by showing more of the world. Menus
+ *          and the battle HUD are not laid out for it yet.
+ */
+export type ScreenFit = 'sharp' | 'fit' | 'wide';
+
+export type DisplayMode = 'borderless' | 'windowed';
 
 export interface Settings {
   textSpeed: TextSpeed;
   battleSpeed: BattleSpeed;
   battleAnimations: boolean;
   battleStyle: BattleStyle;
-  /** Run without holding the run key. */
-  autoRun: boolean;
   musicVolume: number;   // 0..1
   sfxVolume: number;     // 0..1
   autosave: boolean;
@@ -30,6 +46,10 @@ export interface Settings {
   /** Fixed time of day when the clock is disabled. */
   fixedTime: 'morning' | 'day' | 'evening' | 'night';
   showFps: boolean;
+  /** How the picture is fitted to the display. */
+  screenFit: ScreenFit;
+  /** Borderless fullscreen, or a resizable window. */
+  displayMode: DisplayMode;
   bindings: Bindings;
 }
 
@@ -38,7 +58,6 @@ export const DEFAULT_SETTINGS: Settings = {
   battleSpeed: 'classic',
   battleAnimations: true,
   battleStyle: 'switch',
-  autoRun: false,
   musicVolume: 0.7,
   sfxVolume: 0.8,
   autosave: true,
@@ -46,6 +65,8 @@ export const DEFAULT_SETTINGS: Settings = {
   useSystemClock: true,
   fixedTime: 'day',
   showFps: false,
+  screenFit: 'fit',
+  displayMode: 'borderless',
   bindings: DEFAULT_BINDINGS,
 };
 
@@ -65,10 +86,18 @@ export function loadSettings(): Settings {
     const raw = localStorage.getItem(KEY) ?? localStorage.getItem(LEGACY_KEY);
     if (!raw) return structuredClone(DEFAULT_SETTINGS);
     const parsed = JSON.parse(raw) as Partial<Settings>;
+    const known: Partial<Bindings> = {};
+    // Only actions the game still has. A save written before the run key was
+    // taken out carries a binding for it, and letting that back in would put a
+    // dead row on the controls screen for as long as the file survives.
+    for (const a of ACTIONS) {
+      const codes = (parsed.bindings as Partial<Bindings> | undefined)?.[a];
+      if (codes) known[a] = codes;
+    }
     return {
       ...structuredClone(DEFAULT_SETTINGS),
       ...parsed,
-      bindings: { ...DEFAULT_BINDINGS, ...(parsed.bindings ?? {}) },
+      bindings: { ...DEFAULT_BINDINGS, ...known },
     };
   } catch {
     return structuredClone(DEFAULT_SETTINGS);

@@ -3,9 +3,9 @@
     "id": "mh_perrin_meet",
     "trigger": "step",
     "map": "marrow_hollow",
+    "_note": "The player's front door drops them on (6,7), and (6,8) is the only tile they can step to from there, so this always fires with Perrin's landing tile (7,8) free. (7,8) is deliberately NOT a trigger: firing from there walked Perrin straight into the player.",
     "at": [
       { "x": 6, "y": 8 },
-      { "x": 7, "y": 8 },
       { "x": 5, "y": 8 }
     ],
     "when": {
@@ -19,8 +19,10 @@
     "actions": [
       { "kind": "sfx", "sound": "spotted" },
       { "kind": "wait", "frames": 18 },
+      { "kind": "face", "who": "player", "dir": "right" },
       { "kind": "move", "who": "mh_perrin", "steps": ["left", "left", "left"], "speed": "run" },
       { "kind": "face", "who": "mh_perrin", "dir": "left" },
+      { "kind": "wait", "frames": 10 },
       {
         "kind": "say",
         "who": "PERRIN",
@@ -33,7 +35,7 @@
         "kind": "say",
         "who": "PERRIN",
         "lines": [
-          "Vess has three of them down there. Three. On the desk, in the open, like a bowl of apples.",
+          "Vess has three of them down there. Three. Sat up on the counter, in the open, like a bowl of apples.",
           "I have not touched them. I want it on record that I have not touched them."
         ]
       },
@@ -90,12 +92,13 @@
 
   {
     "id": "mh_perrin_first",
+    "_note": "Fires on the road tiles directly below the laboratory door -- the only stretch of ground a player leaving the lab can reach. Perrin is NOT on the map at this point: mh_perrin_meet ran removeNpc on him and its onceFlag hides him for good, which is why this scene used to be delivered by a disembodied voice with nobody on screen. He is spawned again here at y=17, which is below the bottom of the view at every size the renderer hands out (240x160 up to 432x240), and runs up the road into frame before a word is said. The removeNpc before the spawn is belt and braces: spawnNpc is a no-op if an actor with that id already exists.",
     "trigger": "step",
     "map": "marrow_hollow",
     "at": [
+      { "x": 21, "y": 8 },
       { "x": 22, "y": 8 },
-      { "x": 21, "y": 7 },
-      { "x": 23, "y": 7 }
+      { "x": 23, "y": 8 }
     ],
     "when": {
       "kind": "all",
@@ -106,8 +109,22 @@
     },
     "onceFlag": "perrin_first_done",
     "actions": [
+      { "kind": "face", "who": "player", "dir": "down" },
+      { "kind": "removeNpc", "who": "mh_perrin" },
+      { "kind": "spawnNpc", "npc": {
+        "id": "mh_perrin",
+        "sprite": "rival",
+        "x": 22,
+        "y": 17,
+        "facing": "up",
+        "movement": { "kind": "static" }
+      }},
       { "kind": "sfx", "sound": "spotted" },
-      { "kind": "wait", "frames": 16 },
+      { "kind": "wait", "frames": 14 },
+      { "kind": "move", "who": "mh_perrin", "steps": ["up", "up", "up", "up", "up", "up", "up"], "speed": "run" },
+      { "kind": "move", "who": "mh_perrin", "steps": ["up"], "speed": "walk" },
+      { "kind": "face", "who": "mh_perrin", "dir": "up" },
+      { "kind": "wait", "frames": 14 },
       {
         "kind": "say",
         "who": "PERRIN",
@@ -196,6 +213,12 @@
           "...Go. Fill Vess's book. I will see you at Ashgate."
         ]
       },
+      { "kind": "move", "who": "mh_perrin", "steps": [
+        "left", "left", "left", "left", "left", "left", "left",
+        "up", "up", "up", "up", "up", "up"
+      ], "speed": "run" },
+      { "kind": "removeNpc", "who": "mh_perrin" },
+      { "kind": "say", "lines": ["Perrin is off up the north road before you can answer."] },
       { "kind": "setVar", "var": "act", "value": 1 }
     ]
   }
