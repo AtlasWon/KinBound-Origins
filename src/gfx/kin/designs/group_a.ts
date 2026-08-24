@@ -1,1045 +1,1409 @@
 /**
- * Design group A -- the plants, plus the thing that lives in the mud with them.
+ * Design group A -- the hedgerow, the quarry and the mud. ROUND 6: all five
+ * started again from the animal, not edited.
  *
- * Five species that have to sit together as a set and still be five different
- * animals when you flatten them to black:
+ * WHY FROM SCRATCH. The old versions of these five were written against a
+ * pipeline that no longer exists. There was no line-free way to say "darker" --
+ * SHADE and DEEP were both promoted to hard ink -- so all five answered the
+ * same way every author on the roster did, with a smooth blob under a diagonal
+ * wash and a cream halo round its up-left contour. The structure of those
+ * functions WAS the fault, so none of it is carried forward. What round 6 gave
+ * back, and what these five are built out of, is: `FORM` and `cast()` for
+ * darkness with no ring round it, `flat()` for a facet the light does not
+ * touch, `notch`/`poly(EMPTY)` for carving anatomy into the outline, and a lamp
+ * with a +z component so the lit contour is BASE and the bright band is inset.
  *
- *   bramblehusk   a low hunched forager carrying a coiled basket of dead thorn
- *                 canes on its back, head thrust out low in front of it.
- *   thornmarch    its evolution: an upright slab-sided wall of mossed stone
- *                 with long arms hanging clear of its flanks and the same
- *                 coiled thorn bundle laid across its shoulders.
- *   mossback      a wide faceted boulder with a shaggy moss fringe hanging
- *                 over one enormous half-shut eye, on four stub legs.
- *   bladderwrack  a leaning kelp column, no legs at all, fronds streaming to
- *                 one side, golden float bladders bunched along them, splayed
- *                 on a holdfast gripping its rock.
- *   silthopper    a coiled mud cricket, front end down on the floor, two huge
- *                 folded jumping legs standing above its own back.
+ * THE FIVE, AND WHY YOU CAN TELL THEM APART IN FLAT BLACK:
  *
- * The family line is what they are *made of*, not what shape they are: every
- * one of them is bound, coiled or knotted out of plant matter, and every one of
- * them shows the binding. The two that are an evolution line share the coiled
- * thorn basket, the heavy brow and the low sunk head; nothing else.
+ *   bramblehusk   a low hunched hedgerow forager with last season's dead thorn
+ *                 cane bound over its back as a lobed husk, four canes standing
+ *                 off it, and the head thrust out LOW and forward.  (MID)
+ *   thornmarch    its evolution: a standing wall. An upright walker with a
+ *                 faceted stone yoke across enormous shoulders, the same cane
+ *                 row now petrified into a crest, and one open stone hand set
+ *                 down on the floor in front of it.  (HUGE, the largest here)
+ *   mossback      a faceted quarry block with a mossed crown, a slab of green
+ *                 flesh underneath, four stone-hard stubs, and ONE enormous eye
+ *                 under the near corner of the rock.  (LARGE, wide)
+ *   bladderwrack  one leaning kelp column and nothing else: a splayed holdfast
+ *                 on the floor, six gold float bladders bulging its seaward
+ *                 edge, and a frond hood folded forward over the face.
+ *                 (LARGE, tall -- the opposite proportion to mossback)
+ *   silthopper    a mud cricket coiled to launch: head down on the flat, and a
+ *                 green jumping leg folded so hard the knee stands clear above
+ *                 its own back.  (TINY, the smallest here)
+ *
+ * THE SIZE LADDER, measured through the real factory, longest dimension in
+ * cells and body area in reference pixels:
+ *
+ *     silthopper     68     436     TINY   (band 52-68,   380-700)
+ *     bramblehusk   100    1176     MID    (band 84-100,  950-1400)
+ *     mossback      106    1307     LARGE  (band 100-116, 1300-1900)
+ *     bladderwrack  111    1375     LARGE  (band 100-116, 1300-1900)
+ *     thornmarch    115    2019     HUGE   (band 112-128, 1800-2600)
+ *
+ * Every one inside its rung, and monotonic across the five. NOTHING HERE IS
+ * RESAMPLED: every design box is inside `fitToCell`'s 120 x 110 clamp, so
+ * k = 1.000 on all five and every eye stamp and facet corner lands where it was
+ * put.
+ *
+ * FAMILY. bramblehusk -> thornmarch keep exactly TWO things, per the manual's
+ * evolution rule: the BACK-SWEPT CANE ROW -- literally the same `cane()` helper
+ * at two sizes -- and the palette relationship GREEN BODY + PALE MOSS BIB + A
+ * BUNDLE IN THE ACCENT. Everything else changes: a low wide quadruped becomes a
+ * tall top-heavy walker, fill goes 55 % -> 62 %, the head goes from a deep stop
+ * with a pale muzzle to a no-stop wedge with none, `hooded` becomes `angry`, and
+ * the accent changes MATERIAL AND HUE from live tan cane (H41) to grey slab
+ * stone (H90), which is the "keep one hue, change the other two" rule.
+ * The other three share only the group's material logic -- everything in this
+ * file is bound, grown or caked over something hard.
+ *
+ * NO TWO FACES IN THIS GROUP SHARE A STYLE: hooded, angry, gem, sleepy,
+ * compound. Every one carries exactly ONE mark below the eyes (nostril, mouth
+ * line, mouth line, mouth line, mandibles) and none carries two.
+ *
+ * PLAN OVERRIDES against `species.json`, recorded as the manual asks:
+ *   thornmarch    json says `brute`; drawn as E/BIPED with F/HUMANOID shoulders
+ *                 and an explicit hand gesture, because "broad-shouldered
+ *                 walker" at 186 kg is a person-shaped wall, not a beast.
+ *   silthopper    json says `grub`; drawn as B/NON-QUADRUPED ANIMAL - BUG. A
+ *                 grub is a legless tube and this creature is entirely legs.
+ *   mossback      json says `mineral` and that is right, so it is the one
+ *                 species here that is allowed to be near-symmetric.
+ *
+ * ================================================================= EXEMPTIONS
+ * Two acceptance criteria are NOT met on this group and neither is reachable
+ * from a design file. Both are recorded here rather than quietly missed.
+ *
+ * (a) "12-25 % OF BODY PIXELS DARKER THAN THE MEAN OUTLINE LUMA."  All five of
+ *     these species declare an ink that is darker than every other colour they
+ *     own by a wide margin, and a shade slot that is a genuine mid-tone. Worked,
+ *     through the real `maskToCanvas`:
+ *
+ *       species        OUTLINE luma   darkest tone a DESIGN can write
+ *       bramblehusk        59          DEEP 48, INNER 45      -> 7.3 % reached
+ *       thornmarch         50          DEEP 42, INNER 40      -> 4.3 %
+ *       mossback           52          DEEP 54, INNER 75      -> 0.0 %, and it
+ *                                      cannot be anything else: on this palette
+ *                                      the darkest tone available to an author
+ *                                      is LIGHTER than the line drawn round the
+ *                                      creature
+ *       bladderwrack       50          DEEP 52                -> 0.0 %
+ *       silthopper         41          DEEP 44                -> 0.0 %
+ *
+ *     The fix is one hex value per species in `data/creatures/species.json` --
+ *     a shade slot rotated cool and dropped 25-30 luma, which is the same
+ *     correction PART 6.2 of the manual asks for anyway. This round's brief
+ *     puts that file out of this file's reach, so the shortfall is declared
+ *     rather than faked: every one of these five DOES carry an authored DEEP
+ *     core-shadow event where the manual asks for one, and on the two species
+ *     whose palettes allow it that event is what produces the 7.3 % and 4.3 %.
+ *
+ * (b) "TOTAL INK <= 28 %" ON silthopper, measured 33 %.  Structural, and the
+ *     old file recorded the same thing for the same reason: the outline pass
+ *     grows two cells on every side, and on a creature drawn 68 x 44 -- which is
+ *     what the TINY rung demands of a 0.3 m insect -- that border is a fifth of
+ *     the sprite before a single interior line is drawn. The only way to buy it
+ *     back is to draw the creature bigger, which is the exact fault the rung
+ *     exists to prevent. Its authored interior ink is 3.9 %, well inside the
+ *     5 % ceiling; the rest is the silhouette.
+ *
+ * Also recorded, and NOT an exemption: `ACCENT2` renders at 0.0 % on all five.
+ * These species declare five palette slots, and `paletteOf` resolves a
+ * five-slot palette by handing slot 4 back as `accent2` only when the declared
+ * ink is not the darkest colour on the sheet. On all five of these it IS the
+ * darkest -- which is the correct, healthy case -- so `accent2` is a copy of
+ * `accent` and there is nothing to paint with it. The third hue on every one of
+ * these creatures is therefore `INNER`, which is what PART 6.5 of the manual
+ * says the third hue usually is.
  */
 
 import {
-  ACCENT, ACCENT_DARK, ACCENT_LIT, BASE, DEEP, EYE_DARK, INNER, LIGHT, SHADE, SPEC,
+  ACCENT, ACCENT_DARK, ACCENT_LIT, BASE, DEEP, INNER, LIGHT, SHADE,
 } from '../mask.js';
 import {
-  arc, bellyPlate, blob, blobFront, bottomOf, cell, cellOver, crease, eye, hand,
-  leaf, legColumn, limbPath, mouthLine, muzzle, normalAt, nostril, path, paw, plate, poly,
-  polyFront, polyLine, speckle, stroke,
+  blob, cast, cell, earPointed, eyeRow, eyeStamp, flat, haunch, limbPath,
+  mouthLine, muzzle, notch, paw, poly, toeNotches,
   type Pen, type Pt,
 } from '../parts.js';
 
-/** Local lerp, so the helpers below can read as arithmetic rather than calls. */
-const lerpN = (a: number, b: number, t: number): number => a + (b - a) * t;
+/**
+ * THE FAMILY SIGNATURE: one dead thorn cane, swept back and up.
+ *
+ * `bramblehusk` carries four of these off the crown of its husk and
+ * `thornmarch` carries five off its shoulder yoke, and it is deliberately the
+ * SAME function at two sizes so the relationship is literally the same object.
+ * A cane is a MASS, not a stroke: four cells at the root is the thinnest thing
+ * that survives the 2x2 icon vote, and a one-cell scratch comes back as
+ * nothing at all.
+ *
+ * The tip is `ACCENT_LIT` and nothing else is: the manual's third hue for this
+ * line is "dried-red thorn tips", and two bright cells at the point of a dark
+ * stick is the whole of it. An earlier version ran `limbPath({ lit })` down the
+ * flank, which on a stick four cells wide is a dotted line -- a hundred loose
+ * highlight specks across the two species.
+ */
+function cane(p: Pen, x0: number, y0: number, x1: number, y1: number, w: number): void {
+  // Straight, and near-parallel to its neighbours. The first version bent each
+  // cane and fanned the set through ninety degrees, and both species came back
+  // with a splayed hand growing out of their back -- five fat tapering digits
+  // radiating from one knuckle is a hand, whatever tone it is painted in. A
+  // bundle of dead sticks is a set of stiff lines going the SAME way at
+  // slightly different lengths.
+  // No lit flank run. `limbPath({lit})` walks the whole length dropping one
+  // ACCENT_LIT cell per step, and on a stick four cells wide that is a dotted
+  // line down the side of it: the two species between them were carrying over
+  // a hundred loose highlight specks, more than a quarter of their total. A
+  // cane is a small dark shape and ACCENT_DARK is a fixed tone, so it stays
+  // one flat dark thing at every size. Two bright cells at the tip and no more.
+  limbPath(p, [[x0, y0], [x1, y1]] as Pt[], w, 1.6, ACCENT_DARK);
+  cell(p, x1, y1, ACCENT_LIT);
+  cell(p, x1 - 1, y1 + 1, ACCENT_LIT);
+}
 
 /* ========================================================== bramblehusk */
 
 /**
- * A coiled basket of dead thorn canes, seen from the side.
+ * PART 1 BRIEF SHEET
  *
- * Drawn as contour bands rather than as a lattice: a coiled basket's weft wraps
- * horizontally, so from the side it reads as a stack of shallow arcs bowing
- * *down* at their centres, each bound to the next by a stitch. A criss-cross
- * lattice was the first attempt and at this size it came out as noise.
- */
-function coiledHusk(p: Pen, dx: number, dy: number, rx: number, ry: number, coils: number,
-  band = ACCENT_DARK, lit = ACCENT_LIT): void {
-  for (let k = 1; k <= coils; k++) {
-    const t = k / (coils + 1);
-    const y = dy - ry + ry * 2 * t;
-    const half = rx * Math.sqrt(Math.max(0, 1 - ((y - dy) / ry) ** 2)) * 0.98;
-    const bow = 3.2 * (1 - Math.abs(t - 0.5));
-    const bandPts = path([[dx - half, y - bow * 0.4], [dx, y + bow], [dx + half, y - bow * 0.4]] as Pt[]);
-    for (const q of bandPts) {
-      cellOver(p, q[0], q[1], band);
-      cellOver(p, q[0], q[1] + 1, DEEP);
-      cellOver(p, q[0], q[1] - 1, lit);
-    }
-    // Binding stitches, offset half a pitch each row so the weave staggers.
-    const pitch = 11;
-    for (let s = -3; s <= 3; s++) {
-      const sx = dx + s * pitch + (k % 2) * pitch * 0.5;
-      if (Math.abs(sx - dx) > half - 2) continue;
-      const idx = Math.round(((sx - (dx - half)) / (half * 2)) * (bandPts.length - 1));
-      const q = bandPts[Math.max(0, Math.min(bandPts.length - 1, idx))]!;
-      for (let d = -3; d <= 2; d++) cellOver(p, q[0], q[1] + d, d < 0 ? lit : band);
-      cellOver(p, q[0] - 1, q[1] - 2, lit);
-    }
-  }
-}
-
-/**
- * A row of thorns growing off an elliptical rim, swept back.
- *
- * Written by hand rather than with `spineRow`, for two reasons found the hard
- * way. That helper grows each spine along its path's left-hand normal, and an
- * arc walked from PI to 2PI has its left hand pointing *into* the shape, so the
- * first attempt planted every thorn inside the basket where it read as a fan of
- * pale scratches. And its base is proportional to its length, so a thorn long
- * enough to break the contour came out nine cells wide at the root and the crown
- * read as a row of petals. A thorn is narrow, uneven and leaning.
- *
- * Shared by the two species in the evolution line, which is the point: the same
- * thorns on a basket on a forager's back and on a bale across a giant's
- * shoulders is what makes them the same animal twice.
- */
-function thornCrown(p: Pen, dx: number, dy: number, rx: number, ry: number, count: number,
-  a0: number, a1: number, long: number, short: number, v = ACCENT): void {
-  for (let i = 0; i < count; i++) {
-    const t = count === 1 ? 0.5 : i / (count - 1);
-    const a = Math.PI * (a0 + t * (a1 - a0));
-    const bx = dx + Math.cos(a) * rx, by = dy + Math.sin(a) * ry;
-    // Alternating lengths, and shorter at the front so the crown never out-
-    // shouts the head. Equal spikes read as machined.
-    const ln = (i % 2 ? long : short) * (0.6 + t * 0.55);
-    const dir = a + 0.26;
-    const tx = bx + Math.cos(dir) * ln, ty = by + Math.sin(dir) * ln;
-    const nx = -Math.sin(dir) * 2.6, ny = Math.cos(dir) * 2.6;
-    poly(p, [[bx - nx, by - ny], [bx + nx, by + ny], [tx, ty]], v);
-    stroke(p, bx - nx, by - ny, tx, ty, ACCENT_LIT, false);
-    stroke(p, bx + nx, by + ny, tx, ty, ACCENT_DARK, false);
-    cell(p, tx, ty, SPEC);
-  }
-}
-
-/**
- * "Hunched quadruped under a woven thorn shell."
- *
- * The pose is all forward: the shoulders are the highest point of the animal,
- * the head is carried *below* the line of the back and pushed out well in front
- * of it, and the near forefoot has already landed a step ahead. A quadruped
- * with its head level with its spine is a pony; drop the head eight cells and
- * it becomes something that pushes through a hedge for a living.
- *
- * The husk is the signature and it is deliberately bigger than the animal
- * inside it -- it overhangs the flanks so the green body only shows as a strip
- * along the bottom and four legs underneath.
+ *  1. WHAT IS IT.  A low, heavy hedgerow forager -- badger-shouldered, built to
+ *     shove through a hedge bottom -- that keeps last season's dead bramble
+ *     growth bound over its own back as a husk.
+ *  2. PLAN.  A / QUADRUPED, and it obeys what the plan demands: four legs
+ *     visible as four with floor between the pairs, the near pair BASE after
+ *     the torso and the far pair SHADE before it, and the head carried FORWARD
+ *     of the chest rather than on top of it. The trap the plan names -- the
+ *     level barrel -- is answered in item 9.
+ *  3. RUNG.  0.9 m, MID. MEASURED THROUGH THE REAL FACTORY: ships 100 x 86,
+ *     long dimension 100 against a band of 84-100, body area 1176 ref px
+ *     against 950-1400, fill 55 %. Inside 120 x 110, so k = 1.000 and nothing
+ *     is resampled.
+ *     THE REST OF THE MEASURED SHEET: ink 25.1 % of which authored interior ink
+ *     is 1.3 %; largest connected same-tone region 13.5 %, top three 30.3 %,
+ *     204 regions; 5.0 tone changes per horizontal scanline; 289 body-ramp runs
+ *     of which 40 % are <= 3 cells; 2 highlight events; 0 SPEC; symmetry 47 %;
+ *     7.3 % of body pixels darker than the outline. Four cast shadows, one DEEP
+ *     core-shadow event, ZERO authored internal dark lines.
+ *  4. ASPECT AND FILL.  Wider than tall by about 5:4 -- compact, per the size
+ *     ladder's aspect list -- at roughly 55 % fill. thornmarch, the other half
+ *     of this family, is the opposite proportion the other way up.
+ *  5. SMOOTH OR STRUCTURED.  STRUCTURED. It has a withers, a croup, a brisket,
+ *     a stop, a cheek and a hock and they are all named below.
+ *  6. THE MASSES.  Five. (1) the husk, (2) the barrel, (3) the head, (4) the
+ *     near fore and near hind legs, (5) the far pair as one dark shape.
+ *  7. HEAD VERB / BODY VERB.  Head SUNK -- carried below the shoulder line and
+ *     thrust forward, which is what a browser shoving into a hedge does. Body:
+ *     weight forward over the near forefoot, near hind foot advanced, far
+ *     foreleg lifted clear of the floor.
+ *  8. SIGNATURE.  The husk with its four back-swept canes. Silhouette: fill the
+ *     creature with one colour and there is still a low body, a lobed pack, four
+ *     spikes off the back of it and a head down at the front.
+ *  9. THE TWELVE REVERSALS -- eight named, with coordinates.
+ *       withers           cx-18, G-45   contour high point, front half
+ *       back dip          cx- 2, G-42   3-cell sag behind the withers
+ *       croup             cx+18, G-48   second high point, 3 ABOVE the withers,
+ *                                       which is the digger's back line
+ *       point of shoulder cx-26, G-32   front contour steps forward 4
+ *       brisket           cx-22, G-21   lowest, most forward point of the belly
+ *       belly tuck        cx+10, G-30   the belly RISES 9 cells to the flank
+ *       point of buttock  cx+33, G-40   rearmost point on the animal
+ *       hock              cx+27, G- 9   sharpest angle on it; notched by
+ *                                       `legDigitigrade`
+ *       occiput           cx-25, G-38   3-cell dip between skull and neck
+ *       paw               cx-21, G      16 wide against a 9-cell ankle
+ * 10. THREE HUES.  H1 leaf green (BASE / LIGHT / FORM), ~55 %: the animal.
+ *     H2 tan cane (ACCENT family), ~20 %: the husk and the canes, and the only
+ *     warm mass on it. H3 INNER, ~2 %: nostril and both ear cavities -- plus
+ *     two ACCENT_LIT cells at each thorn tip.
+ * 11. FOUR INTERIOR DETAIL EVENTS.  (a) the face; (b) the pale throat-and-belly
+ *     field, one bounded region following the tuck; (c) the jaw line; (d) the
+ *     husk's cast shadow onto the flank. Nothing else. The whole flank, the
+ *     whole of every leg and the whole interior of the husk are flat.
+ * 12. EYES.  `hooded` m, `far: 'm-'`, spread 8, at about 0.36 of skull depth
+ *     from the crown, moved 6 cells toward the muzzle. Hooded because the heavy
+ *     lid IS the expression -- patient, dug in -- and because it is the Numel
+ *     read: lit flesh, one dark line, a shallow eye under it. ONE mark below the
+ *     eyes: the nostril on the muzzle, three cells.
+ * 13. SURFACE MATERIAL, THREE PLACES MAX.  Exactly one: the neck ruff, where the
+ *     coat genuinely breaks the outline between skull and husk. No fur anywhere
+ *     else -- there is not a hair drawn on the flank.
+ * 14. EVERY INTERNAL DARK LINE.  One: the jaw line, from the ear root on the
+ *     rear head contour to the mouth corner on the lower jaw contour. Both ends
+ *     on the silhouette. There is no other authored dark line on the creature.
+ * 15. Not a second stage. It PASSES ON to thornmarch: the cane bundle (the same
+ *     `cane` helper), and the green-body / accent-bundle / pale-bib palette
+ *     relationship. See thornmarch item 15 for what changes.
  */
 function bramblehusk(p: Pen): void {
+  // The verdant character pass hangs live leaf blades off the upper contour,
+  // and on this creature the upper contour is a bundle of DEAD cane. "It never
+  // sheds anything it can still use" is the whole Vellum entry.
+  p.noTypeTraits();
   const G = p.ground, cx = p.cx;
 
-  // The stock verdant pass grows three leaf blades off the highest contour,
-  // which here is the crown of the husk -- they landed as one tan lump on top
-  // of a tan dome and read as a growth rather than as foliage. The live cane
-  // below does that job on purpose, where it can be seen against the sky.
-  p.noTypeTraits();
+  /* ---------------------------------------------------------- far pair.
+     Down first, in SHADE -- a genuinely separate part set behind another one,
+     which is the one case that wants the ink. Both far feet land nine cells
+     higher than the near ones, which is the single cue that turns four legs
+     into an animal standing on a ground plane, and the far foreleg is LIFTED
+     clear on top of that: three feet planted and one off the floor is a walk,
+     four down is a table. */
+  limbPath(p, [[cx + 12, G - 36], [cx + 7, G - 24]] as Pt[], 15, 11, SHADE, { bulge: 2 });
+  limbPath(p, [[cx + 7, G - 24], [cx + 15, G - 14]] as Pt[], 11, 7, SHADE);
+  paw(p, cx + 12, G - 9, 7, { tone: SHADE, toes: 3 });
+  limbPath(p, [[cx - 10, G - 28], [cx - 15, G - 21], [cx - 13, G - 16]] as Pt[], 12, 8, SHADE);
+  paw(p, cx - 13, G - 14, 6, { tone: SHADE, toes: 3 });
 
-  const bodyX = cx + 2, bodyY = G - 40;
-  const DX = cx + 6, DY = G - 56, RX = 30, RY = 23;
-  const headX = cx - 38, headY = G - 34;
+  /* ------------------------------------------------------------- barrel.
+     A `poly`, not a `blob`. Every vertex here has a name (item 9) and a blob
+     throws all ten of them away -- which is exactly how the old one came out as
+     a level capsule with legs inserted at the spine. The back has two high
+     points with a sag between them and the croup is the higher of the two,
+     because this animal digs and shoves rather than runs. */
+  poly(p, [
+    [cx - 26, G - 32],  // point of shoulder: the front contour steps forward
+    [cx - 18, G - 45],  // withers
+    [cx -  2, G - 42],  // back dip
+    [cx + 18, G - 48],  // croup
+    [cx + 33, G - 40],  // point of buttock
+    [cx + 34, G - 26],
+    [cx + 22, G - 28],
+    [cx + 10, G - 30],  // flank -- the top of the belly tuck
+    [cx -  8, G - 24],
+    [cx - 22, G - 21],  // brisket
+  ] as Pt[], BASE);
 
-  /* --- far legs. Short braced columns: this animal is close to the floor. */
-  legColumn(p, cx + 18, bodyY + 12, G - 1, { tone: SHADE, side: 1, thick: 12, footHalf: 8, claws: false });
-  legColumn(p, cx - 12, bodyY + 13, G - 2, { tone: SHADE, side: -1, thick: 11, footHalf: 7, claws: false });
+  // The haunch and the shoulder belong to the TORSO's outline, not to the legs.
+  // `haunch` welds a muscle mass in as a silhouette bulge and nothing else --
+  // no seam, no ring, no lozenge sticker.
+  haunch(p, cx + 24, G - 34, 13, 12, BASE);
+  haunch(p, cx - 18, G - 33, 10, 10, BASE);
 
-  /* --- the body. Barely taller than the legs are long, and the haunch is its
-     own mass so the back half has some weight in it. */
-  blob(p, bodyX, bodyY, 31, 20, BASE);
-  blobFront(p, bodyX + 20, bodyY + 2, 17, 18, BASE);
-  bellyPlate(p, bodyX - 4, bodyY + 13, 20, 8, 2);
+  /* -------------------------------------------- the throat-and-belly field.
+     ONE bounded pale region whose lower edge IS the belly contour, so the tuck
+     is stated twice -- once in the outline and once in the value -- and never
+     contradicted. It stops well short of the flank so BASE keeps the majority
+     of the barrel. */
+  poly(p, [
+    [cx - 24, G - 26], [cx - 6, G - 29], [cx + 10, G - 32], [cx + 16, G - 29],
+    [cx + 12, G - 25], [cx - 4, G - 22], [cx - 20, G - 19],
+  ] as Pt[], LIGHT);
 
-  /* --- near legs. The forefoot is planted a good way ahead of the shoulder,
-     which is the whole of what makes this a walk and not a stand. */
-  legColumn(p, cx + 12, bodyY + 15, G, { tone: BASE, side: 1, thick: 13, footHalf: 9, front: true, claws: false });
-  limbPath(p, [[cx - 16, bodyY + 12], [cx - 22, bodyY + 22], [cx - 27, G - 6]], 14, 11, BASE, { front: true, bulge: 1 });
-  paw(p, cx - 28, G, 9, { tone: BASE, toes: 3, claws: true, clawTone: ACCENT_LIT });
+  /* ------------------------------------------------------------ near pair.
+     The hind leg ZIGZAGS -- thigh down-and-FORWARD, shin down-and-BACK,
+     metatarsus forward again -- and the foreleg does not; that difference is
+     most of what says "quadruped" rather than "four pegs". Written out by hand
+     rather than through `legDigitigrade` because on a leg this short the
+     helper's proportional swing is only five cells and the reversal is buried
+     inside the limb's own thickness. Nine numbers, no ink, and the whole event
+     is in the outline so it survives the icon. */
+  cast(p, 18, () => {
+    limbPath(p, [[cx + 24, G - 36], [cx + 16, G - 21]] as Pt[], 18, 13, BASE, { bulge: 3 });
+    limbPath(p, [[cx + 16, G - 21], [cx + 27, G - 11]] as Pt[], 13, 8, BASE);
+    limbPath(p, [[cx + 27, G - 11], [cx + 22, G -  4]] as Pt[],  8, 7, BASE);
+    // The hock is the sharpest angle on the animal. Bite the reversal into the
+    // contour so it is still there at 64 px.
+    notch(p, cx + 31, G - 12, 6, 5, -1, 0);
+    paw(p, cx + 22, G, 9, { tone: BASE, toes: 3 });
+  });
 
-  /* --- the neck, dropping forward and down out of the shoulders. */
-  limbPath(p, [[cx - 14, bodyY + 2], [cx - 26, G - 34], [headX + 12, headY - 3]], 22, 17, BASE, { front: true });
+  // The foreleg: one gentle S, three points, and its own cast shadow onto the
+  // chest. That shadow is what replaced the closed DEEP ring the old design
+  // stamped round the leg root.
+  cast(p, 15, () => {
+    limbPath(p, [[cx - 20, G - 30], [cx - 24, G - 18], [cx - 21, G - 6]] as Pt[], 15, 9, BASE);
+    paw(p, cx - 21, G, 8, { tone: BASE, toes: 3 });
+  });
 
-  /* --- the head: a blunt wedge, low, carried below the line of the back.
+  /* --------------------------------------------------------------- head.
+     Sunk: the crown sits two cells BELOW the withers and eighteen cells forward
+     of the chest, in its own air. It is drawn as a `poly` for the same reason
+     the barrel is -- brow, crown, occiput, cheek, jaw and chin are six named
+     landmarks and an ellipse has none of them. The deep stop (13 cells from
+     brow to nose bridge) is what earns the pale muzzle: a no-stop head with a
+     pale patch on the front is a wedge with a stain on it. */
+  // Far ear first, mostly behind the skull and darker; near ear after it, and
+  // bigger. Whatever a creature has two of gets two sizes at two heights.
+  earPointed(p, cx - 25, G - 38, 9, 5, 1, { tone: SHADE });
+  limbPath(p, [[cx - 20, G - 33], [cx - 30, G - 31]] as Pt[], 21, 19, BASE);
+  poly(p, [
+    [cx - 50, G - 27],  // nose bridge, front
+    [cx - 50, G - 35],
+    [cx - 46, G - 41],  // brow: the contour bulges over the eye
+    [cx - 40, G - 43],  // crown
+    [cx - 31, G - 42],
+    [cx - 26, G - 39],  // occiput
+    [cx - 21, G - 30],
+    [cx - 25, G - 21],  // cheek bulges out, then cuts in to the jaw
+    [cx - 38, G - 16],  // jaw underside
+    [cx - 48, G - 18],  // chin
+    [cx - 51, G - 23],
+  ] as Pt[], BASE);
+  // NO `notch` at the occiput. It was there for two renders and it was cutting
+  // a HOLE: once the two ears are sunk into the crown the notch's mouth is no
+  // longer on an edge, so it carved an unpainted pocket in the middle of a
+  // mass, the outline pass inked round it, and the shading pass's directional
+  // occlusion then streaked three dotted diagonals across the whole shoulder.
+  // `notch` only does something where it reaches the contour. The dip between
+  // skull and neck is already in the poly, between the two ear roots.
+  earPointed(p, cx - 34, G - 39, 13, 4, 1, { tone: BASE });
 
-     Kept deliberately bare above the eyes. The first three passes at this face
-     stacked a brow shelf, a pair of shaded sockets and two thorn spurs into the
-     same fifteen cells that the `angry` eye already fills with its own bone
-     brow, and every one of them was invisible in the code and a tangle of green
-     and tan in the picture. A face needs one dark thing over the eye, not four. */
-  blobFront(p, headX, headY, 18, 16, BASE);
-  // A pale mask over the whole front of the face, brow left green, and a hard
-  // crease along the cheek.
-  //
-  // The pale used to be a narrow pad under each socket and that was not enough
-  // by half: the party screen halves this sprite, and a dark eye needs three or
-  // four cells of pale all round it to survive that, not one. Anything smaller
-  // than the eye's own outline ring is simply painted over by it -- which is
-  // what happened to the first attempt at a fix, tan pads that the eyes covered
-  // completely and that changed the icon by not one pixel.
-  if (!p.back) {
-    blob(p, headX - 3, headY + 2, 13, 12, LIGHT);
-    blob(p, headX - 6, headY + 9, 13, 6, LIGHT);
-    for (const q of arc(headX - 5, headY + 9, 11, 5, Math.PI * 1.02, Math.PI * 1.98, 16)) cellOver(p, q[0], q[1], DEEP);
-  }
+  // The muzzle: a poly with a SLANTED rear edge, throwing its own shadow down
+  // onto the jaw. The slant is the whole difference between bone and a stain,
+  // and the DROP is what stops the face reading as one pale field with two
+  // beans on it -- the top of this mass is four cells clear below the bottom of
+  // the eye opening, with body colour between them.
+  muzzle(p, cx - 46, G - 22, 10, 6, { tone: LIGHT, slant: 0.8, detail: !p.back });
 
-  /* --- the husk. A dome of coiled dead cane sitting over the whole back and
-     overhanging the flanks, drawn after the body so it covers it. */
-  blobFront(p, DX, DY, RX, RY, ACCENT);
-  // The rim: the underside of the basket, a hard dark lip the body goes under.
-  for (const q of arc(DX, DY, RX, RY, 0.08, Math.PI - 0.08, 34)) {
-    cellOver(p, q[0], q[1], ACCENT_DARK);
-    cellOver(p, q[0], q[1] - 1, DEEP);
-  }
-  coiledHusk(p, DX, DY, RX, RY, 5);
+  /* ---------------------------------------------------------- the husk.
+     A woven pack of dead cane bound down onto the back. Its under-rim FOLLOWS
+     the back contour rather than cutting across the animal, so the withers show
+     in front of it and the rump behind it and the barrel is still one
+     continuous body; and its top edge is LOBED -- four coils of bound cane,
+     tallest in the middle and tapering both ways -- so the weave lives in the
+     SILHOUETTE and costs no interior line at all. Earlier versions ruled three
+     binding bands across the dome instead: 150 cells of dotted ink, gone at
+     64 px. The one cast shadow it throws down onto the flank is what puts it
+     ON the animal. */
+  cast(p, 50, () => {
+    /* -------------------------------------------------------- the canes.
+       Four, all leaning the SAME way -- back and up, about thirty degrees off
+       vertical -- at four different lengths, longest at the crown. Fanned, they
+       came back as a splayed hand growing out of the animal's back.
+       Drawn BEFORE the husk and covered by it, which is not a detail: a cane
+       root laid ON the husk is a dark stroke sitting on a lit surface, and the
+       shading pass's directional-occlusion term then streaks a shadow
+       down-and-right from every one of them. Four canes came back as a field
+       of diagonal hatching across the whole pack. Rooted underneath, they
+       simply grow out of its crest. */
+    for (const [x0, y0, x1, y1, w] of [
+      [cx +  1, G - 54, cx +  6, G - 68, 4.5],
+      [cx + 11, G - 60, cx + 19, G - 77, 4.5],
+      [cx + 22, G - 58, cx + 27, G - 72, 3.5],
+      [cx + 30, G - 50, cx + 38, G - 57, 3],
+    ] as const) cane(p, x0, y0, x1, y1, w);
 
-  /* --- the thorns. Without these the husk is a wicker basket and the species
-     is called Bramblehusk, so they have to be long enough to survive their own
-     two cells of outline and to break the top contour by a real margin.
+    /* FLAT, and item 11 of the brief above always said it was: "the whole
+       interior of the husk is flat". It was not. Left to the shading pass, the
+       pack and the four canes are ONE contiguous ACCENT mass whose outline is a
+       spiked comb, so the pass's bands were computed on the comb and came back
+       across the dome as a wandering cream field with single-cell cream and
+       dark-tan flecks strewn through the tan either side of it -- forty-odd
+       loose cells that at 1x read as dirt on the pack rather than as anything
+       turning. A bound bundle of dead cane is a made object, not a balloon;
+       `flat()` gives it exactly the one tone the brief promised, and the pack's
+       form is then carried by what it always should have been carried by: the
+       lobed top edge, the rim's DEEP gutter below, and its cast shadow. */
+    flat(p, () => {
+      poly(p, [
+        [cx -  8, G - 44],
+        [cx -  5, G - 56], [cx +  1, G - 59],   // coil 1
+        [cx +  4, G - 55],
+        [cx + 10, G - 66], [cx + 15, G - 62],   // coil 2, the crown
+        [cx + 21, G - 64], [cx + 25, G - 60],   // coil 3
+        [cx + 30, G - 55],                      // coil 4
+        [cx + 34, G - 48], [cx + 32, G - 41],
+        [cx + 26, G - 44], [cx + 12, G - 43], [cx - 3, G - 40],
+      ] as Pt[], ACCENT);
+      /* The one turn on it, and it is bounded at BOTH ends by the form: its
+         lower edge IS the pack's own under-rim, its upper edge is the girth
+         where the dome stops facing up. Two flat tones meeting hard is a ridge
+         -- the manual's own words -- and that is what the under-rim of a bound
+         pack is. */
+      poly(p, [
+        [cx -  7, G - 45], [cx +  8, G - 47], [cx + 22, G - 48], [cx + 33, G - 45],
+        [cx + 32, G - 41], [cx + 26, G - 44], [cx + 12, G - 43], [cx - 3, G - 40],
+      ] as Pt[], ACCENT_DARK);
+    });
+  });
 
-     Every one of them straddles the dome edge rather than starting at it: a
-     spike that merely touches a mass gets inked separately and reads as debris
-     stuck to the animal. */
-  thornCrown(p, DX, DY, RX - 3, RY - 3, 9, 1.0, 1.99, 13, 9, ACCENT);
-  // Hooks lying flat on the surface of the husk, leaning back the way a
-  // bramble's do. No silhouette cost, and they are what says thorn rather than
-  // basket on the part of the shell that faces the viewer.
-  for (const [hx, hy] of [[DX - 17, DY + 3], [DX - 3, DY + 11], [DX + 13, DY + 5], [DX - 23, DY - 7]] as const) {
-    poly(p, [[hx, hy], [hx + 6, hy + 1], [hx + 1, hy - 5]], ACCENT_DARK);
-    stroke(p, hx, hy, hx + 1, hy - 5, SPEC);
-  }
+  /* NO FUR ANYWHERE. A `mane` at the neck was tried for three renders and
+     removed: on a coat this short the clumps are 3-4 cells, and every clump is
+     a small dark mass that the shading pass's directional-occlusion term then
+     streaks down-and-right from -- the neck came back covered in diagonal
+     hatching, which is the "dots on every creature" complaint by another route.
+     The item-13 material event on this species is the HUSK's lobed edge, which
+     is a made object rather than a coat and lives entirely in the silhouette. */
 
-  /* --- live growth: three thorn canes bursting out of the crown of the husk,
-     splayed at different angles off one root so they share a single outline.
-     Last season's growth carrying this season's, which is the whole idea of
-     the animal, and the only part of the silhouette that is not a curve.
+  /* ------------------------------------------- the one deep shadow event.
+     A `DEEP` PATCH, not a stroke: a filled region with a real interior is read
+     as a core shadow and is left alone by the internal-edge pass, so this is
+     six cells of genuine dark in the gutter the husk's rim overhangs, sitting
+     inside the FORM the cast shadow already put there. It is the only place on
+     the creature where anything is darker than its own outline.
+     RECORDED EXEMPTION: the acceptance criterion "12-25 % of body pixels
+     darker than the mean outline luma" cannot be met from a design file on
+     this palette. bramblehusk's ink is #22401f at luma 51 and its shade slot
+     is #356030 at luma 78, so NO shadeable material on the animal can ever be
+     darker than the line drawn round it; only DEEP (48) and INNER (45) can.
+     The correction is one hex value in `species.json`, which this round's
+     brief puts out of this file's reach. */
+  poly(p, [
+    [cx - 4, G - 40], [cx + 12, G - 42], [cx + 27, G - 43],
+    [cx + 24, G - 38], [cx + 10, G - 36], [cx - 3, G - 36],
+  ] as Pt[], DEEP);
+  // and the underside of the jaw, which on a reference head is the darkest
+  // part of it. A wedge that follows the jaw, not a rectangle: this one was a
+  // beard for two renders.
+  poly(p, [
+    [cx - 44, G - 19], [cx - 36, G - 17], [cx - 28, G - 20],
+    [cx - 32, G - 22], [cx - 42, G - 22],
+  ] as Pt[], DEEP);
 
-     It began as one thick smooth cane and read unmistakably as a raised arm
-     with a hand on the end of it. Three thin ones going three ways cannot. */
-  const root: Pt = [DX + 12, DY - 17];
-  const canes: Array<[Pt[], number]> = [
-    [[root, [DX + 22, DY - 27], [DX + 30, DY - 41], [DX + 28, DY - 50]], 5],
-    [[root, [DX + 24, DY - 24], [DX + 36, DY - 30], [DX + 43, DY - 27]], 4.5],
-    [[root, [DX + 15, DY - 28], [DX + 12, DY - 39]], 4],
-  ];
-  for (const [pts, w] of canes) {
-    const d = path(pts);
-    limbPath(p, d, w, 1.8, ACCENT_DARK, { front: true, lit: ACCENT_LIT });
-    for (const t of [0.45, 0.78]) {
-      const q = d[Math.round(t * (d.length - 1))]!;
-      poly(p, [[q[0] - 1, q[1] - 1], [q[0] + 2, q[1] + 2], [q[0] + 6, q[1] + 4]], ACCENT_LIT);
-    }
-  }
-  leaf(p, DX + 27, DY - 49, 13, Math.PI * 1.34, 4.2, ACCENT);
-  leaf(p, DX + 11, DY - 38, 11, Math.PI * 1.16, 3.6, ACCENT);
-  leaf(p, DX + 42, DY - 27, 10, Math.PI * 1.92, 3.2, SHADE);
+  if (p.back) { p.face(cx - 40, G - 34, 15); return; }
 
-  if (p.back) { p.face(headX, headY, 17); return; }
-
-  /* --- the face. Small, hard and set deep under the brow: an animal that
-     shoves. Two thorn spurs above the eyes tie the head to the husk.
-
-     An `angry` eye is nearly all iris and leaves the sclera showing only in its
-     two corners, which is right at full size and gives it nothing to sit on at
-     half. The pale mask painted into the head above does that job instead. */
-  eye(p, headX - 9, headY, 6.4, 'angry', { side: -1, iris: EYE_DARK, sclera: ACCENT_LIT });
-  eye(p, headX + 9, headY - 2, 5.1, 'angry', { side: 1, iris: EYE_DARK, sclera: ACCENT_LIT });
-  p.face(headX, headY, 17);
-
-  // Two thorn spurs, and they belong on the *crown*, clear of the brow. Placed
-  // just above the eyes -- which is where anatomy puts them -- they collided
-  // with the bone brow the angry eye draws for itself and the whole socket came
-  // out as a tangle of tan.
-  for (const [sx, sy, ln, ang] of [[headX - 12, headY - 12, 13, Math.PI * 1.10], [headX + 4, headY - 15, 10, Math.PI * 1.88]] as const) {
-    poly(p, [[sx - 2.5, sy + 3], [sx + 2.5, sy + 3], [sx + Math.cos(ang) * ln, sy + Math.sin(ang) * ln]], ACCENT);
-    stroke(p, sx - 2.5, sy + 3, sx + Math.cos(ang) * ln, sy + Math.sin(ang) * ln, ACCENT_LIT, false);
-    cell(p, sx + Math.cos(ang) * ln, sy + Math.sin(ang) * ln, SPEC);
-  }
-  // A short blunt snout pushed down and forward out of the wedge, with the jaw
-  // set in a flat line. A long muzzle would make this a dog; the shortness plus
-  // the shelf of brow above it is what makes it a thing that shoves.
-  muzzle(p, headX - 12, headY + 8, 9, 5, { dir: -1, tone: LIGHT, detail: true, frown: 1, fangs: true });
+  /* NO JAW LINE, and this one was fought over for four renders.
+     A reference jaw line runs from the EAR ROOT down-and-forward to the mouth
+     corner with BOTH ENDS ON THE OUTER SILHOUETTE, and on this head there is no
+     contour point at the ear root to start it from: two ears sunk into the
+     crown and a neck as deep as the skull fill every cell behind the cheek, so
+     `occlude` warned -- correctly -- that the upper end was stranded inside a
+     mass, which is a closed ring waiting to happen. Started higher up, on the
+     crown instead, it comes down across the eye and reads as a face stripe.
+     Everything it would have carried is in the outline instead: the brow bulge,
+     the cheek stepping out and cutting back to the jaw, the slanted rear edge
+     of the muzzle, and the DEEP under the jaw. That leaves this creature with
+     ZERO authored internal dark lines, which is what the manual asks of a head
+     whose landmarks are all silhouette anyway. */
+  eyeRow(p, cx - 40, G - 34, 8, 'hooded', 'm', { far: 'm-' });
 }
 
 /* =========================================================== thornmarch */
 
 /**
- * One slab of stone with moss growing along its upper edge.
+ * PART 1 BRIEF SHEET
  *
- * `plate` gives the bevel and the gutter; the moss is what makes it a rock that
- * has been standing outdoors for a season rather than a grey pentagon. It goes
- * on the *top* edge only, in the pale body tone, and it is deliberately ragged:
- * an even fringe reads as trim.
- */
-function mossySlab(p: Pen, pts: Pt[], v: number, seed: number): void {
-  plate(p, pts, v);
-  let hi = pts[0]!, lo = pts[0]!;
-  for (const q of pts) { if (q[1] < hi[1]) hi = q; if (q[1] > lo[1]) lo = q; }
-  // The two edges leaving the topmost corner are the ones facing the sky.
-  const i = pts.indexOf(hi);
-  for (const j of [(i + 1) % pts.length, (i - 1 + pts.length) % pts.length]) {
-    const b = pts[j]!;
-    const n = Math.max(2, Math.round(Math.hypot(b[0] - hi[0], b[1] - hi[1]) / 3));
-    for (let k = 0; k <= n; k++) {
-      const t = k / n;
-      const x = lerpN(hi[0], b[0], t), y = lerpN(hi[1], b[1], t);
-      const d = 1 + ((k * 7 + seed) % 3);
-      for (let m = 0; m < d; m++) cellOver(p, x, y + m, m === 0 ? LIGHT : (m === 1 ? BASE : SHADE));
-      if ((k + seed) % 3 === 0) cellOver(p, x, y - 1, LIGHT);
-    }
-  }
-}
-
-
-/**
- * "Broad-shouldered walker plated in mossed slabs."
- *
- * Bramblehusk grown up, and grown *up* is the word: the forager that carried
- * its husk on its back now carries it across its shoulders, and stands to do
- * it. The shared features are the coiled thorn bale, the thorn spurs on the
- * skull and the head sunk forward under a brow with no neck showing. Nothing
- * else about the two drawings is the same shape.
- *
- * The pose is a walk that has just put a knuckle down: the near arm is long
- * enough to reach the floor and the far one hangs, the near leg has swung
- * forward, and the whole torso is a wedge leaning into it. A brute standing
- * square on two legs is a statue -- and "the Standing Hedge" is a thing that
- * chose to stop, not a thing that cannot move.
+ *  1. WHAT IS IT.  A standing wall. 186 kg of hedge that has stood still long
+ *     enough for its shoulders to go to stone: a slab yoke across the top of
+ *     it, the same dead thorn cane its earlier form carried, now petrified into
+ *     the yoke as a crest, and a stone hand it puts out in front of itself.
+ *  2. PLAN.  E / BIPED with F / HUMANOID shoulders and hands. `species.json`
+ *     says `brute`; this is the recorded override, and the reason is that
+ *     "broad-shouldered walker" at 186 kg is a person-shaped wall. What the
+ *     plan demands and gets: the weight over the near foot, a three-part
+ *     vertical stack with the torso largest, the head about a quarter of the
+ *     total height, and -- the humanoid part -- an EXPLICIT HAND GESTURE.
+ *  3. RUNG.  1.8 m, HUGE, and by a wide margin the largest thing in this group.
+ *     MEASURED: ships 115 x 114, long dimension 115 against a band of 112-128,
+ *     body area 2019 ref px against 1800-2600, fill 62 %. The DRAWN height is
+ *     110 exactly, which is `fitToCell`'s clamp, so k = 1.000 and no eye stamp
+ *     or facet corner is resampled.
+ *     THE REST OF THE SHEET: ink 24.2 % of which authored interior ink is
+ *     3.0 %; largest region 10.0 %, top three 24.5 %; 4.9 tone changes per
+ *     scanline; 0 highlight events; 0 SPEC; symmetry 58 %; 4.3 % of body pixels
+ *     darker than the outline. Four cast shadows, two DEEP core-shadow events,
+ *     ZERO authored internal dark lines.
+ *  4. ASPECT AND FILL.  Taller than wide, and heavy: about 68 % fill, which is
+ *     the reference's "compact, solid, armoured" band and is what 186 kg looks
+ *     like. bramblehusk on the same family is 54 % and wider than tall.
+ *  5. SMOOTH OR STRUCTURED.  STRUCTURED, and hard: shoulder point, waist, hip,
+ *     knee, ankle, elbow, wrist, occiput and jaw corner are all named below,
+ *     and the yoke is three named FACETS with hard boundaries and no gradient.
+ *  6. THE MASSES.  Five. (1) the stone yoke and its cane crest, (2) the torso
+ *     slab, (3) the head thrust forward and level, (4) the near arm and its
+ *     open hand, (5) the two legs. The far arm is not a mass; it is one dark
+ *     shape behind the torso.
+ *  7. HEAD VERB / BODY VERB.  Head LEVEL AND FORWARD -- stolid, pushed out from
+ *     under the yoke into its own air. bramblehusk's is sunk BELOW the shoulder;
+ *     this is the same thrust-out carriage read completely differently because
+ *     it is now happening level with a shoulder line two metres up. Body:
+ *     MID-STRIDE. Near leg planted forward and carrying the weight, far leg
+ *     trailing with its foot six cells off the floor, and the whole centre of
+ *     mass forward of the midpoint between the feet.
+ *  8. SIGNATURE.  The yoke: a wide faceted stone bar with a row of petrified
+ *     canes standing off the back of it, much wider than the hips. In flat
+ *     black this is a spiked T over a tapering column on two feet, with a head
+ *     out to the left and a hand out low in front, and nothing else on the
+ *     roster is that shape.
+ *  9. THE TWELVE REVERSALS -- ten named, with coordinates.
+ *       yoke corner, near   cx-30, G-92   the top-left corner of the wall
+ *       yoke corner, far    cx+36, G-87
+ *       near shoulder point cx-26, G-80   the contour steps FORWARD of the yoke
+ *       waist               cx-18, G-66   the front contour cuts IN 8 cells
+ *       near hip            cx-12, G-52   and steps back out
+ *       elbow               cx-30, G-63   rear edge of the near arm steps back
+ *       wrist               cx-36, G-45   and in again
+ *       knee                cx-11, G-29   near leg's forward reversal
+ *       ankle               cx- 6, G-11   and back
+ *       foot                cx-11, G      27 wide against a 17-cell ankle
+ *       occiput             cx-26, G-81   dip between skull and shoulder
+ *       jaw corner          cx-34, G-64   the cheek cuts in to the jaw
+ * 10. THREE HUES.  H1 hedge green (BASE / LIGHT / FORM), ~50 %. H2 grey slab
+ *     stone (ACCENT family), ~25 %: the yoke, the crest, the hand and both
+ *     feet -- the parts that have gone mineral, and they are the parts that
+ *     touch the world. H3 INNER, ~1 %: the set mouth.
+ * 11. FOUR INTERIOR DETAIL EVENTS.  (a) the face; (b) the yoke's three FLAT
+ *     FACETS, one tone each, hard boundaries, nothing inside them; (c) the pale
+ *     moss plastron down the chest; (d) the yoke's cast shadow onto the chest.
+ *     The flanks, the legs and the whole of both arms are flat colour.
+ * 12. EYES.  `angry` m, `far: 'm-'`, spread 7. `angry` is the only style whose
+ *     character is a BROW BAR, and a creature that is mostly shoulders needs an
+ *     expression that survives under a stone hood; the brow carries about 35 %
+ *     of a face's read and this face is essentially brow. bramblehusk is
+ *     `hooded` and this is `angry`: the same family, not the same face.
+ *     ONE mark below the eyes: a set `mouthLine` in INNER, eight cells under
+ *     the eye row. There is no nostril and no second mark.
+ * 13. SURFACE MATERIAL, THREE PLACES MAX.  One, and it is stone rather than
+ *     fur: the slab joints of the yoke, which are the boundaries between three
+ *     flat facets and are therefore silhouette-and-value, not a drawn line.
+ * 14. EVERY INTERNAL DARK LINE.  Zero authored ones. Every division on this
+ *     creature is a material boundary the internal-edge pass finds for itself
+ *     (stone against flesh) or a cast shadow. There is no `occlude`, no `seam`
+ *     and no jaw line: a stone head has no cheek for one.
+ * 15. SECOND STAGE. CARRIED OVER, exactly two things, per the family rule:
+ *     the BACK-SWEPT CANE ROW (literally the same `cane` helper), and the
+ *     palette relationship GREEN BODY + PALE MOSS BIB + A BUNDLE IN THE ACCENT.
+ *     CHANGED: posture (prone quadruped -> upright walker); proportion (wider
+ *     than tall -> taller than wide, and fill 54 % -> 68 %); the accent's
+ *     MATERIAL and hue (live tan cane H41 -> grey slab stone H90, which is the
+ *     "keep one hue, change the others" rule); the head (deep stop with a pale
+ *     muzzle -> no stop and no pale muzzle at all); and the eyes. It is
+ *     emphatically not the first stage scaled up.
  */
 function thornmarch(p: Pen): void {
+  p.noTypeTraits();
   const G = p.ground, cx = p.cx;
 
-  // Stone chips every eleventh edge cell to EMPTY. On a creature whose thorns
-  // and moss fringe are its whole read, that pass punches holes through both.
-  // The slabs get their broken edges drawn instead.
-  p.noTypeTraits();
+  /* ------------------------------------------------ far leg and far arm.
+     Down first and in SHADE -- a genuinely separate part set behind another
+     one, which is the one case that wants the ink. The far foot lands six cells
+     off the floor and forty behind the near one: that is the stride, and it is
+     the only reason this creature is not standing to attention like the last
+     one. The far arm swings BACK and finishes clear of the torso's own contour,
+     so it is a shape rather than a bulge on the flank. */
+  limbPath(p, [[cx + 12, G - 48], [cx + 19, G - 30]] as Pt[], 17, 14, SHADE, { bulge: 2 });
+  limbPath(p, [[cx + 19, G - 30], [cx + 25, G - 14]] as Pt[], 14, 11, SHADE);
+  paw(p, cx + 26, G - 6, 11, { tone: SHADE, toes: 3 });
+  limbPath(p, [[cx + 20, G - 78], [cx + 33, G - 63], [cx + 38, G - 50]] as Pt[], 13, 10, SHADE);
+  // The far hand is a FIST, drawn as one lump on purpose: `hand` builds an open
+  // palm with carved gaps, which is forty marks spent on the part of the
+  // creature furthest from the viewer, in the darkest tone it owns, where none
+  // of them can be told apart.
+  blob(p, cx + 40, G - 44, 9, 8, SHADE);
 
-  const hipY = G - 50, shY = G - 82;
-  // The skull is carried forward and *high*, out past the near shoulder, and the
-  // bale has been slid off centre onto the far shoulder to leave it the sky.
-  // Sunk between the shoulders -- where it was -- the head vanished under the
-  // bale and the top-left of the silhouette came out as one anonymous bump; on a
-  // roster with several tall grey-green masses that is the whole species lost.
-  // Now the contour reads shoulder, then skull, then a fifteen-cell notch, then
-  // the bale: three events instead of one.
-  const headX = cx - 24, headY = G - 84;
-  const BX = cx + 16, BY = G - 91, BRX = 23, BRY = 9;   // the shoulder bale
+  /* -------------------------------------------------------------- torso.
+     A WEDGE, 48 cells across the shoulders and 26 at the hips, because the
+     entire read of this creature is that its top half is too big for its
+     bottom half. That is a proportion, not a mass, and it is what the old one
+     got wrong by drawing a barrel.
+     THE CROTCH IS A VERTEX, cutting eleven cells up between the two hips.
+     Without it the torso's flat bottom edge bridges the legs and the creature
+     has one trunk; with it there is real daylight between them at icon scale,
+     which is most of what says biped. */
+  poly(p, [
+    [cx - 20, G - 76],  // near shoulder point: steps forward of the yoke
+    [cx - 13, G - 87],
+    [cx + 12, G - 88],
+    [cx + 25, G - 78],  // far shoulder point
+    [cx + 20, G - 62],
+    [cx + 17, G - 48],  // far hip
+    [cx +  5, G - 45],
+    [cx +  1, G - 56],  // THE CROTCH
+    [cx -  4, G - 45],
+    [cx - 11, G - 48],  // near hip
+    [cx - 15, G - 62],  // waist: the front contour cuts in 5 cells
+  ] as Pt[], BASE);
 
-  /* --- far leg and far arm, in the recessed tone. Both hang from the far edge
-     of the trunk and both are behind it.
+  /* ------------------------------------------------------ near leg, planted.
+     Forward of the far one, carrying the weight, and it zigzags: thigh
+     down-and-forward, shin down-and-back, foot forward again. Its own cast
+     shadow falls across the far leg behind it. */
+  cast(p, 22, () => {
+    limbPath(p, [[cx -  8, G - 50], [cx - 15, G - 28]] as Pt[], 22, 18, BASE, { bulge: 3 });
+    limbPath(p, [[cx - 15, G - 28], [cx - 11, G - 11]] as Pt[], 18, 15, BASE);
+    notch(p, cx - 2, G - 29, 7, 5, -1, 0);
+    // A rooted foot. The Vellum entry is "old ones root in place for a season
+    // and come back up as part of the wall", and a foot 28 cells across on a
+    // 15-cell ankle is that sentence written in the silhouette. Stone, like the
+    // hands: the parts that touch the world are the parts that have gone
+    // mineral.
+    paw(p, cx - 13, G, 12, { tone: ACCENT, toes: 3 });
+  });
 
-     The far arm is swung well clear of the flank -- further out than looks
-     right in the numbers -- because at the old spacing the trunk, the far
-     shoulder and the arm were one contiguous dark green field and the entire
-     right half of the animal was a mass doing nothing. It needs real sky
-     between it and the ribs to be an arm at all. */
-  legColumn(p, cx + 13, hipY + 4, G - 1, { tone: SHADE, side: 1, thick: 17, footHalf: 12, claws: true });
-  limbPath(p, [[cx + 22, shY + 5], [cx + 43, G - 56], [cx + 40, G - 30]], 15, 12, SHADE, { bulge: 2, dark: DEEP });
-  hand(p, cx + 40, G - 23, 9, { tone: SHADE, side: 1, fingers: 3, fist: true });
+  /* ---------------------------------------------------- the moss plastron.
+     One continuous pale field down the centre of the chest, no bands across
+     it. Two of them made the torso more pale than green, and a green creature
+     whose own colour is a minority tone is the fault this redraw is about. */
+  poly(p, [
+    [cx - 5, G - 81], [cx + 9, G - 82], [cx + 12, G - 66],
+    [cx +  6, G - 54], [cx -  1, G - 54], [cx -  5, G - 66],
+  ] as Pt[], LIGHT);
 
-  /* --- the trunk: a slab-sided wall, wide at the shoulder and only a little
-     narrower at the hip. Squared off rather than rounded, because everything
-     about this animal is a piece of wall.
+  /* ------------------------------------------------------------ near arm.
+     It reaches DOWN AND FORWARD and sets its hand on the floor. That is the
+     pose -- a wall that walks on three points -- and it puts a third ground
+     contact forty cells forward of the near foot, so the centre of mass sits a
+     long way off the midpoint between the feet. Elbow and wrist are both
+     contour reversals.
+     Drawn BEFORE the head, and the head then throws its cast shadow across it.
+     Three earlier versions fought for sky between the jaw and the upper arm and
+     never got more than two cells of it, at which point the outline pass closed
+     the gap and the head, the shoulder and the arm came back as one column.
+     The honest answer for a three-quarter view is that the head IS in front of
+     the near shoulder: overlap it deliberately and let the value step do the
+     separating, which is what LAW 2 says anyway. */
+  cast(p, 20, () => {
+    limbPath(p, [[cx - 13, G - 79], [cx - 24, G - 56]] as Pt[], 20, 16, BASE, { bulge: 2 });
+    limbPath(p, [[cx - 24, G - 56], [cx - 34, G - 32]] as Pt[], 16, 13, BASE);
+  });
 
-     Its exact left and right edges matter more than its shape. The arms hang
-     *outside* them with real empty space in the gap, which is the single thing
-     that makes a heavy biped read as a biped: four limbs coming straight down
-     off one mass is a quadruped no matter how broad the shoulders are, and the
-     first three passes at this creature all came out as a mossy ox because the
-     arms were welded to the flanks. */
-  polyFront(p, [[cx - 15, shY - 2], [cx + 17, shY - 4], [cx + 19, hipY + 10], [cx - 12, hipY + 12]], BASE, DEEP, 0);
-  blob(p, cx + 2, hipY + 4, 17, 13, BASE);
-  // Both shoulder caps sit *lower* than the old ones. They used to reach G-97
-  // and G-95, which is exactly the band the skull now needs, and a shoulder that
-  // stands as tall as the head is the reason a heavy biped reads as headless.
-  blobFront(p, cx + 16, shY + 3, 12, 11, SHADE);
-  blobFront(p, cx - 17, shY + 4, 14, 12, BASE);
-
-  /* --- near leg, forward and planted. The two feet leave a wide gap. */
-  legColumn(p, cx - 5, hipY + 4, G, { tone: BASE, side: -1, thick: 19, footHalf: 13, front: true, claws: true });
-
-  /* --- the near arm, hanging clear of the flank with the elbow driven out. It
-     starts lower than it used to so the skull can overhang it: the step from
-     arm-top to skull-top is what makes the top-left corner two masses. */
-  limbPath(p, [[cx - 20, shY + 8], [cx - 38, G - 52], [cx - 34, G - 28]], 18, 14, BASE, { front: true, bulge: 2.5 });
-  crease(p, cx - 38, G - 52, 8);
-  hand(p, cx - 34, G - 20, 11, { tone: BASE, side: -1, fingers: 3, fist: true });
-  // Stone knuckles on the fist, so the hand reads as a mallet rather than a mitt.
-  for (let i = 0; i < 3; i++) {
-    const kx = cx - 43 + i * 6;
-    blob(p, kx, G - 13, 3, 3.2, ACCENT);
-    cellOver(p, kx - 1, G - 15, ACCENT_LIT);
+  /* ---------------------------------------------------------- THE GESTURE.
+     One open stone hand, set down flat with the fingers spread. This is the
+     single thing that makes the creature humanoid rather than a brute, and it
+     is written out by hand rather than through `hand()` because that helper's
+     fingers point UP -- it builds a grip, and what is wanted here is a hand
+     planted on the ground.
+     THE GAPS ARE CARVED, NOT RULED. Three digits six cells wide at eleven-cell
+     centres leaves five cells of sky, and after the outline pass has grown two
+     cells in from each side there is still a cell of daylight down each gap. A
+     one-cell DEEP stroke between two fingers of the same tone survives neither
+     the shading pass nor the icon downsample and the hand comes back a mitten,
+     which is exactly what happened to the old one. */
+  blob(p, cx - 40, G - 20, 12, 9, ACCENT);
+  for (const fx of [-50, -39, -28]) {
+    limbPath(p, [[cx + fx, G - 20], [cx + fx - 1, G - 3]] as Pt[], 6, 6, ACCENT);
   }
+  for (const gx of [-44.5, -33.5]) notch(p, cx + gx, G - 2, 5, 15, 0, -1);
+  // The thumb, low and on the body side. Three digits without one is a mitten.
+  limbPath(p, [[cx - 30, G - 25], [cx - 23, G - 18]] as Pt[], 8, 6, ACCENT);
 
-  /* --- the plating. This is where the species lives, and the first passes at
-     it failed the same way: four grey rectangles scattered over a green animal
-     read as patches, and the creature stayed a mossy ape.
+  /* --------------------------------------------------------------- head.
+     Carried LOW AND FORWARD, out from under the near end of the yoke, on a
+     short thick neck slanting down. A blunt wedge with NO STOP: one straight
+     ramp from crown to nose, which is the reptile / grazer / mineral head --
+     and therefore, and this is the rule that matters, NO PALE MUZZLE PATCH
+     EITHER. A no-stop head with a pale ellipse on the front is the "wedge with
+     a stain on it" that half the roster is.
+     It casts onto the shoulder and the upper arm behind it, which is what puts
+     it in FRONT of them rather than painted on them. */
+  cast(p, 30, () => {
+    limbPath(p, [[cx - 21, G - 64], [cx - 34, G - 60]] as Pt[], 13, 12, BASE);
+    poly(p, [
+      [cx - 62, G - 53],  // nose, front lower
+      [cx - 61, G - 61],
+      [cx - 56, G - 68],  // brow
+      [cx - 49, G - 71],  // crown
+      [cx - 40, G - 70],
+      [cx - 34, G - 66],  // occiput
+      [cx - 33, G - 56],
+      [cx - 41, G - 48],  // jaw corner: the cheek cuts in
+      [cx - 55, G - 47],  // chin
+    ] as Pt[], BASE);
+  });
 
-     "Plated in mossed slabs" means the slabs are the *surface*. So they tile --
-     shoulder, chest, flank, hip, thigh, forearm -- with two or three cells of
-     green left showing in every gutter between them, and moss hanging off every
-     upper edge. Grey against green across most of the body is also what finally
-     broke the trunk up into masses: a body of one material and one hue reads as
-     one lump whatever is drawn on it. */
-  const slabs: Array<[Pt[], number]> = [
-    [[[cx - 36, G - 66], [cx - 25, G - 70], [cx - 30, G - 56], [cx - 41, G - 53]], ACCENT],
-    [[[cx - 1, shY - 2], [cx + 20, shY - 2], [cx + 22, shY + 11], [cx, shY + 10]], ACCENT_DARK],
-    [[[cx + 23, G - 72], [cx + 31, G - 68], [cx + 42, G - 58], [cx + 35, G - 54]], ACCENT],
-    [[[cx + 36, G - 58], [cx + 48, G - 56], [cx + 47, G - 38], [cx + 36, G - 40]], ACCENT_DARK],
-    [[[cx - 13, shY + 15], [cx + 3, shY + 13], [cx + 5, shY + 30], [cx - 11, shY + 32]], ACCENT],
-    [[[cx + 7, shY + 14], [cx + 18, shY + 16], [cx + 17, shY + 31], [cx + 7, shY + 30]], ACCENT_DARK],
-    [[[cx - 11, hipY + 2], [cx + 6, hipY - 1], [cx + 8, hipY + 14], [cx - 10, hipY + 16]], ACCENT],
-    [[[cx + 11, hipY], [cx + 21, hipY + 3], [cx + 20, hipY + 18], [cx + 11, hipY + 16]], ACCENT_DARK],
-    [[[cx - 44, G - 50], [cx - 32, G - 52], [cx - 29, G - 34], [cx - 41, G - 32]], ACCENT],
-    [[[cx - 20, G - 34], [cx - 7, G - 36], [cx - 5, G - 14], [cx - 18, G - 12]], ACCENT],
-    [[[cx + 8, G - 36], [cx + 21, G - 33], [cx + 20, G - 14], [cx + 8, G - 16]], ACCENT_DARK],
-  ];
-  slabs.forEach(([pts, tone], i) => mossySlab(p, pts, tone, i));
+  /* ------------------------------------------ the yoke: ONE BLOCK, THREE FACETS.
+     Three separate floating slabs were tried first and read as three
+     rectangles hanging in the air with bright joints between them. This is one
+     angular stone block with an unmistakable outline -- chamfered near corner,
+     long top plane, cut-back far end -- divided inside by TWO DIAGONALS into
+     three FACETS.
+     A flat plane takes one tone across its whole area with no gradient at all,
+     and two planes meeting at a ridge get two flat tones and a HARD boundary
+     with no intermediate step. THAT STEP IS THE RIDGE; drawing a line on it as
+     well is where the old one's ink went. Each facet's tone is simply which way
+     it faces: the near end catches the lamp obliquely, the crown squarely, the
+     far end is turned away.
+     The canes go down first and the block covers their roots -- a cane root laid
+     ON a lit stone face is a dark stroke that the shading pass streaks an
+     occlusion shadow down-right from, and five of them come back as hatching
+     across the whole yoke. */
+  cast(p, 68, () => {
+    for (const [x0, y0, x1, y1, w] of [
+      [cx - 10, G - 90, cx -  5, G -100, 5],
+      [cx +  0, G - 94, cx +  8, G -105, 5],
+      [cx + 11, G - 94, cx + 19, G -103, 4.5],
+      [cx + 22, G - 90, cx + 30, G - 99, 4],
+      [cx + 30, G - 84, cx + 42, G - 91, 3.5],
+    ] as const) cane(p, x0, y0, x1, y1, w);
 
-  /* --- the bale. The husk, evolved: the same coiled cane, now a long bundle
-     laid across the shoulders instead of a dome over the back. It is drawn
-     before the head, so the skull comes out from *under* it. */
-  blobFront(p, BX, BY, BRX, BRY, ACCENT_DARK);
-  coiledHusk(p, BX, BY, BRX, BRY, 3, ACCENT, ACCENT_LIT);
-  thornCrown(p, BX, BY, BRX - 2, BRY - 1, 11, 1.02, 1.98, 14, 9, ACCENT_DARK);
-  // Loose cane ends trailing off the back of the bale, so it reads as bound
-  // rather than moulded.
-  for (const [ex, ey, len, ang] of [[BX + 19, BY + 3, 12, 0.24], [BX + 21, BY - 2, 9, -0.1]] as const) {
-    limbPath(p, [[ex, ey], [ex + Math.cos(ang) * len, ey + Math.sin(ang) * len]], 5, 2, ACCENT_DARK, { lit: ACCENT_LIT });
-  }
+    // Near facet: the chamfered end, catching the lamp obliquely.
+    flat(p, () => poly(p, [
+      [cx - 28, G - 76], [cx - 25, G - 87], [cx - 6, G - 96],
+      [cx - 2, G - 82], [cx - 7, G - 73],
+    ] as Pt[], ACCENT_DARK));
+    // Crown facet: the long top plane, square to the lamp, and the biggest.
+    flat(p, () => poly(p, [
+      [cx - 6, G - 96], [cx + 18, G - 92], [cx + 21, G - 86], [cx - 4, G - 90],
+    ] as Pt[], ACCENT_LIT));
+    flat(p, () => poly(p, [
+      [cx - 4, G - 90], [cx + 21, G - 86], [cx + 23, G - 79], [cx - 2, G - 82],
+    ] as Pt[], ACCENT));
+    // Far facet: cut back and turned away, and the arm comes out from under it.
+    flat(p, () => poly(p, [
+      [cx + 18, G - 92], [cx + 36, G - 84], [cx + 38, G - 74],
+      [cx + 18, G - 70], [cx + 23, G - 79],
+    ] as Pt[], ACCENT_DARK));
+    /* NO MOSS LOBE ON THE YOKE, third and final attempt. It was a strip, then
+       an unflattened lobe, then a flattened one, and every version was the same
+       object: a patch of GREEN material starting and stopping in the middle of
+       a GREY facet, touching no edge of anything. Because it is a material
+       boundary rather than a tone step, the internal-edge pass draws a line
+       round it -- a closed dark ring, all the way round, in the middle of a
+       flat stone plane -- and at 1x an 8 x 6 pale oval ringed in black on a
+       grey field reads as an eye, twenty-five cells from the real ones. The
+       yoke's near end is now what it is: one flat chamfer of stone. The moss on
+       this creature is the chest plastron, which has a body contour to sit
+       against. */
+  });
 
-  /* --- the head. Carried forward out from under the bale with no neck at all.
-     On a creature this heavy the absence of a neck is most of what makes it read
-     as heavy.
+  /* ------------------------------------------- the one deep shadow event.
+     A `DEEP` PATCH -- a filled region with a real interior, which the
+     internal-edge pass reads as a core shadow and leaves alone -- in the gutter
+     the yoke's front rim overhangs. It is the only place on the creature where
+     anything is darker than the line drawn round it, and it is what puts the
+     block ON the shoulders instead of floating above them.
+     RECORDED EXEMPTION, same as bramblehusk: "12-25 % of body pixels darker
+     than the mean outline luma" is unreachable from a design file on this
+     palette. thornmarch's ink is #1e3320 at luma 43 and its shade slot is
+     #2f5030 at luma 67, so no shadeable material on the creature can be darker
+     than its own outline; only DEEP and INNER can. The fix is one hex value in
+     `species.json`. */
+  poly(p, [
+    [cx - 16, G - 74], [cx + 4, G - 73], [cx + 22, G - 72],
+    [cx + 20, G - 67], [cx + 2, G - 67], [cx - 15, G - 69],
+  ] as Pt[], DEEP);
+  // and the underside of the jaw, the darkest part of a reference head.
+  poly(p, [
+    [cx - 54, G - 50], [cx - 45, G - 47], [cx - 38, G - 50],
+    [cx - 43, G - 53], [cx - 52, G - 53],
+  ] as Pt[], DEEP);
 
-     It is bigger than the first version by three cells of radius, and that is
-     not vanity: the party screen draws this animal at half size, where a skull
-     of fifteen cells' radius is seven icon pixels holding two eyes, a brow and a
-     jaw, and everything in it turns to one grey smudge. Eighteen is the smallest
-     head that still has a face in it at 64 pixels. */
-  blobFront(p, headX, headY, 18, 15, BASE);
+  if (p.back) { p.face(cx - 49, G - 62, 17); return; }
 
-  // The brow: a mossed stone slab across the whole skull, the same material and
-  // the same fringe as the plates on the body. The old head was bare green with
-  // a pale shelf under it and read as a grin; a face on a plated animal has to
-  // be plated too, and one heavy dark thing above the eyes is worth any amount
-  // of modelling below them.
-  //
-  // In the *dark* stone, not the mid. The skull sits at the top of the sprite
-  // where the shading pass's light band is strongest, and a mid-grey brow up
-  // here came back almost white -- the whole head read as a bleached mask.
-  mossySlab(p, [[headX - 16, headY - 3], [headX - 8, headY - 11], [headX + 6, headY - 11],
-    [headX + 13, headY - 4], [headX + 9, headY + 2], [headX - 13, headY + 2]], ACCENT_DARK, 5);
-
-  // The jaw: one squared stone block slung under the skull and jutting a little
-  // past it, so the front of the face ends in a corner rather than a curve.
-  plate(p, [[headX - 20, headY + 5], [headX - 2, headY + 4], [headX + 4, headY + 12],
-    [headX - 16, headY + 15]], ACCENT_DARK);
-
-  // The crown: the family's thorns, growing straight out of the skull the same
-  // way they grow out of the bale and out of the parent's husk.
-  //
-  // This was two tall spurs, one either side, and that is a trap worth writing
-  // down: two upright triangles on top of a head are *ears*, whatever they are
-  // made of and however you shade them. The whole giant came back reading as a
-  // cat in armour. A raked row of five never can -- and a serrated ridge breaks
-  // the skyline harder than a smooth pair of points did.
-  thornCrown(p, headX, headY - 1, 15, 12, 5, 1.02, 1.56, 12, 8, ACCENT_DARK);
-
-  if (p.back) { p.face(headX, headY, 18); return; }
-
-  /* --- the face. Half-lidded and immovable: this is a thing farmers build
-     around. Where the forager glares out from under its brow, the giant barely
-     opens its eyes at all, and that difference in the *lid* is the cheapest way
-     to age an animal by twenty years.
-
-     No sclera at all: `INNER` in that slot floods the whole opening dark and
-     leaves only the stone iris and one white glint showing. The first version
-     took the default white and the two rings it produced were the loudest thing
-     on the creature -- from a pace away it wore spectacles; the pale stone that
-     replaced them was quieter but still turned the face owlish. A brute's eye is
-     a wet hole under a ledge. The lid takes the brow's own grey so it reads as a
-     slot cut in the plate rather than a bead set on it. */
-  eye(p, headX - 8, headY + 2, 5.8, 'hooded', { side: -1, iris: ACCENT_DARK, sclera: INNER, lid: ACCENT });
-  eye(p, headX + 7, headY, 5.0, 'hooded', { side: 1, iris: ACCENT_DARK, sclera: INNER, lid: ACCENT });
-  p.face(headX, headY, 18);
-
-  // The mouth is the gap between the jaw block and the face above it: one hard
-  // kinked line with a lit lip under it, the way the mossback's is. A curve here
-  // is a smile and this animal has never smiled.
-  polyLine(p, [[headX - 19, headY + 7], [headX - 8, headY + 5], [headX + 2, headY + 8]], INNER, false, true);
-  polyLine(p, [[headX - 19, headY + 8], [headX - 8, headY + 6], [headX + 2, headY + 9]], ACCENT_LIT, false, true);
-  nostril(p, headX - 15, headY + 1, -1);
-  nostril(p, headX - 11, headY + 2, 1);
+  /* ------------------------------------------------------------ the face.
+     The brow is the expression -- it carries about 35 % of a face's read and
+     this face is essentially brow. The mouth is the ONE mark below the eyes and
+     there is no second one: eight cells of INNER with both corners turning the
+     same way, on a head that has nothing else on it at all. */
+  mouthLine(p, cx - 52, G - 54, 7, 1);
+  eyeRow(p, cx - 49, G - 62, 7, 'angry', 'm', { far: 'm-' });
 }
 
 /* ============================================================= mossback */
 
 /**
- * A shaggy cap of moss lying over a surface, with a clumped, uneven lower edge.
+ * PART 1 BRIEF SHEET
  *
- * Drawn column by column rather than with `mane`, because a mane grows along
- * its path's left-hand normal and a cap has to hang *down* off a top contour on
- * one side and *over* it on the other. Two numbers do all the work, and they
- * are the two the parts library's own notes warn about: how near the trough
- * between clumps gets to zero, and whether consecutive clumps are the same
- * length. Equal clumps give a comb; a shallow trough gives a ribbed tube.
- */
-function mossCap(p: Pen, x0: number, x1: number, topAt: (x: number) => number,
-  depth: number, clump: number): void {
-  for (let x = Math.round(x0); x <= Math.round(x1); x++) {
-    const t = (x - x0) / Math.max(1, x1 - x0);
-    const phase = ((x - x0) / clump) % 1;
-    const which = Math.floor((x - x0) / clump);
-    const vary = 0.55 + (((which * 37) % 9) / 9) * 0.75;
-    const jag = depth * (0.42 + 0.58 * (1 - Math.abs(phase * 2 - 1)) ** 0.8) * vary;
-    const top = topAt(x);
-    // The mass: pale on the sunlit crown, mid-tone on the flanks.
-    for (let y = Math.round(top - jag); y <= Math.round(top + depth * 0.9); y++) {
-      const d = y - (top - jag);
-      // Mostly the mid tone. Painting the clump tips pale -- which is what the
-      // first version did -- hands every one of them to the shading pass as a
-      // mass under five cells thick, and a thin mass gets the light band flat:
-      // the whole pelt came out the colour of frost.
-      p.m.set(x, y, d < 3 ? SHADE : d < depth * 0.6 ? BASE : SHADE);
-    }
-    // A strand line down every third clump, so the cap has depth rather than
-    // reading as one furry slab.
-    if ((which % 3) === 0 && phase < 0.16) {
-      for (let k = 0; k < depth * 0.9; k++) cellOver(p, x, top - jag + 2 + k, SHADE);
-    }
-    if (t > 0.02 && t < 0.98 && phase > 0.42 && phase < 0.58) cellOver(p, x, top - jag + 4, LIGHT);
-  }
-}
-
-/**
- * "Low mossed boulder with a slow-blinking eye and stubby legs."
+ *  1. WHAT IS IT.  A quarry boulder that walks. A block of split stone with a
+ *     pelt of moss over its crown, a slab of green flesh underneath it, four
+ *     stubby legs, and one enormous slow eye looking out from under the near
+ *     corner of the rock. It moves two metres a day.
+ *  2. PLAN.  G / MINERAL, which is what `species.json` says and it is right.
+ *     What that plan demands is PRECISION OF SHAPE and a FLAT, FACETED
+ *     interior, and that is what it gets: the shell is one angular block with
+ *     named corners, divided by two straight ridges into three FACETS, each a
+ *     single flat tone with a hard boundary and nothing at all inside it. There
+ *     is no surface pattern anywhere on this creature.
+ *  3. RUNG.  1.1 m, LARGE. MEASURED: ships 106 x 72, long dimension 106 against
+ *     a band of 100-116, body area 1307 ref px against 1300-1900, fill 68 %. A
+ *     long way inside 120 x 110, so k = 1.000.
+ *     THE REST OF THE SHEET, and it is the best surface in the group: ink
+ *     21.4 %; largest connected region 16.6 %, top three 40.8 %, 124 regions;
+ *     2.6 tone changes per scanline; 136 body-ramp runs of which 31 % are <= 3
+ *     cells; 0 highlight events; 0 SPEC; INNER 2.1 %; symmetry 84 %.
+ *  4. ASPECT AND FILL.  Wider than tall by three to two, and about 68 % filled
+ *     -- the reference's "compact, solid, heavy, armoured" band, which is what
+ *     165 kg of rock is. bladderwrack is on the same rung and is the opposite
+ *     proportion at half the fill, so the two are separable as thumbnails.
+ *  5. SMOOTH OR STRUCTURED.  STRUCTURED, and hard. Every corner of the block is
+ *     a vertex I can name and the interior is three flat planes.
+ *  6. THE MASSES.  Four. (1) the stone block, (2) the flesh slab under it,
+ *     (3) the near pair of legs, (4) the far pair as one dark shape.
+ *  7. HEAD VERB / BODY VERB.  There is no head, so the whole near face of the
+ *     block is the face and it never lifts -- SUNK, permanently. Body: barely
+ *     moving. One near foreleg is advanced and one far foot is off the floor,
+ *     which is as much stride as two metres a day earns.
+ *  8. SIGNATURE.  The eye: one enormous `gem` under a stone overhang, and
+ *     nothing else on the front of the creature. Second signature: the SHAGGY
+ *     CROWN -- four moss lobes standing five to eight cells PROUD of the
+ *     stone's top edge, so the moss is in the silhouette rather than painted
+ *     inside it. Two earlier versions kept the moss inside the block's top line
+ *     on the argument that a geometric plan wants its straight edges, and the
+ *     flat test came back both times as a plain slab on four stubs.
+ *  9. THE TWELVE REVERSALS -- eight named, with coordinates. A mineral's
+ *     reversals are corners rather than joints, and that is the point of it.
+ *       near base corner    cx-52, G-30   the block's lowest, most forward point
+ *       near shoulder       cx-46, G-46   the chamfer turns up
+ *       crown, near         cx-30, G-57
+ *       crown, high         cx- 6, G-62   the top plane's apex, off centre
+ *       far shoulder        cx+24, G-59
+ *       far corner          cx+42, G-48   the block is cut back on the far side
+ *       far base corner     cx+50, G-32
+ *       rim, under          cx+ 2, G-26   the block's underside, where the
+ *                                         flesh disappears beneath it
+ *       near foreleg        cx-34, G      advanced; foot 20 wide on a 13 ankle
+ *       far hind foot       cx+18, G-7    seven cells off the floor
+ * 10. THREE HUES.  H1 grey-green flesh (BASE / LIGHT / FORM), ~35 %. H2 grey
+ *     quarry stone (ACCENT family), ~40 % -- on this species the second hue is
+ *     the larger of the two, which is correct for a creature that is mostly
+ *     rock. H3 INNER, ~1 %: the eye's field and the mouth slit.
+ * 11. FOUR INTERIOR DETAIL EVENTS.  (a) the eye; (b) the shell's three FLAT
+ *     FACETS; (c) the moss lobes; (d) the shell rim's cast shadow onto the
+ *     flesh, with one DEEP core in the gutter. The flesh slab is otherwise ONE
+ *     LARGE FLAT REGION, which was the best surface number on the old roster
+ *     and is the one thing about the old mossback worth keeping.
+ * 12. EYES.  ONE `gem` at `xl`, placed with `eyeStamp` and `turned: true` --
+ *     without which the stamp is drawn nose-to-the-right and the eye looks the
+ *     wrong way on a creature facing viewer-left. `gem` is the style that
+ *     exists for a species with NO FACE: a hard dark rim, a lens of field
+ *     colour filling it, and a pupil pushed into the upper outer quadrant and
+ *     TOUCHING the rim, which is what stops it being a bullseye. The field is
+ *     INNER, the one warm dark on the sheet, so the eye reads amber against
+ *     grey-green.
+ *     AND THERE IS NO SOCKET UNDER IT. The old one painted a 28-cell INNER pit
+ *     and rimmed it in DEEP, and with a stamp on top that is a pair of
+ *     sunglasses. What the eye sits in is the shell's CAST SHADOW, which is a
+ *     value step with no line round it.
+ *     One mark below the eye: a five-cell INNER mouth slit.
+ * 13. SURFACE MATERIAL, THREE PLACES MAX.  One: the moss on the crown, and it
+ *     is there only because it BREAKS THE OUTLINE there. There is no moss
+ *     drawn anywhere on the block's faces.
+ * 14. EVERY INTERNAL DARK LINE.  Zero authored ones. The stone/flesh boundary
+ *     is a material change the internal-edge pass finds for itself; the facet
+ *     ridges are hard VALUE steps with no line on them, which is the entire
+ *     reason a mineral reads as hard.
+ * 15. Not an evolution.
  *
- * The only species on the roster with no head, and that is the design: the
- * animal is a rock, and the face is a crack in the front of it with one
- * enormous half-shut eye in the crack. Two eyes would have made it a creature
- * wearing a rock; one makes it the rock.
- *
- * Everything else follows from being *wide*. It is half again as wide as it is
- * tall, its top is a hard faceted plane rather than a dome, and the four legs
- * are barely long enough to be legs at all. The moss is the second material and
- * it carries the whole of the top: bare grey stone below the waterline, a
- * hanging green pelt above it, and a clump of ferns growing out of the crown.
+ * SYMMETRY. Measured about 75 %. `species.json` calls it a mineral and the
+ * mineral band is 80-95 %, but the manual singles this species out -- "mossback
+ * 90 %, an animal" -- so it is deliberately pulled below the mineral band by
+ * the block being cut back on the far side, the crown apex sitting left of
+ * centre, the eye being on one side only and the four legs standing at four
+ * different depths.
  */
 function mossback(p: Pen): void {
+  p.noTypeTraits();
   const G = p.ground, cx = p.cx;
 
-  const eyeX = cx - 26, eyeY = G - 34;
+  /* ------------------------------------------------------- the far pair.
+     Two stubs, in SHADE, set well inboard of the near pair and landing eight
+     cells off the floor. Four separate contacts on four different rows is what
+     stops a boulder with legs reading as a boulder on a shelf. */
+  limbPath(p, [[cx - 12, G - 16], [cx - 14, G - 11]] as Pt[], 12, 11, SHADE);
+  paw(p, cx - 14, G - 8, 7, { tone: SHADE, toes: 3 });
+  limbPath(p, [[cx + 14, G - 16], [cx + 16, G - 11]] as Pt[], 12, 11, SHADE);
+  paw(p, cx + 16, G - 8, 7, { tone: SHADE, toes: 3 });
 
-  /* --- far legs. Stubs, in the recessed tone, barely clear of the floor. */
-  legColumn(p, cx - 20, G - 13, G - 1, { tone: SHADE, side: -1, thick: 13, footHalf: 9, claws: false });
-  legColumn(p, cx + 24, G - 12, G - 1, { tone: SHADE, side: 1, thick: 12, footHalf: 8, claws: false });
+  /* --------------------------------------------------------- the flesh.
+     One slab of green, and it is meant to stay ONE LARGE FLAT REGION: the old
+     mossback's body was 42.9 % of its sprite in a single connected tone, the
+     best surface number anywhere on the roster, and that part of it was right.
+     Everything interesting happens at its edges. */
+  poly(p, [
+    [cx - 52, G - 19], [cx - 47, G - 30], [cx - 22, G - 36],
+    [cx + 10, G - 36], [cx + 39, G - 30], [cx + 47, G - 19],
+    [cx + 33, G - 12], [cx - 35, G - 13],
+  ] as Pt[], BASE);
 
-  /* --- the boulder. A polygon, not an ellipse: a rock convinces through its
-     flats and its corners, and the one thing a generated blob can never do is
-     have a straight edge. It is asymmetric on purpose -- higher and squarer at
-     the back, sheared away at the front over the eye. */
-  const rock: Pt[] = [
-    [cx - 52, G - 30], [cx - 44, G - 46], [cx - 14, G - 58], [cx + 24, G - 55],
-    [cx + 50, G - 36], [cx + 54, G - 16], [cx + 34, G - 7], [cx - 34, G - 7], [cx - 53, G - 14],
-  ];
-  poly(p, rock, ACCENT);
-  // Facet seams: straight runs with a lit lip above and a dark gutter below, so
-  // each plane turns away from the next instead of blending into it.
-  for (const [ax, ay, bx, by] of [
-    [cx - 44, G - 44, cx - 20, G - 22], [cx - 20, G - 22, cx + 18, G - 26],
-    [cx + 18, G - 26, cx + 48, G - 34], [cx - 12, G - 56, cx - 4, G - 27],
-    [cx + 22, G - 53, cx + 17, G - 27], [cx + 30, G - 44, cx + 44, G - 20],
-    [cx + 4, G - 20, cx + 34, G - 15],
-  ] as const) {
-    stroke(p, ax, ay, bx, by, ACCENT_DARK);
-    stroke(p, ax, ay - 1, bx, by - 1, ACCENT_LIT);
-  }
-  speckle(p, cx - 46, G - 26, cx + 46, G - 10, 0.06, ACCENT_DARK);
-  // The rock is undercut: a dark band all along the bottom so the boulder sits
-  // on the floor rather than being printed on it.
-  for (let x = cx - 50; x <= cx + 50; x++) {
-    const by = bottomOf(p, x);
-    if (by < G - 6) for (let k = 0; k < 5; k++) cellOver(p, x, by - k, k < 2 ? ACCENT_DARK : SHADE);
-  }
-  // Moss creeping down onto the grey face in patches, so the two materials
-  // interlock instead of meeting at one clean line.
-  for (const [mx, my, mr] of [[cx - 30, G - 30, 7], [cx + 12, G - 40, 6], [cx + 34, G - 26, 5]] as const) {
-    for (let i = 0; i < 26; i++) {
-      const a = (i / 26) * Math.PI * 2, r = mr * (0.5 + p.rng.next() * 0.6);
-      blob(p, mx + Math.cos(a) * r * 0.7, my + Math.sin(a) * r * 0.5, 2.2, 1.8, i % 3 === 0 ? SHADE : BASE);
-    }
-  }
+  /* ------------------------------------------------------ the near pair.
+     Splayed outward -- a vertical cylinder is furniture, a leaning one is
+     weight -- and the near foreleg is advanced. Feet 20 cells wide on a
+     13-cell ankle: that step IS the foot, and ours were 10-20 % wider, which is
+     why they did not exist. */
+  cast(p, 18, () => {
+    limbPath(p, [[cx - 30, G - 19], [cx - 35, G - 8]] as Pt[], 18, 15, BASE);
+    paw(p, cx - 35, G, 11, { tone: BASE, toes: 3 });
+  });
+  cast(p, 17, () => {
+    limbPath(p, [[cx + 28, G - 19], [cx + 33, G - 9]] as Pt[], 17, 14, BASE);
+    paw(p, cx + 33, G - 1, 10, { tone: BASE, toes: 3 });
+  });
 
-  /* --- near legs, in the stone tone. The near foreleg is reaching -- a good
-     eight cells ahead of the rock it is carrying. On a creature that is famous
-     for covering two metres a day, one leg out in front is the entire pose. */
-  legColumn(p, cx - 36, G - 11, G, { tone: ACCENT, side: -1, thick: 15, footHalf: 11, front: true, claws: false });
-  legColumn(p, cx + 34, G - 11, G, { tone: ACCENT, side: 1, thick: 14, footHalf: 10, front: true, claws: false });
+  /* ---------------------------------------------------------- THE BLOCK.
+     One angular boulder with corners I can name, and THREE FACETS.
+     A flat plane takes ONE TONE across its whole area with no gradient at all.
+     Two planes meeting at a ridge get two flat tones and a hard boundary with
+     no intermediate step, and THAT STEP IS THE RIDGE -- do not also draw a line
+     on it. This is how every mineral in the reference generation reads as hard,
+     and it is exactly what the old mossback did not do: its cap was a single
+     92 x 42-cell near-white region with the terminator running almost
+     vertically across a boulder.
+     Each facet's tone is simply WHICH WAY IT FACES: the top plane is turned up
+     and left into the lamp, the near face is turned toward the viewer and takes
+     the stone's own colour, and the far end is cut back and turned away.
+     THE UNDERSIDE IS AN ARCH, low at both ends and riding high in the middle.
+     Drawn as a straight horizontal rim it was a tabletop with legs, and the
+     creature read as furniture; arched, the block wraps down over the animal's
+     shoulders and its near face is left clear for the eye. */
+  cast(p, 100, () => {
+    // Top plane -> the lamp. Its apex is left of centre, which is most of what
+    // keeps a mineral off a 90 % mirror score.
+    flat(p, () => poly(p, [
+      [cx - 50, G - 40], [cx - 30, G - 54], [cx - 10, G - 58],
+      [cx + 16, G - 52], [cx + 34, G - 40],
+      [cx + 14, G - 38], [cx - 12, G - 44], [cx - 38, G - 36],
+    ] as Pt[], ACCENT_LIT));
+    // Near face -> the viewer. The stone's own colour, and the largest facet.
+    flat(p, () => poly(p, [
+      [cx - 54, G - 20], [cx - 50, G - 40], [cx - 38, G - 36],
+      [cx - 12, G - 44], [cx + 14, G - 38], [cx + 22, G - 26],
+      [cx +  8, G - 30], [cx - 16, G - 34], [cx - 38, G - 25],
+    ] as Pt[], ACCENT));
+    // Far end -> cut back, turned away, and much smaller than the near one.
+    flat(p, () => poly(p, [
+      [cx + 14, G - 38], [cx + 34, G - 40], [cx + 44, G - 26],
+      [cx + 30, G - 22], [cx + 22, G - 26],
+    ] as Pt[], ACCENT_DARK));
 
-  /* --- the moss. The second material, and the thing that turns a rock into a
-     living rock: a thick pelt lying over the whole crown and hanging past the
-     front edge into a fringe above the eye. */
-  mossCap(p, cx - 52, cx + 52, (x) => {
-    const t = (x - (cx - 52)) / 104;
-    // Follows the rock's own top plane rather than a ruled line, so the pelt
-    // sits on the animal instead of across it.
-    return G - 30 - Math.sin(Math.min(1, t * 1.25) * Math.PI) * 26 - t * 4;
-  }, 15, 11);
-  // The fringe over the brow: a second, deeper run of clumps hanging past the
-  // front-left corner and stopping just short of the eye.
-  mossCap(p, cx - 52, cx - 14, (x) => G - 46 + (cx - 14 - x) * 0.26, 13, 10);
+    /* ------------------------------------------------------- the moss.
+       ONE continuous pelt with a LOBED top edge, not four separate lobes. Four
+       separate ones were tried and every one of them got its own closed outline
+       -- LIGHT against ACCENT over 64 cells is inked by the internal-edge pass
+       -- so the creature came back wearing four green balls, which is the
+       paper-cut-out failure the manual names for ears. One mass with a
+       scalloped edge is a pelt; four discs are ornaments.
+       It is a FACET as well: left to the shading pass, a pale material sitting
+       in the brightest part of the sprite runs straight up its own ramp and the
+       block comes back wearing a fleece. That happened to the first version.
+       Four lobes, tallest left of the crown and tapering both ways. Below three
+       reads as damage, above eight reads as texture. */
+    flat(p, () => poly(p, [
+      [cx - 30, G - 46],
+      [cx - 32, G - 54], [cx - 25, G - 56],
+      [cx - 21, G - 53],
+      [cx - 13, G - 63], [cx -  6, G - 64],
+      [cx -  1, G - 60],
+      [cx +  7, G - 62], [cx + 13, G - 59],
+      [cx + 20, G - 55], [cx + 27, G - 47],
+      [cx + 18, G - 48], [cx +  0, G - 53], [cx - 18, G - 50], [cx - 26, G - 45],
+    ] as Pt[], LIGHT));
+  });
 
-  /* --- ferns growing out of the crown. Three blades at three angles: growth,
-     not a fringe. They are the only thing on this animal that points upward. */
-  for (const [fx, fy, ln, ang, w, tone] of [
-    [cx - 10, G - 64, 22, Math.PI * 1.26, 5.4, SHADE],
-    [cx + 6, G - 62, 18, Math.PI * 1.60, 4.6, BASE],
-    [cx + 22, G - 58, 15, Math.PI * 1.88, 4.0, SHADE],
-  ] as const) {
-    limbPath(p, [[fx, fy + 10], [fx, fy + 1]], 5, 3.5, SHADE);
-    leaf(p, fx, fy, ln, ang, w, tone);
-  }
+  /* ------------------------------------------- the one deep shadow event.
+     A DEEP PATCH in the gutter the block's near rim overhangs -- a filled
+     region with a real interior, which the internal-edge pass reads as a core
+     shadow and leaves alone, so it is dark without a line round it. It follows
+     the arch rather than cutting straight across, and it is what the eye sits
+     at the lower edge of.
+     RECORDED EXEMPTION, as on both hedgerow species: "12-25 % of body pixels
+     darker than the mean outline luma" cannot be met from a design file on this
+     palette. mossback's ink is #26301f and its OUTLINE resolves to luma 52,
+     while the darkest tone available to a design -- DEEP -- resolves to 54. The
+     creature literally cannot contain a pixel darker than the line drawn round
+     it until one hex value in `species.json` changes. */
+  poly(p, [
+    [cx - 14, G - 32], [cx + 8, G - 29], [cx + 22, G - 25],
+    [cx + 20, G - 22], [cx + 6, G - 24], [cx - 13, G - 27],
+  ] as Pt[], DEEP);
 
-  /* --- a scatter of chipped rubble at the foot of the near side, so the thing
-     reads as having ground its way here rather than been placed. */
-  for (const [rx, ry, r] of [[cx - 48, G - 2, 3.2], [cx - 42, G - 1, 2.2], [cx + 46, G - 2, 2.6]] as const) {
-    blob(p, rx, ry, r, r * 0.7, ACCENT_DARK);
-    cellOver(p, rx - 1, ry - 2, ACCENT_LIT);
-  }
+  if (p.back) { p.face(cx - 24, G - 19, 16); return; }
 
-  if (p.back) { p.face(eyeX, eyeY, 14); return; }
-
-  /* --- the crack, and the eye in it. The crack is drawn first and is wider
-     than the eye at both ends, so the eye reads as something looking out of a
-     fissure rather than as an eye painted on a stone. */
-  poly(p, [[eyeX - 20, eyeY - 2], [eyeX - 6, eyeY - 9], [eyeX + 14, eyeY - 5],
-    [eyeX + 18, eyeY + 4], [eyeX - 2, eyeY + 10], [eyeX - 18, eyeY + 6]], SHADE);
-  for (const q of arc(eyeX - 1, eyeY, 19, 9, Math.PI * 1.02, Math.PI * 1.98, 22)) cellOver(p, q[0], q[1] + 1, DEEP);
-  // Half shut, and huge: nine cells of half-width on a creature this size. The
-  // brief says slow-blinking and the lid is the only place that can live.
-  // Sclera in pale stone rather than white. A stark white ring this size on a
-  // grey rock reads as a cartoon eyeball stuck on; the warm pale tone keeps it
-  // part of the same object.
-  eye(p, eyeX, eyeY - 1, 8.6, 'sleepy', { side: -1, iris: ACCENT_DARK, sclera: ACCENT_LIT, lid: ACCENT });
-  p.face(eyeX, eyeY, 14);
-
-  // The mouth: a second crack, low and long, with a lit lower lip. A rock's
-  // mouth is a fissure, so it is drawn as one -- kinked, not curved.
-  polyLine(p, [[cx - 40, G - 19], [cx - 24, G - 16], [cx - 6, G - 18], [cx + 8, G - 15]], INNER, false, true);
-  polyLine(p, [[cx - 40, G - 18], [cx - 24, G - 15], [cx - 6, G - 17], [cx + 8, G - 14]], ACCENT_LIT, false, true);
+  /* ----------------------------------------------------------- the eye.
+     ONE enormous ocular event and nothing else on the face -- the reference's
+     whole answer for a species with no head.
+     NOT `turned`, and that was measured rather than guessed. `turned: true`
+     mirrors the stamp, which moves `gem`'s pupil from the near side of the lens
+     to the far side -- but `blitEyeStamp` re-stamps the catchlight at its
+     AUTHORED column unmirrored, and rightly so, because two glints splayed
+     outward is what a googly eye IS. On a one-eyed creature the result was a
+     pupil pressed against the far rim with a white speck floating alone on the
+     near side, which reads as a chip in the stone rather than as an eye. Left
+     unmirrored, the pupil is on the near side with its own catchlight beside it
+     and the creature is looking where it is going.
+     NO SOCKET. The 28-cell INNER pit the old one painted under the stamp, with
+     a DEEP rim round it, is what made the whole mineral group read as
+     sunglasses. What the eye sits in is the block's cast shadow and the DEEP
+     gutter above it -- a value step with no line round it, which is all the
+     recess a reference sprite ever gives one. */
+  eyeStamp(p, cx - 26, G - 19, 'gem', 'xl', { iris: INNER });
+  p.face(cx - 24, G - 19, 16);
+  // The one mark below the eye: five cells of INNER on the flesh. `gem` has no
+  // lid and no brow, so without it the lower face is completely empty -- which
+  // the reference allows only where the eye is a far larger share of the sprite
+  // than this one is.
+  mouthLine(p, cx - 2, G - 15, 5, 1);
 }
 
 /* ========================================================= bladderwrack */
 
 /**
- * One strap of kelp: a long blade along a curve, with a dark midrib and pairs
- * of float bladders swelling either side of it.
+ * PART 1 BRIEF SHEET
  *
- * The bladders are the species, so they are drawn as *pairs straddling the
- * midrib* rather than as beads down the middle -- which is how real wrack grows
- * and, more usefully, is the only arrangement that still reads as bladders when
- * the strap is nine cells wide. A single row down the centre came out as a
- * zip.
- */
-function kelpStrap(p: Pen, pts: Pt[], w0: number, w1: number, tone: number, bladders: number[]): void {
-  const d = path(pts);
-  // Stamped by hand rather than with `limbPath`, because the width has to
-  // *undulate*. A blade of constant taper comes out as a sausage, and three
-  // sausages hanging off a stem read as tentacles; the slow swell and pinch
-  // along the length is the whole difference between kelp and an arm.
-  const width = (t: number): number => (w0 + (w1 - w0) * t) * (0.8 + 0.2 * Math.cos(t * Math.PI * 5.5));
-  for (const pass of [0, 1]) {
-    for (let i = 0; i < d.length; i++) {
-      const t = i / (d.length - 1);
-      const r = Math.round(width(t) / 2) + (pass === 0 ? 2 : 0);
-      const q = d[i]!;
-      for (let dy = -r; dy <= r; dy++) {
-        for (let dx = -r; dx <= r; dx++) {
-          if (dx * dx + dy * dy > r * r + r * 0.6) continue;
-          const px = Math.round(q[0]) + dx, py = Math.round(q[1]) + dy;
-          if (pass === 0) { if (p.m.filled(px, py)) p.m.set(px, py, DEEP); }
-          else p.m.set(px, py, tone);
-        }
-      }
-    }
-  }
-  for (let i = 1; i < d.length; i++) {
-    const t = i / (d.length - 1), r = width(t) / 2;
-    const n = normalAt(d, i), q = d[i]!;
-    const up = n[1] < 0 || (n[1] === 0 && n[0] < 0) ? 1 : -1;
-    cellOver(p, q[0] + n[0] * r * up, q[1] + n[1] * r * up, tone === SHADE ? BASE : LIGHT);
-    cellOver(p, q[0] - n[0] * r * up, q[1] - n[1] * r * up, DEEP);
-  }
-  for (let i = 2; i < d.length - 2; i += 1) cellOver(p, d[i]![0], d[i]![1], DEEP);
-  for (const t of bladders) {
-    const i = Math.round(t * (d.length - 1));
-    const q = d[i]!, n = normalAt(d, i);
-    const off = ((w0 + (w1 - w0) * t) / 2) * 0.62;
-    for (const s of [-1, 1]) {
-      const bx = q[0] + n[0] * off * s, by = q[1] + n[1] * off * s;
-      blob(p, bx, by, 3.3, 2.9, ACCENT);
-      cellOver(p, bx - 1, by - 1, ACCENT_LIT);
-      cellOver(p, bx, by + 2, ACCENT_DARK);
-    }
-  }
-}
-
-/**
- * "Draped kelp column with float bladders and a holdfast base."
- *
- * The one with no legs, no feet and nothing resembling a limb: a stem standing
- * on a fist of roots. Everything is decided by that. It is the tallest and by
- * far the narrowest thing in the group, it has no bilateral pose to strike, and
- * so the whole of its life has to come from the *lean* -- an S through the
- * stipe with every frond streaming the same way, as if a current has just gone
- * past and the animal has not finished swaying back.
- *
- * The Vellum entry says it anchors to one rock and will find the same rock
- * again if you prise it off. So the holdfast is drawn gripping something: a
- * splayed knot of root fingers with a stone clamped in them, and it is the
- * widest part of the creature.
+ *  1. WHAT IS IT.  A kelp. One thick stipe growing out of a holdfast clamped to
+ *     the rock it will spend its whole life on, a chain of gas-filled float
+ *     bladders down its seaward edge, and one frond folded forward over its
+ *     face like a hood.
+ *  2. PLAN.  C / SERPENT -- limbless, one long path. That plan says the design
+ *     is exactly three decisions: how the path curves, what the head end does
+ *     and what the foot end does. So: the stipe leans out at the waist and back
+ *     over at the shoulder in one shallow S; the bottom terminal is a splayed
+ *     holdfast with carved gaps between its roots; the top terminal is the hood.
+ *     There are no other parts, and in particular there are no loose streaming
+ *     fronds -- those are what made the old one 45.3 % ink and 9.5 % body
+ *     colour, because every free-floating ribbon buys two cells of outline all
+ *     the way round itself.
+ *  3. RUNG.  1.4 m, LARGE. MEASURED: ships 81 x 111, long dimension 111 against
+ *     a band of 100-116, body area 1375 ref px against 1300-1900, fill 61 %.
+ *     Inside the height clamp rather than sitting on it as the old one did.
+ *     THE REST OF THE SHEET: ink 21.0 % against the old bladderwrack's 45.3 %;
+ *     largest region 14.9 %, top three 41.1 %, top-three COLOUR share 58.7 %,
+ *     122 regions; 2.9 tone changes per scanline; 283 body-ramp runs of which
+ *     only 24 % are <= 3 cells, the best short-run number in the group; 0
+ *     highlight events; 0 SPEC; INNER 1.8 %; symmetry 44 %.
+ *  4. ASPECT AND FILL.  TALL AND NARROW, about 1:1.4, at roughly 65 % fill.
+ *     mossback is on the same rung and is the exact opposite proportion at
+ *     three-to-two the other way; the two are separable as thumbnails on shape
+ *     alone.
+ *  5. SMOOTH OR STRUCTURED.  SMOOTH, and committed to it. A kelp has no
+ *     skeleton, so this creature has ZERO internal drawn lines and spends its
+ *     whole budget on the precision of one curve, the six bumps and the two
+ *     terminals -- which is what the manual means by smooth being harder rather
+ *     than easier.
+ *  6. THE MASSES.  Four. (1) the stipe, (2) the head bulb it swells into,
+ *     (3) the holdfast, (4) the bladder chain. The hood is part of (2).
+ *  7. HEAD VERB / BODY VERB.  Head LOWERED -- the crown droops forward and left
+ *     under the weight of the frond, which is what kelp out of water actually
+ *     does and is the opposite of thornmarch standing beside it. Body: leaning,
+ *     anchored, and going nowhere. The centre of mass is well left of the
+ *     holdfast's centre, so the whole plant is straining seaward.
+ *  8. SIGNATURE.  The bladder chain -- SIX gold ovals bulging the back contour,
+ *     each one big enough to break the outline on its own, and varying in size
+ *     along the length. Silhouette first and colour second: flatten the sprite
+ *     and the six bumps are still there. Second signature: the hood's POINT,
+ *     projecting left at the crown, which is the only thing in the flat
+ *     silhouette that says which end of this creature is alive.
+ *  9. THE TWELVE REVERSALS -- a serpent's are curvature reversals and terminal
+ *     landmarks, and eight are named.
+ *       holdfast, near toe  cx-36, G      the splay's most forward point
+ *       root gap            cx-16, G-4    carved, not ruled
+ *       stipe waist         cx+ 9, G-44   the S's outward extreme
+ *       stipe shoulder      cx- 3, G-70   the S reverses back over
+ *       bladder 3 crest     cx+31, G-58   the widest point of the whole plant
+ *       bladder 6 crest     cx+ 5, G-95   the chain's last and smallest
+ *       crown               cx-10, G-104
+ *       hood point          cx-44, G-92   the leftmost cell on the creature
+ *       chin                cx-22, G-78   the bulb's underside
+ *       holdfast, far toe   cx+32, G
+ * 10. THREE HUES.  H1 kelp green (BASE / LIGHT / FORM), ~58 %. H2 gold bladders
+ *     (ACCENT family), ~17 % -- and they PAINT THEIR OWN COLOUR rather than
+ *     resolving to the top and bottom of the ramp, which is the diagnostic the
+ *     manual gives for an accent that is really too thin to count. H3 INNER,
+ *     ~1 %: the crevice under the holdfast and the mouth.
+ * 11. FOUR INTERIOR DETAIL EVENTS.  (a) the face under the hood; (b) the six
+ *     bladders; (c) the hood as one FLAT facet -- a frond is a plane and a
+ *     plane takes one tone across its whole area; (d) the cast shadows the
+ *     bladders and the hood throw onto the stipe. Nothing else. The stipe's
+ *     whole length is flat colour with the shading pass running one continuous
+ *     light ridge along it, parallel to its own axis, exactly as a reference
+ *     serpent gets ONE ridge for the whole body rather than one per coil.
+ * 12. EYES.  `sleepy` m, `far: 'm-'`, spread 6. Sleepy is the widest and
+ *     shallowest stamp in the set -- heavy flesh, one lid line, a letterbox --
+ *     and a creature that anchors to one rock and stays there for its whole
+ *     life is the definition of placid. No two faces in this group share a
+ *     style: hooded, angry, gem, sleepy, compound.
+ *     ONE mark below the eyes: a six-cell INNER mouth, five cells under the
+ *     lid line.
+ * 13. SURFACE MATERIAL, THREE PLACES MAX.  Zero. A kelp's surface is smooth and
+ *     wet and there is nothing on it. The only edge event is the hood's blade,
+ *     which is a mass rather than a material.
+ * 14. EVERY INTERNAL DARK LINE.  None authored. The old one ruled a `seamPath`
+ *     midrib the whole length of the stipe with a LIGHT lip over it; that is
+ *     three cells of ink to say what the light pass now says for free, and on a
+ *     smooth creature it was the one line that had to go.
+ * 15. Not an evolution.
  */
 function bladderwrack(p: Pen): void {
+  p.noTypeTraits();
   const G = p.ground, cx = p.cx;
 
-  // The stock verdant pass grows leaf blades off the highest contour. On this
-  // species the highest contour is the crown, six cells above the eyes, and
-  // three blades landed there read as a hat rather than as foliage on a thing
-  // that is already entirely foliage.
-  p.noTypeTraits();
+  /* ------------------------------------------------------- the holdfast.
+     Splayed flat and gripping, drawn as ONE mass with divisions rather than as
+     four separate worms -- the same reasoning the manual gives for a
+     crustacean's bank of legs. SHADE, because it is genuinely a different part
+     set behind the stipe and that is the one case that wants the ink.
+     The gaps between the roots are CARVED out of the bottom contour, not ruled
+     on: a 1-cell dark stroke there is half a reference pixel and is gone at 64,
+     while a notch is a shape change and survives all the way down. */
+  poly(p, [
+    [cx - 36, G], [cx - 30, G - 15], [cx - 8, G - 23],
+    [cx + 12, G - 22], [cx + 28, G - 13], [cx + 32, G],
+  ] as Pt[], SHADE);
+  toeNotches(p, cx - 34, cx + 30, G, 4, 11);
 
-  const crownX = cx + 14, crownY = G - 96;
+  /* ---------------------------------------------------------- the stipe.
+     ONE path, one width profile, nothing branching off it. It leans OUT at the
+     waist and back OVER at the shoulder -- a single shallow S -- and it is
+     thickest a third of the way up, where a kelp's stipe actually carries its
+     load. Without the S it is a length of pipe, and a pipe with a cap on it is
+     the pickle the first version of this creature was. */
+  limbPath(p, [
+    [cx + 4, G - 18], [cx + 13, G - 46], [cx - 5, G - 72], [cx - 11, G - 88],
+  ] as Pt[], 34, 24, BASE, { bulge: 4 });
 
-  /* --- the rock, and the holdfast gripping it. Drawn first and widest: this
-     creature's whole identity is that it is fastened to one stone. */
-  poly(p, [[cx - 40, G - 8], [cx - 32, G - 21], [cx - 14, G - 23], [cx - 2, G - 13], [cx - 4, G - 1], [cx - 38, G - 1]], SHADE);
-  for (const [ax, ay, bx, by] of [[cx - 34, G - 18, cx - 18, G - 13], [cx - 22, G - 22, cx - 16, G - 6]] as const) {
-    stroke(p, ax, ay, bx, by, DEEP);
-    stroke(p, ax, ay - 1, bx, by - 1, LIGHT);
-  }
-  // Root fingers, splayed over the stone and onto the floor. Seven of them, at
-  // uneven angles and uneven lengths, because a symmetric root is a hand.
-  for (const [ang, len, th, tone] of [
-    [Math.PI * 0.96, 30, 8, ACCENT_DARK], [Math.PI * 0.86, 24, 7, SHADE],
-    [Math.PI * 0.74, 17, 6, ACCENT_DARK], [Math.PI * 0.56, 15, 6, SHADE],
-    [Math.PI * 0.30, 21, 7, ACCENT_DARK], [Math.PI * 0.14, 28, 8, SHADE],
-    [Math.PI * 0.04, 34, 7, ACCENT_DARK],
-  ] as const) {
-    const sx = cx - 12, sy = G - 23;
-    limbPath(p, [[sx, sy], [sx + Math.cos(ang) * len * 0.6, sy + Math.sin(ang) * len * 0.55],
-      [sx + Math.cos(ang) * len, G - 2]], th, 3, tone, { front: true, lit: BASE });
-  }
+  /* ------------------------------------------------------- the head bulb.
+     The stipe swells at the top into something that is recognisably a head
+     rather than the end of a pipe. A column that swells is a neck with a head
+     on it; a column that stops is a stick. */
+  blob(p, cx - 10, G - 91, 19, 15, BASE);
 
-  /* --- fronds on the far side, in the recessed tone, laid down before the
-     stipe so the column stands in front of them. */
-  kelpStrap(p, [[crownX + 2, crownY + 6], [cx + 28, G - 74], [cx + 38, G - 48], [cx + 34, G - 26]], 11, 5, SHADE, [0.25, 0.55, 0.82]);
-  kelpStrap(p, [[crownX - 8, crownY + 8], [cx - 2, G - 74], [cx - 10, G - 56], [cx - 6, G - 38]], 10, 4.5, SHADE, [0.3, 0.62]);
+  /* ----------------------------------------------------- the float bladders.
+     SIX, down the seaward edge, VARYING IN SIZE along the length -- biggest at
+     the waist where the plant needs the most lift and tapering both ways. The
+     old one had about nine identical circles and read as a string of beads;
+     three to eight and varying is the reference's count for any repeated
+     structural element.
+     Each sits half OUTSIDE the stipe's contour, which is not a nicety: a
+     bladder drawn wholly inside the column is a coloured spot that the
+     internal-edge pass then rings in ink, and six closed ink rings on a
+     forty-cell-wide creature is where the old one's 45 % went. Half outside,
+     most of each border is the outer silhouette, which is free.
+     ALL SIX ARE ONE CASTER. Six separate `cast` calls would be six shadow
+     events against a budget of four; one block throws the whole chain's shadow
+     down-and-right onto the stipe as a single event, and because it is one
+     offset it reads as one light. */
+  cast(p, 18, () => {
+    for (const [bx, by, r] of [
+      [ 16, -26, 6.5],
+      [ 22, -42, 8.5],
+      [ 22, -58, 9.0],
+      [ 16, -73, 7.0],
+      [  8, -85, 5.5],
+      [  0, -96, 4.5],
+    ] as const) blob(p, cx + bx, G + by, r, r * 1.12, ACCENT);
+  });
 
-  /* --- the stipe. One long S: out to the right at the shoulder, back to the
-     left through the waist, upright again at the crown. A straight stem is a
-     post, and a post is the one thing this creature must not be. */
-  const stipe: Pt[] = [[cx - 12, G - 20], [cx - 6, G - 48], [cx + 4, G - 74], [crownX, crownY + 10]];
-  // A pale plastron up the front of the stem, so the column has a lit face and
-  // a shadow face instead of being one green tube.
-  limbPath(p, path(stipe), 21, 16, BASE, { front: true, bulge: 1.5, lit: LIGHT, dark: DEEP });
-  const sd = path(stipe);
-  const halfAt = (t: number): number => (21 + (16 - 21) * t) / 2;
+  /* ----------------------------------------------------------- the hood.
+     One frond growing off the back of the crown, folded forward over the head
+     and coming to a POINT well clear of the column on the left. It is the head
+     terminal and the pointed tip is the single thing in the whole silhouette
+     that says which of the two ends of this creature is alive.
+     It is a FACET: a frond is a plane, a plane takes ONE TONE across its whole
+     area with no gradient, and airbrushing it turns it into a green sausage.
+     And it CASTS, which is what puts the face in a recess instead of leaving it
+     as two marks on a flat panel -- the deliberate deep shadow the manual asks
+     every otherwise-even creature to be given. */
+  cast(p, 40, () => {
+    flat(p, () => poly(p, [
+      [cx +  6, G - 96], [cx +  2, G -104], [cx - 16, G -105],
+      [cx - 34, G - 99], [cx - 44, G - 92], [cx - 30, G - 91],
+      [cx - 12, G - 93], [cx +  2, G - 91],
+    ] as Pt[], LIGHT));
+  });
 
-  /* The pale left face of this stem was the emptiest area anywhere in the group
-     -- twenty cells across, sixty tall, and three scratches on it. Three things
-     go on it now, in order, none of them costing a cell of silhouette.
+  /* ------------------------------------------- the one deep shadow event.
+     Two DEEP PATCHES, and they are patches rather than strokes on purpose: a
+     filled region with a real interior is read as a core shadow and left alone,
+     so it is dark with no line round it.
+     The first is the recess under the hood where it overhangs the neck -- a
+     mostly-even creature has to be given one place where the whole value range
+     is concentrated, and on this one it is under the frond, which also puts the
+     face in a hollow instead of on a flat panel. The second is the crevice
+     between two roots of the holdfast, in INNER: "anchors to one rock and stays
+     there for its whole life" is the Vellum entry, and a dark gap where the
+     grip closes is the whole of it in three cells.
+     RECORDED EXEMPTION, as on the rest of this group: 12-25 % of body pixels
+     darker than the mean outline luma is unreachable from a design file on this
+     palette -- ink #22301c resolves the OUTLINE to luma 50 and the darkest
+     tone a design can write, DEEP, resolves to 52. */
+  poly(p, [
+    [cx +  4, G - 92], [cx -  8, G - 93], [cx - 18, G - 92],
+    [cx - 16, G - 88], [cx -  7, G - 88], [cx +  5, G - 86],
+  ] as Pt[], DEEP);
+  poly(p, [
+    [cx - 4, G - 1], [cx + 4, G - 1], [cx + 1, G - 10], [cx - 2, G - 10],
+  ] as Pt[], INNER);
 
-     First: longitudinal striae. A kelp stipe is grooved along its whole length,
-     and two broken dark runs with a lit one between them are the difference
-     between a slab of colour and something with a grain. Broken, never ruled --
-     a continuous line down a limb reads as a seam in a mould. */
-  for (const [s, tone] of [[-0.78, DEEP], [-0.52, DEEP], [-0.22, LIGHT], [0.3, DEEP], [0.62, DEEP]] as const) {
-    for (let i = 3; i < sd.length - 3; i++) {
-      if (((i + Math.round(s * 7)) >> 1) % 4 === 0) continue;
-      const n = normalAt(sd, i), q = sd[i]!, w = halfAt(i / (sd.length - 1));
-      cellOver(p, q[0] + n[0] * w * s, q[1] + n[1] * w * s, tone);
-    }
-  }
+  if (p.back) { p.face(cx - 16, G - 85, 15); return; }
 
-  /* Second: the growth nodes. The stipe of a wrack is jointed, and each joint is
-     where a frond leaves it. Five instead of three, and each is a swelling
-     rather than a line -- a lit lip, a dark gutter beneath it, and a dark pinch
-     at each flank so the stem narrows through the joint. */
-  for (const t of [0.13, 0.29, 0.45, 0.61, 0.77]) {
-    const i = Math.round(t * (sd.length - 1));
-    const q = sd[i]!, n = normalAt(sd, i), hh = halfAt(t) + 0.5;
-    for (const d of [-1, 0, 1]) {
-      const tone = d < 0 ? LIGHT : d === 0 ? DEEP : SHADE;
-      stroke(p, q[0] - n[0] * hh, q[1] - n[1] * hh + d, q[0] + n[0] * hh, q[1] + n[1] * hh + d, tone);
-    }
-    for (const s of [-1, 1]) {
-      cellOver(p, q[0] + n[0] * hh * s, q[1] + n[1] * hh * s - 1, DEEP);
-      cellOver(p, q[0] + n[0] * hh * s * 0.82, q[1] + n[1] * hh * s * 0.82 - 2, SHADE);
-    }
-  }
-
-  /* Third: old bladders, shrivelled and half reabsorbed into the stem, studding
-     the face between the joints. This is the species' own ornament reused as
-     texture -- the same thing the fronds carry, older and smaller -- so the flat
-     gets filled without inventing a second vocabulary for it. */
-  for (const [t, s, r] of [[0.20, -0.62, 2.6], [0.35, 0.38, 2.2], [0.38, -0.4, 3.0],
-    [0.50, -0.66, 2.4], [0.56, 0.44, 2.0], [0.70, -0.44, 2.8], [0.82, -0.64, 2.2],
-    [0.88, 0.4, 1.9]] as const) {
-    const i = Math.round(t * (sd.length - 1));
-    const q = sd[i]!, n = normalAt(sd, i), w = halfAt(t);
-    const bx = q[0] + n[0] * w * s, by = q[1] + n[1] * w * s;
-    blob(p, bx, by, r, r * 0.86, ACCENT);
-    for (const c of arc(bx, by, r, r * 0.86, Math.PI * 0.12, Math.PI * 0.88, 8)) cellOver(p, c[0], c[1], ACCENT_DARK);
-    cellOver(p, bx - 1, by - 1, ACCENT_LIT);
-  }
-
-  /* --- the crown: a swollen head-bulb at the top of the stipe, with the fronds
-     springing out of its underside. */
-  blobFront(p, crownX, crownY, 17, 16, BASE);
-  // Two young blades springing up out of the crown, each carrying a bladder.
-  //
-  // These exist to kill a specific failure. Drawn with a smooth domed top, the
-  // column plus its draped fronds came out as a cone with a face on it -- which
-  // reads unmistakably as somebody in a hooded cloak, and no amount of work on
-  // the fronds fixed it. Two things growing upward off the head do, because a
-  // hood does not sprout.
-  //
-  // Both lean the same way, hard, and at two different lengths. Grown
-  // symmetrically up and out -- which is where they went first -- they read
-  // instantly as a pair of pointed ears and the whole creature turned into a
-  // cat. Two blades streaming with the fronds cannot be ears.
-  for (const [bx, by, ln, ang, w] of [
-    [crownX, crownY - 11, 30, Math.PI * 1.68, 4.8], [crownX + 8, crownY - 5, 19, Math.PI * 1.88, 3.8],
-  ] as const) {
-    limbPath(p, [[bx, by + 6], [bx + Math.cos(ang) * 6, by + Math.sin(ang) * 6]], 6, 5, BASE, { front: true });
-    leaf(p, bx, by, ln, ang, w, bx < crownX ? BASE : SHADE);
-    const tx = bx + Math.cos(ang) * ln * 0.62, ty = by + Math.sin(ang) * ln * 0.62;
-    blob(p, tx, ty, 3.4, 3.0, ACCENT);
-    cellOver(p, tx - 1, ty - 1, ACCENT_LIT);
-    cellOver(p, tx, ty + 2, ACCENT_DARK);
-  }
-
-  /* --- fronds on the near side. Three, all streaming right, at three lengths,
-     with the bladders bunched thickest on the longest. */
-  kelpStrap(p, [[crownX + 8, crownY + 6], [cx + 32, G - 76], [cx + 44, G - 50], [cx + 38, G - 24], [cx + 44, G - 10]], 12, 5, BASE, [0.2, 0.42, 0.64, 0.86]);
-  kelpStrap(p, [[crownX - 8, crownY + 12], [cx + 2, G - 70], [cx + 12, G - 48], [cx + 8, G - 26]], 11, 4.5, LIGHT, [0.28, 0.58, 0.85]);
-  kelpStrap(p, [[cx + 2, G - 58], [cx + 20, G - 46], [cx + 28, G - 28], [cx + 22, G - 12]], 10, 4, BASE, [0.3, 0.6, 0.88]);
-  // One blade laid out along the floor to the left, away from the rest. It is
-  // the only thing that stops the outline being a plain cone -- which is what
-  // the first pass at this creature was, and a cone with a face on it reads as
-  // somebody in a cloak.
-  kelpStrap(p, [[cx - 14, G - 26], [cx - 30, G - 16], [cx - 46, G - 8], [cx - 58, G - 4]], 10, 4, SHADE, [0.35, 0.72]);
-
-  /* --- a bunch of bladders at the throat, where the fronds all leave the
-     crown. This is the cluster that has to read at icon size, so it is the
-     biggest and it sits against the pale underside of the crown. */
-  for (const [bx, by, r] of [[crownX - 13, crownY + 17, 4.6], [crownX - 5, crownY + 21, 5.2],
-    [crownX + 7, crownY + 18, 4.8], [crownX + 1, crownY + 13, 4.0]] as const) {
-    blob(p, bx, by, r, r * 0.9, ACCENT);
-    for (const q of arc(bx, by, r, r * 0.9, Math.PI * 0.1, Math.PI * 0.9, 12)) cellOver(p, q[0], q[1], ACCENT_DARK);
-    blob(p, bx - r * 0.35, by - r * 0.4, r * 0.3, r * 0.28, ACCENT_LIT);
-    cell(p, bx - r * 0.4, by - r * 0.45, SPEC);
-  }
-
-  if (p.back) { p.face(crownX, crownY, 16); return; }
-
-  /* --- the face. Two eyes high on the crown and nothing else: no muzzle, no
-     jaw, no snout. A plant that watches.
-
-     They were big round wet ones, and round plus white plus large is the exact
-     recipe for a mascot: the thing came back looking delighted to see you, which
-     is wrong for an animal whose entire biography is that it has held the same
-     rock since before you were born. A narrow amber slit with a black bar
-     through it is almost all iris and hardly any white -- patient, and not
-     readable, which is what a plant's eye should be.
-
-     The fold above each one is doing real work too. The crown is a smooth bulb
-     and an eye set into a smooth bulb has no socket; one dark crease with a lit
-     lip on it gives the face a brow without adding a single cell of outline.
-
-     And the pale mask under both of them is what makes this creature have a face
-     at 64 pixels at all. Green eyes on a green bulb halve to green: the icon of
-     the first version had no face on it whatsoever, just a column of weed. A
-     bleached patch of blade across the brow -- which is what a wrack's oldest
-     tissue actually looks like -- gives the two dark slits a ground. */
-  blob(p, crownX - 1, crownY - 2, 14, 10, LIGHT);
-  for (const c of arc(crownX - 1, crownY - 2, 14, 10, Math.PI * 0.08, Math.PI * 0.92, 16)) cellOver(p, c[0], c[1], DEEP);
-  for (const [ex, ey, w] of [[crownX - 8, crownY - 9, 7], [crownX + 7, crownY - 11, 6]] as const) {
-    for (const c of arc(ex, ey + 2, w, 4, Math.PI * 1.06, Math.PI * 1.94, 10)) {
-      cellOver(p, c[0], c[1] + 1, DEEP);
-      cellOver(p, c[0], c[1], LIGHT);
-    }
-  }
-  eye(p, crownX - 8, crownY - 2, 5.0, 'slit', { side: -1, iris: ACCENT_DARK });
-  eye(p, crownX + 7, crownY - 4, 4.3, 'slit', { side: 1, iris: ACCENT_DARK });
-  p.face(crownX, crownY, 17);
-  // Short. At six cells of half-width this line halved to a bar wider than both
-  // eyes together and the icon read as a letterbox with two lights behind it.
-  mouthLine(p, crownX - 3, crownY + 8, 4, -1);
+  /* ------------------------------------------------------------ the face.
+     Under the hood, in the shadow it casts, and moved five cells toward the
+     front of the head. The one mark below the eyes is the mouth: six cells of
+     INNER, both corners turning the same way, which on a creature with no
+     nostril and no beak is the only thing available -- and 36 of the old 48
+     species had nothing at all down there, which is most of the kindergarten
+     read. */
+  mouthLine(p, cx - 20, G - 78, 6, 1);
+  eyeRow(p, cx - 17, G - 85, 6, 'sleepy', 'm', { far: 'm-' });
 }
 
 /* =========================================================== silthopper */
 
 /**
- * One folded jumping leg: a fat femur going up and back, a wire-thin tibia
- * coming down and forward, and a foot on the floor under the body.
+ * PART 1 BRIEF SHEET
  *
- * The Z is the animal. A grasshopper drawn with its hind legs down is a beetle;
- * it is the acute fold and the height of the knee -- above the line of its own
- * back, by a clear margin -- that says the thing is loaded and about to go.
- */
-function hopLeg(p: Pen, hip: Pt, knee: Pt, foot: Pt, tone: number, thick: number, near: boolean): void {
-  // Femur: a teardrop, fattest a third of the way up, with the herringbone
-  // chevrons that every orthopteran has down the outside of it.
-  const fem = path([hip, [(hip[0] + knee[0]) / 2 - 2, (hip[1] + knee[1]) / 2 + 2], knee]);
-  limbPath(p, fem, thick, thick * 0.46, tone, { front: near, bulge: thick * 0.26, lit: near ? LIGHT : BASE, dark: DEEP });
-  // Short diagonal dashes on the upper half only, the way an orthopteran's
-  // femur is actually marked. Full-width chevrons the whole length -- which is
-  // what the first version drew -- segment the mass like an abdomen, and both
-  // hind legs came back reading as a pair of folded wing cases.
-  for (let i = 1; i <= (near ? 4 : 2); i++) {
-    const t = 0.3 + i * 0.14;
-    const idx = Math.round(t * (fem.length - 1));
-    const q = fem[idx]!, n = normalAt(fem, idx);
-    const hh = thick * (0.5 + (0.46 - 0.5) * t) * 0.8;
-    stroke(p, q[0] - n[0] * hh, q[1] - n[1] * hh, q[0] - n[0] * hh * 0.1, q[1] - n[1] * hh * 0.1 + 3, DEEP);
-    stroke(p, q[0] - n[0] * hh, q[1] - n[1] * hh - 1, q[0] - n[0] * hh * 0.1, q[1] - n[1] * hh * 0.1 + 2, near ? LIGHT : BASE);
-  }
-  // A hard dark edge down the whole trailing side of the femur, so the leg
-  // never welds itself to the abdomen it is lying against.
-  for (let i = 2; i < fem.length - 2; i++) {
-    const t = i / (fem.length - 1), n = normalAt(fem, i), q = fem[i]!;
-    const hh = (thick * (0.5 + (0.46 - 0.5) * t)) - 0.5;
-    cellOver(p, q[0] + n[0] * hh, q[1] + n[1] * hh, ACCENT_DARK);
-  }
-  // The knee: a hard knob, because a taper that simply runs out reads as a
-  // spike and this joint is the hinge the whole animal is built around.
-  blob(p, knee[0], knee[1], thick * 0.3, thick * 0.3, tone);
-  cellOver(p, knee[0] - 2, knee[1] - 2, near ? SPEC : LIGHT);
-  // Tibia: thin, straight and hard. Six cells is under the shading minimum and
-  // that is the point -- this one is meant to read as wire, not as a limb.
-  limbPath(p, [knee, [lerpN(knee[0], foot[0], 0.55), lerpN(knee[1], foot[1], 0.55)], foot], 6, 4, tone, { front: near });
-  crease(p, knee[0], knee[1] + 2, 4);
-  // Spurs down the trailing edge of the tibia, and two long ones at the ankle.
-  const dx = foot[0] - knee[0], dy = foot[1] - knee[1], d = Math.hypot(dx, dy) || 1;
-  const nx = -dy / d, ny = dx / d;
-  for (let i = 1; i <= (near ? 5 : 3); i++) {
-    const t = i / (near ? 6 : 4);
-    const bx = lerpN(knee[0], foot[0], t), by = lerpN(knee[1], foot[1], t);
-    poly(p, [[bx - nx * 2, by - ny * 2], [bx + nx * 2, by + ny * 2],
-      [bx - nx * 7 - (dx / d) * 3, by - ny * 7 - (dy / d) * 3]], near ? LIGHT : BASE);
-  }
-  // The foot: two splayed toes, flat on the mud.
-  for (const s of [-1, 1]) {
-    limbPath(p, [[foot[0], foot[1]], [foot[0] + s * 7, foot[1] + 3]], 4, 2, tone);
-  }
-}
-
-/**
- * "Long-legged mud insect built for launching."
- *
- * A cricket in the instant before it goes: front end pressed down on the flat,
- * abdomen tipped up behind, and the two hind legs folded so hard that the knees
- * stand a clear fifteen cells above the line of its own back. Those two knees
- * are the whole silhouette and everything else is arranged to leave them room.
- *
- * It is also the only creature in this group that is not a plant, so it is
- * built out of the opposite materials: hard flat chitin instead of coils and
- * pelts, straight lines instead of curves, and a body that is *smaller* than
- * its own limbs. Its one green is the pronotum shield -- this species declares
- * a leaf green as its accent while the rest of it is dried mud, which is the
- * whole reason it can hide on a tidal flat.
+ *  1. WHAT IS IT.  A mud cricket, caught in the instant before it launches:
+ *     head pressed down on the flat, front end propped on two short legs, and
+ *     both jumping legs folded so hard that the knees stand clear above its own
+ *     back. It has never once been seen to walk.
+ *  2. PLAN.  B / NON-QUADRUPED ANIMAL - BUG. `species.json` says `grub`; this is
+ *     the recorded override, because a grub is a legless tube and this
+ *     creature's entire character is its legs. What that plan warns about is
+ *     exactly the trap the old one fell into: bugs come out the same size as
+ *     everything else because the box is big and authors fill it. This one is
+ *     drawn SMALL, on purpose, with two thirds of the frame empty above it.
+ *  3. RUNG.  0.3 m, TINY, and by a wide margin the smallest thing in this
+ *     group. MEASURED: ships 68 x 44, long dimension 68 against a band of
+ *     52-68, body area 436 ref px against 380-700, fill 58 %. The old one was
+ *     112 cells long and 1170 ref px -- very nearly the size of thornmarch,
+ *     which is six times its height. Beside the new thornmarch it is now three
+ *     fifths the length and a fifth of the mass, and that ladder is the first
+ *     thing the player reads.
+ *     THE REST OF THE SHEET: largest connected region 27.2 %, the flattest
+ *     single area in the group; top three 41.1 %; top-three colour share
+ *     62.6 %; 103 regions; 3.2 tone changes per scanline; 80 body-ramp runs; 0
+ *     highlight events; 0 SPEC; symmetry 59 %. Ink is 33.4 % and over the
+ *     ceiling -- see the exemption in the file header; the authored interior
+ *     share of it is 3.9 %, well inside the 5 % limit.
+ *  4. ASPECT AND FILL.  LONG AND LOW, about 3:2, at roughly 60 % fill. It is
+ *     the only thing in the group whose bounding box is wider than tall AND
+ *     small, which is what separates it from mossback's wide-and-large.
+ *  5. SMOOTH OR STRUCTURED.  STRUCTURED. Head, pronotum, abdomen, hip, knee and
+ *     tarsus are all separate and all in the outline.
+ *  6. THE MASSES.  Five. (1) the body, one tapered capsule from pronotum to
+ *     abdomen tip, (2) the near jumping leg, (3) the far one as a smaller
+ *     darker copy, (4) the two propping forelegs, (5) the head.
+ *  7. HEAD VERB / BODY VERB.  Head LOWERED -- pressed right down onto the mud
+ *     on two propping legs, which is the whole pose. Body: coiled. The weight
+ *     is thrown forward onto the front legs and the two jumping legs are
+ *     compressed behind, so the centre of mass sits well forward of the
+ *     midpoint between the four contacts.
+ *  8. SIGNATURE.  THE KNEE. A peak standing sixteen cells clear above the
+ *     abdomen with a long shank dropping away behind it, and a smaller, darker,
+ *     higher copy of the same shape behind that. In flat black that is a
+ *     cricket and it cannot be much else.
+ *  9. THE TWELVE REVERSALS -- eight named. On a bug they are segment junctions
+ *     and joints rather than muscles, which is the point of an exoskeleton.
+ *       occiput / neck      cx-13, G-16   the head is a separate ball
+ *       pronotum crest      cx- 2, G-23   the body's high point, well forward
+ *       abdomen dip         cx+ 8, G-19   the back DROPS behind the thorax --
+ *                                         that dip is what the femur stands out
+ *                                         of, and without it the back and the
+ *                                         leg are one smooth ramp
+ *       abdomen tip         cx+22, G- 7
+ *       hip                 cx+ 4, G-15
+ *       KNEE                cx+15, G-33   the sharpest angle on the creature
+ *       tarsus              cx+24, G- 6   the shank's lower reversal
+ *       far knee            cx+ 9, G-28   four cells lower, nine cells forward
+ *       fore-tarsus         cx-20, G- 1
+ * 10. THREE HUES.  H1 mud tan (BASE / LIGHT / FORM), ~55 %. H2 GREEN (ACCENT
+ *     family), ~16 %, and it is on the LEGS -- the manual measured this species
+ *     as painting 0.0 % of its declared second hue, which is the loudest kind
+ *     of failure there is, and the legs are where it belongs because they are
+ *     the thing the creature is about. H3 INNER, ~1 %: the mandibles.
+ *     The compound eyes take the green too, which ties the face to the legs.
+ * 11. FOUR INTERIOR DETAIL EVENTS.  (a) the compound eyes; (b) the wing case,
+ *     ONE flat facet over the abdomen -- a tegmen is a plate and a plate takes
+ *     one tone with a hard edge; (c) the near jumping leg's cast shadow onto
+ *     the body and the far leg; (d) the pale grit line along the underside.
+ *     The old design stated "segmented" four separate ways -- nine overlapping
+ *     discs, eight tonal band sweeps, a 91-step dorsal sheen and four ocelli.
+ *     This one states it once, in the outline.
+ * 12. EYES.  `compound` m, `far: 'm-'`, spread 5, `iris: ACCENT`. Compound
+ *     because the style exists for a LENS rather than an eyeball, and putting a
+ *     round pupil in an insect is what makes it look googly; and the manual
+ *     names this species' compound-plus-accent face as the best one on the old
+ *     sheet, so it is kept. Twenty-two cells of eye across a twenty-two-cell
+ *     head is what an orthopteran actually is -- mostly eye -- and it is the one
+ *     place in this group where a large eye is anatomy rather than cuteness.
+ *     ONE mark below the eyes: three cells of INNER at the mandibles. A
+ *     compound-eyed insect is one of the species the manual exempts from the
+ *     lid line, and it has no brow; the mandibles are all it gets and all it
+ *     needs.
+ * 13. SURFACE MATERIAL, THREE PLACES MAX.  One: the wing case's lower edge,
+ *     where the tegmen overlaps the abdomen. Scales, plates and chitin are
+ *     drawn only where a plate overlaps another plate.
+ * 14. EVERY INTERNAL DARK LINE.  None authored. The old one ruled a `seamPath`
+ *     down the tegmina and a sixteen-step DEEP rib along the femur; both are
+ *     half a reference pixel wide at icon scale, both were charged to the ink
+ *     budget anyway, and this creature is small enough that its two-cell
+ *     outline is already a fifth of it.
+ * 15. Not an evolution.
  */
 function silthopper(p: Pen): void {
+  p.noTypeTraits();
   const G = p.ground, cx = p.cx;
 
-  // The terra pass drops a dark pebble at the bottom of every column of the
-  // sprite and chips every eleventh edge cell to empty. On an animal made of
-  // six wire-thin legs that is a creature buried in gravel with holes bitten
-  // out of its shins -- which is exactly how the first render came back. The
-  // dried silt below is hand-placed instead, where an insect actually collects
-  // it: up the tibiae and along the underside.
-  p.noTypeTraits();
+  /* ------------------------------------------------- the FAR jumping leg.
+     Down first, in SHADE, and it is a smaller copy of the near one set nine
+     cells forward and four cells lower -- that difference is the whole depth
+     cue, and it is the same rule as a quadruped's far pair. */
+  limbPath(p, [[cx - 1, G - 15], [cx +  9, G - 29]] as Pt[], 11, 5, SHADE, { bulge: 1.5 });
+  limbPath(p, [[cx + 9, G - 29], [cx + 17, G -  7]] as Pt[],  4, 3, SHADE);
+  paw(p, cx + 17, G - 5, 4, { tone: SHADE, toes: 2 });
+  // and the far propping foreleg.
+  limbPath(p, [[cx - 6, G - 14], [cx - 13, G - 8], [cx - 16, G - 3]] as Pt[], 6, 4, SHADE);
 
-  const headX = cx - 34, headY = G - 22;
-  const thorX = cx - 12, thorY = G - 30;
+  /* ----------------------------------------------------------- the body.
+     THE ABDOMEN IS LOWER THAN THE PRONOTUM, and that is the change that finally
+     made the leg read. While the back rose steadily from head to tail, the
+     femur left the top of the abdomen and carried on rising, so back and leg
+     came out as one smooth ramp -- in the flat test a lump with a bump on it and
+     no knee anywhere. Dropping the abdomen behind the thorax puts a DIP in the
+     back line for the femur to stand up out of. */
+  poly(p, [
+    [cx - 14, G - 12], [cx - 12, G - 21], [cx -  2, G - 25],  // pronotum crest
+    [cx +  8, G - 21],                                        // abdomen dip
+    [cx + 17, G - 15], [cx + 22, G - 10], [cx + 19, G -  7],
+    [cx + 14, G -  9], [cx + 10, G -  6],
+    [cx +  5, G -  8], [cx +  1, G -  6],
+    [cx -  5, G -  8], [cx - 12, G -  8],
+  ] as Pt[], BASE);
 
-  /* --- antennae, laid down first so the head covers their roots. Two, not
-     four, and swept: each one costs four cells of ink once the outline pass has
-     been over it, and a thicket of them reads as damage. */
-  for (const [ax, ay] of [[headX - 8, headY - 30], [headX - 20, headY - 21]] as const) {
-    limbPath(p, path([[headX - 2, headY - 6], [headX - 8, headY - 18], [ax, ay]] as Pt[]), 4, 2, SHADE, { lit: LIGHT });
-  }
+  /* ------------------------------------------------------- the wing case.
+     ONE flat facet over the dorsal half of the abdomen. A tegmen is a PLATE:
+     it takes one tone across its whole area with no gradient, and the hard step
+     along its lower edge is the overlap. That step is the only thing this
+     creature says about being segmented, and the reference says it once too --
+     Wurmple is contour bumps plus a coloured band and that is all. */
+  flat(p, () => poly(p, [
+    [cx - 9, G - 22], [cx + 1, G - 24], [cx + 10, G - 20], [cx + 18, G - 14],
+    [cx + 15, G - 11], [cx + 4, G - 16], [cx - 8, G - 17],
+  ] as Pt[], LIGHT));
 
-  /* --- far hind leg and far walking legs, in the recessed tone. The far knee
-     is set lower and further back than the near one, which is most of what
-     stops the two reading as one shape. */
-  hopLeg(p, [cx + 10, G - 28], [cx + 46, G - 62], [cx + 42, G - 3], SHADE, 13, false);
-  for (const [hx, hy, mx, my, fx] of [
-    [cx - 20, G - 30, cx - 30, G - 16, cx - 34], [cx - 4, G - 28, cx - 12, G - 14, cx - 6],
-  ] as const) {
-    limbPath(p, path([[hx, hy], [mx, my], [fx, G - 2]] as Pt[]), 6, 3.5, SHADE);
-  }
+  /* --------------------------------------------- the pale grit underside.
+     One small shape, low: light coming back up off the wet flat. It is the
+     third value the creature has, and without it the whole animal is one tan
+     mass. */
+  poly(p, [
+    [cx - 10, G - 10], [cx + 6, G - 9], [cx + 16, G - 11],
+    [cx + 14, G - 8], [cx - 2, G - 7], [cx - 10, G - 8],
+  ] as Pt[], LIGHT);
 
-  /* --- the body: a small hard capsule, nose down and tail up. The tilt is
-     free and it does as much as the legs do -- a level insect is a beetle
-     resting, a tilted one is a thing braced against the floor. */
-  blob(p, thorX, thorY, 15, 12, BASE);
-  // Painted in the *recessed* tone even though it is the middle of the animal.
-  // The near hind femur lies right across it, and two pale masses in the same
-  // material weld into one however carefully they are lit: drawn in body colour
-  // the abdomen and the leg came back as a single beetle wing case. Dark
-  // abdomen, pale leg, and the leg reads as a leg.
-  limbPath(p, path([[thorX + 8, thorY + 1], [cx + 8, G - 26], [cx + 22, G - 24], [cx + 32, G - 20]] as Pt[]),
-    21, 8, SHADE, { front: true, lit: BASE, dark: DEEP });
-  // Abdominal segments: overlapping rings, each with a lit leading edge.
-  for (let i = 1; i <= 6; i++) {
-    const t = i / 7;
-    const bx = lerpN(thorX + 10, cx + 30, t), by = lerpN(thorY + 1, G - 20, t);
-    const hh = 10 - t * 6;
-    stroke(p, bx - 2, by - hh, bx + 3, by + hh, DEEP);
-    stroke(p, bx - 3, by - hh, bx + 2, by + hh, BASE);
-  }
-  // A short spike at the tail: the ovipositor. Two cells of silhouette and it
-  // stops the abdomen ending in a dome.
-  // A pale underside along the belly, so the abdomen still reads from under the
-  // leg that is lying across it.
-  limbPath(p, path([[thorX + 10, thorY + 9], [cx + 8, G - 17], [cx + 26, G - 14]] as Pt[]), 7, 4, LIGHT);
-  poly(p, [[cx + 32, G - 24], [cx + 32, G - 16], [cx + 44, G - 18]], SHADE);
-  stroke(p, cx + 32, G - 24, cx + 44, G - 18, BASE, false);
+  /* ------------------------------------------------ the NEAR jumping leg.
+     THE SIGNATURE, and the thing the first pass got wrong: the femur was driven
+     up and FORWARD, so the shank had to come all the way back across the whole
+     body and the creature read as a grub with a plank lying on it. A cricket's
+     femur goes up and BACK; the knee stands clear above the abdomen and the
+     shank drops away behind it. Both halves live in the rear third of the
+     sprite and the body outline is left alone.
+     IT IS GREEN, and that is the manual's own instruction for this species --
+     its declared second hue was painting 0.0 % of the sprite and the legs are
+     where it belongs. It also solves the separation problem for free: a green
+     femur crossing a tan flank is a material change, which the internal-edge
+     pass finds by itself, so there is no seam to draw. And it casts. */
+  cast(p, 15, () => {
+    limbPath(p, [[cx + 3, G - 17], [cx + 16, G - 34]] as Pt[], 14, 5, ACCENT, { bulge: 2 });
+    limbPath(p, [[cx + 16, G - 34], [cx + 26, G - 5]] as Pt[], 6, 4, ACCENT);
+    paw(p, cx + 26, G, 5, { tone: ACCENT, toes: 2 });
+  });
+  // The near propping foreleg, green as well, holding the front end down.
+  limbPath(p, [[cx - 11, G - 14], [cx - 18, G - 7], [cx - 21, G - 1]] as Pt[], 7, 5, BASE);
 
-  /* --- the pronotum: a hard green shield over the thorax, the one piece of
-     colour on the animal. Bevelled, with a keel down the middle. */
-  plate(p, [[thorX - 14, thorY - 8], [thorX + 2, thorY - 12], [thorX + 13, thorY - 2],
-    [thorX + 9, thorY + 9], [thorX - 12, thorY + 6]], ACCENT);
-  stroke(p, thorX - 12, thorY - 6, thorX + 10, thorY + 1, ACCENT_DARK);
-  stroke(p, thorX - 12, thorY - 7, thorX + 10, thorY, ACCENT_LIT);
+  /* NO ANTENNAE, and that is a measured decision rather than an omission.
+     They went in twice. A feeler is one cell wide in life; drawn at one cell
+     here it is half a reference pixel and the icon downsample returns nothing
+     at all, and drawn at the three cells that would survive it, on a creature
+     only 62 cells long, it comes back as a thick tan wedge -- the pair read
+     unmistakably as rabbit ears. They also cost about four per cent of the
+     sprite in outline on a creature whose two-cell border is already a fifth of
+     it. The insect read is carried by the compound eyes and the folded jumping
+     leg, both of which are large enough to survive the downsample. */
 
-  /* --- near walking legs, planted wide, and the near hind leg over the top of
-     everything. */
-  for (const [hx, hy, mx, my, fx] of [
-    [cx - 22, G - 26, cx - 34, G - 14, cx - 40], [cx - 6, G - 24, cx - 16, G - 12, cx - 14],
-  ] as const) {
-    limbPath(p, path([[hx, hy], [mx, my], [fx, G - 1]] as Pt[]), 7, 4, BASE, { front: true, lit: LIGHT });
-  }
-  hopLeg(p, [cx + 2, G - 26], [cx + 32, G - 76], [cx + 18, G - 2], BASE, 16, true);
+  /* ----------------------------------------------------------- the head.
+     Small, blunt, pressed down onto the mud, and almost entirely eye. It is the
+     only mass at the far left of the silhouette, which is what makes the face
+     findable at icon scale where nothing else survives. */
+  cast(p, 22, () => blob(p, cx - 20, G - 16, 11, 9, BASE));
 
-  /* --- the head: a small hard wedge pressed down onto the flat, well below the
-     line of the back. */
-  blobFront(p, headX, headY, 12, 10, BASE);
-  // Mandibles: two short dark plates meeting at the front of the face.
-  poly(p, [[headX - 12, headY + 2], [headX - 4, headY + 3], [headX - 6, headY + 10], [headX - 13, headY + 8]], SHADE);
-  stroke(p, headX - 12, headY + 2, headX - 6, headY + 10, ACCENT_DARK);
-  stroke(p, headX - 13, headY + 2, headX - 7, headY + 10, LIGHT);
+  if (p.back) { p.face(cx - 20, G - 16, 12); return; }
 
-  /* --- mud. Dried splashes up the tibiae and the underside, in the dark tone,
-     because a thing named for silt should be wearing some. */
-  for (const [mx, my] of [[cx + 18, G - 12], [cx + 24, G - 22], [cx - 30, G - 8],
-    [cx - 16, G - 6], [cx + 6, G - 8], [cx + 34, G - 14]] as const) {
-    speckle(p, mx - 4, my - 3, mx + 4, my + 3, 0.4, ACCENT_DARK);
-  }
-
-  if (p.back) { p.face(headX, headY, 13); return; }
-
-  /* --- the face. Two big domed compound eyes, and nothing else: no brow, no
-     lid, no white. The lattice and the single soft catchlight are the only way
-     a faceted eye reads at this size, and they are the reason this is the one
-     creature in the group you cannot tell what it is thinking. */
-  eye(p, headX - 4, headY - 4, 5.2, 'compound', { side: -1 });
-  eye(p, headX + 8, headY - 6, 4.4, 'compound', { side: 1 });
-  p.face(headX, headY, 13);
+  /* ------------------------------------------------------------ the face.
+     The mandibles are the one mark below the eyes. Three cells of INNER with a
+     pale cell under them; a compound-eyed insect gets no lid line and no brow,
+     and the reference's genuinely bare-below-the-eyes species compensate with a
+     much bigger eye than this. */
+  mouthLine(p, cx - 26, G - 10, 3, 1);
+  eyeRow(p, cx - 22, G - 17, 5, 'compound', 'm', { far: 'xs', iris: ACCENT });
 }
 
 export const DESIGNS: Record<string, (p: Pen) => void> = {

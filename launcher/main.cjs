@@ -82,12 +82,40 @@ function gameRoot() {
 
 /* ------------------------------------------------------------- protocol */
 
+/**
+ * The creature-art listing.
+ *
+ * Hand-drawn sprites live in assets/kin as <species-id>-front.png. The game
+ * will not probe 96 URLs to find out which of them exist, so it asks for this
+ * index; answering it from a directory read means the packaged app and a run
+ * from source both report exactly what they are carrying, with no generated
+ * file to keep in step. (fs reads through the asar transparently, so this works
+ * inside the installer as well.) tools/serve.js answers it the same way for the
+ * browser build, and tools/kinart.js writes a static copy for a plain host.
+ */
+const KIN_ART_INDEX = '/assets/kin/index.json';
+
+function kinArtIndex(root) {
+  let files = [];
+  try {
+    files = fs.readdirSync(path.join(root, 'assets', 'kin'))
+      .filter((f) => f.toLowerCase().endsWith('.png'))
+      .sort();
+  } catch {
+    // No art folder in this build: an empty listing is the right answer.
+  }
+  return new Response(JSON.stringify({ note: 'served from assets/kin', files }), {
+    headers: { 'Content-Type': 'application/json; charset=utf-8' },
+  });
+}
+
 function registerGameProtocol() {
   const root = gameRoot();
   protocol.handle(GAME_SCHEME, (request) => {
     const url = new URL(request.url);
     let rel = decodeURIComponent(url.pathname);
     if (rel === '' || rel === '/') rel = '/index.html';
+    if (rel === KIN_ART_INDEX) return kinArtIndex(root);
 
     // Resolve inside the app directory and refuse anything that escapes it.
     const target = path.normalize(path.join(root, rel));
@@ -489,12 +517,20 @@ async function runSmokeTest() {
     // smoke run is that it makes no noise, and that is exactly the kind of
     // thing that quietly regresses. If this ever reports audioOff:false, an
     // automated run just played music over somebody's desk.
+    // The kin-art count is here for the same reason: hand-drawn creature PNGs
+    // live in assets/, are fetched over kinbound://game, and are only in the
+    // installer because build.files says so. Every one of those three can be
+    // true in a dev checkout and false in a real build, and the symptom -- a
+    // roster that quietly reverts to generated sprites -- looks like nothing.
     const probe = await gameWindow?.webContents.executeJavaScript(
-      "import('./build/js/audio/audio.js').then((m) => JSON.stringify({"
+      "Promise.all([import('./build/js/audio/audio.js'), import('./build/js/gfx/kinart.js')])"
+      + ".then(([m, k]) => { const art = k.kinArtReport(); return JSON.stringify({"
       + " scene: window.game && window.game.scenes.top && window.game.scenes.top.name,"
       + " assets: window.game && window.game.assets.stats(),"
       + " audioOff: m.audio.isDisabled,"
-      + " rendererMuted: true }))");
+      + " kinArt: { species: art.species.length, images: art.entries.length,"
+      + "   failed: art.notes.filter((n) => n.level === 'error').length },"
+      + " rendererMuted: true }); })");
     console.log('  game state: ' + probe);
     if (probe && probe.includes('"audioOff":false')) {
       console.error('  !! WARNING: this run was NOT silent');

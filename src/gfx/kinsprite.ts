@@ -25,12 +25,15 @@ import { Rng } from '../core/rng.js';
 import { registry } from '../data/registry.js';
 import type { SpeciesData } from '../data/schema.js';
 import {
-  ACCENT, ACCENT_DARK, ACCENT_LIT, BASE, DEEP, DESIGN, EMPTY, EYE_DARK, EYE_WHITE,
-  HILIGHT, INNER, LIGHT, Mask, OUTLINE, OUTLINE_LIT, SHADE, SHADOW, SHADOW_CORE,
-  SPEC, TONE_COUNT, U, WORK,
+  ACCENT, ACCENT2, ACCENT2_DARK, ACCENT2_LIT, ACCENT_DARK, ACCENT_LIT, BASE, DEEP, DESIGN,
+  EDGE, EMPTY, EYE_DARK, EYE_WHITE, FORM, HILIGHT, INNER, LIGHT, Mask, OUTLINE, OUTLINE_LIT,
+  SHADE, SHADOW, SHADOW_CORE, SPEC, TONE_COUNT, U, WORK,
 } from './kin/mask.js';
 import { DESIGNS } from './kin/index.js';
+import { kinArtSprite } from './kinart.js';
 import type { Pen as DesignPen } from './kin/parts.js';
+import type { EyeSize, EyeStyle } from './kin/eyes.js';
+import { blitEyeStamp, eyeStampOf } from './kin/eyes.js';
 
 /** The canvas a sprite is handed out on. Derived, so the two can never drift:
  *  the mask is the sprite now that nothing scales it on the way out. */
@@ -317,94 +320,131 @@ const ditherOn = (x: number, y: number, level: number): boolean =>
   BAYER[y & 3]![x & 3]! < level * 16;
 
 /**
- * 8x8 ordered dither, for the band boundaries.
+ * THE LADDER. Every body tone in one order, brightest first.
  *
- * The 4x4 pattern was right when a shading block was two cells across: it gave
- * four visible levels and the checker read as deliberate. At one cell to a
- * block a 4x4 threshold repeats every four pixels and the transitions come out
- * as visible tartan. Eight levels over eight cells reads as a gradient built
- * out of dots, which is what the reference art actually does between bands.
+ * The shading pass no longer has a ramp per material with its own private
+ * arrangement of tones. It has one ladder and each material sits on a rung of
+ * it, so "one step darker" means the same thing on a belly, on a flank and
+ * inside a cast shadow, and a cast shadow crossing from one material onto
+ * another stays the same shadow.
  */
-const BAYER8: number[][] = (() => {
-  const g: number[][] = [];
-  for (let y = 0; y < 8; y++) {
-    const row: number[] = [];
-    for (let x = 0; x < 8; x++) {
-      // Standard recursive Bayer construction, bit-interleaved.
-      let v = 0;
-      for (let b = 0; b < 3; b++) {
-        v |= (((y >> b) ^ (x >> b)) & 1) << (2 * b + 1);
-        v |= ((x >> b) & 1) << (2 * b);
-      }
-      row.push(v);
-    }
-    g.push(row);
-  }
-  return g;
-})();
-const ditherOn8 = (x: number, y: number, level: number): boolean =>
-  BAYER8[y & 7]![x & 7]! < level * 64;
+const LADDER = [SPEC, HILIGHT, LIGHT, BASE, FORM, DEEP];
+const RUNG_LIGHT = 2, RUNG_BASE = 3, RUNG_FORM = 4;
 
 /**
- * Step an already-lit cell one place along its own ramp.
+ * How far each material moves off its home rung at each of the four light
+ * levels: full light, the body's own colour, turned away, and occluded.
  *
- * The texture pass works on the shaded mask rather than before it, so a scale
- * or a quill or a rivet is a *modulation of the light* and not a fixed tone
- * pasted over it. Tables rather than a search, because this runs per cell.
+ * **THREE TONES PER MATERIAL, not six per creature.** This is the structural
+ * fact and it is not an impression: a reference sprite gets fifteen colours and
+ * spends them on MATERIALS -- three of blue skin, three of orange fin, two of
+ * cream belly -- while we were spending ours on ramp steps, six of one body
+ * colour plus three of one accent. One thing, nine steps. That is why a
+ * reference sprite reads as an animal with skin and fins and a belly and ours
+ * read as one inflated object.
+ *
+ * SPEC and HILIGHT are therefore gone from every body surface. They survive as
+ * hand-placed tones -- a HILIGHT on a pale material, one SPEC catchlight of
+ * eight to sixteen cells on a wet or icy or metal species -- and nothing
+ * generates them any more.
+ *
+ * FORM is the flattest of the four on purpose. A cast shadow is a hard-edged
+ * region of one value; if the pass put a gradient through it, it would stop
+ * reading as a shadow and start reading as a marking.
  */
-const TONE_UP = new Uint8Array(TONE_COUNT);
-const TONE_DOWN = new Uint8Array(TONE_COUNT);
-(() => {
-  for (let i = 0; i < TONE_COUNT; i++) { TONE_UP[i] = i; TONE_DOWN[i] = i; }
-  for (const ramp of [[SPEC, HILIGHT, LIGHT, BASE, SHADE, DEEP], [ACCENT_LIT, ACCENT, ACCENT_DARK]]) {
-    for (let i = 0; i < ramp.length; i++) {
-      TONE_UP[ramp[i]!] = ramp[Math.max(0, i - 1)]!;
-      TONE_DOWN[ramp[i]!] = ramp[Math.min(ramp.length - 1, i + 1)]!;
-    }
-  }
-})();
+const OFF_BASE = [-1, 0, 1, 2];
+const OFF_LIGHT = [-1, 0, 1, 1];
+const OFF_FORM = [-1, 0, 0, 1];
+/** Off the ladder: a far part is its own colour and never borrows the body's. */
+const RAMP_SHADE = [SHADE, SHADE, SHADE, DEEP];
+const RAMP_ACCENT = [ACCENT_LIT, ACCENT, ACCENT, ACCENT_DARK];
+const RAMP_ACCENT2 = [ACCENT2_LIT, ACCENT2, ACCENT2, ACCENT2_DARK];
 
 /**
- * The six shading bands, per material.
+ * THE LAMP.
  *
- * A plan paints in materials -- body, pale underside, recessed mass, accent --
- * and the shading pass runs each of them through its own ramp. That is why a
- * belly plate stays pale in shadow and a far leg stays dark in light: they are
- * different surfaces, not different amounts of the same one.
+ * One light for the whole creature: up-left AND well in front of it, over the
+ * viewer's shoulder. **L = (-0.40, -0.40, +0.82).**
+ *
+ * The old lamp was `L = (-0.707, -0.707, 0)` -- beside the creature, at its
+ * height, with no component toward the viewer at all. Under that lamp the
+ * physically brightest point on any convex mass *is* its up-left silhouette
+ * edge, and that is exactly what we rendered: the outermost lit cell of every
+ * mass on the roster came out between HILIGHT and SPEC, and the rim pass then
+ * promoted it the rest of the way. Every mass wore a cream halo over a diagonal
+ * wash. That is not volume; it is colouring-in.
+ *
+ * With a z component the lit contour is no longer the bright point. At the
+ * contour the surface is edge-on to the viewer and n.L is only 0.57 -- mid
+ * tone. The brightest band falls on the **shoulder** of the mass, the part
+ * facing both up-left and toward the viewer, about a fifth of the way in, and
+ * the terminator falls at about 91% across. So a mass is mostly its own colour,
+ * with a bounded light patch inset from the edge and a narrow band of real
+ * shadow on the far side -- which is what a reference sprite looks like.
  */
-const RAMP_BASE = [SPEC, HILIGHT, LIGHT, BASE, SHADE, DEEP];
-const RAMP_LIGHT = [SPEC, SPEC, HILIGHT, HILIGHT, LIGHT, BASE];
-const RAMP_SHADE = [BASE, BASE, SHADE, SHADE, DEEP, DEEP];
-const RAMP_ACCENT = [ACCENT_LIT, ACCENT_LIT, ACCENT, ACCENT, ACCENT_DARK, ACCENT_DARK];
+const LAMP_XY = 0.566;
+const LAMP_Z = 0.824;
 
 /**
- * Light from the upper left, as banded form shading.
+ * Lambert term across a mass, as a function of fractional position across it.
  *
- * This used to sample and paint whole 2x2 blocks, because the mask underneath
- * it was a doubled copy of a coarser design and a band that stepped on a
- * half-block boundary looked smoothed rather than drawn. The design cell is
- * now the buffer pixel, so the pass runs one cell at a time and the terminator
- * can follow the actual curve of the mass instead of a staircase of it. Every
- * distance in here is measured in the finer cells, which is why the numbers
- * are twice what they were.
+ * `t` runs 0 at the lit contour to 1 at the dark contour. The cross-section is
+ * taken as a circle, so at fraction `t` the surface normal is
+ * `(u, sqrt(1 - u^2))` in the (across, toward-viewer) frame with `u = 2t - 1`.
+ * Everything the pass does about *where* the light lands comes out of this one
+ * line, which is the point of writing it down rather than hand-tuning band
+ * edges: 0.57 at the lit rim, peak 1.0 at t = 0.22, zero at t = 0.91.
+ */
+const lambert = (t: number): number => {
+  const u = 2 * t - 1;
+  return -LAMP_XY * u + LAMP_Z * Math.sqrt(Math.max(0, 1 - u * u));
+};
+
+/** Light level from the Lambert term: 0 lit, 1 body colour, 2 turned away, 3 occluded. */
+const levelOf = (lam: number): number => (lam >= 0.93 ? 0 : lam >= 0.16 ? 1 : lam >= -0.30 ? 2 : 3);
+
+/**
+ * Banded form shading under one lamp.
  *
- * Each cell takes its band from where it sits *across* the thickness of its
- * own mass along the light axis, not from an absolute distance to the lit
- * edge. A leg then gets the same number of bands as the torso, just narrower,
- * which is how a person shades. The old absolute ramp could not: it lit thin
- * limbs almost flat, so every creature came out as a well-lit body with tubes
- * attached.
+ * Two things changed here and they are the whole of the "colouring-in" fix.
  *
- * Three things are layered on top of the falloff:
+ * **The bands run parallel to each mass's own axis.** They used to run on a
+ * fixed 45 degree SCREEN diagonal: every mass on every creature was airbrushed
+ * on the same angle regardless of which way it pointed, which is why the
+ * measured tone-field gradient came out at 45-60 degrees on all forty-eight
+ * species. A cylinder does not do that. Every tone band on a cylinder is a
+ * stripe PARALLEL TO ITS AXIS and does not change along the length: a vertical
+ * leg gets vertical stripes, a horizontal barrel gets horizontal stripes. So
+ * the pass measures the mass locally, three chords through the cell -- across,
+ * down, and along the diagonal -- takes the THINNEST as the direction the light
+ * wraps, and bands across that. On a sphere the three are equal and the tie
+ * goes to the diagonal, which is what a sphere wants.
  *
- *  - a **core shadow**, holding the surface that turns away from the light a
- *    step darker than the falloff alone gives it, which is what makes a form
- *    have weight rather than merely a light side;
+ * **Band widths are in cells; what scales with the mass is the tone COUNT.**
+ * `t` is a fraction of the local chord, so a six-cell ear and a ninety-cell
+ * torso used to get identically proportioned bands -- which is how an ear ended
+ * up carrying a one-cell specular stripe, half a reference pixel, that the icon
+ * downsample then flipped a coin over. Now a mass under fourteen cells thick
+ * gets two tones and no highlight at all, a mass under sixty gets three, and
+ * only a mass over sixty is allowed the fourth; and the light and shadow bands
+ * are capped in cells so a big torso gets a bounded light patch rather than a
+ * proportional one.
+ *
+ * Layered on top of the falloff:
+ *
  *  - a **crevice** term from local coverage, so an armpit, the seam where a
  *    limb enters the torso, and any two masses that overlap all darken where
  *    they meet;
- *  - **ground contact**, because the last thing a sprite needs is to be
- *    equally bright where it touches the floor.
+ *  - **directional occlusion**: a cell that finds an occlusion seam between it
+ *    and the lamp is in that seam's shadow, which is the automatic half of cast
+ *    shadow;
+ *  - **ground contact**, because the last thing a sprite needs is to be equally
+ *    bright where it touches the floor.
+ *
+ * There is no dithering anywhere in here any more. Gen 1 and 2 dithered; Gen 3
+ * is the generation that stopped, and a 2.5-cell feathered seam is 1.25
+ * reference pixels -- a checkerboard of half-pixels that becomes a coin flip
+ * under the icon's 2x2 vote. Every boundary this pass draws is hard.
  */
 function shade(mask: Mask): void {
   const W = mask.w, H = mask.h;
@@ -452,266 +492,226 @@ function shade(mask: Mask): void {
     for (let x = 0; x < W; x++) if (solid(x, y)) { floor = y; break; }
   }
 
-  // Where each band starts along the thickness. Kept as a table so the
-  // fractional position inside a band is available for the dither.
-  const EDGES = [0.10, 0.28, 0.52, 0.74, 0.92, 1.01];
-  /** How many cells wide the feathered seam between two bands is. */
-  const SEAM = 3.5;
+  /**
+   * The three chords, and which way each one has to be walked to face the lamp.
+   *
+   * Only three, not four: the anti-diagonal is exactly perpendicular to the
+   * light and carries no information about which of its two ends is lit, so
+   * banding across it would be a coin flip. `k` converts a step count into a
+   * distance in cells, which matters because a diagonal step covers 1.41 cells
+   * and without it every mass would measure thinnest along its diagonal and the
+   * bands would collapse back onto the screen diagonal we are getting rid of.
+   */
+  const CHORDS: ReadonlyArray<{ dx: number; dy: number; k: number }> = [
+    { dx: -1, dy: 0, k: 1 },        // across: vertical bands, for an upright limb
+    { dx: 0, dy: -1, k: 1 },        // down:   horizontal bands, for a barrel
+    { dx: -1, dy: -1, k: 1.414 },   // diagonal: for a sphere, and for the ties
+  ];
+  /** A tie goes to the diagonal, because that is what a sphere wants. */
+  const TIE = [1, 1, 0.92];
+
+  /** Two tones under this thickness, four only above the second. */
+  const THIN = 14, THICK = 60;
+  /** Band caps in cells, so a big mass gets a bounded light patch, not a proportional one. */
+  const LIGHT_INSET = 2, LIGHT_MAX = 18, FORM_MAX = 10, DEEP_MAX = 4;
+  /** How far a cell looks toward the lamp for something occluding it. */
+  const OCCLUDE_REACH = 5;
+  /**
+   * Only a real seam throws a shadow.
+   *
+   * The first version of the directional term cast from any DEEP cell, and a
+   * DEEP cell is also a toe gap, a nostril, a hatch stroke and a knuckle. Each
+   * one of those threw its own five-cell streak down-right along the light
+   * direction, and the creature came out combed. An occlusion seam is tens of
+   * cells long and connected; anything shorter is a detail, and a detail does
+   * not occlude a surface.
+   */
+  const SEAM_CAST_AREA = 24;
+  const caster = new Uint8Array(W * H);
+  {
+    const seen = new Uint8Array(W * H);
+    const stack: number[] = [];
+    const comp: number[] = [];
+    for (let s = 0; s < W * H; s++) {
+      if (src[s] !== DEEP || seen[s]) continue;
+      comp.length = 0; stack.length = 0;
+      stack.push(s); seen[s] = 1;
+      while (stack.length) {
+        const i = stack.pop()!;
+        comp.push(i);
+        const x = i % W, y = (i / W) | 0;
+        for (let dy = -1; dy <= 1; dy++) {
+          for (let dx = -1; dx <= 1; dx++) {
+            const nx = x + dx, ny = y + dy;
+            if (nx < 0 || ny < 0 || nx >= W || ny >= H) continue;
+            const j = ny * W + nx;
+            if (seen[j] || src[j] !== DEEP) continue;
+            seen[j] = 1; stack.push(j);
+          }
+        }
+      }
+      if (comp.length >= SEAM_CAST_AREA) for (const i of comp) caster[i] = 1;
+    }
+  }
 
   for (let y = 0; y < H; y++) {
     for (let x = 0; x < W; x++) {
       const v = at(x, y);
-      const ramp = v === BASE ? RAMP_BASE
-        : v === LIGHT ? RAMP_LIGHT
-          : v === SHADE ? RAMP_SHADE
-            : v === ACCENT ? RAMP_ACCENT : null;
-      if (!ramp) continue;
+      // A facet is a plane. One tone across its whole area, no gradient, no
+      // exceptions -- that is how a mineral reads as hard rather than inflated.
+      if (mask.isFlat(x, y)) continue;
+      const isBody = v === BASE || v === LIGHT || v === FORM;
+      if (!isBody && v !== SHADE && v !== ACCENT && v !== ACCENT2) continue;
 
-      const up = ray(x, y, -1, -1, 32);
-      const down = ray(x, y, 1, 1, 32);
+      // Which way does the light wrap round this mass? The thinnest chord.
+      let best = 0, bestThick = Infinity, up = 0, down = 0;
+      for (let c = 0; c < 3; c++) {
+        const ch = CHORDS[c]!;
+        const a = ray(x, y, ch.dx, ch.dy, 40);
+        const b = ray(x, y, -ch.dx, -ch.dy, 40);
+        const thick = (a + b + 1) * ch.k * TIE[c]!;
+        if (thick < bestThick) { bestThick = thick; best = c; up = a; down = b; }
+      }
+      const ch = CHORDS[best]!;
       const span = up + down;
+      const spanCells = (span + 1) * ch.k;
       const t = span === 0 ? 0.5 : up / span;
 
-      let band = 0;
-      while (band < 5 && t >= EDGES[band]!) band++;
-      const lo = band === 0 ? 0 : EDGES[band - 1]!;
-      const frac = (t - lo) / Math.max(0.01, EDGES[band]! - lo);
-      let forced = false;
+      let level = levelOf(lambert(t));
 
-      if (span <= 4) {
-        // Too thin to carry six steps; two is honest and stays readable.
-        band = up === 0 ? 2 : 4;
-        forced = true;
-      } else if (span <= 10) {
-        const clamped = Math.max(1, Math.min(4, band));
-        if (clamped !== band) forced = true;
-        band = clamped;
-      } else {
-        // A large mass must not carry a highlight the size of a limb, nor let
-        // its shadow eat half the body.
-        const was = band;
-        if (band === 0 && up > 3) band = 1;
-        if (band === 1 && up > 7) band = 2;
-        if (band === 2 && up > 15) band = 3;
-        if (band === 5 && down > 5) band = 4;
-        if (band === 4 && down > 13) band = 3;
-        if (down <= 2) band = 5;
-        if (band !== was) forced = true;
-      }
+      // Band widths in cells. The light patch is inset from the lit contour and
+      // bounded on the far side; the shadow band hugs the shadow contour; the
+      // fourth tone only exists at all on a mass big enough to need it.
+      const upCells = up * ch.k, downCells = down * ch.k;
+      if (level === 0 && (upCells < LIGHT_INSET || upCells > LIGHT_MAX)) level = 1;
+      if (level === 2 && downCells > FORM_MAX) level = 1;
+      if (level === 3 && downCells > DEEP_MAX) level = 2;
 
-      // The diagonal ray is degenerate at the lower-left and upper-right tips
-      // of a round mass, where it reports a lit edge for a surface that is
-      // plainly underneath. A second measurement on each axis vetoes that.
-      // Only ever consulted for a cell the diagonal called lit, which keeps
-      // four of the six rays off the hot path entirely.
-      if (band < 3) {
-        const vUp = ray(x, y, 0, -1, 24), vDn = ray(x, y, 0, 1, 24);
-        if (vUp + vDn > 0 && vUp / (vUp + vDn) > 0.74) { band = 3; forced = true; }
-        if (band < 3) {
-          const hL = ray(x, y, -1, 0, 24), hR = ray(x, y, 1, 0, 24);
-          if (hL + hR > 0 && hL / (hL + hR) > 0.82) { band = 3; forced = true; }
-        }
-      }
+      // Tone count from thickness. Under fourteen cells -- seven reference
+      // pixels -- a mass gets two tones and no highlight, because a highlight
+      // on a mass that thin is one or two cells and does not survive the icon.
+      if (spanCells < THIN) level = Math.max(1, Math.min(2, level));
+      else if (spanCells < THICK) level = Math.min(2, level);
 
       // Crevice: close to an edge, but with the body wrapping around rather
       // than falling away. That is an armpit, never a tip.
       const edge = !solid(x - 1, y) || !solid(x + 1, y) || !solid(x, y - 1) || !solid(x, y + 1)
         || !solid(x - 1, y - 1) || !solid(x + 1, y - 1) || !solid(x - 1, y + 1) || !solid(x + 1, y + 1);
-      if (edge && band < 5 && coverage(x, y) > 0.70) { band++; forced = true; }
+      if (edge && coverage(x, y) > 0.70) level = Math.max(level, 2);
 
-      if (floor > 0 && y >= floor - 2 && band < 5) { band++; forced = true; }
+      // Directional occlusion -- the automatic half of cast shadow.
+      //
+      // Nothing in this pass used to ask "is this cell occluded ALONG THE LIGHT
+      // DIRECTION?"; `coverage` is a symmetric box sum and darkens a crevice
+      // equally from all sides. March toward the lamp instead: an occlusion
+      // seam between this cell and the light means some part is in front of
+      // this surface, and a surface behind another part is in its shadow. Every
+      // shadow this produces points the same way, which is exactly the property
+      // that makes the creature read as being under one light.
+      if (isBody && level < 2) {
+        for (let d = 1; d <= OCCLUDE_REACH; d++) {
+          const nx = x - d, ny = y - d;
+          if (nx < 0 || ny < 0) break;
+          const s = at(nx, ny);
+          if (s === EMPTY || s === OUTLINE) break;
+          if (caster[ny * W + nx]) { level = 2; break; }
+        }
+      }
 
-      // Every boundary is dithered now, not just the terminator.
-      //
-      // Six bands over a 128-cell creature is a step every ten cells or so,
-      // and at that spacing a hard edge reads as a contour line on a map. So
-      // each boundary gets a narrow feathered seam and the bands themselves
-      // stay flat: the eye reads eleven steps that still resolve into six when
-      // it looks straight at them.
-      //
-      // The seam is measured in *cells*, not in a fraction of the band. That
-      // distinction is the whole thing. A fractional threshold dithers the
-      // last third of a band, and on a barrel-shaped torso the last third of a
-      // band is fifteen cells wide, so the creature comes out wearing tartan.
-      // Three cells is a seam whatever the mass behind it is doing.
-      //
-      // And a band narrower than the seam gets no seam at all. A leg eight
-      // cells thick carries bands two cells wide, every one of which is inside
-      // the feather distance, so the whole limb dithers and comes out looking
-      // like wire mesh -- which is what the front legs of every quadruped on
-      // the roster did until this guard went in.
-      const bandCells = span * Math.max(0.01, EDGES[band]! - lo);
-      const toEdge = (1 - frac) * bandCells;
-      if (!forced && band < 5 && bandCells > SEAM * 1.6
-        && toEdge < SEAM && ditherOn8(x, y, 1 - toEdge / SEAM)) band++;
+      if (floor > 0 && y >= floor - 2) level = Math.max(level, 2);
 
-      mask.set(x, y, ramp[band]!);
+      if (v === SHADE) { mask.set(x, y, RAMP_SHADE[level]!); continue; }
+      if (v === ACCENT) { mask.set(x, y, RAMP_ACCENT[level]!); continue; }
+      if (v === ACCENT2) { mask.set(x, y, RAMP_ACCENT2[level]!); continue; }
+
+      // Body materials all live on one ladder, so "a step darker" is the same
+      // step whether it lands on a flank, on a pale belly or inside a shadow.
+      const home = v === LIGHT ? RUNG_LIGHT : v === FORM ? RUNG_FORM : RUNG_BASE;
+      const off = v === LIGHT ? OFF_LIGHT : v === FORM ? OFF_FORM : OFF_BASE;
+      // A pale material stops at the body's own colour: three tones, and a
+      // belly that goes darker than the flank it sits on is not a belly.
+      const cap = v === LIGHT ? RUNG_BASE : 5;
+      mask.set(x, y, LADDER[Math.max(0, Math.min(cap, home + off[level]!))]!);
     }
   }
 }
 
 /**
- * Surface texture.
+ * Settle the tone boundaries.
  *
- * This pass did not exist before and could not have: at one shading block to
- * two cells there was no spare pixel to put a scale, a barb or a bevel on, and
- * anything drawn at that size came out as a pattern of blobs rather than as a
- * material. It runs *after* the light, and it works by stepping cells one
- * place along the ramp they were already given, so a scale on the shadow side
- * is a dark scale and the same scale on the lit shoulder is a bright one --
- * which is the difference between texture and a decal.
+ * The shading pass decides each cell independently off ray measurements, and
+ * ray measurements are noisy by one cell wherever a contour steps. The result
+ * is a boundary that reads as a 1-on-1 jagged staircase with the odd stray cell
+ * in it -- and on a broad curve the reference draws a small number of long
+ * straight runs instead: five segments of six to ten pixels across a whole
+ * flank, never a single-cell zigzag. It also leaves single stray cells, which
+ * at icon scale become a coin flip in the 2x2 dominant-colour vote.
  *
- * Everything here is one cell wide and one step deep on purpose. Two steps and
- * the creature reads as diseased; two cells and it reads as a knitted jumper.
+ * So one majority pass over the generated body tones. A cell surrounded by six
+ * or more neighbours of a single other generated tone joins them. That deletes
+ * every isolated cell and every one-cell notch while leaving any boundary that
+ * is genuinely a corner, because a corner has at most five neighbours on the
+ * other side.
+ *
+ * Only tones this pass produced are eligible, in both directions. A hand-placed
+ * DEEP seam, an ACCENT_LIT claw tip, an INNER nostril, a SPEC catchlight and
+ * every eye cell are invisible to it -- a two-cell mark an author placed
+ * deliberately is not noise, and majority-filtering it away is exactly the kind
+ * of helpfulness that loses a claw.
  */
-function texture(mask: Mask, sp: SpeciesData | undefined, seed: string): void {
-  const b = mask.bounds();
-  if (!b) return;
-  const kind = sp?.types?.[0] ?? 'beast';
-  const plan = sp?.design.plan;
-  const rng = new Rng('skin:' + seed);
-  const src = mask.data.slice();
+const SETTLE = new Set([HILIGHT, LIGHT, BASE, FORM, SHADE, ACCENT, ACCENT2]);
+
+function settle(mask: Mask): void {
   const W = mask.w, H = mask.h;
-
-  const val = (x: number, y: number): number => {
-    if (x < 0 || y < 0 || x >= W || y >= H) return EMPTY;
-    return src[y * W + x]!;
-  };
-  const body = (x: number, y: number): boolean => {
-    const v = val(x, y);
-    return v !== EMPTY && v !== OUTLINE && v !== OUTLINE_LIT && v !== SHADOW
-      && v !== EYE_WHITE && v !== EYE_DARK && v !== INNER;
-  };
-  /** Two cells clear of the silhouette on every side. Texture that runs to the
-   *  edge eats the rim light and the outline comes out looking chewed. */
-  const inside = (x: number, y: number): boolean =>
-    body(x, y) && body(x - 2, y) && body(x + 2, y) && body(x, y - 2) && body(x, y + 2);
-
-  const up = (x: number, y: number): void => {
-    if (!inside(x, y)) return;
-    const v = val(x, y);
-    // Texture never reaches the specular. That tone belongs to the rim light
-    // and to nothing else; a pale creature speckled with it comes out looking
-    // like television static, which is exactly how the first pass looked.
-    if (v === HILIGHT || v === SPEC || v === ACCENT_LIT) return;
-    mask.set(x, y, TONE_UP[v]!);
-  };
-  const dn = (x: number, y: number): void => { if (inside(x, y)) mask.set(x, y, TONE_DOWN[val(x, y)]!); };
-
-  const family =
-    kind === 'tide' || kind === 'frost' || plan === 'fish' || plan === 'serpentine' || plan === 'aquatic' ? 'scales'
-      : kind === 'chitin' || kind === 'iron' ? 'plates'
-        : kind === 'gale' || plan === 'bird' || plan === 'moth' ? 'feathers'
-          : kind === 'stone' || kind === 'terra' || plan === 'mineral' || plan === 'monolith' ? 'grain'
-            : kind === 'radiant' || kind === 'spirit' || kind === 'psyche' ? 'sheen'
-              : 'hide';
-
-  switch (family) {
-    case 'scales': {
-      // Offset rows of scallops: a dark lower rim with a lit crown, and the
-      // row below staggered by half a pitch so the coverage reads as
-      // imbricated rather than as a grid.
-      //
-      // Two cells a scale, not five. Five drew every scale in full and the
-      // creature came out wearing chain mail; the eye only needs the shadow
-      // under each scale and one catchlight to infer the rest.
-      const pitch = 7, rowH = 5;
-      for (let y = b.y0 + 3, row = 0; y <= b.y1 - 3; y += rowH, row++) {
-        const off = (row & 1) ? Math.floor(pitch / 2) : 0;
-        for (let x = b.x0 + 3 + off; x <= b.x1 - 3; x += pitch) {
-          dn(x, y + 1);
-          dn(x + 1, y + 1);
-          up(x, y - 1);
+  const src = mask.data.slice();
+  const tally = new Uint8Array(TONE_COUNT);
+  for (let y = 1; y < H - 1; y++) {
+    for (let x = 1; x < W - 1; x++) {
+      const i = y * W + x;
+      const v = src[i]!;
+      if (!SETTLE.has(v)) continue;
+      // A facet is exempt. Where two planes meet, the hard step IS the ridge,
+      // and a majority filter would round the one corner that has to stay sharp.
+      if (mask.isFlat(x, y)) continue;
+      let bestV = -1, bestN = 0;
+      tally.fill(0);
+      for (let dy = -1; dy <= 1; dy++) {
+        for (let dx = -1; dx <= 1; dx++) {
+          if (!dx && !dy) continue;
+          const n = src[(y + dy) * W + x + dx]!;
+          if (n === v || !SETTLE.has(n)) continue;
+          const c = ++tally[n]!;
+          if (c > bestN) { bestN = c; bestV = n; }
         }
       }
-      break;
-    }
-
-    case 'plates': {
-      // Stacked armour: a dark gutter with a bevel catching the light on the
-      // plate above it, and a rivet line down the middle of each band.
-      for (let y = b.y0 + 4; y <= b.y1 - 3; y += 7) {
-        for (let x = b.x0 + 1; x <= b.x1 - 1; x++) {
-          const bow = Math.round(Math.abs(x - (b.x0 + b.x1) / 2) * 0.08);
-          dn(x, y + bow);
-          up(x, y + bow - 1);
-        }
-        for (let x = b.x0 + 4; x <= b.x1 - 4; x += 9) {
-          const ry = y + Math.round(Math.abs(x - (b.x0 + b.x1) / 2) * 0.08) - 4;
-          dn(x, ry + 1); dn(x + 1, ry); dn(x - 1, ry);
-          up(x, ry - 1);
-        }
-      }
-      break;
-    }
-
-    case 'feathers': {
-      // Barbs: a short slanted stroke with a lit leading edge, laid in rows
-      // that lean the way the wing does. Three cells each, which is exactly
-      // one cell more than the old grid could spare and the reason a feather
-      // now reads as a feather instead of as a dash.
-      for (let y = b.y0 + 4, row = 0; y <= b.y1 - 3; y += 5, row++) {
-        const off = (row & 1) ? 4 : 0;
-        for (let x = b.x0 + 3 + off; x <= b.x1 - 5; x += 8) {
-          up(x, y - 1);
-          dn(x, y); dn(x + 1, y + 1); dn(x + 2, y + 1);
-        }
-      }
-      break;
-    }
-
-    case 'grain': {
-      // Mineral speckle plus a few straight cleavage lines. Hashed rather
-      // than sampled from the rng so the cost stays one multiply per cell.
-      for (let y = b.y0 + 2; y <= b.y1 - 2; y++) {
-        for (let x = b.x0 + 2; x <= b.x1 - 2; x++) {
-          const n = (x * 7 + y * 13 + ((x * y) & 7)) & 15;
-          if (n === 0) dn(x, y);
-          else if (n === 9) up(x, y);
-        }
-      }
-      for (let i = 0; i < 5; i++) {
-        const ax = b.x0 + rng.below(Math.max(1, b.x1 - b.x0));
-        const ay = b.y0 + rng.below(Math.max(1, b.y1 - b.y0));
-        const dx = rng.chance(50) ? 1 : -1;
-        const slope = 0.3 + rng.next() * 0.6;
-        for (let k = 0; k < 14; k++) {
-          dn(ax + dx * k, ay + Math.round(k * slope));
-          up(ax + dx * k, ay + Math.round(k * slope) - 1);
-        }
-      }
-      break;
-    }
-
-    case 'sheen': {
-      // Diagonal light banding, the way a lantern or a ghost reads: no
-      // material at all, just the surface catching and losing the glow.
-      for (let y = b.y0 + 2; y <= b.y1 - 2; y++) {
-        for (let x = b.x0 + 2; x <= b.x1 - 2; x++) {
-          const d = (x + y) % 9;
-          if (d === 0) up(x, y);
-          else if (d === 4) dn(x, y);
-        }
-      }
-      break;
-    }
-
-    default: {
-      // Hide and fur: short strokes lying the way the light falls. Sparse is
-      // the whole discipline here -- a stroke every four cells reads as a coat
-      // and a stroke every two reads as a knitted jumper, and the difference
-      // between the two is one number.
-      for (let y = b.y0 + 4, row = 0; y <= b.y1 - 3; y += 5, row++) {
-        const off = (row & 1) ? 3 : 0;
-        for (let x = b.x0 + 3 + off; x <= b.x1 - 4; x += 6) {
-          up(x, y - 1);
-          dn(x + 1, y);
-        }
-      }
-      break;
+      if (bestN >= 6) mask.data[i] = bestV;
     }
   }
 }
+
+/*
+ * SURFACE TEXTURE -- REMOVED.
+ *
+ * There used to be a pass here that stamped a repeating pattern -- scales,
+ * plates, feathers, grain, sheen, hide -- across the whole body of every
+ * creature, one cell wide and one ramp step deep. It was defended as being
+ * "a modulation of the light rather than a decal", and that defence was true
+ * and beside the point: at a stroke every five cells, over a body a hundred
+ * cells across, it put four hundred flecks on every Kin. The player read them
+ * exactly as what they were -- dots -- and asked for none.
+ *
+ * The reference this roster is measured against holds large FLAT areas. A
+ * Ruby-era battle sprite has no all-over surface pattern anywhere on it; what
+ * looks like scales on a reptile is four deliberately drawn scales in the one
+ * place a scale would read, not a field of them. Generated texture cannot do
+ * that, because it does not know where the interesting places are.
+ *
+ * So: no automatic texture, at any strength. A design that genuinely needs a
+ * material -- a plated back, a feathered breast, a faceted crystal -- draws it
+ * deliberately, in the handful of places it belongs, with `seamPath`, `rings`,
+ * `bevel`, `plate`, `shell` or a short loop of its own. `p.noTexture()` is
+ * kept as a no-op so the designs that called it still compile.
+ */
 
 /**
  * Appendages.
@@ -1076,7 +1076,13 @@ function fitToCell(work: Mask, groundY: number): Mask {
     for (let x = b.x0; x <= b.x1; x++) {
       const v = work.get(x, y);
       if (v === EMPTY) continue;
-      out.set(dx0 + Math.round((x - b.x0) * k), dy0 + Math.round((y - b.y0) * k), v);
+      const ox = dx0 + Math.round((x - b.x0) * k), oy = dy0 + Math.round((y - b.y0) * k);
+      out.set(ox, oy, v);
+      // The facet flags travel with the cells they belong to, or a mineral
+      // authored as flat planes would be airbrushed the moment it was fitted.
+      if (work.isFlat(x, y) && ox >= 0 && oy >= 0 && ox < out.w && oy < out.h) {
+        out.flat[oy * out.w + ox] = 1;
+      }
     }
   }
   // The eyes were recorded in scratch coordinates and are drawn much later, so
@@ -1527,55 +1533,256 @@ function typeTraits(m: Pen, sp: SpeciesData | undefined, seed: string): void {
   }
 }
 
-/**
- * Inner rim light.
- *
- * A bright run along the edges that face the light. This is the highest-value
- * pass in the generator: it separates the creature from whatever it is
- * standing on, and it is the difference between a flat cutout and something
- * that looks like it has a surface.
- *
- * It used to be one shading block wide, which meant one flat step of specular
- * and nothing else -- a rim with no falloff, because there was no second row
- * to put the falloff in. There is now. The cell on the edge takes the full
- * lift and the cell behind it takes half of one, so the rim rolls off into the
- * body the way a real highlight on a curved surface does.
- *
- * Shadowed material gets a rim too, but only a modest one. A limb whose lit
- * edge is a contact seam otherwise looks sunk into the body it belongs to.
- */
-function rimLight(mask: Mask): void {
-  const W = mask.w, H = mask.h;
-  const src = mask.data.slice();
-  const at = (x: number, y: number): number => {
-    if (x < 0 || y < 0 || x >= W || y >= H) return EMPTY;
-    return src[y * W + x]!;
-  };
-  const filled = (x: number, y: number): boolean => {
-    const v = at(x, y);
-    return v !== EMPTY && v !== OUTLINE && v !== SHADOW;
-  };
-  /** On the lit edge: nothing of the body up, left, or up-left of here. */
-  const lit = (x: number, y: number): boolean =>
-    !(filled(x, y - 1) && filled(x - 1, y) && filled(x - 1, y - 1));
+/* ------------------------------------------------------ internal edges */
 
-  for (let y = 0; y < H; y++) {
-    for (let x = 0; x < W; x++) {
-      const v = at(x, y);
-      // Shadowed material is lifted exactly one step, never up to the
-      // specular: a rim as bright as the lit side turns the whole silhouette
-      // into a halo and undoes the banding underneath it.
-      const full = (v === BASE || v === LIGHT || v === HILIGHT || v === SPEC) ? SPEC
-        : v === SHADE ? BASE : v === DEEP ? SHADE : EMPTY;
-      if (full === EMPTY) continue;
-      if (lit(x, y)) { mask.set(x, y, full); continue; }
-      // Second row in: half the lift, and only where the cell in front of it
-      // actually took the rim.
-      if (!filled(x, y) ) continue;
-      if (lit(x - 1, y) || lit(x, y - 1) || lit(x - 1, y - 1)) mask.set(x, y, TONE_UP[v]!);
-    }
+/**
+ * The four intents a cell can have been painted with, collapsed into the
+ * three that a division can be drawn between.
+ *
+ * Read off the *intent map* -- the mask as the design left it, before the
+ * light ran -- because after `shade` the information is gone: a far limb's
+ * middle band and a torso's dark band are both literally SHADE, and a pass
+ * that keys off the shaded mask would either miss the boundary or ink every
+ * shading band on the creature.
+ */
+const PART_NONE = 0;
+/** The near surface of the animal: body, belly, muzzle, the lit face of a mass. */
+const PART_BODY = 1;
+/** Set back: a far limb, an underside, a seam the design drew for itself. */
+const PART_RECESS = 2;
+/** Feature material: horn, fin, claw, plate, leaf, flame, marking. */
+const PART_ACCENT = 3;
+
+function partOf(v: number): number {
+  switch (v) {
+    // FORM is body. It is the same surface as the BASE beside it, turned away
+    // from the light or standing in something's shadow, and inking round it
+    // would be inking round a shadow -- which is the exact wall that made the
+    // whole roster come out as smooth blobs.
+    case BASE: case LIGHT: case HILIGHT: case SPEC: case FORM: return PART_BODY;
+    case SHADE: case DEEP: return PART_RECESS;
+    case ACCENT: case ACCENT_DARK: case ACCENT_LIT: return PART_ACCENT;
+    case ACCENT2: case ACCENT2_DARK: case ACCENT2_LIT: return PART_ACCENT;
+    // EMPTY, OUTLINE, the eye tones, INNER, SHADOW. An eye is already ringed in
+    // its own ink and a mouth is already a cavity; neither wants inking twice.
+    default: return PART_NONE;
   }
 }
+
+/**
+ * Internal edges: the dark line between two parts of the same creature.
+ *
+ * THE PROBLEM. Every distinct part of a reference sprite is bounded by ink,
+ * not just the outer silhouette. An arm crossing the chest has a black edge
+ * along it; a far leg is both darker than the near one *and* outlined against
+ * it. We only inked the silhouette, so any limb drawn in a tone close to the
+ * body's dissolved into it and the creature read as one lump with bumps -- the
+ * single most damaging difference between this roster and the reference.
+ *
+ * THE RULE, and why it is this rule. The temptation is to ink wherever two
+ * tones differ, which turns a creature into a stained-glass window: the
+ * shading pass alone puts six tones on one flank. So the pass never looks at
+ * tone. It looks at *intent*, off the pre-shading map, and inks exactly two
+ * kinds of boundary:
+ *
+ *   1. **Recess against body** -- SHADE or DEEP touching BASE/LIGHT. This is
+ *      the far-limb case, and it is unconditional, because SHADE is documented
+ *      as meaning "set behind" and the designs use it that way. The ink goes
+ *      on the *recessed* side, so the near part keeps its full shape and the
+ *      far one is both darker and outlined, which is what the reference does.
+ *      It also promotes a one-cell DEEP seam -- what `limbFront`, `taperFront`
+ *      and `blobFront` lay down -- from a mid-dark tone that the shading could
+ *      swallow into hard ink that it cannot.
+ *
+ *   2. **An accent MASS against body or recess** -- and mass is the load-
+ *      bearing word. ACCENT is a horn and a fin, but it is also every stripe,
+ *      every claw tip and every iris, and ringing all of those is the
+ *      stained-glass failure by another route. So the accent regions are
+ *      connected-component labelled and only a component that is both large
+ *      (>= ACCENT_MASS_AREA cells) and genuinely thick (it has interior cells,
+ *      i.e. cells whose whole 3x3 is the same component) earns a division.
+ *      A two-cell claw, a brow, a one-cell rim stripe and an eye all fail that
+ *      test and are left alone. Here the ink goes on the *body* side instead,
+ *      because eating a cell off a horn changes the horn and eating a cell off
+ *      the shoulder behind it changes nothing.
+ *
+ * What is deliberately NOT inked: LIGHT against BASE. A belly, a throat, a pale
+ * muzzle is a change of material on one continuous surface, not a separate
+ * part, and lining it is what would make the pass look like a colouring book.
+ *
+ * Eight-connected, so a boundary that steps diagonally comes out as one
+ * unbroken line rather than a dotted one.
+ */
+const ACCENT_MASS_AREA = 64;
+const ACCENT_MASS_INTERIOR = 12;
+/**
+ * The smallest run of recessed cells that counts as a division rather than a
+ * dot.
+ *
+ * A seam is a line: `limbFront` lays a two-cell-thick ring, `seam` and
+ * `crease` lay a single-cell stroke, and either way it is tens of cells long
+ * and connected. A `speckle` call in SHADE or DEEP -- and there are several on
+ * the roster, painting a flank at ten per cent density -- is hundreds of
+ * one-cell islands. Without this floor every one of them would come out as a
+ * hard black fleck, which is the dots complaint returning by the back door.
+ */
+const RECESS_RUN_AREA = 10;
+/**
+ * How much of a recess component may be interior before it stops being a seam.
+ *
+ * The rule that changed with FORM. Hard ink is now reserved for genuine
+ * OCCLUSION -- one part passing in front of another -- and not charged against
+ * every dark patch on the creature.
+ *
+ * A seam is a stroke: `limbFront` lays a two-cell ring, `seamPath` and `crease`
+ * lay a single-cell run, and neither has any cell whose whole 3x3 is also seam.
+ * A core shadow is a patch, and a patch is mostly interior. So a DEEP stroke
+ * still inks -- that is what DEEP is for and it is how a near limb reads
+ * against the chest it crosses -- and a DEEP patch does not, because a dark
+ * region on a continuous surface is a shadow and a shadow is not a division.
+ *
+ * SHADE is exempt from the test in both directions: it is a declaration that
+ * this is a separate part set behind another, so it inks at any shape. That is
+ * its entire job and the only reason to reach for it.
+ */
+const RECESS_SOLID_RATIO = 0.35;
+
+function internalEdges(mask: Mask, intent: Uint8Array): void {
+  const W = mask.w, H = mask.h, N = W * H;
+  const part = new Uint8Array(N);
+  for (let i = 0; i < N; i++) part[i] = partOf(intent[i]!);
+
+  /**
+   * Connected-component pass. Both groups are labelled the same way and differ
+   * only in what they have to prove: a recess has to be a run, an accent has
+   * to be a mass. An iterative stack rather than recursion, because a crest
+   * can be two thousand cells.
+   */
+  const eligible = new Uint8Array(N);
+  const seen = new Uint8Array(N);
+  const stack: number[] = [];
+  const comp: number[] = [];
+  const label = (group: number, keeps: (c: number[]) => boolean): void => {
+    for (let s = 0; s < N; s++) {
+      if (part[s] !== group || seen[s]) continue;
+      comp.length = 0;
+      stack.length = 0;
+      stack.push(s);
+      seen[s] = 1;
+      while (stack.length) {
+        const i = stack.pop()!;
+        comp.push(i);
+        const x = i % W, y = (i / W) | 0;
+        for (let dy = -1; dy <= 1; dy++) {
+          for (let dx = -1; dx <= 1; dx++) {
+            const nx = x + dx, ny = y + dy;
+            if (nx < 0 || ny < 0 || nx >= W || ny >= H) continue;
+            const j = ny * W + nx;
+            if (seen[j] || part[j] !== group) continue;
+            seen[j] = 1;
+            stack.push(j);
+          }
+        }
+      }
+      if (keeps(comp)) for (const i of comp) eligible[i] = 1;
+    }
+  };
+
+  label(PART_RECESS, (c) => {
+    if (c.length < RECESS_RUN_AREA) return false;
+    // A far part inks whatever shape it is; a hand-drawn dark only inks if it
+    // is a stroke rather than a patch. See RECESS_SOLID_RATIO.
+    let solidCells = 0;
+    for (const i of c) {
+      if (intent[i] === SHADE) return true;
+      const x = i % W, y = (i / W) | 0;
+      if (x < 1 || y < 1 || x >= W - 1 || y >= H - 1) continue;
+      if (part[i - W - 1] === PART_RECESS && part[i - W] === PART_RECESS && part[i - W + 1] === PART_RECESS
+        && part[i - 1] === PART_RECESS && part[i + 1] === PART_RECESS
+        && part[i + W - 1] === PART_RECESS && part[i + W] === PART_RECESS && part[i + W + 1] === PART_RECESS) {
+        solidCells++;
+      }
+    }
+    return solidCells < c.length * RECESS_SOLID_RATIO;
+  });
+  label(PART_ACCENT, (c) => {
+    if (c.length < ACCENT_MASS_AREA) return false;
+    // Thickness: does the component contain cells whose entire 3x3 is also in
+    // it? A one-cell stripe two hundred cells long never will, and that is
+    // precisely the shape that must not be ringed.
+    let interior = 0;
+    for (const i of c) {
+      const x = i % W, y = (i / W) | 0;
+      if (x < 1 || y < 1 || x >= W - 1 || y >= H - 1) continue;
+      if (part[i - W - 1] === PART_ACCENT && part[i - W] === PART_ACCENT && part[i - W + 1] === PART_ACCENT
+        && part[i - 1] === PART_ACCENT && part[i + 1] === PART_ACCENT
+        && part[i + W - 1] === PART_ACCENT && part[i + W] === PART_ACCENT && part[i + W + 1] === PART_ACCENT) {
+        if (++interior >= ACCENT_MASS_INTERIOR) return true;
+      }
+    }
+    return false;
+  });
+
+  // Collected first, written after, so a cell that has just become ink cannot
+  // seed a second line against its own neighbour and let the division creep.
+  const ink: number[] = [];
+  for (let y = 0; y < H; y++) {
+    for (let x = 0; x < W; x++) {
+      const i = y * W + x;
+      const g = part[i]!;
+      if (g === PART_NONE) continue;
+      // A recessed cell inks itself; a body cell is inked by the accent mass
+      // in front of it. Either way the check below has to find a qualifying
+      // neighbour of the other kind.
+      if (g === PART_RECESS && !eligible[i]) continue;
+      let hit = false;
+      for (let dy = -1; dy <= 1 && !hit; dy++) {
+        for (let dx = -1; dx <= 1; dx++) {
+          if (!dx && !dy) continue;
+          const nx = x + dx, ny = y + dy;
+          if (nx < 0 || ny < 0 || nx >= W || ny >= H) continue;
+          const j = ny * W + nx;
+          const ng = part[j]!;
+          if (ng === PART_NONE) continue;
+          if (g === PART_RECESS && ng === PART_BODY) { hit = true; break; }
+          if (g !== PART_ACCENT && ng === PART_ACCENT && eligible[j]) { hit = true; break; }
+        }
+      }
+      if (hit) ink.push(i);
+    }
+  }
+  for (const i of ink) mask.data[i] = EDGE;
+}
+
+/*
+ * INNER RIM LIGHT -- REMOVED.
+ *
+ * There used to be a pass here that walked the up-left silhouette of every mass
+ * and promoted it to SPEC, with a half-step behind it, on the grounds that it
+ * separated the creature from the floor and was "the difference between a flat
+ * cutout and something with a surface".
+ *
+ * It was measured. It promoted every lit-edge body cell to SPEC wherever the
+ * body did not continue up, left or up-left -- the entire upper-left contour of
+ * every mass and every protrusion, regardless of thickness or material. Sitting
+ * directly on OUTLINE_LIT, the upper-left border of every creature ran
+ * OUTLINE_LIT -> SPEC -> HILIGHT -> LIGHT -> BASE in about three reference
+ * pixels: a smooth airbrushed gradient wrapped round the whole silhouette.
+ * SPEC + HILIGHT + OUTLINE_LIT came to 22.3% of an average sprite, of which
+ * 15.8% was this halo. It is most of what made the roster look like coloured-in
+ * balloons, and the player named it before we measured it.
+ *
+ * It is not coming back as a weaker version either. Under a lamp with a z
+ * component the lit contour is edge-on to the viewer and is genuinely NOT the
+ * bright part of the mass -- the shading pass now gives it BASE on purpose, and
+ * any rim pass at all would put the brightest tone straight back on the one
+ * place the physics says it does not belong. Separation from the background is
+ * the outline's job, and OUTLINE_LIT does it.
+ *
+ * Reflected light on the shadow contour is a real effect, but it is one cell
+ * on a mass forty reference pixels across on a wet or icy species, so it is
+ * hand-placed by the author who wants it, not generated for everybody.
+ */
 
 /**
  * Wrap the whole silhouette in a hard outline, two cells thick.
@@ -1712,71 +1919,31 @@ function eyes(p: Pen, cx: number, cy: number, spread: number, size: number, angr
 }
 
 /**
- * Draw a recorded pair.
+ * Draw a recorded pair -- the stock eye, for the legacy body plans.
  *
- * The proportions matter more than the size: a mostly-dark eye with a single
- * bright glint reads as an animal looking at you, while a mostly-white eye with
- * a dot in it reads as a doll. The pupil sits slightly inboard so both eyes
- * converge on the viewer.
+ * This used to draw its own ellipses, in step with the old procedural `eye()`,
+ * and it inherited the same defect: a ring computed at a three-cell radius is
+ * a lumpy octagon, and the two eyes of a pair sit at different x and so came
+ * out as two different lumpy octagons. It now blits the same hand-authored
+ * stamps the parts library uses, so a creature that falls through to a body
+ * plan gets exactly the eye a hand-authored one gets.
  *
- * Everything from the iris inward is new. An eye ten cells across used to be
- * five shading blocks and could hold a sclera, a pupil and a glint and nothing
- * else -- so every creature on the roster had the same black bead with a white
- * corner. Ten actual cells hold a coloured iris in the species accent, a
- * pupil, a fine dark limbal ring around the iris, a hard glint up towards the
- * light and a soft warm bounce reflected back into the lower rim. That last
- * pair is the whole trick: one cool highlight and one warm one is what makes a
- * painted eye look wet rather than merely shiny.
+ * The pair is placed the way `eyeRow` places one: both eyes on a single
+ * integer row, symmetric about an integer centre, the right one an exact
+ * mirror of the left. A body plan cannot produce a crooked pair any more.
  */
 function drawEyes(mask: Mask, spots: EyeSpot[]): void {
   for (const s of spots) {
     if (!s.draw) continue;
-    const cy = s.y;
-    // Big enough to hold an expression across a battle, small enough that the
-    // head still has room for a skull behind it.
-    const r = Math.max(4.2, s.size * 1.25);
-
-    for (const side of [-1, 1]) {
-      const ex = s.x + side * s.spread;
-
-      // Socket: a hard rim so the eye separates from any body colour.
-      mask.ellipse(ex, cy, r + 1.4, r * 1.25 + 1.4, OUTLINE);
-      // The white is kept to a rim. An eye at this size with a wide sclera
-      // reads as a googly eye stuck on, and the point of a big eye is to make
-      // the creature look at you, not to make it look surprised.
-      mask.ellipse(ex, cy, r, r * 1.25, EYE_WHITE);
-      // Limbal ring, then iris in the species accent, then the pupil. Three
-      // rings inside a ten-cell eye, which is exactly the budget the finer
-      // grid bought and exactly where it is best spent.
-      mask.ellipse(ex - side * r * 0.1, cy + r * 0.08, r * 0.88, r * 1.08, EYE_DARK);
-      mask.ellipse(ex - side * r * 0.1, cy + r * 0.08, r * 0.72, r * 0.92, ACCENT_DARK);
-      mask.ellipse(ex - side * r * 0.12, cy + r * 0.1, r * 0.54, r * 0.72, ACCENT);
-      mask.ellipse(ex - side * r * 0.12, cy + r * 0.12, r * 0.34, r * 0.5, EYE_DARK);
-      // A lit crescent under the pupil, which is what makes an eye look wet.
-      mask.ellipse(ex, cy + r * 0.86, r * 0.46, r * 0.22, EYE_WHITE);
-      // Glint, up and towards the light: a hard square-cornered mark, because
-      // a round glint at this size just looks like a smudge.
-      const g = Math.max(1, Math.round(r * 0.3));
-      mask.box(Math.round(ex - r * 0.5) - g, Math.round(cy - r * 0.6) - g,
-        Math.round(ex - r * 0.5), Math.round(cy - r * 0.6), EYE_WHITE);
-      // Bounce light reflected back into the far rim, one cell, warm. The eye
-      // stops reading as a hole the moment this lands.
-      mask.set(Math.round(ex + r * 0.5), Math.round(cy + r * 0.45), ACCENT_LIT);
-      mask.set(Math.round(ex + r * 0.5), Math.round(cy + r * 0.45) + 1, ACCENT_LIT);
-
-      if (s.angry) {
-        // A heavy slanted brow: the cheapest way to say predator. It gets a lit
-        // top edge now, so it reads as a ridge of bone over the socket rather
-        // than as a stripe of paint above it.
-        const bh = Math.max(2, Math.round(r * 0.5));
-        for (let i = 0; i <= Math.round(r * 2.4); i++) {
-          const bx = Math.round(ex - side * r * 1.2 + side * i);
-          const by = Math.round(cy - r * 1.5 - i * 0.35);
-          mask.box(bx, by, bx, by + bh, ACCENT_DARK);
-          mask.set(bx, by, ACCENT);
-        }
-      }
-    }
+    // The plans speak in a 0..n "size"; the library speaks in authored stamps.
+    // A plan that asks for a big eye is asking for the thing the player told
+    // us to stop doing, so the ceiling is the library's own ceiling.
+    const size: EyeSize = s.size <= 3 ? 's' : s.size <= 5 ? 'm' : 'l';
+    const style: EyeStyle = s.angry ? 'angry' : 'round';
+    const cy = Math.round(s.y), cx = Math.round(s.x), sp = Math.round(s.spread);
+    const st = eyeStampOf(style, size);
+    blitEyeStamp(mask, st, cx - sp, cy, { mirror: false });
+    blitEyeStamp(mask, st, cx + sp, cy, { mirror: true });
   }
 }
 
@@ -2651,54 +2818,109 @@ const PLAN_FNS: Record<BodyPlan, (c: PlanCtx) => void> = {
 
 /* ---------------------------------------------------------- rendering */
 
+/**
+ * The six palette slots.
+ *
+ *   0 `base`    the species' own colour. Most of the creature.
+ *   1 `shade`   its dark. Far parts, and every FORM shadow on it.
+ *   2 `light`   its pale material: belly, muzzle, mane, plate.
+ *   3 `accent`  the second hue, as a material.
+ *   4 `accent2` the third hue. A beak, a flame core, a gem, a leaf.
+ *   5 `ink`     the outline. **The ink, and nothing else.**
+ *
+ * Slot 5 is new and it exists because `accent` was doubling as the ink. The old
+ * five-slot layout ended at `ink`, and `maskToCanvas` took whichever declared
+ * colour was actually darkest as the ink reference -- a sound guard against the
+ * species that authored a pale colour in the last slot, but on sixteen of
+ * forty-eight species the ACCENT was darker than the declared ink, so the
+ * accent became the ink and the declared colour was silently thrown away. That
+ * deleted a fire highlight on all three flame cats, a beak gold on both birds
+ * and the electric blue on both spark species; `voltwick` was designed
+ * yellow-and-blue and shipped yellow-and-black.
+ *
+ * A five-slot palette still works and still looks the same. It is read as
+ * `[base, shade, light, accent, ink]`, and if the declared ink is NOT the
+ * darkest colour on the sheet -- which is precisely the case where it was being
+ * discarded -- it is recovered as `accent2` instead of being lost.
+ */
 function paletteOf(sp: SpeciesData | undefined): string[] {
   const p = sp?.design.palette ?? ['#7a8a9a', '#4f5a68', '#a8b8c8', '#d0a050', '#20242c'];
-  return [
-    p[0] ?? '#7a8a9a',
-    p[1] ?? p[0] ?? '#4f5a68',
-    p[2] ?? p[0] ?? '#a8b8c8',
-    p[3] ?? p[0] ?? '#d0a050',
-    p[4] ?? '#20242c',
-  ];
+  const base = p[0] ?? '#7a8a9a';
+  const shade = p[1] ?? base;
+  const light = p[2] ?? base;
+  const accent = p[3] ?? base;
+  if (p.length >= 6) return [base, shade, light, accent, p[4] ?? accent, p[5] ?? '#20242c'];
+
+  const last = p[4] ?? '#20242c';
+  const ink = [last, shade, base, accent].reduce((a, c) => (lumaOf(c) < lumaOf(a) ? c : a));
+  return [base, shade, light, accent, ink === last ? accent : last, ink];
 }
 
-function maskToCanvas(mask: Mask, pal: string[], flip: boolean): HTMLCanvasElement {
+/**
+ * Which way the light end of a species' palette leans.
+ *
+ * Mixing a highlight toward pure white by t multiplies its chroma by exactly
+ * (1 - t), which is why the measured SPEC came out at chroma 18/255 on luma 239
+ * -- essentially white -- and why the palette drained to near-grey at the lit
+ * end on every species at once. A highlight is not white; it is the colour of
+ * the lamp. So the light end is mixed toward a saturated tint and ROTATES
+ * rather than desaturating, and cool species get a cool lamp so the whole
+ * roster does not come out wearing the same cream.
+ */
+const COOL_TYPES = new Set(['tide', 'frost', 'gale', 'spirit', 'psyche', 'umbral', 'iron', 'venom']);
+function tintOf(sp: SpeciesData | undefined): { warm: string; hot: string; dark: string } {
+  const cool = (sp?.types ?? []).some((t) => COOL_TYPES.has(t));
+  return cool
+    ? { warm: '#b8e4ff', hot: '#e0f4ff', dark: '#101a30' }
+    : { warm: '#ffe08a', hot: '#fff2c0', dark: '#1a1024' };
+}
+
+function maskToCanvas(mask: Mask, pal: string[], tint: { warm: string; hot: string; dark: string }, flip: boolean): HTMLCanvasElement {
   const cv = document.createElement('canvas');
   cv.width = mask.w;
   cv.height = mask.h;
   const cx = cv.getContext('2d')!;
   cx.imageSmoothingEnabled = false;
 
-  const [base, shadeC, lightC, accent, outlineC] = pal as [string, string, string, string, string];
-  // The fifth slot is meant to be the ink, but a handful of species author a
-  // pale colour there and every derived shadow tone then comes out lighter
-  // than the thing it is shading -- which is how a creature ends up wearing a
-  // cream halo. Take whichever declared colour is actually darkest as the
-  // reference instead; for a correctly authored palette that is the fifth slot
-  // and nothing changes.
-  const ink = [outlineC, shadeC, base, accent].reduce((a, c) => (lumaOf(c) < lumaOf(a) ? c : a));
-  // The extra ramp steps are derived, so a species still declares only five
-  // colours in its JSON and never has to hand-pick a highlight.
+  const [base, shadeC, lightC, accent, accent2, ink] = pal as
+    [string, string, string, string, string, string];
+  // The extra ramp steps are derived, so a species declares six colours in its
+  // JSON and never has to hand-pick a highlight.
   const accentDark = mixHex(accent, ink === accent ? '#101014' : ink, 0.45);
-  const hilight = mixHex(lightC, '#ffffff', 0.42);
-  const spec = mixHex(lightC, '#ffffff', 0.72);
-  const deep = mixHex(shadeC, ink === shadeC ? '#101014' : ink, 0.5);
-  // The bright accent is pushed towards warm white rather than pure white: a
-  // flame core, a claw and a metal sheen all read hotter for it, and it never
-  // collides with the specular step of the body ramp.
-  const accentLit = mixHex(accent, '#fff4d8', 0.55);
+  const accent2Dark = mixHex(accent2, ink === accent2 ? '#101014' : ink, 0.45);
+  // The light end ROTATES toward the colour of the lamp rather than draining
+  // toward white. Mixing toward #ffffff by t multiplies chroma by (1 - t), so
+  // the old SPEC kept 28% of its own colour and came out near-grey on every
+  // species; mixing toward a saturated tint keeps the chroma and swings the hue
+  // 15-25 degrees toward the light instead. See `tintOf`.
+  const hilight = mixHex(lightC, tint.warm, 0.38);
+  const spec = mixHex(lightC, tint.hot, 0.60);
+  // And the dark end rotates the other way: a shadow that is merely a darker
+  // version of the surface is a computer's shadow. Mixing toward a cool dark
+  // gives it somewhere to go.
+  const deep = mixHex(mixHex(shadeC, ink === shadeC ? '#101014' : ink, 0.42), tint.dark, 0.22);
+  // FORM is the species' own authored dark. A shadow on a creature costs no
+  // palette entry -- that is a large part of why it is the cheapest mark on the
+  // sheet and why we can afford one on every overlap.
+  const form = shadeC;
+  const accentLit = mixHex(accent, tint.hot, 0.55);
+  const accent2Lit = mixHex(accent2, tint.hot, 0.55);
   // A cavity is the darkest thing on the sprite that is still a colour. Warming
   // it slightly is what stops an open mouth reading as a hole in the sprite.
   const inner = mixHex(mixHex(ink, accent, 0.3), '#a04038', 0.25);
   // A pure-black border looks traced. Bleeding a little body colour into the
   // outline, and more of it into the lit side, is what makes it read as ink.
+  // The lit side carries BASE, not LIGHT: against LIGHT the step from border to
+  // body measured 52 luma, which is a third gradient stop wrapped round the
+  // silhouette. Against BASE it is about 25 and reads as one edge.
   const outlineInk = mixHex(ink, base, 0.12);
-  const outlineLit = mixHex(ink, lightC, 0.42);
+  const outlineLit = mixHex(ink, base, 0.42);
 
   const colorFor = (v: number): string | null => {
     switch (v) {
       case BASE: return base;
       case SHADE: return shadeC;
+      case FORM: return form;
       case DEEP: return deep;
       case LIGHT: return lightC;
       case HILIGHT: return hilight;
@@ -2706,11 +2928,19 @@ function maskToCanvas(mask: Mask, pal: string[], flip: boolean): HTMLCanvasEleme
       case ACCENT: return accent;
       case ACCENT_DARK: return accentDark;
       case ACCENT_LIT: return accentLit;
+      case ACCENT2: return accent2;
+      case ACCENT2_DARK: return accent2Dark;
+      case ACCENT2_LIT: return accent2Lit;
       case INNER: return inner;
       case EYE_WHITE: return '#f8f8fc';
       case EYE_DARK: return ink;
       case OUTLINE: return outlineInk;
       case OUTLINE_LIT: return outlineLit;
+      // An internal division is the same ink as the border, carrying a little
+      // more of the body's colour. Identical to the border and the creature
+      // reads as separate pieces laid on top of each other; much lighter and
+      // it stops dividing anything, which was the whole complaint.
+      case EDGE: return mixHex(ink, base, 0.22);
       case SHADOW: return 'rgba(18,22,30,0.18)';
       case SHADOW_CORE: return 'rgba(14,17,24,0.34)';
       default: return null;
@@ -2789,7 +3019,7 @@ function build(speciesId: string, back: boolean): HTMLCanvasElement {
    * for free and only has to think about the creature.
    */
   const designed = sp ? DESIGNS[speciesId] : undefined;
-  let wantTypeTraits = true, wantTexture = true;
+  let wantTypeTraits = true;
 
   if (designed && sp) {
     const pen: DesignPen = {
@@ -2808,7 +3038,8 @@ function build(speciesId: string, back: boolean): HTMLCanvasElement {
         });
       },
       noTypeTraits: () => { wantTypeTraits = false; },
-      noTexture: () => { wantTexture = false; },
+      // The texture pass is gone; the hook stays so old designs compile.
+      noTexture: () => { /* no-op: see SURFACE TEXTURE -- REMOVED, above */ },
     };
     designed(pen);
   } else {
@@ -2831,39 +3062,71 @@ function build(speciesId: string, back: boolean): HTMLCanvasElement {
   }
   if (wantTypeTraits) typeTraits(dpen, sp, speciesId);
 
+  // The intent map: what the design *meant* each cell to be, captured before
+  // the light runs over it and turns four materials into eleven tones. The
+  // internal-edge pass reads it to find the boundaries that matter -- see
+  // `internalEdges` -- and it can only be taken here, because after `shade`
+  // a far limb's mid band and the torso's dark band are the same number.
+  const intent = design.data.slice();
+
   // Silhouette first, then everything that reads as craftsmanship: the light,
-  // the surface it falls on, the eyes, the rim, the ink and the floor. All of
-  // these run one cell at a time, which is the entire point of the finer cell.
+  // the divisions between the parts, the eyes, the rim, the ink and the floor.
+  // All of these run one cell at a time, which is the point of the finer cell.
   shade(design);
-  if (wantTexture) texture(design, sp, speciesId);
+  settle(design);
+  internalEdges(design, intent);
   drawEyes(design, pendingEyes);
   pendingEyes = [];
-  rimLight(design);
   outline(design);
   contactShadow(design);
 
   // The back view is the same animal seen from behind: mirrored, and the
   // generator has already suppressed the face.
-  return maskToCanvas(design, paletteOf(sp), back);
+  return maskToCanvas(design, paletteOf(sp), tintOf(sp), back);
 }
 
+/**
+ * TWO ROUTES, ONE RETURN TYPE.
+ *
+ * A species that ships hand-drawn art (assets/kin/<id>-front.png, see
+ * gfx/kinart.ts) is handed that image, already seated on the same ground line
+ * and centre line the generator uses. A species that does not is built from its
+ * design exactly as before. Both come back as a 128x128 canvas, cached the same
+ * way, so everything downstream -- the hit flash, the icon, the capture and
+ * send-out crops, the party and switch screens, the region map -- works on
+ * either without knowing which it got.
+ *
+ * The images were decoded during boot, so this stays synchronous. A species
+ * with a front but no back yet keeps its generated back: art arrives in
+ * batches and the game has to be playable in between.
+ */
 export function frontSprite(speciesId: string): HTMLCanvasElement {
   const key = `f:${speciesId}`;
   let cv = cache.get(key);
-  if (!cv) { cv = build(speciesId, false); cache.set(key, cv); }
+  if (!cv) { cv = kinArtSprite(speciesId, false) ?? build(speciesId, false); cache.set(key, cv); }
   return cv;
 }
 
 export function backSprite(speciesId: string): HTMLCanvasElement {
   const key = `b:${speciesId}`;
   let cv = cache.get(key);
-  if (!cv) { cv = build(speciesId, true); cache.set(key, cv); }
+  if (!cv) { cv = kinArtSprite(speciesId, true) ?? build(speciesId, true); cache.set(key, cv); }
   return cv;
 }
 
-/** Half-size party/Vellum icon: the front sprite reduced by taking the dominant
- *  colour of each 2x2 block, which preserves the silhouette far better than a
- *  smoothed downscale. */
+/**
+ * Half-size party/Vellum icon: the front sprite reduced by taking the dominant
+ * colour of each 2x2 block, which preserves the silhouette far better than a
+ * smoothed downscale.
+ *
+ * Note what this does on art that is already drawn in 2x2 blocks -- which the
+ * generator's is, and which a hand-drawn sprite should be: every block is one
+ * flat colour, so the dominant colour IS that colour and the reduction is
+ * exact. No blending, no new colours, nothing invented. Art that is not on that
+ * grid still reduces, to the nearest thing to a majority vote, and comes out
+ * softer; `kinArtReport().softIcons` names the images that fall in that case so
+ * the artist can be told which ones to redraw on the grid.
+ */
 export function iconSprite(speciesId: string): HTMLCanvasElement {
   const key = `i:${speciesId}`;
   const hit = cache.get(key);

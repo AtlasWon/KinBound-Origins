@@ -66,6 +66,7 @@ Add `?dev=1` to the URL to load the scripted playtest harness (see *Development*
 | `npm run build` | Minified single-file release bundle |
 | `node tools/validate-maps.js` | Check every map for ragged rows, bad tiles, broken warps |
 | `node tools/build-manifest.js` | Regenerate `data/manifest.json` after adding content |
+| `npm run kinart` | Index and check the hand-drawn creature art in `assets/kin/` |
 
 ---
 
@@ -122,9 +123,12 @@ for use in the world.
 map, shops, Waystations, save/load with three manual slots plus autosave at every Waystation, full
 options with key rebinding, and a JSON event VM that drives all story content.
 
-**Art & audio** — everything is generated at runtime from code and data: the 5x7 bitmap font, the
-16x16 tileset, 16x24 character walk cycles, 64x64 creature sprites built from 14 body plans, and a
-four-channel chiptune synth playing tracks authored as JSON, with procedural per-species cries.
+**Art & audio** — the world is generated at runtime from code and data: the 5x7 bitmap font, the
+16x16 tileset, 16x24 character walk cycles, and a four-channel chiptune synth playing tracks
+authored as JSON, with procedural per-species cries. Creature sprites are generated too, from 14
+body plans and 48 hand-authored designs — *unless* a species has hand-drawn art in `assets/kin/`,
+in which case that is used instead. The two routes are permanent: art arrives one creature at a
+time and every species without it keeps its generated sprite.
 
 ---
 
@@ -153,6 +157,8 @@ data/
   dialogue/  flag-aware NPC dialogue
   events/    story scripts for the event VM
   audio/     music tracks
+assets/
+  kin/       hand-drawn creature PNGs, <species-id>-front.png / -back.png (see its README)
 tests/       unit tests (node:test)
 tools/       dev server, release build, validators, manifest generator
 docs/        research notes and the design bible
@@ -183,6 +189,14 @@ archetypes (`quadruped`, `biped`, `brute`, `critter`, `bird`, `grub`, `arachnid`
 `monolith`, `orb`, `fish`, `moth`, `aquatic`, `serpentine`) and `design.palette` gives it five
 colours; sprites, icons and its cry are generated from those. The test suite checks that every
 move, ability and evolution target it references actually exists.
+
+**Hand-drawn art for a creature** — drop `assets/kin/<species-id>-front.png` and
+`<species-id>-back.png` in, 128x128, hard alpha, drawn in 2x2 pixel blocks, front facing left and
+back facing away to the right. The loader finds the creature's real outline and seats it on the
+same ground line the generated sprites stand on, so the framing does not have to be exact, and it
+lays the contact shadow down itself. Deliver one view, or one species, or all of them — anything
+without art keeps its generated sprite. `npm run kinart` indexes the folder and reports anything
+that will look wrong. Full spec: [assets/kin/README.md](assets/kin/README.md).
 
 **A new story beat** — add an `EventScript` to `data/events/<mapId>.json` and point an NPC's
 `script` field at its id. Scripts have conditions (`flag`, `hasItem`, `hasSeal`, `defeated`,

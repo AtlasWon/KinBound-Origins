@@ -53,7 +53,10 @@ test('everything the packaged app loads is listed in build.files', () => {
   const files = pkg.build?.files ?? [];
   // CHANGELOG.md is read at runtime by the Patch Notes tab when GitHub cannot
   // be reached, so it has to be inside the package like any other asset.
-  for (const needed of ['index.html', 'launcher/**/*', 'data/**/*', 'CHANGELOG.md']) {
+  // assets/**/* carries the hand-drawn creature PNGs. Leaving it out does not
+  // fail anything visibly -- the game simply falls back to generated sprites
+  // for every species, in the installed build only.
+  for (const needed of ['index.html', 'launcher/**/*', 'data/**/*', 'assets/**/*', 'CHANGELOG.md']) {
     assert.ok(files.includes(needed), `build.files is missing "${needed}"`);
   }
   assert.ok(

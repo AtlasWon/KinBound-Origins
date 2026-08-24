@@ -1,7 +1,7 @@
 // Zero-dependency static dev server for KinBound.
 // Serves the project root so /build/js, /data and /assets are all reachable.
 import { createServer } from 'node:http';
-import { readFile, stat, mkdir, writeFile } from 'node:fs/promises';
+import { readFile, stat, mkdir, writeFile, readdir } from 'node:fs/promises';
 import { extname, join, normalize, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -62,7 +62,36 @@ async function handleShot(req, res, name) {
   console.log('shot ->', out);
 }
 
+/**
+ * The creature-art listing, read off the disk on every request.
+ *
+ * The game will not hunt for 96 image files that mostly do not exist, so it
+ * asks for this index instead. Answering it live means a PNG dropped into
+ * assets/kin is picked up on the next reload with no build step in between,
+ * which is the whole point during an art pass. `tools/kinart.js` writes the
+ * same file for hosts that cannot do this. The Electron scheme handler in
+ * launcher/main.cjs answers it the same way.
+ */
+const KIN_ART_INDEX = '/assets/kin/index.json';
+
+async function handleKinIndex(res) {
+  let files = [];
+  try {
+    const all = await readdir(resolve(ROOT, 'assets', 'kin'));
+    files = all.filter((f) => f.toLowerCase().endsWith('.png')).sort();
+  } catch {
+    // No folder yet: an empty listing is the correct answer, not an error.
+  }
+  const body = JSON.stringify({ note: 'served live from assets/kin', files });
+  res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });
+  res.end(body);
+}
+
 const server = createServer(async (req, res) => {
+  if (req.url && req.url.split('?')[0] === KIN_ART_INDEX) {
+    await handleKinIndex(res);
+    return;
+  }
   if (req.url && req.url.startsWith('/__shot')) {
     if (req.method === 'POST') {
       await handleShot(req, res, decodeURIComponent(req.url.slice('/__shot/'.length)));

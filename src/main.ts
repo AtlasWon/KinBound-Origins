@@ -5,6 +5,8 @@ import { Game } from './core/game.js';
 import { TitleScene } from './scenes/title.js';
 import { validateFont } from './gfx/font.js';
 import { registry } from './data/registry.js';
+import { loadKinArt } from './gfx/kinart.js';
+import { clearSpriteCache } from './gfx/kinsprite.js';
 import { audio, type TrackData } from './audio/audio.js';
 import { migrateLegacySaves } from './systems/save.js';
 
@@ -48,6 +50,21 @@ async function boot(): Promise<void> {
 
   try {
     await registry.loadCore(game.assets);
+
+    /*
+     * Hand-drawn creature art, decoded here and nowhere else.
+     *
+     * Image decoding is asynchronous and every sprite accessor in the game is
+     * synchronous, called from inside a render tick. There is exactly one safe
+     * place to reconcile that, and it is here: after the species list exists
+     * (so we know what to look for) and before the first frame is drawn (so
+     * nothing can ask for a sprite that has not finished arriving). It never
+     * throws -- a species with no art, or with bad art, simply keeps the
+     * procedural sprite.
+     */
+    await loadKinArt([...registry.species.keys()]);
+    clearSpriteCache();
+
     const tracks = await game.assets
       .loadJson<TrackData[]>('data/audio/tracks.json')
       .catch(() => [] as TrackData[]);

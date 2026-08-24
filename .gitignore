@@ -7,8 +7,9 @@ build/kinbound.min.js
 build/kinbound.min.js.map
 dist/
 
-# Development screenshots. These are working files, not content.
+# Development screenshots and comparison renders. Working files, not content.
 build/shots/
+build/kin-compare/
 
 # Editor / OS noise
 .DS_Store
