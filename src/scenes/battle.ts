@@ -15,6 +15,7 @@ import { Battle, type BattleAction, type BattleEvent, type SideId } from '../bat
 import { TrainerAI } from '../battle/ai.js';
 import { registry } from '../data/registry.js';
 import { backSprite, frontSprite, ICON_SIZE, iconSprite, SPRITE_SIZE, whiteSprite } from '../gfx/kinsprite.js';
+import { kinAnchor } from '../gfx/kinanchor.js';
 import { fxTargetsSelf, MoveFx } from '../gfx/movefx.js';
 import { ListMenu, type MenuItem } from '../ui/menu.js';
 import { battleSpeedScale, textDelayFrames } from '../core/settings.js';
@@ -24,6 +25,7 @@ import type { AiTier, StatusId, TrainerData, TypeId, WeatherId } from '../data/s
 import { expForLevel } from '../battle/formulas.js';
 import { audio } from '../audio/audio.js';
 import { drawShutters } from '../ui/transition.js';
+import { drawArena, drawPads, FOE_PAD, PLAYER_PAD } from '../gfx/arena.js';
 
 /**
  * Which sound plays with which move animation. Grouped by feel rather than by
@@ -69,8 +71,10 @@ function sfxForAnim(anim: string): string {
  */
 const FOE_SPRITE = { x: 158, y: 2 };
 const PLAYER_SPRITE = { x: 14, y: 40 };
-const FOE_PAD = { x: 190, y: 70 };
-const PLAYER_PAD = { x: 46, y: 106 };
+// FOE_PAD and PLAYER_PAD now come from the arena, which derives them from where
+// feet actually land (design row 123) rather than from a guess. The old values
+// here had the foe's platform at y=70 with the horizon at 84 -- that pad was
+// drawn in the sky, which is why the far creature never looked planted.
 const FOE_BOX = { x: 6, y: 10, w: 100, h: 28 };
 const PLAYER_BOX = { x: 134, y: 68, w: 100, h: 36 };
 const MSG = { x: 0, y: 114, w: SCREEN_W, h: SCREEN_H - 114 };
@@ -87,11 +91,8 @@ const THROW_FROM: Record<SideId, { x: number; y: number }> = {
   foe: { x: 254, y: 44 },
 };
 
-/** Where a side's vessel splits open: over its own pad, at shoulder height. */
-function openPoint(side: SideId): { x: number; y: number } {
-  const pad = side === 'player' ? PLAYER_PAD : FOE_PAD;
-  return { x: pad.x, y: pad.y - 30 };
-}
+/** Fallback split height, for a side with nothing measurable on it yet. */
+const OPEN_FALLBACK = 30;
 
 /** 0 before `a`, 1 after `b`, linear between. Every beat below is cut from it. */
 function ramp(x: number, a: number, b: number): number {
@@ -134,12 +135,21 @@ interface Capsule {
   spin: number;
   /** One-shot burst: 1 the instant it fires, 0 once it has expanded away. */
   burst: number;
+  /**
+   * The same one-shot, but where the cone LANDS rather than at the vessel.
+   *
+   * This is the beat the creature forms on. Without something happening on the
+   * ground at that moment the arrival is a crossfade, and a crossfade is what
+   * the eye reads as a sprite fading in rather than as a thing being poured
+   * out of a capsule.
+   */
+  land: number;
   /** The failure mark, drawn above the vessel. */
   tell: string | null;
 }
 
 function capsuleAt(x: number, y: number, o: Partial<Capsule> = {}): Capsule {
-  return { x, y, open: 0, beam: 0, beamTo: null, spin: 0, burst: 0, tell: null, ...o };
+  return { x, y, open: 0, beam: 0, beamTo: null, spin: 0, burst: 0, land: 0, tell: null, ...o };
 }
 
 /** Authored lengths of the capture performance, already speed-scaled. */
@@ -206,12 +216,13 @@ interface SideView {
    *  holding the queue up in front of it. */
   flashT: number;
   visible: boolean;
-  /** How much of the sprite exists, measured up from the feet. Anything under 1
-   *  is a materialise or a dissolve part-way through. */
-  reveal: number;
   /** How far the sprite has been replaced by its own white silhouette:
    *  0 flesh, 1 pure light. */
   ghost: number;
+  /** How brightly the silhouette is glowing, 0..1. Drives the halo that makes
+   *  a materialising kin read as light rather than as a faded sprite. Only the
+   *  vessel steps ever raise it. */
+  bloom: number;
   /** Absolute logical y the sprite is cut off at, so a beaten kin sinks into
    *  the ground rather than sliding off the bottom of the screen. */
   clipY: number | null;
@@ -225,7 +236,7 @@ interface SideView {
 
 const NEW_VIEW = (): SideView => ({
   kin: null, displayHp: 0, offsetX: 0, offsetY: 0, alpha: 1, flash: 0, flashT: 0,
-  visible: true, reveal: 1, ghost: 0, clipY: null,
+  visible: true, ghost: 0, bloom: 0, clipY: null,
   dash: 0, dashV: 0, dashTo: 0, idleT: 0,
 });
 
@@ -334,7 +345,7 @@ export class BattleScene implements Scene {
     for (const a of this.queue) {
       if (a.kind !== 'sendOut') continue;
       const v = this.view[a.side];
-      v.visible = false; v.alpha = 0; v.reveal = 0;
+      v.visible = false; v.alpha = 0; v.ghost = 1;
     }
 
     this.buildActionMenu();
@@ -616,7 +627,7 @@ export class BattleScene implements Scene {
     const v = this.view[side];
     if (!v.visible || v.alpha < 1 || !v.kin || v.kin.currentHp <= 0) return false;
     // Half-materialised is not idling either, whichever step put it there.
-    if (v.reveal < 1 || v.ghost > 0) return false;
+    if (v.ghost > 0 || v.bloom > 0 || v.clipY !== null) return false;
     const a = this.current;
     if (a && (a.kind === 'faint' || a.kind === 'withdraw' || a.kind === 'sendOut') && a.side === side) {
       return false;
@@ -715,17 +726,23 @@ export class BattleScene implements Scene {
         const p = Math.min(1, a.t / a.frames);
         const v = this.view[a.side];
         const pad = a.side === 'player' ? PLAYER_PAD : FOE_PAD;
-        // Beaten, not deleted. It blanches on the blow, goes limp, then slides
-        // down through its own pad -- the clip is what sells "into the ground"
-        // rather than "off the bottom of the screen", and it is the reason the
-        // step no longer just fades a sprite out on the spot.
-        v.ghost = 1 - ramp(p, 0.02, 0.20);
+        // Beaten, not deleted. It blanches on the blow, goes limp, slides down
+        // through its own pad -- the clip is what sells "into the ground"
+        // rather than "off the bottom of the screen" -- and on the way down it
+        // gives itself back to the light it was sent out as. The second rise of
+        // `ghost` is that return: same silhouette, same glow, run the other way,
+        // so a knockout and a recall are visibly the same event happening for
+        // different reasons.
+        const blanch = 1 - ramp(p, 0.02, 0.20);
+        const dissolve = ramp(p, 0.46, 0.78);
+        v.ghost = Math.max(blanch, dissolve);
+        v.bloom = dissolve * 0.8;
         v.offsetY = Math.round(Math.pow(p, 1.6) * 46);
         v.offsetX = Math.round(Math.sin(p * Math.PI * 1.2) * 2);
         v.clipY = pad.y + 3;
         v.alpha = 1 - ramp(p, 0.62, 1);
         if (a.t >= a.frames || skip) {
-          v.visible = false; v.alpha = 0; v.ghost = 0;
+          v.visible = false; v.alpha = 0; v.ghost = 0; v.bloom = 0;
           v.offsetX = 0; v.offsetY = 0; v.clipY = null;
           this.current = null;
         }
@@ -742,7 +759,7 @@ export class BattleScene implements Scene {
         this.withdrawFrame(a.side, a.t, a.frames);
         if (a.t >= a.frames || skip) {
           const v = this.view[a.side];
-          v.visible = false; v.alpha = 0; v.reveal = 1; v.ghost = 0; v.clipY = null;
+          v.visible = false; v.alpha = 0; v.ghost = 0; v.bloom = 0; v.clipY = null;
           v.offsetX = 0; v.offsetY = 0;
           this.capsule = null;
           this.current = null;
@@ -781,7 +798,8 @@ export class BattleScene implements Scene {
           if (a.caught) {
             // Caught: the field is empty, and the status panel goes with it.
             const v = this.view.foe;
-            v.visible = false; v.alpha = 0; v.ghost = 0; v.reveal = 1; v.clipY = null;
+            v.visible = false; v.alpha = 0; v.ghost = 0; v.bloom = 0; v.clipY = null;
+            v.offsetX = 0; v.offsetY = 0;
           } else {
             this.arrive('foe');
           }
@@ -1054,7 +1072,7 @@ export class BattleScene implements Scene {
   /** Everything a side looks like once it is simply stood on its pad. */
   private arrive(side: SideId): void {
     const v = this.view[side];
-    v.visible = true; v.alpha = 1; v.reveal = 1; v.ghost = 0; v.clipY = null;
+    v.visible = true; v.alpha = 1; v.ghost = 0; v.bloom = 0; v.clipY = null;
     v.offsetX = 0; v.offsetY = 0;
     this.capsule = null;
   }
@@ -1068,72 +1086,103 @@ export class BattleScene implements Scene {
    * the creature is still solidifying, which is what stops the sequence reading
    * as a list of things that happened one after another.
    *
-   * The creature is grown out of the ground inside the cone rather than scaled
-   * up into it. Nothing in this game is ever resampled, and a sprite drawn at a
-   * fraction of its height would land every row off the design grid; so the
-   * white silhouette is revealed a whole design pixel at a time from the feet
-   * up, and then cross-faded into the real sprite. See renderKin.
+   * HOW THE CREATURE ARRIVES, and why it is not how it used to.
+   *
+   * It used to be grown out of the ground: the sprite was revealed by a source
+   * rectangle that crept up from the feet, a whole design pixel at a time. That
+   * was chosen to obey the rule that nothing is ever resampled -- a sprite drawn
+   * at a fraction of its height lands its rows off the design grid and reads as
+   * blur -- and on a flat generated silhouette it passed for growth. On drawn
+   * artwork it does not. A hard horizontal line travelling up a detailed animal
+   * is read by the eye as a CUT, and the player reported exactly that: it looks
+   * like the kin falls in half.
+   *
+   * So nothing is cropped any more, at either end. The whole silhouette is
+   * present from the first frame it exists and the only things that change are
+   * how bright it is and how much colour it has: it fades up out of the cone as
+   * pure white light with a glow around it, settles the last two pixels onto its
+   * pad, and then the colour comes back into it from underneath. No edge crosses
+   * the creature at any point -- which is also why the no-resampling rule costs
+   * nothing here. There is no scale to snap to the grid because there is no
+   * scale. See renderKin.
    */
   private sendOutFrame(side: SideId, t: number, frames: number): void {
     const v = this.view[side];
     const p = Math.min(1, t / frames);
     const home = THROW_FROM[side];
-    const open = openPoint(side);
+    const open = this.openPoint(side);
     const pad = side === 'player' ? PLAYER_PAD : FOE_PAD;
 
-    const back = ramp(p, 0.82, 1);
+    const back = ramp(p, 0.84, 1);
     const pos = back > 0 ? arcTo(open, home, back) : arcTo(home, open, ramp(p, 0, 0.30));
 
     this.capsule = capsuleAt(pos.x, pos.y, {
-      open: ramp(p, 0.30, 0.38) - ramp(p, 0.74, 0.84),
-      beam: ramp(p, 0.31, 0.42) - ramp(p, 0.74, 0.86),
+      open: ramp(p, 0.30, 0.38) - ramp(p, 0.76, 0.86),
+      beam: ramp(p, 0.31, 0.42) - ramp(p, 0.72, 0.86),
       beamTo: p > 0.30 && p < 0.86 ? { x: pad.x, y: pad.y } : null,
       spin: p < 0.30 ? p / 0.30 : 0,
       burst: pop(p, 0.30, 0.18),
+      // Light striking the ground, on the beat the silhouette appears in it.
+      land: pop(p, 0.36, 0.34),
     });
 
     v.offsetX = 0;
-    v.offsetY = 0;
     v.clipY = null;
-    v.reveal = ramp(p, 0.38, 0.64);
-    v.ghost = 1 - ramp(p, 0.62, 0.80);
-    v.visible = v.reveal > 0;
-    v.alpha = v.visible ? 1 : 0;
+    // Poured, not stamped: it forms a couple of pixels high in the cone and
+    // settles onto its feet. Whole logical pixels, so it stays on the grid.
+    v.offsetY = -Math.round(2 * (1 - ramp(p, 0.48, 0.68)) * (p > 0.34 ? 1 : 0));
+    v.alpha = ramp(p, 0.34, 0.52);
+    v.ghost = 1 - ramp(p, 0.58, 0.82);
+    // Brightest while it is still nothing but light, gone by the time it is
+    // flesh: the halo is what makes the difference between arriving and simply
+    // fading in.
+    v.bloom = ramp(p, 0.34, 0.44) - ramp(p, 0.62, 0.84);
+    v.visible = v.alpha > 0;
 
     // Keyed off the frame index rather than a latch, so a skip cannot leave a
     // cry owed. The max() is for the collapsed one-frame version.
     if (t === Math.max(1, Math.round(frames * 0.30))) audio.playSfx('send_out');
-    if (t === Math.max(1, Math.round(frames * 0.64)) && v.kin) audio.playCry(v.kin.species);
+    if (t === Math.max(1, Math.round(frames * 0.66)) && v.kin) audio.playCry(v.kin.species);
   }
 
-  /** Recall: the send-out run backwards, beam first and creature last. */
+  /**
+   * Recall: the send-out run backwards, beam first and creature last.
+   *
+   * The same rebuild as the arrival and for the same reason. It blanches into
+   * its own silhouette where it stands, glows, lifts a few pixels toward the
+   * open vessel and thins away. Nothing is cropped, so no edge travels across
+   * the artwork.
+   */
   private withdrawFrame(side: SideId, t: number, frames: number): void {
     const v = this.view[side];
     const p = Math.min(1, t / frames);
     const home = THROW_FROM[side];
-    const open = openPoint(side);
+    const open = this.openPoint(side);
     const pad = side === 'player' ? PLAYER_PAD : FOE_PAD;
 
-    const back = ramp(p, 0.72, 1);
+    const back = ramp(p, 0.74, 1);
     const pos = back > 0 ? arcTo(open, home, back) : arcTo(home, open, ramp(p, 0, 0.22));
 
     this.capsule = capsuleAt(pos.x, pos.y, {
-      open: ramp(p, 0.22, 0.30) - ramp(p, 0.60, 0.70),
-      beam: ramp(p, 0.24, 0.34) - ramp(p, 0.62, 0.72),
-      beamTo: p > 0.22 && p < 0.72 ? { x: pad.x, y: pad.y } : null,
+      open: ramp(p, 0.22, 0.30) - ramp(p, 0.62, 0.72),
+      beam: ramp(p, 0.24, 0.34) - ramp(p, 0.62, 0.74),
+      beamTo: p > 0.22 && p < 0.74 ? { x: pad.x, y: pad.y } : null,
       spin: p < 0.22 ? p / 0.22 : 0,
-      burst: pop(p, 0.62, 0.16),
+      burst: pop(p, 0.64, 0.16),
+      land: pop(p, 0.30, 0.30),
     });
 
     v.offsetX = 0;
-    v.offsetY = 0;
     v.clipY = null;
-    v.ghost = ramp(p, 0.26, 0.40);
-    v.reveal = 1 - ramp(p, 0.38, 0.62);
-    // The alpha trails the reveal so the silhouette thins as it shrinks, and so
-    // the status panel -- which hides on alpha -- leaves with the creature.
-    v.alpha = 1 - ramp(p, 0.44, 0.62);
-    v.visible = v.reveal > 0;
+    v.ghost = ramp(p, 0.24, 0.42);
+    // Drawn up the cone. Six pixels is enough to say "leaving" and little
+    // enough that a heavy creature does not appear to jump.
+    v.offsetY = -Math.round(6 * ramp(p, 0.40, 0.70));
+    // The alpha trails the blanch so the light thins rather than snapping out,
+    // and so the status panel -- which hides on alpha -- leaves with it.
+    v.alpha = 1 - ramp(p, 0.46, 0.70);
+    v.bloom = ramp(p, 0.22, 0.38) - ramp(p, 0.52, 0.72);
+    v.visible = v.alpha > 0;
 
     if (t === Math.max(1, Math.round(frames * 0.24))) audio.playSfx('withdraw');
   }
@@ -1150,7 +1199,7 @@ export class BattleScene implements Scene {
   private vesselFrame(a: Extract<Anim, { kind: 'vessel' }>): void {
     const v = this.view.foe;
     const ph = a.ph;
-    const open = openPoint('foe');
+    const open = this.openPoint('foe');
     const pad = FOE_PAD;
     const rest = pad.y - 6;
     let t = a.t;
@@ -1173,18 +1222,24 @@ export class BattleScene implements Scene {
         // Spent by the end of the phase: the next one builds a fresh capsule
         // and a burst still running would be cut off mid-expansion.
         burst: pop(q, 0.72, 0.28),
+        land: pop(q, 0.10, 0.30),
       });
+      // Taken as light, exactly as a recall takes it: blanch, glow, lift, thin.
+      // Never cropped -- a horizontal edge climbing a captured creature was the
+      // same "falls in half" read as the send-out had.
       v.ghost = ramp(q, 0.04, 0.28);
-      v.reveal = 1 - ramp(q, 0.24, 0.70);
-      v.alpha = 1 - ramp(q, 0.46, 0.76);
-      v.visible = v.reveal > 0;
+      v.offsetY = -Math.round(6 * ramp(q, 0.22, 0.66));
+      v.alpha = 1 - ramp(q, 0.36, 0.74);
+      v.bloom = ramp(q, 0.04, 0.24) - ramp(q, 0.48, 0.72);
+      v.visible = v.alpha > 0;
       return;
     }
     t -= ph.suck;
 
     v.visible = false;
     v.alpha = 0;
-    v.reveal = 0;
+    v.bloom = 0;
+    v.offsetY = 0;
 
     if (t <= ph.settle) {
       // Falls to the ground with the kin inside it, accelerating.
@@ -1223,30 +1278,79 @@ export class BattleScene implements Scene {
       beam: ramp(q, 0.06, 0.26) - ramp(q, 0.62, 0.86),
       beamTo: { x: pad.x, y: pad.y },
       burst: pop(q, 0, 0.26),
+      land: pop(q, 0.18, 0.32),
       tell: q > 0.7 ? '!' : null,
     });
-    v.reveal = ramp(q, 0.22, 0.52);
-    v.ghost = 1 - ramp(q, 0.48, 0.72);
-    v.visible = v.reveal > 0;
-    v.alpha = v.visible ? 1 : 0;
+    // Given back the same way it would have been sent out.
+    v.offsetY = -Math.round(2 * (1 - ramp(q, 0.34, 0.56)) * (q > 0.18 ? 1 : 0));
+    v.alpha = ramp(q, 0.18, 0.40);
+    v.ghost = 1 - ramp(q, 0.44, 0.70);
+    v.bloom = ramp(q, 0.18, 0.30) - ramp(q, 0.48, 0.72);
+    v.visible = v.alpha > 0;
   }
 
   /* ------------------------------------------------------------ effects */
 
   /**
-   * Kick off a move's effect. Positions are the middle of each sprite rather
-   * than the pad, because that is where the eye is already looking.
+   * Where an effect happens to a side: on the creature's body.
+   *
+   * This used to be the geometric centre of the sprite FRAME, which was near
+   * enough right while the generator filled the frame and is wrong now. Drawn
+   * artwork is seated by its ink on the ground line, so cinderpaw's frame
+   * centre is thirteen logical pixels above its actual middle and every effect
+   * played over its head -- which is what the player reported. The generated
+   * roster turns out to have the same problem in a quieter form: pebblet's ink
+   * starts at design row 64, so its frame centre is a point in the sky.
+   *
+   * So both routes ask kinanchor for the real thing. A blow lands on mass.
    */
+  private bodyPoint(side: SideId): { x: number; y: number } {
+    const back = side === 'player';
+    const pos = back ? PLAYER_SPRITE : FOE_SPRITE;
+    const kin = this.view[side].kin;
+    if (!kin) {
+      const half = SPRITE_SIZE / DETAIL / 2;
+      return { x: pos.x + half, y: pos.y + half * 0.9 };
+    }
+    const a = kinAnchor(kin.species, back);
+    return { x: pos.x + a.hitX / DETAIL, y: pos.y + a.hitY / DETAIL };
+  }
+
+  /**
+   * Where a side's vessel splits open.
+   *
+   * Over its own pad, and -- this is the measured part -- clear of the top of
+   * whatever is arriving. A fixed thirty pixels above the pad put the two open
+   * halves of the capsule in the middle of a short creature's chest, and light
+   * that starts inside the thing it is delivering does not read as delivering
+   * it.
+   *
+   * Both clamps are load-bearing. A very tall kin would otherwise push the
+   * vessel off the top of the field -- or, for the player's side, up behind the
+   * opponent's status panel, which is drawn over the field and would simply eat
+   * it. The far clamp keeps some distance for the cone to travel down.
+   */
+  private openPoint(side: SideId): { x: number; y: number } {
+    const pad = side === 'player' ? PLAYER_PAD : FOE_PAD;
+    const back = side === 'player';
+    const pos = back ? PLAYER_SPRITE : FOE_SPRITE;
+    // The player's vessel rises over the pad that sits under the foe's panel.
+    const ceiling = back ? FOE_BOX.y + FOE_BOX.h + 6 : 12;
+    const kin = this.view[side].kin;
+    if (!kin) return { x: pad.x, y: Math.max(ceiling, pad.y - OPEN_FALLBACK) };
+    const top = pos.y + kinAnchor(kin.species, back).y0 / DETAIL;
+    return { x: pad.x, y: Math.round(Math.max(ceiling, Math.min(pad.y - 22, top - 12))) };
+  }
+
+  /** Kick off a move's effect, anchored to each creature's body. */
   private startFx(side: SideId, anim: string, type: TypeId): void {
     const meta = registry.typeChart?.meta?.[type];
     const color = meta?.color ?? '#ffffff';
-    const half = SPRITE_SIZE / DETAIL / 2;
-    const centre = (p: { x: number; y: number }) => ({ x: p.x + half, y: p.y + half * 0.9 });
 
-    const user = centre(side === 'player' ? PLAYER_SPRITE : FOE_SPRITE);
+    const user = this.bodyPoint(side);
     const target = fxTargetsSelf(anim)
       ? user
-      : centre(side === 'player' ? FOE_SPRITE : PLAYER_SPRITE);
+      : this.bodyPoint(side === 'player' ? 'foe' : 'player');
 
     this.fxSide = side;
     this.fx.play(anim, user, target, color);
@@ -1257,7 +1361,9 @@ export class BattleScene implements Scene {
 
   render(game: Game, r: Renderer): void {
     r.camX = 0; r.camY = 0;
-    this.renderBackdrop(r);
+    // The field sits outside the shake; the pads go inside it with the
+    // combatants, so the ground the creatures stand on moves with them.
+    drawArena(r, this.opts.backdrop ?? 'highland', this.ticks, { pads: false });
 
     // The field shakes; the interface does not. Shaking the whole screen makes
     // text unreadable and reads as a bug rather than as force.
@@ -1265,7 +1371,12 @@ export class BattleScene implements Scene {
     const c = r.bctx;
     c.save();
     if (sx || sy) c.translate(sx * DETAIL, sy * DETAIL);
-    this.renderPads(r);
+    drawPads(r, this.opts.backdrop ?? 'highland');
+    // The cone lands on the pad and the creature stands IN it, so the light
+    // goes down before the sprite does. Drawn over the top -- which is where it
+    // used to be -- it put a hard white stripe down the middle of whatever it
+    // was delivering, and that is the last thing a materialise needs.
+    this.renderBeam(r);
     this.renderKin(r, 'foe');
     this.renderKin(r, 'player');
     this.fx.render(r);
@@ -1288,90 +1399,33 @@ export class BattleScene implements Scene {
     }
   }
 
-  /**
-   * Backdrops are painted from banded palettes rather than art files, so a new
-   * region only needs an entry here. The horizon detail differs per backdrop
-   * because a flat seam between sky and ground is the thing that makes a
-   * battle screen look unfinished.
-   */
-  private renderBackdrop(r: Renderer): void {
-    const kind = this.opts.backdrop ?? 'highland';
-    const palettes: Record<string, { sky: string[]; ground: string[]; hill?: string }> = {
-      indoor: { sky: ['#3a3448', '#463e56', '#524a64'], ground: ['#6b5440', '#7d6450', '#8d7460'] },
-      cave: { sky: ['#1c2030', '#242a3c', '#2c3448'], ground: ['#3a3a44', '#46464f', '#52525c'] },
-      quarry: { sky: ['#8fa8c0', '#a8bcd0', '#c0d0e0'], ground: ['#8a8478', '#9a9488', '#aaa498'], hill: '#6e6a60' },
-      coast: { sky: ['#8fc0dc', '#a8d4e8', '#c8e4f0'], ground: ['#cdb682', '#d8c48c', '#e2d0a2'], hill: '#3f7aa8' },
-      highland: { sky: ['#7fb0d8', '#9cc4e4', '#bcd8ee'], ground: ['#5f8f4a', '#6fa055', '#7fb060'], hill: '#4f7a48' },
-    };
-    const pal = palettes[kind] ?? palettes.highland!;
-
-    const horizon = 84;
-    pal.sky.forEach((c, i) =>
-      r.rect(0, i * (horizon / pal.sky.length), SCREEN_W, horizon / pal.sky.length + 1, c));
-    pal.ground.forEach((c, i) => {
-      const h = (MSG.y - horizon) / pal.ground.length;
-      r.rect(0, horizon + i * h, SCREEN_W, h + 1, c);
-    });
-
-    if (!pal.hill) return;
-
-    if (kind === 'coast') {
-      // Open water along the horizon, with a drifting glitter line.
-      r.rect(0, horizon - 14, SCREEN_W, 14, pal.hill);
-      for (let i = 0; i < 10; i++) {
-        const y = horizon - 12 + (i % 6) * 2;
-        const x = ((i * 37 + Math.floor(this.ticks / 3)) % (SCREEN_W + 30)) - 15;
-        r.rect(x, y, 5 + (i % 4), 1, '#7fb8d8');
-      }
-      r.rect(0, horizon - 1, SCREEN_W, 1, '#e8dcb0');
-      return;
-    }
-
-    // Distant relief, so the horizon is never a straight seam.
-    for (let i = 0; i < 5; i++) {
-      const hx = 20 + i * 52;
-      const hw = 34 + (i % 3) * 10;
-      for (let x = -hw; x <= hw; x++) {
-        const h = kind === 'quarry'
-          // A quarry face is cut in steps, not rounded.
-          ? Math.round((1 - Math.abs(x) / hw) * 18) - (Math.abs(x) % 6 < 3 ? 0 : 3)
-          : Math.round(Math.cos((x / hw) * (Math.PI / 2)) * (12 + (i % 3) * 5));
-        if (h > 0) r.rect(hx + x, horizon - h, 1, h, pal.hill);
-      }
-    }
-  }
-
-  private renderPads(r: Renderer): void {
-    for (const pad of [FOE_PAD, PLAYER_PAD]) {
-      const rx = pad === FOE_PAD ? 30 : 36;
-      const ry = pad === FOE_PAD ? 8 : 10;
-      for (let y = -ry; y <= ry; y++) {
-        const w = Math.round(rx * Math.sqrt(Math.max(0, 1 - (y / ry) ** 2)));
-        if (w <= 0) continue;
-        const shade = y < 0 ? '#6fa055' : '#54833f';
-        r.rect(pad.x - w, pad.y + y, w * 2, 1, shade);
-      }
-      r.rect(pad.x - rx, pad.y, 1, 1, '#3f6432');
-    }
-  }
 
   /**
-   * Idle breathing.
+   * Idle breathing, as whole logical pixels of compression.
    *
-   * A creature standing perfectly still is what makes a battle screen look
-   * like a screenshot of itself. This returns whole design pixels rather than a
-   * float: the sprite rises one pixel at the top of the breath, sits neutral
-   * through the middle, and compresses one pixel at the bottom. That is the
-   * entire range the grid allows and about as much as the era ever used -- any
-   * more and it stops reading as breathing and starts reading as floating.
+   * A creature standing perfectly still is what makes a battle screen look like
+   * a screenshot of itself. Two things about this are deliberate.
+   *
+   * **It is compression, not a lift.** The old cycle spent half its range
+   * raising the whole sprite by a pixel, feet included, which is a hop rather
+   * than a breath. Every pixel of movement now comes out of the lower body and
+   * the feet never leave the pad.
+   *
+   * **Two pixels, not one.** The player asked for more movement and one pixel
+   * on a sixty-four pixel creature is barely visible. The second pixel is only
+   * available to a creature with the body depth to spare it -- see the `seams`
+   * list in kinanchor, whose length is the deepest squash that species can take
+   * -- so a small one still breathes a single pixel and does not stamp.
    *
    * The two sides run a little over half a cycle apart so they never pulse
    * together, which would read as one shared heartbeat rather than two animals.
+   * Zero has to be the resting pose: a side whose clock is frozen sits at
+   * idleT 0 and must not be caught mid-squash.
    */
-  private breath(side: SideId): { lift: number; squash: number } {
+  private breath(side: SideId): number {
     const v = this.view[side];
-    const p = Math.sin(v.idleT / 22 + (side === 'foe' ? Math.PI * 1.15 : 0));
-    return { lift: p > 0.55 ? -1 : 0, squash: p < -0.6 ? 1 : 0 };
+    const p = Math.sin(v.idleT / 26 + (side === 'foe' ? Math.PI * 1.15 : 0));
+    return p < -0.75 ? 2 : p < -0.25 ? 1 : 0;
   }
 
   private renderKin(r: Renderer, side: SideId): void {
@@ -1392,76 +1446,151 @@ export class BattleScene implements Scene {
     const fxLunge = this.fxSide === side ? this.fx.lunge : 0;
     const dash = Math.max(-7, Math.min(13, v.dash + fxLunge));
 
-    const br = this.breath(side);
     // Rounded to whole logical units, always: r.image snaps to the buffer, so a
     // fractional position would land the sprite's pixels on the odd row and
     // undo the whole 2x2 design grid.
     const x = Math.round(pos.x + v.offsetX + dash * face);
-    const y = Math.round(pos.y + v.offsetY + br.lift);
+    const y = Math.round(pos.y + v.offsetY);
     const size = SPRITE_SIZE;
+
+    /*
+     * `clipY` cuts the sprite off at an absolute line on the field, which is
+     * how a beaten kin sinks into its own pad rather than sliding off the
+     * bottom of the screen. It is the one horizontal edge left in here, and it
+     * is a piece of ground occluding a creature -- not an edge travelling
+     * across one.
+     */
+    let drawH = size;
+    if (v.clipY !== null) {
+      drawH = Math.min(size, Math.max(0, Math.floor(v.clipY - y) * DETAIL));
+      if (drawH <= 0) return;
+    }
 
     /*
      * Squashing without scaling.
      *
      * Nothing in this game is ever resampled -- a sprite drawn at 63/64 height
      * would land half its rows off the design grid and read as blur. So the
-     * compressed pose is two blits instead: the top of the sprite is dropped a
-     * pixel onto the bottom and the single source row at the seam is simply not
-     * drawn. The silhouette loses exactly one design pixel of height, the feet
-     * stay planted, and every pixel that survives is still where the grid says.
-     */
-    /*
-     * The materialise window.
+     * compressed pose is a split blit instead: everything above a seam is
+     * dropped a whole logical pixel onto the row below it and the source rows
+     * at the seam are simply not drawn. The silhouette loses exactly one
+     * design-grid step of height per seam, the feet stay planted, and every
+     * pixel that survives is still exactly where the grid says.
      *
-     * A creature coming out of a vessel is grown from the feet up, not scaled
-     * up out of nothing, for exactly the reason above: a sprite drawn at some
-     * fraction of its height would land every row off the design grid. So the
-     * reveal is a source-rectangle crop snapped to whole design pixels, and the
-     * recall runs the same crop backwards. `clipY` cuts the other end of the
-     * same window, which is how a fainting kin sinks into its own pad.
+     * WHERE THE SEAMS GO is the part that was wrong. They used to sit at a
+     * fixed 62% of the FRAME, which was mid-body on a generated sprite that
+     * filled its cell and is 45% of the way UP a drawn one -- straight through
+     * cinderpaw's chest and head. The head compressed and the legs did not
+     * move, which is backwards, and the player said so. They are now measured
+     * off the creature's own ink and sit low in its body, so a breath moves the
+     * haunches and carries the skull as a rigid block.
+     *
+     * Only a whole, plainly-standing sprite is ever squashed: a clipped or
+     * half-materialised one is drawn flat, and nothing is breathing during
+     * either of those anyway.
      */
-    const revealH = v.reveal >= 1 ? size : Math.round((size * v.reveal) / DETAIL) * DETAIL;
-    if (revealH <= 0) return;
-    const srcY = size - revealH;
-    const topY = y + srcY / DETAIL;
-    let drawH = revealH;
-    if (v.clipY !== null) {
-      drawH = Math.min(drawH, Math.max(0, Math.floor(v.clipY - topY) * DETAIL));
-      if (drawH <= 0) return;
-    }
-    const whole = srcY === 0 && drawH === size;
+    const settled = drawH === size && v.clipY === null && v.ghost === 0
+      && v.bloom === 0 && v.alpha >= 1;
+    const anchor = kinAnchor(kin.species, back);
+    const depth = settled ? Math.min(this.breath(side), anchor.seams.length) : 0;
+    const seams = depth > 0 ? anchor.seams.slice(anchor.seams.length - depth) : [];
 
-    const cut = Math.round(size * 0.62 / DETAIL) * DETAIL;
-    const blit = (img: CanvasImageSource, alpha: number) => {
-      // The squash is a two-part blit and assumes a complete sprite, so a
-      // cropped one is drawn flat. Nothing is breathing mid-materialise anyway.
-      if (br.squash === 0 || !whole) {
-        r.image(img, x, topY, 0, srcY, size, drawH, false, false, alpha);
+    const blit = (img: CanvasImageSource, alpha: number, ox = 0, oy = 0) => {
+      if (seams.length === 0) {
+        r.image(img, x + ox, y + oy, 0, 0, size, drawH, false, false, alpha);
         return;
       }
-      r.image(img, x, y + 1, 0, 0, size, cut - DETAIL, false, false, alpha);
-      r.image(img, x, y + cut / DETAIL, 0, cut, size, size - cut, false, false, alpha);
+      let from = 0;
+      let drop = seams.length;
+      for (const seam of seams) {
+        const h = seam - DETAIL - from;
+        if (h > 0) {
+          r.image(img, x + ox, y + oy + from / DETAIL + drop, 0, from, size, h, false, false, alpha);
+        }
+        from = seam;
+        drop--;
+      }
+      r.image(img, x + ox, y + oy + from / DETAIL, 0, from, size, size - from, false, false, alpha);
     };
 
-    if (v.ghost < 1) blit(sprite, v.alpha * (1 - v.ghost));
+    const white = v.ghost > 0 || v.bloom > 0 || v.flash > 0
+      ? whiteSprite(kin.species, back) : null;
+
+    // The glow around a materialising kin. Three offset copies of its own
+    // silhouette at low alpha -- cheap, on the grid, and the thing that makes
+    // the difference between a creature arriving as light and a sprite fading
+    // in. Nothing below the feet, so it never spills onto the pad.
+    if (white && v.bloom > 0) {
+      const a = Math.max(0, Math.min(1, v.alpha)) * v.bloom * 0.26;
+      blit(white, a, -1, 0);
+      blit(white, a, 1, 0);
+      blit(white, a, 0, -1);
+    }
+
+    // Colour underneath, light over the top, and never both at part alpha: a
+    // straight crossfade between the two leaves the backdrop showing through
+    // the middle of the animal, and a half-transparent creature is a ghost
+    // rather than one that is still forming. While it is pure light there is
+    // no colour drawn at all; after that the colour is solid and the white
+    // simply recedes off it.
+    if (v.ghost < 1) blit(sprite, v.alpha);
     // The same white silhouette does three jobs: the light a kin arrives as,
     // the light it leaves as, and the blanching of a beaten one.
-    if (v.ghost > 0) blit(whiteSprite(kin.species, back), v.alpha * v.ghost);
+    if (white && v.ghost > 0) blit(white, v.alpha * v.ghost);
 
-    if (v.flash > 0) {
+    if (white && v.flash > 0) {
       // A white silhouette over the sprite: the era's standard hit tell, and
       // far more readable than a translucent box.
-      blit(whiteSprite(kin.species, back), 0.75);
+      blit(white, 0.75);
     }
+  }
+
+  /** The half of the vessel's light that belongs behind the creature. */
+  private renderBeam(r: Renderer): void {
+    const c = this.capsule;
+    if (!c || !c.beamTo) return;
+    if (c.beam > 0) this.drawBeam(r, c, c.beamTo);
+    if (c.land > 0) this.drawLanding(r, c.beamTo.x, c.beamTo.y, c.land, true);
   }
 
   private renderVessel(r: Renderer): void {
     const c = this.capsule;
     if (!c) return;
-    if (c.beam > 0 && c.beamTo) this.drawBeam(r, c, c.beamTo);
+    if (c.land > 0 && c.beamTo) this.drawLanding(r, c.beamTo.x, c.beamTo.y, c.land, false);
     this.drawVesselIcon(r, c.x, c.y, c.open, c.spin);
     if (c.burst > 0) this.drawBurst(r, c.x, c.y, c.burst);
     if (c.tell) r.text(c.tell, c.x + 10, c.y - 22, { color: '#ffffff', shadow: '#000000' });
+  }
+
+  /**
+   * Light striking the pad.
+   *
+   * Flat on purpose -- a pool that spreads outward along the ground and a ring
+   * of sparks leaving it. It is deliberately not the starburst the vessel
+   * itself throws: that one is an explosion at head height and would read as
+   * the creature being hit rather than as it arriving. This one belongs to the
+   * floor, so the eye reads the animal above it as standing in the light rather
+   * than as being drawn on top of it.
+   */
+  private drawLanding(r: Renderer, x: number, y: number, k: number, behind: boolean): void {
+    const q = Math.max(0, Math.min(1, k));
+    const grow = 1 - q;
+    const rad = 8 + grow * 22;
+    if (behind) {
+      // The pool goes under the feet, not over them.
+      r.ellipsePixel(x * DETAIL, y * DETAIL, rad * DETAIL, rad * 0.32 * DETAIL,
+        `rgba(255,252,226,${(0.42 * q).toFixed(3)})`);
+      return;
+    }
+    const col = `rgba(255,248,208,${q.toFixed(3)})`;
+    for (let i = 0; i < 10; i++) {
+      const ang = (i / 10) * Math.PI * 2;
+      r.rect(
+        Math.round(x + Math.cos(ang) * rad * 1.15) - 1,
+        Math.round(y + Math.sin(ang) * rad * 0.34) - 1 - Math.round(grow * 6),
+        2, 2, col,
+      );
+    }
   }
 
   /**

@@ -1,15 +1,16 @@
 {
   "mapId": "route_1",
+  "$comment": "The first grass a player ever walks into, carrying a level SIX starter and nothing else. It used to top out at six and seven -- level parity -- and in this game's early damage curve parity is a coin flip: a solo starter won only 37 to 52 percent of top-of-band fights here. Worse, gale, chitin and spark all beat Verdant while resisting it, and they carried 47 of the 100 encounter weight, so the Sprigling player specifically lost 11%, 1% and 0% of fights against Pipwing, Nettlebug and Sootmoth. Two changes: the two neutral Beast slots keep a 3-5 band and take the bulk of the weight, while the three starter-counters drop to 3-4 and get rarer. Mean wild level falls 4.61 -> 3.82, so about a sixth less experience per fight, in exchange for 86-94 percent win rates instead of 63-79.",
   "methods": {
     "tallGrass": {
       "rate": 170,
       "slots": [
-        { "species": "nibbet", "minLevel": 3, "maxLevel": 6, "weight": 30 },
-        { "species": "pipwing", "minLevel": 3, "maxLevel": 6, "weight": 25 },
-        { "species": "tuftail", "minLevel": 4, "maxLevel": 6, "weight": 20 },
-        { "species": "nettlebug", "minLevel": 3, "maxLevel": 5, "weight": 15 },
-        { "species": "fizzlet", "minLevel": 4, "maxLevel": 6, "weight": 7 },
-        { "species": "sootmoth", "minLevel": 5, "maxLevel": 7, "weight": 3, "time": ["evening", "night"] }
+        { "species": "nibbet", "minLevel": 3, "maxLevel": 5, "weight": 34 },
+        { "species": "tuftail", "minLevel": 3, "maxLevel": 5, "weight": 28 },
+        { "species": "pipwing", "minLevel": 3, "maxLevel": 4, "weight": 17 },
+        { "species": "nettlebug", "minLevel": 3, "maxLevel": 4, "weight": 11 },
+        { "species": "fizzlet", "minLevel": 3, "maxLevel": 4, "weight": 7 },
+        { "species": "sootmoth", "minLevel": 4, "maxLevel": 5, "weight": 3, "time": ["evening", "night"] }
       ]
     },
     "water": {

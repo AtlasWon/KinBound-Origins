@@ -8,6 +8,47 @@ Add a new `## vX.Y.Z` heading above the others before running `npm run ship`.
 
 ---
 
+## v0.8.0
+
+### The battlefield
+
+The grass arena was three flat bands of colour and one flat hill. It is now
+built in layers -- sky, cloud, a broken horizon, distant trees, mid ground,
+foreground clumps -- with a real platform under each creature so they stand on
+something instead of floating on a stripe. Every arena got the same treatment,
+not just the grass one.
+
+One thing that had been wrong for a long time: the far creature's platform was
+drawn above the horizon. It was in the sky.
+
+### Moves and idles land where they should
+
+- **Attack effects hit the creature.** They were anchored to the middle of the
+  sprite's frame rather than to the creature, so on anything that does not fill
+  its frame the effect played above its head. It is now aimed at the animal's
+  own mass, and where a creature is tall the shot lifts toward the chest rather
+  than the legs.
+- **Breathing moves the body, not the head.** The idle compressed the sprite at
+  a fixed height that happened to fall through the chest, so heads squashed and
+  legs stayed still. The compression now sits low on each creature, so the
+  haunches and legs work and the head rides on top.
+- **Sending a kin out no longer cuts it in half.** The creature used to be
+  revealed by a hard edge travelling up its body. Now the vessel splits, light
+  falls on the pad, and the kin forms inside it as white light before its colour
+  comes back. Recalling, fainting and capturing all follow the same rule.
+
+### An easier start
+
+Measured over 2,000 simulated battles per matchup rather than guessed at.
+
+- The first trainer went from a **67% win rate to 97%** for the starter that was
+  struggling, and he is no longer better trained than you are.
+- The first unavoidable trainer on Route 1 went from **7% to 89%**.
+- Route 1's grass is calmer: the creatures that counter your starter are rarer
+  and a level lower, and the neutral ones are commoner.
+
+Nothing past Route 2 was touched.
+
 ## v0.7.0
 
 ### Hand-drawn kin

@@ -1,6 +1,7 @@
 [
   {
     "id": "r1_madden",
+    "$comment": "Level three, not five. Madden stands at the mouth of Route 1 with a sight range of four, so he is the first fight nobody can walk past, and stone resists BOTH of Cinderpaw's move types while hitting it back for double. Measured: a level-five Pebblet beat a level-six Cinderpaw in 93 battles out of 100. At level three the Cinderpaw wins about nine times in ten.",
     "name": "Madden",
     "className": "Hiker",
     "sprite": "hiker",
@@ -9,7 +10,7 @@
     "party": [
       {
         "species": "pebblet",
-        "level": 5
+        "level": 3
       }
     ],
     "intro": [
@@ -83,15 +84,16 @@
   },
   {
     "id": "r1_ottel",
+    "$comment": "Novice, not trained, and level four. He is the second fight on Route 1 and the only Tide on it: against a level-seven Cinderpaw the trained level-five Rillfry won 91 times in 100. Ottel is a man guarding a pond, not a tactician.",
     "name": "Ottel",
     "className": "Angler",
     "sprite": "villager_m",
-    "ai": "trained",
+    "ai": "novice",
     "payout": 28,
     "party": [
       {
         "species": "rillfry",
-        "level": 5
+        "level": 4
       }
     ],
     "intro": [
@@ -976,6 +978,7 @@
   },
   {
     "id": "perrin_first_cinderpaw",
+    "$comment": "Level three with untrained stats. Dr. Vess hands the player a level SIX starter and Perrin picked the type that beats it, which made exactly one of the three openings unfair: Cinderpaw beat the level-four Rilltail only 69 times in 100 because Rilltail knows Spray from level one while the other two rivals have no super-effective move at all until level five. Level three plus flat zero IVs -- he got it this morning and has never trained a day -- lands all three openings at 97 to 100 percent while keeping the type-advantage joke intact.",
     "className": "Rival",
     "name": "Perrin",
     "sprite": "rival",
@@ -993,12 +996,14 @@
     "party": [
       {
         "species": "cinderpaw",
-        "level": 4
+        "level": 3,
+        "ivs": { "hp": 0, "atk": 0, "def": 0, "spa": 0, "spd": 0, "spe": 0 }
       }
     ]
   },
   {
     "id": "perrin_first_rilltail",
+    "$comment": "Level three with untrained stats. Dr. Vess hands the player a level SIX starter and Perrin picked the type that beats it, which made exactly one of the three openings unfair: Cinderpaw beat the level-four Rilltail only 69 times in 100 because Rilltail knows Spray from level one while the other two rivals have no super-effective move at all until level five. Level three plus flat zero IVs -- he got it this morning and has never trained a day -- lands all three openings at 97 to 100 percent while keeping the type-advantage joke intact.",
     "className": "Rival",
     "name": "Perrin",
     "sprite": "rival",
@@ -1016,12 +1021,14 @@
     "party": [
       {
         "species": "rilltail",
-        "level": 4
+        "level": 3,
+        "ivs": { "hp": 0, "atk": 0, "def": 0, "spa": 0, "spd": 0, "spe": 0 }
       }
     ]
   },
   {
     "id": "perrin_first_sprigling",
+    "$comment": "Level three with untrained stats. Dr. Vess hands the player a level SIX starter and Perrin picked the type that beats it, which made exactly one of the three openings unfair: Cinderpaw beat the level-four Rilltail only 69 times in 100 because Rilltail knows Spray from level one while the other two rivals have no super-effective move at all until level five. Level three plus flat zero IVs -- he got it this morning and has never trained a day -- lands all three openings at 97 to 100 percent while keeping the type-advantage joke intact.",
     "className": "Rival",
     "name": "Perrin",
     "sprite": "rival",
@@ -1039,7 +1046,8 @@
     "party": [
       {
         "species": "sprigling",
-        "level": 4
+        "level": 3,
+        "ivs": { "hp": 0, "atk": 0, "def": 0, "spa": 0, "spd": 0, "spe": 0 }
       }
     ]
   }

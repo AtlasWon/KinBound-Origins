@@ -1,5 +1,11 @@
 // Photographs the first seconds of a battle densely, which is where the
 // send-out animation lives. Also catches a switch and a knockout.
+//
+// "Densely" used to mean a frame every five, which is coarse enough to step
+// clean over the middle of a materialise -- the beat that actually had to be
+// looked at. Two now, with the text collapsed so the shots are spent on the
+// animation rather than on a line typing. tools/shots/materialise.js is the
+// version that waits for each step and walks it frame by frame.
 
 const d = window.dev;
 const top = () => d.game.scenes.top;
@@ -27,6 +33,7 @@ state.party.push(kinMod.createKin('pipwing', 9, d.game.rng, { originalTrainer: '
 const foe = [kinMod.createKin('rilltail', 6, d.game.rng)];
 
 d.game.settings.battleSpeed = 'classic';
+d.game.settings.textSpeed = 'fast';
 d.game.scenes.push(new battleMod.BattleScene({
   state, playerParty: state.party, foeParty: foe, isWild: true,
   backdrop: 'grass', onFinish: () => {},
@@ -34,7 +41,7 @@ d.game.scenes.push(new battleMod.BattleScene({
 d.tick(2);
 
 // The opening: both sides being sent out.
-for (let i = 0; i < 46; i++) await d.shoot('so-' + String(i).padStart(2, '0'), 5);
+for (let i = 0; i < 60; i++) await d.shoot('so-' + String(i).padStart(2, '0'), 2);
 out.push('phase after intro: ' + top().phase);
 
 // Get to the menu, then switch, which is the return-and-send-out pair.
@@ -45,7 +52,7 @@ d.key('Enter', 10);
 await d.shoot('so-party', 6);
 d.key('KeyS', 4);
 d.key('Enter', 6);
-for (let i = 0; i < 16; i++) await d.shoot('so-switch-' + String(i).padStart(2, '0'), 5);
+for (let i = 0; i < 30; i++) await d.shoot('so-switch-' + String(i).padStart(2, '0'), 2);
 out.push('phase after switch: ' + top().phase);
 
 return { out };
