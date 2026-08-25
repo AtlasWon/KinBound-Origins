@@ -8,169 +8,262 @@
   "rows": [
     "IIIUUIIIIIIIIIIIIIIIIUUIII",
     "IFFFFFFFFFFFFFFFFFFFFFFFFI",
-    "IFSSFFFFFFFFFFFFFFFFFFSSFI",
+    "IFSSFFFFFFFFFFFFFFFFFFFFFI",
     "IFFFFFFFFFFFFFFFFFFFFFFFFI",
     "IIIIIIIIIIIIFIIIIIIIIIIIII",
     "IFFFFFFFFFFFFFFFFFFFFFFFFI",
     "IKKKKKKKKKKKFKKKKKKKKKKKKI",
-    "IFFFFFFFFFFFFFFFFFFFFFFFFI",
+    "IFFFFFFFFFPFFFFPFFFFFFFFFI",
     "IFF@@@@FFFFFFFFFFFF@@@@FFI",
     "IFFFFFFFFFFFFFFFFFFFFFFFFI",
     "IFkkkkFFFFFFFFFFFFFFkkkkFI",
-    "IFFFFFFFFFFFFFFFFFFFFFFFFI",
+    "IFFFFFFΞFFFΞFFΞFFFΞFFFFFFI",
     "IFFFFFFAAAAAFFAAAAAFFFFFFI",
     "IFFFFFFAAAAAFFAAAAAFFFFFFI",
-    "IFFFFFFFFFFFFFFFFFFFFFFFFI",
+    "IFFFFFFΞFFFΞFFΞFFFΞFFFFFFI",
     "IP$$FFFFFFFFFFFFFFFFFF$$PI",
-    "IFFFFFFFFFFFFFFFFFFFFFFFFI",
+    "IFFFFFFFFFPFFFFPFFFFFFFSSI",
     "IFF/rrFFFFFFFFFFFFFFrr/FFI",
     "IPFFFFFFFFFFFFFFFFFFFFFFPI",
     "IIIIIIIIIIIIDDIIIIIIIIIIII"
   ],
   "warps": [
     {
-      "x": 12, "y": 19,
-      "toMap": "aureline", "toX": 40, "toY": 41,
-      "facing": "down", "style": "door"
+      "x": 12,
+      "y": 19,
+      "toMap": "aureline",
+      "toX": 40,
+      "toY": 41,
+      "facing": "down",
+      "style": "door"
     },
     {
-      "x": 13, "y": 19,
-      "toMap": "aureline", "toX": 41, "toY": 41,
-      "facing": "down", "style": "door"
+      "x": 13,
+      "y": 19,
+      "toMap": "aureline",
+      "toX": 41,
+      "toY": 41,
+      "facing": "down",
+      "style": "door"
     },
     {
-      "x": 2, "y": 2,
-      "toMap": "aureline_meridian_offices", "toX": 24, "toY": 8,
-      "facing": "down", "style": "stairs"
+      "x": 2,
+      "y": 2,
+      "toMap": "aureline_meridian_records",
+      "toX": 23,
+      "toY": 8,
+      "facing": "down",
+      "style": "stairs"
     },
     {
-      "x": 3, "y": 2,
-      "toMap": "aureline_meridian_offices", "toX": 24, "toY": 9,
-      "facing": "down", "style": "stairs"
+      "x": 3,
+      "y": 2,
+      "toMap": "aureline_meridian_records",
+      "toX": 23,
+      "toY": 9,
+      "facing": "down",
+      "style": "stairs"
     },
     {
-      "x": 22, "y": 2,
-      "toMap": "aureline_meridian_hall", "toX": 11, "toY": 16,
-      "facing": "up", "style": "stairs"
+      "x": 23,
+      "y": 16,
+      "toMap": "aureline_meridian_hall",
+      "toX": 11,
+      "toY": 15,
+      "facing": "up",
+      "style": "stairs"
     },
     {
-      "x": 23, "y": 2,
-      "toMap": "aureline_meridian_hall", "toX": 12, "toY": 16,
-      "facing": "up", "style": "stairs"
+      "x": 24,
+      "y": 16,
+      "toMap": "aureline_meridian_hall",
+      "toX": 12,
+      "toY": 15,
+      "facing": "up",
+      "style": "stairs"
     }
   ],
   "npcs": [
     {
       "id": "aur_hq_gate",
       "sprite": "meridian",
-      "x": 12, "y": 6,
+      "x": 12,
+      "y": 6,
       "facing": "down",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_hq_gate",
       "hiddenIfFlag": "aur_hq_pass"
     },
     {
       "id": "aur_hq_gate_open",
       "sprite": "meridian",
-      "x": 11, "y": 5,
+      "x": 11,
+      "y": 5,
       "facing": "down",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_hq_gate_open",
       "requiresFlag": "aur_hq_pass"
     },
     {
       "id": "aur_hq_desk",
       "sprite": "clerk",
-      "x": 8, "y": 5,
+      "x": 8,
+      "y": 5,
       "facing": "down",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_hq_desk"
     },
     {
       "id": "aur_hq_giving",
       "sprite": "townsfolk_f",
-      "x": 18, "y": 5,
+      "x": 18,
+      "y": 5,
       "facing": "down",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_hq_giving"
     },
     {
       "id": "aur_hq_greeter",
       "sprite": "villager_f",
-      "x": 15, "y": 17,
+      "x": 15,
+      "y": 17,
       "facing": "left",
-      "movement": { "kind": "lookAround" },
+      "movement": {
+        "kind": "lookAround"
+      },
       "script": "aur_hq_greeter"
     },
     {
       "id": "aur_hq_vet",
       "sprite": "meridian_sci_f",
-      "x": 6, "y": 9,
+      "x": 6,
+      "y": 9,
       "facing": "up",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_hq_vet"
     },
     {
       "id": "aur_hq_ocean",
       "sprite": "meridian_sci",
-      "x": 19, "y": 9,
+      "x": 19,
+      "y": 9,
       "facing": "up",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_hq_ocean"
     },
     {
       "id": "aur_hq_relief",
       "sprite": "porter",
-      "x": 20, "y": 16,
+      "x": 20,
+      "y": 14,
       "facing": "left",
-      "movement": { "kind": "pace", "axis": "x", "distance": 3 },
+      "movement": {
+        "kind": "pace",
+        "axis": "x",
+        "distance": 2
+      },
       "script": "aur_hq_relief"
     },
     {
       "id": "aur_hq_donor",
       "sprite": "elder",
-      "x": 4, "y": 11,
+      "x": 4,
+      "y": 11,
       "facing": "right",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_hq_donor"
     },
     {
       "id": "aur_hq_teacher",
       "sprite": "professor",
-      "x": 13, "y": 14,
+      "x": 13,
+      "y": 14,
       "facing": "up",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_hq_teacher"
     },
     {
       "id": "aur_hq_pupil",
       "sprite": "kid",
-      "x": 10, "y": 14,
+      "x": 10,
+      "y": 14,
       "facing": "up",
-      "movement": { "kind": "wander", "radius": 2 },
+      "movement": {
+        "kind": "wander",
+        "radius": 2
+      },
       "script": "aur_hq_pupil"
     },
     {
       "id": "aur_hq_digger",
       "sprite": "hiker",
-      "x": 21, "y": 11,
+      "x": 21,
+      "y": 11,
       "facing": "left",
-      "movement": { "kind": "lookAround" },
+      "movement": {
+        "kind": "lookAround"
+      },
       "script": "aur_hq_digger"
     },
     {
       "id": "aur_hq_porter",
       "sprite": "dockhand",
-      "x": 3, "y": 16,
+      "x": 3,
+      "y": 16,
       "facing": "right",
-      "movement": { "kind": "pace", "axis": "y", "distance": 2 },
+      "movement": {
+        "kind": "pace",
+        "axis": "y",
+        "distance": 2
+      },
       "script": "aur_hq_porter"
+    },
+    {
+      "id": "am_lyra",
+      "sprite": "lyra",
+      "x": 14,
+      "y": 15,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "am_lyra",
+      "hiddenIfFlag": "act4_inside"
+    },
+    {
+      "id": "am_tarin",
+      "sprite": "rival",
+      "x": 11,
+      "y": 15,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "am_tarin",
+      "hiddenIfFlag": "act4_inside"
     }
   ],
   "objects": [
     {
       "kind": "sign",
-      "x": 11, "y": 19,
+      "x": 11,
+      "y": 19,
       "text": [
         "Cut into the stone beside the doors, and old enough that the letters",
         "have been recut once: WEATHER IS NOT FATE.",
@@ -179,7 +272,8 @@
     },
     {
       "kind": "sign",
-      "x": 14, "y": 19,
+      "x": 14,
+      "y": 19,
       "text": [
         "A board of the day's public business.",
         "TSUNAMI WARNING, THE FIRST NINE MINUTES - assembly hall, four o'clock.",
@@ -188,7 +282,8 @@
     },
     {
       "kind": "sign",
-      "x": 6, "y": 6,
+      "x": 6,
+      "y": 6,
       "text": [
         "The giving counter. A brass plate of the year's donors, six columns deep.",
         "Most of the sums are small. One is not, and has no name against it,",
@@ -197,7 +292,8 @@
     },
     {
       "kind": "sign",
-      "x": 18, "y": 6,
+      "x": 18,
+      "y": 6,
       "text": [
         "The visitors' book, open at today. Two hundred names since breakfast.",
         "School parties, a bereaved family, three men from a fishing cooperative,",
@@ -206,7 +302,8 @@
     },
     {
       "kind": "sign",
-      "x": 3, "y": 8,
+      "x": 3,
+      "y": 8,
       "text": [
         "KIN CONSERVATION. Tanks of shore and reed species bred here and let go.",
         "A tally on the glass: 41,000 returned to the wetlands since the drainage.",
@@ -215,7 +312,8 @@
     },
     {
       "kind": "sign",
-      "x": 6, "y": 8,
+      "x": 6,
+      "y": 8,
       "text": [
         "A hatchery, warm, and lit low. Twelve eggs of a species nobody has",
         "seen wild in Caelora for sixty years.",
@@ -224,7 +322,8 @@
     },
     {
       "kind": "sign",
-      "x": 19, "y": 8,
+      "x": 19,
+      "y": 8,
       "text": [
         "OCEAN RESEARCH. A tank of black water lit from beneath, and in it,",
         "nothing at all. The card explains that the deep tanks are for holding",
@@ -233,7 +332,8 @@
     },
     {
       "kind": "sign",
-      "x": 22, "y": 8,
+      "x": 22,
+      "y": 8,
       "text": [
         "Sounding charts of the eastern shelf, thirty years of them, overlaid.",
         "The seabed is the same in every one except the last, which shows",
@@ -242,7 +342,8 @@
     },
     {
       "kind": "sign",
-      "x": 3, "y": 10,
+      "x": 3,
+      "y": 10,
       "text": [
         "The Foundation's own publications, free, take one.",
         "STORM SAFETY. WHAT TO DO WITH A HURT KIN. THE FLOODS OF 1049.",
@@ -251,7 +352,8 @@
     },
     {
       "kind": "sign",
-      "x": 21, "y": 10,
+      "x": 21,
+      "y": 10,
       "text": [
         "ARCHAEOLOGY. Field photographs from eleven digs, pinned in rows.",
         "Aurelian doorways, Aurelian floors, Aurelian rings the size of a cart.",
@@ -260,7 +362,8 @@
     },
     {
       "kind": "sign",
-      "x": 9, "y": 12,
+      "x": 9,
+      "y": 12,
       "text": [
         "The relief model of Caelora, twelve feet of it, carved and painted.",
         "Every weather station is a brass pin. There are forty-one on land.",
@@ -269,7 +372,8 @@
     },
     {
       "kind": "sign",
-      "x": 16, "y": 13,
+      "x": 16,
+      "y": 13,
       "text": [
         "The eastern half of the model. Out past the shelf the paint changes",
         "from blue to a colour with no name on the key, and there are pins there too.",
@@ -278,7 +382,8 @@
     },
     {
       "kind": "sign",
-      "x": 2, "y": 15,
+      "x": 2,
+      "y": 15,
       "text": [
         "DISASTER RESPONSE. A relief pack laid out open: blankets, line, water,",
         "a lamp, a splint, and a card of instructions in four languages.",
@@ -287,7 +392,8 @@
     },
     {
       "kind": "sign",
-      "x": 23, "y": 15,
+      "x": 23,
+      "y": 15,
       "text": [
         "A working storm bell, wired to the coastal stations, under glass.",
         "It has rung eleven times in eight years. Beside it, in a frame,",
@@ -296,7 +402,8 @@
     },
     {
       "kind": "sign",
-      "x": 3, "y": 17,
+      "x": 3,
+      "y": 17,
       "text": [
         "Chairs for people waiting to be seen, and a table of old journals.",
         "A woman has been asleep in one of them for an hour and nobody",
@@ -305,7 +412,8 @@
     },
     {
       "kind": "sign",
-      "x": 22, "y": 17,
+      "x": 22,
+      "y": 17,
       "text": [
         "MUSEUMS. A card listing every collection the Foundation keeps open free:",
         "Stonewake, Tideglass, Emberfall, the National in the Grand Park.",
@@ -314,7 +422,8 @@
     },
     {
       "kind": "hiddenItem",
-      "x": 2, "y": 18,
+      "x": 2,
+      "y": 18,
       "item": "clearleaf",
       "quantity": 1,
       "flag": "item_aur_hq_atrium"

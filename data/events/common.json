@@ -2914,5 +2914,23 @@
         "flag": "lyra_thread"
       }
     }
+  },
+  {
+    "id": "act4_open_gates",
+    "_note": "ACT 4. Opens whichever Act 4 doorway is standing in front of the player, by taking the person out of it live -- hiddenIfFlag is only read when a map loads, and both of these stand in a one-tile gap, so the flag alone would leave the player looking at a staff member they cannot walk through until they leave the building and come back.\n\nBOTH REMOVALS, FROM ONE SCRIPT, CALLED FROM TWO PLACES. removeNpc on an id that is not on this map is a no-op, so the atrium call clears the counter gate and does nothing about the deep stair, and the Records call does the reverse. That is deliberate: it means neither aureline_meridian.json nor aureline_meridian_records.json has to name an NPC on a map it does not own, and Act 4 keeps working whatever the capital author does with either doorway.\n\nIt has to be in common.json for a narrow, mechanical reason: tests/content.test.js checks that a script naming an NPC in move, face or removeNpc names one that exists on the map its FILE is named after, and common.json is not a map. It is the same reason act2_night_attempt spawns and removes its agents from this file.",
+    "trigger": "call",
+    "actions": [
+      { "kind": "removeNpc", "who": "aur_hq_gate" },
+      { "kind": "removeNpc", "who": "aur_deep_guard" }
+    ]
+  },
+  {
+    "id": "act4_veyl_exit",
+    "_note": "ACT 4. Veyl and Kell leaving, at the end of the confrontation. Here rather than in aureline_meridian_deep.json for the reason set out in act4_open_gates above: Act 4 spawns its own cast, so a removal of one of them cannot live in a map-named file.",
+    "trigger": "call",
+    "actions": [
+      { "kind": "removeNpc", "who": "ad_veyl" },
+      { "kind": "removeNpc", "who": "ad_kell" }
+    ]
   }
 ]

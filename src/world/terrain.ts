@@ -550,6 +550,10 @@ export const TERRAIN: Record<string, TerrainDef> = {
   '┓': { ground: T.TRACK_SW, collision: 1, tag: 'floor' },
   // The level crossing, and the only tile of railway anybody is allowed on.
   '╋': { ground: T.TRACK_CROSSING, collision: 0, tag: 'sand', step: 'wood' },
+  // The same crossing on a line running north to south. Two tiles rather than
+  // one, because the deck timbers are laid parallel to the rails and a deck
+  // drawn across the wrong axis reads as road markings.
+  '╂': { ground: T.TRACK_CROSSING_V, collision: 0, tag: 'sand', step: 'wood' },
   // A semaphore signal: a mast with an arm off one side, which is the glyph.
   '┫': { over: T.TRACK_SIGNAL, collision: 1, tag: 'floor' },
   // The halt platform, and its coping. Both walkable; the coping row is the

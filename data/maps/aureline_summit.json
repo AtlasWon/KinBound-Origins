@@ -25,70 +25,98 @@
   ],
   "warps": [
     {
-      "x": 9, "y": 15,
-      "toMap": "aureline", "toX": 62, "toY": 20,
-      "facing": "down", "style": "door"
+      "x": 9,
+      "y": 15,
+      "toMap": "aureline",
+      "toX": 133,
+      "toY": 12,
+      "facing": "down",
+      "style": "door"
     },
     {
-      "x": 10, "y": 15,
-      "toMap": "aureline", "toX": 63, "toY": 20,
-      "facing": "down", "style": "door"
+      "x": 10,
+      "y": 15,
+      "toMap": "aureline",
+      "toX": 134,
+      "toY": 12,
+      "facing": "down",
+      "style": "door"
     }
   ],
   "npcs": [
     {
       "id": "aur_sum_registrar",
       "sprite": "clerk",
-      "x": 8, "y": 1,
+      "x": 8,
+      "y": 1,
       "facing": "down",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_sum_registrar"
     },
     {
       "id": "aur_sum_steward",
       "sprite": "elder",
-      "x": 4, "y": 4,
+      "x": 4,
+      "y": 4,
       "facing": "right",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_sum_steward"
     },
     {
       "id": "aur_sum_hopeful",
       "sprite": "rival",
-      "x": 14, "y": 7,
+      "x": 14,
+      "y": 7,
       "facing": "up",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_sum_hopeful"
     },
     {
       "id": "aur_sum_veteran",
       "sprite": "hiker",
-      "x": 5, "y": 9,
+      "x": 5,
+      "y": 9,
       "facing": "right",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_sum_veteran"
     },
     {
       "id": "aur_sum_child",
       "sprite": "kid",
-      "x": 12, "y": 11,
+      "x": 12,
+      "y": 11,
       "facing": "up",
-      "movement": { "kind": "wander", "radius": 2 },
+      "movement": {
+        "kind": "wander",
+        "radius": 2
+      },
       "script": "aur_sum_child"
     },
     {
       "id": "aur_sum_trainer",
       "sprite": "townsfolk_m",
-      "x": 15, "y": 13,
+      "x": 15,
+      "y": 13,
       "facing": "left",
-      "movement": { "kind": "lookAround" },
+      "movement": {
+        "kind": "lookAround"
+      },
       "script": "aur_sum_trainer"
     }
   ],
   "objects": [
     {
       "kind": "sign",
-      "x": 9, "y": 0,
+      "x": 9,
+      "y": 0,
       "text": [
         "Behind the desk, a pair of doors twenty feet high, shut, and polished",
         "where a great many people have leaned on them and been asked not to.",
@@ -97,7 +125,8 @@
     },
     {
       "kind": "sign",
-      "x": 4, "y": 1,
+      "x": 4,
+      "y": 1,
       "text": [
         "The registry desk, and the rule, in letters nobody could pretend not to see:",
         "EIGHT BOND CRESTS. NO EXCEPTIONS. NO SUBSTITUTIONS. NO APPEALS.",
@@ -106,7 +135,8 @@
     },
     {
       "kind": "sign",
-      "x": 14, "y": 1,
+      "x": 14,
+      "y": 1,
       "text": [
         "The standing list. Every Trainer in Caelora with four Crests or more,",
         "ranked, in a hand that is redone every week.",
@@ -115,7 +145,8 @@
     },
     {
       "kind": "sign",
-      "x": 2, "y": 3,
+      "x": 2,
+      "y": 3,
       "text": [
         "THE CHAMPIONS OF CAELORA. Eighty-one names in gold, oldest at the top.",
         "The gaps are years nobody managed it. There are more gaps than names.",
@@ -124,7 +155,8 @@
     },
     {
       "kind": "sign",
-      "x": 7, "y": 3,
+      "x": 7,
+      "y": 3,
       "text": [
         "A case of the four Masters' standards, one per discipline, unlabelled.",
         "The Summit does not publish who they are or what they use.",
@@ -133,7 +165,8 @@
     },
     {
       "kind": "sign",
-      "x": 12, "y": 3,
+      "x": 12,
+      "y": 3,
       "text": [
         "A cast of the eight Bond Crests, mounted in a ring, with the Halls named.",
         "Briarbell. Stonewake. Tideglass. Emberfall. Mirehaven.",
@@ -142,7 +175,8 @@
     },
     {
       "kind": "sign",
-      "x": 16, "y": 3,
+      "x": 16,
+      "y": 3,
       "text": [
         "A wall of failed ascents, by year, with the stage reached against each.",
         "Nobody's name is on it. That was a decision taken a long time ago",
@@ -151,7 +185,8 @@
     },
     {
       "kind": "sign",
-      "x": 2, "y": 8,
+      "x": 2,
+      "y": 8,
       "text": [
         "Training halls beyond the far wall, and a timetable of who has them booked.",
         "Every slot from six in the morning to eleven at night is taken.",
@@ -160,7 +195,8 @@
     },
     {
       "kind": "sign",
-      "x": 17, "y": 8,
+      "x": 17,
+      "y": 8,
       "text": [
         "A relief carving of the Ascent: the road up, the four halls, the last hall.",
         "It is drawn from a long way off, deliberately, so that the figures",
@@ -169,7 +205,8 @@
     },
     {
       "kind": "sign",
-      "x": 4, "y": 10,
+      "x": 4,
+      "y": 10,
       "text": [
         "Reading shelves, free to anybody, of every published Hall record",
         "and every Master's match going back sixty years.",
@@ -178,7 +215,8 @@
     },
     {
       "kind": "sign",
-      "x": 13, "y": 10,
+      "x": 13,
+      "y": 10,
       "text": [
         "A book on a stand, open, with a pencil on a string.",
         "REGISTER OF INTENT. Anyone may sign it. It commits you to nothing.",
@@ -187,7 +225,8 @@
     },
     {
       "kind": "sign",
-      "x": 5, "y": 12,
+      "x": 5,
+      "y": 12,
       "text": [
         "Chairs, and a long window on to a training floor you cannot get to.",
         "Somebody down there is doing the same switch, over and over,",

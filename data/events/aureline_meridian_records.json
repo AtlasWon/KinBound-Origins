@@ -1,18 +1,27 @@
 [
   {
-    "id": "ao_arrive",
-    "_note": "ACT 4, BEAT 2: RECORDS. The back room of the Foundation office floor.\n\nThis floor already belongs to the capital's author and it is full of people doing real work -- forecasters, relief, conservation, two archivists, and a man on resonance who says the Aurelian rings were never built to push. Nothing here overrides any of that. Act 4 spawns two people into the back of it, Lyra and Tarin, and lets the shelving do the rest.\n\nLyra goes straight through to the archive without waiting, which is both in character and the only signpost this beat needs.\n\nThe respawn script below it is what puts the two of them back when the player walks out for a wander and comes back, which canon's freedom-between-beats rule requires them to be able to do. Only the first 'enter' script that starts is run, so the order in this file matters: the once-only arrival first, the respawn second.",
+    "id": "ar_arrive",
+    "_note": "ACT 4, BEAT 2: RECORDS.\n\nThis floor belongs to the capital's author and it is full of people doing real work -- forecasting, relief, conservation, a man on resonance who says the Aurelian rings were never built to push, and two archivists at the back. Nothing here overrides any of that: Act 4 puts Lyra and Tarin into the archive at the back and lets the shelving do the rest.\n\nThey are SPAWNED rather than placed on the map, so that this floor's own cast stays entirely the capital author's, and because spawnNpc dedupes by id -- if the two of them are ever added to the map under these ids nothing here changes or doubles up.\n\nLyra goes straight through to the archive without waiting, which is in character and is the only signpost this beat needs.\n\nThe respawn script below is what puts them back when the player wanders off and comes back, which canon's freedom-between-beats rule requires. Only the first 'enter' script that starts is run, so order in this file matters: the once-only arrival first, the respawn second.",
     "trigger": "enter",
-    "map": "aureline_meridian_offices",
-    "onceFlag": "ao_arrived",
-    "when": { "kind": "flag", "flag": "act4_inside" },
+    "map": "aureline_meridian_records",
+    "onceFlag": "ar_arrived",
+    "when": {
+      "kind": "flag",
+      "flag": "act4_inside"
+    },
     "actions": [
-      { "kind": "call", "script": "act4_cast_offices" },
-      { "kind": "wait", "frames": 14 },
+      {
+        "kind": "call",
+        "script": "ar_cast"
+      },
+      {
+        "kind": "wait",
+        "frames": 14
+      },
       {
         "kind": "say",
         "lines": [
-          "Forecasting, relief, conservation, and a long room at the back with a rail across it.",
+          "Forecasting, relief and conservation along the front, and a long room at the back with a rail across it.",
           "Somebody two desks over is eating an apple and writing at the same time."
         ]
       },
@@ -24,7 +33,10 @@
           "They are the reason the lights are on and I would like you to have counted them."
         ]
       },
-      { "kind": "wait", "frames": 12 },
+      {
+        "kind": "wait",
+        "frames": 12
+      },
       {
         "kind": "say",
         "who": "TARIN",
@@ -37,60 +49,136 @@
         "who": "LYRA",
         "lines": [
           "Nobody has ever needed to.",
-          "That is what I have been trying to say since the ridge and I have never had the words."
+          "That is what I have been trying to say since the ridge and I have never had the words for it."
         ]
       },
-      { "kind": "wait", "frames": 14 },
+      {
+        "kind": "wait",
+        "frames": 14
+      },
       {
         "kind": "say",
         "lines": [
-          "She goes through to the back room without waiting for either of you.",
+          "She goes through to the stacks at the back without waiting for either of you.",
           "The archivist looks up, and does not ask her for anything."
         ]
       }
     ]
   },
-
   {
-    "id": "ao_respawn",
-    "_note": "Puts Lyra and Tarin back on this floor on every later visit, until the act is over. No onceFlag: it is meant to run again.",
+    "id": "ar_respawn",
+    "_note": "Puts the two of them back on any later visit while the act is still running. No onceFlag: it is meant to run again.",
     "trigger": "enter",
-    "map": "aureline_meridian_offices",
+    "map": "aureline_meridian_records",
     "when": {
       "kind": "all",
       "of": [
-        { "kind": "flag", "flag": "act4_inside" },
-        { "kind": "flag", "flag": "act4_done", "value": false }
+        {
+          "kind": "flag",
+          "flag": "act4_inside"
+        },
+        {
+          "kind": "flag",
+          "flag": "act4_done",
+          "value": false
+        }
       ]
     },
     "actions": [
-      { "kind": "call", "script": "act4_cast_offices" }
+      {
+        "kind": "call",
+        "script": "ar_cast"
+      }
     ]
   },
-
   {
-    "id": "ao_file",
-    "_note": "THE TRUTH ABOUT ELIAS, part one: the file anybody could have asked for.\n\nFired off the reading aisle between the two runs of shelving at the back of the floor, which is the only place on this map the scene could happen. Four boxes and a stamp: nine years of service, a sailing date, a one-page manifest with the word MISSING in it, and a loss report that says weather. All of it true, all of it public, and all of it wrong in a way that nothing in the folder can show.\n\nThe archivist standing four feet away has a line, already written by the capital's author, about a file leaving this room for the Director's office and nowhere else -- and the sewn sleeve at the back of this folder is stamped for exactly that. It needs a director's countersign, which puts the next scene entirely in Lyra's hands.",
+    "id": "ar_cast",
+    "_note": "Lyra and Tarin, at the west end of the two reading aisles between the stacks, which is where the beat is.\n\nTHE TILES ARE MEASURED, NOT CHOSEN. Each aisle on this map is a corridor between two runs of shelving, open at x=15, x=16, x=23 and x=24 and walled by bookcases in between, and NPCs are solid. Standing Lyra on 16,13 sealed the aisle at the west end while the map's own archivist sealed it at the east, and the reading shelf in the middle became unreachable -- the first run of the Act 4 driver walked at it for two hundred steps and gave up. 15,13 leaves 16 open, so the player walks past her to the shelf and turns round to talk to her, which is also the better staging.",
+    "trigger": "call",
+    "actions": [
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "ar_lyra",
+          "sprite": "lyra",
+          "x": 15,
+          "y": 13,
+          "facing": "right",
+          "movement": {
+            "kind": "static"
+          },
+          "script": "ar_lyra"
+        }
+      },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "ar_tarin",
+          "sprite": "rival",
+          "x": 15,
+          "y": 15,
+          "facing": "right",
+          "movement": {
+            "kind": "static"
+          },
+          "script": "ar_tarin"
+        }
+      }
+    ]
+  },
+  {
+    "id": "ar_file",
+    "_note": "THE TRUTH ABOUT ELIAS, part one: the file anybody could have asked for.\n\nFires along the reading aisle between the two runs of shelving at the back, four feet from the archivist, whose own line -- written by the capital's author -- is that a file may leave this room for the Director's office and nowhere else. The sewn sleeve at the back of this folder is stamped for exactly that, which is what hands the next scene to Lyra.\n\nFour boxes and a stamp: nine years of service, a sailing date, a one-page manifest with the word MISSING in it, and a loss report that says weather. All of it true, all of it public, and all of it wrong in a way that nothing in the folder can show. The junior archivist upstairs has already told the player, without knowing what he was telling them, that a loss report with no assessor's name means nobody went and looked.",
     "trigger": "step",
-    "map": "aureline_meridian_offices",
+    "map": "aureline_meridian_records",
     "onceFlag": "a4_elias_file",
-    "when": { "kind": "flag", "flag": "act4_inside" },
+    "when": {
+      "kind": "flag",
+      "flag": "act4_inside"
+    },
     "at": [
-      { "x": 18, "y": 13 }, { "x": 19, "y": 13 },
-      { "x": 20, "y": 13 }, { "x": 21, "y": 13 }
+      {
+        "x": 18,
+        "y": 13
+      },
+      {
+        "x": 19,
+        "y": 13
+      },
+      {
+        "x": 20,
+        "y": 13
+      },
+      {
+        "x": 21,
+        "y": 13
+      }
     ],
     "actions": [
-      { "kind": "face", "who": "player", "dir": "up" },
-      { "kind": "wait", "frames": 14 },
+      {
+        "kind": "face",
+        "who": "player",
+        "dir": "up"
+      },
+      {
+        "kind": "wait",
+        "frames": 14
+      },
       {
         "kind": "say",
         "lines": [
-          "Lyra has written the request out in pencil, the way the rail says to,",
-          "and the archivist has put the folder on the reading shelf and gone back to his chair."
+          "Lyra has written the request out in pencil, the way the rail says to.",
+          "The archivist has put the folder on the reading shelf and gone back to his chair."
         ]
       },
-      { "kind": "sfx", "sound": "page_turn" },
-      { "kind": "wait", "frames": 18 },
+      {
+        "kind": "sfx",
+        "sound": "page_turn"
+      },
+      {
+        "kind": "wait",
+        "frames": 18
+      },
       {
         "kind": "say",
         "lines": [
@@ -105,7 +193,10 @@
           "Sailed on the fourteenth."
         ]
       },
-      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
       {
         "kind": "say",
         "lines": [
@@ -113,7 +204,10 @@
           "ONE ITEM RECOVERED. ONE ITEM LOGGED. ONE ITEM NOT RETURNED TO STORE."
         ]
       },
-      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
       {
         "kind": "say",
         "who": "TARIN",
@@ -122,7 +216,10 @@
           "That is the whole of what she read, and she got theft out of it."
         ]
       },
-      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
       {
         "kind": "say",
         "lines": [
@@ -130,23 +227,32 @@
           "All hands. Cause given: weather."
         ]
       },
-      { "kind": "wait", "frames": 26 },
+      {
+        "kind": "wait",
+        "frames": 24
+      },
       {
         "kind": "say",
         "lines": [
           "There is no assessor's name at the bottom of it.",
-          "That means nobody went and looked."
+          "The junior archivist told you on the way in what that means. Nobody went and looked."
         ]
       },
-      { "kind": "wait", "frames": 22 },
+      {
+        "kind": "wait",
+        "frames": 22
+      },
       {
         "kind": "say",
         "lines": [
           "It is a thin folder for nine years of a man.",
-          "The junior archivist told you on the way in that they mostly are."
+          "He said that too. He said they mostly are."
         ]
       },
-      { "kind": "wait", "frames": 18 },
+      {
+        "kind": "wait",
+        "frames": 18
+      },
       {
         "kind": "say",
         "lines": [
@@ -160,7 +266,10 @@
           "RELEASE TO THE DIRECTOR'S OFFICE ONLY. CROSS-REFERENCE 4A."
         ]
       },
-      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
       {
         "kind": "say",
         "who": "TARIN",
@@ -171,43 +280,54 @@
       }
     ]
   },
-
   {
-    "id": "ao_lyra",
-    "_note": "THE TRUTH ABOUT ELIAS, part two, and the moral shape the whole act is built to protect.\n\nCANON, EXACTLY:\n  - Elias tried to leave with the Tideheart because he had worked out what it was for.\n  - A Meridian commander sabotaged his vessel -- the same commander the player met in\n    the Sanctum in Act 3, so that it is a face and not a job title.\n  - CASSIAN DID NOT ORDER IT. He found out afterwards and covered it up rather than lose\n    the programme. That is what makes him guilty and the distinction is the character.\n\nThe evidence has to survive a vessel lost with all hands and no body, so it is not the wreck: it is a shipyard night book from the evening before she sailed, a fitter's statement taken three days after, and one unsigned sheet in Cassian's own hand written ninety-two days later. The storm was real. That is the reason for doing it that way, and Tarin says so out loud.\n\nThe sheet is the most important document in the game and it is four lines long. The last of them -- that he is writing it down so that he cannot later tell himself he did not know -- is the whole man. Somebody who lies to himself can be argued out of it. He has taken that exit out on purpose and has been living without it for eleven years.\n\nWHY LYRA CAN OPEN IT. She is not a director. She has signed her father's name on Foundation paper since she was fourteen because he asked her to, to save himself an hour a day. The thing he trusted her with is the thing that opens the sleeve, and she has never used it before. That is her cost, paid here, and it is why she is the one who is betrayed rather than the one who is angry.\n\nSets aur_deep_open, which is this map's own flag for the west stair guard, and removes him live because hiddenIfFlag is only read when a map loads.",
+    "id": "ar_lyra",
+    "_note": "THE TRUTH ABOUT ELIAS, part two, and the moral shape the whole act is built to protect.\n\nCANON, EXACTLY:\n  - Elias tried to leave with the Tideheart because he had worked out what it was for.\n  - A Meridian commander sabotaged his vessel -- the same commander the player met in\n    the Sanctum in Act 3, so that it is a face and not a job title.\n  - CASSIAN DID NOT ORDER IT. He found out afterwards and covered it up rather than lose\n    the programme. That is what makes him guilty, and the distinction is the character.\n\nThe evidence has to survive a vessel lost with all hands and no body, so it is not the wreck: it is a shipyard night book from the evening before she sailed, a fitter's statement taken three days after, and one unsigned sheet in Cassian's own hand written ninety-two days later. The storm was real. That is the reason for doing it this way, and Tarin says so out loud -- somebody opened a valve and then let the weather finish it, in a game whose whole subject is the weather.\n\nThe sheet is the most important document in the game and it is four lines long. The last of them -- that he is writing it down so that he cannot later tell himself he did not know -- is the whole man. Somebody who lies to himself can be argued out of it. He took that exit out on purpose and has lived eleven years without it.\n\nWHY LYRA CAN OPEN IT. She is not a director. She has signed her father's name on Foundation paper since she was fourteen because he asked her to, to save himself an hour a day. The thing he trusted her with is the thing that opens the sleeve, and she has never used it before. That is her cost, paid here, and it is why she is the one who is betrayed rather than the one who is angry.\n\nSets aur_deep_open, which is this map's own flag for the west stair guard, and removes him live, because hiddenIfFlag is only read when a map loads.",
     "trigger": "interact",
     "actions": [
       {
         "kind": "if",
-        "cond": { "kind": "flag", "flag": "a4_truth" },
+        "cond": {
+          "kind": "flag",
+          "flag": "a4_truth"
+        },
         "then": [
           {
             "kind": "say",
             "who": "LYRA",
             "lines": [
               "West stair. There is a floor under this one and I have never been on it.",
-              "Fifteen years old when I started here and I did not know there was a floor under this one."
+              "Fifteen when I started here, and I did not know there was a floor under this one."
             ]
           },
-          { "kind": "end" }
+          {
+            "kind": "end"
+          }
         ]
       },
       {
         "kind": "if",
-        "cond": { "kind": "not", "of": { "kind": "flag", "flag": "a4_elias_file" } },
+        "cond": {
+          "kind": "not",
+          "of": {
+            "kind": "flag",
+            "flag": "a4_elias_file"
+          }
+        },
         "then": [
           {
             "kind": "say",
             "who": "LYRA",
             "lines": [
-              "The request slip is in. Go and read it off the shelf between the stacks.",
+              "The request slip is in. It is on the reading shelf between the stacks.",
               "I am not going to read it to you. He was not my father."
             ]
           },
-          { "kind": "end" }
+          {
+            "kind": "end"
+          }
         ]
       },
-
       {
         "kind": "say",
         "who": "LYRA",
@@ -215,7 +335,10 @@
           "Show me the stamp."
         ]
       },
-      { "kind": "wait", "frames": 18 },
+      {
+        "kind": "wait",
+        "frames": 18
+      },
       {
         "kind": "say",
         "who": "LYRA",
@@ -268,7 +391,10 @@
           }
         ]
       },
-      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
       {
         "kind": "say",
         "who": "LYRA",
@@ -277,7 +403,10 @@
           "It saves him an hour a day and he has never once checked what I put it on."
         ]
       },
-      { "kind": "wait", "frames": 18 },
+      {
+        "kind": "wait",
+        "frames": 18
+      },
       {
         "kind": "say",
         "who": "LYRA",
@@ -286,8 +415,14 @@
           "I would like somebody in this room to have heard me say that."
         ]
       },
-      { "kind": "wait", "frames": 20 },
-      { "kind": "sfx", "sound": "sign" },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "sfx",
+        "sound": "sign"
+      },
       {
         "kind": "say",
         "lines": [
@@ -295,11 +430,22 @@
           "She does not look at the page while she is doing it."
         ]
       },
-      { "kind": "wait", "frames": 22 },
-      { "kind": "music", "track": "stop" },
-      { "kind": "sfx", "sound": "page_turn" },
-      { "kind": "wait", "frames": 22 },
-
+      {
+        "kind": "wait",
+        "frames": 22
+      },
+      {
+        "kind": "music",
+        "track": "stop"
+      },
+      {
+        "kind": "sfx",
+        "sound": "page_turn"
+      },
+      {
+        "kind": "wait",
+        "frames": 22
+      },
       {
         "kind": "say",
         "lines": [
@@ -314,15 +460,24 @@
           "FOUNDATION PARTY. ONE NAME ON THE LINE."
         ]
       },
-      { "kind": "wait", "frames": 26 },
-      { "kind": "sfx", "sound": "fx_dark" },
+      {
+        "kind": "wait",
+        "frames": 26
+      },
+      {
+        "kind": "sfx",
+        "sound": "fx_dark"
+      },
       {
         "kind": "say",
         "lines": [
           "C. KELL."
         ]
       },
-      { "kind": "wait", "frames": 30 },
+      {
+        "kind": "wait",
+        "frames": 30
+      },
       {
         "kind": "say",
         "who": "TARIN",
@@ -331,7 +486,10 @@
           "She told you she thinks about him every day and you thanked her for it."
         ]
       },
-      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
       {
         "kind": "say",
         "lines": [
@@ -346,7 +504,10 @@
           "He says he did not, and that he has thought about it every week since."
         ]
       },
-      { "kind": "wait", "frames": 26 },
+      {
+        "kind": "wait",
+        "frames": 26
+      },
       {
         "kind": "say",
         "who": "TARIN",
@@ -362,8 +523,10 @@
           "Somebody opened a valve and then stood back and let the weather do the rest of it."
         ]
       },
-      { "kind": "wait", "frames": 28 },
-
+      {
+        "kind": "wait",
+        "frames": 28
+      },
       {
         "kind": "say",
         "lines": [
@@ -371,7 +534,10 @@
           "It is dated ninety-two days after the CORVANE."
         ]
       },
-      { "kind": "wait", "frames": 22 },
+      {
+        "kind": "wait",
+        "frames": 22
+      },
       {
         "kind": "say",
         "lines": [
@@ -379,7 +545,10 @@
           "and she was in the yard."
         ]
       },
-      { "kind": "wait", "frames": 22 },
+      {
+        "kind": "wait",
+        "frames": 22
+      },
       {
         "kind": "say",
         "lines": [
@@ -387,7 +556,10 @@
           "I am as certain of that as I am of anything, and it does not help."
         ]
       },
-      { "kind": "wait", "frames": 22 },
+      {
+        "kind": "wait",
+        "frames": 22
+      },
       {
         "kind": "say",
         "lines": [
@@ -395,7 +567,10 @@
           "and everything that would have come after it ends with it."
         ]
       },
-      { "kind": "wait", "frames": 22 },
+      {
+        "kind": "wait",
+        "frames": 22
+      },
       {
         "kind": "say",
         "lines": [
@@ -403,16 +578,21 @@
           "I am writing it down so that I cannot tell myself later that I did not know."
         ]
       },
-      { "kind": "wait", "frames": 34 },
+      {
+        "kind": "wait",
+        "frames": 34
+      },
       {
         "kind": "say",
         "lines": [
           "It is not signed. It was never sent to anybody.",
-          "It has been in a sewn sleeve in Records for eleven years, filed by the man who wrote it."
+          "It has been in a sewn sleeve in this room for eleven years, filed by the man who wrote it."
         ]
       },
-      { "kind": "wait", "frames": 26 },
-
+      {
+        "kind": "wait",
+        "frames": 26
+      },
       {
         "kind": "say",
         "who": "LYRA",
@@ -482,7 +662,10 @@
           }
         ]
       },
-      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
       {
         "kind": "say",
         "who": "TARIN",
@@ -491,14 +674,38 @@
           "That is not theft. That is the only sane thing in the whole folder."
         ]
       },
-      { "kind": "wait", "frames": 18 },
-      { "kind": "setFlag", "flag": "a4_truth" },
-      { "kind": "setFlag", "flag": "act4_saw_coverup" },
-      { "kind": "setFlag", "flag": "a4_records_read" },
-      { "kind": "setFlag", "flag": "aur_deep_open" },
-      { "kind": "removeNpc", "who": "aur_deep_guard" },
-      { "kind": "music", "track": "resume" },
-      { "kind": "wait", "frames": 22 },
+      {
+        "kind": "wait",
+        "frames": 18
+      },
+      {
+        "kind": "setFlag",
+        "flag": "a4_truth"
+      },
+      {
+        "kind": "setFlag",
+        "flag": "act4_saw_coverup"
+      },
+      {
+        "kind": "setFlag",
+        "flag": "a4_records_read"
+      },
+      {
+        "kind": "setFlag",
+        "flag": "aur_deep_open"
+      },
+      {
+        "kind": "call",
+        "script": "act4_open_gates"
+      },
+      {
+        "kind": "music",
+        "track": "resume"
+      },
+      {
+        "kind": "wait",
+        "frames": 22
+      },
       {
         "kind": "say",
         "who": "LYRA",
@@ -515,24 +722,29 @@
           "and it turns out that I am going to keep doing that today."
         ]
       },
-      { "kind": "sfx", "sound": "door" },
+      {
+        "kind": "sfx",
+        "sound": "door"
+      },
       {
         "kind": "say",
         "lines": [
-          "The man at the top of the west stair reads the countersign twice, and then stands aside.",
+          "The man on the west stair reads the countersign twice, and then stands out of the doorway.",
           "He looks relieved. It cannot have been a good posting."
         ]
       }
     ]
   },
-
   {
-    "id": "ao_tarin",
+    "id": "ar_tarin",
     "trigger": "interact",
     "actions": [
       {
         "kind": "if",
-        "cond": { "kind": "flag", "flag": "a4_truth" },
+        "cond": {
+          "kind": "flag",
+          "flag": "a4_truth"
+        },
         "then": [
           {
             "kind": "say",
@@ -542,12 +754,17 @@
               "It has not turned up. It is not that kind of building."
             ]
           },
-          { "kind": "end" }
+          {
+            "kind": "end"
+          }
         ]
       },
       {
         "kind": "if",
-        "cond": { "kind": "flag", "flag": "a4_elias_file" },
+        "cond": {
+          "kind": "flag",
+          "flag": "a4_elias_file"
+        },
         "then": [
           {
             "kind": "say",
@@ -557,14 +774,16 @@
               "Somebody wanted that findable and unreadable at the same time. Think about who."
             ]
           },
-          { "kind": "end" }
+          {
+            "kind": "end"
+          }
         ]
       },
       {
         "kind": "say",
         "who": "TARIN",
         "lines": [
-          "Ask everything. We are wearing passes and everybody on this floor is bored.",
+          "Ask everybody on this floor everything. We have passes and they are all bored.",
           "That is the only two things you need in a records office. I have read a book."
         ]
       }

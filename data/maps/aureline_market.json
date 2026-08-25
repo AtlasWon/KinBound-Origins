@@ -25,118 +25,164 @@
   ],
   "warps": [
     {
-      "x": 11, "y": 15,
-      "toMap": "aureline", "toX": 20, "toY": 30,
-      "facing": "down", "style": "door"
+      "x": 11,
+      "y": 15,
+      "toMap": "aureline",
+      "toX": 101,
+      "toY": 104,
+      "facing": "down",
+      "style": "door"
     },
     {
-      "x": 12, "y": 15,
-      "toMap": "aureline", "toX": 21, "toY": 30,
-      "facing": "down", "style": "door"
+      "x": 12,
+      "y": 15,
+      "toMap": "aureline",
+      "toX": 102,
+      "toY": 104,
+      "facing": "down",
+      "style": "door"
     }
   ],
   "npcs": [
     {
       "id": "aur_mk_fish",
       "sprite": "fisher",
-      "x": 2, "y": 3,
+      "x": 2,
+      "y": 3,
       "facing": "down",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_mk_fish"
     },
     {
       "id": "aur_mk_bread",
       "sprite": "villager_f",
-      "x": 9, "y": 3,
+      "x": 9,
+      "y": 3,
       "facing": "down",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_mk_bread"
     },
     {
       "id": "aur_mk_cloth",
       "sprite": "merchant",
-      "x": 15, "y": 3,
+      "x": 15,
+      "y": 3,
       "facing": "down",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_mk_cloth"
     },
     {
       "id": "aur_mk_charms",
       "sprite": "elder",
-      "x": 21, "y": 3,
+      "x": 21,
+      "y": 3,
       "facing": "down",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_mk_charms"
     },
     {
       "id": "aur_mk_feed",
       "sprite": "villager_m",
-      "x": 3, "y": 8,
+      "x": 3,
+      "y": 8,
       "facing": "down",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_mk_feed"
     },
     {
       "id": "aur_mk_ironmonger",
       "sprite": "dockhand",
-      "x": 9, "y": 8,
+      "x": 9,
+      "y": 8,
       "facing": "down",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_mk_ironmonger"
     },
     {
       "id": "aur_mk_herbalist",
       "sprite": "townsfolk_f",
-      "x": 16, "y": 8,
+      "x": 16,
+      "y": 8,
       "facing": "down",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_mk_herbalist"
     },
     {
       "id": "aur_mk_foreign",
       "sprite": "sailor",
-      "x": 21, "y": 8,
+      "x": 21,
+      "y": 8,
       "facing": "down",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_mk_foreign"
     },
     {
       "id": "aur_mk_shopper",
       "sprite": "townsfolk_m",
-      "x": 7, "y": 6,
+      "x": 7,
+      "y": 6,
       "facing": "up",
-      "movement": { "kind": "wander", "radius": 3 },
+      "movement": {
+        "kind": "wander",
+        "radius": 3
+      },
       "script": "aur_mk_shopper"
     },
     {
       "id": "aur_mk_inspector",
       "sprite": "concord",
-      "x": 17, "y": 6,
+      "x": 17,
+      "y": 6,
       "facing": "left",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_mk_inspector"
     },
     {
       "id": "aur_mk_busker",
       "sprite": "kid",
-      "x": 12, "y": 13,
+      "x": 12,
+      "y": 13,
       "facing": "up",
-      "movement": { "kind": "lookAround" },
+      "movement": {
+        "kind": "lookAround"
+      },
       "script": "aur_mk_busker"
     },
     {
       "id": "aur_mk_gossip",
       "sprite": "villager_f",
-      "x": 5, "y": 13,
+      "x": 5,
+      "y": 13,
       "facing": "right",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_mk_gossip"
     }
   ],
   "objects": [
     {
       "kind": "sign",
-      "x": 11, "y": 0,
+      "x": 11,
+      "y": 0,
       "text": [
         "The roof is one span of iron and glass and you cannot see both ends of it",
         "from anywhere in the building.",
@@ -145,7 +191,8 @@
     },
     {
       "kind": "sign",
-      "x": 3, "y": 2,
+      "x": 3,
+      "y": 2,
       "text": [
         "Fish, on ice brought down from the north by rail overnight.",
         "The board lists nine kinds and has three of them crossed out.",
@@ -154,7 +201,8 @@
     },
     {
       "kind": "sign",
-      "x": 9, "y": 2,
+      "x": 9,
+      "y": 2,
       "text": [
         "Bread in twelve shapes, and a queue that has learned to fold itself",
         "so as not to block the aisle.",
@@ -163,7 +211,8 @@
     },
     {
       "kind": "sign",
-      "x": 16, "y": 2,
+      "x": 16,
+      "y": 2,
       "text": [
         "Cloth by the bolt, from four regions, and a girl measuring against her arm",
         "because the yardstick has been borrowed and not returned.",
@@ -172,7 +221,8 @@
     },
     {
       "kind": "sign",
-      "x": 21, "y": 2,
+      "x": 21,
+      "y": 2,
       "text": [
         "Charms, luck knots, and small carved things for the mantelpiece.",
         "Half the stall is spirals. A card claims they are Aurelian.",
@@ -181,7 +231,8 @@
     },
     {
       "kind": "sign",
-      "x": 3, "y": 9,
+      "x": 3,
+      "y": 9,
       "text": [
         "Feed, grit and bedding, by the sack, with a scale that is checked monthly",
         "and a certificate to prove it hanging over the scale.",
@@ -190,7 +241,8 @@
     },
     {
       "kind": "sign",
-      "x": 9, "y": 9,
+      "x": 9,
+      "y": 9,
       "text": [
         "Ironmongery. Everything hangs from a beam and the whole stall rings",
         "when a cart goes past outside.",
@@ -199,7 +251,8 @@
     },
     {
       "kind": "sign",
-      "x": 16, "y": 9,
+      "x": 16,
+      "y": 9,
       "text": [
         "Herbs, dried, in jars, with the price and the ailment on each label.",
         "A separate shelf is labelled DOES NOT WORK BUT PEOPLE LIKE IT,",
@@ -208,7 +261,8 @@
     },
     {
       "kind": "sign",
-      "x": 21, "y": 9,
+      "x": 21,
+      "y": 9,
       "text": [
         "Imports off the quays. Shell money, a jar of something in oil,",
         "and a rolled chart of a coast that is not on any map you have seen.",
@@ -217,7 +271,8 @@
     },
     {
       "kind": "hiddenItem",
-      "x": 22, "y": 13,
+      "x": 22,
+      "y": 13,
       "item": "steadyroot",
       "quantity": 2,
       "flag": "item_aur_market"

@@ -1,0 +1,615 @@
+{
+  "$comment": "Aureline, the streets. Ambient only. Nobody in this file is a member of the cast -- Lyra, Tarin, Cassian and the commander belong to whoever writes the Act 4 events, and a second Lyra standing on the pavement outside the headquarters would be the join nobody owns. What is here is the other hundred and sixty thousand people. Three notes on the tone, all from CANON.md. FIRST, the Meridian Foundation is publicly LOVED here, and most of the people who work for it are doing genuinely good work and have no idea what is inside it -- so nobody warns the player, and the one or two who are uneasy are uneasy about paperwork, not about a conspiracy. SECOND, this is a capital: strangers, cost of living, transport, weather, and everybody in a hurry. THIRD, foreign regions and other leagues come up in the ordinary way, because Averra is much bigger than this game. Everything is one to three sentences. Add entries here rather than replacing the file: the exterior crowd and the story beats have to share it.",
+  "speakers": {
+    "au_gatewarden": "GATE WARDEN",
+    "au_gate_carter": "CARTER",
+    "au_gate_child": "AURELINE CHILD",
+    "au_candlerow_baker": "BAKER",
+    "au_candlerow_lamps": "LAMPWRIGHT",
+    "au_archivist": "RECORDS CLERK",
+    "au_wallwalker": "OLD MAN",
+    "au_candlerow_kid": "CANDLEROW BOY",
+    "au_market_fishwife": "FISH SELLER",
+    "au_market_wire": "WIRE SELLER",
+    "au_streetsinger": "STREET SINGER",
+    "au_candlerow_sceptic": "SIGNWRITER",
+    "au_mile_guide": "CITY GUIDE",
+    "au_mile_tourist": "VISITOR",
+    "au_mile_flowers": "FLOWER SELLER",
+    "au_mile_courier": "COURIER",
+    "au_mile_objector": "PETITIONER",
+    "au_mile_constable": "CONSTABLE",
+    "au_mile_boy": "SMALL BOY",
+    "au_mile_countrywoman": "WOMAN FROM BRIARBELL",
+    "au_arcade_shopgirl": "SHOP ASSISTANT",
+    "au_emporium_doorman": "DOORMAN",
+    "au_teahouse_owner": "TEA HOUSE KEEPER",
+    "au_arcade_kid": "GIRL WITH A BAG",
+    "au_clinic_nurse": "CLINIC NURSE",
+    "au_provisioner_boy": "STOCK BOY",
+    "au_arcade_busker": "BUSKER",
+    "au_arcade_country": "TRAINER FROM STONEWAKE",
+    "au_east_innkeeper": "INNKEEPER",
+    "au_east_shift": "NIGHT SHIFT",
+    "au_east_skyreach": "SKYREACH TRADER",
+    "au_east_child": "EASTFIELD CHILD",
+    "au_park_keeper": "PARK KEEPER",
+    "au_park_painter": "PAINTER",
+    "au_park_child": "CHILD IN THE PARK",
+    "au_park_rower": "BOATMAN",
+    "au_park_botanist": "PLANTSMAN",
+    "au_park_pensioner": "PENSIONER",
+    "au_park_runner": "RUNNER",
+    "au_park_hallkeeper": "VISITING HALLKEEPER",
+    "au_spires_broker": "BROKER",
+    "au_spires_window": "WINDOW CLEANER",
+    "au_spires_lost": "LOST TRAVELLER",
+    "au_skydeck_attendant": "LIFT ATTENDANT",
+    "au_spires_courier": "MESSENGER",
+    "au_mer_reception": "FOUNDATION GREETER",
+    "au_mer_guard_west": "FOUNDATION STAFF",
+    "au_mer_guard_east": "FOUNDATION STAFF",
+    "au_mer_scientist": "FOUNDATION RESEARCHER",
+    "au_mer_oceanographer": "OCEANOGRAPHER",
+    "au_mer_docent": "GALLERY DOCENT",
+    "au_mer_intern": "FOUNDATION INTERN",
+    "au_mer_relief": "DISASTER RELIEF",
+    "au_square_sitter": "WOMAN ON A BENCH",
+    "au_square_child": "CHILD IN THE SQUARE",
+    "au_station_porter": "STATION PORTER",
+    "au_station_clerk": "TICKET CLERK",
+    "au_station_frostmere": "STRANDED PASSENGER",
+    "au_station_traveller": "TRAVELLER",
+    "au_station_kid": "BOY ON THE PLATFORM",
+    "au_high_washer": "WASHERWOMAN",
+    "au_high_boy": "HIGHWATER BOY",
+    "au_high_old": "OLD WOMAN",
+    "au_high_builder": "BUILDER",
+    "au_high_teacher": "SCHOOLTEACHER",
+    "au_summit_gate": "REGISTRY CLERK",
+    "au_summit_hopeful": "HOPEFUL"
+  },
+  "entries": {
+    "au_gatewarden": [
+      {
+        "lines": [
+          "Aureline. A hundred and sixty-one thousand, and that count is four years old.",
+          "Nobody checks anybody at this gate any more. I open it, I shut it, and I answer questions.",
+          "Yours is: the Mile goes north, everything else comes off it."
+        ]
+      }
+    ],
+    "au_gate_carter": [
+      {
+        "lines": [
+          "Four days from Mirehaven with a load that would go by rail in six hours.",
+          "The rail does not stop where my customers are. It stops where the money is."
+        ]
+      }
+    ],
+    "au_gate_child": [
+      {
+        "lines": [
+          "Are you from outside? Everyone is from outside. My mother says I am the only one who isn't.",
+          "She is from Emberfall so she would say that."
+        ]
+      }
+    ],
+    "au_candlerow_baker": [
+      {
+        "lines": [
+          "Candlerow. Two hundred years this was the whole city, wall to wall.",
+          "Then they built the Mile through the middle of it and nobody wrote down where the four hundred houses went."
+        ]
+      }
+    ],
+    "au_candlerow_lamps": [
+      {
+        "lines": [
+          "Nine hundred lamps between the wall and Campus Row and I light none of them.",
+          "The new ones on the Mile come on by themselves. Foundation work, and it works.",
+          "Mine are the ones down here that still need a person. Long may it last."
+        ]
+      }
+    ],
+    "au_archivist": [
+      {
+        "lines": [
+          "Every ship, every charter, every will and every death notice in Caelora, in one building.",
+          "People come looking for a name and go home with a date. It is almost never what they wanted."
+        ]
+      }
+    ],
+    "au_wallwalker": [
+      {
+        "lines": [
+          "This wall stopped mattering three hundred years ago and it is still here.",
+          "Pulling it down costs more than leaving it up. That is the capital in one sentence."
+        ]
+      }
+    ],
+    "au_candlerow_kid": [
+      {
+        "lines": [
+          "There are eleven ways from here to the Mile and only two of them are streets.",
+          "I know all eleven. It costs a coin."
+        ]
+      }
+    ],
+    "au_market_fishwife": [
+      {
+        "lines": [
+          "Off the coast this morning, on this slab by noon, and that is the rail, whatever the carters say.",
+          "Though the Tideglass boats have been coming in light. Three weeks of light."
+        ]
+      }
+    ],
+    "au_market_wire": [
+      {
+        "lines": [
+          "Wire, cable, brass, glass. If a thing in this city carries a current, it went past me first.",
+          "Business has trebled in two years. I have stopped asking who is buying."
+        ]
+      }
+    ],
+    "au_streetsinger": [
+      {
+        "lines": [
+          "Six songs and one of them is about a man who went to sea and did not come back.",
+          "It is the only one anybody asks for. I have stopped wondering why."
+        ]
+      }
+    ],
+    "au_candlerow_sceptic": [
+      {
+        "lines": [
+          "I letter signs. Every board on the Mile, twice a year, in their blue.",
+          "THE FOUNDATION WELCOMES VISITORS. I have painted it forty times and I still could not tell you where."
+        ]
+      }
+    ],
+    "au_mile_guide": [
+      {
+        "lines": [
+          "The Long Mile. Southgate to Campus Row, one mile and a hundred and forty paces.",
+          "Old city behind you, park on the left, shops on the right, the Spires after the Crossway.",
+          "The Foundation is at the end of it. Everything in this city ends at the Foundation."
+        ]
+      }
+    ],
+    "au_mile_tourist": [
+      {
+        "lines": [
+          "I came up from Salthollow to see one building and I have been walking for two hours.",
+          "You cannot see the top and the bottom of the thing at the same time. Nobody warns you."
+        ]
+      }
+    ],
+    "au_mile_flowers": [
+      {
+        "lines": [
+          "Cut this morning in the Greatpark, which I am not supposed to say and everybody does.",
+          "The keeper knows. The keeper lets me."
+        ]
+      }
+    ],
+    "au_mile_courier": [
+      {
+        "lines": [
+          "Eleven runs a day between the Exchange and the Foundation and I know every alley in the Spires.",
+          "Do not follow me. People do, and they end up in a yard."
+        ]
+      }
+    ],
+    "au_mile_objector": [
+      {
+        "lines": [
+          "Two hundred names asking the Foundation to publish what its ships are doing.",
+          "Nobody has said no to me. Nobody has said anything at all. That is worse."
+        ]
+      }
+    ],
+    "au_mile_constable": [
+      {
+        "lines": [
+          "Keep left, mind the carriages, and if you are carrying something valuable, carry it in front of you.",
+          "It is a good city. It is also a hundred and sixty thousand people and I am one constable."
+        ]
+      }
+    ],
+    "au_mile_boy": [
+      {
+        "lines": [
+          "I counted the windows on the blue building. I got to four hundred and lost it.",
+          "My sister says there are more than a thousand. My sister has never counted anything."
+        ]
+      }
+    ],
+    "au_mile_countrywoman": [
+      {
+        "lines": [
+          "There is a tree in Briarbell with bells hanging in it and I have missed it every day for six years.",
+          "Nothing here makes a sound like that. Everything here just makes a sound."
+        ]
+      }
+    ],
+    "au_arcade_shopgirl": [
+      {
+        "lines": [
+          "Forty shops under one roof and not one of them sells anything you need.",
+          "That is the point of an arcade. I have made my peace with it."
+        ]
+      }
+    ],
+    "au_emporium_doorman": [
+      {
+        "lines": [
+          "Four floors, and a lift boy who is sixty-two and has been the lift boy since he was nine.",
+          "Do not call him the lift man. He will not have it."
+        ]
+      }
+    ],
+    "au_teahouse_owner": [
+      {
+        "lines": [
+          "A hundred and ten years on this corner. The arcade next door is eleven.",
+          "I will outlast it. My mother said the same about the one before it and she was right."
+        ]
+      }
+    ],
+    "au_arcade_kid": [
+      {
+        "lines": [
+          "Mother said one thing. I have four things. I am going to be in a great deal of trouble."
+        ]
+      }
+    ],
+    "au_clinic_nurse": [
+      {
+        "lines": [
+          "The largest Clinic in Caelora and the only one that does not close.",
+          "Bring them in whatever hour it is. Nobody here will ask you what you were doing."
+        ]
+      }
+    ],
+    "au_provisioner_boy": [
+      {
+        "lines": [
+          "Vessels, potions, salves, and everything the road out of here needs.",
+          "Buy the road things here. Everything past Campus Row costs a third more for the same box."
+        ]
+      }
+    ],
+    "au_arcade_busker": [
+      {
+        "lines": [
+          "Twenty thousand people walk past this pitch on a Saturday.",
+          "Eleven of them stop. It is enough, and I have stopped doing the arithmetic."
+        ]
+      }
+    ],
+    "au_arcade_country": [
+      {
+        "lines": [
+          "I came to challenge the Summit and got as far as the gate. Eight Crests, they said.",
+          "So now I am shopping. It is not the same and I am pretending that it is."
+        ]
+      }
+    ],
+    "au_east_innkeeper": [
+      {
+        "lines": [
+          "Cheap, clean, and forty minutes on foot from anywhere worth being. I say so on the sign.",
+          "People come back. Half of them are honest about why."
+        ]
+      }
+    ],
+    "au_east_shift": [
+      {
+        "lines": [
+          "I go on at six and come off at six and I have not seen the Mile in daylight since spring.",
+          "The Foundation pays well. Everybody in Eastfield works for the Foundation, one way round or another."
+        ]
+      }
+    ],
+    "au_east_skyreach": [
+      {
+        "lines": [
+          "Skyreach, on the cliffs. Bridges, wind, and airships coming in sideways.",
+          "You have not been? Go north when the passes open. Nothing here is that big and nothing here is that quiet."
+        ]
+      }
+    ],
+    "au_east_child": [
+      {
+        "lines": [
+          "Every window on this street looks at another window on this street.",
+          "I have counted forty-one people I have never spoken to. I wave at all of them."
+        ]
+      }
+    ],
+    "au_park_keeper": [
+      {
+        "lines": [
+          "Sixty-one Kin in the Greatpark last count and not one of them belongs to anybody.",
+          "Four times they have asked me to fence it. Four times I have said the same thing.",
+          "They are not in a park. We built a park round them."
+        ]
+      }
+    ],
+    "au_park_painter": [
+      {
+        "lines": [
+          "Forty years of the same water. It has never once been the same water.",
+          "That is either very deep or very obvious and at my age I no longer care which."
+        ]
+      }
+    ],
+    "au_park_child": [
+      {
+        "lines": [
+          "There is one that comes when I sit still and goes when I move.",
+          "I have been sitting still for a very long time."
+        ]
+      }
+    ],
+    "au_park_rower": [
+      {
+        "lines": [
+          "You can row it in eleven minutes and walk round it in nine.",
+          "People pay me for the eleven. I have never understood people."
+        ]
+      }
+    ],
+    "au_park_botanist": [
+      {
+        "lines": [
+          "Four hundred species in the Glasshouse and eleven Kin that moved in and were allowed to stay.",
+          "They keep the heat honest. Nothing I could build does the job as well."
+        ]
+      }
+    ],
+    "au_park_pensioner": [
+      {
+        "lines": [
+          "This is the only place in the capital where nobody is going anywhere.",
+          "That is what I pay my rates for. Not the lamps. This."
+        ]
+      }
+    ],
+    "au_park_runner": [
+      {
+        "lines": [
+          "Twice round the water before the office and twice round after. It is the only air in the city."
+        ]
+      }
+    ],
+    "au_park_hallkeeper": [
+      {
+        "lines": [
+          "I keep a Hall three hundred miles north of here and I come down once a year for this park.",
+          "Kin that have never been battled, never been caught, never been moved on.",
+          "You will not see it anywhere else in Caelora. Sit down a while."
+        ]
+      }
+    ],
+    "au_spires_broker": [
+      {
+        "lines": [
+          "Grain, iron, glass, charter hulls, and weather insurance, which is the one that is moving.",
+          "People are buying cover for storms that have not happened. Somebody knows something and it is not me."
+        ]
+      }
+    ],
+    "au_spires_window": [
+      {
+        "lines": [
+          "Fourteen floors of glass and it takes eleven days to do one side.",
+          "By the time I finish the far end the near end wants doing again. Best job in the city."
+        ]
+      }
+    ],
+    "au_spires_lost": [
+      {
+        "lines": [
+          "I have walked past this corner three times. Every one of these is the same building.",
+          "Follow the dark road. The dark road is always a road. That is what somebody told me and it is the only thing that has worked."
+        ]
+      }
+    ],
+    "au_skydeck_attendant": [
+      {
+        "lines": [
+          "Top of the Exchange, and on a clear day you can see the sea from it.",
+          "Not today. Lift is stopped for the survey and nobody will tell me for how long."
+        ]
+      }
+    ],
+    "au_spires_courier": [
+      {
+        "lines": [
+          "Everything in that satchel is sealed and none of it is mine.",
+          "That is the whole job and it is the reason I still have it."
+        ]
+      }
+    ],
+    "au_mer_reception": [
+      {
+        "lines": [
+          "The Meridian Foundation. Ground floor is open to anybody, every day, free.",
+          "Ocean survey, Kin conservation, storm warning, disaster relief. Come in and look."
+        ]
+      }
+    ],
+    "au_mer_guard_west": [
+      {
+        "lines": [
+          "Public floors, that way. Everything above the second needs a pass and I do not issue them.",
+          "It is not a secret. It is a building with laboratories in it."
+        ]
+      }
+    ],
+    "au_mer_guard_east": [
+      {
+        "lines": [
+          "Thirty-one storeys, and the top four are Dr Veyl's floor.",
+          "I have worked here nine years and been up there twice. Both times he made the tea himself."
+        ]
+      }
+    ],
+    "au_mer_scientist": [
+      {
+        "lines": [
+          "Pressure and current, mostly. Where the sea is heavy and where it is going.",
+          "The last eight months of readings do not look like the forty years before them, and nobody upstairs seems worried, which is the part I keep turning over."
+        ]
+      }
+    ],
+    "au_mer_oceanographer": [
+      {
+        "lines": [
+          "I map the deep off the south coast. Thirty years and I have seen a tenth of it.",
+          "Whatever anybody tells you about the sea, the honest answer is that we do not know."
+        ]
+      }
+    ],
+    "au_mer_docent": [
+      {
+        "lines": [
+          "The gallery is free and it always will be. Dr Veyl wrote that into the charter himself.",
+          "Whatever else is true about the man, that is also true about the man."
+        ]
+      }
+    ],
+    "au_mer_intern": [
+      {
+        "lines": [
+          "Six months unpaid and I would do six more. Everybody I have met here is trying to stop something terrible.",
+          "There is nowhere else in Averra you can say that about your work."
+        ]
+      }
+    ],
+    "au_mer_relief": [
+      {
+        "lines": [
+          "Disaster relief. Flood, storm, sea wall, and a hurricane on the east islands last autumn.",
+          "Four hundred and eleven people came off that coast alive and every one of them came off in our boats.",
+          "So when people are clever about the Foundation, I let them be clever."
+        ]
+      }
+    ],
+    "au_square_sitter": [
+      {
+        "lines": [
+          "The plaque on the basin says FOR THOSE THE WEATHER TOOK.",
+          "My brother is on it. So is a girl of nine that Dr Veyl paid for himself and never explained.",
+          "I have my own idea about who she was."
+        ]
+      }
+    ],
+    "au_square_child": [
+      {
+        "lines": [
+          "You are not allowed in the water. I have tried it and I know exactly how not allowed it is."
+        ]
+      }
+    ],
+    "au_station_porter": [
+      {
+        "lines": [
+          "Nine hundred trains a week under one roof, and the roof took eleven years and fell in twice.",
+          "Stand still where you are and you will be moved. Not rudely. Just moved."
+        ]
+      }
+    ],
+    "au_station_clerk": [
+      {
+        "lines": [
+          "Stonewake, Tideglass, Emberfall, the Eastern Halt. All running, all late.",
+          "Frostmere is suspended. Weather, they say, in a month that has never had weather in it."
+        ]
+      }
+    ],
+    "au_station_frostmere": [
+      {
+        "lines": [
+          "Three days I have been sitting on this bag waiting for the northern line.",
+          "My cousin writes that the passes are shut and the sky over the Observatory has not been right since spring."
+        ]
+      }
+    ],
+    "au_station_traveller": [
+      {
+        "lines": [
+          "Off the boat at Tideglass, up the coast, and here in two days.",
+          "In my grandmother's time that was three weeks and a will made out beforehand."
+        ]
+      }
+    ],
+    "au_station_kid": [
+      {
+        "lines": [
+          "I know all nine platforms and I have never been on a train.",
+          "One day I am getting on one and I am not telling anybody which."
+        ]
+      }
+    ],
+    "au_high_washer": [
+      {
+        "lines": [
+          "Eighty-four rows in Highwater and my mother was born in row nine.",
+          "They built it for the people the Mile put out of Candlerow. Nobody has ever called it enough."
+        ]
+      }
+    ],
+    "au_high_boy": [
+      {
+        "lines": [
+          "You can get from row one to row eighty-four without going into a street.",
+          "I can, anyway. You are too big."
+        ]
+      }
+    ],
+    "au_high_old": [
+      {
+        "lines": [
+          "Same window sixty-one years. The view has been a wall for sixty-one years.",
+          "It is a good wall. I know every brick in it and there are people in this city who know nobody."
+        ]
+      }
+    ],
+    "au_high_builder": [
+      {
+        "lines": [
+          "Two more towers going up past the Crossway and neither of them is for anybody who lives here.",
+          "I build them anyway. That is the trade and I am not ashamed of the trade."
+        ]
+      }
+    ],
+    "au_high_teacher": [
+      {
+        "lines": [
+          "Sixty children in the room and half of them have never left the terraces.",
+          "I teach them the map of Averra. Caelora is one region and it is not the big one.",
+          "You should see their faces when the chart comes out."
+        ]
+      }
+    ],
+    "au_summit_gate": [
+      {
+        "lines": [
+          "The Summit Training Complex. Admission is eight Bond Crests. There are no exceptions.",
+          "You have five. Come back with three more and I will open this gate myself and mean it."
+        ]
+      }
+    ],
+    "au_summit_hopeful": [
+      {
+        "lines": [
+          "Seven. I have seven. I have had seven for four months.",
+          "Crownspire will not have me and I cannot make myself go anywhere else. Do not be me."
+        ]
+      }
+    ]
+  }
+}

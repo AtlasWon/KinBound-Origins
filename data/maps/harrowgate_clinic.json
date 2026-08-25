@@ -1,0 +1,88 @@
+{
+  "id": "harrowgate_clinic",
+  "name": "Interior",
+  "displayName": "KIN CLINIC",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIIIUIII",
+    "I+++++kkF?FFFI",
+    "IPKKFKKKFFFFkI",
+    "IFFFFFFFFFFFFI",
+    "IkFFFFFFFFAAFI",
+    "IF/rr/FFFFEEFI",
+    "IFFrrFFFFFFFPI",
+    "IkFFFFFFFFFFkI",
+    "IFFFFFFFFFFFFI",
+    "IIIIIIDIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 9,
+      "toMap": "harrowgate",
+      "toX": 8,
+      "toY": 16,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "hg_clinic_keeper",
+      "sprite": "healer",
+      "x": 4,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "clinic_heal"
+    },
+    {
+      "id": "hg_clinic_roost",
+      "sprite": "professor",
+      "x": 10,
+      "y": 1,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "roost_terminal"
+    },
+    {
+      "id": "hg_rester",
+      "sprite": "porter",
+      "x": 3,
+      "y": 5,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hg_rester"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 1,
+      "text": [
+        "A brass terminal. THE ROOST, stencilled on the side.",
+        "Kin you cannot carry wait here."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 2,
+      "text": [
+        "The bulletin rack, and every notice on it has a train time on it somewhere.",
+        "HARVEST HANDS WANTED. REPORT TO THE HALT, DOWN TRAIN, ANY DAY.",
+        "Underneath, a smaller one nobody has taken down: HANDS WANTED - MIREHAVEN. 1852."
+      ]
+    }
+  ],
+  "_plan": "The clinic on High Street, which is the OLD half of the village, and it is busier than a village clinic should be because a hundred casual hands come off the down train at harvest and a fair number of them arrive already hurt."
+}

@@ -5,24 +5,48 @@
     "trigger": "enter",
     "map": "aureline_meridian",
     "onceFlag": "am_arrived",
-    "when": { "kind": "flag", "flag": "tarin_committed" },
+    "when": {
+      "kind": "flag",
+      "flag": "tarin_committed"
+    },
     "actions": [
       {
         "kind": "spawnNpc",
         "npc": {
-          "id": "a4_lyra", "sprite": "lyra", "x": 13, "y": 16,
-          "facing": "down", "movement": { "kind": "static" }, "script": "am_lyra"
+          "id": "am_lyra",
+          "sprite": "lyra",
+          "x": 14,
+          "y": 15,
+          "facing": "down",
+          "movement": {
+            "kind": "static"
+          },
+          "script": "am_lyra"
         }
       },
       {
         "kind": "spawnNpc",
         "npc": {
-          "id": "a4_tarin", "sprite": "rival", "x": 11, "y": 16,
-          "facing": "right", "movement": { "kind": "static" }, "script": "am_tarin"
+          "id": "am_tarin",
+          "sprite": "rival",
+          "x": 11,
+          "y": 15,
+          "facing": "down",
+          "movement": {
+            "kind": "static"
+          },
+          "script": "am_tarin"
         }
       },
-      { "kind": "face", "who": "player", "dir": "up" },
-      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "face",
+        "who": "player",
+        "dir": "up"
+      },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
       {
         "kind": "say",
         "lines": [
@@ -37,7 +61,10 @@
           "and the woman at the front of it is being given money."
         ]
       },
-      { "kind": "wait", "frames": 12 },
+      {
+        "kind": "wait",
+        "frames": 12
+      },
       {
         "kind": "say",
         "who": "TARIN",
@@ -46,7 +73,10 @@
           "I have wanted that since Stonewake and it is not going to happen, is it."
         ]
       },
-      { "kind": "wait", "frames": 14 },
+      {
+        "kind": "wait",
+        "frames": 14
+      },
       {
         "kind": "say",
         "lines": [
@@ -96,7 +126,10 @@
           }
         ]
       },
-      { "kind": "wait", "frames": 12 },
+      {
+        "kind": "wait",
+        "frames": 12
+      },
       {
         "kind": "say",
         "lines": [
@@ -110,8 +143,14 @@
           "Morning, Miss Veyl."
         ]
       },
-      { "kind": "wait", "frames": 26 },
-      { "kind": "sfx", "sound": "denied" },
+      {
+        "kind": "wait",
+        "frames": 26
+      },
+      {
+        "kind": "sfx",
+        "sound": "denied"
+      },
       {
         "kind": "say",
         "who": "TARIN",
@@ -119,7 +158,10 @@
           "...Veyl."
         ]
       },
-      { "kind": "wait", "frames": 22 },
+      {
+        "kind": "wait",
+        "frames": 22
+      },
       {
         "kind": "say",
         "who": "LYRA",
@@ -175,7 +217,10 @@
           }
         ]
       },
-      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
       {
         "kind": "say",
         "who": "LYRA",
@@ -192,7 +237,10 @@
           "All four of them changed the subject, and not one of them was clumsy about it."
         ]
       },
-      { "kind": "wait", "frames": 14 },
+      {
+        "kind": "wait",
+        "frames": 14
+      },
       {
         "kind": "say",
         "who": "TARIN",
@@ -208,10 +256,16 @@
           "I know. I worked that out on Tuesday and I have not slept properly since."
         ]
       },
-      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
       {
         "kind": "if",
-        "cond": { "kind": "hasItem", "item": "tideheart" },
+        "cond": {
+          "kind": "hasItem",
+          "item": "tideheart"
+        },
         "then": [
           {
             "kind": "say",
@@ -255,10 +309,16 @@
               }
             ]
           },
-          { "kind": "wait", "frames": 12 }
+          {
+            "kind": "wait",
+            "frames": 12
+          }
         ]
       },
-      { "kind": "sfx", "sound": "sign" },
+      {
+        "kind": "sfx",
+        "sound": "sign"
+      },
       {
         "kind": "say",
         "lines": [
@@ -266,20 +326,38 @@
           "The clerk countersigns without reading either of them."
         ]
       },
-      { "kind": "setFlag", "flag": "aur_hq_pass" },
-      { "kind": "setFlag", "flag": "act4_inside" },
-      { "kind": "removeNpc", "who": "aur_hq_gate" },
-      { "kind": "sfx", "sound": "door" },
-      { "kind": "wait", "frames": 14 },
+      {
+        "kind": "setFlag",
+        "flag": "aur_hq_pass"
+      },
+      {
+        "kind": "setFlag",
+        "flag": "act4_inside"
+      },
+      {
+        "kind": "call",
+        "script": "act4_open_gates"
+      },
+      {
+        "kind": "sfx",
+        "sound": "door"
+      },
+      {
+        "kind": "wait",
+        "frames": 14
+      },
       {
         "kind": "say",
         "who": "LYRA",
         "lines": [
-          "East stair is the assembly hall. West stair is offices, and Records is at the back of it.",
+          "Records is the stair in the far corner, past the counter. The hall is through the east door.",
           "Nobody will stop you on either. Nobody has ever needed to."
         ]
       },
-      { "kind": "wait", "frames": 14 },
+      {
+        "kind": "wait",
+        "frames": 14
+      },
       {
         "kind": "say",
         "who": "TARIN",
@@ -295,11 +373,9 @@
           "...Fine. Do not say it back to me.",
           "Just do the second half of it."
         ]
-      },
-      { "kind": "call", "script": "act4_cast_clear" }
+      }
     ]
   },
-
   {
     "id": "am_lyra",
     "trigger": "interact",
@@ -314,7 +390,6 @@
       }
     ]
   },
-
   {
     "id": "am_tarin",
     "trigger": "interact",
@@ -337,16 +412,21 @@
       }
     ]
   },
-
   {
     "id": "aur_act4_close",
     "_note": "ACT 4, THE CLOSE. The player comes back down into the atrium with an empty key pocket and has to walk out through four hundred people being helped. That is the staging, and it is why the close is here rather than out in the square: the last thing Act 4 shows the player is the Foundation doing exactly the good it says it does, on the way out of the building that has just robbed them.\n\nWEIGHTLESS ON THE MAP ON PURPOSE. Lyra catches them up in narration and leaves in narration, so this names no NPC, moves nothing and warps nowhere.\n\nWHERE IT HANDS OFF. Lyra names Frostmere and the Observatory, which is where canon puts Elias' last message in Act 5, and she goes there herself, tonight, on a coach. NOTHING IN ACT 4 OPENS A ROAD NORTH and nothing should until Stage 5 builds one -- there must be no stub for a player to walk into -- so the thing the player is actually pointed at is Sorrell, in Hearthmere, which has existed since Act 1.\n\nListed after am_arrive because only the first 'enter' script that starts gets run: on this visit am_arrive declines on its onceFlag and this one takes its turn.",
     "trigger": "enter",
     "map": "aureline_meridian",
     "onceFlag": "act4_after_done",
-    "when": { "kind": "flag", "flag": "act4_theft_done" },
+    "when": {
+      "kind": "flag",
+      "flag": "act4_theft_done"
+    },
     "actions": [
-      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "wait",
+        "frames": 24
+      },
       {
         "kind": "say",
         "lines": [
@@ -354,7 +434,10 @@
           "Nobody in this room knows. Nobody in it is ever going to know."
         ]
       },
-      { "kind": "wait", "frames": 22 },
+      {
+        "kind": "wait",
+        "frames": 22
+      },
       {
         "kind": "say",
         "lines": [
@@ -419,7 +502,10 @@
           }
         ]
       },
-      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
       {
         "kind": "say",
         "who": "LYRA",
@@ -435,8 +521,14 @@
           "I would like to find out what I signed it for."
         ]
       },
-      { "kind": "setFlag", "flag": "lyra_chose" },
-      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "setFlag",
+        "flag": "lyra_chose"
+      },
+      {
+        "kind": "wait",
+        "frames": 24
+      },
       {
         "kind": "say",
         "lines": [
@@ -444,7 +536,10 @@
           "She goes out through the doors at a walk and the street closes over her in about nine steps."
         ]
       },
-      { "kind": "wait", "frames": 28 },
+      {
+        "kind": "wait",
+        "frames": 28
+      },
       {
         "kind": "say",
         "who": "TARIN",
@@ -453,7 +548,10 @@
           "I have never been anywhere with snow in it."
         ]
       },
-      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
       {
         "kind": "say",
         "who": "TARIN",
@@ -462,7 +560,10 @@
           "It was that or nothing, and I was not going to do nothing at you."
         ]
       },
-      { "kind": "wait", "frames": 22 },
+      {
+        "kind": "wait",
+        "frames": 22
+      },
       {
         "kind": "say",
         "who": "TARIN",
@@ -471,7 +572,10 @@
           "She should hear this off us and not off a newspaper."
         ]
       },
-      { "kind": "wait", "frames": 26 },
+      {
+        "kind": "wait",
+        "frames": 26
+      },
       {
         "kind": "say",
         "lines": [
@@ -479,7 +583,10 @@
           "The lights come off floor by floor, from the top."
         ]
       },
-      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "wait",
+        "frames": 24
+      },
       {
         "kind": "say",
         "lines": [
@@ -487,7 +594,10 @@
           "There is nothing in it to find."
         ]
       },
-      { "kind": "setFlag", "flag": "act4_done" }
+      {
+        "kind": "setFlag",
+        "flag": "act4_done"
+      }
     ]
   }
 ]

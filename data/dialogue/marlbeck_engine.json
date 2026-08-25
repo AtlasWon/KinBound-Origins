@@ -1,0 +1,26 @@
+{
+  "speakers": {
+    "mb_driver": "ENGINE DRIVER",
+    "mb_stoker": "STOKER"
+  },
+  "entries": {
+    "mb_driver": [
+      {
+        "lines": [
+          "Sixty-one years, three drivers, one beam. I am the third and I am not the last.",
+          "It has stopped four times. Twice for a valve, once for a flood, once for a funeral.",
+          "The funeral was the second driver's. We started it again before the tea."
+        ]
+      }
+    ],
+    "mb_stoker": [
+      {
+        "lines": [
+          "Coal comes up from Harrowgate on a cart and the cart comes off a train.",
+          "So a machine two counties away is why this one turns over. I think about that.",
+          "Everything is joined to everything now. Nobody asked me and I do not mind."
+        ]
+      }
+    ]
+  }
+}

@@ -2692,5 +2692,499 @@
       "Tallow keeps the Venom Hall and she will not go easy on you.",
       "She has not gone easy on anybody since the survey people arrived. Do not take it personally."
     ]
+  },
+  {
+    "id": "r7_bankman",
+    "$comment": "The first fight north of the sea bank, and the first one in the game against a Terra pair. Deliberately the lightest trainer on the Central Road: a player has just walked out of the wetlands into a country with different rules, and the tile they are standing on is more interesting than the fight ought to be.",
+    "name": "Ossett",
+    "className": "Bank Warden",
+    "sprite": "hiker",
+    "ai": "trained",
+    "payout": 104,
+    "party": [
+      {
+        "species": "burrowen",
+        "level": 24
+      },
+      {
+        "species": "gravelet",
+        "level": 25
+      }
+    ],
+    "intro": [
+      "You came over the bank, so you know what is on the other side of it.",
+      "Everything on this side is nine feet below that. Nine feet and one wall."
+    ],
+    "defeat": [
+      "Fair. Go on north, then."
+    ],
+    "victory": [
+      "We walk this wall twice a day. You get quick or you get wet."
+    ],
+    "afterward": [
+      "Marlbeck is up the lane. They will feed you and they will talk about water.",
+      "Everybody here talks about water. There is nothing else to talk about and it is enough."
+    ]
+  },
+  {
+    "id": "r7_dyke",
+    "name": "Prue",
+    "className": "Dyke Hand",
+    "sprite": "villager_m",
+    "ai": "trained",
+    "payout": 110,
+    "party": [
+      {
+        "species": "rillfry",
+        "level": 24
+      },
+      {
+        "species": "bladderwrack",
+        "level": 25
+      },
+      {
+        "species": "silthopper",
+        "level": 25
+      }
+    ],
+    "intro": [
+      "Cut is clear, gates are up, and I have an hour. Do you want it or not?"
+    ],
+    "defeat": [
+      "That is the hour gone. Worth it."
+    ],
+    "victory": [
+      "You fight like somebody who has never had to be anywhere by eleven."
+    ],
+    "afterward": [
+      "You can wade the cuts. Everybody does. Just do not do it where the two of them meet.",
+      "Nobody has ever found the bottom at the junction. People have looked."
+    ]
+  },
+  {
+    "id": "r7_carter",
+    "name": "Bram Quill",
+    "className": "Waggoner",
+    "sprite": "porter",
+    "ai": "trained",
+    "payout": 116,
+    "party": [
+      {
+        "species": "tuftail",
+        "level": 25
+      },
+      {
+        "species": "nibbet",
+        "level": 25
+      },
+      {
+        "species": "burrowen",
+        "level": 26
+      }
+    ],
+    "intro": [
+      "Twenty-five miles today and I will do it again on Thursday.",
+      "I have got three that can pull and none that can fight. Let us see how bad that is."
+    ],
+    "defeat": [
+      "Bad, then. Right."
+    ],
+    "victory": [
+      "Pulling is fighting with a heavier thing behind you."
+    ],
+    "afterward": [
+      "Nine years ago this was a cart track and I was the only wheel on it.",
+      "Now I count sixty a day and I am not the fastest thing going north any more."
+    ]
+  },
+  {
+    "id": "r7_gate",
+    "name": "Hesk",
+    "className": "Fieldhand",
+    "sprite": "dockhand",
+    "ai": "trained",
+    "payout": 118,
+    "party": [
+      {
+        "species": "nettlebug",
+        "level": 25
+      },
+      {
+        "species": "spinnet",
+        "level": 26
+      },
+      {
+        "species": "weaverjaw",
+        "level": 26
+      }
+    ],
+    "intro": [
+      "Everything I have came out of a hedge on this road.",
+      "People think that is funny until the second one comes out."
+    ],
+    "defeat": [
+      "And the third. All right, all right."
+    ],
+    "victory": [
+      "Hedges are older than the fields. Things live in them that were here first."
+    ],
+    "afterward": [
+      "Do not cut through a hedge. Walk to the gap. The gap is there because somebody needed one."
+    ]
+  },
+  {
+    "id": "r7_stubble",
+    "name": "Winna",
+    "className": "Reaper",
+    "sprite": "villager_f",
+    "ai": "trained",
+    "payout": 122,
+    "party": [
+      {
+        "species": "pipwing",
+        "level": 26
+      },
+      {
+        "species": "kestrelle",
+        "level": 26
+      },
+      {
+        "species": "bristlebuck",
+        "level": 27
+      }
+    ],
+    "intro": [
+      "Stubble field, hot afternoon, nothing in it but us.",
+      "Go on. I am owed a sit down and I would rather lose than have one."
+    ],
+    "defeat": [
+      "Then I will sit down. Thank you."
+    ],
+    "victory": [
+      "Everything that lives in corn comes out when you cut it. You learn to be ready."
+    ],
+    "afterward": [
+      "The stooks stay up a fortnight and then the carts come and it is all gone in a day.",
+      "Every year it looks like somebody stole the county overnight."
+    ]
+  },
+  {
+    "id": "r7n_wagon",
+    "name": "Ferris",
+    "className": "Waggoner",
+    "sprite": "porter",
+    "ai": "trained",
+    "payout": 128,
+    "party": [
+      {
+        "species": "burrowen",
+        "level": 27
+      },
+      {
+        "species": "tuftail",
+        "level": 27
+      },
+      {
+        "species": "mossback",
+        "level": 28
+      }
+    ],
+    "intro": [
+      "Going up empty and coming back empty. That is what the line has done to me.",
+      "I have got time for this. That is the whole complaint."
+    ],
+    "defeat": [
+      "And I have got more time now. Marvellous."
+    ],
+    "victory": [
+      "At least something still needs doing by hand."
+    ],
+    "afterward": [
+      "I am not angry at the trains. I would put my grain on one. Everybody does.",
+      "I am angry that I agree with them. Go on, off you go."
+    ]
+  },
+  {
+    "id": "r7n_ganger",
+    "$comment": "The only Iron party on the Central Road, and Chalkmar is otherwise never in a wild table anywhere in the game -- so the gang who keep the track are also where a player first meets Stone-Iron in a fight. That is not decoration: the tile they are standing on is the reason.",
+    "name": "Odo Slate",
+    "className": "Platelayer",
+    "sprite": "dockhand",
+    "ai": "trained",
+    "payout": 134,
+    "party": [
+      {
+        "species": "chalkid",
+        "level": 27
+      },
+      {
+        "species": "gravelet",
+        "level": 28
+      },
+      {
+        "species": "chalkmar",
+        "level": 28
+      }
+    ],
+    "intro": [
+      "Six of us keep eleven miles of this. Get off the ballast and we can talk.",
+      "Off it. Thank you. Now, then."
+    ],
+    "defeat": [
+      "Right. Back to the eleven miles."
+    ],
+    "victory": [
+      "Everything I have was dug out from under a rail. They are used to weight."
+    ],
+    "afterward": [
+      "You want to know the worst thing about this job? It is never finished and it is never wrong.",
+      "You walk it, you find the low joint, you pack it, you walk it again. Forever. It is lovely."
+    ]
+  },
+  {
+    "id": "r7n_ferry",
+    "name": "Cade",
+    "className": "Angler",
+    "sprite": "fisher",
+    "ai": "trained",
+    "payout": 136,
+    "party": [
+      {
+        "species": "rillfry",
+        "level": 26
+      },
+      {
+        "species": "currentail",
+        "level": 27
+      },
+      {
+        "species": "anchorling",
+        "level": 27
+      }
+    ],
+    "intro": [
+      "My father rowed people over here. Then they built twelve arches and he stopped.",
+      "I fish under it now. Better living, worse story."
+    ],
+    "defeat": [
+      "Still a worse story."
+    ],
+    "victory": [
+      "Nobody swims the Rhene. Ask anyone. Then ask them why they know."
+    ],
+    "afterward": [
+      "The eyot in the middle. Things wash up on it and nothing takes them off again.",
+      "You will get out there one day. Everybody says that. Nobody has."
+    ]
+  },
+  {
+    "id": "r7n_courier",
+    "$comment": "A Foundation courier, and the first Meridian party in the game to lead with Spark. That is on purpose: everything Meridian do in Act 4 runs down a wire, and the player should meet the type on the road under the wires before they ever see the headquarters. Veteran AI and the highest payout on the Central Road -- this is the fight that says the capital is close.",
+    "name": "Sennet",
+    "className": "Foundation Courier",
+    "sprite": "meridian",
+    "ai": "veteran",
+    "payout": 158,
+    "party": [
+      {
+        "species": "fizzlet",
+        "level": 27
+      },
+      {
+        "species": "voltwick",
+        "level": 29
+      },
+      {
+        "species": "lantric",
+        "level": 29
+      }
+    ],
+    "intro": [
+      "Foundation despatch, and I am ahead of time, which never happens.",
+      "You have got the look of somebody who has been walking a while. Show me."
+    ],
+    "defeat": [
+      "Ahead of time and beaten. Balanced day."
+    ],
+    "victory": [
+      "We are not the enemy of anybody on this road. Do try to remember that."
+    ],
+    "afterward": [
+      "Everything in that bag is weather. Rainfall, frost, tide. Numbers going one direction.",
+      "North. It all goes north. I could not tell you what happens to it after that."
+    ]
+  },
+  {
+    "id": "r7n_reaper",
+    "name": "Della",
+    "className": "Harvester",
+    "sprite": "townsfolk_f",
+    "ai": "trained",
+    "payout": 132,
+    "party": [
+      {
+        "species": "bristlebuck",
+        "level": 28
+      },
+      {
+        "species": "kestrelle",
+        "level": 28
+      },
+      {
+        "species": "tuftail",
+        "level": 29
+      }
+    ],
+    "intro": [
+      "Came up on the six-ten with forty others and I will go back on the eight.",
+      "A fortnight of this and it pays for a winter. Come on."
+    ],
+    "defeat": [
+      "Worth getting up for."
+    ],
+    "victory": [
+      "Forty of us in a field and everything in it runs at the same time. You learn."
+    ],
+    "afterward": [
+      "The whole parish goes to Aureline. Not the people. The wheat.",
+      "We are just the bit in the middle that lifts it."
+    ]
+  },
+  {
+    "id": "r7n_wire",
+    "name": "Idris",
+    "className": "Foundation Linesman",
+    "sprite": "meridian_sci_f",
+    "ai": "trained",
+    "payout": 146,
+    "party": [
+      {
+        "species": "lantric",
+        "level": 28
+      },
+      {
+        "species": "voltwick",
+        "level": 29
+      }
+    ],
+    "intro": [
+      "Do not follow the wires. Everybody follows the wires.",
+      "Fine. Follow the wires. But you are going through me first."
+    ],
+    "defeat": [
+      "Go on, then. There is nothing out there but a shed."
+    ],
+    "victory": [
+      "There is nothing out there but a shed. I would still rather you did not."
+    ],
+    "afterward": [
+      "It repeats a signal. That is all it does. It has done it every day for six years.",
+      "I do not know what the signal says. That is not a complaint, it is the job."
+    ]
+  },
+  {
+    "id": "r7f_fowler",
+    "$comment": "Optional, on the branch, and the hardest fight on the Central Road by three levels -- which is correct for a place nobody sends the player to. Tidewrack is on the party because it is on the fen table and nowhere else in Caelora, so the fight is also the introduction.",
+    "name": "Halloway",
+    "className": "Fowler",
+    "sprite": "fisher",
+    "ai": "veteran",
+    "payout": 150,
+    "party": [
+      {
+        "species": "tuftail",
+        "level": 26
+      },
+      {
+        "species": "bladderwrack",
+        "level": 27
+      },
+      {
+        "species": "tidewrack",
+        "level": 28
+      }
+    ],
+    "intro": [
+      "Nobody comes over the wall. You came over the wall.",
+      "So either you are lost or you are the other thing. Let us find out which."
+    ],
+    "defeat": [
+      "The other thing, then."
+    ],
+    "victory": [
+      "This is not a place to be wrong in. The water goes over your head very politely."
+    ],
+    "afterward": [
+      "The Commission drew a line and everything inside it got a name and a field.",
+      "Out here never got either. I like it. So does everything living in it."
+    ]
+  },
+  {
+    "id": "r7r_linesman",
+    "name": "Ovett",
+    "className": "Linesman",
+    "sprite": "dockhand",
+    "ai": "trained",
+    "payout": 152,
+    "party": [
+      {
+        "species": "voltwick",
+        "level": 29
+      },
+      {
+        "species": "lantric",
+        "level": 30
+      }
+    ],
+    "intro": [
+      "You got past Idris. Nobody gets past Idris and then goes home.",
+      "Right. Mine live in the wire. Yours had better be quick."
+    ],
+    "defeat": [
+      "They were quick. Take one of ours out of the grass, then. Go on."
+    ],
+    "victory": [
+      "Everything in this yard has been shocked at least once, including me."
+    ],
+    "afterward": [
+      "The grass in here has not been cut since the fence went up. That is why they are in it.",
+      "Nobody tidies a relay yard. It is the only kindness the Foundation does by accident."
+    ]
+  },
+  {
+    "id": "hg_granary_hand",
+    "name": "Tully",
+    "className": "Granary Hand",
+    "sprite": "dockhand",
+    "ai": "trained",
+    "payout": 130,
+    "party": [
+      {
+        "species": "nibbet",
+        "level": 27
+      },
+      {
+        "species": "silthopper",
+        "level": 28
+      },
+      {
+        "species": "nettlebug",
+        "level": 28
+      }
+    ],
+    "intro": [
+      "Six bins, nine bays, and everything that has ever tried to live in a grain store.",
+      "Mine came with the building. Come on, before the weigher wants me."
+    ],
+    "defeat": [
+      "Right, back to it."
+    ],
+    "victory": [
+      "You do not keep a granary by being gentle with what gets into it."
+    ],
+    "afterward": [
+      "The whole parish, every year, to one buyer. Signed and framed on the wall.",
+      "It is a good price. That is what nobody says out loud, and it is why nobody argues."
+    ]
   }
 ]

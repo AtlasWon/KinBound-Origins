@@ -1,0 +1,80 @@
+{
+  "speakers": {
+    "r7n_toll": "BRIDGE KEEPER",
+    "r7n_lane": "LANE WIFE",
+    "r7n_pedlar": "CHAPMAN",
+    "r7n_boy": "BOY",
+    "r7n_clerk": "FOUNDATION CLERK",
+    "r7n_tunnel": "SURVEYOR"
+  },
+  "entries": {
+    "r7n_toll": [
+      {
+        "lines": [
+          "Foot is free. It has been free since the county paid for the arches and it will stay free.",
+          "Wheels are a penny and nobody has ever argued, which tells you what the ferry cost.",
+          "Go on over. Do not lean on the parapet at the fourth arch, it is being seen to."
+        ]
+      }
+    ],
+    "r7n_lane": [
+      {
+        "ifFlags": ["crest_5_taken"],
+        "lines": [
+          "Down the lane, over the line, and you are in Harrowgate in a quarter of an hour.",
+          "Mind the gates. Four trains a day sounds like nothing until one of them is coming.",
+          "There is a boy who stands there and counts them. He has never missed one."
+        ]
+      },
+      {
+        "lines": [
+          "Harrowgate is west, over the crossing.",
+          "You will hear the halt before you see it. Everybody does."
+        ]
+      }
+    ],
+    "r7n_pedlar": [
+      {
+        "lines": [
+          "Buttons, thread, tin, and news, and the news is the part they actually want.",
+          "I used to be four days ahead of the capital out here. Now I am four days behind it.",
+          "The wire beat me. I do not know what I sell now, but they still stop me."
+        ]
+      }
+    ],
+    "r7n_boy": [
+      {
+        "lines": [
+          "Six-ten, eleven-fifty, three-oh-five, seven-forty. And back the other way, four more.",
+          "I know all of them by the sound before I can see them.",
+          "When I am big I am going to be on one instead of beside one."
+        ]
+      }
+    ],
+    "r7n_clerk": [
+      {
+        "ifFlags": ["ms_second_truth"],
+        "lines": [
+          "Rain gauges, forty-one parishes, once a week, and I carry the book myself.",
+          "You will hear people say the Foundation is only interested in the weather.",
+          "They are right. I have never understood why anybody says it like an accusation."
+        ]
+      },
+      {
+        "lines": [
+          "Foundation. Rain gauges, forty-one parishes, and I have the wettest boots in Caelora.",
+          "It all goes to Aureline. Everything does."
+        ]
+      }
+    ],
+    "r7n_tunnel": [
+      {
+        "lines": [
+          "The old branch. Eight hundred yards of tunnel and the hill sat down on the middle of it.",
+          "They bricked the mouth rather than argue with a hill, and they were right to.",
+          "Do not go looking for the other end. There is not one any more."
+        ]
+      }
+    ]
+  }
+}

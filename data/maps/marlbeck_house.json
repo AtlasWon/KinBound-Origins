@@ -1,0 +1,67 @@
+{
+  "id": "marlbeck_house",
+  "name": "Interior",
+  "displayName": "HOUSE",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIUIIIIIUIII",
+    "IbeFFkkFFFFI",
+    "IFFFFFFFFAFI",
+    "IFFFFFFFFEFI",
+    "IFF/rrFFFFFI",
+    "IFFFrrFFFNQI",
+    "IPFFFFFFFFJI",
+    "IFFFFFFFFFFI",
+    "IIIIIDIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 5,
+      "y": 8,
+      "toMap": "marlbeck",
+      "toX": 6,
+      "toY": 18,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "mb_house_woman",
+      "sprite": "townsfolk_f",
+      "x": 8,
+      "y": 3,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mb_house_woman"
+    },
+    {
+      "id": "mb_house_boy",
+      "sprite": "kid",
+      "x": 3,
+      "y": 5,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mb_house_boy"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 6,
+      "y": 1,
+      "text": [
+        "A shelf of books, and every one of them is about the same thing.",
+        "Levels. Tides. Rainfall, by the month, for thirty-one years.",
+        "The spines are worn where a thumb goes, all at the same height."
+      ]
+    }
+  ],
+  "_plan": "One cottage, opened so the drain is said once from inside a home rather than only by a post outside. The books on the shelf are the whole characterisation: this family reads the weather the way other families read the news."
+}

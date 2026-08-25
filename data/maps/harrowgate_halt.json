@@ -1,0 +1,91 @@
+{
+  "id": "harrowgate_halt",
+  "name": "Interior",
+  "displayName": "HARROWGATE HALT",
+  "music": "station",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIIUIIIIIIUIIIII",
+    "IFFFFFFFFFFFFFFFI",
+    "IKKKKKFFFFFFAAFFI",
+    "IFFFFFFFFFFFEEFFI",
+    "IFFFFFFFFFFFFFFFI",
+    "IFAAFFFFFFFFFFAAI",
+    "IFEEFFFFFFFFFFEEI",
+    "IFFFFFFFFFFFFFFFI",
+    "IkFFFFFFFFFFFFFPI",
+    "IFFFFFFFFFFFFFFFI",
+    "IFFFFFFFFFFFFFFFI",
+    "IIIIIIIIIDIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 11,
+      "toMap": "harrowgate",
+      "toX": 30,
+      "toY": 27,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "hg_booking",
+      "sprite": "clerk",
+      "x": 3,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hg_booking"
+    },
+    {
+      "id": "hg_traveller",
+      "sprite": "merchant",
+      "x": 3,
+      "y": 6,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hg_traveller"
+    },
+    {
+      "id": "hg_meridian_pair",
+      "sprite": "meridian",
+      "x": 14,
+      "y": 6,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hg_meridian_pair"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 2,
+      "text": [
+        "The fares board. Everywhere on the line, and what it costs to get there.",
+        "AURELINE, SECOND CLASS: less than a night at an inn.",
+        "MIREHAVEN: not listed. The line does not go there and it never will."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 15,
+      "y": 8,
+      "text": [
+        "A map of the line under glass, drawn straight because a line drawn straight is easier.",
+        "Every station on it is a dot except one, which is a square with four roads into it.",
+        "Nothing on this map is to scale and nobody looking at it has ever minded."
+      ]
+    }
+  ],
+  "_plan": "A waiting room, which is a kind of room this game has not had: the only place in Caelora where strangers sit in rows facing the same way because a machine is coming at a time. Two of them are Foundation and they are perfectly pleasant, which is exactly the note Act 4 needs from Meridian before Aureline."
+}

@@ -1,0 +1,93 @@
+{
+  "id": "marlbeck_engine",
+  "name": "Interior",
+  "displayName": "MARLBECK SCOOP",
+  "music": "station",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIUIIIIIIIIUIII",
+    "I+++++++++++++I",
+    "IfKKKKKKKKKKKfI",
+    "IfffffffffffffI",
+    "IkfffI++++IfffI",
+    "IffffI++++IfkfI",
+    "If$fffI++Ifff$I",
+    "IfffffffffffffI",
+    "IfffffffffffffI",
+    "IAEfffffffffffI",
+    "IfffffffffffffI",
+    "IfffffffffffffI",
+    "IfffffffffffffI",
+    "IfffffffffffffI",
+    "IIIIIIIIIDIIIII"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 14,
+      "toMap": "marlbeck",
+      "toX": 12,
+      "toY": 14,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "mb_driver",
+      "sprite": "porter",
+      "x": 4,
+      "y": 8,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mb_driver"
+    },
+    {
+      "id": "mb_stoker",
+      "sprite": "dockhand",
+      "x": 11,
+      "y": 9,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mb_stoker"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 6,
+      "text": [
+        "The beam. One casting, twenty-two feet of it, rocking so slowly you can watch it.",
+        "One end takes the steam. The other end takes the fen.",
+        "It has been doing this since before anybody in the village was born."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 4,
+      "text": [
+        "The log, on a nail. Level, time, coal, and a name, four times a day for years.",
+        "The hand changes every eight or nine pages and the columns never do.",
+        "The last line was written eleven minutes ago."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 5,
+      "text": [
+        "A shelf of spares, arranged by how fast they would be needed.",
+        "The nearest to the door is a valve. There are four of them.",
+        "There is one of everything else."
+      ]
+    }
+  ],
+  "_plan": "The memorable room of the small village, and it is memorable for a shape: the whole upper half of the map is one machine, and the player walks under the beam.\n\nDeliberately NOT drawn in the laboratory's floor and glass. The first cut used them and the room came out looking like a Meridian station, which is the exact wrong sentence -- this machine is timber, iron and brick, it was paid for by a parish, and there is a log on the wall with everybody's name in it going back sixty years. The player has met Meridian's machines twice by now and been frightened by them. This one keeps two hundred and eighty people dry. The contrast only works if the two look nothing alike."
+}

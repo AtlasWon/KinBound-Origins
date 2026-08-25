@@ -29,126 +29,177 @@
   ],
   "warps": [
     {
-      "x": 12, "y": 19,
-      "toMap": "aureline", "toX": 24, "toY": 15,
-      "facing": "down", "style": "door"
+      "x": 12,
+      "y": 19,
+      "toMap": "aureline",
+      "toX": 128,
+      "toY": 106,
+      "facing": "down",
+      "style": "door"
     },
     {
-      "x": 13, "y": 19,
-      "toMap": "aureline", "toX": 25, "toY": 15,
-      "facing": "down", "style": "door"
+      "x": 13,
+      "y": 19,
+      "toMap": "aureline",
+      "toX": 129,
+      "toY": 106,
+      "facing": "down",
+      "style": "door"
     }
   ],
   "npcs": [
     {
       "id": "aur_st_gate_north",
       "sprite": "clerk",
-      "x": 6, "y": 1,
+      "x": 6,
+      "y": 1,
       "facing": "down",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_st_gate_north"
     },
     {
       "id": "aur_st_gate_east",
       "sprite": "clerk",
-      "x": 13, "y": 1,
+      "x": 13,
+      "y": 1,
       "facing": "down",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_st_gate_east"
     },
     {
       "id": "aur_st_gate_south",
       "sprite": "clerk",
-      "x": 20, "y": 1,
+      "x": 20,
+      "y": 1,
       "facing": "down",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_st_gate_south"
     },
     {
       "id": "aur_st_ticket",
       "sprite": "clerk",
-      "x": 3, "y": 6,
+      "x": 3,
+      "y": 6,
       "facing": "down",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_st_ticket"
     },
     {
       "id": "aur_st_parcels",
       "sprite": "porter",
-      "x": 21, "y": 6,
+      "x": 21,
+      "y": 6,
       "facing": "down",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_st_parcels"
     },
     {
       "id": "aur_st_soldier",
       "sprite": "hiker",
-      "x": 9, "y": 5,
+      "x": 9,
+      "y": 5,
       "facing": "up",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_st_soldier"
     },
     {
       "id": "aur_st_leaver",
       "sprite": "townsfolk_f",
-      "x": 16, "y": 11,
+      "x": 16,
+      "y": 11,
       "facing": "down",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_st_leaver"
     },
     {
       "id": "aur_st_kid",
       "sprite": "kid",
-      "x": 8, "y": 12,
+      "x": 8,
+      "y": 12,
       "facing": "up",
-      "movement": { "kind": "wander", "radius": 3 },
+      "movement": {
+        "kind": "wander",
+        "radius": 3
+      },
       "script": "aur_st_kid"
     },
     {
       "id": "aur_st_bookstall",
       "sprite": "merchant",
-      "x": 3, "y": 14,
+      "x": 3,
+      "y": 14,
       "facing": "up",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_st_bookstall"
     },
     {
       "id": "aur_st_flowers",
       "sprite": "villager_f",
-      "x": 22, "y": 14,
+      "x": 22,
+      "y": 14,
       "facing": "up",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_st_flowers"
     },
     {
       "id": "aur_st_porter",
       "sprite": "dockhand",
-      "x": 17, "y": 16,
+      "x": 17,
+      "y": 16,
       "facing": "left",
-      "movement": { "kind": "pace", "axis": "x", "distance": 6 },
+      "movement": {
+        "kind": "pace",
+        "axis": "x",
+        "distance": 6
+      },
       "script": "aur_st_porter"
     },
     {
       "id": "aur_st_sleeper",
       "sprite": "elder",
-      "x": 6, "y": 17,
+      "x": 6,
+      "y": 17,
       "facing": "down",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_st_sleeper"
     },
     {
       "id": "aur_st_waiting",
       "sprite": "sailor",
-      "x": 19, "y": 17,
+      "x": 19,
+      "y": 17,
       "facing": "left",
-      "movement": { "kind": "lookAround" },
+      "movement": {
+        "kind": "lookAround"
+      },
       "script": "aur_st_waiting"
     }
   ],
   "objects": [
     {
       "kind": "sign",
-      "x": 6, "y": 0,
+      "x": 6,
+      "y": 0,
       "text": [
         "Platforms one to four, in letters a foot high, under a glass roof",
         "you cannot see the far end of.",
@@ -157,7 +208,8 @@
     },
     {
       "kind": "sign",
-      "x": 13, "y": 0,
+      "x": 13,
+      "y": 0,
       "text": [
         "Platforms five to nine.",
         "EAST: THE WETLANDS, MIREHAVEN ROAD-HEAD, THE FERRY QUAYS.",
@@ -166,7 +218,8 @@
     },
     {
       "kind": "sign",
-      "x": 20, "y": 0,
+      "x": 20,
+      "y": 0,
       "text": [
         "Platforms ten to fourteen. Goods only, and busier than all the rest.",
         "A board of what has come in this morning: stone, coal, glass, fish,",
@@ -175,7 +228,8 @@
     },
     {
       "kind": "sign",
-      "x": 3, "y": 1,
+      "x": 3,
+      "y": 1,
       "text": [
         "The barrier line. Fourteen gates, all of them staffed, all of them queued.",
         "Beyond it the platforms go on until they stop being platforms",
@@ -184,7 +238,8 @@
     },
     {
       "kind": "sign",
-      "x": 3, "y": 7,
+      "x": 3,
+      "y": 7,
       "text": [
         "The booking hall. Nine windows, a queue at every one, and a fare board",
         "in six columns.",
@@ -193,7 +248,8 @@
     },
     {
       "kind": "sign",
-      "x": 22, "y": 7,
+      "x": 22,
+      "y": 7,
       "text": [
         "Parcels and left luggage. A wall of pigeonholes going up out of reach,",
         "and a ladder on a rail to get at the top of it.",
@@ -202,7 +258,8 @@
     },
     {
       "kind": "sign",
-      "x": 10, "y": 13,
+      "x": 10,
+      "y": 13,
       "text": [
         "The departure board, and a man on a ladder changing it by hand.",
         "Forty-one departures before midnight.",
@@ -211,7 +268,8 @@
     },
     {
       "kind": "sign",
-      "x": 15, "y": 13,
+      "x": 15,
+      "y": 13,
       "text": [
         "The arrivals board. LATE, LATE, ON TIME, LATE, and one line reading",
         "simply HELD AT THE TUNNEL.",
@@ -220,7 +278,8 @@
     },
     {
       "kind": "sign",
-      "x": 2, "y": 13,
+      "x": 2,
+      "y": 13,
       "text": [
         "The bookstall. Novels, newspapers, timetables, and a rack of postcards",
         "of the Grand Park with the tower behind it.",
@@ -229,7 +288,8 @@
     },
     {
       "kind": "sign",
-      "x": 23, "y": 13,
+      "x": 23,
+      "y": 13,
       "text": [
         "A flower stall, doing better trade than the bookstall.",
         "A card explains why: everybody arriving in Aureline is arriving",
@@ -238,7 +298,8 @@
     },
     {
       "kind": "sign",
-      "x": 2, "y": 15,
+      "x": 2,
+      "y": 15,
       "text": [
         "A bench worn to a hollow at each end and shining in the middle.",
         "A brass plate on the back: GIVEN BY THE PORTERS OF THIS STATION,",
@@ -247,7 +308,8 @@
     },
     {
       "kind": "sign",
-      "x": 23, "y": 15,
+      "x": 23,
+      "y": 15,
       "text": [
         "A city map under glass, four feet across, and a red dot saying YOU ARE HERE.",
         "The dot is about a third of the way up.",
@@ -256,7 +318,8 @@
     },
     {
       "kind": "hiddenItem",
-      "x": 23, "y": 18,
+      "x": 23,
+      "y": 18,
       "item": "potion",
       "quantity": 1,
       "flag": "item_aur_station"

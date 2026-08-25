@@ -394,6 +394,7 @@ export enum T {
   TRACK_SE,
   TRACK_SW,
   TRACK_CROSSING,
+  TRACK_CROSSING_V,
   TRACK_SIGNAL,
   HALT_DECK,
   HALT_EDGE,
@@ -1036,7 +1037,8 @@ const VARIED: Partial<Record<number, number>> = {
   [T.GRANITE_WINDOW]: 2,
   [T.SHOPFRONT]: 3,
   [T.HEDGE]: 2,
-  [T.MER_GLASS]: 2,
+  [T.MER_GLASS]: 3,
+  [T.FOUNTAIN]: 3,
   // The Central Road. Appended last, as the note above requires, and safe for
   // the second reason as well: every painter in this family draws from
   // position hashes and never touches the shared Rng.
@@ -1552,7 +1554,8 @@ export class Tileset {
       case T.TRACK_NW: this.trackTurn(px, fill, 0, 0); break;
       case T.TRACK_SE: this.trackTurn(px, fill, 16, 16); break;
       case T.TRACK_SW: this.trackTurn(px, fill, 0, 16); break;
-      case T.TRACK_CROSSING: this.trackCrossing(px, fill); break;
+      case T.TRACK_CROSSING: this.trackCrossing(px, fill, 'h'); break;
+      case T.TRACK_CROSSING_V: this.trackCrossing(px, fill, 'v'); break;
       case T.TRACK_SIGNAL: this.trackSignal(px); break;
       case T.HALT_DECK: this.haltDeck(px, fill, false); break;
       case T.HALT_EDGE: this.haltDeck(px, fill, true); break;
@@ -8026,12 +8029,19 @@ export class Tileset {
     const P = this.unit(px);
     for (let y = 0; y < TILE_SIZE; y++) {
       for (let x = 0; x < TILE_SIZE; x++) {
-        const n = wrapNoise(x * DETAIL, y * DETAIL, 8, 431);
-        let c: string = n > 0.62 ? CITY.roadLight : n < 0.34 ? CITY.roadDark : CITY.roadMid;
-        // Aggregate: the pale chips in the surface. Sparse and hard-edged --
-        // a road that is evenly speckled reads as sandpaper.
-        if (hash2(x, y, 887) > 0.955) c = CITY.roadGrit;
-        else if (hash2(x, y, 311) > 0.94) c = CITY.roadDeep;
+        // Almost flat. The first cut of this ran wrapping noise at an eight-unit
+        // cell and the boulevard came out as wet slate -- big soft blotches
+        // that read as depth in a surface which has none, and which fought
+        // every sprite standing on it. A made road is a FIELD, and the only
+        // structure in it is the aggregate: one value, a step either side of it
+        // at single-pixel scale, and a scatter of pale chips.
+        const n = hash2(x, y, 431);
+        let c: string = n > 0.72 ? CITY.roadLight : n < 0.3 ? CITY.roadDark : CITY.roadMid;
+        if (hash2(x, y, 887) > 0.965) c = CITY.roadGrit;
+        // Wheel polish: two faint bands where the traffic runs, on a repeat
+        // that divides the cell so a carriageway forty rows long has a memory
+        // in it rather than a texture.
+        if ((y + 3) % 8 === 0) c = n > 0.5 ? CITY.roadLight : CITY.roadMid;
         P(x, y, c);
       }
     }
@@ -8499,18 +8509,25 @@ export class Tileset {
     }
 
     if (kind === 'glass') {
-      // Deep blue glazing, floor to floor, with one hard diagonal of sky in it.
-      for (let y = 1; y <= 14; y++) {
-        for (let x = 1; x <= 14; x++) {
-          const v = (x + y) / 30;
-          const band = (x - y + 32) % 11;
-          P(x, y, band < 2 ? CITY.merSky
-            : v < 0.35 ? CITY.merGlassLight : v < 0.7 ? CITY.merGlass : CITY.merGlassDeep);
+      // Deep blue glazing, four bays across and two floors up, and it has to
+      // meet itself top and bottom: this is the tile the headquarters is made
+      // of, four hundred and fifty cells of it, and anything with a motif in it
+      // prints a lattice across the biggest building in Caelora.
+      for (let y = 0; y < S; y++) {
+        for (let x = 0; x < S; x++) {
+          const bay = Math.floor(x / 4), floor = Math.floor(y / 8);
+          const ix = x % 4, iy = y % 8;
+          if (ix === 0) { P(x, y, CITY.merBlueDark); continue; }
+          if (ix === 1 && iy > 0) { P(x, y, CITY.merShade); continue; }
+          if (iy === 0) { P(x, y, CITY.merBlueDark); continue; }
+          if (iy === 1) { P(x, y, CITY.merShade); continue; }
+          const state = hash2(bay, floor, 3313);
+          if (state > 0.88) { P(x, y, iy % 2 === 0 ? CITY.merPale : CITY.merShade); continue; }
+          if (state < 0.14) { P(x, y, iy < 4 ? CITY.merSky : CITY.merGlassLight); continue; }
+          const v = (ix + iy) / 10;
+          P(x, y, v < 0.3 ? CITY.merGlassLight : v < 0.7 ? CITY.merGlass : CITY.merGlassDeep);
         }
       }
-      for (const mx of [1, 8, 14]) for (let y = 1; y <= 14; y++) P(mx, y, CITY.merShade);
-      for (let x = 1; x <= 14; x++) { P(x, 1, CITY.merShade); P(x, 14, CITY.merBlueDark); }
-      for (let x = 0; x < S; x++) P(x, 15, CITY.outline);
     }
 
     if (kind === 'crest') {
@@ -8685,10 +8702,10 @@ export class Tileset {
     const P = this.unit(px);
     for (let y = 5; y <= 9; y++) {
       for (let x = 2; x <= 13; x++) {
-        P(x, y, y % 2 === 0 ? PAL.woodLight : PAL.woodMid);
+        P(x, y, y % 2 === 0 ? PAL.woodMid : PAL.woodDark);
       }
     }
-    for (let x = 2; x <= 13; x++) { P(x, 4, PAL.woodPale); P(x, 10, PAL.woodDeep); }
+    for (let x = 2; x <= 13; x++) { P(x, 4, PAL.woodLight); P(x, 10, PAL.woodDeep); }
     for (const ex of [2, 3, 12, 13]) for (let y = 4; y <= 12; y++) P(ex, y, CITY.ironDark);
     for (const ex of [3, 12]) for (let y = 5; y <= 9; y++) P(ex, y, CITY.ironMid);
     this.footShadow(P, 2, 13, 13);
@@ -8794,10 +8811,17 @@ export class Tileset {
 
     for (let y = 0; y < S; y++) {
       for (let x = 0; x < S; x++) {
-        // The stone under the water shows through, dimmed and blued.
-        const stone = ((x >> 2) + (y >> 2)) % 2 === 0 ? CITY.basinLight : CITY.basinMid;
-        const n = wrapNoise(x * DETAIL, y * DETAIL, 8, 1291);
-        P(x, y, n > 0.72 ? CITY.basinSky : n < 0.3 ? CITY.basinDeep : stone);
+        // The stone under the water shows through, dimmed and blued. The first
+        // cut laid it as a four-unit chequer and a basin twelve cells across
+        // printed the chequer seventy-two times -- the one thing a sheet of
+        // water must not do. Two octaves of wrapping noise instead, so the
+        // paving under the surface is a pattern of blocks that never repeats
+        // where the eye can catch it.
+        const a = wrapNoise(x * DETAIL, y * DETAIL, 16, 1291);
+        const b = wrapNoise(x * DETAIL, y * DETAIL, 8, 733);
+        const v = a * 0.6 + b * 0.4;
+        P(x, y, v > 0.68 ? CITY.basinSky : v > 0.5 ? CITY.basinLight
+          : v > 0.32 ? CITY.basinMid : CITY.basinDeep);
       }
     }
     // Glitter: short horizontal breaks, which is what still water does when it
@@ -8940,29 +8964,34 @@ export class Tileset {
     for (let y = 0; y < S; y++) {
       for (let x = 0; x < S; x++) {
         const n = wrapNoise(x * DETAIL, y * DETAIL, 8, 1117);
-        P(x, y, n < 0.38 ? PAL.wheatDeep : PAL.wheatDark);
+        P(x, y, n < 0.42 ? PAL.wheatDeep : PAL.wheatDark);
       }
     }
-    for (const base of [7, 15]) for (let x = 0; x < S; x++) W(x, base, PAL.wheatDeep);
+    // Each column's two ranks stand a unit or two off its neighbour's. Level
+    // ranks drew a horizontal band across every cell, and a field of that is a
+    // crop with lines ruled through it -- which is a picket fence, not corn.
+    const stand = (x: number) => Math.floor(hash2(x, 9, 1131) * 3);
+    for (const base of [7, 15]) for (let x = 0; x < S; x++) W(x, base + stand(x), PAL.wheatDeep);
 
     for (const base of [7, 15]) {
       for (let x = 0; x < S; x++) {
+        const foot = base + stand(x);
         const h = 5 + Math.floor(hash2(x, base, 1123) * 3);
-        const lean = (hash2(x, base, 1129) - 0.5) * 1.8;
+        const lean = (hash2(x, base, 1129) - 0.5) * 2.4;
         for (let k = 1; k <= h; k++) {
           const t = k / h;
           const xx = x + Math.round(lean * t);
-          const c = t > 0.74 ? PAL.wheatLight : t > 0.42 ? PAL.wheatMid : PAL.wheatDark;
-          W(xx, base - k, c);
+          const c = t > 0.58 ? PAL.wheatLight : t > 0.26 ? PAL.wheatMid : PAL.wheatDark;
+          W(xx, foot - k, c);
           // The shaded side of the stalk. One unit wide vanishes at 1x.
-          if (t < 0.7) W(xx + 1, base - k, PAL.wheatDeep);
+          if (t < 0.7) W(xx + 1, foot - k, PAL.wheatDeep);
         }
         // The ear, and the awns over it: the pale flecks are the whole reason
         // a field of this reads as grain rather than as long grass.
         const ex = x + Math.round(lean);
-        W(ex, base - h, PAL.wheatPale);
-        W(ex, base - h - 1, hash2(x, base, 1151) > 0.45 ? PAL.wheatPale : PAL.wheatLight);
-        W(ex + 1, base - h, PAL.wheatDark);
+        W(ex, foot - h, PAL.wheatPale);
+        W(ex, foot - h - 1, hash2(x, base, 1151) > 0.45 ? PAL.wheatPale : PAL.wheatLight);
+        W(ex + 1, foot - h, PAL.wheatDark);
       }
     }
   }
@@ -9313,15 +9342,17 @@ export class Tileset {
    * outside the rails, with the road running straight over them and the two
    * heads left flush and bright.
    *
-   * Drawn for a line running east to west under a road running north to south,
-   * which is the only orientation the Central Road uses it in. A crossing that
-   * worked both ways would have to lose the timber, and the timber is the
-   * thing that makes it read as a place to cross.
+   * The timber is what makes it read as a place to cross rather than as road
+   * paint, and timber has a direction -- so the tile has one too, and the
+   * vertical cut is the horizontal one transposed through the writer, exactly
+   * as the straight track is. 'h' is a line running east to west with the road
+   * crossing it north to south; 'v' is the other way round.
    */
-  private trackCrossing(px: Px, fill: (c: string) => void): void {
+  private trackCrossing(px: Px, fill: (c: string) => void, dir: 'h' | 'v'): void {
     this.highroad(px, fill);
-    const P = this.unit(px);
+    const P0 = this.unit(px);
     const S = TILE_SIZE;
+    const P: Px = dir === 'h' ? P0 : (x, y, c) => P0(y, x, c);
 
     const baulk = (y0: number, y1: number) => {
       for (let y = y0; y <= y1; y++) {
@@ -9531,23 +9562,23 @@ const CITY = {
   paveLight: '#d9d3c5',
   pavePale: '#efeade',
   // Carriageway. The darkest ground layer in the game, on purpose.
-  roadDeep: '#23262c',
-  roadDark: '#33373f',
-  roadMid: '#434852',
-  roadLight: '#565c68',
-  roadGrit: '#8b909b',
+  roadDeep: '#2c3037',
+  roadDark: '#474c56',
+  roadMid: '#585e69',
+  roadLight: '#6a707c',
+  roadGrit: '#9aa0ab',
   // The Old City's setts: a four-unit module, warm, hand-laid.
-  cobbleDeep: '#5f5548',
-  cobbleDark: '#7d7161',
-  cobbleMid: '#9a8c78',
-  cobbleLight: '#b6a68e',
-  cobblePale: '#d0bfa4',
+  cobbleDeep: '#463f37',
+  cobbleDark: '#61594d',
+  cobbleMid: '#786e5f',
+  cobbleLight: '#8e8371',
+  cobblePale: '#a49883',
   // Park gravel.
-  gravelDeep: '#9a875f',
-  gravelDark: '#b8a37c',
-  gravelMid: '#d1bd97',
-  gravelLight: '#e3d3b1',
-  gravelPale: '#f3e8cb',
+  gravelDeep: '#a09a86',
+  gravelDark: '#b9b099',
+  gravelMid: '#cec5ad',
+  gravelLight: '#ded6c1',
+  gravelPale: '#eee7d6',
   // Curtain wall. A cold blue-green: the sea and the sky in a north-facing
   // window, and nothing at all like the warm Aurelian current.
   glassDark: '#1f4356',
@@ -9598,12 +9629,12 @@ const CITY = {
   fascia: '#2f4a3e',
   fasciaLit: '#456658',
   // The Old City's ashlar, and the soot in it.
-  graniteDeep: '#5c5344',
-  graniteDark: '#7d7361',
-  graniteMid: '#988c77',
-  graniteLight: '#b2a58c',
-  granitePale: '#cabca0',
-  soot: '#4b4438',
+  graniteDeep: '#544f47',
+  graniteDark: '#726c60',
+  graniteMid: '#8c8578',
+  graniteLight: '#a69e8f',
+  granitePale: '#c0b8a8',
+  soot: '#464239',
   // Old glass, old paint, old timber.
   paneMid: '#6f93a3',
   paneLight: '#9fc0cb',

@@ -1,0 +1,78 @@
+{
+  "id": "harrowgate_provisioner",
+  "name": "Interior",
+  "displayName": "PROVISIONER",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIIIUIII",
+    "I;;;;;;;;;;;;I",
+    "IPKKKFKKKKFF;I",
+    "I;FFFFFFFFFF;I",
+    "I;;;FFFF;;FF;I",
+    "IFFFFFFFFFFFFI",
+    "I;;FFFF;;;FF;I",
+    "IFFFFFFFFFFFFI",
+    "IPFFFFFFFFFFPI",
+    "IIIIIIDIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 9,
+      "toMap": "harrowgate",
+      "toX": 16,
+      "toY": 16,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "hg_shopkeeper",
+      "sprite": "clerk",
+      "x": 5,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "harrowgate_shop"
+    },
+    {
+      "id": "hg_shop_hand",
+      "sprite": "clerk",
+      "x": 10,
+      "y": 5,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hg_shop_hand"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 3,
+      "y": 4,
+      "text": [
+        "Vessels four grades deep, and a card over them nobody has changed in a year.",
+        "ALL STOCK COMES UP ON THE 07.25 AND GOES OUT THE SAME DAY.",
+        "The shelves are full. That is a sentence about the railway, not about the shop."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 6,
+      "text": [
+        "A stack of capital newspapers, four days old and sold anyway.",
+        "The front page is a Foundation weather station opening on the north coast.",
+        "The picture is of a man cutting a ribbon. He is not looking at the camera."
+      ]
+    }
+  ],
+  "_plan": "The one shop on the road between Mirehaven and the capital, and it is fuller than any shop the player has seen in a settlement this size -- which is the point being made about the railway, in stock rather than in dialogue."
+}

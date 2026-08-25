@@ -1,0 +1,23 @@
+{
+  "speakers": {
+    "r7r_operator": "RELAY OPERATOR"
+  },
+  "entries": {
+    "r7r_operator": [
+      {
+        "ifFlags": ["ms_second_truth"],
+        "lines": [
+          "It comes in from the north, it goes out to the south, and I make it louder.",
+          "I do not read it. It is not in words, it is in gaps, and the gaps are somebody else's.",
+          "Whoever is at the far end of this knows things before the people they are about do."
+        ]
+      },
+      {
+        "lines": [
+          "Relay six. I keep the batteries topped and the tape running and that is all of it.",
+          "Quietest posting in Caelora. That is not an accident, it is a requirement."
+        ]
+      }
+    ]
+  }
+}

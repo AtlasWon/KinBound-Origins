@@ -8,6 +8,69 @@ Add a new `## vX.Y.Z` heading above the others before running `npm run ship`.
 
 ---
 
+## v0.16.0
+
+### The long road north
+
+Out of the mire and onto a bank, and the country changes in four tiles. North of
+it everything is ditched on a line and a level, hedged into fields, ploughed and
+cropped. There is a working main line across the middle of the map and it does
+not care about you — the road has to go and find the level crossing.
+
+Further north the line stops crossing your path and starts leading, running
+beside the road for forty rows with telegraph poles down the verge. Things go to
+the capital, and a lot of them.
+
+**Marlbeck**, 281 souls, exists because a machine has to lift the water out of
+nine miles of fen. The drain along the top of the village is on a bank, and the
+water in it is higher than the cottage roofs. There is a gauge post by the
+engine house, and the mark for 1861 is above your head.
+
+**Harrowgate**, about 940, exists because the line came through. In the granary
+there is a framed contract: the Meridian Foundation buys the whole parish's crop
+at a good price. Nobody in Harrowgate resents it. That is how the Foundation
+actually works, and it is the last thing you see before the capital.
+
+### Aureline
+
+A hundred and fifty-two tiles by a hundred and twenty. Tideglass was thirty
+thousand people and felt enormous; this is four times that and it is meant to
+make Tideglass look like a town.
+
+Most of it is not for you. Streets you can walk and never enter, towers with no
+doors, whole blocks of housing that are simply there. The Grand Park is the one
+place in the capital that breathes.
+
+### The Foundation, from the inside
+
+Four floors, and there is nothing sinister in the building. Everything on the
+walls is true and most of it is good work — weather stations, conservation,
+disaster relief, the museum. The unease is only in what the true things fail to
+add up to.
+
+Down in the deep laboratory there are two racks of sixty cradles. Fifty-one are
+filled with re-wound Aurelian rings. Nine are empty and dated for the end of the
+month. The bench board reads:
+
+**FIND. WAKE. RING. HOLD.**
+
+And under WAKE, in a different hand: *requires the heart. no substitute found.*
+
+You will read that while it is still in your bag.
+
+### Your father
+
+He tried to leave with it, because he had worked out what it was for.
+
+A Meridian commander made sure his vessel did not come back — the same one who
+told you in the marsh that he was a thief. Cassian Veyl did not give that order.
+He found out afterwards, and he decided the work mattered more.
+
+He will explain himself. He is not raving, and his arithmetic is not wrong.
+Tarin is the one who argues with him. Lyra is the one it breaks.
+
+Then they take it off you, and you walk out of the capital with an empty pocket.
+
 ## v0.15.0
 
 ### Embercoil

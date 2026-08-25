@@ -1,7 +1,7 @@
 {
-  "id": "aureline_meridian_offices",
-  "name": "Foundation Offices",
-  "displayName": "THE FOUNDATION - SECOND FLOOR",
+  "id": "aureline_meridian_records",
+  "name": "Records",
+  "displayName": "THE FOUNDATION - RECORDS",
   "music": "station",
   "battleBackdrop": "indoor",
   "indoor": true,
@@ -31,113 +31,162 @@
   ],
   "warps": [
     {
-      "x": 24, "y": 8,
-      "toMap": "aureline_meridian", "toX": 2, "toY": 2,
-      "facing": "down", "style": "stairs"
+      "x": 24,
+      "y": 8,
+      "toMap": "aureline_meridian",
+      "toX": 2,
+      "toY": 3,
+      "facing": "up",
+      "style": "stairs"
     },
     {
-      "x": 24, "y": 9,
-      "toMap": "aureline_meridian", "toX": 3, "toY": 2,
-      "facing": "down", "style": "stairs"
+      "x": 24,
+      "y": 9,
+      "toMap": "aureline_meridian",
+      "toX": 3,
+      "toY": 3,
+      "facing": "up",
+      "style": "stairs"
     },
     {
-      "x": 1, "y": 8,
-      "toMap": "aureline_meridian_deep", "toX": 1, "toY": 1,
-      "facing": "down", "style": "stairs"
+      "x": 1,
+      "y": 8,
+      "toMap": "aureline_meridian_deep",
+      "toX": 14,
+      "toY": 15,
+      "facing": "down",
+      "style": "stairs"
     },
     {
-      "x": 1, "y": 9,
-      "toMap": "aureline_meridian_deep", "toX": 2, "toY": 1,
-      "facing": "down", "style": "stairs"
+      "x": 1,
+      "y": 9,
+      "toMap": "aureline_meridian_deep",
+      "toX": 15,
+      "toY": 15,
+      "facing": "down",
+      "style": "stairs"
     }
   ],
   "npcs": [
     {
       "id": "aur_deep_guard",
       "sprite": "meridian",
-      "x": 2, "y": 8,
+      "x": 2,
+      "y": 8,
       "facing": "right",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_deep_guard",
       "hiddenIfFlag": "aur_deep_open"
     },
     {
       "id": "aur_off_weather",
       "sprite": "meridian_sci",
-      "x": 5, "y": 3,
+      "x": 5,
+      "y": 3,
       "facing": "up",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_off_weather"
     },
     {
       "id": "aur_off_forecaster",
       "sprite": "meridian_sci_f",
-      "x": 8, "y": 5,
+      "x": 8,
+      "y": 5,
       "facing": "down",
-      "movement": { "kind": "lookAround" },
+      "movement": {
+        "kind": "lookAround"
+      },
       "script": "aur_off_forecaster"
     },
     {
       "id": "aur_off_relief",
       "sprite": "concord",
-      "x": 18, "y": 3,
+      "x": 18,
+      "y": 3,
       "facing": "down",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_off_relief"
     },
     {
       "id": "aur_off_conservation",
       "sprite": "villager_f",
-      "x": 22, "y": 5,
+      "x": 22,
+      "y": 5,
       "facing": "left",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_off_conservation"
     },
     {
       "id": "aur_off_runner",
       "sprite": "kid",
-      "x": 12, "y": 8,
+      "x": 12,
+      "y": 8,
       "facing": "right",
-      "movement": { "kind": "pace", "axis": "x", "distance": 5 },
+      "movement": {
+        "kind": "pace",
+        "axis": "x",
+        "distance": 5
+      },
       "script": "aur_off_runner"
     },
     {
       "id": "aur_off_field",
       "sprite": "hiker",
-      "x": 7, "y": 13,
+      "x": 7,
+      "y": 13,
       "facing": "left",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_off_field"
     },
     {
       "id": "aur_off_tired",
       "sprite": "meridian_sci",
-      "x": 4, "y": 16,
+      "x": 4,
+      "y": 16,
       "facing": "down",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_off_tired"
     },
     {
       "id": "aur_records_clerk",
       "sprite": "elder",
-      "x": 22, "y": 13,
+      "x": 22,
+      "y": 13,
       "facing": "left",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_records_clerk"
     },
     {
       "id": "aur_records_junior",
       "sprite": "townsfolk_m",
-      "x": 22, "y": 19,
+      "x": 22,
+      "y": 19,
       "facing": "left",
-      "movement": { "kind": "lookAround" },
+      "movement": {
+        "kind": "lookAround"
+      },
       "script": "aur_records_junior"
     }
   ],
   "objects": [
     {
       "kind": "sign",
-      "x": 4, "y": 7,
+      "x": 4,
+      "y": 7,
       "text": [
         "A plate beside the door. DIRECTORATE OF WEATHER AND SEA.",
         "Under it a hand-lettered card that has been there long enough to yellow:",
@@ -146,7 +195,8 @@
     },
     {
       "kind": "sign",
-      "x": 3, "y": 2,
+      "x": 3,
+      "y": 2,
       "text": [
         "The trace wall. Forty-one stations, one roll each, wound off all day.",
         "Six of the coastal rolls have run flat for nine weeks.",
@@ -155,7 +205,8 @@
     },
     {
       "kind": "sign",
-      "x": 2, "y": 4,
+      "x": 2,
+      "y": 4,
       "text": [
         "Storm glasses in a rack, sixty of them, each labelled with a village.",
         "The oldest is from Hearthmere and is forty years old.",
@@ -164,7 +215,8 @@
     },
     {
       "kind": "sign",
-      "x": 9, "y": 6,
+      "x": 9,
+      "y": 6,
       "text": [
         "A bench of half-built instruments and a ledger of what they cost.",
         "The Foundation gives them away. The ledger records the giving, not the price.",
@@ -173,7 +225,8 @@
     },
     {
       "kind": "sign",
-      "x": 22, "y": 7,
+      "x": 22,
+      "y": 7,
       "text": [
         "A plate beside the door. RELIEF, CONSERVATION AND PUBLIC PROGRAMMES.",
         "A rota is pinned under it with fourteen names on it and every",
@@ -182,7 +235,8 @@
     },
     {
       "kind": "sign",
-      "x": 18, "y": 2,
+      "x": 18,
+      "y": 2,
       "text": [
         "Shelves of case files, one per disaster, going back sixty years.",
         "1049. 1052. 1058. 1061. The spines get thinner as they get newer,",
@@ -191,7 +245,8 @@
     },
     {
       "kind": "sign",
-      "x": 21, "y": 2,
+      "x": 21,
+      "y": 2,
       "text": [
         "Breeding registers for eleven species. Two are marked RECOVERED.",
         "One is marked GONE, in a different hand, and the page after it",
@@ -200,7 +255,8 @@
     },
     {
       "kind": "sign",
-      "x": 7, "y": 10,
+      "x": 7,
+      "y": 10,
       "text": [
         "A plate beside the stairs down. FIELD SCIENCES.",
         "Beside it a rack of coats, thirty hooks, and eleven coats.",
@@ -209,7 +265,8 @@
     },
     {
       "kind": "sign",
-      "x": 4, "y": 12,
+      "x": 4,
+      "y": 12,
       "text": [
         "Water tanks under a running tap, and a card of what is in them:",
         "samples from every river mouth in Caelora, taken monthly.",
@@ -218,7 +275,8 @@
     },
     {
       "kind": "sign",
-      "x": 5, "y": 14,
+      "x": 5,
+      "y": 14,
       "text": [
         "A specimen table. Bones, sorted, labelled, and argued over in pencil",
         "in three hands down the margin of the same card.",
@@ -227,7 +285,8 @@
     },
     {
       "kind": "sign",
-      "x": 4, "y": 17,
+      "x": 4,
+      "y": 17,
       "text": [
         "A resonance bench: coils, glass, and a cut Aurelian ring on a stand,",
         "wound about with new copper that is not Aurelian at all.",
@@ -236,7 +295,8 @@
     },
     {
       "kind": "sign",
-      "x": 17, "y": 10,
+      "x": 17,
+      "y": 10,
       "text": [
         "A plate beside the door. ANTIQUITIES AND RECORDS.",
         "And below it, the reading rule: NOTHING LEAVES THIS ROOM.",
@@ -245,7 +305,8 @@
     },
     {
       "kind": "sign",
-      "x": 18, "y": 12,
+      "x": 18,
+      "y": 12,
       "text": [
         "EXPEDITIONS, A-F. Cloth-bound, one per season, forty years deep.",
         "Every one of them has a crew list in the back, and every crew list",
@@ -254,7 +315,8 @@
     },
     {
       "kind": "sign",
-      "x": 21, "y": 12,
+      "x": 21,
+      "y": 12,
       "text": [
         "EXPEDITIONS, G-M. A gap on the shelf the width of two volumes,",
         "with the dust drawn back in a clean rectangle.",
@@ -263,7 +325,8 @@
     },
     {
       "kind": "sign",
-      "x": 18, "y": 14,
+      "x": 18,
+      "y": 14,
       "text": [
         "VESSELS AND CHARTERS. Insurance papers, hull surveys, loss reports.",
         "The loss reports are the thinnest bundle here and the most handled.",
@@ -272,7 +335,8 @@
     },
     {
       "kind": "sign",
-      "x": 21, "y": 14,
+      "x": 21,
+      "y": 14,
       "text": [
         "FIELD STAFF, PAST. Personal files, alphabetical, and a stool to reach them.",
         "The drawer runs from ABBOTT to FENNIMORE and shuts properly",
@@ -281,7 +345,8 @@
     },
     {
       "kind": "sign",
-      "x": 18, "y": 16,
+      "x": 18,
+      "y": 16,
       "text": [
         "ANTIQUITIES, ACCESSIONS. What was dug up, where, and by whom.",
         "The Aurelian entries are the fullest in the room and the most careful,",
@@ -290,7 +355,8 @@
     },
     {
       "kind": "sign",
-      "x": 21, "y": 16,
+      "x": 21,
+      "y": 16,
       "text": [
         "The reading rules, framed. Requests in writing. Pencil only.",
         "A file may be withdrawn to the Director's office by the Director alone.",
@@ -299,7 +365,8 @@
     },
     {
       "kind": "sign",
-      "x": 19, "y": 18,
+      "x": 19,
+      "y": 18,
       "text": [
         "The reading table. A lamp, a blotter, and a jar of sharpened pencils.",
         "Nobody is at it. The chair on the far side has been pulled out",
@@ -308,7 +375,8 @@
     },
     {
       "kind": "hiddenItem",
-      "x": 24, "y": 20,
+      "x": 24,
+      "y": 20,
       "item": "rouse",
       "quantity": 1,
       "flag": "item_aur_hq_records"

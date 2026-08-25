@@ -1,0 +1,26 @@
+{
+  "speakers": {
+    "hg_house_man": "VILLAGER",
+    "hg_house_gran": "GRANDMOTHER"
+  },
+  "entries": {
+    "hg_house_man": [
+      {
+        "lines": [
+          "That clock is set off the halt every morning at six.",
+          "Before the line this village was eleven minutes behind the capital and nobody knew.",
+          "Now we are all on the same minute. I could not tell you what we lost. Something."
+        ]
+      }
+    ],
+    "hg_house_gran": [
+      {
+        "lines": [
+          "I remember the surveyors. Nice young men, and they took the top of our field.",
+          "We were paid, and we were angry, and we were both for about a year.",
+          "Now my grandson can be in the capital by dinner. Ask me if I am still angry."
+        ]
+      }
+    ]
+  }
+}

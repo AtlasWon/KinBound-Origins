@@ -281,6 +281,18 @@ export const STAGES = [
     trainers: ['r6_hallow', 'r6_wick', 'r6_kess', 'r6_ordway', 'r6_selm'] },
   { name: 'Mirehaven', grass: null, wilds: 0,
     trainers: ['mh_hand_a', 'mh_hand_b', 'mh_hand_c', 'mh_hand_d', 'mh_keeper_tallow'] },
+  // Stage 4, the capital: the Central Road north out of the wetlands. Two
+  // route maps and two optional villages, appended in the order the road runs.
+  // The optional branches are listed because this table is the CEILING of what
+  // the road pays -- a player who takes neither the Old Fen nor the relay yard
+  // arrives at the capital about a level under the numbers below, which is the
+  // margin the tables are cut against.
+  { name: 'Route 7', grass: 'route_7', wilds: 14,
+    trainers: ['r7_bankman', 'r7_dyke', 'r7_carter', 'r7_gate', 'r7_stubble', 'r7f_fowler'] },
+  { name: 'Marlbeck', grass: null, wilds: 0, trainers: [] },
+  { name: 'Route 7 N', grass: 'route_7_north', wilds: 14,
+    trainers: ['r7n_wagon', 'r7n_ganger', 'r7n_ferry', 'r7n_reaper', 'r7n_courier', 'r7n_wire', 'r7r_linesman'] },
+  { name: 'Harrowgate', grass: null, wilds: 0, trainers: ['hg_granary_hand'] },
 ];
 
 /**

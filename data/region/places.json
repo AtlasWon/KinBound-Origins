@@ -117,6 +117,30 @@
       "kind": "hall"
     },
     {
+      "id": "route_7",
+      "name": "The Central Road",
+      "x": 28,
+      "y": 11,
+      "kind": "route",
+      "blurb": "Drained fen, hedged corn, and a main line going the same way you are."
+    },
+    {
+      "id": "marlbeck",
+      "name": "Marlbeck",
+      "x": 31,
+      "y": 13,
+      "kind": "town",
+      "blurb": "One street, and a drain running along above the roofs."
+    },
+    {
+      "id": "harrowgate",
+      "name": "Harrowgate",
+      "x": 24,
+      "y": 8,
+      "kind": "town",
+      "blurb": "A market cross, a grain elevator, and four trains a day."
+    },
+    {
       "id": "tideglass",
       "name": "Tideglass",
       "x": 31,

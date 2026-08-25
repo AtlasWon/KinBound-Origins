@@ -1,0 +1,70 @@
+{
+  "speakers": {
+    "r7_keeper": "CROSSING KEEPER",
+    "r7_commission": "COMMISSION HAND",
+    "r7_drover": "DROVER",
+    "r7_pedlar": "PEDLAR",
+    "r7_lookout": "BANK WATCH"
+  },
+  "entries": {
+    "r7_keeper": [
+      {
+        "lines": [
+          "Gates open to the road, shut to the road, and never both at once.",
+          "I have opened and shut them eleven thousand times and got it wrong none.",
+          "That is not a boast. It is the whole job and there is nothing else in it."
+        ]
+      }
+    ],
+    "r7_commission": [
+      {
+        "ifFlags": ["ms_second_truth"],
+        "lines": [
+          "Nine miles of cut, two engines, and one bank between all of it and the sea.",
+          "People say we made this country. We did not. We only keep taking the water off it.",
+          "Stop for a season and it is a mire again, and it will not even be angry about it."
+        ]
+      },
+      {
+        "lines": [
+          "Drainage Commission. I measure the level twice a day and write down a number.",
+          "Everything you can see was under two feet of water when my grandmother was born."
+        ]
+      }
+    ],
+    "r7_drover": [
+      {
+        "lines": [
+          "Forty head, and every one of them going to the same street in Aureline.",
+          "Four days on the hoof. The corn goes by train and gets there before I have had breakfast.",
+          "I am not bitter. I would just like somebody to invent a train for cows."
+        ]
+      }
+    ],
+    "r7_pedlar": [
+      {
+        "lines": [
+          "First time on this road? Then here is the only thing worth telling you.",
+          "It is straight. It looks like an hour and it is a day and a half.",
+          "Nothing on it will hurt you. It will just take longer than you have decided it will."
+        ]
+      }
+    ],
+    "r7_lookout": [
+      {
+        "ifFlags": ["crest_5_taken"],
+        "lines": [
+          "You came up out of the mire, then. Not many do it that way round any more.",
+          "There used to be a road east along the coast. The sea has it now.",
+          "So everything from down there comes over this bank, past me, and goes north."
+        ]
+      },
+      {
+        "lines": [
+          "Bank watch. I walk it, I look at it, and if it is wrong I run.",
+          "It has been wrong twice in my life. Both times I ran."
+        ]
+      }
+    ]
+  }
+}

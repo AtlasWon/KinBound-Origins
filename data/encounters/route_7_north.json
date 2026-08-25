@@ -1,0 +1,138 @@
+{
+  "mapId": "route_7_north",
+  "$comment": "The same country as the levels with one difference that matters: this is where Spark stops being a curiosity and becomes a line a player can raise. Fizzlet is on the levels at eight and here it is at fourteen, and Voltwick is on the table at four -- so anybody who has been ignoring the yellow one for two routes gets a second and much louder invitation before the capital. Everything else is the wold: Beast in the hedges, Terra in the plough, Gale over the open ground north of the river, and Chalkid, which is on this table and nowhere else on the road because the only chalk on the Central Road is the bluff the old tunnel runs into.\n\nMEASURED, not guessed at. Levels are 26-30 against a team-raising player who leaves the levels at about 31. At that level, novice play, no items, one Kin in front: Bramblehusk 80, Blazelynx 86, Brookmaw 73. Bristlebuck and Kestrelle carry the top of the band and stay small at ten apiece -- they are the two evolved Kin out here and meeting one should be an event rather than a tax.",
+  "methods": {
+    "tallGrass": {
+      "rate": 160,
+      "slots": [
+        {
+          "species": "tuftail",
+          "minLevel": 26,
+          "maxLevel": 28,
+          "weight": 14
+        },
+        {
+          "species": "fizzlet",
+          "minLevel": 26,
+          "maxLevel": 28,
+          "weight": 14
+        },
+        {
+          "species": "burrowen",
+          "minLevel": 27,
+          "maxLevel": 29,
+          "weight": 12
+        },
+        {
+          "species": "kestrelle",
+          "minLevel": 27,
+          "maxLevel": 29,
+          "weight": 10
+        },
+        {
+          "species": "bristlebuck",
+          "minLevel": 28,
+          "maxLevel": 30,
+          "weight": 10
+        },
+        {
+          "species": "nibbet",
+          "minLevel": 26,
+          "maxLevel": 28,
+          "weight": 10
+        },
+        {
+          "species": "gravelet",
+          "minLevel": 27,
+          "maxLevel": 29,
+          "weight": 8
+        },
+        {
+          "species": "chalkid",
+          "minLevel": 27,
+          "maxLevel": 29,
+          "weight": 8
+        },
+        {
+          "species": "silthopper",
+          "minLevel": 27,
+          "maxLevel": 29,
+          "weight": 6
+        },
+        {
+          "species": "pipwing",
+          "minLevel": 26,
+          "maxLevel": 28,
+          "weight": 4
+        },
+        {
+          "species": "voltwick",
+          "minLevel": 28,
+          "maxLevel": 30,
+          "weight": 4
+        }
+      ]
+    },
+    "water": {
+      "rate": 120,
+      "slots": [
+        {
+          "species": "rillfry",
+          "minLevel": 25,
+          "maxLevel": 27,
+          "weight": 34
+        },
+        {
+          "species": "currentail",
+          "minLevel": 27,
+          "maxLevel": 29,
+          "weight": 26
+        },
+        {
+          "species": "rilltail",
+          "minLevel": 26,
+          "maxLevel": 28,
+          "weight": 22
+        },
+        {
+          "species": "gullswift",
+          "minLevel": 27,
+          "maxLevel": 29,
+          "weight": 18
+        }
+      ]
+    },
+    "fishOld": {
+      "slots": [
+        {
+          "species": "shalefin",
+          "minLevel": 19,
+          "maxLevel": 27,
+          "weight": 100
+        }
+      ]
+    },
+    "fishGood": {
+      "slots": [
+        {
+          "species": "currentail",
+          "minLevel": 27,
+          "maxLevel": 30,
+          "weight": 45
+        },
+        {
+          "species": "clatterclaw",
+          "minLevel": 28,
+          "maxLevel": 31,
+          "weight": 30
+        },
+        {
+          "species": "anchorling",
+          "minLevel": 28,
+          "maxLevel": 31,
+          "weight": 25
+        }
+      ]
+    }
+  }
+}

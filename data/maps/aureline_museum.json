@@ -27,78 +27,109 @@
   ],
   "warps": [
     {
-      "x": 11, "y": 17,
-      "toMap": "aureline", "toX": 55, "toY": 31,
-      "facing": "down", "style": "door"
+      "x": 11,
+      "y": 17,
+      "toMap": "aureline",
+      "toX": 85,
+      "toY": 53,
+      "facing": "down",
+      "style": "door"
     },
     {
-      "x": 12, "y": 17,
-      "toMap": "aureline", "toX": 56, "toY": 31,
-      "facing": "down", "style": "door"
+      "x": 12,
+      "y": 17,
+      "toMap": "aureline",
+      "toX": 86,
+      "toY": 53,
+      "facing": "down",
+      "style": "door"
     }
   ],
   "npcs": [
     {
       "id": "aur_mus_curator",
       "sprite": "professor",
-      "x": 11, "y": 3,
+      "x": 11,
+      "y": 3,
       "facing": "down",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_mus_curator"
     },
     {
       "id": "aur_mus_guide",
       "sprite": "villager_f",
-      "x": 6, "y": 5,
+      "x": 6,
+      "y": 5,
       "facing": "right",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_mus_guide"
     },
     {
       "id": "aur_mus_copyist",
       "sprite": "townsfolk_f",
-      "x": 16, "y": 4,
+      "x": 16,
+      "y": 4,
       "facing": "left",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_mus_copyist"
     },
     {
       "id": "aur_mus_warder",
       "sprite": "elder",
-      "x": 20, "y": 9,
+      "x": 20,
+      "y": 9,
       "facing": "left",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_mus_warder"
     },
     {
       "id": "aur_mus_pupil",
       "sprite": "kid",
-      "x": 8, "y": 11,
+      "x": 8,
+      "y": 11,
       "facing": "up",
-      "movement": { "kind": "wander", "radius": 3 },
+      "movement": {
+        "kind": "wander",
+        "radius": 3
+      },
       "script": "aur_mus_pupil"
     },
     {
       "id": "aur_mus_sceptic",
       "sprite": "hiker",
-      "x": 15, "y": 13,
+      "x": 15,
+      "y": 13,
       "facing": "up",
-      "movement": { "kind": "lookAround" },
+      "movement": {
+        "kind": "lookAround"
+      },
       "script": "aur_mus_sceptic"
     },
     {
       "id": "aur_mus_keeper",
       "sprite": "meridian_sci_f",
-      "x": 4, "y": 13,
+      "x": 4,
+      "y": 13,
       "facing": "down",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_mus_keeper"
     }
   ],
   "objects": [
     {
       "kind": "sign",
-      "x": 11, "y": 0,
+      "x": 11,
+      "y": 0,
       "text": [
         "Above the inner doors, in the stone: KEPT FOR EVERYONE. ENTRY FREE FOREVER.",
         "Under it, smaller and newer: MAINTAINED WITH THE SUPPORT OF",
@@ -107,7 +138,8 @@
     },
     {
       "kind": "sign",
-      "x": 3, "y": 2,
+      "x": 3,
+      "y": 2,
       "text": [
         "THE AURELIAN GALLERY. Nine rooms of a people who left no name for themselves.",
         "What is known about them fills one card at the door.",
@@ -116,7 +148,8 @@
     },
     {
       "kind": "sign",
-      "x": 8, "y": 2,
+      "x": 8,
+      "y": 2,
       "text": [
         "Cases of resonance glass, cut and joined without heat.",
         "Nobody in Averra can do this now. Three people have tried publicly",
@@ -125,7 +158,8 @@
     },
     {
       "kind": "sign",
-      "x": 13, "y": 2,
+      "x": 13,
+      "y": 2,
       "text": [
         "A wall of rubbings taken from Aurelian floors across the whole region.",
         "The same spiral, the same circle, from the volcano to the wetlands.",
@@ -134,7 +168,8 @@
     },
     {
       "kind": "sign",
-      "x": 17, "y": 2,
+      "x": 17,
+      "y": 2,
       "text": [
         "The accession ledger, open, under glass, at a page in a small neat hand.",
         "Most of this gallery was catalogued by one man over eleven years.",
@@ -143,7 +178,8 @@
     },
     {
       "kind": "sign",
-      "x": 9, "y": 4,
+      "x": 9,
+      "y": 4,
       "text": [
         "A resonance ring, whole, on a stand, lit from below.",
         "Struck, it is said to hold a note for a full minute.",
@@ -152,7 +188,8 @@
     },
     {
       "kind": "sign",
-      "x": 14, "y": 4,
+      "x": 14,
+      "y": 4,
       "text": [
         "A second ring, broken in three, laid out as found.",
         "The break is not weathering. Something pulled it apart from the inside.",
@@ -161,7 +198,8 @@
     },
     {
       "kind": "sign",
-      "x": 2, "y": 10,
+      "x": 2,
+      "y": 10,
       "text": [
         "THE HALL OF THE DELUGE. A painted panorama forty feet long,",
         "and it takes a while to work out that the small pale marks in the water",
@@ -170,7 +208,8 @@
     },
     {
       "kind": "sign",
-      "x": 21, "y": 10,
+      "x": 21,
+      "y": 10,
       "text": [
         "The date of the Deluge, argued over in six panels by six scholars.",
         "They agree on nothing except that it took less than a season",
@@ -179,7 +218,8 @@
     },
     {
       "kind": "sign",
-      "x": 7, "y": 12,
+      "x": 7,
+      "y": 12,
       "text": [
         "Cast and mounted: a whole Aurelian street, drowned and lifted, tile by tile.",
         "The doors are all standing open. Every one of them.",
@@ -188,7 +228,8 @@
     },
     {
       "kind": "sign",
-      "x": 15, "y": 12,
+      "x": 15,
+      "y": 12,
       "text": [
         "A case of what was found inside the houses. Bowls. Toys. A comb.",
         "Nothing packed, nothing bundled, nothing hidden.",
@@ -197,7 +238,8 @@
     },
     {
       "kind": "sign",
-      "x": 2, "y": 14,
+      "x": 2,
+      "y": 14,
       "text": [
         "THE KIN GALLERY. Skeletons, casts and a hundred and eleven species,",
         "with the ones nobody has seen alive in a lifetime marked in grey.",
@@ -206,7 +248,8 @@
     },
     {
       "kind": "sign",
-      "x": 8, "y": 14,
+      "x": 8,
+      "y": 14,
       "text": [
         "Under glass: an Aurelian carving of people and Kin, side by side,",
         "and none of the Kin is on a lead, in a cage, or under anybody's hand.",
@@ -215,7 +258,8 @@
     },
     {
       "kind": "sign",
-      "x": 15, "y": 14,
+      "x": 15,
+      "y": 14,
       "text": [
         "The largest object in the building: one vertebra, on its own trestle,",
         "raised from the eastern shelf. It is taller than you are.",
@@ -224,7 +268,8 @@
     },
     {
       "kind": "sign",
-      "x": 21, "y": 14,
+      "x": 21,
+      "y": 14,
       "text": [
         "The last case in the museum is empty, dusted, and labelled.",
         "AURELIAN RESONANCE DEVICE, PORTABLE. ON LOAN.",
@@ -233,7 +278,8 @@
     },
     {
       "kind": "hiddenItem",
-      "x": 22, "y": 15,
+      "x": 22,
+      "y": 15,
       "item": "escape_line",
       "quantity": 1,
       "flag": "item_aur_museum"

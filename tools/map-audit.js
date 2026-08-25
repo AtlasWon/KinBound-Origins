@@ -17,7 +17,12 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const MAPDIR = join(ROOT, 'data', 'maps');
 
 /** Tiles a player can stand on with no field move. 'L' is a one-way ledge. */
-const OPEN = new Set([...'.,*-=sDfrSpBxgFiqu:"L']);
+const OPEN = new Set([...'.,*-=sDfrSpBxgFiqu:"L'
+  // Aureline. The capital's ground and its doorways: flagstone footway,
+  // carriageway, old-city setts, park gravel, the glazed tower entrance, the
+  // granite arch and the Foundation's own doors. Everything else in that family
+  // is a building and belongs nowhere near this set.
+  + '═▬░▒╬◘╩']);
 /** Water. Impassable on foot, but not a mistake -- it is meant to stop you. */
 const WET = new Set([...'~W']);
 

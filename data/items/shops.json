@@ -391,6 +391,71 @@
     ]
   },
   {
+    "id": "harrowgate_provisioner",
+    "name": "Harrowgate Provisioner",
+    "$comment": "The best-stocked shop in Caelora outside a city, and it is in a village of nine hundred and forty people, which is the whole point of it. Everything here came off the 07.25 this morning. Mirehaven charges for a barrel carried across forty tiles of marsh; Harrowgate charges for a barrel that arrived by rail before the shop opened, so the deep grades are on the shelf here two settlements earlier than anywhere else has managed. The railway is being argued for in stock rather than in dialogue.",
+    "greeting": [
+      "Everything you can see came up on the seven twenty-five. Ask for what you cannot."
+    ],
+    "stock": [
+      {
+        "item": "field_vessel"
+      },
+      {
+        "item": "fine_vessel"
+      },
+      {
+        "item": "net_vessel"
+      },
+      {
+        "item": "potion"
+      },
+      {
+        "item": "strong_potion"
+      },
+      {
+        "item": "great_potion",
+        "requiresCrest": 5
+      },
+      {
+        "item": "clearleaf"
+      },
+      {
+        "item": "steadyroot"
+      },
+      {
+        "item": "coolsalve"
+      },
+      {
+        "item": "thawcloth"
+      },
+      {
+        "item": "wakebell"
+      },
+      {
+        "item": "full_heal"
+      },
+      {
+        "item": "ward_incense"
+      },
+      {
+        "item": "escape_line"
+      },
+      {
+        "item": "rouse",
+        "requiresCrest": 5
+      },
+      {
+        "item": "deep_vessel",
+        "requiresCrest": 5
+      },
+      {
+        "item": "dusk_vessel",
+        "requiresCrest": 5
+      }
+    ]
+  },
+  {
     "id": "aureline_provisioner",
     "name": "Halloway and Daughters",
     "$comment": "The capital shop, and the only one in Caelora that stocks the whole ladder at once. It is not cheaper than anywhere else -- a capital never is -- it simply has everything, which after five settlements of rationed stock is the actual luxury.",

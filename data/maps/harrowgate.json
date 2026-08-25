@@ -1,0 +1,306 @@
+{
+  "id": "harrowgate",
+  "name": "Harrowgate",
+  "displayName": "HARROWGATE",
+  "music": "station",
+  "battleBackdrop": "highland",
+  "indoor": false,
+  "regionPos": {
+    "x": 24,
+    "y": 8
+  },
+  "_design": "Nine hundred and forty people, and every one of them is downstream of a timetable. Harrowgate was a hamlet with a market cross until the line came through, and then somebody built a grain elevator against the platform and the village grew out from it in one direction. That is why the map is arranged the way it is: High Street runs east to west because it always did, and Station Road cuts south off it because it had to, and every new frontage in the village is on Station Road. A player who has just walked two route maps of farmland arrives at the place the farmland is FOR.",
+  "_plan": "THE VILLAGE IS BUILT ROUND ONE JOINT AND THE JOINT IS VISIBLE FROM THE HIGH STREET. Station Road drops from the old street to the platform in ten rows, and at the bottom of it the booking hall and the granary stand side by side facing the same line. Everything else -- clinic, provisioner, cottages -- is dressing on that.\n\nTHE GRANARY IS THE LANDMARK, and it is deliberately the biggest building the player has seen outside a city: eleven wide and five deep, timber, standing straight off the loading dock with no yard in front of it, because it does not want a yard, it wants a waggon. It is also where the act's politics are said out loud without anybody making a speech -- the Foundation has bought the harvest, the price is chalked on a board, and it is a good price.\n\nLARGE MEANS LARGE. Seventeen roofs against Marlbeck's eight, two civic frontages, a platform twenty-seven tiles long, and a street that runs the whole width of the map. Canon puts a large village at seven hundred to twelve hundred and the count is meant to read as the top of that.",
+  "warps": [
+    {
+      "x": 54,
+      "y": 19,
+      "toMap": "route_7_north",
+      "toX": 1,
+      "toY": 26,
+      "facing": "right",
+      "style": "edge"
+    },
+    {
+      "x": 54,
+      "y": 20,
+      "toMap": "route_7_north",
+      "toX": 1,
+      "toY": 27,
+      "facing": "right",
+      "style": "edge"
+    },
+    {
+      "x": 8,
+      "y": 16,
+      "toMap": "harrowgate_clinic",
+      "toX": 6,
+      "toY": 9,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 16,
+      "y": 16,
+      "toMap": "harrowgate_provisioner",
+      "toX": 6,
+      "toY": 9,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 26,
+      "y": 15,
+      "toMap": "harrowgate_office",
+      "toX": 7,
+      "toY": 10,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 30,
+      "y": 27,
+      "toMap": "harrowgate_halt",
+      "toX": 9,
+      "toY": 11,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 45,
+      "y": 26,
+      "toMap": "harrowgate_granary",
+      "toX": 11,
+      "toY": 16,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 13,
+      "y": 25,
+      "toMap": "harrowgate_house",
+      "toX": 5,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "hg_porter",
+      "sprite": "porter",
+      "x": 22,
+      "y": 29,
+      "facing": "right",
+      "movement": {
+        "kind": "pace",
+        "axis": "x",
+        "distance": 2
+      },
+      "script": "hg_porter"
+    },
+    {
+      "id": "hg_master",
+      "sprite": "harbourmaster",
+      "x": 27,
+      "y": 29,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hg_master"
+    },
+    {
+      "id": "hg_waiting",
+      "sprite": "townsfolk_f",
+      "x": 15,
+      "y": 30,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hg_waiting"
+    },
+    {
+      "id": "hg_boy",
+      "sprite": "kid",
+      "x": 11,
+      "y": 29,
+      "facing": "right",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "hg_boy"
+    },
+    {
+      "id": "hg_farmer",
+      "sprite": "townsfolk_m",
+      "x": 38,
+      "y": 27,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hg_farmer"
+    },
+    {
+      "id": "hg_buyer",
+      "sprite": "meridian_sci",
+      "x": 40,
+      "y": 31,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hg_buyer"
+    },
+    {
+      "id": "hg_cross",
+      "sprite": "elder",
+      "x": 20,
+      "y": 21,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hg_cross"
+    },
+    {
+      "id": "hg_baker",
+      "sprite": "merchant",
+      "x": 33,
+      "y": 21,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hg_baker"
+    },
+    {
+      "id": "hg_girl",
+      "sprite": "villager_f",
+      "x": 47,
+      "y": 19,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hg_girl"
+    },
+    {
+      "id": "hg_tarin_word",
+      "sprite": "hiker",
+      "x": 6,
+      "y": 19,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hg_tarin_word"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "script",
+      "x": 21,
+      "y": 21,
+      "text": [
+        "The market cross. Four steps, a shaft, and nothing on top of it any more.",
+        "HARROWGATE MARKET. GRANTED BY CHARTER. EVERY SECOND TUESDAY SINCE.",
+        "Under that, newer, and cut by somebody in a hurry: EXCEPT AT HARVEST."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 36,
+      "y": 25,
+      "text": [
+        "A board on the granary wall with this week chalked on it.",
+        "WHEAT, PER QUARTER. And a figure, and it is a very good figure.",
+        "BUYER: MERIDIAN FOUNDATION, AURELINE. ALL GRADES. WHOLE CROP."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 26,
+      "y": 28,
+      "text": [
+        "The departure board, in a case, with the glass wiped and the chalk fresh.",
+        "DOWN: 06.10 - 11.50 - 15.05 - 19.40.  UP: 07.25 - 12.40 - 16.15 - 20.55.",
+        "Four trains a day to the capital. Nine years ago it was one, on Tuesdays."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 6,
+      "y": 30,
+      "text": [
+        "The starting signal, and the lever frame under it in a hut with the door open.",
+        "Eight levers. Six of them are painted, two of them are not.",
+        "The two unpainted ones are new, and the frame was built for six."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 4,
+      "y": 30,
+      "item": "great_potion",
+      "quantity": 3,
+      "flag": "item_hg_backfield"
+    },
+    {
+      "kind": "item",
+      "x": 50,
+      "y": 17,
+      "item": "full_heal",
+      "quantity": 3,
+      "flag": "item_hg_stubble"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 52,
+      "y": 29,
+      "item": "deep_vessel",
+      "quantity": 5,
+      "flag": "item_hg_hidden"
+    }
+  ],
+  "rows": [
+    "●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●",
+    "●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●",
+    "●●,,,,,,,,,,,,,,,*,*,*,,,*,,,*,,,,*,,*,,,,,,*,,*,,,,,*●●",
+    "●●,,*,,,*,*,,,,,,*,*,,,,,,,*,,*,,*,,,,*,,,,,,,,,*,*,,,●●",
+    "●●......,,.,*........,..........,..,......,...........●●",
+    "●●.(&&&)...<%%%>...(&&&)...<%%%>,..(&&&&&)*..<%%%>..,*●●",
+    "●●.MZdZM.,.HdZdH..,MdZdM.,.HZdZH,,,MZdZdZM.,.HdZdH,,,.●●",
+    "●●,MMdMM...HHdHH..,MMdMM.,.HHdHH.,.MMZdZMM...HHdHH...,●●",
+    "●●T..,...........,..,.........,*,......,,,.,,,......,T●●",
+    "●●.,...,,.....,.,...........,,...,*.....,............,●●",
+    "●●.,\",\"\"\",\",,,,,,,,,,,,\",,,,,,,\"\",,,,,,,,,,,,,,,,,,...●●",
+    "●●,\",,\",,,,,\",\",,\",\",\",\"\",,,,,,,,,,,\",\",,\",,\",,,\",,...●●",
+    "●●,,,,,,,,,,,,,\",,\",,\",\"\",\",\"\",,,,\",,,,,\",,,\"\",,,,,..,●●",
+    "●●.....,...,...........<%%%%%>,............**.....,..,●●",
+    "●●...144443..6999998...MZdZdZM...(&&&&&),..<%j%%%>*,..●●",
+    "●●...122523.,6770778..*MMMiMMM..,HZdZdZH...M,,,,▲,▲,,,●●",
+    "●●T..GGhgGG..GGmgGGG.,.,.,=,.....HHZdZHH.*.M,,,,▲,,,▲.●●",
+    "●●..,...=.....,.=...,....,=........,...,....,,,▲,,,,,.●●",
+    "●●...,..=Y,..,..=....Y,...=...,Y......*a*Y..,,,,,,,,,.●●",
+    "●●======================================================",
+    "●●======================================================",
+    "●●======..a......,,..!,.==Y...a.,,.*...,,.........,,,.●●",
+    "●●.....*,.,..........,..==,,........,..,<%%%%%%%%%>,,.●●",
+    "●●,,(&&&)..<%%%>*(&&&).,==....*,..,.....HZHHZHHZHHH,,,●●",
+    "●●..MZdZM.,HdZdH.MdZdM,.==.....,........HHZHHZHHZHH,,,●●",
+    "●●.,MMdMM..HHiHH,MMdMM..==.<%%%%%>.*!...HZHHZHHZHHH,,T●●",
+    "●●\",,,,,,....=......*...==,MZdZdZM.=====HHZHHiHHZHH,,.●●",
+    "●●,,\",\"\",....=,,,,,,▲,,,==*MMMiMMM.=====.*..,=,,.,.,,.●●",
+    "●●\",,\",\".,...,▲,,,,,,,,*==Y.*,==,.,=====.....=.,,.,,,,●●",
+    "●●\",\",,,▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤=====....,....,.,,.●●",
+    "●●,,\"\",,▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤================,,.●●",
+    "●●,,,\",\"▥▥▥▥▥▥▥▥▥▥▥▥▥▥▥▥▥▥▥▥▥▥▥▥▥▥▥================,,,●●",
+    "●●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━●●",
+    "●●┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅●●",
+    "●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●",
+    "●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●"
+  ]
+}

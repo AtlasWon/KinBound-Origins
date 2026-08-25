@@ -1,0 +1,132 @@
+{
+  "mapId": "route_7_fen",
+  "$comment": "The wetlands, still here, on the wrong side of a wall that failed sixty years ago -- so the table is the wetlands table with one addition and one deletion. The deletion is everything that needs a farm: no Tuftail, no Burrowen, no Fizzlet, nothing that eats a crop, because there has been no crop here since 1861. The addition is TIDEWRACK, which lives nowhere else in Caelora and lives here for a reason a player can see from the wall -- it is a Tide and Stone Kin that grows on drowned timber, and this is the only place on the road with drowned timber in it.\n\nIt is deliberately the highest band on the Central Road at 27-31. This is an optional branch, nothing in the world points at it, and a player who finds it should feel they went somewhere they were not sent. It is also short -- forty-four by thirty-two, most of it reed -- so the levels are a texture rather than a wall, and the one trainer on it measures 100/92/70 for the three starters at the level a team-raiser arrives with.",
+  "methods": {
+    "tallGrass": {
+      "rate": 175,
+      "slots": [
+        {
+          "species": "bladderwrack",
+          "minLevel": 27,
+          "maxLevel": 29,
+          "weight": 20
+        },
+        {
+          "species": "silthopper",
+          "minLevel": 27,
+          "maxLevel": 29,
+          "weight": 16
+        },
+        {
+          "species": "spinnet",
+          "minLevel": 27,
+          "maxLevel": 29,
+          "weight": 14
+        },
+        {
+          "species": "tidewrack",
+          "minLevel": 29,
+          "maxLevel": 31,
+          "weight": 12
+        },
+        {
+          "species": "nettlebug",
+          "minLevel": 26,
+          "maxLevel": 28,
+          "weight": 12
+        },
+        {
+          "species": "weaverjaw",
+          "minLevel": 28,
+          "maxLevel": 30,
+          "weight": 10
+        },
+        {
+          "species": "sootmoth",
+          "minLevel": 27,
+          "maxLevel": 29,
+          "weight": 8
+        },
+        {
+          "species": "brinewisp",
+          "minLevel": 28,
+          "maxLevel": 30,
+          "weight": 5,
+          "time": [
+            "night"
+          ]
+        },
+        {
+          "species": "deeplum",
+          "minLevel": 28,
+          "maxLevel": 30,
+          "weight": 3,
+          "time": [
+            "night"
+          ]
+        }
+      ]
+    },
+    "water": {
+      "rate": 140,
+      "slots": [
+        {
+          "species": "pinchel",
+          "minLevel": 26,
+          "maxLevel": 28,
+          "weight": 32
+        },
+        {
+          "species": "bladderwrack",
+          "minLevel": 27,
+          "maxLevel": 29,
+          "weight": 24
+        },
+        {
+          "species": "clatterclaw",
+          "minLevel": 28,
+          "maxLevel": 30,
+          "weight": 22
+        },
+        {
+          "species": "tidewrack",
+          "minLevel": 29,
+          "maxLevel": 31,
+          "weight": 22
+        }
+      ]
+    },
+    "fishOld": {
+      "slots": [
+        {
+          "species": "shalefin",
+          "minLevel": 19,
+          "maxLevel": 27,
+          "weight": 100
+        }
+      ]
+    },
+    "fishGood": {
+      "slots": [
+        {
+          "species": "tidewrack",
+          "minLevel": 29,
+          "maxLevel": 32,
+          "weight": 40
+        },
+        {
+          "species": "anchorling",
+          "minLevel": 28,
+          "maxLevel": 31,
+          "weight": 32
+        },
+        {
+          "species": "clatterclaw",
+          "minLevel": 28,
+          "maxLevel": 31,
+          "weight": 28
+        }
+      ]
+    }
+  }
+}

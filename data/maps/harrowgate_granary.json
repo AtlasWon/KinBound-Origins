@@ -1,0 +1,105 @@
+{
+  "id": "harrowgate_granary",
+  "name": "Interior",
+  "displayName": "THE GRANARY",
+  "music": "station",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIIIIIIIIIIIIIIIII",
+    "IfffffffffffffffffI",
+    "IfkkfffffffffkkfffI",
+    "IfffffffffffffffffI",
+    "IfIIIIfffIIIIfffffI",
+    "IfIIIIfffIIIIfffffI",
+    "IfKKKKfffKKKKfffffI",
+    "IfffffffffffffffffI",
+    "IfffffffffffffffffI",
+    "IfffffffffffffffffI",
+    "IfIIIIfffIIIIfffffI",
+    "IfIIIIfffIIIIfffffI",
+    "IfKKKKfffKKKKfffffI",
+    "IfffffffffffffffffI",
+    "IfAEfffffffff$ffffI",
+    "IfffffffffffffffffI",
+    "IIIIIIIIIIIDIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 11,
+      "y": 16,
+      "toMap": "harrowgate",
+      "toX": 45,
+      "toY": 26,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "hg_granary_boss",
+      "sprite": "harbourmaster",
+      "x": 3,
+      "y": 8,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hg_granary_boss"
+    },
+    {
+      "id": "hg_granary_hand",
+      "sprite": "dockhand",
+      "x": 13,
+      "y": 8,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "hg_granary_hand",
+      "sightRange": 3
+    },
+    {
+      "id": "hg_weigher",
+      "sprite": "clerk",
+      "x": 4,
+      "y": 14,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hg_weigher"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 2,
+      "text": [
+        "The ledgers. One volume a year, and the spines get thicker as they go along.",
+        "The first eleven are the width of a finger. The last four are the width of a hand.",
+        "The year the line opened is where the change happens, and it is not gradual."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 14,
+      "text": [
+        "The contract, framed, because somebody here is proud of it.",
+        "THE MERIDIAN FOUNDATION WILL TAKE THE WHOLE CROP OF THIS PARISH, EVERY YEAR.",
+        "It is signed by a man whose signature the player will see again in Aureline."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 17,
+      "y": 3,
+      "item": "wakebell",
+      "quantity": 3,
+      "flag": "item_hg_granary"
+    }
+  ],
+  "_plan": "The biggest interior on the Central Road, and it is one room with nothing in it but grain and a ledger. Two things happen here. The first is scale: nine bays, four bins of boarded timber, and a floor the player walks the length of, so the granary is as big inside as it looked outside -- and it is boarded timber rather than the laboratory's glass and plate, because a grain store drawn in Meridian's own material says something about Meridian that this room is not entitled to say yet. The second is the frame on the wall at 13,14 -- the Foundation has bought the whole parish's crop at a good price and everybody here is glad about it, which is precisely how Meridian actually works and precisely what makes the capital so hard to be angry at when the player gets there."
+}

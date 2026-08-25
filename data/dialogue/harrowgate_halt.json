@@ -1,0 +1,44 @@
+{
+  "speakers": {
+    "hg_booking": "BOOKING CLERK",
+    "hg_traveller": "TRAVELLER",
+    "hg_meridian_pair": "FOUNDATION STAFF"
+  },
+  "entries": {
+    "hg_booking": [
+      {
+        "lines": [
+          "Single or return, and if you are going to Aureline take the return. Everybody forgets.",
+          "I have sold four thousand tickets and three of them were to somebody staying."
+        ]
+      }
+    ],
+    "hg_traveller": [
+      {
+        "lines": [
+          "Eleven times in this room and I have never once had to run for it.",
+          "That is the thing people miss about the railway. It is not the speed.",
+          "It is that you can plan a day. Nobody could plan a day before."
+        ]
+      }
+    ],
+    "hg_meridian_pair": [
+      {
+        "ifFlags": [
+          "ms_second_truth"
+        ],
+        "lines": [
+          "Foundation. We are on the eleven-fifty and I think you are too.",
+          "You will like Aureline. Most people expect to hate it and then do not.",
+          "Whatever you have been told about us, we are mostly people going to work."
+        ]
+      },
+      {
+        "lines": [
+          "Foundation staff, going up. There are more of us on this train than anybody else.",
+          "It is not sinister. It is a large employer with an office at the other end."
+        ]
+      }
+    ]
+  }
+}

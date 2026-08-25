@@ -20,46 +20,65 @@
   ],
   "warps": [
     {
-      "x": 7, "y": 11,
-      "toMap": "aureline", "toX": 12, "toY": 20,
-      "facing": "down", "style": "door"
+      "x": 7,
+      "y": 11,
+      "toMap": "aureline",
+      "toX": 12,
+      "toY": 20,
+      "facing": "down",
+      "style": "door"
     },
     {
-      "x": 8, "y": 11,
-      "toMap": "aureline", "toX": 13, "toY": 20,
-      "facing": "down", "style": "door"
+      "x": 8,
+      "y": 11,
+      "toMap": "aureline",
+      "toX": 13,
+      "toY": 20,
+      "facing": "down",
+      "style": "door"
     }
   ],
   "npcs": [
     {
       "id": "aur_ha_mother",
       "sprite": "villager_f",
-      "x": 4, "y": 3,
+      "x": 4,
+      "y": 3,
       "facing": "down",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_ha_mother"
     },
     {
       "id": "aur_ha_lodger",
       "sprite": "townsfolk_m",
-      "x": 11, "y": 6,
+      "x": 11,
+      "y": 6,
       "facing": "up",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_ha_lodger"
     },
     {
       "id": "aur_ha_boy",
       "sprite": "kid",
-      "x": 6, "y": 8,
+      "x": 6,
+      "y": 8,
       "facing": "left",
-      "movement": { "kind": "wander", "radius": 2 },
+      "movement": {
+        "kind": "wander",
+        "radius": 2
+      },
       "script": "aur_ha_boy"
     }
   ],
   "objects": [
     {
       "kind": "sign",
-      "x": 8, "y": 1,
+      "x": 8,
+      "y": 1,
       "text": [
         "Shelves of ledgers with a Foundation stamp on the spine, brought home",
         "and worked on at the kitchen table, which is against the rules",
@@ -68,7 +87,8 @@
     },
     {
       "kind": "sign",
-      "x": 2, "y": 4,
+      "x": 2,
+      "y": 4,
       "text": [
         "A table set for four in a room that comfortably seats two.",
         "One of the chairs is a crate with a cushion on it and has been",
@@ -77,7 +97,8 @@
     },
     {
       "kind": "sign",
-      "x": 12, "y": 7,
+      "x": 12,
+      "y": 7,
       "text": [
         "A shelf of city things: a tram token collection, a theatre bill,",
         "a chipped model of the tower in the Grand Park.",
@@ -86,7 +107,8 @@
     },
     {
       "kind": "sign",
-      "x": 1, "y": 7,
+      "x": 1,
+      "y": 7,
       "text": [
         "A bed made up in what was plainly meant to be the sitting room.",
         "Rents in this district went up twice this year.",

@@ -1,0 +1,26 @@
+{
+  "speakers": {
+    "hg_granary_boss": "GRANARY MASTER",
+    "hg_weigher": "WEIGHER"
+  },
+  "entries": {
+    "hg_granary_boss": [
+      {
+        "lines": [
+          "Nine bays, six bins, and a floor you could race a horse down.",
+          "It holds a year of this parish. Never once been full and never once been empty.",
+          "That is what a contract does. My father had one or the other every single year."
+        ]
+      }
+    ],
+    "hg_weigher": [
+      {
+        "lines": [
+          "Every load in, every load out, and a signature against both.",
+          "The ledgers go back before the line. You can find the year it came by the thickness.",
+          "One winter a spine goes from a finger to a hand. Nothing here was the same after."
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "id": "route_7_fen",
+  "name": "The Old Fen",
+  "displayName": "THE OLD FEN",
+  "music": "route_coast",
+  "battleBackdrop": "coast",
+  "indoor": false,
+  "weather": "fog",
+  "fog": 0.55,
+  "encounterTable": "route_7_fen",
+  "_design": "The strip the Drainage Commission never got, on the wrong side of a sea wall that failed in 1861 and was never rebuilt. It is the only place on the Central Road where the country the levels used to be is still standing, and everything about it is the levels run backwards: no line, no hedge, no field, no plan, and a farmhouse with four walls and no roof that somebody's grandfather walked out of. The reward for coming here is the Kin that live in drowned timber, which live nowhere else.",
+  "_plan": "ONE ROW OF THE MAP DOES ALL THE WORK. Row 9 is the old sea wall, and there is a four-tile breach in it at x16-19 that the tide comes through, so the wall is drawn identically to the bank on the levels and it has a hole in it. Every pool of deep water below the breach is downstream of that hole. A player who reads the map at all reads the history off it.\n\nThe deep water is Swim-gated and it is NOT the point of the place -- the pocket at 28,25 is a small pay-off for coming back, not the reason to come. The reason to come is the ruin and the reeds round it.",
+  "warps": [
+    {
+      "x": 20,
+      "y": 0,
+      "toMap": "route_7",
+      "toX": 20,
+      "toY": 61,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 21,
+      "y": 0,
+      "toMap": "route_7",
+      "toX": 21,
+      "toY": 61,
+      "facing": "up",
+      "style": "edge"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "r7f_fowler",
+      "sprite": "fisher",
+      "x": 24,
+      "y": 19,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r7f_fowler",
+      "sightRange": 4
+    },
+    {
+      "id": "r7f_last",
+      "sprite": "elder",
+      "x": 31,
+      "y": 18,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r7f_last"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "script",
+      "x": 24,
+      "y": 8,
+      "text": [
+        "A Commission post on the wall, and the paint has gone but the cut has not.",
+        "WALL SIX. RELAID 1839. RELAID 1854. BREACHED 1861.",
+        "There is no fourth line. Somebody costed the fourth line and did not like it."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 31,
+      "y": 17,
+      "text": [
+        "Four walls of tarred board with the sky in them, standing in two feet of water.",
+        "The hearth is still there. So is the doorstep, worn in the middle.",
+        "Whoever wore it out walked over it for forty years and then once more."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 6,
+      "y": 28,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_r7f_reeds"
+    },
+    {
+      "kind": "item",
+      "x": 32,
+      "y": 24,
+      "item": "dusk_vessel",
+      "quantity": 5,
+      "flag": "item_r7f_pocket"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 30,
+      "y": 14,
+      "item": "wakebell",
+      "quantity": 3,
+      "flag": "item_r7f_hearth"
+    }
+  ],
+  "rows": [
+    "ДДДДДДДДДДДДДДДДДДДДддДДДДДДДДДДДДДДДДДДДДДД",
+    "ДДДДДДДДДДДДДДДДДДДДддДДДДДДДДДДДДДДДДДДДДДД",
+    "ДДппюжюпппюжппппжжжпддюппжюппГююжюппппюжГюДД",
+    "ДДпюжпжпжпГпюппппюжРддРжпюжпппжпппппжпжжжжДД",
+    "ДДпГппюжпппжппГГжпжюддпюжпжююжппюжппжпппппДД",
+    "ДДжппюГжжжжГпжпюппюЛддРГжпппюпппппжпжпжпГюДД",
+    "ДДпююпппжжпюпжпююпГпддппжюжпжпюпюжппжюпппжДД",
+    "ДДпГпжжюжжпжппюппппРддРпжпжюпжжжппппжюпжппДД",
+    "ДДжжжпюжпжпппююппппжддюГЂпюпююжжжжпжжюжппжДД",
+    "ДД┅┅┅┅┅┅┅┅┅┅┅┅┅┅юююююю┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅ДД",
+    "ДДпжппжпююжжпжппппппппппппппюппппжжпГппппжДД",
+    "ДДжппююГпжпюпюГппппппппжпжпппппппппппжпппжДД",
+    "ДДпжпГюжжжпюппппжпппппппппппДЯЯЯЯЯДппжпюппДД",
+    "ДДююпппппюппюжпжжпппюжпююпппЯпппппЯппююжппДД",
+    "ДДюжщщщщщщщщщюпппжппжпжпппппЯжппппЯппюжпппДД",
+    "ДДппщщщщщщщщщпжпжжппппжГГюппЯпппжпЯпппжпююДД",
+    "ДДппщщщщщщщщщжпжюжпппппппюппЯпппппЯпппжГппДД",
+    "ДДпжщщщщщщщщщюжжпюппюпппжпппЯЯЯпЯЯЯпппжжпжДД",
+    "ДДпГщщщщщщщщщжппппппппппюжпппппппппппжжжпюДД",
+    "ДДппщщщщщщщщщпжппппппппппппппппппппппююпжжДД",
+    "ДДюпщщщщщщщщщюжпппппппппппппжппппппююпГюппДД",
+    "ДДюпщщщщщщщщщюпжппппппжпжпппщщщщщщщщщщщюжпДД",
+    "ДДжжщщщщщщщщщппжжппппжжппюпющщщщщщщщщщщюжпДД",
+    "ДДппюжпжпжжГпююппппппжжГжпжпщщщпппщщщщщжююДД",
+    "ДДюпжжжжжжжжжжжппжппппжжппппщщщпжпщщщщщюжпДД",
+    "ДДжпжжГжжжжжжжжжжюппжжппжпюпщщщпппщщщщщппжДД",
+    "ДДпжжжжжГжжжжжжжпппппГппппюющщщщщщщщщщщжпжДД",
+    "ДДюжжжжжжжжжГжжжпжппппжжююжжщщщщщщщщщщщюппДД",
+    "ДДпюжжжжжжжжжжжжппппжпююпГпГюжГюжппюпжжпппДД",
+    "ДДппжжжжжжжжжжжппюппппжжюжпппюпжюпжпппюжпжДД",
+    "ДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДД",
+    "ДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДД"
+  ]
+}

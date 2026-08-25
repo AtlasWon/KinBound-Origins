@@ -1,21 +1,48 @@
 [
   {
     "id": "ad_arrive",
-    "_note": "ACT 4, BEAT 3: THE FLOOR UNDER RECORDS.\n\nThe object speaks before the player's eyes do, and it says the opposite of everything it has said so far. Every other time it has been this loud it has also been pointing; here there is no needle, because it is not looking for anything down here. See RECOIL in src/systems/tideheart.ts -- the bag row, the arrival cue and the object's own screen are all already saying this before the scene opens its mouth, so a player who checks their bag on the stair finds the game has told them the truth twice.\n\nThen the room, and the room is the whole of Project Abyss Crown as a physical object: sixty cradles, fifty-one of them full, and the metal in them is the metal in the palm-sized thing the player has been carrying since their birthday. Nobody says that. It is on the screen.\n\nAND THEN CASSIAN, ALREADY HERE, WORKING. Not summoned by an alarm, not hunting them, not surprised. A man alone at seven in the evening with his coat off, filing a burr off a piece of salvage, and doing it well. Canon says he must not read as a villain, and the cheapest way to buy that is to let the player watch him be good at something before he says a word.\n\nHe invites them to look before they talk. That is in character and it is also what keeps canon's freedom-between-beats rule alive in the last room of the act: the player can walk this floor, read the chart, and talk to the Commander who murdered their father, before they choose to go and start the conversation.",
+    "_note": "ACT 4, BEAT 3: DEEP SURVEY.\n\nTHE OBJECT SPEAKS BEFORE THE PLAYER'S EYES DO, and it says the opposite of everything it has said all game. Every other time it has been this loud it has also been pointing; here there is no needle, because it is not looking for anything down here. See RECOIL in src/systems/tideheart.ts -- the bag row, the arrival cue and the object's own screen are all already saying this before the scene opens its mouth, so a player who checks their bag on the stair finds that the game has told them twice.\n\nTHE ROOM IS ALREADY WRITTEN AND THIS SCENE DOES NOT REPEAT IT. Sixty cradles with fifty-one filled, the nine empty ones due at the end of the month, the split ring whose report card says SUBJECT RESPONSE: DISTRESS, the old ring and its rebuild side by side, the crates waybilled to a harbour with no road, the pallet of cold-weather kit, and the bench board reading FIND. WAKE. RING. HOLD, with REQUIRES THE HEART under WAKE -- all of that is signs on this map, and all of it is better read cold. This scene only does the two things a sign cannot: the object, and the man.\n\nAND CASSIAN, ALREADY HERE, WORKING. Not summoned by an alarm, not hunting them, not surprised: alone in the evening with his coat over the back of the chair, doing careful work at the bench the sign beside him describes. Canon says he must not read as a villain, and the cheapest way to buy that is to let the player watch him be good at something before he says a word.\n\nHe invites them to look before they talk, which is in character and keeps canon's freedom-between-beats rule alive in the last room of the act.",
     "trigger": "enter",
     "map": "aureline_meridian_deep",
     "onceFlag": "ad_arrived",
-    "when": { "kind": "flag", "flag": "a4_records_read" },
+    "when": {
+      "kind": "flag",
+      "flag": "a4_records_read"
+    },
     "actions": [
-      { "kind": "face", "who": "player", "dir": "up" },
-      { "kind": "wait", "frames": 12 },
+      {
+        "kind": "call",
+        "script": "ad_cast"
+      },
+      {
+        "kind": "face",
+        "who": "player",
+        "dir": "up"
+      },
+      {
+        "kind": "wait",
+        "frames": 12
+      },
       {
         "kind": "if",
-        "cond": { "kind": "hasItem", "item": "tideheart" },
+        "cond": {
+          "kind": "hasItem",
+          "item": "tideheart"
+        },
         "then": [
-          { "kind": "sfx", "sound": "fx_iron" },
-          { "kind": "shake", "frames": 34, "power": 3 },
-          { "kind": "wait", "frames": 22 },
+          {
+            "kind": "sfx",
+            "sound": "fx_iron"
+          },
+          {
+            "kind": "shake",
+            "frames": 34,
+            "power": 3
+          },
+          {
+            "kind": "wait",
+            "frames": 22
+          },
           {
             "kind": "say",
             "lines": [
@@ -29,68 +56,61 @@
               "It is not pulling toward anything. It is pulling away, and your bag is in the way."
             ]
           },
-          { "kind": "wait", "frames": 20 },
+          {
+            "kind": "wait",
+            "frames": 22
+          },
           {
             "kind": "say",
             "who": "TARIN",
             "lines": [
               "It has never done that.",
-              "In four months and three ruins it has never once done that."
+              "Four months and three ruins and it has never once done that."
             ]
           },
-          { "kind": "wait", "frames": 16 }
+          {
+            "kind": "wait",
+            "frames": 16
+          }
         ]
       },
-      { "kind": "music", "track": "stop" },
       {
-        "kind": "say",
-        "lines": [
-          "The floor is longer than the hall upstairs and there is almost nothing on it.",
-          "Cradles. Sixty of them, in two rows, and fifty-one are full."
-        ]
-      },
-      { "kind": "wait", "frames": 16 },
-      {
-        "kind": "say",
-        "lines": [
-          "You have seen this metal before.",
-          "You have been carrying a palm-sized piece of it since your birthday."
-        ]
-      },
-      { "kind": "wait", "frames": 22 },
-      {
-        "kind": "say",
-        "lines": [
-          "A chart on the end wall, nine feet across. A circle drawn on a sea floor.",
-          "Inside the circle, the subject, drawn to scale."
-        ]
+        "kind": "music",
+        "track": "stop"
       },
       {
         "kind": "say",
         "lines": [
-          "Beside it, for comparison, somebody has drawn a person.",
-          "The person is a pencil mark."
+          "Twelve generators down the wall, all of them running, and nothing in the room is loud.",
+          "The light is very good. Everything here has been paid for properly."
         ]
       },
-      { "kind": "wait", "frames": 24 },
       {
-        "kind": "say",
-        "who": "TARIN",
-        "lines": [
-          "Somebody drew that.",
-          "Somebody drew that, and then put the pencil down, and went home for their tea."
-        ]
+        "kind": "wait",
+        "frames": 18
       },
-      { "kind": "wait", "frames": 20 },
       {
         "kind": "say",
         "lines": [
-          "There is a man at a bench halfway down, with his coat over the back of a chair.",
-          "He is taking a burr off a piece of the metal with a hand file, and he is doing it well."
+          "Two rows of cradles the length of the floor, with the aisle running up between them.",
+          "The end wall is one chart, and the circle on it is the smaller of the two shapes."
         ]
       },
-      { "kind": "wait", "frames": 22 },
-      { "kind": "face", "who": "ad_veyl", "dir": "down" },
+      {
+        "kind": "wait",
+        "frames": 22
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "There is a man at the bench with his coat over the back of the chair,",
+          "taking a burr off a fragment with a hand file, and he is doing it well."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 24
+      },
       {
         "kind": "say",
         "who": "DR. VEYL",
@@ -102,40 +122,240 @@
         "kind": "say",
         "who": "DR. VEYL",
         "lines": [
-          "That is my countersign on the stair door, so I know exactly how the three of you got here.",
+          "That is my countersign on the west stair, so I know exactly how the three of you got here.",
           "I am not going to ask, and you are not going to have to invent anything."
         ]
       },
-      { "kind": "wait", "frames": 18 },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
       {
         "kind": "say",
         "who": "DR. VEYL",
         "lines": [
           "Look at it first.",
-          "I would very much rather you had looked at it properly before we talk. Take as long as you like."
+          "I would much rather you had read all of it before we talk. Take as long as you like."
         ]
       },
-      { "kind": "setFlag", "flag": "a4_deep" },
-      { "kind": "wait", "frames": 14 },
+      {
+        "kind": "setFlag",
+        "flag": "a4_deep"
+      },
+      {
+        "kind": "wait",
+        "frames": 14
+      },
       {
         "kind": "say",
         "who": "TARIN",
         "lines": [
-          "He means it, and I hate that he means it.",
-          "Go on, then. Look at all of it. I am not leaving this spot."
+          "He means that, and I hate that he means it.",
+          "Go on, then. Read every card in the room. I am not leaving this spot."
         ]
       }
     ]
   },
-
+  {
+    "id": "ad_respawn",
+    "_note": "Puts the four of them back on any later visit while the confrontation is still ahead. No onceFlag: it is meant to run again. After the theft nothing respawns, because two of them have gone up the aisle and the other two are walking out with the player. Listed after ad_arrive because only the first \"enter\" script that starts is run.",
+    "trigger": "enter",
+    "map": "aureline_meridian_deep",
+    "when": {
+      "kind": "all",
+      "of": [
+        {
+          "kind": "flag",
+          "flag": "a4_records_read"
+        },
+        {
+          "kind": "flag",
+          "flag": "act4_theft_done",
+          "value": false
+        }
+      ]
+    },
+    "actions": [
+      {
+        "kind": "call",
+        "script": "ad_cast"
+      }
+    ]
+  },
+  {
+    "id": "ad_rings",
+    "_note": "PROJECT ABYSS CROWN, felt rather than read.\n\nThe bench board already says FIND. WAKE. RING. HOLD, and under WAKE, in a smaller hand, REQUIRES THE HEART. NO SUBSTITUTE FOUND. That is the capital author's sign and it is exactly right, so this scene does not repeat a word of it. It fires in the aisle between the two rows of cradles -- on the central gap and on both wall ends, so that it cannot be walked round -- and does the thing a card cannot: it puts the heart the card is asking for between the rings, and lets the object answer.\n\nThe brief asks that Abyss Crown land as dread and not as information, and the only reason it can is that the player stood in the Mirehaven Sanctum in Act 3 and watched what the fourth word does. So nobody here draws the comparison. Tarin says the four words back and stops.\n\nThe branch for a player who somehow has no Tideheart is not decorative: the same hollow, empty, is what the whole act is about.",
+    "trigger": "step",
+    "map": "aureline_meridian_deep",
+    "onceFlag": "a4_abyss",
+    "when": {
+      "kind": "flag",
+      "flag": "a4_deep"
+    },
+    "at": [
+      {
+        "x": 14,
+        "y": 6
+      },
+      {
+        "x": 15,
+        "y": 6
+      },
+      {
+        "x": 1,
+        "y": 6
+      },
+      {
+        "x": 28,
+        "y": 6
+      },
+      {
+        "x": 14,
+        "y": 3
+      },
+      {
+        "x": 15,
+        "y": 3
+      },
+      {
+        "x": 1,
+        "y": 3
+      },
+      {
+        "x": 28,
+        "y": 3
+      }
+    ],
+    "actions": [
+      {
+        "kind": "wait",
+        "frames": 12
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "hasItem",
+          "item": "tideheart"
+        },
+        "then": [
+          {
+            "kind": "sfx",
+            "sound": "fx_charge"
+          },
+          {
+            "kind": "shake",
+            "frames": 26,
+            "power": 4
+          },
+          {
+            "kind": "wait",
+            "frames": 20
+          },
+          {
+            "kind": "say",
+            "lines": [
+              "In the aisle the bag strap is cutting into your shoulder,",
+              "because the thing in it is trying to go the other way and it is not stopping."
+            ]
+          },
+          {
+            "kind": "wait",
+            "frames": 22
+          },
+          {
+            "kind": "sfx",
+            "sound": "fx_light"
+          },
+          {
+            "kind": "say",
+            "lines": [
+              "Every ring within reach of you lights, one after another, going away down the row.",
+              "Nobody has touched anything. Two aisles off, somebody swears quietly."
+            ]
+          },
+          {
+            "kind": "wait",
+            "frames": 24
+          },
+          {
+            "kind": "say",
+            "who": "LYRA",
+            "lines": [
+              "Out of the row. {name}.",
+              "Please get out of the row."
+            ]
+          },
+          {
+            "kind": "wait",
+            "frames": 20
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "lines": [
+              "Sixty cradles, and the hollow cut into the head of every one of them is the size of a palm.",
+              "All sixty of them are empty."
+            ]
+          },
+          {
+            "kind": "wait",
+            "frames": 22
+          }
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Find. Wake. Ring. Hold."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 22
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "{name}. We have already been shown the fourth one.",
+          "We watched it happen and there was nothing left in the picture but water."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "Three of those four words have a tick against them on that board.",
+          "I read the crates on the way in. They are stencilled for a harbour with no road."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "This is not a proposal that somebody is going to put to somebody.",
+          "This has a month on it."
+        ]
+      }
+    ]
+  },
   {
     "id": "ad_kell",
-    "_note": "The player, standing four feet from the woman who murdered their father, holding the night book that proves it, in a room where nobody is going to do anything about it.\n\nMISSABLE ON PURPOSE. Nothing requires this conversation and no flag depends on it, because the player who walks straight past her to Cassian has made a choice about what they came here for. But it is the payoff of the line the Sanctum note said must stay exactly as it was -- 'I have thought about him every day for eleven years' -- and it turns over on one word.\n\nShe does not deny it, does not perform, does not enjoy it and does not apologise. She keeps records. Lying to somebody holding an accurate record would be, to her, untidy. Her reason is Cassian's reason with the last restraint taken off, which is what makes her the one who overrides him in Act 5 rather than a second villain with a second motive.",
+    "_note": "The player, standing four feet from the woman who murdered their father, holding the night book that proves it, in a room where nobody is going to do anything about it.\n\nMISSABLE ON PURPOSE. Nothing requires this conversation and no flag depends on it, because a player who walks past her to get to Cassian has made a decision about what they came here for. But it is the payoff of the line the Sanctum's own note said must stay exactly as it was -- 'I have thought about him every day for eleven years' -- and it turns over on one word.\n\nShe does not deny it, does not perform, does not enjoy it, and does not apologise. She keeps records. Lying to somebody who is holding an accurate one would strike her as untidy. Her reason is Cassian's reason with the last restraint taken off, which is why she is the one who overrides him in Act 5 rather than a second villain with a second motive.",
     "trigger": "interact",
     "actions": [
       {
         "kind": "if",
-        "cond": { "kind": "flag", "flag": "a4_kell_asked" },
+        "cond": {
+          "kind": "flag",
+          "flag": "a4_kell_asked"
+        },
         "then": [
           {
             "kind": "say",
@@ -145,7 +365,9 @@
               "He is at the bench. He has been waiting since the marsh."
             ]
           },
-          { "kind": "end" }
+          {
+            "kind": "end"
+          }
         ]
       },
       {
@@ -153,19 +375,22 @@
         "who": "COMMANDER KELL",
         "lines": [
           "You came up out of a marsh and then you came here.",
-          "That is a straight line and I have never once been sorry to be right about somebody."
+          "That is a straight line and I have never been sorry to be right about somebody."
         ]
       },
       {
         "kind": "choice",
         "lines": [
-          "She has a notebook under her arm and a flat case at her feet, and the case has a lock on it."
+          "There is a notebook under her arm and a flat case at her feet, and the case has a lock on it."
         ],
         "options": [
           {
             "label": "Were you in the yard?",
             "then": [
-              { "kind": "wait", "frames": 26 },
+              {
+                "kind": "wait",
+                "frames": 28
+              },
               {
                 "kind": "say",
                 "who": "COMMANDER KELL",
@@ -173,7 +398,10 @@
                   "Yes."
                 ]
               },
-              { "kind": "wait", "frames": 22 },
+              {
+                "kind": "wait",
+                "frames": 24
+              },
               {
                 "kind": "say",
                 "who": "COMMANDER KELL",
@@ -187,7 +415,10 @@
           {
             "label": "Every day for eleven years.",
             "then": [
-              { "kind": "wait", "frames": 26 },
+              {
+                "kind": "wait",
+                "frames": 28
+              },
               {
                 "kind": "say",
                 "who": "COMMANDER KELL",
@@ -196,21 +427,30 @@
                   "You assumed something about what kind of thinking it was, and I let you."
                 ]
               },
-              { "kind": "wait", "frames": 20 },
+              {
+                "kind": "wait",
+                "frames": 22
+              },
               {
                 "kind": "say",
                 "who": "COMMANDER KELL",
                 "lines": [
-                  "I did not lie to you in that room. I have gone back over it twice.",
-                  "I would have told you if you had asked me the question. You were fifteen feet away and you did not."
+                  "I did not lie to you in that room. I have been back over it twice.",
+                  "I would have answered the question. You were fifteen feet away and you did not ask it."
                 ]
               }
             ]
           }
         ]
       },
-      { "kind": "setFlag", "flag": "a4_kell_asked" },
-      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "setFlag",
+        "flag": "a4_kell_asked"
+      },
+      {
+        "kind": "wait",
+        "frames": 22
+      },
       {
         "kind": "say",
         "who": "COMMANDER KELL",
@@ -232,20 +472,20 @@
                 "kind": "say",
                 "who": "COMMANDER KELL",
                 "lines": [
-                  "Yes. That is the part I have no answer for and I have stopped looking for one.",
-                  "You are entitled to every single thing you are feeling. It does not change the arithmetic."
+                  "Yes. That is the part I have no answer for and I stopped looking for one years ago.",
+                  "You are entitled to every single thing you are feeling. It does not move the arithmetic."
                 ]
               }
             ]
           },
           {
-            "label": "Does he know you did it?",
+            "label": "Does he know?",
             "then": [
               {
                 "kind": "say",
                 "who": "COMMANDER KELL",
                 "lines": [
-                  "He has known for eleven years and he has never asked me and I have never told him.",
+                  "He has known for eleven years. He has never asked me and I have never told him.",
                   "That is not a conspiracy. That is two people being careful with each other."
                 ]
               }
@@ -253,125 +493,158 @@
           }
         ]
       },
-      { "kind": "wait", "frames": 18 },
+      {
+        "kind": "wait",
+        "frames": 18
+      },
       {
         "kind": "say",
         "who": "TARIN",
         "lines": [
           "{name}. Walk away from her.",
-          "I am asking. I have never asked you for anything."
+          "I am asking you. I have never asked you for anything."
         ]
       }
     ]
   },
-
   {
     "id": "ad_tech",
+    "_note": "The fitter who cut the rings down. The capital author placed him; this is his voice. Nine cradles short and a date at the end of the month is the same fact the crate card gives, said by somebody who has to make it true.",
     "trigger": "interact",
     "actions": [
       {
         "kind": "say",
         "who": "FOUNDATION FITTER",
         "lines": [
-          "Nine short. We are nine elements short and we have been nine short since the spring.",
-          "There is no more of this metal. There is only ever what somebody dug up."
+          "Nine cradles short, nine to go, and there is no more of this metal anywhere in Averra.",
+          "There is only ever what somebody dug up."
         ]
       },
       {
         "kind": "say",
         "who": "FOUNDATION FITTER",
         "lines": [
-          "Mind the cradles. Every one of those is older than the language you are complaining in.",
-          "I cut them down myself and I have not enjoyed a day of it."
+          "Mind the racks. Every ring on this floor is older than the language you are complaining in.",
+          "I cut them down myself and I have not enjoyed a single day of it."
         ]
       }
     ]
   },
-
   {
     "id": "ad_lyra",
     "trigger": "interact",
     "actions": [
       {
         "kind": "if",
-        "cond": { "kind": "flag", "flag": "act4_theft_done" },
+        "cond": {
+          "kind": "flag",
+          "flag": "act4_theft_done"
+        },
         "then": [
           {
             "kind": "say",
             "who": "LYRA",
             "lines": [
               "Go up. I will be behind you.",
-              "I am not going to cry in a room with sixty cradles in it. I have some standards left."
+              "I am not going to cry on a floor with sixty cradles on it. I have some standards left."
             ]
           },
-          { "kind": "end" }
+          {
+            "kind": "end"
+          }
         ]
       },
       {
         "kind": "say",
         "who": "LYRA",
         "lines": [
-          "I have been in this building since I was fifteen and I did not know this floor was here.",
-          "That is not him keeping a secret from the region. That is him keeping one from me."
+          "Fifteen when I started in this building and I did not know this level was here.",
+          "That is not a secret kept from the region. That is one kept from me."
         ]
       },
       {
         "kind": "say",
         "who": "LYRA",
         "lines": [
-          "Talk to him when you are ready and not before.",
+          "Talk to him when you are ready and not one minute before.",
           "He will wait. He is extremely good at waiting and it is the worst thing about him."
         ]
       }
     ]
   },
-
   {
     "id": "ad_tarin",
     "trigger": "interact",
     "actions": [
       {
         "kind": "if",
-        "cond": { "kind": "flag", "flag": "act4_theft_done" },
+        "cond": {
+          "kind": "flag",
+          "flag": "act4_theft_done"
+        },
         "then": [
           {
             "kind": "say",
             "who": "TARIN",
             "lines": [
               "Up. Out. Air.",
-              "In that order and no talking on the stairs."
+              "In that order, and no talking on the stairs."
             ]
           },
-          { "kind": "end" }
+          {
+            "kind": "end"
+          }
+        ]
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
+          "flag": "a4_abyss"
+        },
+        "then": [
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "I have got something to say to him and I have been building it since the marsh.",
+              "Not to hurt him. I do not think you can hurt him."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "I want him to have to answer it out loud, in front of her.",
+              "Go when you are ready."
+            ]
+          },
+          {
+            "kind": "end"
+          }
         ]
       },
       {
         "kind": "say",
         "who": "TARIN",
         "lines": [
-          "Fifty-one cradles full and nine to go, and a man with a hand file at the end of it.",
-          "I have got something to say to him. I have been building it since the marsh."
-        ]
-      },
-      {
-        "kind": "say",
-        "who": "TARIN",
-        "lines": [
-          "Not to hurt him. I do not think you can hurt him.",
-          "I want him to have to answer it. Go when you are ready."
+          "Read the cards. All of them, including the boring ones about crates.",
+          "The boring ones are where the date is."
         ]
       }
     ]
   },
-
   {
     "id": "ad_veyl",
-    "_note": "ACT 4, BEAT 4 AND 5: THE CONFRONTATION, AND MERIDIAN TAKE THE TIDEHEART.\n\nCANON IS EXPLICIT AND THIS SCENE IS BUILT ROUND IT: do not make him insane. His arguments must sound reasonable, because they are. So he denies nothing, he refuses to use his dead sister because it would work, he concedes Tarin's first two points out loud, and he wins the exchange about the diameter, because he is right about the diameter. A man the player can dismiss is not the man in CANON.md.\n\nTHE MORAL SHAPE, in his own mouth and in this order:\n  he did not order it -- a commander of his did, on her own judgement -- he found out\n  ninety-two days later -- he did nothing -- and then he wrote down that he was doing\n  nothing and filed it, so that he could never improve on the memory.\nA man who ordered a murder is a villain. This is worse and much more ordinary, and the player has to be able to feel the difference, so nothing in the scene blurs it.\n\nTARIN'S ARC PAYS OFF HERE AND HE IS NOT COMIC ONCE. His attack is a chain and each link has to survive the answer:\n  1. the sheet has a number on one side and nothing on the other -- Cassian concedes it,\n     and then correctly points out that nobody can cost a hurricane they did not have.\n  2. every person in the Aurelian record was as careful as you -- Cassian answers this\n     one properly and wins it.\n  3. in eleven years, has anybody written down a plan for ASKING it? -- no.\n     'Then you have not built a better machine. You have built a bigger one.'\nThat is BOND VS CONTROL, said out loud, by the rival, in the last room of the act. And Cassian's reply is the horror of the whole scene: he grants the argument, says he will think about it for years, and does not stop.\n\nLYRA IS THE ONE WHO IS BETRAYED, because she is the only person present who loved him. Her whole part is four boxes and none of them is an argument. She asks him about one afternoon when she was fifteen. He says yes. That is all she wanted.\n\nTHE THEFT IS REAL. takeItem removes the object from the inventory and the key pocket; tideheart_taken tells src/systems/tideheart.ts what has happened. From here the bag row is gone, the screen the bag opened is unreachable, the sites stop stirring and the arrival cue stops firing, and readTideheart says where it went. Nothing in Act 5 may assume the player is carrying it -- ask hasItem, never tideheart_given.\n\nNO BATTLE, AND THAT IS DELIBERATE. The Sanctum note already fixed Kell's character: a commander who has to fight a sixteen-year-old is a commander who is worried, and she is not. Nothing stops her. Tarin steps in front of the player and she goes round him without breaking stride. It is also the correct answer for a player who has asked four times for an easier game: the loss the act needs is a story loss, and there is nothing here to lose a battle to.",
+    "_note": "ACT 4, BEATS 4 AND 5: THE CONFRONTATION, AND MERIDIAN TAKE THE TIDEHEART.\n\nCANON IS EXPLICIT AND THIS SCENE IS BUILT ROUND IT: do not make him insane, and his arguments must sound reasonable, because they are. So he denies nothing, he refuses to use his dead sister because it would work, he concedes Tarin's first point out loud, and he wins the exchange about the diameter, because on the diameter he is right. A man the player can dismiss on sight is not the man in CANON.md.\n\nTHE MORAL SHAPE, in his own mouth and in this order:\n  he did not order it -- a commander of his did, on her own judgement -- he found out\n  ninety-two days later -- he did nothing -- and then he wrote down that he was doing\n  nothing and filed it, so that he could never improve on the memory.\nSomebody who ordered a murder is a villain. This is worse and far more ordinary, and the player has to be able to feel the difference, so nothing in the scene blurs it.\n\nTARIN'S ARC PAYS OFF HERE AND HE IS NOT COMIC ONCE. His attack is a chain and every link has to survive the answer:\n  1. the sheet has a number on one side and nothing on the other -- conceded, and then\n     correctly answered: nobody can cost the hurricane they did not have.\n  2. every person in the Aurelian record was as careful as you are -- answered properly,\n     and Cassian wins that one.\n  3. in eleven years, four hundred people, has anybody once written down a plan for\n     ASKING it? -- no. 'Then you have not built a better machine. You have built a\n     bigger one.'\nThat is BOND VS CONTROL said out loud, by the rival, in the last room of the act. And Cassian's reply is the horror of the whole scene: he grants the argument, says he will think about it for the rest of his life, and does not stop.\n\nLYRA IS THE ONE WHO IS BETRAYED, because she is the only person in the room who loved him. Her whole part is four boxes and not one of them is an argument. She asks him about one afternoon when she was fifteen. He says yes. That is all she wanted.\n\nTHE THEFT IS REAL. takeItem removes the object from the inventory and from the key pocket; tideheart_taken tells src/systems/tideheart.ts what has happened. From here the bag row is gone, the screen the bag opened is unreachable because the row that opened it is not there, the sites stop stirring, the arrival cue stops firing, and readTideheart says where it went. Nothing in Act 5 may assume the player is carrying it: ask hasItem, never tideheart_given.\n\nNO BATTLE, AND THAT IS DELIBERATE. The Sanctum's own note fixed Kell's character: a commander who has to fight a sixteen-year-old is a commander who is worried, and she is not. Nothing stops her. Tarin steps in front of the player and she goes round him without breaking stride. It is also the right answer for a player who has asked four times for an easier game -- the loss this act needs is a story loss, and there is nothing here to lose a battle to.",
     "trigger": "interact",
     "actions": [
       {
         "kind": "if",
-        "cond": { "kind": "flag", "flag": "act4_theft_done" },
+        "cond": {
+          "kind": "flag",
+          "flag": "act4_theft_done"
+        },
         "then": [
           {
             "kind": "say",
@@ -380,11 +653,36 @@
               "Go up. Nobody will stop you."
             ]
           },
-          { "kind": "end" }
+          {
+            "kind": "end"
+          }
         ]
       },
-
-      { "kind": "music", "track": "stop" },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
+          "flag": "a4_abyss",
+          "value": false
+        },
+        "then": [
+          {
+            "kind": "say",
+            "who": "DR. VEYL",
+            "lines": [
+              "Walk the aisle first. Read the board over this bench, and the four words on it.",
+              "I am not going to argue with somebody who has not read the four words."
+            ]
+          },
+          {
+            "kind": "end"
+          }
+        ]
+      },
+      {
+        "kind": "music",
+        "track": "stop"
+      },
       {
         "kind": "say",
         "lines": [
@@ -414,8 +712,10 @@
           "You could have made me ask twice and you have never once made me ask twice."
         ]
       },
-      { "kind": "wait", "frames": 22 },
-
+      {
+        "kind": "wait",
+        "frames": 24
+      },
       {
         "kind": "say",
         "who": "DR. VEYL",
@@ -431,7 +731,10 @@
           "It is mine. I wrote it upstairs on a Thursday and I filed it myself."
         ]
       },
-      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "wait",
+        "frames": 22
+      },
       {
         "kind": "say",
         "who": "DR. VEYL",
@@ -440,7 +743,10 @@
           "It would work on you, and it is not the reason. The reason is a number."
         ]
       },
-      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
       {
         "kind": "say",
         "who": "DR. VEYL",
@@ -454,13 +760,13 @@
         "who": "DR. VEYL",
         "lines": [
           "I can stop it. That is not a hope and it is not a prospectus.",
-          "The engineering is finished. It is in cradles behind you."
+          "The engineering is finished. It is standing in two rows behind you."
         ]
       },
       {
         "kind": "choice",
         "lines": [
-          "He is not raising his voice and he is not enjoying any of it."
+          "He is not raising his voice, and he is not enjoying any part of this."
         ],
         "options": [
           {
@@ -471,7 +777,7 @@
                 "who": "DR. VEYL",
                 "lines": [
                   "No. I can know it on paper to four figures and not at all in the water.",
-                  "That is true of every bridge anybody has ever stood under. It is not a reason to ford rivers."
+                  "That is true of every bridge anybody ever stood under. It is not a reason to ford rivers."
                 ]
               }
             ]
@@ -484,7 +790,7 @@
                 "who": "DR. VEYL",
                 "lines": [
                   "Then whose? Name them. I will have the drawings on a cart to them this evening.",
-                  "I have asked that question in six cities for eleven years and nobody has ever named anybody."
+                  "I have asked that in six cities for eleven years and nobody has ever named anybody."
                 ]
               }
             ]
@@ -496,15 +802,17 @@
                 "kind": "say",
                 "lines": [
                   "You let it stand.",
-                  "He waits a long time to be sure that you have, and then he nods, as if you had scored something."
+                  "He waits a long time to be sure that you have, and then nods, as if you had scored something."
                 ]
               }
             ]
           }
         ]
       },
-      { "kind": "wait", "frames": 24 },
-
+      {
+        "kind": "wait",
+        "frames": 26
+      },
       {
         "kind": "say",
         "who": "DR. VEYL",
@@ -560,7 +868,10 @@
           }
         ]
       },
-      { "kind": "wait", "frames": 18 },
+      {
+        "kind": "wait",
+        "frames": 18
+      },
       {
         "kind": "say",
         "who": "DR. VEYL",
@@ -569,7 +880,10 @@
           "I know it was ninety-two because I counted them afterwards. Twice."
         ]
       },
-      { "kind": "wait", "frames": 22 },
+      {
+        "kind": "wait",
+        "frames": 24
+      },
       {
         "kind": "say",
         "who": "DR. VEYL",
@@ -581,7 +895,7 @@
       {
         "kind": "choice",
         "lines": [
-          "Somewhere behind him a fitter puts a tool in a rack, and does not look over."
+          "Somewhere behind him a fitter puts a tool back in a rack and does not look over."
         ],
         "options": [
           {
@@ -598,7 +912,7 @@
             ]
           },
           {
-            "label": "Why nothing?",
+            "label": "Why do nothing?",
             "then": [
               {
                 "kind": "say",
@@ -612,8 +926,8 @@
                 "kind": "say",
                 "who": "DR. VEYL",
                 "lines": [
-                  "I have never once got that sum to come out the other way,",
-                  "and I have never once been able to say it out loud without hearing what it is."
+                  "I have never got that sum to come out the other way,",
+                  "and I have never been able to say it out loud without hearing what it is."
                 ]
               }
             ]
@@ -633,8 +947,10 @@
           }
         ]
       },
-      { "kind": "wait", "frames": 26 },
-
+      {
+        "kind": "wait",
+        "frames": 28
+      },
       {
         "kind": "say",
         "lines": [
@@ -653,17 +969,20 @@
         "kind": "say",
         "who": "TARIN",
         "lines": [
-          "Your own man upstairs told me there has never been one to put.",
-          "He said he would love one. He said it like it was a shame about the weather."
+          "Nobody in this building has one. I have asked two of your own people today.",
+          "One of them said he would love one, and said it like it was a shame about the weather."
         ]
       },
-      { "kind": "wait", "frames": 18 },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
       {
         "kind": "say",
         "who": "DR. VEYL",
         "lines": [
           "He is right and so are you. There is no number on that side.",
-          "That is a real weakness in the case and I have never pretended otherwise."
+          "It is a real weakness in the case and I have never once pretended otherwise."
         ]
       },
       {
@@ -674,7 +993,10 @@
           "Nobody has ever been able to cost the hurricane they did not have."
         ]
       },
-      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "wait",
+        "frames": 22
+      },
       {
         "kind": "say",
         "who": "TARIN",
@@ -691,7 +1013,10 @@
           "It is a room full of careful people, and then it is a sea standing up."
         ]
       },
-      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "wait",
+        "frames": 22
+      },
       {
         "kind": "say",
         "who": "DR. VEYL",
@@ -707,7 +1032,10 @@
           "That is not the same experiment. I am sorry. It is genuinely not the same experiment."
         ]
       },
-      { "kind": "wait", "frames": 26 },
+      {
+        "kind": "wait",
+        "frames": 28
+      },
       {
         "kind": "say",
         "lines": [
@@ -715,7 +1043,10 @@
           "and Tarin does not look away from him for a second."
         ]
       },
-      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "wait",
+        "frames": 22
+      },
       {
         "kind": "say",
         "who": "TARIN",
@@ -727,13 +1058,22 @@
         "kind": "say",
         "who": "TARIN",
         "lines": [
-          "Eleven years. Four hundred people. Every drawing in this room.",
+          "Eleven years. Four hundred people. Every card in this room.",
           "Has one of you, once, written down a plan for asking it?"
         ]
       },
-      { "kind": "wait", "frames": 34 },
-      { "kind": "sfx", "sound": "denied" },
-      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "wait",
+        "frames": 36
+      },
+      {
+        "kind": "sfx",
+        "sound": "denied"
+      },
+      {
+        "kind": "wait",
+        "frames": 22
+      },
       {
         "kind": "say",
         "who": "DR. VEYL",
@@ -741,7 +1081,10 @@
           "...No."
         ]
       },
-      { "kind": "wait", "frames": 28 },
+      {
+        "kind": "wait",
+        "frames": 30
+      },
       {
         "kind": "say",
         "who": "TARIN",
@@ -756,7 +1099,10 @@
           "You have built a bigger one."
         ]
       },
-      { "kind": "wait", "frames": 34 },
+      {
+        "kind": "wait",
+        "frames": 36
+      },
       {
         "kind": "say",
         "who": "DR. VEYL",
@@ -772,7 +1118,10 @@
           "and I am going to think about it for the rest of my life."
         ]
       },
-      { "kind": "wait", "frames": 22 },
+      {
+        "kind": "wait",
+        "frames": 24
+      },
       {
         "kind": "say",
         "who": "DR. VEYL",
@@ -780,7 +1129,10 @@
           "And I am not going to stop."
         ]
       },
-      { "kind": "wait", "frames": 30 },
+      {
+        "kind": "wait",
+        "frames": 32
+      },
       {
         "kind": "say",
         "lines": [
@@ -788,7 +1140,10 @@
           "Not the sleeve, and not the sheet, and not the night book. That."
         ]
       },
-      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "wait",
+        "frames": 24
+      },
       {
         "kind": "say",
         "who": "TARIN",
@@ -805,7 +1160,10 @@
           "You have already run this once. It came out with a man dead in the middle of it."
         ]
       },
-      { "kind": "wait", "frames": 30 },
+      {
+        "kind": "wait",
+        "frames": 32
+      },
       {
         "kind": "say",
         "lines": [
@@ -813,8 +1171,10 @@
           "He has an answer. You can watch him decide not to use it."
         ]
       },
-      { "kind": "wait", "frames": 26 },
-
+      {
+        "kind": "wait",
+        "frames": 26
+      },
       {
         "kind": "say",
         "lines": [
@@ -843,7 +1203,10 @@
           "You put your hand on the back of my head and you said, weather, love."
         ]
       },
-      { "kind": "wait", "frames": 36 },
+      {
+        "kind": "wait",
+        "frames": 38
+      },
       {
         "kind": "say",
         "who": "DR. VEYL",
@@ -851,16 +1214,22 @@
           "Yes."
         ]
       },
-      { "kind": "wait", "frames": 28 },
+      {
+        "kind": "wait",
+        "frames": 30
+      },
       {
         "kind": "say",
         "who": "LYRA",
         "lines": [
           "That is all I wanted.",
-          "I have wanted you to say no since Tuesday and now I can stop."
+          "I have wanted you to say no since Tuesday, and now I can stop."
         ]
       },
-      { "kind": "wait", "frames": 22 },
+      {
+        "kind": "wait",
+        "frames": 22
+      },
       {
         "kind": "say",
         "who": "DR. VEYL",
@@ -876,8 +1245,10 @@
           "She has stopped looking at him, and she does not start again."
         ]
       },
-      { "kind": "wait", "frames": 30 },
-
+      {
+        "kind": "wait",
+        "frames": 32
+      },
       {
         "kind": "say",
         "who": "DR. VEYL",
@@ -896,13 +1267,13 @@
         "who": "DR. VEYL",
         "lines": [
           "I am going to ask you for it.",
-          "Asking is the only piece of this evening I still get to choose, and I would like to have chosen something."
+          "Asking is the only piece of this evening I get to choose, and I would like to choose something."
         ]
       },
       {
         "kind": "choice",
         "lines": [
-          "Behind him, at the far end of the floor, somebody closes a notebook."
+          "At the far end of the floor somebody closes a notebook."
         ],
         "options": [
           {
@@ -925,7 +1296,7 @@
                 "who": "DR. VEYL",
                 "lines": [
                   "It was the Foundation's, and then it was his, and then it was yours.",
-                  "I have never been able to make that sentence mean anything and I have tried in three languages."
+                  "I have never made that sentence mean anything and I have tried it in three languages."
                 ]
               }
             ]
@@ -945,7 +1316,10 @@
           }
         ]
       },
-      { "kind": "wait", "frames": 26 },
+      {
+        "kind": "wait",
+        "frames": 26
+      },
       {
         "kind": "say",
         "who": "DR. VEYL",
@@ -953,14 +1327,20 @@
           "Commander."
         ]
       },
-      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "wait",
+        "frames": 26
+      },
       {
         "kind": "say",
         "lines": [
           "She starts walking. She is not in a hurry and she does not put the notebook down."
         ]
       },
-      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "wait",
+        "frames": 22
+      },
       {
         "kind": "say",
         "lines": [
@@ -968,11 +1348,16 @@
           "She goes round him. She does not break stride and she does not touch him."
         ]
       },
-      { "kind": "wait", "frames": 26 },
-
+      {
+        "kind": "wait",
+        "frames": 28
+      },
       {
         "kind": "if",
-        "cond": { "kind": "hasItem", "item": "tideheart" },
+        "cond": {
+          "kind": "hasItem",
+          "item": "tideheart"
+        },
         "then": [
           {
             "kind": "say",
@@ -981,28 +1366,54 @@
               "and opens your bag with the other hand."
             ]
           },
-          { "kind": "wait", "frames": 20 },
+          {
+            "kind": "wait",
+            "frames": 22
+          },
           {
             "kind": "say",
             "lines": [
               "She is not rough.",
-              "It is much worse that she is not rough."
+              "It is very much worse that she is not rough."
             ]
           },
-          { "kind": "wait", "frames": 22 },
-          { "kind": "sfx", "sound": "fx_dark" },
-          { "kind": "shake", "frames": 16, "power": 2 },
-          { "kind": "takeItem", "item": "tideheart", "count": 1 },
-          { "kind": "setFlag", "flag": "tideheart_taken" },
-          { "kind": "wait", "frames": 28 },
+          {
+            "kind": "wait",
+            "frames": 24
+          },
+          {
+            "kind": "sfx",
+            "sound": "fx_dark"
+          },
+          {
+            "kind": "shake",
+            "frames": 16,
+            "power": 2
+          },
+          {
+            "kind": "takeItem",
+            "item": "tideheart",
+            "count": 1
+          },
+          {
+            "kind": "setFlag",
+            "flag": "tideheart_taken"
+          },
+          {
+            "kind": "wait",
+            "frames": 30
+          },
           {
             "kind": "say",
             "lines": [
-              "The case at her feet has a shaped hollow in it, cut to size, lined, waiting.",
-              "It has been waiting for a while."
+              "The case at her feet has a shaped hollow in it, cut to size and lined.",
+              "It has been waiting a while."
             ]
           },
-          { "kind": "wait", "frames": 22 },
+          {
+            "kind": "wait",
+            "frames": 22
+          },
           {
             "kind": "say",
             "lines": [
@@ -1010,7 +1421,10 @@
               "The key pocket is empty."
             ]
           },
-          { "kind": "wait", "frames": 30 }
+          {
+            "kind": "wait",
+            "frames": 32
+          }
         ],
         "else": [
           {
@@ -1020,10 +1434,12 @@
               "and neither of them says anything at all."
             ]
           },
-          { "kind": "wait", "frames": 24 }
+          {
+            "kind": "wait",
+            "frames": 24
+          }
         ]
       },
-
       {
         "kind": "say",
         "who": "COMMANDER KELL",
@@ -1039,40 +1455,65 @@
           "That is the whole of what I can offer you and I am aware of what it is worth."
         ]
       },
-      { "kind": "wait", "frames": 26 },
+      {
+        "kind": "wait",
+        "frames": 28
+      },
       {
         "kind": "say",
         "who": "DR. VEYL",
         "lines": [
           "There is a stair behind you and nobody on any floor of this building will stop you.",
-          "Do not try the north door. It is alarmed, it is loud, and I would rather you left with your dignity."
+          "Walk out through the atrium. I would rather you saw the queue on your way past it."
         ]
       },
-      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
       {
         "kind": "say",
         "who": "DR. VEYL",
         "lines": [
           "Lyra. You are my daughter on Monday and you are on the payroll on Monday.",
-          "Neither of those is a threat and I have no idea how to make you believe that."
+          "Neither of those is a threat, and I have no idea how to make you believe it."
         ]
       },
-      { "kind": "wait", "frames": 24 },
-      { "kind": "setFlag", "flag": "act4_theft_done" },
-      { "kind": "setFlag", "flag": "act4_confronted" },
+      {
+        "kind": "wait",
+        "frames": 26
+      },
+      {
+        "kind": "setFlag",
+        "flag": "act4_theft_done"
+      },
+      {
+        "kind": "setFlag",
+        "flag": "act4_confronted"
+      },
       {
         "kind": "say",
         "lines": [
-          "They go out by the far stair together.",
-          "Before the door closes, one of them is already asking the other about the nine short elements."
+          "They go up the aisle together and out.",
+          "Before they are out of earshot, one of them is asking the other about the sailing date."
         ]
       },
-      { "kind": "removeNpc", "who": "ad_veyl" },
-      { "kind": "removeNpc", "who": "ad_kell" },
-      { "kind": "sfx", "sound": "door_close" },
-      { "kind": "wait", "frames": 34 },
-      { "kind": "music", "track": "resume" },
-
+      {
+        "kind": "call",
+        "script": "act4_veyl_exit"
+      },
+      {
+        "kind": "sfx",
+        "sound": "door_close"
+      },
+      {
+        "kind": "wait",
+        "frames": 34
+      },
+      {
+        "kind": "music",
+        "track": "resume"
+      },
       {
         "kind": "say",
         "who": "TARIN",
@@ -1080,7 +1521,10 @@
           "Right."
         ]
       },
-      { "kind": "wait", "frames": 26 },
+      {
+        "kind": "wait",
+        "frames": 28
+      },
       {
         "kind": "say",
         "who": "TARIN",
@@ -1089,7 +1533,10 @@
           "That is three more things than you have ever had about your dad."
         ]
       },
-      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "wait",
+        "frames": 22
+      },
       {
         "kind": "say",
         "who": "TARIN",
@@ -1100,13 +1547,67 @@
       }
     ]
   },
-
   {
-    "id": "ad_contract",
-    "_note": "NOT A SCENE. Never triggered; here to be read by whoever builds this map.\n\nWHAT THIS FLOOR NEEDS FROM THE MAP:\n\n  NPC  id 'ad_veyl'   sprite 'veyl'                script 'ad_veyl'   hiddenIfFlag 'act4_theft_done'\n  NPC  id 'ad_kell'   sprite 'meridian_commander'  script 'ad_kell'   hiddenIfFlag 'act4_theft_done'\n  NPC  id 'ad_lyra'   sprite 'lyra'                script 'ad_lyra'\n  NPC  id 'ad_tarin'  sprite 'rival'               script 'ad_tarin'\n  NPC  id 'ad_tech'   sprite 'meridian_sci'        script 'ad_tech'   (optional flavour)\n\nad_veyl and ad_kell are both removed at the end of the confrontation and both carry hiddenIfFlag act4_theft_done, so that they are still gone when the player walks back down here later. Nothing is ever moved -- only face is used -- so every position is yours.\n\nPUT KELL A LONG WAY OFF. The confrontation says she is at the far end of the floor and that she starts walking; the further she is from the bench, the better the scene reads, and it is the only staging this act asks for.\n\n  WARP  up to 'aureline_meridian_records', ungated, always. It is the only way out\n        and the scene ends by telling the player to use it.\n\nTHE ROOM ITSELF, which the scenes assert and the map should show: two long rows of sixty cradles with fifty-one filled, a bench with a coat over the chair, and a nine-foot chart on the end wall of a circle on a sea floor with the subject drawn to scale. No Kin, no encounters, no items. It is a workshop at seven in the evening.\n\nThe map id 'aureline_meridian_deep' is also listed in RECOIL in src/systems/tideheart.ts, which is what makes the object react down here in the bag and on its own screen as well as in the arrival scene. If this floor ends up under a different id, add that id to RECOIL.maps -- the alternates already listed there are aureline_meridian_vault and aureline_meridian_works.",
+    "id": "ad_cast",
+    "_note": "THE ACT 4 CAST ON THIS LEVEL, spawned rather than placed, so that this floor's own people stay entirely the capital author's and Act 4 owns nobody else's. spawnNpc dedupes by id, so if these four are ever put on the map under the same ids nothing here doubles up.\n\nSTAGING, and it is the only staging the act asks for. Veyl is beside the bench with the coat over the chair and the board reading FIND. WAKE. RING. HOLD, because the player should see him working before he says anything. Kell is as far from him as this floor goes, in the top corner past both rows of cradles, so that \"at the far end of the floor somebody closes a notebook\" is literally true and so that her walk is long. Lyra and Tarin are at the foot of the stair the player comes down, out of the middle of the aisle.\n\nBoth of the signs on the bench tiles stay readable: nobody is standing on the two floor tiles in front of them.",
     "trigger": "call",
     "actions": [
-      { "kind": "end" }
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "ad_veyl",
+          "sprite": "veyl",
+          "x": 12,
+          "y": 10,
+          "facing": "left",
+          "movement": {
+            "kind": "static"
+          },
+          "script": "ad_veyl"
+        }
+      },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "ad_kell",
+          "sprite": "meridian_commander",
+          "x": 26,
+          "y": 2,
+          "facing": "down",
+          "movement": {
+            "kind": "static"
+          },
+          "script": "ad_kell"
+        }
+      },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "ad_lyra",
+          "sprite": "lyra",
+          "x": 16,
+          "y": 14,
+          "facing": "left",
+          "movement": {
+            "kind": "static"
+          },
+          "script": "ad_lyra"
+        }
+      },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "ad_tarin",
+          "sprite": "rival",
+          "x": 13,
+          "y": 14,
+          "facing": "right",
+          "movement": {
+            "kind": "static"
+          },
+          "script": "ad_tarin"
+        }
+      }
     ]
   }
 ]

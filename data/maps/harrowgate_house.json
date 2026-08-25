@@ -1,0 +1,67 @@
+{
+  "id": "harrowgate_house",
+  "name": "Interior",
+  "displayName": "HOUSE",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIUIIIIIUIII",
+    "IbeFFkkFFFFI",
+    "IFFFFFFFFAFI",
+    "IFFFFFFFFEFI",
+    "IFF/rrFFFFFI",
+    "IFFFrrFFFNQI",
+    "IPFFFFFFFFJI",
+    "IFFFFFFFFFFI",
+    "IIIIIDIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 5,
+      "y": 8,
+      "toMap": "harrowgate",
+      "toX": 13,
+      "toY": 25,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "hg_house_man",
+      "sprite": "townsfolk_m",
+      "x": 8,
+      "y": 3,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hg_house_man"
+    },
+    {
+      "id": "hg_house_gran",
+      "sprite": "elder",
+      "x": 3,
+      "y": 4,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hg_house_gran"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 6,
+      "y": 1,
+      "text": [
+        "A shelf with a clock on it, and the clock is right.",
+        "It is right because somebody sets it off the signal gun at the halt every morning.",
+        "Before the line, this village kept its own time and it was eleven minutes out."
+      ]
+    }
+  ],
+  "_plan": "One cottage on Station Road, opened so the railway gets said once from inside a home. The clock is the whole scene: a village that used to keep its own time and does not any more, and nobody minds, and that is the thing worth noticing."
+}

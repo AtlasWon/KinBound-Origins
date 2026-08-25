@@ -1,0 +1,199 @@
+{
+  "id": "marlbeck",
+  "name": "Marlbeck",
+  "displayName": "MARLBECK",
+  "music": "town_hearth",
+  "battleBackdrop": "highland",
+  "indoor": false,
+  "regionPos": {
+    "x": 31,
+    "y": 13
+  },
+  "_design": "Two hundred and eighty people, one street, and a brick engine house that is worth more than the rest of the village put together. Marlbeck exists because somewhere on nine miles of drained fen a machine has to lift the water OUT, and where the machine is, people are. The one thing worth stopping for is the fact the whole place is built on and nobody here finds remarkable: the drain along the top of the map is on a bank, and the water in it is higher than the ridge of the cottage roofs. They have known this every day of their lives.",
+  "_plan": "THE MAP IS ONE PICTURE AND IT IS DRAWN IN THE FIRST SIX ROWS. Water, water, bank, and then the village below it. The engine house is directly under the drain with its leat running up to the top of the bank, so the geometry answers itself before anybody speaks: the engine is what puts that water up there and keeps it there. Everything the villagers say is a footnote to it.\n\nSmall means small. Eight roofs, one street, one clinic, no Provisioner and no Hall, because canon puts a small village at two to five hundred and this is the low end of it. The clinic is here rather than in Harrowgate because the Central Road is two full route maps long and a player crossing it should not have to choose between healing and progress.",
+  "warps": [
+    {
+      "x": 43,
+      "y": 20,
+      "toMap": "route_7",
+      "toX": 1,
+      "toY": 47,
+      "facing": "right",
+      "style": "edge"
+    },
+    {
+      "x": 43,
+      "y": 21,
+      "toMap": "route_7",
+      "toX": 1,
+      "toY": 48,
+      "facing": "right",
+      "style": "edge"
+    },
+    {
+      "x": 12,
+      "y": 13,
+      "toMap": "marlbeck_engine",
+      "toX": 9,
+      "toY": 14,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 11,
+      "y": 25,
+      "toMap": "marlbeck_clinic",
+      "toX": 6,
+      "toY": 9,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 6,
+      "y": 18,
+      "toMap": "marlbeck_house",
+      "toX": 5,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "mb_engineman",
+      "sprite": "porter",
+      "x": 14,
+      "y": 14,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mb_engineman"
+    },
+    {
+      "id": "mb_elder",
+      "sprite": "elder",
+      "x": 20,
+      "y": 19,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mb_elder"
+    },
+    {
+      "id": "mb_child",
+      "sprite": "kid",
+      "x": 29,
+      "y": 19,
+      "facing": "left",
+      "movement": {
+        "kind": "wander",
+        "radius": 2
+      },
+      "script": "mb_child"
+    },
+    {
+      "id": "mb_carter",
+      "sprite": "merchant",
+      "x": 38,
+      "y": 20,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mb_carter"
+    },
+    {
+      "id": "mb_woman",
+      "sprite": "townsfolk_f",
+      "x": 24,
+      "y": 22,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mb_woman"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "script",
+      "x": 24,
+      "y": 8,
+      "text": [
+        "A gauge post at the foot of the bank, with the years cut into it.",
+        "The marks go up the post. The highest is above your head and says 1861.",
+        "The village street is four feet below where you are standing to read it."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 11,
+      "y": 13,
+      "text": [
+        "A brass plate beside the engine house door, kept polished by somebody.",
+        "MARLBECK SCOOP. LIFTS ELEVEN FEET. RUNS WHEN THE LEVEL SAYS SO.",
+        "Under it a smaller plate, screwed on later: AND ALL NIGHT IN A WET FEBRUARY."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 33,
+      "y": 21,
+      "text": [
+        "A board at the east end of the street where the carts come in.",
+        "MARLBECK. TWO HUNDRED AND EIGHTY-ONE SOULS.",
+        "Somebody has crossed out the one and written two. Then crossed that out."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 39,
+      "y": 8,
+      "item": "strong_potion",
+      "quantity": 2,
+      "flag": "item_mb_bank"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 4,
+      "y": 12,
+      "item": "tonic_berry",
+      "quantity": 3,
+      "flag": "item_mb_hidden"
+    }
+  ],
+  "rows": [
+    "●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●",
+    "●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●",
+    "●●...,..,...,.........,.,..,..........,..,●●",
+    "●●..,*,.*......*.**..**,.,....,..,....,...●●",
+    "●●~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~●●",
+    "●●~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~●●",
+    "●●┅┅┅┅┅┅┅┅┅┅┅┅┅┅~┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅●●",
+    "●●,,,,,,,*,,,,,,~,,,,,,,,,*,,*,,,,,,*,,,,,●●",
+    "●●*,*,,,,,,,,,*,~,,,,*,*Ђ,,,,,,,,*,,,,,,,,●●",
+    "●●*,,*,,,,*,,,,,~*,*,,,,,,,,,,,*,,,,,,*,,,●●",
+    "●●,,,,,,*,,,,*,,~,,,,,,,,,,,,,,,,**,,,,,,,●●",
+    "●●.*,....<%j%%%>~....*....,....,,...,....,●●",
+    "●●...*,,.MZZZZZM~.........,.....,...(&&&).●●",
+    "●●....,,*MMMiMMM~.*.Y..,....*.,.,,,.MdZdM,●●",
+    "●●,...,..,,.-...B...,..*.*..,....,..MMdMM,●●",
+    "●●..,.......-..,....*..,...,...,.,..,,,..T●●",
+    "●●..<%%%>...-..*...,..(&&&),.*<%%%>.......●●",
+    "●●..HdZdH..,-.,.,,,..,MZdZM,.,HZdZH*....,*●●",
+    "●●..HHiHH.,.-.a.,....*MMdMM*.,HHdHH*,.,.,.●●",
+    "●●*..,-,,Y..-...,....,.*..,.a....Y......,,●●",
+    "●●------------------------------------------",
+    "●●------------------------------------------",
+    "●●..*..,..*-......,,Y..,..,...,*.....,....●●",
+    "●●.....,144443*.,.<%%%>.,.(&&&)...<%%%>,.,●●",
+    "●●,.,,.,122523.,..HZdZH...MdZdM.,.HdZdH..,●●",
+    "●●...,..GGhgGG..,,HHdHH,,.MMdMM.,.HHdHH,..●●",
+    "●●.t..,.,,.-...,...,....,.,..,.,,......*t.●●",
+    "●●.*...**,,.,..*,...,........*.,...,*,,*.*●●",
+    "●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●",
+    "●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●"
+  ]
+}

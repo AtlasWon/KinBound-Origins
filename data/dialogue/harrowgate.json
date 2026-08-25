@@ -1,0 +1,119 @@
+{
+  "speakers": {
+    "hg_porter": "PORTER",
+    "hg_master": "HALT MASTER",
+    "hg_waiting": "WAITING",
+    "hg_boy": "BOY",
+    "hg_farmer": "FARMER",
+    "hg_buyer": "FOUNDATION BUYER",
+    "hg_cross": "AT THE CROSS",
+    "hg_baker": "BAKER",
+    "hg_girl": "GIRL",
+    "hg_tarin_word": "DROVER"
+  },
+  "entries": {
+    "hg_porter": [
+      {
+        "lines": [
+          "Down side is grain, up side is people, and they are never both at once.",
+          "It works because somebody drew a timetable and the whole parish believes in it."
+        ]
+      }
+    ],
+    "hg_master": [
+      {
+        "lines": [
+          "Four down, four up, and the eleven-fifty is the one everybody means.",
+          "It carries the capital its bread and it has never once been late.",
+          "You could set the county by it. A great many people already have."
+        ]
+      }
+    ],
+    "hg_waiting": [
+      {
+        "lines": [
+          "An hour and ten to Aureline. My mother took two days and was proud of it.",
+          "I am going up for a wedding and I will be back tonight.",
+          "Nobody in her whole life came back the same night from anywhere."
+        ]
+      }
+    ],
+    "hg_boy": [
+      {
+        "lines": [
+          "There is a train under this platform sometimes and it makes your feet go funny.",
+          "Stand on the white line and you feel it before you hear it. Do not tell anyone."
+        ]
+      }
+    ],
+    "hg_farmer": [
+      {
+        "lines": [
+          "Whole crop, one buyer, one price, agreed before I put a seed in the ground.",
+          "My father sold his by the cartload to whoever was in the market that Tuesday.",
+          "He had four bad years. I have not had one. Say what you like about them."
+        ]
+      }
+    ],
+    "hg_buyer": [
+      {
+        "ifFlags": [
+          "ms_second_truth"
+        ],
+        "lines": [
+          "The Foundation buys the whole parish and pays over the market. That is not charity.",
+          "A parish that is not frightened of a wet August will plant what we ask it to.",
+          "You look like you were about to say something unkind. Go on. I have heard them all."
+        ]
+      },
+      {
+        "lines": [
+          "Meridian Foundation, grain. Whole crop, fair price, paid on the day.",
+          "Nobody here has a bad word for us and I would like that noted."
+        ]
+      }
+    ],
+    "hg_cross": [
+      {
+        "lines": [
+          "This cross is four hundred years old and the halt is nine.",
+          "Guess which one the village is arranged around now.",
+          "I am not complaining. I am the only person left who notices, that is all."
+        ]
+      }
+    ],
+    "hg_baker": [
+      {
+        "lines": [
+          "Every loaf in Aureline starts within a morning of where you are standing.",
+          "A hundred and fifty thousand people. Think about that number, then think about bread."
+        ]
+      }
+    ],
+    "hg_girl": [
+      {
+        "lines": [
+          "You can see the capital off the top of the granary on a clear day. A smudge and a shine.",
+          "The shine is glass. More glass in one street of it than in this whole county."
+        ]
+      }
+    ],
+    "hg_tarin_word": [
+      {
+        "ifFlags": [
+          "crest_5_taken"
+        ],
+        "lines": [
+          "Lad came through two days back, your sort of age, would not shut up.",
+          "Took the eleven-fifty north and paid for it out of a jar of coins.",
+          "Said to tell anybody following that he was not waiting. Thought it was funny."
+        ]
+      },
+      {
+        "lines": [
+          "Everybody on this road is going the same way and pretending it is a coincidence."
+        ]
+      }
+    ]
+  }
+}

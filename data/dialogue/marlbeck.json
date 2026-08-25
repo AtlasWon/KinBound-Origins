@@ -1,0 +1,62 @@
+{
+  "speakers": {
+    "mb_engineman": "ENGINE MAN",
+    "mb_elder": "OLD MARLBECK",
+    "mb_child": "CHILD",
+    "mb_carter": "CARTER",
+    "mb_woman": "VILLAGER"
+  },
+  "entries": {
+    "mb_engineman": [
+      {
+        "lines": [
+          "She lifts eleven feet. That is the whole village in one number.",
+          "Everything you are standing on is below the water behind me. Every inch of it.",
+          "You are welcome to come in and look. Everybody does it once and then never forgets it."
+        ]
+      }
+    ],
+    "mb_elder": [
+      {
+        "lines": [
+          "Look up at the drain. Now look at my roof. Go on, both.",
+          "Sixty-one years I have slept under water and not one night wondered about it.",
+          "You do not worry about the bank. You worry about the man who watches the bank."
+        ]
+      }
+    ],
+    "mb_child": [
+      {
+        "lines": [
+          "When the engine stops in the night everybody wakes up.",
+          "Not because it is loud. Because it is not."
+        ]
+      }
+    ],
+    "mb_carter": [
+      {
+        "lines": [
+          "Two loads a week to Harrowgate and it goes on a train from there.",
+          "It used to go all the way to the capital by road and take me four days.",
+          "I am not sorry. I have got my evenings back and my horse is eleven."
+        ]
+      }
+    ],
+    "mb_woman": [
+      {
+        "ifFlags": ["crest_5_taken"],
+        "lines": [
+          "You came up the road from the mire? Then you have seen what we used to be.",
+          "My great-grandmother was born in a reed house and died in a brick one, half a mile apart.",
+          "Somebody dug a ditch. That is the entire difference and it is the whole difference."
+        ]
+      },
+      {
+        "lines": [
+          "The clinic is at the end of the row. It is small and it is open.",
+          "It is open because the road goes past and the road does not keep hours."
+        ]
+      }
+    ]
+  }
+}

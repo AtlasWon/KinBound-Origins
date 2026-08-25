@@ -1,0 +1,25 @@
+{
+  "speakers": {
+    "mb_house_woman": "VILLAGER",
+    "mb_house_boy": "BOY"
+  },
+  "entries": {
+    "mb_house_woman": [
+      {
+        "lines": [
+          "Thirty-one years of rainfall on that shelf, and my mother's thirty before it.",
+          "Nobody asked us to keep them. We keep them because a wet March is a thing you can see coming.",
+          "A man from the Foundation copied the lot last summer. Very polite. Left the originals."
+        ]
+      }
+    ],
+    "mb_house_boy": [
+      {
+        "lines": [
+          "I can tell the level from the sound the engine makes. Everybody here can.",
+          "It is a bit higher today. Nobody has said anything, so it is fine."
+        ]
+      }
+    ]
+  }
+}

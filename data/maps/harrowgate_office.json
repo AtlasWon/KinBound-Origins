@@ -1,0 +1,79 @@
+{
+  "id": "harrowgate_office",
+  "name": "Interior",
+  "displayName": "GRAIN OFFICE",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIIIIIUIII",
+    "IFFFFFFkkkFFFFFI",
+    "IF$FFFFFFFFFF?FI",
+    "IFFFFFFFFFFFFFFI",
+    "IFKKKKFFFFAAFFFI",
+    "IFFFFFFFFFEEFFFI",
+    "IFFFFFFFFFFFFFFI",
+    "IkFFFFFFFFFFFFPI",
+    "IFFFFFFFFFFFFFFI",
+    "IFFFFFFFFFFFFFFI",
+    "IIIIIIIDIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 7,
+      "y": 10,
+      "toMap": "harrowgate",
+      "toX": 26,
+      "toY": 15,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "hg_office_clerk",
+      "sprite": "clerk",
+      "x": 3,
+      "y": 4,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hg_office_clerk"
+    },
+    {
+      "id": "hg_office_agent",
+      "sprite": "meridian_sci_f",
+      "x": 10,
+      "y": 5,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hg_office_agent"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 1,
+      "text": [
+        "A run of ledgers, and beside them a shelf of something else entirely.",
+        "RAINFALL. WIND. FROST DATES. Thirty years of them, parish by parish.",
+        "A grain office does not need thirty years of frost dates. Somebody asked for them."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 2,
+      "text": [
+        "A tide table for a coast four days from here, pinned up and marked in pencil.",
+        "The marks are not on the high tides. They are on the days between them.",
+        "Nobody in this room could tell you why, and one of them did not pin it up."
+      ]
+    }
+  ],
+  "_plan": "A small office that is doing two jobs, and the second one is the first real thread the player can pull in Act 4. It buys grain, and it also keeps thirty years of weather for a hundred parishes and a tide table for a coast nobody here trades with. Nothing is said out loud. The room is the evidence, and it is the same evidence Aureline is built on at a hundred times the size."
+}

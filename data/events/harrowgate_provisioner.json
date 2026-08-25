@@ -1,0 +1,19 @@
+[
+  {
+    "id": "harrowgate_shop",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "PROVISIONER",
+        "lines": [
+          "Two deliveries a day and a shop the size of a barn door. Ask for anything."
+        ]
+      },
+      {
+        "kind": "openShop",
+        "shop": "harrowgate_provisioner"
+      }
+    ]
+  }
+]

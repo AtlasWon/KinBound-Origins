@@ -1,0 +1,126 @@
+{
+  "id": "route_7_relay",
+  "name": "The Relay Yard",
+  "displayName": "THE RELAY YARD",
+  "music": "station",
+  "battleBackdrop": "highland",
+  "indoor": false,
+  "encounterTable": "route_7_relay",
+  "_design": "The rare-encounter spot, and the one place on the road that is signposted by scenery instead of by a post: ten telegraph poles march east off the railway across open wold, and this is what is at the end of them. A Foundation repeater station -- the same mesh fence, the same generator, the same numbered crates the player last saw in a lava field a hundred and thirty miles south, which is the quiet half of what Act 4 is about. The loud half is what lives in the grass inside the wire.",
+  "_plan": "A single small yard, and the whole reason for it is the encounter table. LANTRIC LIVES NOWHERE ELSE IN CAELORA, and Voltwick is otherwise only reachable by raising a Fizzlet -- so a player who follows the wires gets the Spark line handed to them and a player who does not never knows. That is the correct shape for an optional: it pays properly and it is never mentioned by anybody.\n\nThe rough grass is inside the fence rather than outside it on purpose. Nothing keeps the grass down in there because nobody walks in it, which is exactly why the Kin are in it, and it means the reward is behind a gate the player has to notice.",
+  "warps": [
+    {
+      "x": 0,
+      "y": 9,
+      "toMap": "route_7_north",
+      "toX": 53,
+      "toY": 40,
+      "facing": "left",
+      "style": "edge"
+    },
+    {
+      "x": 0,
+      "y": 10,
+      "toMap": "route_7_north",
+      "toX": 53,
+      "toY": 41,
+      "facing": "left",
+      "style": "edge"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "r7r_operator",
+      "sprite": "meridian_sci",
+      "x": 13,
+      "y": 12,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r7r_operator"
+    },
+    {
+      "id": "r7r_linesman",
+      "sprite": "dockhand",
+      "x": 19,
+      "y": 13,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r7r_linesman",
+      "sightRange": 3
+    }
+  ],
+  "objects": [
+    {
+      "kind": "script",
+      "x": 5,
+      "y": 12,
+      "text": [
+        "A board wired to the fence, in the Foundation’s own lettering.",
+        "MERIDIAN FOUNDATION. RELAY SIX. NO ADMITTANCE WITHOUT THE BOOK.",
+        "The gate is open. Nobody has thought about that side of it in years."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 13,
+      "y": 11,
+      "text": [
+        "The hut door, and it is locked, and there is a card in a frame beside it.",
+        "RELAY SIX. ONE OPERATOR. NO VISITORS. THE BOOK IS KEPT INSIDE.",
+        "You can hear the tape going through in there. It does not stop while you listen."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 19,
+      "y": 9,
+      "text": [
+        "A mast, and a paper tape going into a box and coming out the other side.",
+        "It is repeating something. Nobody here can read it and nobody here needs to.",
+        "The tape is warm. Whatever it is has not stopped all day."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 21,
+      "y": 5,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_r7r_grass"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 8,
+      "y": 15,
+      "item": "fine_vessel",
+      "quantity": 5,
+      "flag": "item_r7r_hidden"
+    }
+  ],
+  "rows": [
+    "TTTTTTTTTTTTTTTTTTTTTTTTTT",
+    "TT.....╪....T,.,,T...T..TT",
+    "TT..¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯TT",
+    "TT..¹.\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\".¹TT",
+    "TT.,¹.\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\".¹TT",
+    "TT.,¹.*\"\"\"\"\"\"\"\"\"\"\"\"\"\"\",¹TT",
+    "TT.,¹.\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\".¹TT",
+    "TT..¹.\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\",¹TT",
+    "TT..¹...,.,<%%%%>,..,..¹TT",
+    "-----------MZMMZM..²,..¹TT",
+    "-----------MMMMMM,**,,,¹TT",
+    "TT,.¹.,..,-MMiMMM.,...,¹TT",
+    "TT..¹´\"\"\"\"-\"\"-\"\"\"\"\"¾\"\".¹TT",
+    "TT..¹,\"\"\"¾---\"*\"\"\"\"\"\"\",¹TT",
+    "TT..¹.\"\"³**\"\"\"\"\"\"\"\"\"\"\".¹TT",
+    "TT,.¹,\"*\"\"*\"\"\"\"\"\"\"\"\"\"\".¹TT",
+    "TT..¹.\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\".¹TT",
+    "TT,,¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯TT",
+    "TTTTTTTTTTTTTTTTTTTTTTTTTT",
+    "TTTTTTTTTTTTTTTTTTTTTTTTTT"
+  ]
+}

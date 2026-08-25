@@ -1,0 +1,29 @@
+{
+  "mapId": "route_7_relay",
+  "$comment": "The smallest table in the game and the only reason the map exists. LANTRIC LIVES NOWHERE ELSE IN CAELORA. Voltwick is otherwise reachable only by raising a Fizzlet through the whole of Route 7, so this yard hands a player the Spark line in one afternoon if they followed the wires, and never mentions it if they did not. That is the correct shape for an optional: it pays properly, and nobody in the world tells you it is there.\n\nThree slots only, because the yard is a hundred and fifty tiles of rough grass inside a fence and a nine-entry table would be pretending to be a habitat. Fizzlet is more than half of it so a player who wants the evolution rather than the rarity gets one quickly; Lantric is roughly one in six and is the thing worth the walk. Levels 28-31, at the top of the road, because this is the last optional before the capital and anybody standing here has done everything else.",
+  "methods": {
+    "tallGrass": {
+      "rate": 190,
+      "slots": [
+        {
+          "species": "fizzlet",
+          "minLevel": 28,
+          "maxLevel": 30,
+          "weight": 55
+        },
+        {
+          "species": "voltwick",
+          "minLevel": 29,
+          "maxLevel": 31,
+          "weight": 28
+        },
+        {
+          "species": "lantric",
+          "minLevel": 29,
+          "maxLevel": 31,
+          "weight": 17
+        }
+      ]
+    }
+  }
+}

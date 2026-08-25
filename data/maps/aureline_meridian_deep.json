@@ -6,215 +6,295 @@
   "battleBackdrop": "indoor",
   "indoor": true,
   "rows": [
-    "IIIIIIIIIIIIIIIIIIIIIIII",
-    "ISS::::::::::::::::::::I",
-    "I::::::::::::::::::::::I",
-    "I:$$$::::::::::::$$$:::I",
-    "I::::::::::::::::::::::I",
-    "IIIIIIIIII::::IIIIIIIIII",
-    "I::::::::::::::::::::::I",
-    "I:³:::ΦΘΘΦΦΘΘΦ::::::³::I",
-    "I:::::ΘΘθθθθΘΘ:::::::::I",
-    "I:::::ΘθΘΞΞΘθΘ:::::::::I",
-    "I:::::ΦΘΘΞΞΘΘΦ:::::::::I",
-    "I:::::ΘθΘθθΘθΘ:::::::::I",
-    "I:::::ΘΘθθθθΘΘ:::::::::I",
-    "I:²:::ΦΘΘΦΦΘΘΦ::::::²::I",
-    "I::::::::::::::::::::::I",
-    "I:¾¾::::::::::::::¾¾:::I",
-    "I::::::::::::::::::::::I",
-    "I:+?+:::::::::::+?+::::I",
-    "I:::::::::SS:::::::::::I",
-    "IIIIIIIIIIIIIIIIIIIIIIII"
+    "IIIIIIIIIIIIIIIIIIIIIIIIIIIIII",
+    "I::::::::::::::::::::::::::::I",
+    "I::::::::::::::::::::::::::::I",
+    "I:ΦΦΦΦΦΦΦΦΦΦΦΦ::ΦΦΦΦΦΦΦΦΦΦΞΞ:I",
+    "I::::::::::::::::::::::::::::I",
+    "I::::::::::::::::::::::::::::I",
+    "I:ΦΦΦΦΦΦΦΦΦΞΞΞ::ΦΦΦΦΦΦΦΦΞΞΞΞ:I",
+    "I::::::::::::::::::::::::::::I",
+    "I::::::::::::::::::::::::::::I",
+    "I::::::::$$::::::::::::::::::I",
+    "I::::::::$E::::::::::::::::::I",
+    "I::::::::::::::::::::::::::::I",
+    "I::::::::::::::::::::::::::::I",
+    "I:³:::::¾¾:::::::::¾¾:::³::::I",
+    "I::::::::::::::::::::::::::::I",
+    "I::::?++?::::::::::::?++?::::I",
+    "I:::::::::::::SS:::::::::::::I",
+    "IIIIIIIIIIIIIIIIIIIIIIIIIIIIII"
   ],
   "warps": [
     {
-      "x": 1, "y": 1,
-      "toMap": "aureline_meridian_offices", "toX": 1, "toY": 8,
-      "facing": "right", "style": "stairs"
+      "x": 14,
+      "y": 16,
+      "toMap": "aureline_meridian_records",
+      "toX": 3,
+      "toY": 8,
+      "facing": "right",
+      "style": "stairs"
     },
     {
-      "x": 2, "y": 1,
-      "toMap": "aureline_meridian_offices", "toX": 1, "toY": 9,
-      "facing": "right", "style": "stairs"
-    },
-    {
-      "x": 10, "y": 18,
-      "toMap": "aureline_meridian_hall", "toX": 2, "toY": 1,
-      "facing": "down", "style": "stairs"
-    },
-    {
-      "x": 11, "y": 18,
-      "toMap": "aureline_meridian_hall", "toX": 3, "toY": 1,
-      "facing": "down", "style": "stairs"
+      "x": 15,
+      "y": 16,
+      "toMap": "aureline_meridian_records",
+      "toX": 3,
+      "toY": 9,
+      "facing": "right",
+      "style": "stairs"
     }
   ],
   "npcs": [
     {
-      "id": "aur_deep_lead",
-      "sprite": "meridian_lead",
-      "x": 16, "y": 3,
-      "facing": "down",
-      "movement": { "kind": "static" },
-      "script": "aur_deep_lead"
-    },
-    {
       "id": "aur_deep_eng",
       "sprite": "meridian_sci",
-      "x": 4, "y": 4,
-      "facing": "down",
-      "movement": { "kind": "static" },
+      "x": 3,
+      "y": 8,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_deep_eng"
-    },
-    {
-      "id": "aur_deep_ring",
-      "sprite": "meridian_sci_f",
-      "x": 16, "y": 10,
-      "facing": "left",
-      "movement": { "kind": "static" },
-      "script": "aur_deep_ring"
     },
     {
       "id": "aur_deep_doubt",
       "sprite": "meridian",
-      "x": 4, "y": 15,
-      "facing": "right",
-      "movement": { "kind": "lookAround" },
+      "x": 25,
+      "y": 8,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
       "script": "aur_deep_doubt"
     },
     {
       "id": "aur_deep_young",
       "sprite": "meridian",
-      "x": 19, "y": 16,
+      "x": 7,
+      "y": 11,
       "facing": "up",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_deep_young"
+    },
+    {
+      "id": "ad_kell",
+      "sprite": "meridian_commander",
+      "x": 26,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ad_kell",
+      "hiddenIfFlag": "act4_theft_done",
+      "requiresFlag": "act4_saw_coverup"
+    },
+    {
+      "id": "ad_veyl",
+      "sprite": "veyl",
+      "x": 13,
+      "y": 10,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ad_veyl",
+      "hiddenIfFlag": "act4_theft_done",
+      "requiresFlag": "act4_saw_coverup"
+    },
+    {
+      "id": "ad_lyra",
+      "sprite": "lyra",
+      "x": 16,
+      "y": 12,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ad_lyra"
+    },
+    {
+      "id": "ad_tarin",
+      "sprite": "rival",
+      "x": 12,
+      "y": 12,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ad_tarin"
+    },
+    {
+      "id": "ad_tech",
+      "sprite": "meridian_sci",
+      "x": 5,
+      "y": 14,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ad_tech"
+    },
+    {
+      "id": "aur_deep_lead",
+      "sprite": "meridian_lead",
+      "x": 20,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "aur_deep_lead"
+    },
+    {
+      "id": "aur_deep_ring",
+      "sprite": "meridian_sci_f",
+      "x": 20,
+      "y": 5,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "aur_deep_ring"
     },
     {
       "id": "aur_deep_hand",
       "sprite": "dockhand",
-      "x": 14, "y": 18,
+      "x": 22,
+      "y": 14,
       "facing": "left",
-      "movement": { "kind": "pace", "axis": "x", "distance": 3 },
+      "movement": {
+        "kind": "pace",
+        "axis": "x",
+        "distance": 3
+      },
       "script": "aur_deep_hand"
     }
   ],
   "objects": [
     {
       "kind": "sign",
-      "x": 9, "y": 9,
+      "x": 14,
+      "y": 0,
       "text": [
-        "A stone plinth with nothing on it, and a card in a brass frame:",
-        "PROJECT ABYSS CROWN. RESTRAINT ARRAY, TEST GEOMETRY, ONE TWELFTH SCALE.",
-        "The plinth is the size of a table. What goes on it is a mile long."
+        "The end wall is one chart, nine feet of it, drawn to scale.",
+        "A circle laid on a sea floor, and inside the circle, for scale, the subject.",
+        "The circle is the smaller of the two shapes."
       ]
     },
     {
       "kind": "sign",
-      "x": 10, "y": 10,
+      "x": 5,
+      "y": 3,
       "text": [
-        "The far side of the plinth carries the sequence, in four steps.",
-        "FIND. WAKE. RING. HOLD. Each step is ticked but the last.",
-        "Under WAKE, in a smaller hand: REQUIRES THE HEART. NO SUBSTITUTE FOUND."
+        "PROJECT ABYSS CROWN. RESTRAINT ARRAY. CRADLES 1-60.",
+        "Sixty stands in two rows and fifty-one of them filled.",
+        "Every ring in them was cut out of an Aurelian floor and re-wound by hand."
       ]
     },
     {
       "kind": "sign",
-      "x": 6, "y": 7,
+      "x": 26,
+      "y": 3,
       "text": [
-        "One of the twelve. An Aurelian ring, cut out of a temple floor,",
-        "and re-wound with new copper and a new throat of glass.",
-        "The Aurelians built it to speak with. It has been rebuilt to hold."
+        "Nine cradles standing empty at the end of the row, numbered and waiting.",
+        "A card gives the date the last nine are due.",
+        "It is the end of this month."
       ]
     },
     {
       "kind": "sign",
-      "x": 13, "y": 13,
+      "x": 5,
+      "y": 6,
       "text": [
-        "A ring that failed testing, kept for comparison, split from rim to hub.",
-        "The report card is short. INPUT SUSTAINED 41 SECONDS.",
-        "SUBJECT RESPONSE: DISTRESS. TERMINATED ON SAFETY."
+        "A ring kept out of the rack for comparison, split from rim to hub.",
+        "Its report card is short and completely honest.",
+        "INPUT SUSTAINED 41 SECONDS. SUBJECT RESPONSE: DISTRESS. TERMINATED ON SAFETY."
       ]
     },
     {
       "kind": "sign",
-      "x": 2, "y": 7,
+      "x": 20,
+      "y": 6,
       "text": [
-        "A generator the size of a cart, and eleven more like it along the wall.",
-        "Twelve rings, twelve generators, and a load sheet that comes to more",
-        "current than the city of Aureline draws on a winter night."
+        "An Aurelian ring and its rebuild, side by side, so the change is plain.",
+        "The old one is tuned to listen and the new one is tuned to insist.",
+        "It is the same instrument. It is a completely different sentence."
       ]
     },
     {
       "kind": "sign",
-      "x": 2, "y": 13,
+      "x": 10,
+      "y": 9,
       "text": [
-        "A survey mast, dismantled and laid out on trestles with its parts numbered.",
-        "It is the same mast the Foundation stands in villages to read the wind.",
-        "The instrument at the top of this one is not a wind instrument."
+        "The bench, and the working sequence chalked on the board above it,",
+        "in four words: FIND. WAKE. RING. HOLD.",
+        "Under WAKE, smaller: REQUIRES THE HEART. NO SUBSTITUTE FOUND."
       ]
     },
     {
       "kind": "sign",
-      "x": 2, "y": 3,
+      "x": 10,
+      "y": 10,
       "text": [
-        "A bench of Aurelian fragments in numbered trays, and a lamp over it.",
-        "The work is beautiful. Careful, slow, reversible, properly recorded.",
-        "The people who did it were taught by somebody very good."
+        "A coat over the back of the chair and a cold cup on the bench.",
+        "Somebody has been working at this all day and has not gone home,",
+        "and there is nothing at all sinister about that, which is the trouble."
       ]
     },
     {
       "kind": "sign",
-      "x": 18, "y": 3,
+      "x": 2,
+      "y": 13,
       "text": [
-        "The deep chart, drawn at last year's soundings and hung under glass.",
-        "The shape on the shelf floor is outlined in red and given a bearing,",
-        "a depth, and a name that is not a place name."
+        "A generator, and eleven more like it down the wall.",
+        "Sixty rings, sixty generators, and a load sheet that comes to more current",
+        "than the city of Aureline draws on a winter night."
       ]
     },
     {
       "kind": "sign",
-      "x": 2, "y": 15,
+      "x": 8,
+      "y": 13,
       "text": [
-        "Crates stencilled for the coast, waybilled to a harbour with no road.",
+        "Crates stencilled for the coast, waybilled to a harbour with no road to it.",
         "The manifest says SURVEY EQUIPMENT.",
-        "The weights on the waybill say twelve of the same thing."
+        "The weights on the waybill say sixty of the same thing."
       ]
     },
     {
       "kind": "sign",
-      "x": 18, "y": 15,
+      "x": 19,
+      "y": 13,
       "text": [
         "A pallet of coats, boots and cold-weather kit for forty people,",
-        "shrink-wrapped and dated for the end of the month.",
-        "Whatever this is, it is not a plan. It is a sailing date."
+        "wrapped and dated for the end of the month.",
+        "Whatever this is, it is not a plan any more. It is a sailing date."
       ]
     },
     {
       "kind": "sign",
-      "x": 2, "y": 17,
+      "x": 6,
+      "y": 15,
       "text": [
-        "A console still lit, cycling one recorded trace over and over.",
-        "It is a pressure reading, taken at depth, and it is not weather.",
+        "A console left running, cycling one recorded trace over and over.",
+        "It is a pressure reading taken at depth, and it is not weather.",
         "It rises and falls, slowly, evenly, like something enormous breathing."
       ]
     },
     {
       "kind": "sign",
-      "x": 17, "y": 17,
+      "x": 22,
+      "y": 15,
       "text": [
-        "The floor plan of this level, and the door out of it at the bottom.",
-        "The room beyond is marked ASSEMBLY, and under that, in the same ink",
-        "as everything else down here, is written simply: WHEN IT IS TIME."
+        "The floor's own plan, pinned up, with every station numbered.",
+        "There is no station on it for the room you came down from",
+        "and no stair on it but the one you came down."
       ]
-    },
-    {
-      "kind": "hiddenItem",
-      "x": 22, "y": 18,
-      "item": "full_heal",
-      "quantity": 1,
-      "flag": "item_aur_hq_deep"
     }
   ],
-  "_plan": "The horror is the craftsmanship. This is not a lair: it is a well-run laboratory with tidy trays, honest test reports and a failure kept for comparison, and it happens to be building a cage for something the size of a valley. The twelve rings stand round an empty plinth because what belongs in the middle cannot be brought here. Everything the brief asks Act 4 to deliver about Abyss Crown is on the two plinth cards: FIND, WAKE, RING, HOLD, and REQUIRES THE HEART. The player reads that BEFORE anybody takes the Tideheart off them, which is what makes the theft land."
+  "_plan": "Rebuilt to the ad_contract in data/events/aureline_meridian_deep.json: two long racks of sixty cradles with fifty-one filled, a bench with a coat over the chair, and a nine-foot chart on the end wall of a circle on a sea floor with the subject drawn inside it to scale -- and the subject is the bigger of the two shapes. No Kin, no encounters, no items: a workshop at seven in the evening. The horror is the craftsmanship. Everything here is tidy, honestly reported and well made, including a failure kept for comparison whose own card says the subject was in distress and that they stopped. Then they ordered forty-nine more and a sailing date. ad_kell stands at (26,2), as far from the bench at (10,9) as this floor allows, because the confrontation has her walk the length of it."
 }

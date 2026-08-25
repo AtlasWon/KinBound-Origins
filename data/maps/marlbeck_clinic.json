@@ -1,0 +1,88 @@
+{
+  "id": "marlbeck_clinic",
+  "name": "Interior",
+  "displayName": "KIN CLINIC",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIIIUIII",
+    "I+++++kkF?FFFI",
+    "IPKKFKKKFFFFkI",
+    "IFFFFFFFFFFFFI",
+    "IkFFFFFFFFAAFI",
+    "IF/rr/FFFFEEFI",
+    "IFFrrFFFFFFFPI",
+    "IkFFFFFFFFFFkI",
+    "IFFFFFFFFFFFFI",
+    "IIIIIIDIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 9,
+      "toMap": "marlbeck",
+      "toX": 11,
+      "toY": 25,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "mb_clinic_keeper",
+      "sprite": "healer",
+      "x": 4,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "clinic_heal"
+    },
+    {
+      "id": "mb_clinic_roost",
+      "sprite": "professor",
+      "x": 10,
+      "y": 1,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "roost_terminal"
+    },
+    {
+      "id": "mb_rester",
+      "sprite": "hiker",
+      "x": 3,
+      "y": 5,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mb_rester"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 1,
+      "text": [
+        "A brass terminal. THE ROOST, stencilled on the side.",
+        "Kin you cannot carry wait here."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 2,
+      "text": [
+        "A rack of bulletins, most of them about water.",
+        "On the top: FOUNDATION HAULAGE - HARROWGATE HALT. RATES ON APPLICATION.",
+        "Under it, older and hand-written: ANYBODY WALKING NORTH, TELL US YOU GOT THERE."
+      ]
+    }
+  ],
+  "_plan": "Half the size it looks: a fen village clinic with two beds and a terminal, kept open because the Central Road runs past the end of the street and the road does not care what time it is."
+}

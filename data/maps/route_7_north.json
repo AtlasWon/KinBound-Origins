@@ -1,0 +1,479 @@
+{
+  "id": "route_7_north",
+  "name": "The Central Road",
+  "displayName": "ROUTE 7 - THE GRAIN ROAD",
+  "music": "route_west",
+  "battleBackdrop": "highland",
+  "indoor": false,
+  "regionPos": {
+    "x": 24,
+    "y": 8
+  },
+  "encounterTable": "route_7_north",
+  "_design": "The second half of the road, and the half where the player stops being the only person going somewhere. The levels were empty because somebody drained them and went home; the Grain Road is BUSY. There is a waggon on it, a courier on it, a man taking a toll on the bridge, gangers on the line and a village whose whole economy is loading the capital's bread onto trains. The line and the road run beside each other from the curve at Harrowgate End to the top of the map and never part, and that is the argument: everything in this country is pointed at one place.",
+  "_plan": "THE LINE STOPS CROSSING AND STARTS LEADING. On the levels the railway cut across the player's path at right angles and went somewhere else. Here it comes in from the east, turns north at 8,54 and runs up the whole map beside the road. That single change of relationship is worth more than any amount of scenery: for forty rows the player walks north with two white threads in the corner of the screen, and they are going to the same place.\n\nTHE RIVER IS THE REAL GATE. Four rows: shallows, deep, deep, shallows. The middle two are Swim and stay shut, so the Rhene is the one honest wall on the road and there is exactly one way over it -- the bridge at x15-17, which the road pays for. The eyot at 38-40,21 is in plain sight from the bank with something on it, and it is the second half of the same sentence the junction pool started on the levels.\n\nHARROWGATE IS WEST ALONG THE LANE AT y26-27, and the lane crosses the line on the level at 8,26. Everything the village is for is in that one fact: the road to it goes over the railway, because the railway got there first.\n\nTHE OPTIONAL BRANCH is the relay track east at y40-41, and it is signed by the wires rather than by a post. Ten telegraph poles march away from the line across open wold, and at the end of them is the Foundation's repeater yard -- which is the only place in Caelora a Lantric lives. A player who works out that the poles are an arrow has found the best thing on this road without being told it is there.\n\nTHE OLD RAIL TUNNEL is at 46,13 and it is a WALL. Canon files it under the region's optional places, which are not this stage's to build, so what stands here is the outside of one: a dead branch running east into a chalk bluff, an arch somebody bricked up, and a board. There is no stub behind it and there never will be until somebody builds the inside.",
+  "warps": [
+    {
+      "x": 28,
+      "y": 63,
+      "toMap": "route_7",
+      "toX": 28,
+      "toY": 1,
+      "facing": "down",
+      "style": "edge"
+    },
+    {
+      "x": 29,
+      "y": 63,
+      "toMap": "route_7",
+      "toX": 29,
+      "toY": 1,
+      "facing": "down",
+      "style": "edge"
+    },
+    {
+      "x": 30,
+      "y": 63,
+      "toMap": "route_7",
+      "toX": 30,
+      "toY": 1,
+      "facing": "down",
+      "style": "edge"
+    },
+    {
+      "x": 15,
+      "y": 0,
+      "toMap": "aureline",
+      "toX": 74,
+      "toY": 118,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 16,
+      "y": 0,
+      "toMap": "aureline",
+      "toX": 75,
+      "toY": 118,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 17,
+      "y": 0,
+      "toMap": "aureline",
+      "toX": 76,
+      "toY": 118,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 0,
+      "y": 26,
+      "toMap": "harrowgate",
+      "toX": 53,
+      "toY": 19,
+      "facing": "left",
+      "style": "edge"
+    },
+    {
+      "x": 0,
+      "y": 27,
+      "toMap": "harrowgate",
+      "toX": 53,
+      "toY": 20,
+      "facing": "left",
+      "style": "edge"
+    },
+    {
+      "x": 55,
+      "y": 40,
+      "toMap": "route_7_relay",
+      "toX": 2,
+      "toY": 9,
+      "facing": "right",
+      "style": "edge"
+    },
+    {
+      "x": 55,
+      "y": 41,
+      "toMap": "route_7_relay",
+      "toX": 2,
+      "toY": 10,
+      "facing": "right",
+      "style": "edge"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "r7n_wagon",
+      "sprite": "porter",
+      "x": 27,
+      "y": 52,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r7n_wagon",
+      "sightRange": 3
+    },
+    {
+      "id": "r7n_ganger",
+      "sprite": "dockhand",
+      "x": 9,
+      "y": 33,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r7n_ganger",
+      "sightRange": 4
+    },
+    {
+      "id": "r7n_ferry",
+      "sprite": "fisher",
+      "x": 19,
+      "y": 24,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r7n_ferry",
+      "sightRange": 3
+    },
+    {
+      "id": "r7n_courier",
+      "sprite": "meridian",
+      "x": 14,
+      "y": 14,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r7n_courier",
+      "sightRange": 4
+    },
+    {
+      "id": "r7n_reaper",
+      "sprite": "townsfolk_f",
+      "x": 24,
+      "y": 43,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r7n_reaper",
+      "sightRange": 4
+    },
+    {
+      "id": "r7n_wire",
+      "sprite": "meridian_sci_f",
+      "x": 46,
+      "y": 42,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r7n_wire",
+      "sightRange": 3
+    },
+    {
+      "id": "r7n_toll",
+      "sprite": "elder",
+      "x": 18,
+      "y": 19,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r7n_toll"
+    },
+    {
+      "id": "r7n_lane",
+      "sprite": "villager_f",
+      "x": 10,
+      "y": 25,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r7n_lane"
+    },
+    {
+      "id": "r7n_pedlar",
+      "sprite": "merchant",
+      "x": 18,
+      "y": 34,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r7n_pedlar"
+    },
+    {
+      "id": "r7n_boy",
+      "sprite": "kid",
+      "x": 12,
+      "y": 28,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "r7n_boy"
+    },
+    {
+      "id": "r7n_clerk",
+      "sprite": "meridian_sci",
+      "x": 14,
+      "y": 7,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r7n_clerk"
+    },
+    {
+      "id": "r7n_tunnel",
+      "sprite": "hiker",
+      "x": 44,
+      "y": 14,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r7n_tunnel"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "script",
+      "x": 14,
+      "y": 46,
+      "text": [
+        "A fingerpost at the elbow of the road, and the newest board on it is a timetable.",
+        "HARROWGATE HALT, ONE MILE WEST. DOWN TRAINS 06, 11, 15, 19.",
+        "The old arm under it still says CART FERRY, and points at nothing."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 18,
+      "y": 24,
+      "text": [
+        "A board at the bridge foot, and a slot in the post under it.",
+        "THE RHENE BRIDGE. TWELVE ARCHES. BUILT ON THE SUBSCRIPTION OF THE COUNTY.",
+        "Below, smaller: FOOT, FREE. WHEEL, A PENNY. NOBODY SWIMS IT. ASK WHY LATER."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 18,
+      "y": 8,
+      "text": [
+        "A milestone. AURELINE VI.",
+        "This one is not moss-grown. Somebody scrubs it, and recently.",
+        "The road here is wider than the road behind you, and it is wider again ahead."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 18,
+      "y": 30,
+      "text": [
+        "A milestone. AURELINE XII.",
+        "Cut into the base by a different chisel, later and in a hurry: HALT 1.",
+        "A railway measures from its own stations. It does not care where the miles were."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 14,
+      "y": 44,
+      "text": [
+        "A milestone. AURELINE XV.",
+        "Somebody has counted the waggons past it and chalked the tally on the back.",
+        "Two hundred and six since the light. All of them going the same way."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 31,
+      "y": 61,
+      "text": [
+        "A milestone. AURELINE XVIII.",
+        "A cart has clipped it at some point and the county has straightened it since.",
+        "They straightened it. Nobody straightened a milestone on the Mire Road."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 11,
+      "y": 25,
+      "text": [
+        "A signal, and a small board screwed to the mast at eye height.",
+        "UP DISTANT. HARROWGATE. DO NOT PASS THE ARM.",
+        "It is the only sentence out here addressed to somebody moving faster than you."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 45,
+      "y": 13,
+      "text": [
+        "A dead branch line, and where it stops there is an arch bricked flat.",
+        "THE OLD TUNNEL. CLOSED BY ORDER. THE HILL MOVED AND THE HILL WON.",
+        "The brick is newer than the arch and older than anybody who could tell you why."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 44,
+      "y": 40,
+      "text": [
+        "The wires leave the railway here and go east on their own poles.",
+        "Ten of them, in a line, out across country with nothing at either end you can see.",
+        "Somebody wanted to say something from somewhere quiet."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 8,
+      "y": 15,
+      "text": [
+        "A gate either side of the line, and a plank between them, and a brass plate.",
+        "OCCUPATION CROSSING. GRANTED IN PERPETUITY TO THE OWNER OF WEST FIELD.",
+        "Somebody had eleven acres cut in half and this is what they got for it."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 6,
+      "y": 10,
+      "item": "great_potion",
+      "quantity": 2,
+      "flag": "item_r7n_westwheat"
+    },
+    {
+      "kind": "item",
+      "x": 39,
+      "y": 22,
+      "item": "deep_vessel",
+      "quantity": 5,
+      "flag": "item_r7n_eyot"
+    },
+    {
+      "kind": "item",
+      "x": 42,
+      "y": 30,
+      "item": "full_heal",
+      "quantity": 3,
+      "flag": "item_r7n_plough"
+    },
+    {
+      "kind": "item",
+      "x": 24,
+      "y": 50,
+      "item": "strong_potion",
+      "quantity": 3,
+      "flag": "item_r7n_southwheat"
+    },
+    {
+      "kind": "item",
+      "x": 50,
+      "y": 45,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_r7n_eastwheat"
+    },
+    {
+      "kind": "item",
+      "x": 4,
+      "y": 33,
+      "item": "rouse",
+      "quantity": 2,
+      "flag": "item_r7n_westplough"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 43,
+      "y": 15,
+      "item": "wakebell",
+      "quantity": 2,
+      "flag": "item_r7n_hidden_tunnel"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 5,
+      "y": 58,
+      "item": "escape_line",
+      "quantity": 3,
+      "flag": "item_r7n_hidden_south"
+    }
+  ],
+  "rows": [
+    "●●●●●●●●┃●●●●●●▦▦▦●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●",
+    "●●●●●●●●┃●●●●●●▦▦▦●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●",
+    "●●●.....┃......▦▦▦.....,..,,.......**.,.........,...,●●●",
+    "●●●↑↑↑↑↑┃↑↑↑↑↑.▦▦▦.●▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧●.*.....●●●",
+    "●●●↑↑↑↑↑┃↑↑↑↑↑.▦▦▦,●▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧●*,...,.●●●",
+    "●●●↑↑↑↑↑┃↑↑↑↑↑.▦▦▦.●▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧●,..,,,,●●●",
+    "●●T↑↑↑↑↑┃↑↑↑↑↑.▦▦▦.●▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧●.,.....T●●",
+    "●●●↑↑↑↑↑┃↑↑↑↑↑.▦▦▦.●▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧..,.....●●●",
+    "●●●↑↑↑↑↑┃↑↑↑↑↑.▦▦▦■.▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧●ccccccc●●●",
+    "●●●↑↑↑↑↑┃↑↑↑↑↑.▦▦▦.●▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧●ccccccc●●●",
+    "●●●↑↑↑↑↑┃↑↑↑↑↑.▦▦▦.●▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧●ccccccc●●●",
+    "●●●↑↑↑↑↑┃↑↑↑↑↑.▦▦▦,●▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧●ccccccc●●●",
+    "●●●↑↑↑↑↑┃↑↑↑↑↑,▦▦▦.●●●●.●●●●●●●●●●●●●●.●●●●●●●CCCCCCC.●●",
+    "●●●↑↑↑↑↑┃↑↑↑↑↑.▦▦▦.●↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑━━━━━━━━MCCCCCC●●●",
+    "●●●↑↑↑↑↑┃↑↑↑↑↑.▦▦▦.●↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑\"↑\"↑\".CCCCCCC●●●",
+    "●●●↑↑↑↑↑╂↑↑↑↑↑.▦▦▦,.↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑\"\"↑↑\"\"●..,....●●●",
+    "●●●↑↑↑↑↑╂↑↑↑↑↑.▦▦▦.●↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑●,,,,,,,●●●",
+    "●●●↑↑↑↑↑┃↑↑↑↑↑.▦▦▦.●↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑.,,,,,,,●●●",
+    "●●●↑↑↑↑↑┃↑↑↑↑↑,▦▦▦.●↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑●,,,,,,,●●●",
+    "●●●..*..┃..*,t.▦▦▦........*,..,,..,.,..*,,.....t.,...●●●",
+    "●●~~~~~~┃~~~~~~BBB~~~~~~~~~~~~~~~~~~~WWWWW~~~~~~~~~~~~●●",
+    "●●WWWWWW┃WWWWWWBBBWWWWWWWWWWWWWWWWWWWW.,.WWWWWWWWWWWWW●●",
+    "●●TWWWWW┃WWWWWWBBBWWWWWWWWWWWWWWWWWWWW\".,WWWWWWWWWWWWT●●",
+    "●●~~~~~~┃~~~~~~BBB~~~~~~~~~~~~~~~~~~~WWWWW~~~~~~~~~~~~●●",
+    "●●●,.,,.┃....,,▦▦▦!.*,...,,.,....t..,*.,.,....,,,,...●●●",
+    "●●●▧▧▧▧●┃..┫..●▦▦▦..,,\",,,\"●.,,●▧▧▧▧▧▧▧▧▧▧▧▧..,,,,,,,●●●",
+    "--------╂------▦▦▦..,,,,,\",....●▧▧▧▧▧▧▧▧▧▧▧▧.*,,\",,\",●●●",
+    "--------╂------▦▦▦.,▲▲\"\",▲\"●..,.▧▧▧▧▧▧▧▧▧▧▧▧..,,\",,,,●●●",
+    "●●●▧▧▧▧●┃...,.●▦▦▦.,,,\",,,,●.,.●▧▧▧▧▧▧▧▧▧▧▧▧.,,,\",\",,●●●",
+    "●●●▧▧▧▧●┃...,.●▦▦▦..,,,,,\",●,.,●▧▧▧▧▧▧▧▧▧▧▧▧.,\",,,\",,●●●",
+    "●●●▧▧▧▧.┃.↑↑↑↑●▦▦▦■,,\",,,,\"●..,●▧▧▧▧▧▧▧▧▧▧▧▧,.,,,,,,\"●●●",
+    "●●●▧▧▧▧●┃.↑↑↑↑●▦▦▦..\",,\",,,●,..●▧▧▧▧▧▧▧▧▧▧▧▧..,,,,\"\"\"●●●",
+    "●●●▧▧▧▧●┃.↑↑↑↑●▦▦▦..,,,,,\",●,.,●▧▧▧▧▧▧▧▧▧▧▧▧..,,\",,,,●●●",
+    "●●●▧▧▧▧●┃.↑↑↑↑●▦▦▦..,,\"\"▲\"\"●,..●▧▧▧▧▧▧▧▧▧▧▧▧,,,\"\",,,,●●●",
+    "●●●▧▧▧▧●┃.↑↑↑↑●▦▦▦,,,,,\",,,●..,●▧▧▧▧▧▧▧▧▧▧▧▧..,,,\",,,●●●",
+    "●●●▧▧▧▧●┃.↑↑↑↑●▦▦▦,.\",\"\"\",,●...●▧▧▧▧▧▧▧▧▧▧▧▧,.,\",,,,\"●●●",
+    "●●●▧▧▧▧●┃.↑↑↑↑●▦▦▦..,\"▲,,,,●,..●▧▧▧▧▧▧▧▧▧▧▧▧..,\",\",\",●●●",
+    "●●●▧▧▧▧●┃,↑↑↑↑●▦▦▦.,,,,,,,,●...●▧▧▧▧▧▧▧▧▧▧▧▧..,,,\",,,●●●",
+    "●●●▧▧▧▧●┃,↑↑↑↑●▦▦▦..,,,,,,,●...●▧▧▧▧▧▧▧▧▧▧▧▧..,,,,\"\",●●●",
+    "●●●▧▧▧▧.┃.↑↑↑↑●▦▦▦..╪.,.╪..●╪..●╪..,╪..,╪,..╪..,╪,..╪●●●",
+    "●●.▧▧▧▧●┃,↑↑↑↑.▦▦▦--------------------------------------",
+    "●●.●●.●●┃●●.●●●▦▦▦--------------------------------------",
+    "●●●▧▧▧▧●┃.↑↑↑↑●▦▦▦..↑↑↑↑↑↑↑●,..●↑↑↑↑↑↑↑↑↑↑↑↑●↑↑↑↑↑↑↑↑●●●",
+    "●●●▧▧▧▧●┃.↑↑↑↑●▦▦▦.,↑↑↑↑↑↑↑●,.,●↑↑↑↑↑↑↑↑↑↑↑↑●↑↑↑↑↑↑↑↑●●●",
+    "●●●▧▧▧▧●┃.↑↑↑↑■▦▦▦.T↑↑↑↑↑↑↑..,,●↑↑↑↑↑↑↑↑↑↑↑↑●T↑↑↑↑↑↑↑●●●",
+    "●●●.....┃,*,*.●▦▦▦..↑↑↑↑↑↑↑●...●↑↑↑↑↑↑↑↑↑↑↑↑.↑↑↑↑↑↑↑↑●●●",
+    "●●●●.●●●┃●●●.●!▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦●↑↑↑↑↑↑↑↑↑↑↑↑●↑↑↑↑↑↑↑↑●●●",
+    "●●●,\",,,┃,,,\",●▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦●↑↑↑↑↑↑↑↑↑↑↑↑●↑↑↑↑↑↑↑↑●●●",
+    "●●●\",,,\"┃\",,\"\"●▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦●↑↑↑↑↑↑↑↑↑↑↑↑●↑↑↑↑↑↑↑↑●●●",
+    "●●●,\",,,┃,,\",,●.,,..↑↑↑↑↑↑↑●▦▦▦●↑↑↑↑↑↑↑↑↑↑↑↑●↑↑↑↑↑↑↑↑●●●",
+    "●●●\"\"\",,┃,,\"▲\"..,...↑↑↑↑↑↑↑●▦▦▦.↑↑↑↑↑↑↑↑↑↑↑↑●↑↑↑↑↑↑↑↑.●●",
+    "●●●,\"\",,┃,\"\",,●,.*.,↑↑↑↑↑↑↑●▦▦▦●↑↑↑↑↑↑↑↑↑↑↑↑●↑↑↑↑↑↑↑↑●●●",
+    "●●●,,,,,┃,▲,,▲●....*↑↑↑↑↑↑↑.▦▦▦●↑↑↑↑↑↑↑↑↑↑↑↑●↑↑↑↑↑↑↑↑●●●",
+    "●●●\",\",\"┃,,\",,●,,.,,↑↑↑↑↑↑↑┫▦▦▦.●●●●●.●●●●●●●●●●.●●●●●●●",
+    "●●●\",,,,┗━━━━━━━━━━━━━━━━━━━╋╋╋━━━━━━━━━━━━━━━━━━━━━━━●●",
+    "●●●\",,▲\",┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅▦▦▦┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅●●",
+    "●●●,,╪,\"\",,\"╪\"●.╪...╪↑↑↑╪↑↑●▦▦▦●╪\",,╪\",,,,,,╪,,\"╪,\",\"●●●",
+    "●●●\"\",,,\",▲\"\",●,*.,,↑↑↑↑↑↑↑●▦▦▦●\",,,,,,,,\"\",●\",,,,\"\",●●●",
+    "●●●\",,,,,,▲,,,●....,↑↑↑↑↑↑↑●▦▦▦●,,,,\"\",,,\"\",●,,▲,,,,,●●●",
+    "●●●\"\",,,,\",,,,●...,,↑↑↑↑↑↑↑●▦▦▦●,\",,,\"\"\",,\",●,\"\",,,,,●●●",
+    "●●●,,\"\"▲,,,,,,●.,.,.↑↑↑↑↑↑↑●▦▦▦●,,,,,,\",,,,\"●,,\",\",,,●●●",
+    "●●...,..,......*.,,.........▦▦▦■,,.,..,...............●●",
+    "●●●●●●●●●●●●●●●●●●●●●●●●●●●●▦▦▦●●●●●●●●●●●●●●●●●●●●●●●●●",
+    "●●●●●●●●●●●●●●●●●●●●●●●●●●●●▦▦▦●●●●●●●●●●●●●●●●●●●●●●●●●"
+  ]
+}

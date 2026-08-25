@@ -23,70 +23,100 @@
   ],
   "warps": [
     {
-      "x": 9, "y": 13,
-      "toMap": "aureline", "toX": 46, "toY": 24,
-      "facing": "down", "style": "door"
+      "x": 9,
+      "y": 13,
+      "toMap": "aureline",
+      "toX": 96,
+      "toY": 47,
+      "facing": "down",
+      "style": "door"
     },
     {
-      "x": 10, "y": 13,
-      "toMap": "aureline", "toX": 47, "toY": 24,
-      "facing": "down", "style": "door"
+      "x": 10,
+      "y": 13,
+      "toMap": "aureline",
+      "toX": 97,
+      "toY": 47,
+      "facing": "down",
+      "style": "door"
     }
   ],
   "npcs": [
     {
       "id": "aur_pr_editor",
       "sprite": "elder",
-      "x": 15, "y": 4,
+      "x": 15,
+      "y": 4,
       "facing": "down",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_pr_editor"
     },
     {
       "id": "aur_pr_counter",
       "sprite": "clerk",
-      "x": 3, "y": 4,
+      "x": 3,
+      "y": 4,
       "facing": "down",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_pr_counter"
     },
     {
       "id": "aur_pr_reporter",
       "sprite": "townsfolk_f",
-      "x": 7, "y": 6,
+      "x": 7,
+      "y": 6,
       "facing": "right",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_pr_reporter"
     },
     {
       "id": "aur_pr_setter",
       "sprite": "dockhand",
-      "x": 5, "y": 2,
+      "x": 5,
+      "y": 2,
       "facing": "up",
-      "movement": { "kind": "pace", "axis": "x", "distance": 3 },
+      "movement": {
+        "kind": "pace",
+        "axis": "x",
+        "distance": 3
+      },
       "script": "aur_pr_setter"
     },
     {
       "id": "aur_pr_boy",
       "sprite": "kid",
-      "x": 13, "y": 9,
+      "x": 13,
+      "y": 9,
       "facing": "up",
-      "movement": { "kind": "wander", "radius": 3 },
+      "movement": {
+        "kind": "wander",
+        "radius": 3
+      },
       "script": "aur_pr_boy"
     },
     {
       "id": "aur_pr_complainer",
       "sprite": "villager_m",
-      "x": 2, "y": 11,
+      "x": 2,
+      "y": 11,
       "facing": "right",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_pr_complainer"
     }
   ],
   "objects": [
     {
       "kind": "sign",
-      "x": 2, "y": 1,
+      "x": 2,
+      "y": 1,
       "text": [
         "The press itself, through a glass wall, running.",
         "Forty thousand copies before dawn, and the whole building shakes with it.",
@@ -95,7 +125,8 @@
     },
     {
       "kind": "sign",
-      "x": 7, "y": 1,
+      "x": 7,
+      "y": 1,
       "text": [
         "The morning's front page, still wet, pinned up as it comes off.",
         "NORTHERN LINE STILL SHUT. RENTS AGAIN. A DOG, APPARENTLY.",
@@ -104,7 +135,8 @@
     },
     {
       "kind": "sign",
-      "x": 12, "y": 1,
+      "x": 12,
+      "y": 1,
       "text": [
         "The spike: everything the editor threw out this week, on a nail.",
         "Most of it is nothing. Three of them are about boats.",
@@ -113,7 +145,8 @@
     },
     {
       "kind": "sign",
-      "x": 17, "y": 1,
+      "x": 17,
+      "y": 1,
       "text": [
         "Bound volumes of the Courant, one per year, going back to 1004.",
         "Anybody may read them. There is a stool and a lamp and no questions asked.",
@@ -122,7 +155,8 @@
     },
     {
       "kind": "sign",
-      "x": 2, "y": 3,
+      "x": 2,
+      "y": 3,
       "text": [
         "The public counter. Notices, births, deaths, and lost Kin, a penny a line.",
         "The lost-Kin column is the longest in the paper and always has been.",
@@ -131,7 +165,8 @@
     },
     {
       "kind": "sign",
-      "x": 17, "y": 3,
+      "x": 17,
+      "y": 3,
       "text": [
         "The masthead, in a frame, with the founding sentence under it:",
         "A CITY THIS SIZE CANNOT SEE ITSELF WITHOUT HELP.",
@@ -140,7 +175,8 @@
     },
     {
       "kind": "sign",
-      "x": 1, "y": 8,
+      "x": 1,
+      "y": 8,
       "text": [
         "The morgue: clippings, filed by subject, going back four decades.",
         "The drawer marked MERIDIAN FOUNDATION is the fullest in the room",
@@ -149,7 +185,8 @@
     },
     {
       "kind": "sign",
-      "x": 18, "y": 8,
+      "x": 18,
+      "y": 8,
       "text": [
         "The drawer marked LOST AT SEA is thinner and better ordered.",
         "One folder in it has been taken out and put back so many times",
@@ -158,7 +195,8 @@
     },
     {
       "kind": "sign",
-      "x": 5, "y": 10,
+      "x": 5,
+      "y": 10,
       "text": [
         "A desk with three months of the same investigation on it,",
         "held together with string, and a note to the editor on top",
@@ -167,7 +205,8 @@
     },
     {
       "kind": "sign",
-      "x": 13, "y": 10,
+      "x": 13,
+      "y": 10,
       "text": [
         "A map of the city on the wall stuck with pins where reporters are.",
         "Twenty-two districts, eleven pins.",
@@ -176,7 +215,8 @@
     },
     {
       "kind": "hiddenItem",
-      "x": 17, "y": 12,
+      "x": 17,
+      "y": 12,
       "item": "escape_line",
       "quantity": 1,
       "flag": "item_aur_press"

@@ -1,0 +1,33 @@
+{
+  "speakers": {
+    "hg_office_clerk": "GRAIN CLERK",
+    "hg_office_agent": "FOUNDATION AGENT"
+  },
+  "entries": {
+    "hg_office_clerk": [
+      {
+        "lines": [
+          "Prices, tonnages, and where it all goes. Which is one place, so it is a short column."
+        ]
+      }
+    ],
+    "hg_office_agent": [
+      {
+        "ifFlags": [
+          "ms_second_truth"
+        ],
+        "lines": [
+          "Yes, we keep the weather. Thirty years, a hundred parishes, and the tides as well.",
+          "See a bad season coming and you can move grain into it instead of watching people starve.",
+          "That is all it is. I have never worked out why people say it in that voice."
+        ]
+      },
+      {
+        "lines": [
+          "Foundation. I buy grain and I keep records, and the records are the interesting half.",
+          "Rain, frost, wind, tide. You cannot plan a harvest without knowing what did the last one."
+        ]
+      }
+    ]
+  }
+}

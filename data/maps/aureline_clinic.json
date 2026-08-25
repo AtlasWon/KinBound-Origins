@@ -22,86 +22,119 @@
   ],
   "warps": [
     {
-      "x": 9, "y": 13,
-      "toMap": "aureline", "toX": 33, "toY": 24,
-      "facing": "down", "style": "door"
+      "x": 9,
+      "y": 13,
+      "toMap": "aureline",
+      "toX": 83,
+      "toY": 61,
+      "facing": "down",
+      "style": "door"
     },
     {
-      "x": 10, "y": 13,
-      "toMap": "aureline", "toX": 34, "toY": 24,
-      "facing": "down", "style": "door"
+      "x": 10,
+      "y": 13,
+      "toMap": "aureline",
+      "toX": 84,
+      "toY": 61,
+      "facing": "down",
+      "style": "door"
     }
   ],
   "npcs": [
     {
       "id": "aur_clinic_keeper",
       "sprite": "healer",
-      "x": 4, "y": 2,
+      "x": 4,
+      "y": 2,
       "facing": "down",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "clinic_heal"
     },
     {
       "id": "aur_clinic_roost",
       "sprite": "professor",
-      "x": 15, "y": 1,
+      "x": 15,
+      "y": 1,
       "facing": "down",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "roost_terminal"
     },
     {
       "id": "aur_clinic_nurse",
       "sprite": "healer",
-      "x": 17, "y": 3,
+      "x": 17,
+      "y": 3,
       "facing": "left",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_clinic_nurse"
     },
     {
       "id": "aur_clinic_night",
       "sprite": "meridian_sci_f",
-      "x": 7, "y": 4,
+      "x": 7,
+      "y": 4,
       "facing": "right",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_clinic_night"
     },
     {
       "id": "aur_clinic_waiting",
       "sprite": "townsfolk_m",
-      "x": 5, "y": 6,
+      "x": 5,
+      "y": 6,
       "facing": "left",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_clinic_waiting"
     },
     {
       "id": "aur_clinic_trainer",
       "sprite": "rival",
-      "x": 14, "y": 6,
+      "x": 14,
+      "y": 6,
       "facing": "right",
-      "movement": { "kind": "lookAround" },
+      "movement": {
+        "kind": "lookAround"
+      },
       "script": "aur_clinic_trainer"
     },
     {
       "id": "aur_clinic_child",
       "sprite": "kid",
-      "x": 9, "y": 9,
+      "x": 9,
+      "y": 9,
       "facing": "up",
-      "movement": { "kind": "static" },
+      "movement": {
+        "kind": "static"
+      },
       "script": "aur_clinic_child"
     },
     {
       "id": "aur_clinic_vet",
       "sprite": "villager_f",
-      "x": 16, "y": 10,
+      "x": 16,
+      "y": 10,
       "facing": "left",
-      "movement": { "kind": "lookAround" },
+      "movement": {
+        "kind": "lookAround"
+      },
       "script": "aur_clinic_vet"
     }
   ],
   "objects": [
     {
       "kind": "sign",
-      "x": 6, "y": 1,
+      "x": 6,
+      "y": 1,
       "text": [
         "The restorative bank. Six lamps in a village, twelve in Tideglass,",
         "and thirty-one here, in three tiers, all of them lit.",
@@ -110,7 +143,8 @@
     },
     {
       "kind": "sign",
-      "x": 9, "y": 1,
+      "x": 9,
+      "y": 1,
       "text": [
         "Recovery tanks for Kin too badly hurt for a lamp.",
         "Two are occupied and screened off. A card on each screen says",
@@ -119,7 +153,8 @@
     },
     {
       "kind": "sign",
-      "x": 13, "y": 1,
+      "x": 13,
+      "y": 1,
       "text": [
         "A brass terminal, twinned with every other in Caelora. THE ROOST.",
         "Kin you cannot carry wait here. The city one holds eleven thousand.",
@@ -128,7 +163,8 @@
     },
     {
       "kind": "sign",
-      "x": 3, "y": 2,
+      "x": 3,
+      "y": 2,
       "text": [
         "The board of waiting times, chalked and rubbed out all day.",
         "TRAINERS: NO WAIT. WORKING KIN: NO WAIT. FOUND AND HURT: NO WAIT.",
@@ -137,7 +173,8 @@
     },
     {
       "kind": "sign",
-      "x": 16, "y": 2,
+      "x": 16,
+      "y": 2,
       "text": [
         "A collection tin for the night service, which runs from ten until six",
         "and costs nothing, like everything else in here.",
@@ -146,7 +183,8 @@
     },
     {
       "kind": "sign",
-      "x": 1, "y": 4,
+      "x": 1,
+      "y": 4,
       "text": [
         "Shelves of case notes, one row per district, twenty-two districts.",
         "Aureline is not one city. It is twenty-two of them",
@@ -155,7 +193,8 @@
     },
     {
       "kind": "sign",
-      "x": 18, "y": 4,
+      "x": 18,
+      "y": 4,
       "text": [
         "A wall of thank-you letters, four deep and going up out of reach.",
         "The oldest is from the year the clinic opened.",
@@ -164,7 +203,8 @@
     },
     {
       "kind": "sign",
-      "x": 2, "y": 5,
+      "x": 2,
+      "y": 5,
       "text": [
         "Chairs for waiting, and a jug of water, and a basket of blankets",
         "with a card on it reading TAKE ONE, KEEP IT.",
@@ -173,7 +213,8 @@
     },
     {
       "kind": "sign",
-      "x": 17, "y": 5,
+      "x": 17,
+      "y": 5,
       "text": [
         "A rack of leaflets on caring for a Kin that has been frightened.",
         "It is the thickest leaflet on the rack and the one that runs out.",
@@ -182,7 +223,8 @@
     },
     {
       "kind": "hiddenItem",
-      "x": 1, "y": 12,
+      "x": 1,
+      "y": 12,
       "item": "strong_potion",
       "quantity": 1,
       "flag": "item_aur_clinic"
