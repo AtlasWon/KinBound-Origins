@@ -1,0 +1,76 @@
+{
+  "speakers": {
+    "aur_mus_curator": "CURATOR",
+    "aur_mus_guide": "MUSEUM GUIDE",
+    "aur_mus_copyist": "COPYIST",
+    "aur_mus_warder": "GALLERY WARDER",
+    "aur_mus_pupil": "SCHOOLGIRL",
+    "aur_mus_sceptic": "VISITOR",
+    "aur_mus_keeper": "KEEPER OF KIN"
+  },
+  "entries": {
+    "aur_mus_curator": [
+      {
+        "lines": [
+          "Nine rooms of a people who left no name for themselves, and one honest card at the door.",
+          "I would rather this museum said I DO NOT KNOW nine hundred times",
+          "than said one clever thing that turned out to be a guess."
+        ]
+      }
+    ],
+    "aur_mus_guide": [
+      {
+        "lines": [
+          "Free tours, and I do the Aurelian rooms because nobody else wants to.",
+          "You cannot end a tour of them. There is no ending. They simply stop.",
+          "I finish by asking the children what they think happened and I never argue."
+        ]
+      }
+    ],
+    "aur_mus_copyist": [
+      {
+        "lines": [
+          "I copy the accession pages so scholars do not have to handle them.",
+          "This hand is a pleasure to work from. Small, patient, never crossed out.",
+          "Eleven years of it and then nothing, mid-page, in the spring of 1052."
+        ]
+      }
+    ],
+    "aur_mus_warder": [
+      {
+        "lines": [
+          "The empty case at the end is the one people ask about.",
+          "ON LOAN, eleven years, no return date, and I have never seen a loan card",
+          "with no borrower's name on it before or since."
+        ]
+      }
+    ],
+    "aur_mus_pupil": [
+      {
+        "lines": [
+          "Miss says the doors in the drowned street are all open because",
+          "the card says it might not mean anything.",
+          "But if it might not mean anything, why did they put it on the card?"
+        ]
+      }
+    ],
+    "aur_mus_sceptic": [
+      {
+        "lines": [
+          "One vertebra. That size. And the card will not name it.",
+          "Either they do not know, which is frightening,",
+          "or they do, which is worse. I come back every month to see if it has changed."
+        ]
+      }
+    ],
+    "aur_mus_keeper": [
+      {
+        "lines": [
+          "Eleven species in grey on that wall and two painted back in this year.",
+          "Both of those were the Foundation's breeding programme. I will say that anywhere.",
+          "They are also the ones who have not answered a letter of mine since spring."
+        ]
+      }
+    ]
+  }
+}

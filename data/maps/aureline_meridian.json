@@ -1,0 +1,324 @@
+{
+  "id": "aureline_meridian",
+  "name": "Meridian Foundation",
+  "displayName": "THE MERIDIAN FOUNDATION",
+  "music": "concord",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUUIIIIIIIIIIIIIIIIUUIII",
+    "IFFFFFFFFFFFFFFFFFFFFFFFFI",
+    "IFSSFFFFFFFFFFFFFFFFFFSSFI",
+    "IFFFFFFFFFFFFFFFFFFFFFFFFI",
+    "IIIIIIIIIIIIFIIIIIIIIIIIII",
+    "IFFFFFFFFFFFFFFFFFFFFFFFFI",
+    "IKKKKKKKKKKKFKKKKKKKKKKKKI",
+    "IFFFFFFFFFFFFFFFFFFFFFFFFI",
+    "IFF@@@@FFFFFFFFFFFF@@@@FFI",
+    "IFFFFFFFFFFFFFFFFFFFFFFFFI",
+    "IFkkkkFFFFFFFFFFFFFFkkkkFI",
+    "IFFFFFFFFFFFFFFFFFFFFFFFFI",
+    "IFFFFFFAAAAAFFAAAAAFFFFFFI",
+    "IFFFFFFAAAAAFFAAAAAFFFFFFI",
+    "IFFFFFFFFFFFFFFFFFFFFFFFFI",
+    "IP$$FFFFFFFFFFFFFFFFFF$$PI",
+    "IFFFFFFFFFFFFFFFFFFFFFFFFI",
+    "IFF/rrFFFFFFFFFFFFFFrr/FFI",
+    "IPFFFFFFFFFFFFFFFFFFFFFFPI",
+    "IIIIIIIIIIIIDDIIIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 12, "y": 19,
+      "toMap": "aureline", "toX": 40, "toY": 41,
+      "facing": "down", "style": "door"
+    },
+    {
+      "x": 13, "y": 19,
+      "toMap": "aureline", "toX": 41, "toY": 41,
+      "facing": "down", "style": "door"
+    },
+    {
+      "x": 2, "y": 2,
+      "toMap": "aureline_meridian_offices", "toX": 24, "toY": 8,
+      "facing": "down", "style": "stairs"
+    },
+    {
+      "x": 3, "y": 2,
+      "toMap": "aureline_meridian_offices", "toX": 24, "toY": 9,
+      "facing": "down", "style": "stairs"
+    },
+    {
+      "x": 22, "y": 2,
+      "toMap": "aureline_meridian_hall", "toX": 11, "toY": 16,
+      "facing": "up", "style": "stairs"
+    },
+    {
+      "x": 23, "y": 2,
+      "toMap": "aureline_meridian_hall", "toX": 12, "toY": 16,
+      "facing": "up", "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "aur_hq_gate",
+      "sprite": "meridian",
+      "x": 12, "y": 6,
+      "facing": "down",
+      "movement": { "kind": "static" },
+      "script": "aur_hq_gate",
+      "hiddenIfFlag": "aur_hq_pass"
+    },
+    {
+      "id": "aur_hq_gate_open",
+      "sprite": "meridian",
+      "x": 11, "y": 5,
+      "facing": "down",
+      "movement": { "kind": "static" },
+      "script": "aur_hq_gate_open",
+      "requiresFlag": "aur_hq_pass"
+    },
+    {
+      "id": "aur_hq_desk",
+      "sprite": "clerk",
+      "x": 8, "y": 5,
+      "facing": "down",
+      "movement": { "kind": "static" },
+      "script": "aur_hq_desk"
+    },
+    {
+      "id": "aur_hq_giving",
+      "sprite": "townsfolk_f",
+      "x": 18, "y": 5,
+      "facing": "down",
+      "movement": { "kind": "static" },
+      "script": "aur_hq_giving"
+    },
+    {
+      "id": "aur_hq_greeter",
+      "sprite": "villager_f",
+      "x": 15, "y": 17,
+      "facing": "left",
+      "movement": { "kind": "lookAround" },
+      "script": "aur_hq_greeter"
+    },
+    {
+      "id": "aur_hq_vet",
+      "sprite": "meridian_sci_f",
+      "x": 6, "y": 9,
+      "facing": "up",
+      "movement": { "kind": "static" },
+      "script": "aur_hq_vet"
+    },
+    {
+      "id": "aur_hq_ocean",
+      "sprite": "meridian_sci",
+      "x": 19, "y": 9,
+      "facing": "up",
+      "movement": { "kind": "static" },
+      "script": "aur_hq_ocean"
+    },
+    {
+      "id": "aur_hq_relief",
+      "sprite": "porter",
+      "x": 20, "y": 16,
+      "facing": "left",
+      "movement": { "kind": "pace", "axis": "x", "distance": 3 },
+      "script": "aur_hq_relief"
+    },
+    {
+      "id": "aur_hq_donor",
+      "sprite": "elder",
+      "x": 4, "y": 11,
+      "facing": "right",
+      "movement": { "kind": "static" },
+      "script": "aur_hq_donor"
+    },
+    {
+      "id": "aur_hq_teacher",
+      "sprite": "professor",
+      "x": 13, "y": 14,
+      "facing": "up",
+      "movement": { "kind": "static" },
+      "script": "aur_hq_teacher"
+    },
+    {
+      "id": "aur_hq_pupil",
+      "sprite": "kid",
+      "x": 10, "y": 14,
+      "facing": "up",
+      "movement": { "kind": "wander", "radius": 2 },
+      "script": "aur_hq_pupil"
+    },
+    {
+      "id": "aur_hq_digger",
+      "sprite": "hiker",
+      "x": 21, "y": 11,
+      "facing": "left",
+      "movement": { "kind": "lookAround" },
+      "script": "aur_hq_digger"
+    },
+    {
+      "id": "aur_hq_porter",
+      "sprite": "dockhand",
+      "x": 3, "y": 16,
+      "facing": "right",
+      "movement": { "kind": "pace", "axis": "y", "distance": 2 },
+      "script": "aur_hq_porter"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 11, "y": 19,
+      "text": [
+        "Cut into the stone beside the doors, and old enough that the letters",
+        "have been recut once: WEATHER IS NOT FATE.",
+        "Under it, smaller: THE MERIDIAN FOUNDATION. FOUNDED 1063. OPEN TO ALL."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 14, "y": 19,
+      "text": [
+        "A board of the day's public business.",
+        "TSUNAMI WARNING, THE FIRST NINE MINUTES - assembly hall, four o'clock.",
+        "REPORT A SICK KIN - desk two. FOUND A BONE? - desk two, patiently."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 6, "y": 6,
+      "text": [
+        "The giving counter. A brass plate of the year's donors, six columns deep.",
+        "Most of the sums are small. One is not, and has no name against it,",
+        "only the word ANONYMOUS and the date of a hurricane."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18, "y": 6,
+      "text": [
+        "The visitors' book, open at today. Two hundred names since breakfast.",
+        "School parties, a bereaved family, three men from a fishing cooperative,",
+        "and somebody who has written only THANK YOU and gone."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 3, "y": 8,
+      "text": [
+        "KIN CONSERVATION. Tanks of shore and reed species bred here and let go.",
+        "A tally on the glass: 41,000 returned to the wetlands since the drainage.",
+        "A child has drawn one of them on the card and it has been left up."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 6, "y": 8,
+      "text": [
+        "A hatchery, warm, and lit low. Twelve eggs of a species nobody has",
+        "seen wild in Caelora for sixty years.",
+        "Eleven are ticking. The keeper has written NOT TWELVE. NOT YET."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 19, "y": 8,
+      "text": [
+        "OCEAN RESEARCH. A tank of black water lit from beneath, and in it,",
+        "nothing at all. The card explains that the deep tanks are for holding",
+        "what the deep survey brings up. They have never once been used."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 22, "y": 8,
+      "text": [
+        "Sounding charts of the eastern shelf, thirty years of them, overlaid.",
+        "The seabed is the same in every one except the last, which shows",
+        "a shape the size of a valley that the older charts do not."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 3, "y": 10,
+      "text": [
+        "The Foundation's own publications, free, take one.",
+        "STORM SAFETY. WHAT TO DO WITH A HURT KIN. THE FLOODS OF 1049.",
+        "All of it plain, all of it useful, none of it charged for."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 21, "y": 10,
+      "text": [
+        "ARCHAEOLOGY. Field photographs from eleven digs, pinned in rows.",
+        "Aurelian doorways, Aurelian floors, Aurelian rings the size of a cart.",
+        "Underneath: WE DO NOT KNOW WHAT THEY WERE FOR. WE ARE TRYING TO FIND OUT."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9, "y": 12,
+      "text": [
+        "The relief model of Caelora, twelve feet of it, carved and painted.",
+        "Every weather station is a brass pin. There are forty-one on land.",
+        "You can walk down the middle of the sea between the two halves."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 16, "y": 13,
+      "text": [
+        "The eastern half of the model. Out past the shelf the paint changes",
+        "from blue to a colour with no name on the key, and there are pins there too.",
+        "Nine of them. In open water. Nothing is labelled."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2, "y": 15,
+      "text": [
+        "DISASTER RESPONSE. A relief pack laid out open: blankets, line, water,",
+        "a lamp, a splint, and a card of instructions in four languages.",
+        "Nine thousand of these went east in the spring. The Foundation paid."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 23, "y": 15,
+      "text": [
+        "A working storm bell, wired to the coastal stations, under glass.",
+        "It has rung eleven times in eight years. Beside it, in a frame,",
+        "eleven newspaper cuttings, and not one of them is about a death."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 3, "y": 17,
+      "text": [
+        "Chairs for people waiting to be seen, and a table of old journals.",
+        "A woman has been asleep in one of them for an hour and nobody",
+        "has moved her on."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 22, "y": 17,
+      "text": [
+        "MUSEUMS. A card listing every collection the Foundation keeps open free:",
+        "Stonewake, Tideglass, Emberfall, the National in the Grand Park.",
+        "Somebody has ticked the ones they have been to. All four."
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 2, "y": 18,
+      "item": "clearleaf",
+      "quantity": 1,
+      "flag": "item_aur_hq_atrium"
+    }
+  ],
+  "_plan": "The atrium is the whole thesis of Act 4 in one room: it is enormous, it is free, it is genuinely good, and every single thing in it is true. Nothing is sinister and nothing is pointed at. The unease is only in what the true things do not add up to -- deep tanks that have never been used, nine pins in open water, a new shape on last year's chart. The staff channel at x12 is closed by one clerk standing in the gap; set aur_hq_pass and the gap opens. Central aisle x12-13 runs unbroken from the doors to the desk on purpose: a grand civic building should let you see all the way through it the moment you step in."
+}

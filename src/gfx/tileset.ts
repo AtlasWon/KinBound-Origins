@@ -304,6 +304,99 @@ export enum T {
   SPOIL_HEAP,
   CRATE_STACK,
   VENT_MOUTH,
+  /**
+   * Aureline: the capital.
+   *
+   * The one settlement in Caelora that is not made of what is under it. Every
+   * other town in the game is quarried, felled or dug out of its own ground --
+   * Stonewake is the mountain, Emberfall is the lava, Mirehaven is the reeds --
+   * and that is exactly why the capital needs a material family of its own:
+   * Aureline is made of things that were *brought here*. Float glass, rolled
+   * steel, imported granite, macadam.
+   *
+   * The set is built round one argument, which is the whole point of the city:
+   * the seam between old and new. So it is two kits that do not blend. The
+   * modern kit is a curtain wall, a pier, a parapet and a plinth, and it stacks
+   * -- a tower is the same three tiles repeated up the map, which is what lets
+   * a building be twelve rows tall without twelve pieces of art. The old kit is
+   * coursed granite, a sash window and an arched door, and it does not stack:
+   * three storeys is all it was ever built to.
+   *
+   * Nothing in this family touches the shared Rng -- every painter below draws
+   * from position hashes only -- so appending it here cannot move a single
+   * varied tile anywhere else in the world. Appended at the very end for the
+   * reason given further up: tile ids are atlas indices.
+   */
+  CITY_PAVE,
+  CITY_ROAD,
+  CITY_COBBLE,
+  PARK_PATH,
+  GLASS_WALL,
+  TOWER_PIER,
+  TOWER_CAP_L,
+  TOWER_CAP,
+  TOWER_CAP_R,
+  TOWER_PLINTH,
+  TOWER_DOOR,
+  SHOPFRONT,
+  AWNING,
+  GRANITE_WALL,
+  GRANITE_WINDOW,
+  GRANITE_ARCH,
+  MER_WALL,
+  MER_GLASS,
+  MER_CREST,
+  MER_DOOR,
+  SHED_ROOF,
+  SHED_TRUSS,
+  CITY_LAMP,
+  STREET_TREE,
+  BENCH,
+  RAILING,
+  HEDGE,
+  STATUE,
+  FOUNTAIN,
+  /**
+   * The Central Road.
+   *
+   * The country between the wetlands and the capital, and the first place in
+   * Caelora that is *farmed*. Everything else the player has walked through is
+   * what the ground happens to be doing -- turf, ash, peat, reed -- and this is
+   * the first ground somebody has decided about: ploughed, cropped, hedged,
+   * metalled, and cut through by a railway.
+   *
+   * Three ideas carry the family and they are meant to argue with each other.
+   * The FIELD is soft: wheat, loam, hedge, straw, all warm and all irregular.
+   * The ROAD is hard: macadam, greyer and duller than any road so far, because
+   * this one was engineered rather than worn. The LINE is harder still: broken
+   * stone, creosoted timber, and two rails whose heads are the brightest thing
+   * on the map -- nothing else in Caelora is polished. A player who reads gold
+   * as food, grey as traffic and white as iron has read the whole act before
+   * anybody says a word about the capital.
+   *
+   * Nothing in this family touches the shared Rng: every painter draws from
+   * position hashes only, so appending it here cannot move a varied tile
+   * anywhere else in the world. Appended at the very end for the reason given
+   * further up -- tile ids are atlas indices.
+   */
+  HIGHROAD,
+  FURROW,
+  WHEAT,
+  HEDGEROW,
+  STOOK,
+  MILESTONE,
+  TELEGRAPH,
+  EMBANKMENT,
+  TRACK_H,
+  TRACK_V,
+  TRACK_NE,
+  TRACK_NW,
+  TRACK_SE,
+  TRACK_SW,
+  TRACK_CROSSING,
+  TRACK_SIGNAL,
+  HALT_DECK,
+  HALT_EDGE,
   COUNT,
 }
 
@@ -546,6 +639,40 @@ export const PAL = {
   // Contact shadow under furniture. Translucent on purpose: furniture is drawn
   // over whatever floor the map has, so its shadow has to tint boards, civic
   // tile and turf alike rather than stamp one colour of its own.
+  // --- The Central Road. -----------------------------------------------
+  //
+  // Three ramps and two accents, and they exist because the three materials
+  // this country is made of are all things the palette could only fake before.
+  // Wheat is not turf with the green taken out -- ripe grain is a saturated
+  // gold that has to survive being seen beside a green field. Loam is not the
+  // path ramp: a road is dry and dusty, freshly turned earth is dark and wet,
+  // and a ploughed field drawn in road colours reads as a car park. Macadam is
+  // the awkward one and the most important: every road in the game so far has
+  // been a warm gold stripe worn into turf, and this one is engineered, so it
+  // is duller, greyer and colder than any of them. That single reversal is
+  // what tells the player the country changed.
+  wheatDeep: '#6b5518',
+  wheatDark: '#9a7f28',
+  wheatMid: '#c6a840',
+  wheatLight: '#e2c76a',
+  wheatPale: '#f8e7a6',
+  loamDeep: '#33261a',
+  loamDark: '#4e3a27',
+  loamMid: '#6d5238',
+  loamLight: '#8d6f4d',
+  loamPale: '#ac8f68',
+  roadDeep: '#4f4636',
+  roadDark: '#736750',
+  roadMid: '#98896b',
+  roadLight: '#bbac8b',
+  roadPale: '#dccfae',
+  // The rail head, and the only polished surface in Caelora. It is brighter
+  // than anything else outdoors on purpose: a line that is in use has two
+  // white threads running down it and a line that is not has none, and that is
+  // the whole difference the player needs to read at a glance.
+  railHead: '#e4ebf3',
+  railRust: '#8a5732',
+
   contact: 'rgba(38,32,34,0.34)',
   contactSoft: 'rgba(38,32,34,0.15)',
 
@@ -888,6 +1015,46 @@ const VARIED: Partial<Record<number, number>> = {
   // stamped out forty times. The variant seed folds into the noise, so three
   // cuts is three different sets of plates.
   [T.LAVA]: 3,
+  // Aureline. Appended last, as the note above requires, and safe to append for
+  // the second reason as well: every painter in the capital's family draws from
+  // position hashes and never touches the shared Rng.
+  //
+  // The paving gets the widest set in the city because there is more of it than
+  // everything else put together -- a capital is mostly the ground between the
+  // buildings -- and a square four hundred cells across laid from one cut is
+  // where a repeat shows soonest. The curtain wall gets alternates for a
+  // different reason: a tower is one tile stacked ten high beside another tower
+  // that is the same tile stacked ten high, and without variation the whole
+  // skyline is one window printed six hundred times. What varies is which panes
+  // have the blinds down, which is the only thing that varies on a real one.
+  [T.CITY_PAVE]: 4,
+  [T.CITY_ROAD]: 3,
+  [T.CITY_COBBLE]: 3,
+  [T.PARK_PATH]: 3,
+  [T.GLASS_WALL]: 4,
+  [T.GRANITE_WALL]: 3,
+  [T.GRANITE_WINDOW]: 2,
+  [T.SHOPFRONT]: 3,
+  [T.HEDGE]: 2,
+  [T.MER_GLASS]: 2,
+  // The Central Road. Appended last, as the note above requires, and safe for
+  // the second reason as well: every painter in this family draws from
+  // position hashes and never touches the shared Rng.
+  //
+  // The crop and the plough get the widest sets in the family because a field
+  // is the largest single-tile shape in the game -- forty by twelve of one
+  // cell -- and a repeat shows in an arable field faster than anywhere else,
+  // since there is nothing growing out there to break the eye's lock on the
+  // grid. The road gets three because the player walks the length of it twice.
+  [T.WHEAT]: 4,
+  [T.FURROW]: 4,
+  [T.HIGHROAD]: 3,
+  [T.HEDGEROW]: 3,
+  [T.EMBANKMENT]: 2,
+  [T.HALT_DECK]: 2,
+  // Four stones, four different distances cut into them. A road signed with
+  // the identical mark nine times over is worse than a road signed nowhere.
+  [T.MILESTONE]: 4,
 };
 
 /**
@@ -1338,6 +1505,58 @@ export class Tileset {
       case T.SPOIL_HEAP: this.spoilHeap(px); break;
       case T.CRATE_STACK: this.crateStack(px); break;
       case T.VENT_MOUTH: this.ventMouth(px, fill); break;
+
+      // Aureline.
+      case T.CITY_PAVE: this.cityPave(px, fill); break;
+      case T.CITY_ROAD: this.cityRoad(px, fill); break;
+      case T.CITY_COBBLE: this.cityCobble(px, fill); break;
+      case T.PARK_PATH: this.parkPath(px, fill); break;
+      case T.GLASS_WALL: this.glassWall(px, fill); break;
+      case T.TOWER_PIER: this.towerPier(px, fill); break;
+      case T.TOWER_CAP_L: this.towerCap(px, fill, 'left'); break;
+      case T.TOWER_CAP: this.towerCap(px, fill, 'mid'); break;
+      case T.TOWER_CAP_R: this.towerCap(px, fill, 'right'); break;
+      case T.TOWER_PLINTH: this.towerPlinth(px, fill, false); break;
+      case T.TOWER_DOOR: this.towerPlinth(px, fill, true); break;
+      case T.SHOPFRONT: this.shopfront(px, fill); break;
+      case T.AWNING: this.awning(px, fill); break;
+      case T.GRANITE_WALL: this.granite(px, fill, 'plain'); break;
+      case T.GRANITE_WINDOW: this.granite(px, fill, 'window'); break;
+      case T.GRANITE_ARCH: this.granite(px, fill, 'arch'); break;
+      case T.MER_WALL: this.meridianWall(px, fill, 'plain'); break;
+      case T.MER_GLASS: this.meridianWall(px, fill, 'glass'); break;
+      case T.MER_CREST: this.meridianWall(px, fill, 'crest'); break;
+      case T.MER_DOOR: this.meridianWall(px, fill, 'door'); break;
+      case T.SHED_ROOF: this.shedRoof(px, fill, false); break;
+      case T.SHED_TRUSS: this.shedRoof(px, fill, true); break;
+      case T.CITY_LAMP: this.cityLamp(px); break;
+      case T.STREET_TREE: this.streetTree(px); break;
+      case T.BENCH: this.bench(px); break;
+      case T.RAILING: this.railing(px); break;
+      case T.HEDGE: this.hedge(px); break;
+      case T.STATUE: this.statue(px); break;
+      case T.FOUNTAIN: this.fountain(px, fill); break;
+      // --- The Central Road. None of these is passed `rng`, on purpose: see
+      // the note on the enum entries. They draw from position hashes only.
+      case T.HIGHROAD: this.highroad(px, fill); break;
+      case T.FURROW: this.furrow(px, fill); break;
+      case T.WHEAT: this.wheat(px, fill); break;
+      case T.HEDGEROW: this.hedgerow(px, fill); break;
+      case T.STOOK: this.stook(px); break;
+      case T.MILESTONE: this.milestone(px); break;
+      case T.TELEGRAPH: this.telegraph(px); break;
+      case T.EMBANKMENT: this.embankment(px, fill); break;
+      case T.TRACK_H: this.track(px, fill, 'h'); break;
+      case T.TRACK_V: this.track(px, fill, 'v'); break;
+      case T.TRACK_NE: this.trackTurn(px, fill, 16, 0); break;
+      case T.TRACK_NW: this.trackTurn(px, fill, 0, 0); break;
+      case T.TRACK_SE: this.trackTurn(px, fill, 16, 16); break;
+      case T.TRACK_SW: this.trackTurn(px, fill, 0, 16); break;
+      case T.TRACK_CROSSING: this.trackCrossing(px, fill); break;
+      case T.TRACK_SIGNAL: this.trackSignal(px); break;
+      case T.HALT_DECK: this.haltDeck(px, fill, false); break;
+      case T.HALT_EDGE: this.haltDeck(px, fill, true); break;
+
       default: fill('#ff00ff'); break; // loud, so a missing tile is obvious
     }
   }
@@ -7742,6 +7961,1471 @@ export class Tileset {
     P(8, 13, PAL.emberDeep);
     P(7, 12, PAL.emberDeep);
   }
+
+  /* ------------------------------------------------ Aureline: the capital */
+
+  /**
+   * The city's paving.
+   *
+   * Big imported granite flags, eight units across, courses breaking joint --
+   * deliberately twice the module of the stone floor every other town is laid
+   * with, because scale in a top-down city is carried by the size of the unit
+   * as much as by the size of the map. A capital's square is not a village
+   * square with more of it; the stones themselves are bigger.
+   *
+   * Warm rather than cool, and kept high in the ramp. This is the surface the
+   * player spends the whole act standing on and every sprite in the city is
+   * seen against it, so it has to be a value and not a texture.
+   */
+  private cityPave(px: Px, fill: (c: string) => void): void {
+    fill(CITY.paveMid);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    for (let y = 0; y < S; y++) {
+      const course = Math.floor(y / 8);
+      const offset = (course % 2) * 4;
+      for (let x = 0; x < S; x++) {
+        const bx = (x + offset) % 8;
+        const by = y % 8;
+        // One tone per slab, so a flag reads as a single piece of stone that
+        // happened to be cut from a different block than the one beside it.
+        const n = hash2(Math.floor((x + offset) / 8), course, 617);
+        let c: string = n > 0.72 ? CITY.paveLight : n < 0.28 ? CITY.paveDark : CITY.paveMid;
+        // Wear across the face. Sparse, on a repeat that divides the cell.
+        if ((x * 5 + y * 3) % 13 === 6) c = n > 0.5 ? CITY.pavePale : CITY.paveLight;
+        if (by === 0) c = n > 0.5 ? CITY.pavePale : CITY.paveLight;   // lit head
+        else if (by === 7) c = CITY.paveDark;                          // the joint
+        if (bx === 0) c = CITY.paveDark;
+        else if (bx === 1 && by !== 7) c = n > 0.5 ? CITY.paveLight : CITY.paveMid;
+        P(x, y, c);
+      }
+    }
+    // A chip or two out of a corner. Position-hashed, never rolled: the four
+    // cuts have to be reproducible for screenshots and for player memory.
+    for (let i = 0; i < 3; i++) {
+      const cx = Math.floor(hash2(i, 1, 733) * S);
+      const cy = Math.floor(hash2(i, 2, 733) * S);
+      P(cx, cy, CITY.paveDeep);
+      P(cx + 1, cy, CITY.paveDark);
+    }
+  }
+
+  /**
+   * The carriageway.
+   *
+   * Macadam: dark, fine and almost featureless, and that is the job. The
+   * footway is pale and the road is dark, so the plan of the whole city reads
+   * from the colour of the ground alone -- a player who has never been here can
+   * see where the traffic goes and where they are supposed to walk without one
+   * tile of signage. Nothing else in the game is this dark on the ground layer,
+   * which is exactly why the boulevards read as boulevards from four screens
+   * away.
+   */
+  private cityRoad(px: Px, fill: (c: string) => void): void {
+    fill(CITY.roadMid);
+    const P = this.unit(px);
+    for (let y = 0; y < TILE_SIZE; y++) {
+      for (let x = 0; x < TILE_SIZE; x++) {
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 8, 431);
+        let c: string = n > 0.62 ? CITY.roadLight : n < 0.34 ? CITY.roadDark : CITY.roadMid;
+        // Aggregate: the pale chips in the surface. Sparse and hard-edged --
+        // a road that is evenly speckled reads as sandpaper.
+        if (hash2(x, y, 887) > 0.955) c = CITY.roadGrit;
+        else if (hash2(x, y, 311) > 0.94) c = CITY.roadDeep;
+        P(x, y, c);
+      }
+    }
+  }
+
+  /**
+   * The Old City's setts.
+   *
+   * Rounded, laid by hand, and small: a four-unit module against the paving's
+   * eight. That halving is the whole trick of the old quarter -- the same lane
+   * width feels narrower when the stones in it are half the size, and the seam
+   * between the two surfaces is visible on the ground at the exact line where
+   * the city stopped being medieval.
+   */
+  private cityCobble(px: Px, fill: (c: string) => void): void {
+    fill(CITY.cobbleMid);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    for (let y = 0; y < S; y++) {
+      const course = Math.floor(y / 4);
+      const offset = (course % 2) * 2;
+      for (let x = 0; x < S; x++) {
+        const bx = (x + offset) % 4;
+        const by = y % 4;
+        const n = hash2(Math.floor((x + offset) / 4), course, 199);
+        // Each sett is domed: lit at the upper left, falling to the mortar.
+        const lit = (1 - bx / 3) * 0.55 + (1 - by / 3) * 0.45;
+        let c: string;
+        if (lit > 0.74) c = n > 0.5 ? CITY.cobblePale : CITY.cobbleLight;
+        else if (lit > 0.45) c = n > 0.5 ? CITY.cobbleLight : CITY.cobbleMid;
+        else c = n > 0.5 ? CITY.cobbleMid : CITY.cobbleDark;
+        if (bx === 0 || by === 0) c = CITY.cobbleDeep;   // the joint between setts
+        P(x, y, c);
+      }
+    }
+  }
+
+  /**
+   * Park gravel.
+   *
+   * Buff, fine, and warm against the lawn. The park's paths are the only
+   * walkable surface in Aureline that is not manufactured, and it matters that
+   * the player can feel that underfoot: everywhere else the ground is quarried
+   * flat or poured, and here it is loose.
+   */
+  private parkPath(px: Px, fill: (c: string) => void): void {
+    fill(CITY.gravelMid);
+    const P = this.unit(px);
+    for (let y = 0; y < TILE_SIZE; y++) {
+      for (let x = 0; x < TILE_SIZE; x++) {
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 8, 1213);
+        let c: string = n > 0.6 ? CITY.gravelLight : n < 0.36 ? CITY.gravelDark : CITY.gravelMid;
+        if (hash2(x, y, 457) > 0.9) c = CITY.gravelPale;
+        else if (hash2(x, y, 641) > 0.93) c = CITY.gravelDeep;
+        P(x, y, c);
+      }
+    }
+  }
+
+  /**
+   * Curtain wall.
+   *
+   * The single most important tile in the capital, because a tower is this
+   * cell stacked. Four glazed bays across and two floors up, mullions and
+   * transoms in rolled steel, and the whole thing has to meet itself top and
+   * bottom or a twelve-storey building has a seam every two floors.
+   *
+   * The panes are not all the same, and that is the only thing that keeps a
+   * skyline from being one window printed six hundred times. What differs is
+   * what a real one differs in: blinds down, lights on, or nothing. Three
+   * states, chosen per bay from a position hash that folds the variant seed, so
+   * four cuts of the tile give a tower a plausible pattern of occupancy rather
+   * than a pattern of texture.
+   */
+  private glassWall(px: Px, fill: (c: string) => void): void {
+    fill(CITY.glassMid);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const bay = Math.floor(x / 4);
+        const floor = Math.floor(y / 8);
+        const ix = x % 4, iy = y % 8;
+        // The frame. Mullion on the left of every bay, transom at the head of
+        // every floor, both with the light on their upper-left face.
+        if (ix === 0) { P(x, y, CITY.steelDark); continue; }
+        if (ix === 1 && iy > 0) { P(x, y, CITY.steelLight); continue; }
+        if (iy === 0) { P(x, y, CITY.steelDark); continue; }
+        if (iy === 1) { P(x, y, CITY.steelLight); continue; }
+
+        const state = hash2(bay, floor, 2711);
+        if (state > 0.86) {
+          // Blinds down: horizontal slats, flat and pale, no reflection.
+          P(x, y, iy % 2 === 0 ? CITY.blindLight : CITY.blindMid);
+          continue;
+        }
+        if (state < 0.12) {
+          // A lit floor. Warm, because every other light in the picture is
+          // cold, and one warm window in a tower is worth more than fifty
+          // clever reflections.
+          P(x, y, iy < 4 ? CITY.litPale : CITY.litMid);
+          continue;
+        }
+        // Sky in the glass: pale at the head of the pane, deep at the foot,
+        // with the reflection running across the bay rather than down it.
+        const v = (ix + iy) / 10;
+        P(x, y, v < 0.28 ? CITY.glassHi : v < 0.55 ? CITY.glassLight
+          : v < 0.82 ? CITY.glassMid : CITY.glassDark);
+      }
+    }
+  }
+
+  /**
+   * The pier between the glazing.
+   *
+   * Solid stone cladding, seamless top to bottom, and the reason a tower has
+   * corners. A building faced entirely in curtain wall is a slab of blue; the
+   * piers are what give it a rhythm and an edge, and the map author places them
+   * exactly where the structure would be.
+   */
+  private towerPier(px: Px, fill: (c: string) => void): void {
+    fill(CITY.clad);
+    const P = this.unit(px);
+    for (let y = 0; y < TILE_SIZE; y++) {
+      for (let x = 0; x < TILE_SIZE; x++) {
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 8, 1489);
+        let c: string = n > 0.64 ? CITY.cladPale : n < 0.36 ? CITY.cladDark : CITY.clad;
+        // Panel joints down the face. Vertical only: the pier has to stack.
+        if (x % 8 === 0) c = CITY.cladDeep;
+        else if (x % 8 === 1) c = CITY.cladPale;
+        P(x, y, c);
+      }
+    }
+  }
+
+  /**
+   * The top of a tower.
+   *
+   * A roof deck seen over its own parapet. The coping is the brightest line in
+   * the city and it is doing all the work: it is what says a building has an
+   * edge and a top, and therefore that it has a height. Corner pieces return
+   * the coping down the side, so a block of towers has a drawn silhouette
+   * rather than four right angles of glass.
+   */
+  private towerCap(px: Px, fill: (c: string) => void, part: 'mid' | 'left' | 'right'): void {
+    fill(CITY.deckMid);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        P(x, y, (x * 3 + y * 7) % 14 === 5 ? CITY.deckLight : CITY.deckMid);
+      }
+    }
+    // Deck bays, with the light catching the sheet beyond each seam.
+    for (let y = 6; y < 13; y += 5) {
+      for (let x = 0; x < S; x++) { P(x, y, CITY.deckDark); P(x, y + 1, CITY.deckLight); }
+    }
+    // Plant on the roof: one cooling unit, hashed into place so a run of caps
+    // is not one silhouette repeated. About a third of the cells carry one.
+    if (hash2(0, 0, 1861) > 0.62 && part === 'mid') {
+      for (let y = 6; y <= 11; y++) {
+        for (let x = 4; x <= 11; x++) {
+          const edge = x === 4 || x === 11 || y === 6 || y === 11;
+          P(x, y, edge ? CITY.outline : y <= 8 ? PAL.steelMid : PAL.steelDark);
+        }
+      }
+      for (let x = 5; x <= 10; x++) P(x, 7, PAL.steelPale);
+      for (const ly of [9, 10]) for (let x = 5; x <= 10; x++) P(x, ly, PAL.steelDeep);
+    }
+
+    // Parapet: outline, coping, the city's gilt band under it, then the shadow
+    // the parapet throws back across its own deck.
+    for (let x = 0; x < S; x++) {
+      P(x, 0, CITY.outline);
+      P(x, 1, CITY.cladPale);
+      P(x, 2, CITY.gold);
+      P(x, 3, CITY.goldDark);
+      P(x, 4, CITY.deckDeep);
+      P(x, 13, CITY.goldDark);
+      P(x, 14, CITY.deckDeep);
+      P(x, 15, CITY.outline);
+    }
+
+    if (part === 'left') {
+      for (let y = 0; y < S; y++) {
+        P(0, y, CITY.outline);
+        P(1, y, CITY.cladPale);
+        P(2, y, CITY.gold);
+        P(3, y, CITY.deckDeep);
+      }
+    }
+    if (part === 'right') {
+      for (let y = 0; y < S; y++) {
+        P(S - 1, y, CITY.outline);
+        P(S - 2, y, CITY.cladDark);
+        P(S - 3, y, CITY.gold);
+        P(S - 4, y, CITY.deckDeep);
+      }
+    }
+  }
+
+  /**
+   * The ground floor of a tower, with or without a way in.
+   *
+   * Polished dark stone up to head height, which is what every expensive
+   * building in the world does at street level and what nothing else in Caelora
+   * does at all. The door is warm and everything around it is cold, so at a
+   * glance down a street of forty identical bases the two that open are the two
+   * that are lit.
+   */
+  private towerPlinth(px: Px, fill: (c: string) => void, door: boolean): void {
+    fill(CITY.plinthMid);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 16, 907);
+        // Polished granite: the veining is broad and soft, not speckled.
+        let c: string = n > 0.66 ? CITY.plinthLight : n < 0.33 ? CITY.plinthDark : CITY.plinthMid;
+        if (x % 8 === 0) c = CITY.plinthDeep;         // slab joint
+        P(x, y, c);
+      }
+    }
+    // Head: the shadow the glazing above throws down the face. Foot: the kerb
+    // the frontage stands on, so the building meets the paving.
+    for (let x = 0; x < S; x++) {
+      P(x, 0, CITY.outline);
+      P(x, 1, CITY.plinthLight);
+      P(x, 2, CITY.gold);
+      P(x, 13, CITY.plinthDeep);
+      P(x, 14, CITY.paveDark);
+      P(x, 15, CITY.outline);
+    }
+
+    if (!door) {
+      // A tall slot of lobby glass. Narrow on purpose: the bays that open are
+      // the wide ones, and a player learns that in about four seconds.
+      for (let y = 4; y <= 12; y++) {
+        for (let x = 5; x <= 10; x++) {
+          const frame = x === 5 || x === 10 || y === 4;
+          P(x, y, frame ? PAL.steelMid : x + y < 13 ? CITY.glassLight : CITY.glassMid);
+        }
+      }
+      return;
+    }
+
+    // The entrance. Brass surround, glazed leaves, warm light behind them, and
+    // a mat on the threshold where the player's feet arrive.
+    for (let y = 3; y <= 13; y++) {
+      for (let x = 1; x <= 14; x++) {
+        P(x, y, x + y < 10 ? CITY.litPale : x + y < 19 ? CITY.litMid : CITY.litDark);
+      }
+    }
+    for (let y = 3; y <= 13; y++) {
+      P(1, y, CITY.outline); P(2, y, CITY.gold);
+      P(14, y, CITY.outline); P(13, y, CITY.goldDark);
+      P(7, y, CITY.goldDark); P(8, y, CITY.gold);
+    }
+    for (let x = 1; x <= 14; x++) { P(x, 3, CITY.outline); P(x, 4, CITY.gold); }
+    for (let x = 3; x <= 12; x++) { P(x, 8, CITY.goldLit); P(x, 9, CITY.goldDark); }
+    for (let x = 0; x < S; x++) {
+      P(x, 14, CITY.plinthDeep);
+      P(x, 15, x % 3 === 0 ? '#4b4238' : '#63594c');
+    }
+  }
+
+  /**
+   * A shop window.
+   *
+   * Plate glass to the pavement, a stallriser under it, and something on
+   * display behind. What is on display is deliberately unreadable -- three
+   * blocks of colour on a shelf -- because a legible product at sixteen units
+   * across is a lie, and three blocks of colour is exactly what a shop window
+   * looks like from the other side of a busy street.
+   */
+  private shopfront(px: Px, fill: (c: string) => void): void {
+    fill(CITY.cladDark);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        P(x, y, wrapNoise(x * DETAIL, y * DETAIL, 8, 1601) > 0.55 ? CITY.clad : CITY.cladDark);
+      }
+    }
+    // The glass: one big light per cell, framed in painted timber.
+    for (let y = 2; y <= 12; y++) {
+      for (let x = 1; x <= 14; x++) {
+        const v = (x + y * 1.4) / 26;
+        P(x, y, v < 0.3 ? CITY.glassHi : v < 0.62 ? CITY.glassLight : CITY.glassMid);
+      }
+    }
+    // Goods on the shelf behind it. Colour chosen per cell, so a parade of
+    // fifteen shops is fifteen different windows.
+    const wares = [CITY.wareA, CITY.wareB, CITY.wareC, CITY.gold, CITY.litMid];
+    for (let i = 0; i < 3; i++) {
+      const w = wares[Math.floor(hash2(i, 3, 1979) * wares.length) % wares.length]!;
+      const x0 = 2 + i * 4;
+      const h = 3 + Math.floor(hash2(i, 5, 1979) * 3);
+      for (let y = 11 - h; y <= 10; y++) for (let x = x0; x <= x0 + 2; x++) P(x, y, w);
+      for (let x = x0; x <= x0 + 2; x++) P(x, 11 - h, CITY.pavePale);
+    }
+    for (let x = 1; x <= 14; x++) { P(x, 11, CITY.cladDeep); P(x, 12, CITY.cladPale); }
+    // Frame, stallriser and the kerb line at the foot.
+    for (let y = 2; y <= 12; y++) { P(1, y, CITY.cladDeep); P(14, y, CITY.cladDeep); }
+    for (let x = 0; x < S; x++) {
+      P(x, 0, CITY.outline);
+      P(x, 1, CITY.cladPale);
+      P(x, 13, CITY.cladDeep);
+      P(x, 14, CITY.paveDark);
+      P(x, 15, CITY.outline);
+    }
+  }
+
+  /**
+   * The canopy over a shop window, and the fascia over that.
+   *
+   * Laid in the row above the frontage, which is where a canopy actually is
+   * when a street is drawn from above and slightly in front. Striped, because
+   * one band of alternating colour running the length of a parade does more to
+   * say "this is where the shops are" than any number of individual signs, and
+   * because it is the only saturated horizontal line in the whole city.
+   */
+  private awning(px: Px, fill: (c: string) => void): void {
+    fill(CITY.awnA);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    // Fascia: the painted board the shop's name is on. Two bars of lettering,
+    // which is all that resolves and more honest than pretending to a word.
+    for (let y = 0; y <= 5; y++) for (let x = 0; x < S; x++) P(x, y, CITY.fascia);
+    for (let x = 0; x < S; x++) { P(x, 0, CITY.outline); P(x, 1, CITY.fasciaLit); }
+    for (let x = 2; x <= 13; x++) P(x, 3, CITY.pavePale);
+    for (let x = 4; x <= 10; x++) P(x, 4, CITY.paveLight);
+
+    // Canopy: vertical stripes, lit at the head and falling into shadow at the
+    // scalloped lip.
+    for (let y = 6; y <= 13; y++) {
+      for (let x = 0; x < S; x++) {
+        const stripe = Math.floor(x / 4) % 2 === 0;
+        const base = stripe ? CITY.awnA : CITY.awnB;
+        const lit = stripe ? CITY.awnALit : CITY.awnBLit;
+        P(x, y, y <= 7 ? lit : y >= 12 ? (stripe ? CITY.awnADark : CITY.awnBDark) : base);
+      }
+    }
+    // The scallop: a shallow round on every stripe, and the shadow it throws.
+    for (let x = 0; x < S; x++) {
+      const t = (x % 4) / 3;
+      const dip = Math.round(Math.sin(t * Math.PI) * 1.6);
+      P(x, 13 + Math.min(1, dip), CITY.outline);
+    }
+    for (let x = 0; x < S; x++) { P(x, 15, PAL.contact); }
+  }
+
+  /**
+   * The Old City.
+   *
+   * Coursed granite ashlar, three hundred years of soot in the joints, and a
+   * module that has nothing to do with the module of anything built since. The
+   * blocks are big and irregular and the courses are deep, so a wall of this
+   * beside a curtain wall is not a different colour of the same idea -- it is
+   * plainly a different century, which is the argument the whole district
+   * exists to make.
+   */
+  private granite(px: Px, fill: (c: string) => void, kind: 'plain' | 'window' | 'arch'): void {
+    fill(CITY.graniteMid);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    for (let y = 0; y < S; y++) {
+      const course = Math.floor(y / 5);
+      const offset = (course % 2) * 3;
+      for (let x = 0; x < S; x++) {
+        const block = Math.floor((x + offset) / 6);
+        const n = hash2(block, course, 337);
+        let c: string = n > 0.68 ? CITY.graniteLight : n < 0.3 ? CITY.graniteDark : CITY.graniteMid;
+        if ((x * 7 + y * 5) % 17 === 3) c = n > 0.5 ? CITY.granitePale : CITY.graniteLight;
+        if (y % 5 === 0) c = n > 0.5 ? CITY.granitePale : CITY.graniteLight;   // lit bed
+        else if (y % 5 === 4) c = CITY.graniteDeep;                             // the joint
+        if ((x + offset) % 6 === 0) c = CITY.graniteDeep;                       // perpend
+        P(x, y, c);
+      }
+    }
+    // Soot. It gathers under the beds and on the north face of every course,
+    // and it is the reason this stone is not the same colour as the paving it
+    // was cut from.
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        if (hash2(x, y, 761) > 0.9) P(x, y, CITY.soot);
+      }
+    }
+    for (let x = 0; x < S; x++) { P(x, 15, CITY.outline); P(x, 14, CITY.graniteDeep); }
+
+    if (kind === 'window') {
+      // Sash: a stone lintel, six lights over six, a projecting sill. Tall and
+      // narrow, which is the proportion of the whole quarter.
+      for (let x = 3; x <= 12; x++) { P(x, 1, CITY.granitePale); P(x, 2, CITY.graniteLight); }
+      for (let y = 3; y <= 11; y++) {
+        for (let x = 4; x <= 11; x++) {
+          const v = (x - 4 + (y - 3) * 1.2) / 15;
+          P(x, y, v < 0.3 ? CITY.paneHi : v < 0.62 ? CITY.paneLight : CITY.paneMid);
+        }
+      }
+      for (let y = 3; y <= 11; y++) { P(3, y, CITY.sash); P(12, y, CITY.sashDark); }
+      for (let x = 3; x <= 12; x++) { P(x, 3, CITY.sashDark); P(x, 7, CITY.sash); P(x, 11, CITY.sash); }
+      for (const mx of [6, 9]) for (let y = 4; y <= 10; y++) P(mx, y, CITY.sash);
+      for (let x = 2; x <= 13; x++) { P(x, 12, CITY.granitePale); P(x, 13, CITY.graniteDark); }
+    }
+
+    if (kind === 'arch') {
+      // A round-headed doorway with a fanlight, and a step worn hollow. The
+      // arch is what makes it obviously older than everything with a lintel.
+      for (let y = 2; y < S; y++) {
+        const half = y < 6 ? Math.round(Math.sqrt(Math.max(0, 16 - (6 - y) * (6 - y))) + 1) : 5;
+        for (let x = 8 - half; x <= 7 + half; x++) {
+          if (x < 0 || x >= S) continue;
+          const rim = x === 8 - half || x === 7 + half || y === 2;
+          if (rim) { P(x, y, CITY.granitePale); continue; }
+          if (y <= 6) { P(x, y, x + y < 12 ? CITY.paneHi : CITY.paneLight); continue; }  // fanlight
+          P(x, y, y === 7 ? CITY.outline : x < 8 ? CITY.doorMid : CITY.doorDark);
+        }
+      }
+      for (let y = 9; y <= 12; y++) { P(6, y, CITY.doorDeep); P(9, y, CITY.doorDeep); }
+      P(10, 10, CITY.gold);                                    // the knob
+      for (let x = 3; x <= 12; x++) { P(x, 14, CITY.granitePale); P(x, 15, CITY.graniteDark); }
+    }
+  }
+
+  /**
+   * The Meridian Foundation.
+   *
+   * Their own material, and it has to be: the whole point of the Foundation is
+   * that it looks like the future and looks like it is on your side. So it is
+   * white composite with a hairline joint, glazing in the Foundation's own deep
+   * blue, and their mark on a plate beside the door -- a ring with a line drawn
+   * through the pole of it, which is what a meridian is.
+   *
+   * Nothing about it is sinister and nothing about it should be. It is the
+   * best-built thing in Caelora and it was paid for honestly.
+   */
+  private meridianWall(px: Px, fill: (c: string) => void, kind: 'plain' | 'glass' | 'crest' | 'door'): void {
+    fill(CITY.merPanel);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 16, 1051);
+        let c: string = n > 0.6 ? CITY.merPale : CITY.merPanel;
+        if (x % 8 === 0) c = CITY.merShade;      // the hairline between panels
+        else if (x % 8 === 1) c = CITY.merPale;
+        P(x, y, c);
+      }
+    }
+    for (let x = 0; x < S; x++) {
+      P(x, 0, CITY.merShade);
+      P(x, 1, CITY.merPale);
+      P(x, 7, CITY.merBlue);                     // the accent course
+      P(x, 8, CITY.merBlueDark);
+      P(x, 14, CITY.merShade);
+      P(x, 15, CITY.outline);
+    }
+
+    if (kind === 'glass') {
+      // Deep blue glazing, floor to floor, with one hard diagonal of sky in it.
+      for (let y = 1; y <= 14; y++) {
+        for (let x = 1; x <= 14; x++) {
+          const v = (x + y) / 30;
+          const band = (x - y + 32) % 11;
+          P(x, y, band < 2 ? CITY.merSky
+            : v < 0.35 ? CITY.merGlassLight : v < 0.7 ? CITY.merGlass : CITY.merGlassDeep);
+        }
+      }
+      for (const mx of [1, 8, 14]) for (let y = 1; y <= 14; y++) P(mx, y, CITY.merShade);
+      for (let x = 1; x <= 14; x++) { P(x, 1, CITY.merShade); P(x, 14, CITY.merBlueDark); }
+      for (let x = 0; x < S; x++) P(x, 15, CITY.outline);
+    }
+
+    if (kind === 'crest') {
+      // The mark, on a plate. A ring, a meridian through it, and a chord under
+      // the ring for the horizon -- readable at a glance from across a square,
+      // which is the only test a crest has to pass.
+      for (let y = 2; y <= 13; y++) {
+        for (let x = 2; x <= 13; x++) {
+          const border = y === 2 || y === 13 || x === 2 || x === 13;
+          P(x, y, border ? CITY.merBlueDark : CITY.merBlue);
+        }
+      }
+      const cx = 8, cy = 8, r = 4.4;
+      for (let y = -5; y <= 5; y++) {
+        for (let x = -5; x <= 5; x++) {
+          const d = Math.sqrt(x * x + y * y);
+          if (Math.abs(d - r) < 0.9) P(cx + x, cy + y, CITY.merPale);
+        }
+      }
+      for (let y = -4; y <= 4; y++) P(cx, cy + y, CITY.merPale);
+      for (let x = -3; x <= 3; x++) P(cx + x, cy + 2, CITY.merSky);
+    }
+
+    if (kind === 'door') {
+      // The public entrance. Twice the width of anything else on the frontage,
+      // glazed the whole height, and lit from inside: the Foundation wants you
+      // to walk in.
+      for (let y = 2; y <= 13; y++) {
+        for (let x = 1; x <= 14; x++) {
+          P(x, y, x + y < 10 ? CITY.merSky : x + y < 20 ? CITY.merGlassLight : CITY.merGlass);
+        }
+      }
+      for (let y = 2; y <= 13; y++) {
+        P(1, y, CITY.outline); P(2, y, CITY.merShade);
+        P(14, y, CITY.outline); P(13, y, CITY.merShade);
+        P(7, y, CITY.merShade); P(8, y, CITY.merPale);
+      }
+      for (let x = 1; x <= 14; x++) { P(x, 2, CITY.outline); P(x, 3, CITY.merBlue); }
+      for (let x = 3; x <= 12; x++) { P(x, 8, CITY.merPale); P(x, 9, CITY.merShade); }
+      for (let x = 0; x < S; x++) {
+        P(x, 14, CITY.merBlueDark);
+        P(x, 15, x % 3 === 0 ? '#3c4552' : '#525c6b');
+      }
+    }
+  }
+
+  /**
+   * The trainshed.
+   *
+   * A glazed barrel roof on steel ribs. Half the point of a nineteenth-century
+   * terminus is that it is the biggest single roofed volume anybody in this
+   * country has ever built, so it is drawn as one enormous piece of glazing and
+   * the ribs are what tell you how far across it goes.
+   */
+  private shedRoof(px: Px, fill: (c: string) => void, truss: boolean): void {
+    fill(CITY.shedGlass);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        // Sooty glass, lighter where the light comes through it.
+        const v = wrapNoise(x * DETAIL, y * DETAIL, 16, 1409);
+        P(x, y, v > 0.68 ? CITY.shedGlassLit : v < 0.34 ? CITY.shedGlassDark : CITY.shedGlass);
+      }
+    }
+    // Glazing bars, both ways: a barrel roof from above is a grid.
+    for (let x = 0; x < S; x++) {
+      if (x % 4 === 0) for (let y = 0; y < S; y++) P(x, y, CITY.shedSteel);
+      if (x % 4 === 1) for (let y = 0; y < S; y++) P(x, y, CITY.shedSteelLit);
+    }
+    for (let y = 0; y < S; y += 8) {
+      for (let x = 0; x < S; x++) { P(x, y, CITY.shedSteel); P(x, y + 1, CITY.shedSteelLit); }
+    }
+
+    if (truss) {
+      // A principal rib, and the lattice inside it.
+      for (let y = 0; y < S; y++) {
+        for (let x = 5; x <= 10; x++) {
+          P(x, y, x === 5 || x === 10 ? CITY.outline : CITY.shedSteelLit);
+        }
+      }
+      for (let y = 0; y < S; y++) {
+        const t = y % 6;
+        const x = t < 3 ? 6 + t : 9 - (t - 3);
+        P(x, y, CITY.shedSteel);
+        P(x + 1, y, CITY.shedSteel);
+      }
+    }
+  }
+
+  /**
+   * A street lamp, capital pattern.
+   *
+   * Cast iron, twice the height of the one every town uses, with a fluted
+   * column and a gilt band. Floorless, so it stands on paving, cobble, gravel
+   * and grass without carrying a square of the wrong ground with it -- which is
+   * the whole reason the town lamp had to be replaced rather than reused.
+   */
+  private cityLamp(px: Px): void {
+    const P = this.unit(px);
+
+    // Column, tapering, lit down its left flank.
+    for (let y = 5; y <= 14; y++) {
+      P(7, y, CITY.ironLight);
+      P(8, y, CITY.ironMid);
+      P(9, y, CITY.ironDark);
+    }
+    for (let y = 12; y <= 14; y++) { P(6, y, CITY.ironMid); P(10, y, CITY.ironDark); }
+    P(7, 9, CITY.gold); P(8, 9, CITY.goldDark); P(9, 9, CITY.goldDark);
+
+    // The lantern: a glazed box under a cap, warm inside.
+    for (let y = 1; y <= 5; y++) {
+      for (let x = 5; x <= 11; x++) {
+        const edge = x === 5 || x === 11 || y === 5;
+        P(x, y, edge ? CITY.ironDark : y <= 2 ? CITY.lampCore : CITY.lampGlow);
+      }
+    }
+    for (let x = 4; x <= 12; x++) { P(x, 0, CITY.outline); P(x, 1, CITY.ironMid); }
+    P(5, 3, CITY.ironMid); P(11, 3, CITY.ironMid);
+    // The light it throws down onto whatever it is standing on.
+    for (let x = 6; x <= 10; x++) P(x, 6, CITY.lampSpill);
+    for (let x = 5; x <= 11; x++) P(x, 7, CITY.lampSpillFar);
+
+    this.footShadow(P, 6, 10, 15);
+  }
+
+  /**
+   * A street tree.
+   *
+   * A plane, pollarded, in an iron grate. Every avenue in the city has two rows
+   * of these and they are doing something no building can: they are the only
+   * thing at street level that is alive, and a boulevard without them is a
+   * runway. Floorless, so the paving shows through the grate and round the
+   * crown.
+   */
+  private streetTree(px: Px): void {
+    const P = this.unit(px);
+
+    // The grate, then the bole standing in it.
+    for (let x = 5; x <= 10; x++) { P(x, 13, CITY.ironDark); P(x, 14, CITY.ironMid); }
+    for (let x = 5; x <= 10; x += 2) P(x, 14, CITY.ironDark);
+    for (let y = 9; y <= 13; y++) { P(7, y, PAL.trunkLight); P(8, y, PAL.trunkMid); P(9, y, PAL.trunkDark); }
+
+    // The crown: a pollarded ball, lit from the upper left, with the sky
+    // showing through it in two or three places.
+    const cx = 8, cy = 6, r = 5.6;
+    for (let y = -6; y <= 6; y++) {
+      for (let x = -7; x <= 7; x++) {
+        const wob = Math.sin(x * 1.1) * 0.5 + Math.cos(y * 0.9) * 0.4;
+        const d = Math.sqrt(x * x + y * y * 1.15) + wob;
+        if (d > r) continue;
+        if (hash2(cx + x, cy + y, 1873) > 0.93) continue;      // sky through the leaf
+        const lit = (-x - y) / 9;
+        const c = d > r - 0.9 ? PAL.leafDeep
+          : lit > 0.35 ? PAL.leafTip : lit > 0.05 ? PAL.leafHi
+            : lit > -0.25 ? PAL.leafMid : PAL.leafDark;
+        P(cx + x, cy + y, c);
+      }
+    }
+    this.footShadow(P, 5, 10, 15);
+  }
+
+  /**
+   * A bench.
+   *
+   * Iron ends, timber slats, and it is here for one reason: a city with nowhere
+   * to sit is a set. Floorless, so it takes gravel in the park and flagstone on
+   * the boulevard.
+   */
+  private bench(px: Px): void {
+    const P = this.unit(px);
+    for (let y = 5; y <= 9; y++) {
+      for (let x = 2; x <= 13; x++) {
+        P(x, y, y % 2 === 0 ? PAL.woodLight : PAL.woodMid);
+      }
+    }
+    for (let x = 2; x <= 13; x++) { P(x, 4, PAL.woodPale); P(x, 10, PAL.woodDeep); }
+    for (const ex of [2, 3, 12, 13]) for (let y = 4; y <= 12; y++) P(ex, y, CITY.ironDark);
+    for (const ex of [3, 12]) for (let y = 5; y <= 9; y++) P(ex, y, CITY.ironMid);
+    this.footShadow(P, 2, 13, 13);
+  }
+
+  /**
+   * Iron railings.
+   *
+   * Bars, a top rail and spear heads. Drawn to read the same run vertically as
+   * horizontally, because the park, the areas and the station forecourt all
+   * need it and a set with a corner piece per direction is four tiles for one
+   * idea. Floorless.
+   */
+  private railing(px: Px): void {
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    for (let x = 0; x < S; x++) {
+      if (x % 3 === 0) {
+        for (let y = 4; y <= 14; y++) P(x, y, CITY.ironDark);
+        for (let y = 4; y <= 14; y++) P(x + 1, y, CITY.ironMid);
+        P(x, 3, CITY.gold);            // the spear head
+        P(x + 1, 3, CITY.goldDark);
+      }
+    }
+    for (let x = 0; x < S; x++) { P(x, 6, CITY.ironDark); P(x, 7, CITY.ironLight); }
+    for (let x = 0; x < S; x++) { P(x, 14, CITY.ironDark); P(x, 15, PAL.contact); }
+  }
+
+  /**
+   * Clipped hedge.
+   *
+   * The park's walls, and the only wall in Aureline that is not load-bearing.
+   * Floorless, so it takes lawn on one side and gravel on the other without
+   * dragging a border of the wrong ground behind it.
+   */
+  private hedge(px: Px): void {
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    for (let y = 2; y <= 15; y++) {
+      for (let x = 0; x < S; x++) {
+        const n = hash2(x, y, 1129);
+        const lit = (15 - y) / 13;
+        let c: string = lit > 0.62 ? (n > 0.5 ? PAL.leafHi : PAL.leafLight)
+          : lit > 0.3 ? (n > 0.5 ? PAL.leafMid : PAL.leafLight)
+            : (n > 0.6 ? PAL.leafDark : PAL.leafDeep);
+        if (n > 0.94) c = PAL.leafTip;
+        P(x, y, c);
+      }
+    }
+    // The clipped top: one hard lit line, which is what says this was cut by a
+    // person and not grown.
+    for (let x = 0; x < S; x++) { P(x, 1, CITY.outline); P(x, 2, PAL.leafTip); }
+    for (let x = 0; x < S; x++) P(x, 15, PAL.contact);
+  }
+
+  /**
+   * A monument.
+   *
+   * Bronze on a pale plinth, and quite deliberately not identified: the capital
+   * is full of statues of people the player has never heard of, which is what
+   * having a history looks like from outside. Floorless.
+   */
+  private statue(px: Px): void {
+    const P = this.unit(px);
+
+    // Plinth.
+    for (let y = 10; y <= 14; y++) {
+      for (let x = 3; x <= 12; x++) {
+        P(x, y, x < 5 ? CITY.pavePale : x > 10 ? CITY.paveDark : CITY.paveLight);
+      }
+    }
+    for (let x = 2; x <= 13; x++) { P(x, 10, CITY.pavePale); P(x, 14, CITY.paveDeep); }
+    for (let x = 3; x <= 12; x++) P(x, 12, CITY.paveMid);
+
+    // The figure: a standing person with a raised arm and a cloak. Read as a
+    // silhouette, because at this size that is all a statue ever is.
+    for (let y = 3; y <= 9; y++) {
+      const w = y < 5 ? 1 : y < 7 ? 2 : 3;
+      for (let x = 8 - w; x <= 7 + w; x++) {
+        P(x, y, x <= 7 ? CITY.bronzeLit : CITY.bronze);
+      }
+    }
+    for (let y = 1; y <= 3; y++) for (let x = 7; x <= 8; x++) P(x, y, CITY.bronzeLit);
+    for (let y = 4; y <= 6; y++) P(10, y, CITY.bronze);            // the raised arm
+    P(10, 3, CITY.bronzeLit);
+    for (let y = 6; y <= 9; y++) { P(5, y, CITY.bronzeDark); P(11, y, CITY.bronzeDark); }
+    for (let y = 1; y <= 9; y++) P(9, y, CITY.bronzeDark);          // the shaded flank
+
+    this.footShadow(P, 2, 13, 15);
+  }
+
+  /**
+   * Ornamental water.
+   *
+   * A basin, not a pond: a stone floor a hand's depth under still water, laid
+   * so that a block of any size reads as one sheet. Solid, because a city
+   * fountain is something you walk round.
+   */
+  private fountain(px: Px, fill: (c: string) => void): void {
+    fill(CITY.basinMid);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        // The stone under the water shows through, dimmed and blued.
+        const stone = ((x >> 2) + (y >> 2)) % 2 === 0 ? CITY.basinLight : CITY.basinMid;
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 8, 1291);
+        P(x, y, n > 0.72 ? CITY.basinSky : n < 0.3 ? CITY.basinDeep : stone);
+      }
+    }
+    // Glitter: short horizontal breaks, which is what still water does when it
+    // is seen from above and something is moving in it.
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        if (hash2(x >> 1, y, 1451) > 0.955) { P(x, y, CITY.basinGlint); P(x + 1, y, CITY.basinSky); }
+      }
+    }
+  }
+  /* ------------------------------------------------ The Central Road ---- */
+
+  /**
+   * Macadam.
+   *
+   * The first road in Caelora that was built rather than worn, and the tile has
+   * exactly one job: to be the wrong colour. Every path the player has walked
+   * since Hearthmere is a warm gold stripe rubbed into turf by feet, and this
+   * one is grey, hard and dusty, because a hundred and fifty thousand people
+   * eat at the end of it and somebody had to engineer the way in.
+   *
+   * Deliberately isotropic -- no ruts, no crown, no direction. A cambered road
+   * with wheel tracks in it is a better single tile and a much worse road,
+   * because this one turns four times between the wetlands and the capital and
+   * a directional surface makes every corner a seam. What carries it instead is
+   * the aggregate: chippings from both ends of the ramp, so the surface reads
+   * as crushed stone rolled flat rather than as a painted band.
+   */
+  private highroad(px: Px, fill: (c: string) => void): void {
+    fill(PAL.roadMid);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 8, 1031) * 0.6
+          + wrapNoise(x * DETAIL, y * DETAIL, 4, 1033) * 0.4;
+        let c: string = n > 0.63 ? PAL.roadLight : n < 0.37 ? PAL.roadDark : PAL.roadMid;
+        const g = hash2(x, y, 1039);
+        if (g > 0.968) c = PAL.roadPale;
+        else if (g > 0.952) c = PAL.stoneLight;
+        else if (g < 0.03) c = PAL.roadDeep;
+        P(x, y, c);
+      }
+    }
+
+    // Three worn hollows per cell, wrapping at the edges so a road of any
+    // length has no lattice. A patched road is a used road.
+    for (let i = 0; i < 3; i++) {
+      const cx = Math.floor(hash2(i, 5, 1049) * S);
+      const cy = Math.floor(hash2(i, 6, 1051) * S);
+      const r = 1 + Math.floor(hash2(i, 7, 1061) * 2);
+      for (let y = cy - r; y <= cy + r; y++) {
+        for (let x = cx - r; x <= cx + r; x++) {
+          if ((x - cx) * (x - cx) + (y - cy) * (y - cy) > r * r) continue;
+          P(((x % S) + S) % S, ((y % S) + S) % S,
+            hash2(x, y, 1063) > 0.5 ? PAL.roadDark : PAL.roadDeep);
+        }
+      }
+    }
+  }
+
+  /**
+   * Ploughed ground.
+   *
+   * Not the path ramp with the sun taken out of it. A road is dry, packed and
+   * pale; turned earth is dark, wet and open, and the difference between them
+   * is most of what tells a player that the brown field beside the brown road
+   * is a field. So this is its own ramp, and the structure is ridge and furrow:
+   * a lit crest, the body of the ridge, and the shadow in the bottom of the
+   * cut, repeating every four units.
+   *
+   * The ridges wander by a whole sine period across the cell, which wraps, so
+   * an eighty-tile field has no seam and no ruled line running through it.
+   */
+  private furrow(px: Px, fill: (c: string) => void): void {
+    fill(PAL.loamMid);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    const W = (x: number, y: number, c: string) =>
+      P(((x % S) + S) % S, ((y % S) + S) % S, c);
+
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const wobble = Math.round(Math.sin((x / S) * Math.PI * 2) * 0.9);
+        const b = (((y + wobble) % 4) + 4) % 4;
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 8, 1069);
+        let c: string = b === 0 ? PAL.loamLight
+          : b === 1 ? PAL.loamMid
+          : b === 2 ? PAL.loamDark
+          : PAL.loamDeep;
+        if (b === 0 && n > 0.58) c = PAL.loamPale;
+        else if (b === 3 && n > 0.66) c = PAL.loamDark;
+        P(x, y, c);
+      }
+    }
+
+    // Clods and flints. A clod is a lit crown over its own shadow, because a
+    // single dark unit at this size is dirt on the screen rather than a lump
+    // of earth lying on a field.
+    for (let i = 0; i < 11; i++) {
+      const cx = Math.floor(hash2(i, 11, 1087) * S);
+      const cy = Math.floor(hash2(i, 12, 1091) * S);
+      W(cx, cy, PAL.loamPale);
+      W(cx + 1, cy, PAL.loamMid);
+      W(cx, cy + 1, PAL.loamDeep);
+    }
+    for (let i = 0; i < 3; i++) {
+      W(Math.floor(hash2(i, 21, 1093) * S), Math.floor(hash2(i, 22, 1097) * S), PAL.stoneLight);
+    }
+    // Last year's stubble, still in the ground.
+    for (let i = 0; i < 5; i++) {
+      W(Math.floor(hash2(i, 31, 1103) * S), Math.floor(hash2(i, 32, 1109) * S), PAL.wheatDark);
+    }
+  }
+
+  /**
+   * Standing wheat: this country's tall grass.
+   *
+   * The encounter tile, so the only test that matters is whether a player can
+   * pick it out at 1x from the far side of the screen without being told. On
+   * ash that meant being the darkest mass in view; on a green and brown
+   * farmland map it means being the most SATURATED, which is why the ramp
+   * carries more chroma than anything else outdoors in the game.
+   *
+   * Two ranks of ears to the cell rather than one. A crop is deep -- the
+   * player is walking into it, not over it -- and one rank per tile draws a
+   * field of identical stripes sixteen units apart, which is a lawn with
+   * markings on it. Two ranks, each with its own lean and height, read as a
+   * mass standing at different heights, which is what a field of corn is.
+   */
+  private wheat(px: Px, fill: (c: string) => void): void {
+    fill(PAL.wheatDark);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    const W = (x: number, y: number, c: string) =>
+      P(((x % S) + S) % S, ((y % S) + S) % S, c);
+
+    // The shaded floor of the crop, so the stalks have something to stand in.
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 8, 1117);
+        P(x, y, n < 0.38 ? PAL.wheatDeep : PAL.wheatDark);
+      }
+    }
+    for (const base of [7, 15]) for (let x = 0; x < S; x++) W(x, base, PAL.wheatDeep);
+
+    for (const base of [7, 15]) {
+      for (let x = 0; x < S; x++) {
+        const h = 5 + Math.floor(hash2(x, base, 1123) * 3);
+        const lean = (hash2(x, base, 1129) - 0.5) * 1.8;
+        for (let k = 1; k <= h; k++) {
+          const t = k / h;
+          const xx = x + Math.round(lean * t);
+          const c = t > 0.74 ? PAL.wheatLight : t > 0.42 ? PAL.wheatMid : PAL.wheatDark;
+          W(xx, base - k, c);
+          // The shaded side of the stalk. One unit wide vanishes at 1x.
+          if (t < 0.7) W(xx + 1, base - k, PAL.wheatDeep);
+        }
+        // The ear, and the awns over it: the pale flecks are the whole reason
+        // a field of this reads as grain rather than as long grass.
+        const ex = x + Math.round(lean);
+        W(ex, base - h, PAL.wheatPale);
+        W(ex, base - h - 1, hash2(x, base, 1151) > 0.45 ? PAL.wheatPale : PAL.wheatLight);
+        W(ex + 1, base - h, PAL.wheatDark);
+      }
+    }
+  }
+
+  /**
+   * Hedgerow.
+   *
+   * The field boundary, and the wall of every enclosed map in this country. It
+   * is not the woodland tree recoloured and it is not the city's clipped box:
+   * a laid hedge is a thicket somebody bent over and wove together forty years
+   * ago, so the silhouette is a low dense mass with a ragged top and no gap
+   * underneath at all.
+   *
+   * Drawn edge to edge with no transparent margin, which is the whole trick: a
+   * run of these in either direction has to be a continuous wall, and a tree
+   * tile with daylight round it draws a row of bushes with holes between them.
+   * It stays an overlay rather than a ground tile so the player walking along
+   * the far side of a hedge is correctly behind it.
+   */
+  private hedgerow(px: Px, fill: (c: string) => void): void {
+    void fill;
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    const W = (x: number, y: number, c: string) =>
+      P(((x % S) + S) % S, ((y % S) + S) % S, c);
+
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 5, 1153) * 0.6
+          + wrapNoise(x * DETAIL, y * DETAIL, 3, 1163) * 0.4;
+        // Light falls on the top and the upper left, the way it does on
+        // everything else in the tileset.
+        const lit = n + (S - y) / 40 + (S - x) / 70;
+        const c: string = lit > 1.02 ? PAL.leafHi
+          : lit > 0.86 ? PAL.leafLight
+          : lit > 0.66 ? PAL.leafMid
+          : lit > 0.46 ? PAL.leafDark
+          : PAL.leafDeep;
+        P(x, y, c);
+      }
+    }
+    // The ragged crown. A hedge that stops on a ruled line is a wall with
+    // leaves painted on it.
+    for (let x = 0; x < S; x++) {
+      const top = Math.floor(hash2(x, 0, 1171) * 3);
+      for (let y = 0; y < top; y++) P(x, y, PAL.leafDeep);
+      P(x, top, hash2(x, 1, 1181) > 0.5 ? PAL.leafTip : PAL.leafHi);
+    }
+    // Old wood showing through: the stools the hedge was laid from.
+    for (let i = 0; i < 4; i++) {
+      const bx = Math.floor(hash2(i, 7, 1187) * S);
+      for (let y = 11; y < S; y++) W(bx, y, PAL.trunkDark);
+      W(bx + 1, 13, PAL.trunkDeep);
+    }
+    // Haw and may, one or the other depending on the alternate.
+    for (let i = 0; i < 5; i++) {
+      const bx = Math.floor(hash2(i, 13, 1193) * S);
+      const by = 2 + Math.floor(hash2(i, 14, 1201) * 9);
+      W(bx, by, hash2(i, 15, 1213) > 0.5 ? PAL.redMid : PAL.plasterPale);
+    }
+    for (let x = 0; x < S; x++) P(x, S - 1, PAL.leafDeep);
+  }
+
+  /**
+   * A stook of sheaves.
+   *
+   * Bound sheaves stood on their butts and leant together to dry, which is what
+   * a harvested field is covered in for the fortnight before the carts come. It
+   * is here to do a job no wall or crop can: it dates the act. The player
+   * arrives in the capital's granary at harvest, everybody they meet is busy,
+   * and the road is full because of that -- and the stooks say it in the
+   * background without anybody having to mention the season.
+   */
+  private stook(px: Px): void {
+    const P = this.unit(px);
+
+    /** One sheaf: a tapering bundle, a tie, and ears fanning off the top. */
+    const sheaf = (bx: number, tx: number, top: number, seed: number) => {
+      for (let y = 15; y >= top; y--) {
+        const t = (15 - y) / (15 - top);
+        const cx = bx + (tx - bx) * t;
+        const half = 2 - Math.round(t);
+        const lo = Math.round(cx - half), hi = Math.round(cx + half);
+        for (let x = lo; x <= hi; x++) {
+          const edge = x === lo ? PAL.wheatDeep : x === hi ? PAL.wheatDark : PAL.wheatMid;
+          P(x, y, (x * 3 + y * 5 + seed) % 7 === 0 ? PAL.wheatLight : edge);
+        }
+      }
+      // The band. Every sheaf in Caelora is tied with a twist of its own straw.
+      const bandY = top + Math.round((15 - top) * 0.42);
+      for (let x = -2; x <= 2; x++) P(Math.round(bx + (tx - bx) * 0.58) + x, bandY, PAL.loamDark);
+      // Ears, fanned.
+      for (let k = -2; k <= 2; k++) {
+        P(tx + k, top - 1, PAL.wheatPale);
+        if (k % 2 === 0) P(tx + k, top - 2, PAL.wheatLight);
+      }
+    };
+
+    sheaf(4, 5, 6, 1);
+    sheaf(12, 11, 6, 4);
+    sheaf(8, 8, 3, 2);
+    this.footShadow(P, 2, 13, 15);
+  }
+
+  /**
+   * A milestone.
+   *
+   * The oldest piece of infrastructure on the road and the smallest, and it
+   * carries the whole shape of the act: the number on it goes down. Nobody has
+   * to say the capital is close. The player reads it off a stone.
+   *
+   * Four alternates, four different cuts, because a road signed with the same
+   * mark nine times over is worse than a road signed nowhere at all -- and the
+   * moss is always on the same side, because it always is.
+   */
+  private milestone(px: Px): void {
+    const P = this.unit(px);
+
+    for (let y = 6; y < 16; y++) {
+      const half = y === 6 ? 2 : 3;
+      for (let x = 8 - half; x <= 7 + half; x++) {
+        const lit = (8 - x) / 6 + (10 - y) / 14;
+        P(x, y, lit > 0.25 ? PAL.stonePale : lit > -0.25 ? PAL.stoneLight
+          : lit > -0.8 ? PAL.stoneMid : PAL.stoneDark);
+      }
+    }
+    for (let x = 5; x <= 10; x++) P(x, 5, PAL.stoneLight);
+    for (let x = 6; x <= 9; x++) P(x, 4, PAL.outline);
+    P(5, 5, PAL.outline); P(10, 5, PAL.outline);
+    for (let y = 5; y < 16; y++) { P(4, y, PAL.outline); P(11, y, PAL.outline); }
+    P(5, 6, PAL.stoneMid); P(10, 6, PAL.stoneDark);
+    // The cut face: a name above a distance, both drawn as strokes rather than
+    // as type, because five units of real lettering is mush.
+    const cut = Math.floor(hash2(0, 0, 1217) * 4);
+    for (let x = 6; x <= 9; x++) P(x, 8, PAL.stoneDeep);
+    const digits: number[][] = [[6, 8], [6, 7, 9], [7, 9], [6, 9]];
+    for (const x of digits[cut]!) { P(x, 10, PAL.stoneDeep); P(x, 11, PAL.stoneDeep); }
+    P(7, 12, PAL.stoneDeep); P(8, 12, PAL.stoneDeep);
+    // North side, and it is always the north side.
+    for (let y = 8; y < 15; y++) {
+      if (hash2(y, 3, 1223) > 0.45) P(5, y, PAL.mossDark);
+      if (hash2(y, 4, 1229) > 0.7) P(6, y, PAL.mossMid);
+    }
+    this.footShadow(P, 4, 11, 15);
+  }
+
+  /**
+   * A telegraph pole.
+   *
+   * The quietest thing on the road and one of the loudest arguments in it. The
+   * wetlands ring a bell when somebody is late; this country writes ahead. A
+   * line of these marching up the verge beside the rails says that the capital
+   * knows what is coming before it arrives, which is the single most Meridian
+   * fact about the place, and it is said entirely in scenery.
+   *
+   * No wires, on purpose. A wire drawn across the cell only joins up if a pole
+   * stands on every tile, and a pole every sixteen pixels is a picket fence;
+   * drawn as a stub it ends in mid-air. The crossarm silhouette is what reads
+   * at 1x, so the crossarms are what the tile spends its units on.
+   */
+  private telegraph(px: Px): void {
+    const P = this.unit(px);
+
+    for (let y = 1; y < 16; y++) {
+      P(7, y, PAL.woodLight);
+      P(8, y, PAL.woodDeep);
+      if (y % 4 === 1) P(7, y, PAL.woodPale);
+      if (y > 11) { P(7, y, PAL.woodDark); P(8, y, PAL.trunkDeep); }
+    }
+    /** One crossarm: the arm, its shadow, and glass insulators along it. */
+    const arm = (y: number, half: number) => {
+      for (let x = 8 - half; x <= 7 + half; x++) {
+        P(x, y, PAL.woodMid);
+        P(x, y + 1, PAL.woodDeep);
+      }
+      for (const x of [8 - half, 7 + half, 8 - half + 2, 7 + half - 2]) {
+        P(x, y - 1, PAL.glassLight);
+        P(x, y - 2, PAL.glassHi);
+      }
+    };
+    arm(4, 6);
+    arm(8, 4);
+    P(7, 1, PAL.woodPale);
+    this.footShadow(P, 5, 10, 15);
+  }
+
+  /**
+   * The embankment.
+   *
+   * The flank of the raised line, and the reason a railway is a shape on the
+   * map rather than a stripe painted across it. It is solid: the whole point
+   * of putting a main line through farmland is that the farmland is now in two
+   * halves and the road has to find a crossing, which is what turns a flat
+   * plain into a route with decisions in it.
+   *
+   * Drawn as the face a player standing SOUTH of the line sees -- broken stone
+   * at the shoulder, grading down through weeds into the field at the foot --
+   * so it belongs in the row below a track run. The far side of the line gets
+   * no bank, exactly as a cliff in this genre only ever shows one face.
+   */
+  private embankment(px: Px, fill: (c: string) => void): void {
+    fill(PAL.stoneMid);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 6, 1231) * 0.6
+          + wrapNoise(x * DETAIL, y * DETAIL, 3, 1237) * 0.4;
+        // The line where stone gives out and the bank goes green, wandering by
+        // a couple of units so a long run is a slope and not a painted band.
+        const grassAt = 7 + Math.round(Math.sin((x / S) * Math.PI * 2) * 1.6) + (n > 0.6 ? 1 : 0);
+        let c: string;
+        if (y < grassAt) {
+          c = n > 0.64 ? PAL.stonePale : n > 0.48 ? PAL.stoneLight
+            : n > 0.32 ? PAL.stoneMid : PAL.stoneDark;
+          if (hash2(x, y, 1249) > 0.94) c = PAL.stoneDeep;
+        } else {
+          const d = (y - grassAt) / 9;
+          c = d < 0.2 ? PAL.weedLight : d < 0.5 ? PAL.weedMid
+            : d < 0.78 ? PAL.weedDark : PAL.weedDeep;
+          if (hash2(x, y, 1259) > 0.9) c = PAL.seedHead;
+        }
+        P(x, y, c);
+      }
+    }
+    // The lit crest, so a run of these reads as ground that is higher than the
+    // field beside it.
+    for (let x = 0; x < S; x++) P(x, 0, hash2(x, 0, 1277) > 0.5 ? PAL.stonePale : PAL.stoneLight);
+    for (let x = 0; x < S; x++) P(x, S - 1, PAL.contact);
+  }
+
+  /**
+   * The permanent way.
+   *
+   * Ballast, sleepers and two rails, and it is solid, because nobody in this
+   * game walks up the middle of a working main line. One painter draws both
+   * directions: the vertical run is the horizontal one transposed through the
+   * writer, so the two can never drift apart as the tile is tuned.
+   *
+   * The rail head is the brightest colour used outdoors anywhere in Caelora,
+   * and that is the tile's whole argument. Nothing else in this world is
+   * polished. Two white threads running away to the north are the first thing
+   * the player has seen that was made by an industry rather than by a trade,
+   * and the capital is at the end of them.
+   */
+  private track(px: Px, fill: (c: string) => void, dir: 'h' | 'v'): void {
+    fill(PAL.stoneMid);
+    const P0 = this.unit(px);
+    const S = TILE_SIZE;
+    const P: Px = dir === 'h' ? P0 : (x, y, c) => P0(y, x, c);
+
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 4, 1283);
+        let c: string = n > 0.62 ? PAL.stoneLight : n < 0.38 ? PAL.stoneDark : PAL.stoneMid;
+        const g = hash2(x, y, 1289);
+        if (g > 0.9) c = PAL.stonePale;
+        else if (g < 0.08) c = PAL.stoneDeep;
+        P(x, y, c);
+      }
+    }
+    // Sleepers, four to the cell with a clear unit of ballast between them, so
+    // a run of the tile draws an even ladder rather than a moire. Pulled back
+    // off black on purpose: they are the ground the rail sits on, and when they
+    // were the darkest thing in the cell they took the tile over.
+    for (let sx = 1; sx < S; sx += 4) {
+      for (let y = 1; y <= 14; y++) {
+        P(sx, y, PAL.tarPale);
+        P(sx + 1, y, PAL.tarLight);
+        P(sx + 2, y, PAL.tarMid);
+        if ((y * 3 + sx) % 7 === 0) P(sx + 1, y, PAL.tarDark);
+      }
+    }
+    // Rails, at a seven-unit gauge: the shadow the rail throws, the polished
+    // head, the lit web under it and the foot. Four rows apiece, because a
+    // one-unit head at 1x is a rumour.
+    for (const ry of [4, 11]) {
+      for (let x = 0; x < S; x++) {
+        P(x, ry - 1, PAL.steelDeep);
+        P(x, ry, hash2(x, ry, 1291) > 0.1 ? PAL.railHead : PAL.steelPale);
+        P(x, ry + 1, PAL.steelLight);
+        P(x, ry + 2, hash2(x, ry, 1297) > 0.82 ? PAL.railRust : PAL.steelDeep);
+      }
+    }
+  }
+
+  /**
+   * The permanent way, turning.
+   *
+   * A railway cannot corner on a tile the way a footpath can -- a right angle
+   * in a rail is a derailment, and it reads as one. So the curve is a real
+   * quarter circle struck from the corner the track is turning around, with
+   * the sleepers laid radially the way they actually are on a curve.
+   *
+   * cx, cy is that corner in authoring units: 0 or 16 on each axis. The two
+   * open edges are the two the corner does not touch.
+   */
+  private trackTurn(px: Px, fill: (c: string) => void, cx: number, cy: number): void {
+    fill(PAL.stoneMid);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    const sx = cx === 0 ? 1 : -1;
+    const sy = cy === 0 ? 1 : -1;
+
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 4, 1301);
+        let c: string = n > 0.62 ? PAL.stoneLight : n < 0.38 ? PAL.stoneDark : PAL.stoneMid;
+        const g = hash2(x, y, 1303);
+        if (g > 0.9) c = PAL.stonePale;
+        else if (g < 0.08) c = PAL.stoneDeep;
+        P(x, y, c);
+      }
+    }
+    // Radial sleepers, laid the way they are on a real curve: six across the
+    // quarter, each three units wide, and reaching a unit past both rails so
+    // the track has a bed rather than two arcs floating on ballast.
+    for (let i = 0; i < 6; i++) {
+      const a = ((i + 0.5) / 6) * (Math.PI / 2);
+      const dx = sx * Math.cos(a), dy = sy * Math.sin(a);
+      const nx = -dy, ny = dx;
+      for (let r = 1.5; r <= 14; r += 0.25) {
+        for (let w = -1.2; w <= 1.2; w += 0.6) {
+          P(Math.round(cx + dx * r + nx * w), Math.round(cy + dy * r + ny * w),
+            w < -0.5 ? PAL.tarPale : w < 0.5 ? PAL.tarLight : PAL.tarMid);
+        }
+      }
+    }
+    // Two rails, struck at the same gauge the straight uses.
+    for (const rr of [4, 11]) {
+      for (let t = 0; t <= 1.0001; t += 0.006) {
+        const a = t * (Math.PI / 2);
+        const dx = sx * Math.cos(a), dy = sy * Math.sin(a);
+        P(Math.round(cx + dx * (rr - 1)), Math.round(cy + dy * (rr - 1)), PAL.steelDeep);
+        P(Math.round(cx + dx * (rr + 1)), Math.round(cy + dy * (rr + 1)), PAL.steelLight);
+        P(Math.round(cx + dx * (rr + 2)), Math.round(cy + dy * (rr + 2)), PAL.steelDeep);
+        P(Math.round(cx + dx * rr), Math.round(cy + dy * rr), PAL.railHead);
+      }
+    }
+  }
+
+  /**
+   * A level crossing.
+   *
+   * The one tile of railway a player is allowed to stand on, and the reason
+   * the line is a barrier everywhere else. Baulks of timber laid between and
+   * outside the rails, with the road running straight over them and the two
+   * heads left flush and bright.
+   *
+   * Drawn for a line running east to west under a road running north to south,
+   * which is the only orientation the Central Road uses it in. A crossing that
+   * worked both ways would have to lose the timber, and the timber is the
+   * thing that makes it read as a place to cross.
+   */
+  private trackCrossing(px: Px, fill: (c: string) => void): void {
+    this.highroad(px, fill);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    const baulk = (y0: number, y1: number) => {
+      for (let y = y0; y <= y1; y++) {
+        const tone = hash2(y, 0, 1307);
+        for (let x = 0; x < S; x++) {
+          let c: string = tone > 0.62 ? PAL.plankLight : tone < 0.32 ? PAL.plankDark : PAL.plankMid;
+          if ((x * 5 + y * 7) % 13 === 2) c = PAL.plankPale;
+          if (hash2(x, y, 1319) > 0.94) c = PAL.roadDark;   // road dirt trodden in
+          P(x, y, c);
+        }
+      }
+      for (let x = 0; x < S; x++) P(x, y1, PAL.plankDeep);
+    };
+    baulk(1, 3);
+    baulk(6, 10);
+    baulk(13, 15);
+    for (const ry of [4, 11]) {
+      for (let x = 0; x < S; x++) {
+        P(x, ry, hash2(x, ry, 1321) > 0.1 ? PAL.railHead : PAL.steelPale);
+        P(x, ry + 1, PAL.steelDark);
+      }
+    }
+  }
+
+  /**
+   * A semaphore signal.
+   *
+   * One arm, off, and it is off because there is no train in the section right
+   * now -- which is the only way a still picture can say that a railway is
+   * being operated by somebody rather than merely existing. It is the tallest
+   * thing on the open plain and it is worth the units for that alone.
+   */
+  private trackSignal(px: Px): void {
+    const P = this.unit(px);
+
+    // Lattice mast. Two uprights and a zigzag between them, which is what a
+    // lattice post looks like once it is four units wide.
+    for (let y = 1; y < 16; y++) {
+      P(6, y, PAL.steelMid);
+      P(9, y, PAL.steelDeep);
+      P(y % 2 === 0 ? 7 : 8, y, PAL.steelDark);
+      if (y % 3 === 0) P(7, y, PAL.steelLight);
+    }
+    for (let x = 5; x <= 10; x++) { P(x, 15, PAL.steelDeep); P(x, 14, PAL.steelDark); }
+    // The arm, lowered to clear: a red blade with a white bar across it.
+    for (let x = 0; x <= 5; x++) {
+      P(x, 3, PAL.redDark);
+      P(x, 4, PAL.redMid);
+      P(x, 5, PAL.redDeep);
+    }
+    for (const x of [1, 2]) { P(x, 3, PAL.plasterPale); P(x, 4, PAL.trimPale); }
+    P(0, 4, PAL.outline);
+    // Spectacle plate and lamp, hung below the pivot.
+    P(6, 6, PAL.outline); P(5, 6, PAL.redLight); P(5, 7, PAL.redDeep);
+    // The ladder somebody climbs to trim that lamp.
+    for (let y = 7; y < 14; y += 2) { P(10, y, PAL.steelLight); P(11, y, PAL.steelDark); }
+    this.footShadow(P, 4, 11, 15);
+  }
+
+  /**
+   * A platform.
+   *
+   * Asphalt over a stone-faced bank, which is what a country halt is made of,
+   * and the one piece of civil engineering in this act that exists purely so
+   * that people can wait. edge swaps the bottom rows for the coping and the
+   * painted line, so it belongs in the row of the platform nearest the track --
+   * the halt is laid out with the line running along the south side.
+   */
+  private haltDeck(px: Px, fill: (c: string) => void, edge: boolean): void {
+    fill(PAL.roadLight);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 6, 1327);
+        let c: string = n > 0.6 ? PAL.roadPale : n < 0.4 ? PAL.roadMid : PAL.roadLight;
+        if (hash2(x, y, 1331) > 0.94) c = PAL.roadDark;
+        P(x, y, c);
+      }
+    }
+    // Slab joints, so the surface reads as laid rather than poured. Kept to
+    // one step below the slab: a joint drawn at full contrast turns a platform
+    // into a chequerboard long before it turns into paving.
+    for (let x = 0; x < S; x++) {
+      if ((x + 3) % 8) continue;
+      for (let y = 0; y < S; y++) P(x, y, hash2(x, y, 1373) > 0.3 ? PAL.roadMid : PAL.roadDark);
+    }
+    for (let y = 0; y < S; y++) {
+      if ((y + 5) % 8) continue;
+      for (let x = 0; x < S; x++) P(x, y, hash2(x, y, 1381) > 0.3 ? PAL.roadMid : PAL.roadDark);
+    }
+
+    if (!edge) return;
+    // Coping, painted line, and the drop into the four-foot.
+    for (let x = 0; x < S; x++) {
+      P(x, 12, hash2(x, 1, 1361) > 0.2 ? PAL.plasterPale : PAL.roadPale);
+      P(x, 13, hash2(x, 2, 1367) > 0.5 ? PAL.stonePale : PAL.stoneLight);
+      P(x, 14, PAL.stoneMid);
+      P(x, 15, PAL.stoneDeep);
+      if ((x + 2) % 6 === 0) { P(x, 13, PAL.stoneDark); P(x, 14, PAL.stoneDark); }
+    }
+  }
+
 }
 
 /**
@@ -7816,4 +9500,166 @@ const AUR = {
   lavaMid: '#e9691a',
   lavaHot: '#ffd15c',
   outline: '#181a22',
+} as const;
+
+/**
+ * Aureline's ramps.
+ *
+ * Kept out of PAL for the reason the Aurelian block above gives, turned round:
+ * that family is a civilisation nothing else is allowed near, and this one is a
+ * city that must not be allowed to leak. Aureline is made of imported and
+ * manufactured material -- float glass, rolled steel, macadam, granite brought
+ * in by rail -- and none of it should ever end up on a cottage in Briarbell
+ * because somebody reached for "that nice pale stone".
+ *
+ * Three arguments are baked into the numbers. FIRST, the ground is split: the
+ * footway is the palest surface in the game and the carriageway is the darkest,
+ * so the plan of a city of a hundred and fifty thousand reads from colour alone
+ * with no signage at all. SECOND, the glass is cold and the doors are warm --
+ * every way into a building in this city is the only warm thing on its
+ * frontage, which is what stops a street of forty identical bases from being a
+ * puzzle. THIRD, the old quarter's granite is warmer and dirtier than the
+ * paving it was cut from, because three hundred years of soot is the difference
+ * between the two halves of the city and it has to be visible on the stone.
+ */
+const CITY = {
+  // Footway. Imported granite flags, warm, and high in the ramp: every sprite
+  // in the capital is seen against this.
+  paveDeep: '#8b8577',
+  paveDark: '#a7a091',
+  paveMid: '#c3bcac',
+  paveLight: '#d9d3c5',
+  pavePale: '#efeade',
+  // Carriageway. The darkest ground layer in the game, on purpose.
+  roadDeep: '#23262c',
+  roadDark: '#33373f',
+  roadMid: '#434852',
+  roadLight: '#565c68',
+  roadGrit: '#8b909b',
+  // The Old City's setts: a four-unit module, warm, hand-laid.
+  cobbleDeep: '#5f5548',
+  cobbleDark: '#7d7161',
+  cobbleMid: '#9a8c78',
+  cobbleLight: '#b6a68e',
+  cobblePale: '#d0bfa4',
+  // Park gravel.
+  gravelDeep: '#9a875f',
+  gravelDark: '#b8a37c',
+  gravelMid: '#d1bd97',
+  gravelLight: '#e3d3b1',
+  gravelPale: '#f3e8cb',
+  // Curtain wall. A cold blue-green: the sea and the sky in a north-facing
+  // window, and nothing at all like the warm Aurelian current.
+  glassDark: '#1f4356',
+  glassMid: '#336c81',
+  glassLight: '#5fa2b4',
+  glassHi: '#a6d7e2',
+  // Blinds and lit floors, the two things a pane can be other than sky.
+  blindMid: '#b6bcbd',
+  blindLight: '#d7dcdc',
+  litDark: '#c9a469',
+  litMid: '#e8c98f',
+  litPale: '#fbeec5',
+  // Stone cladding on the piers and the shopfront pilasters.
+  cladDeep: '#77726b',
+  cladDark: '#948e85',
+  clad: '#b3aca1',
+  cladPale: '#dcd6cb',
+  // Rolled steel, in the curtain wall's own frame.
+  steelDark: '#4b5461',
+  steelLight: '#aeb8c4',
+  // Roof decks.
+  deckDeep: '#2f3a44',
+  deckDark: '#48555f',
+  deckMid: '#606e79',
+  deckLight: '#84929c',
+  // Gilt. The one warm accent the modern city allows itself, and it is on every
+  // parapet, every railing head and every door surround -- which is the whole
+  // reason the place is called Aureline.
+  goldDark: '#9b7a2c',
+  gold: '#cfa845',
+  goldLit: '#f2dc95',
+  // Polished granite at street level.
+  plinthDeep: '#20242b',
+  plinthDark: '#333944',
+  plinthMid: '#454d5b',
+  plinthLight: '#646e7f',
+  // Shop window dressing. Three saturated blocks, unreadable on purpose.
+  wareA: '#c0392b',
+  wareB: '#2f7d5a',
+  wareC: '#7a4fa0',
+  // Awnings and the fascia over them.
+  awnA: '#b8443c',
+  awnALit: '#d76a5c',
+  awnADark: '#8a2f2b',
+  awnB: '#e8dfcb',
+  awnBLit: '#faf3e4',
+  awnBDark: '#b3a892',
+  fascia: '#2f4a3e',
+  fasciaLit: '#456658',
+  // The Old City's ashlar, and the soot in it.
+  graniteDeep: '#5c5344',
+  graniteDark: '#7d7361',
+  graniteMid: '#988c77',
+  graniteLight: '#b2a58c',
+  granitePale: '#cabca0',
+  soot: '#4b4438',
+  // Old glass, old paint, old timber.
+  paneMid: '#6f93a3',
+  paneLight: '#9fc0cb',
+  paneHi: '#d5e8ee',
+  sash: '#e9e2d2',
+  sashDark: '#b3aa96',
+  doorDeep: '#2a1c16',
+  doorDark: '#4a3226',
+  doorMid: '#63432f',
+  // The Meridian Foundation. White composite, their blue, their glazing.
+  merShade: '#b7c2d1',
+  merPanel: '#e3eaf3',
+  merPale: '#f8fbff',
+  merBlueDark: '#17406f',
+  merBlue: '#2668ad',
+  merSky: '#9ed2f5',
+  merGlassDeep: '#12314c',
+  merGlass: '#1d4e77',
+  merGlassLight: '#3079a8',
+  // Track, sleepers and ballast.
+  ballastDark: '#4a4741',
+  ballastMid: '#6b675e',
+  ballastLight: '#8d8779',
+  sleeper: '#463427',
+  sleeperLit: '#5e4835',
+  // Platform slab and the line you do not cross.
+  slabDeep: '#8d8b85',
+  slabDark: '#a8a69f',
+  slabMid: '#c2c0b8',
+  slabLight: '#d9d7cf',
+  warnLine: '#e8b53a',
+  warnDark: '#a67d1e',
+  // The trainshed: sooty glazing on steel.
+  shedGlassDark: '#4d5a5e',
+  shedGlass: '#67767a',
+  shedGlassLit: '#93a5a8',
+  shedSteel: '#39424c',
+  shedSteelLit: '#7c8998',
+  // Cast iron: lamps, railings, tree grates, bench ends.
+  ironDark: '#22262e',
+  ironMid: '#3a4049',
+  ironLight: '#5b626d',
+  // Lamplight, and what it throws on the ground.
+  lampGlow: '#f3d99a',
+  lampCore: '#fff6dc',
+  lampSpill: 'rgba(250,220,150,0.30)',
+  lampSpillFar: 'rgba(250,220,150,0.15)',
+  // Bronze, for the statues nobody remembers the names of.
+  bronzeDark: '#4b3a18',
+  bronze: '#7d6428',
+  bronzeLit: '#b39a4e',
+  // Ornamental water: a stone basin a hand's depth under still water.
+  basinDeep: '#3d5f74',
+  basinMid: '#5f8ba0',
+  basinLight: '#7fa9bb',
+  basinSky: '#a9cfdc',
+  basinGlint: '#eafaff',
+  outline: '#1c1f27',
 } as const;

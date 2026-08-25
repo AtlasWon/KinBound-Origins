@@ -1,0 +1,112 @@
+{
+  "speakers": {
+    "aur_deep_guard": "FOUNDATION STAFF",
+    "aur_off_weather": "FORECASTER",
+    "aur_off_forecaster": "SENIOR FORECASTER",
+    "aur_off_relief": "RELIEF DIRECTOR",
+    "aur_off_conservation": "CONSERVATION LEAD",
+    "aur_off_runner": "OFFICE RUNNER",
+    "aur_off_field": "FIELD SCIENTIST",
+    "aur_off_tired": "RESONANCE STAFF",
+    "aur_records_clerk": "ARCHIVIST",
+    "aur_records_junior": "JUNIOR ARCHIVIST"
+  },
+  "entries": {
+    "aur_deep_guard": [
+      {
+        "lines": [
+          "West stair is deep survey and deep survey is not a floor, it is a directorate.",
+          "I do not have a list of who may go down. I have a list of who may not, and it is everybody."
+        ]
+      }
+    ],
+    "aur_off_weather": [
+      {
+        "lines": [
+          "Six coastal traces flat for nine weeks and I have been told it is the instruments.",
+          "I have replaced the instruments. Twice. With my own hands.",
+          "The sea off this coast is not moving, and nobody upstairs will write that down."
+        ]
+      }
+    ],
+    "aur_off_forecaster": [
+      {
+        "lines": [
+          "Thirty-one years of calling weather and I am still wrong one day in five.",
+          "The trick is to be wrong safely. Wrong towards the hill, never wrong towards the water."
+        ]
+      }
+    ],
+    "aur_off_relief": [
+      {
+        "lines": [
+          "Fourteen people and every night of next month covered, in case.",
+          "In case of what, is the question I am paid not to be able to answer.",
+          "Something has been ordering cold-weather kit in quantities I did not requisition."
+        ]
+      }
+    ],
+    "aur_off_conservation": [
+      {
+        "lines": [
+          "Two species back off the edge and one gone while I was in this chair.",
+          "I keep the page. Everybody tells me to take it out of the register.",
+          "It stays in. If it stops hurting to read, I have stopped being any use."
+        ]
+      }
+    ],
+    "aur_off_runner": [
+      {
+        "lines": [
+          "Eleven miles a day, all of it indoors. I have worn out three pairs of boots in here.",
+          "Anything going west down that stair, I hand to the man at the top.",
+          "Anything coming back up it, there has never been any."
+        ]
+      }
+    ],
+    "aur_off_field": [
+      {
+        "lines": [
+          "River mouths, monthly, all thirty-two of them. Salt, silt, temperature, the lot.",
+          "The eastern samples were all taken in the same week and stoppered, which is not monthly.",
+          "Somebody stopped going east. Nobody stopped writing the reports."
+        ]
+      }
+    ],
+    "aur_off_tired": [
+      {
+        "lines": [
+          "Aurelian resonance. Beautiful work, and none of it was built to push.",
+          "You put current into one of their rings and it does not do more. It goes quiet.",
+          "Like a person who has decided not to argue with you. I find that hard to be near."
+        ]
+      }
+    ],
+    "aur_records_clerk": [
+      {
+        "ifFlags": ["aur_hq_pass"],
+        "lines": [
+          "You have a badge, so you may read, and I will sit here while you do it.",
+          "One rule and it is not mine: a file may leave this room for the Director's office and nowhere else.",
+          "In forty years, three have. I remember all three."
+        ]
+      },
+      {
+        "lines": [
+          "Requests in writing, pencil only, and nothing leaves this room.",
+          "Yes, that is a rule about paper. It is also the only rule in this building",
+          "that has ever been broken by somebody senior enough to break it."
+        ]
+      }
+    ],
+    "aur_records_junior": [
+      {
+        "lines": [
+          "Loss reports are the worst of it. A hull survey, a crew list, and a tick or a blank.",
+          "You get used to the blanks. What you do not get used to is a report",
+          "with no assessor's name at the bottom, because that means nobody went and looked."
+        ]
+      }
+    ]
+  }
+}

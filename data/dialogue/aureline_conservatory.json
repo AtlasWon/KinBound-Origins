@@ -1,0 +1,56 @@
+{
+  "speakers": {
+    "aur_gh_keeper": "GLASSHOUSE KEEPER",
+    "aur_gh_ranger": "CONSERVATION STAFF",
+    "aur_gh_painter": "PAINTER",
+    "aur_gh_gardener": "OLD GARDENER",
+    "aur_gh_class": "SCHOOLBOY"
+  },
+  "entries": {
+    "aur_gh_keeper": [
+      {
+        "lines": [
+          "Everything under this glass is a copy of somewhere the weather is winning.",
+          "Reed beds from the drying wetlands. Coast grasses off a coast that has lost them.",
+          "We keep them warm and safe and they will never seed anywhere again."
+        ]
+      }
+    ],
+    "aur_gh_ranger": [
+      {
+        "lines": [
+          "Four thousand released this year and the register is open for anyone to add to.",
+          "A woman came in last month and wrote a sighting from forty miles off.",
+          "That is the best day I have had at this job. That is what the work is for."
+        ]
+      }
+    ],
+    "aur_gh_painter": [
+      {
+        "lines": [
+          "I paint the unplanted bed. Not the flowers. The grey square.",
+          "Nobody buys it. I keep painting it.",
+          "It is the only honest thing in a very beautiful room."
+        ]
+      }
+    ],
+    "aur_gh_gardener": [
+      {
+        "lines": [
+          "Forty years. I have watered the Briarbell cutting since it was a stick.",
+          "It will never be the bell tree. Different soil, different weather, no bells.",
+          "You cannot move a thing somewhere safe and expect it to stay the same thing."
+        ]
+      }
+    ],
+    "aur_gh_class": [
+      {
+        "lines": [
+          "The pool has things in it that are not scared of you.",
+          "Miss says that is because nothing here has ever been caught.",
+          "So I have not caught any. I have just been walking through it slowly."
+        ]
+      }
+    ]
+  }
+}

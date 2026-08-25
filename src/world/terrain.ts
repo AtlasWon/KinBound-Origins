@@ -414,6 +414,148 @@ export const TERRAIN: Record<string, TerrainDef> = {
   // board and posts the whole region uses, with no ground of its own, so it
   // takes the ash, the road or the crust the map put under it.
   '´': { over: T.SIGN, collision: 1, tag: 'ash' },
+
+  // --- Aureline: the capital. ------------------------------------------
+  //
+  // A fifth block, in a fifth script, for the reason the Emberfall note above
+  // gives: printable ASCII ran out three settlements ago, and two families that
+  // may both grow need to be unable to collide as later stages add to either.
+  // BOX DRAWING AND BLOCK ELEMENTS is the capital's set, and it was chosen
+  // because this map is far too big to edit any other way. Aureline is a
+  // hundred and fifty-two characters across and a hundred and twenty deep --
+  // eighteen thousand cells, three times Tideglass -- and at that size the
+  // ASCII source has to be legible *as a picture* or nobody, human or
+  // otherwise, can lay a street in it. So the glyphs are the thing they draw:
+  // '▓' is a wall of glass, '█' the solid pier beside it, '┌─┐' is the parapet
+  // along the top of a tower drawn exactly as it appears, '▬' is a road, '░'
+  // is cobbles, '▪' is a cut block of granite and '▫' the window in it. Open a
+  // district in an editor and you can see the district.
+  //
+  // The two kits do not blend, and that is the city's whole argument. The
+  // modern kit STACKS -- cap, glass, pier, plinth, and a tower is the same
+  // three characters repeated up the map, which is the only way a building gets
+  // to be twelve rows tall without twelve pieces of art. The old kit does NOT
+  // stack: granite, sash, arch, three storeys, and that is all it was ever
+  // built to be.
+
+  // Ground. Footway pale, carriageway dark, and the plan of the whole city
+  // reads off the colour of the ground with no signage anywhere.
+  '═': { ground: T.CITY_PAVE, collision: 0, tag: 'floor', step: 'stone' },
+  '▬': { ground: T.CITY_ROAD, collision: 0, tag: 'floor', step: 'stone' },
+  '░': { ground: T.CITY_COBBLE, collision: 0, tag: 'floor', step: 'stone' },
+  '▒': { ground: T.PARK_PATH, collision: 0, tag: 'sand', step: 'dirt' },
+
+  // The modern kit.
+  '▓': { ground: T.GLASS_WALL, collision: 1, tag: 'floor' },
+  '█': { ground: T.TOWER_PIER, collision: 1, tag: 'floor' },
+  '┌': { ground: T.TOWER_CAP_L, collision: 1, tag: 'floor' },
+  '─': { ground: T.TOWER_CAP, collision: 1, tag: 'floor' },
+  '┐': { ground: T.TOWER_CAP_R, collision: 1, tag: 'floor' },
+  '▄': { ground: T.TOWER_PLINTH, collision: 1, tag: 'floor' },
+  '╬': { ground: T.TOWER_DOOR, collision: 0, tag: 'floor', step: 'stone' },
+  '▌': { ground: T.SHOPFRONT, collision: 1, tag: 'floor' },
+  '▐': { ground: T.AWNING, collision: 1, tag: 'floor' },
+
+  // The old kit.
+  '▪': { ground: T.GRANITE_WALL, collision: 1, tag: 'floor' },
+  '▫': { ground: T.GRANITE_WINDOW, collision: 1, tag: 'floor' },
+  '◘': { ground: T.GRANITE_ARCH, collision: 0, tag: 'floor', step: 'stone' },
+
+  // The Meridian Foundation's own frontage. Nothing else in Caelora is built
+  // out of it, which is the point: you can see where they are from four streets
+  // away, and everything about it is meant to look like it is on your side.
+  '╔': { ground: T.MER_WALL, collision: 1, tag: 'floor' },
+  '╗': { ground: T.MER_GLASS, collision: 1, tag: 'floor' },
+  '╦': { ground: T.MER_CREST, collision: 1, tag: 'floor' },
+  '╩': { ground: T.MER_DOOR, collision: 0, tag: 'floor', step: 'stone' },
+
+  // The trainshed, and only the trainshed. Aureline Central lays its track and
+  // its platforms with the Central Road's own railway kit -- '━' '┃' '┗┛┏┓'
+  // '╋' '┫' '▤' '▥', a few entries down this table -- because the line through
+  // the terminus is the same line that crosses the plain outside it, and two
+  // sets of rails drawn by two different hands meeting at a map seam is exactly
+  // the join nobody owns. What a terminus needs on top of that is the one thing
+  // a country halt never has: a roof over the whole of it.
+  '╧': { ground: T.SHED_ROOF, collision: 1, tag: 'floor' },
+  '╤': { ground: T.SHED_TRUSS, collision: 1, tag: 'floor' },
+
+  // Street furniture. All overlay and all floorless, so one lamp stands on
+  // flagstone, cobble, gravel and lawn without carrying a square of the wrong
+  // ground with it -- which is exactly what the town lamp could not do, and the
+  // reason the capital needed its own.
+  '☼': { over: T.CITY_LAMP, collision: 1, tag: 'floor' },
+  '♣': { over: T.STREET_TREE, collision: 1, tag: 'grass' },
+  '♦': { over: T.BENCH, collision: 1, tag: 'floor' },
+  '╫': { over: T.RAILING, collision: 1, tag: 'floor' },
+  '♠': { over: T.HEDGE, collision: 1, tag: 'grass' },
+  '◆': { over: T.STATUE, collision: 1, tag: 'floor' },
+  // Ornamental water. Solid: a city fountain is something you walk round.
+  '○': { ground: T.FOUNTAIN, collision: 1, tag: 'water' },
+
+  // --- The Central Road: the farmed country and the main line. ---------
+  //
+  // A sixth block, and it had to be one: the capital next door had already
+  // taken the light box drawing and the block elements by the time this
+  // country needed characters, and two families that both grow have to be
+  // unable to collide. HEAVY BOX DRAWING carries the railway and the
+  // GEOMETRIC SHAPES carry the land, and neither is used anywhere else.
+  //
+  // The railway spells itself, which matters more here than in any other
+  // family in the file -- this is the largest stretch of map in the game and
+  // nearly all of it is nine characters repeated, so the source has to be
+  // legible as a picture. A run of track looks like a run of track, the four
+  // corners turn the way they are drawn, and the heavy cross is the one place
+  // the road is allowed across it.
+  //
+  // The land is shapes. An arrow is standing corn, a filled circle is the mass
+  // of a hedge, a triangle is a stook stood on its butt, a square is a stone by
+  // the road, and the three hatched squares are the three made surfaces.
+
+  // Macadam. The road itself, and the tile the player walks most of this act
+  // on. Tagged 'sand' like every other road, so the battle backdrop and the
+  // footstep tables keep treating a road as a road -- but it steps on stone,
+  // because this one is stone.
+  '▦': { ground: T.HIGHROAD, collision: 0, tag: 'sand', step: 'stone' },
+  // Ploughed field. Walkable, and deliberately so: a field with a crop in it
+  // is an encounter and a field that has been turned is a shortcut, which is
+  // the only decision an arable plain can offer on its own.
+  '▧': { ground: T.FURROW, collision: 0, tag: 'sand', step: 'dirt' },
+  // Standing wheat: this country's tall grass, and where its Kin live.
+  '↑': { ground: T.WHEAT, collision: 6, tag: 'tallGrass', encounter: true, step: 'grass' },
+  // Hedgerow. The field wall, and the reason the plain is not one open sheet:
+  // an overlay with turf under it, so the player walking the far side of a
+  // hedge is correctly drawn behind it.
+  '●': { ground: T.GRASS, over: T.HEDGEROW, collision: 1, tag: 'grass' },
+  // A stook of sheaves. Floorless, so it stands in stubble, on a verge and in
+  // a farmyard without carrying a square of the wrong ground with it.
+  '▲': { over: T.STOOK, collision: 1, tag: 'grass' },
+  // A milestone. Floorless for the same reason -- they stand on the verge, and
+  // the verge is turf in one mile and macadam in the next.
+  '■': { over: T.MILESTONE, collision: 1, tag: 'grass' },
+  // A telegraph pole: a mast with two crossarms, which is what the glyph is.
+  '╪': { over: T.TELEGRAPH, collision: 1, tag: 'grass' },
+  // The embankment flank. Solid, and that is the whole point of a railway on a
+  // map: the country is now in two halves and the road has to find the
+  // crossing. Drawn as the face seen from the SOUTH, so it belongs in the row
+  // below a run of track.
+  '┅': { ground: T.EMBANKMENT, collision: 1, tag: 'floor' },
+  // The permanent way. Solid: nobody walks up the middle of a working line.
+  '━': { ground: T.TRACK_H, collision: 1, tag: 'floor' },
+  '┃': { ground: T.TRACK_V, collision: 1, tag: 'floor' },
+  // The four curves, named for the two edges they leave by, and drawn as the
+  // corner they turn.
+  '┗': { ground: T.TRACK_NE, collision: 1, tag: 'floor' },
+  '┛': { ground: T.TRACK_NW, collision: 1, tag: 'floor' },
+  '┏': { ground: T.TRACK_SE, collision: 1, tag: 'floor' },
+  '┓': { ground: T.TRACK_SW, collision: 1, tag: 'floor' },
+  // The level crossing, and the only tile of railway anybody is allowed on.
+  '╋': { ground: T.TRACK_CROSSING, collision: 0, tag: 'sand', step: 'wood' },
+  // A semaphore signal: a mast with an arm off one side, which is the glyph.
+  '┫': { over: T.TRACK_SIGNAL, collision: 1, tag: 'floor' },
+  // The halt platform, and its coping. Both walkable; the coping row is the
+  // one nearest the track, and the halt is laid out with the line to the south.
+  '▤': { ground: T.HALT_DECK, collision: 0, tag: 'floor', step: 'stone' },
+  '▥': { ground: T.HALT_EDGE, collision: 0, tag: 'floor', step: 'stone' },
 };
 
 /**

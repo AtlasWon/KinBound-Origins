@@ -1,0 +1,144 @@
+{
+  "speakers": {
+    "aur_hq_gate": "FOUNDATION STAFF",
+    "aur_hq_gate_open": "FOUNDATION STAFF",
+    "aur_hq_desk": "RECEPTION CLERK",
+    "aur_hq_giving": "A GIVER",
+    "aur_hq_greeter": "VOLUNTEER",
+    "aur_hq_vet": "CONSERVATION STAFF",
+    "aur_hq_ocean": "OCEAN RESEARCH",
+    "aur_hq_relief": "RELIEF COORDINATOR",
+    "aur_hq_donor": "MRS HALLOWAY",
+    "aur_hq_teacher": "SCHOOLMISTRESS",
+    "aur_hq_pupil": "SCHOOLBOY",
+    "aur_hq_digger": "FIELD ARCHAEOLOGIST",
+    "aur_hq_porter": "FOUNDATION PORTER"
+  },
+  "entries": {
+    "aur_hq_gate": [
+      {
+        "lines": [
+          "Everything you can see is public and you may take as long as you like over it.",
+          "Everything behind me is staff, and I am afraid I am the whole of the reason why."
+        ]
+      }
+    ],
+    "aur_hq_gate_open": [
+      {
+        "lines": [
+          "Signed in by Miss Veyl herself, which I have countersigned, which makes it mine.",
+          "Second floor is offices. Please do not open anything that is shut."
+        ]
+      }
+    ],
+    "aur_hq_desk": [
+      {
+        "ifFlags": ["aur_hq_pass"],
+        "lines": [
+          "Badges back at the desk when you go, and if you find a room you did not mean to,",
+          "come and tell me and nobody will be cross. Everybody does it once."
+        ]
+      },
+      {
+        "lines": [
+          "Four thousand people through those doors in a week and I have turned nobody away yet.",
+          "Ask me anything. If I do not know it I will find you the person who does."
+        ]
+      }
+    ],
+    "aur_hq_giving": [
+      {
+        "lines": [
+          "Two coins a month since the flood. It is not much and they never once said so.",
+          "They send me the accounts anyway. Every year. All of it, down to the pencils."
+        ]
+      }
+    ],
+    "aur_hq_greeter": [
+      {
+        "lines": [
+          "Free tour on the hour, and the assembly hall does a talk at four.",
+          "You have come a long way for a city with a hundred and sixty thousand in it.",
+          "Do not try to see it all today. Nobody has ever managed that."
+        ]
+      }
+    ],
+    "aur_hq_vet": [
+      {
+        "lines": [
+          "Bred here, tagged here, and let go in the reed beds at three months.",
+          "I have put forty-one thousand of them back and I still walk down and watch every release."
+        ]
+      }
+    ],
+    "aur_hq_ocean": [
+      {
+        "ifFlags": ["aur_hq_pass"],
+        "lines": [
+          "You have a badge on. Then you can ask the question the public cannot.",
+          "No, I do not know what the deep tanks are for. I asked for the specification twice.",
+          "The second time I was thanked for my interest."
+        ]
+      },
+      {
+        "lines": [
+          "Shelf work, mostly. Currents, temperature, what lives where and why it stopped.",
+          "The deep survey is a different directorate. I have never been on one.",
+          "I have asked. It is not the sort of no that comes with a reason."
+        ]
+      }
+    ],
+    "aur_hq_relief": [
+      {
+        "lines": [
+          "Nine thousand packs east in the spring and every one of them paid for out of that box.",
+          "You want to know what the Foundation is? It is a warehouse and a fast cart.",
+          "The clever end of the building can argue about the weather. I just get there first."
+        ]
+      }
+    ],
+    "aur_hq_donor": [
+      {
+        "lines": [
+          "My husband drowned in the year forty-nine, off a shore with no bell on it.",
+          "There is a bell on it now. I come in once a month to look at the map and see it.",
+          "That is all. That is the whole of my business here."
+        ]
+      }
+    ],
+    "aur_hq_teacher": [
+      {
+        "lines": [
+          "Thirty-one of them and I have counted twice, which means I have lost one.",
+          "They come every year. Half of them will work here one day and they all know it."
+        ]
+      }
+    ],
+    "aur_hq_pupil": [
+      {
+        "lines": [
+          "Miss says the sea between the two halves of the model is a walkway.",
+          "But it is still the sea. So really I am drowning. Look at me. I am drowning."
+        ]
+      }
+    ],
+    "aur_hq_digger": [
+      {
+        "lines": [
+          "Eleven Aurelian sites and not one weapon in any of them. Think about that.",
+          "They built rings, and floors that sing, and doors that open for the right voice.",
+          "Whatever these people were afraid of, it was not each other."
+        ]
+      }
+    ],
+    "aur_hq_porter": [
+      {
+        "lines": [
+          "Twenty years on this floor. I have carried out a whale's jaw and a piano.",
+          "Only thing I am not allowed to carry is anything with a DEEP SURVEY chalk mark.",
+          "Those go down the west stair with their own men. Never seen one come back up."
+        ]
+      }
+    ]
+  }
+}

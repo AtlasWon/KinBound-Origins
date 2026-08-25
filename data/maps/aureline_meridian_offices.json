@@ -1,0 +1,318 @@
+{
+  "id": "aureline_meridian_offices",
+  "name": "Foundation Offices",
+  "displayName": "THE FOUNDATION - SECOND FLOOR",
+  "music": "station",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUUIIIIIIIIIIIIIIIIUUIII",
+    "IFFFFFFFFFFFIFFFFFFFFFFFFI",
+    "IFF+?+FFFFFFIFFkkkkkkkkFFI",
+    "IFFFFFFFFFFFIFFFFFFFFFFFFI",
+    "IF@@FFFFF@@FIFFFAAAAAAFFFI",
+    "IFFFFFFFFFFFIFFFEEEEEEFFFI",
+    "IP$$FFFFF$$PIPFFFFFFFFFFPI",
+    "IIIIIFIIIIIIIIIIIIIIIFIIII",
+    "ISFFFFFFFFFFFFFFFFFFFFFFSI",
+    "IS¾FFFFFFFFFFFFFFFFFFFFFSI",
+    "IIIIIIIIFIIIIIIIIIFIIIIIII",
+    "IFFFFFFFFFFFFFIFFFFFFFFFFI",
+    "IFF@@@@FFFFFFFIFFkkkkkkFFI",
+    "IFFFFFFFFFFFFFIFFFFFFFFFFI",
+    "IPFFAAAAFFFFFPIFFkkkkkkFFI",
+    "IFFFEEEEFFFFFFIFFFFFFFFFFI",
+    "IFFFFFFFFFFFFFIFFkkkkkkFFI",
+    "IFF++??FFFFFFFIFFFFFFFFFFI",
+    "IFFFFFFFFFFFFFIFFAAAAFFFFI",
+    "IPFFFFFFFFFFFPIFFEEEEFFFFI",
+    "IFFFFFFFFFFFFFIFFFFFFFFFFI",
+    "IIIIIIIIIIIIIIIIIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 24, "y": 8,
+      "toMap": "aureline_meridian", "toX": 2, "toY": 2,
+      "facing": "down", "style": "stairs"
+    },
+    {
+      "x": 24, "y": 9,
+      "toMap": "aureline_meridian", "toX": 3, "toY": 2,
+      "facing": "down", "style": "stairs"
+    },
+    {
+      "x": 1, "y": 8,
+      "toMap": "aureline_meridian_deep", "toX": 1, "toY": 1,
+      "facing": "down", "style": "stairs"
+    },
+    {
+      "x": 1, "y": 9,
+      "toMap": "aureline_meridian_deep", "toX": 2, "toY": 1,
+      "facing": "down", "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "aur_deep_guard",
+      "sprite": "meridian",
+      "x": 2, "y": 8,
+      "facing": "right",
+      "movement": { "kind": "static" },
+      "script": "aur_deep_guard",
+      "hiddenIfFlag": "aur_deep_open"
+    },
+    {
+      "id": "aur_off_weather",
+      "sprite": "meridian_sci",
+      "x": 5, "y": 3,
+      "facing": "up",
+      "movement": { "kind": "static" },
+      "script": "aur_off_weather"
+    },
+    {
+      "id": "aur_off_forecaster",
+      "sprite": "meridian_sci_f",
+      "x": 8, "y": 5,
+      "facing": "down",
+      "movement": { "kind": "lookAround" },
+      "script": "aur_off_forecaster"
+    },
+    {
+      "id": "aur_off_relief",
+      "sprite": "concord",
+      "x": 18, "y": 3,
+      "facing": "down",
+      "movement": { "kind": "static" },
+      "script": "aur_off_relief"
+    },
+    {
+      "id": "aur_off_conservation",
+      "sprite": "villager_f",
+      "x": 22, "y": 5,
+      "facing": "left",
+      "movement": { "kind": "static" },
+      "script": "aur_off_conservation"
+    },
+    {
+      "id": "aur_off_runner",
+      "sprite": "kid",
+      "x": 12, "y": 8,
+      "facing": "right",
+      "movement": { "kind": "pace", "axis": "x", "distance": 5 },
+      "script": "aur_off_runner"
+    },
+    {
+      "id": "aur_off_field",
+      "sprite": "hiker",
+      "x": 7, "y": 13,
+      "facing": "left",
+      "movement": { "kind": "static" },
+      "script": "aur_off_field"
+    },
+    {
+      "id": "aur_off_tired",
+      "sprite": "meridian_sci",
+      "x": 4, "y": 16,
+      "facing": "down",
+      "movement": { "kind": "static" },
+      "script": "aur_off_tired"
+    },
+    {
+      "id": "aur_records_clerk",
+      "sprite": "elder",
+      "x": 22, "y": 13,
+      "facing": "left",
+      "movement": { "kind": "static" },
+      "script": "aur_records_clerk"
+    },
+    {
+      "id": "aur_records_junior",
+      "sprite": "townsfolk_m",
+      "x": 22, "y": 19,
+      "facing": "left",
+      "movement": { "kind": "lookAround" },
+      "script": "aur_records_junior"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 4, "y": 7,
+      "text": [
+        "A plate beside the door. DIRECTORATE OF WEATHER AND SEA.",
+        "Under it a hand-lettered card that has been there long enough to yellow:",
+        "IF YOU ARE HERE ABOUT A FORECAST, WE WERE WRONG. COME IN ANYWAY."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 3, "y": 2,
+      "text": [
+        "The trace wall. Forty-one stations, one roll each, wound off all day.",
+        "Six of the coastal rolls have run flat for nine weeks.",
+        "A note pinned over them: INSTRUMENT FAULT. SIX AT ONCE? - and no answer."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2, "y": 4,
+      "text": [
+        "Storm glasses in a rack, sixty of them, each labelled with a village.",
+        "The oldest is from Hearthmere and is forty years old.",
+        "Somebody has to look at every one of these twice a day, and somebody does."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9, "y": 6,
+      "text": [
+        "A bench of half-built instruments and a ledger of what they cost.",
+        "The Foundation gives them away. The ledger records the giving, not the price.",
+        "The last entry is a set of nine for a fishing village of two hundred."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 22, "y": 7,
+      "text": [
+        "A plate beside the door. RELIEF, CONSERVATION AND PUBLIC PROGRAMMES.",
+        "A rota is pinned under it with fourteen names on it and every",
+        "night of the coming month covered."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18, "y": 2,
+      "text": [
+        "Shelves of case files, one per disaster, going back sixty years.",
+        "1049. 1052. 1058. 1061. The spines get thinner as they get newer,",
+        "because fewer people die in them, because of this room."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 21, "y": 2,
+      "text": [
+        "Breeding registers for eleven species. Two are marked RECOVERED.",
+        "One is marked GONE, in a different hand, and the page after it",
+        "is a letter of apology to nobody in particular."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 7, "y": 10,
+      "text": [
+        "A plate beside the stairs down. FIELD SCIENCES.",
+        "Beside it a rack of coats, thirty hooks, and eleven coats.",
+        "The other nineteen are somewhere out in the weather right now."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 4, "y": 12,
+      "text": [
+        "Water tanks under a running tap, and a card of what is in them:",
+        "samples from every river mouth in Caelora, taken monthly.",
+        "The eastern ones are all stoppered and dated in the same week."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 5, "y": 14,
+      "text": [
+        "A specimen table. Bones, sorted, labelled, and argued over in pencil",
+        "in three hands down the margin of the same card.",
+        "The argument is about a joint. It has been going on for two years."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 4, "y": 17,
+      "text": [
+        "A resonance bench: coils, glass, and a cut Aurelian ring on a stand,",
+        "wound about with new copper that is not Aurelian at all.",
+        "The card says REPLICA. The ring is not a replica."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 17, "y": 10,
+      "text": [
+        "A plate beside the door. ANTIQUITIES AND RECORDS.",
+        "And below it, the reading rule: NOTHING LEAVES THIS ROOM.",
+        "Somebody has added, in pencil, and much older ink: NOTHING EVER HAS."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18, "y": 12,
+      "text": [
+        "EXPEDITIONS, A-F. Cloth-bound, one per season, forty years deep.",
+        "Every one of them has a crew list in the back, and every crew list",
+        "has a column headed RETURNED with a tick or a blank in it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 21, "y": 12,
+      "text": [
+        "EXPEDITIONS, G-M. A gap on the shelf the width of two volumes,",
+        "with the dust drawn back in a clean rectangle.",
+        "The ledger card in the slot says only: WITHDRAWN. DIRECTOR'S OFFICE."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18, "y": 14,
+      "text": [
+        "VESSELS AND CHARTERS. Insurance papers, hull surveys, loss reports.",
+        "The loss reports are the thinnest bundle here and the most handled.",
+        "Every one of them is signed off by an assessor. Every one but one."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 21, "y": 14,
+      "text": [
+        "FIELD STAFF, PAST. Personal files, alphabetical, and a stool to reach them.",
+        "The drawer runs from ABBOTT to FENNIMORE and shuts properly",
+        "except at the E's, where something has been put back in a hurry."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18, "y": 16,
+      "text": [
+        "ANTIQUITIES, ACCESSIONS. What was dug up, where, and by whom.",
+        "The Aurelian entries are the fullest in the room and the most careful,",
+        "and almost all of them are in the same small, patient hand."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 21, "y": 16,
+      "text": [
+        "The reading rules, framed. Requests in writing. Pencil only.",
+        "A file may be withdrawn to the Director's office by the Director alone.",
+        "Under the frame, a request slip half filled in and then abandoned."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 19, "y": 18,
+      "text": [
+        "The reading table. A lamp, a blotter, and a jar of sharpened pencils.",
+        "Nobody is at it. The chair on the far side has been pulled out",
+        "and left out, which in a room with rules like this one is loud."
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 24, "y": 20,
+      "item": "rouse",
+      "quantity": 1,
+      "flag": "item_aur_hq_records"
+    }
+  ],
+  "_plan": "The working floor. It has to read as a building full of people doing their jobs well, because it is one. The Elias material is deliberately not written here -- the story agent owns that beat -- but every hook it needs is placed and pointed at: a two-volume gap in EXPEDITIONS G-M withdrawn to the Director's office, a loss report nobody signed off, a personal-file drawer that will not shut at the E's, and a reading chair pulled out and left out. The archive is the bottom-right room, x15-24 / y11-20, reached through the gap at (18,10). The west stair (1,8)/(1,9) is DEEP SURVEY and is closed by one guard on (2,8) plus a parked trolley on (2,9); set aur_deep_open and the guard goes."
+}

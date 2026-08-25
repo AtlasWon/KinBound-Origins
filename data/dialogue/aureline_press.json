@@ -1,0 +1,66 @@
+{
+  "speakers": {
+    "aur_pr_editor": "THE EDITOR",
+    "aur_pr_counter": "NOTICES CLERK",
+    "aur_pr_reporter": "REPORTER",
+    "aur_pr_setter": "TYPESETTER",
+    "aur_pr_boy": "PAPER BOY",
+    "aur_pr_complainer": "AGGRIEVED READER"
+  },
+  "entries": {
+    "aur_pr_editor": [
+      {
+        "lines": [
+          "I spiked three harbour stories this week and I will spike a fourth.",
+          "Not because they are wrong. Because three sources with the same rumour",
+          "is one rumour. Bring me a document and I will put it on the front page."
+        ]
+      }
+    ],
+    "aur_pr_counter": [
+      {
+        "lines": [
+          "Births, deaths, notices, and lost Kin. A penny a line except the last one.",
+          "Lost Kin has been free since 1011 and nobody has ever proposed changing it,",
+          "which for a newspaper is close to a miracle."
+        ]
+      }
+    ],
+    "aur_pr_reporter": [
+      {
+        "lines": [
+          "Three months on the same thing. Deep hulls chartered and left at moorings.",
+          "Money that goes round four companies and comes out somewhere respectable.",
+          "I have everything except one piece of paper with a name on it."
+        ]
+      }
+    ],
+    "aur_pr_setter": [
+      {
+        "lines": [
+          "Forty thousand before dawn and I set every letter of it backwards.",
+          "You get to reading the world the wrong way round. It is a hazard.",
+          "The good news is you notice when a sentence has been changed after it was set."
+        ]
+      }
+    ],
+    "aur_pr_boy": [
+      {
+        "lines": [
+          "Eleven pins on that map. Twenty-two districts.",
+          "I do four of the districts with no pins and I see everything",
+          "and nobody has ever once asked me a single question about any of it."
+        ]
+      }
+    ],
+    "aur_pr_complainer": [
+      {
+        "lines": [
+          "A DOG, APPARENTLY. That is a headline. In a capital city.",
+          "I have written to them nine times. They print every letter.",
+          "That is the infuriating part. They print every single one."
+        ]
+      }
+    ]
+  }
+}

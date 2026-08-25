@@ -1,0 +1,42 @@
+{
+  "mapId": "route_7",
+  "$comment": "The levels, and the first table in the game that is a FARM rather than a habitat. Everything here lives off a crop or off the things that eat one: Beast in the hedges and the stubble, Terra in the ploughing, Gale over open ground, and one Spark, because the telegraph runs the length of the road and Route 7 North is where that pays off. Sixty of every hundred Kin out here are Beast-typed and that is deliberate -- Beast is the one type in the chart that is neutral against all three starters, so a table built on it cannot lock a starter out the way the wetlands nearly locked out Verdant. The identity is carried by the SECOND types instead: Verdant on Bristlebuck, Terra on Burrowen and Silthopper, Gale on Kestrelle. Measured with tests/helpers/simulate.mjs, not guessed at.\n\nLevels are 25-29 against a team-raising player who leaves Mirehaven at 29, which is the two-to-four-under rule every table since the third pass has followed. Bristlebuck and Kestrelle are the top of the band and the smallest slots in it: they are the two evolved Kin out here and meeting one should be an event, not a tax.\n\nThe water table is the drains. It is deliberately gentle -- a player wading a cut is taking a shortcut and paying for it in time, and a shortcut that also kills you is not a choice anybody makes twice.",
+  "methods": {
+    "tallGrass": {
+      "rate": 158,
+      "slots": [
+        { "species": "tuftail", "minLevel": 25, "maxLevel": 27, "weight": 16 },
+        { "species": "nibbet", "minLevel": 25, "maxLevel": 27, "weight": 12 },
+        { "species": "burrowen", "minLevel": 26, "maxLevel": 28, "weight": 12 },
+        { "species": "pipwing", "minLevel": 25, "maxLevel": 27, "weight": 10 },
+        { "species": "bristlebuck", "minLevel": 27, "maxLevel": 29, "weight": 10 },
+        { "species": "nettlebug", "minLevel": 25, "maxLevel": 27, "weight": 8 },
+        { "species": "silthopper", "minLevel": 26, "maxLevel": 28, "weight": 8 },
+        { "species": "gravelet", "minLevel": 26, "maxLevel": 28, "weight": 8 },
+        { "species": "fizzlet", "minLevel": 26, "maxLevel": 28, "weight": 8 },
+        { "species": "kestrelle", "minLevel": 27, "maxLevel": 29, "weight": 8 }
+      ]
+    },
+    "water": {
+      "rate": 120,
+      "slots": [
+        { "species": "rillfry", "minLevel": 24, "maxLevel": 26, "weight": 40 },
+        { "species": "rilltail", "minLevel": 25, "maxLevel": 27, "weight": 25 },
+        { "species": "currentail", "minLevel": 26, "maxLevel": 28, "weight": 20 },
+        { "species": "bladderwrack", "minLevel": 26, "maxLevel": 28, "weight": 15 }
+      ]
+    },
+    "fishOld": {
+      "slots": [
+        { "species": "shalefin", "minLevel": 18, "maxLevel": 26, "weight": 100 }
+      ]
+    },
+    "fishGood": {
+      "slots": [
+        { "species": "currentail", "minLevel": 26, "maxLevel": 29, "weight": 50 },
+        { "species": "clatterclaw", "minLevel": 27, "maxLevel": 30, "weight": 30 },
+        { "species": "anchorling", "minLevel": 27, "maxLevel": 30, "weight": 20 }
+      ]
+    }
+  }
+}

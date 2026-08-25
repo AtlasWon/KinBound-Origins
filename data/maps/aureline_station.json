@@ -1,0 +1,266 @@
+{
+  "id": "aureline_station",
+  "name": "Central Station",
+  "displayName": "AURELINE CENTRAL",
+  "music": "station",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUUIIIIIIIIIIIIIIIIUUIII",
+    "IKKKKKFKKKKKKFKKKKKKFKKKKI",
+    "IFFFFFFFFFFFFFFFFFFFFFFFFI",
+    "IFFFFFFFFFFFFFFFFFFFFFFFFI",
+    "IPFFAAAAFFFFFFFFFFAAAAFFPI",
+    "IFFFEEEEFFFFFFFFFFEEEEFFFI",
+    "IFFFFFFFFFFFFFFFFFFFFFFFFI",
+    "IKKKKKKFFFFFFFFFFFFKKKKKKI",
+    "IFFFFFFFFFFFFFFFFFFFFFFFFI",
+    "IFFFFFFFFFFFFFFFFFFFFFFFFI",
+    "IPFFAAAAFFFFFFFFFFAAAAFFPI",
+    "IFFFEEEEFFFFFFFFFFEEEEFFFI",
+    "IFFFFFFFFFFFFFFFFFFFFFFFFI",
+    "I;;;;FFFFFkkFFkkFFFFF;;;;I",
+    "IFFFFFFFFFFFFFFFFFFFFFFFFI",
+    "IP$$FFFFFFFFFFFFFFFFFF$$PI",
+    "IFFFFFFFFFFFFFFFFFFFFFFFFI",
+    "IFF/rrFFFFFFFFFFFFFFrr/FFI",
+    "IPFFFFFFFFFFFFFFFFFFFFFFPI",
+    "IIIIIIIIIIIIDDIIIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 12, "y": 19,
+      "toMap": "aureline", "toX": 24, "toY": 15,
+      "facing": "down", "style": "door"
+    },
+    {
+      "x": 13, "y": 19,
+      "toMap": "aureline", "toX": 25, "toY": 15,
+      "facing": "down", "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "aur_st_gate_north",
+      "sprite": "clerk",
+      "x": 6, "y": 1,
+      "facing": "down",
+      "movement": { "kind": "static" },
+      "script": "aur_st_gate_north"
+    },
+    {
+      "id": "aur_st_gate_east",
+      "sprite": "clerk",
+      "x": 13, "y": 1,
+      "facing": "down",
+      "movement": { "kind": "static" },
+      "script": "aur_st_gate_east"
+    },
+    {
+      "id": "aur_st_gate_south",
+      "sprite": "clerk",
+      "x": 20, "y": 1,
+      "facing": "down",
+      "movement": { "kind": "static" },
+      "script": "aur_st_gate_south"
+    },
+    {
+      "id": "aur_st_ticket",
+      "sprite": "clerk",
+      "x": 3, "y": 6,
+      "facing": "down",
+      "movement": { "kind": "static" },
+      "script": "aur_st_ticket"
+    },
+    {
+      "id": "aur_st_parcels",
+      "sprite": "porter",
+      "x": 21, "y": 6,
+      "facing": "down",
+      "movement": { "kind": "static" },
+      "script": "aur_st_parcels"
+    },
+    {
+      "id": "aur_st_soldier",
+      "sprite": "hiker",
+      "x": 9, "y": 5,
+      "facing": "up",
+      "movement": { "kind": "static" },
+      "script": "aur_st_soldier"
+    },
+    {
+      "id": "aur_st_leaver",
+      "sprite": "townsfolk_f",
+      "x": 16, "y": 11,
+      "facing": "down",
+      "movement": { "kind": "static" },
+      "script": "aur_st_leaver"
+    },
+    {
+      "id": "aur_st_kid",
+      "sprite": "kid",
+      "x": 8, "y": 12,
+      "facing": "up",
+      "movement": { "kind": "wander", "radius": 3 },
+      "script": "aur_st_kid"
+    },
+    {
+      "id": "aur_st_bookstall",
+      "sprite": "merchant",
+      "x": 3, "y": 14,
+      "facing": "up",
+      "movement": { "kind": "static" },
+      "script": "aur_st_bookstall"
+    },
+    {
+      "id": "aur_st_flowers",
+      "sprite": "villager_f",
+      "x": 22, "y": 14,
+      "facing": "up",
+      "movement": { "kind": "static" },
+      "script": "aur_st_flowers"
+    },
+    {
+      "id": "aur_st_porter",
+      "sprite": "dockhand",
+      "x": 17, "y": 16,
+      "facing": "left",
+      "movement": { "kind": "pace", "axis": "x", "distance": 6 },
+      "script": "aur_st_porter"
+    },
+    {
+      "id": "aur_st_sleeper",
+      "sprite": "elder",
+      "x": 6, "y": 17,
+      "facing": "down",
+      "movement": { "kind": "static" },
+      "script": "aur_st_sleeper"
+    },
+    {
+      "id": "aur_st_waiting",
+      "sprite": "sailor",
+      "x": 19, "y": 17,
+      "facing": "left",
+      "movement": { "kind": "lookAround" },
+      "script": "aur_st_waiting"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 6, "y": 0,
+      "text": [
+        "Platforms one to four, in letters a foot high, under a glass roof",
+        "you cannot see the far end of.",
+        "NORTH: FROSTMERE. THE CROWN LINE. THE HIGH CLIFFS."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13, "y": 0,
+      "text": [
+        "Platforms five to nine.",
+        "EAST: THE WETLANDS, MIREHAVEN ROAD-HEAD, THE FERRY QUAYS.",
+        "SOUTH: THE PASS, EMBERFALL, AND THE WHOLE OF THE COAST."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 20, "y": 0,
+      "text": [
+        "Platforms ten to fourteen. Goods only, and busier than all the rest.",
+        "A board of what has come in this morning: stone, coal, glass, fish,",
+        "and eleven crates consigned to a Foundation address with no street on it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 3, "y": 1,
+      "text": [
+        "The barrier line. Fourteen gates, all of them staffed, all of them queued.",
+        "Beyond it the platforms go on until they stop being platforms",
+        "and start being weather."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 3, "y": 7,
+      "text": [
+        "The booking hall. Nine windows, a queue at every one, and a fare board",
+        "in six columns.",
+        "Half the destinations on it are places you have never heard of."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 22, "y": 7,
+      "text": [
+        "Parcels and left luggage. A wall of pigeonholes going up out of reach,",
+        "and a ladder on a rail to get at the top of it.",
+        "Everything in Caelora passes through this room eventually."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10, "y": 13,
+      "text": [
+        "The departure board, and a man on a ladder changing it by hand.",
+        "Forty-one departures before midnight.",
+        "The northern column has SUSPENDED chalked across it in a hurry."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 15, "y": 13,
+      "text": [
+        "The arrivals board. LATE, LATE, ON TIME, LATE, and one line reading",
+        "simply HELD AT THE TUNNEL.",
+        "Nobody is surprised. Two people are furious. It is a station."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2, "y": 13,
+      "text": [
+        "The bookstall. Novels, newspapers, timetables, and a rack of postcards",
+        "of the Grand Park with the tower behind it.",
+        "The top seller is a pamphlet on how to survive a flood. It is free."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 23, "y": 13,
+      "text": [
+        "A flower stall, doing better trade than the bookstall.",
+        "A card explains why: everybody arriving in Aureline is arriving",
+        "at somebody, and nobody wants to do it empty-handed."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2, "y": 15,
+      "text": [
+        "A bench worn to a hollow at each end and shining in the middle.",
+        "A brass plate on the back: GIVEN BY THE PORTERS OF THIS STATION,",
+        "FOR PEOPLE WAITING ON NEWS."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 23, "y": 15,
+      "text": [
+        "A city map under glass, four feet across, and a red dot saying YOU ARE HERE.",
+        "The dot is about a third of the way up.",
+        "There is more city above the dot than most cities are."
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 23, "y": 18,
+      "item": "potion",
+      "quantity": 1,
+      "flag": "item_aur_station"
+    }
+  ],
+  "_plan": "A station is the fastest way to say a city is enormous: fourteen gates, forty-one departures before midnight, and a map where you are only a third of the way up. The barrier line at y1 is a solid run of gates with three staffed openings, so the player can talk to every gate and board nothing -- Frostmere, Skyreach and Crownspire are Stage 5 and there must be no stub to walk into. The northern column is chalked SUSPENDED, which is a true station answer and also the first cold breath of Act 5."
+}

@@ -1,0 +1,104 @@
+{
+  "id": "aureline_house_b",
+  "name": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUUIIIIIIUUIII",
+    "IffkkkkffJNQfffI",
+    "IffffffffKKKfffI",
+    "IffffffffffffffI",
+    "I/rrfAAffffkkffI",
+    "IfrrfEEffffffffI",
+    "IffffffffffffffI",
+    "IffffffffffffffI",
+    "IbbffbbffffVfffI",
+    "IeeffeeffffffffI",
+    "IPffffffffffffPI",
+    "IIIIIIIDDIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 7, "y": 11,
+      "toMap": "aureline", "toX": 12, "toY": 27,
+      "facing": "down", "style": "door"
+    },
+    {
+      "x": 8, "y": 11,
+      "toMap": "aureline", "toX": 13, "toY": 27,
+      "facing": "down", "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "aur_hb_father",
+      "sprite": "villager_m",
+      "x": 12, "y": 3,
+      "facing": "down",
+      "movement": { "kind": "static" },
+      "script": "aur_hb_father"
+    },
+    {
+      "id": "aur_hb_gran",
+      "sprite": "elder",
+      "x": 2, "y": 6,
+      "facing": "right",
+      "movement": { "kind": "static" },
+      "script": "aur_hb_gran"
+    },
+    {
+      "id": "aur_hb_student",
+      "sprite": "rival",
+      "x": 9, "y": 7,
+      "facing": "left",
+      "movement": { "kind": "lookAround" },
+      "script": "aur_hb_student"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 4, "y": 1,
+      "text": [
+        "Shelves of schoolbooks with three different names written in the covers,",
+        "each crossed out and the next added underneath.",
+        "The third name is still in pencil."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 12, "y": 4,
+      "text": [
+        "A shelf of Kin books, well used, and a chart of the eight Halls",
+        "with five of them circled and a date beside each.",
+        "Somebody in this flat is planning the same journey you are already on."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 11, "y": 8,
+      "text": [
+        "A viewing box, of the kind a whole street shares and this family owns.",
+        "The Summit matches are shown on it in the spring and the room fills up",
+        "with neighbours nobody remembers inviting."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1, "y": 8,
+      "text": [
+        "Four beds in two rooms and a chalk line on the floor between them",
+        "that was drawn as a joke and then honoured for a decade.",
+        "Somebody has recently rubbed out a section of it."
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 14, "y": 9,
+      "item": "clearleaf",
+      "quantity": 1,
+      "flag": "item_aur_house_b"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+[
+  {
+    "id": "aureline_shop",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "MRS HALLOWAY",
+        "lines": [
+          "Everything is here. Everything. It is only ever a question of the ladder.",
+          "And no, we do not do a discount for Crests. My mother did. It nearly finished us."
+        ]
+      },
+      { "kind": "openShop", "shop": "aureline_provisioner" }
+    ]
+  }
+]

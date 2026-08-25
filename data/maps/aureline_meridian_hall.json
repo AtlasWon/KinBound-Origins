@@ -1,0 +1,180 @@
+{
+  "id": "aureline_meridian_hall",
+  "name": "Assembly Hall",
+  "displayName": "THE ASSEMBLY HALL",
+  "music": "concord",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIIIIIIIIIIIIIIIIIIIIII",
+    "IFSSFFFFFFFFFFFFFFFFFFFI",
+    "IFFFFkkkkkkFFkkkkkkFFFFI",
+    "IFFFFFFFFFFKKFFFFFFFFFFI",
+    "IFFFFFFFFFFFFFFFFFFFFFFI",
+    "IPFFFFFFFFFFFFFFFFFFFFPI",
+    "IFFFFFFFFFFFFFFFFFFFFFFI",
+    "IFEEEEEEEEFFFFEEEEEEEEFI",
+    "IFFFFFFFFFFFFFFFFFFFFFFI",
+    "IFEEEEEEEEFFFFEEEEEEEEFI",
+    "IFFFFFFFFFFFFFFFFFFFFFFI",
+    "IFEEEEEEEEFFFFEEEEEEEEFI",
+    "IFFFFFFFFFFFFFFFFFFFFFFI",
+    "IFEEEEEEEEFFFFEEEEEEEEFI",
+    "IFFFFFFFFFFFFFFFFFFFFFFI",
+    "IPFFFFFFFFFFFFFFFFFFFFPI",
+    "IFFFFFFFFFFSSFFFFFFFFFFI",
+    "IIIIIIIIIIIIIIIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 2, "y": 1,
+      "toMap": "aureline_meridian_deep", "toX": 10, "toY": 18,
+      "facing": "up", "style": "stairs"
+    },
+    {
+      "x": 3, "y": 1,
+      "toMap": "aureline_meridian_deep", "toX": 11, "toY": 18,
+      "facing": "up", "style": "stairs"
+    },
+    {
+      "x": 11, "y": 16,
+      "toMap": "aureline_meridian", "toX": 22, "toY": 2,
+      "facing": "up", "style": "stairs"
+    },
+    {
+      "x": 12, "y": 16,
+      "toMap": "aureline_meridian", "toX": 23, "toY": 2,
+      "facing": "up", "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "aur_asm_speaker",
+      "sprite": "meridian_sci_f",
+      "x": 11, "y": 2,
+      "facing": "down",
+      "movement": { "kind": "static" },
+      "script": "aur_asm_speaker",
+      "hiddenIfFlag": "aur_assembly_clear"
+    },
+    {
+      "id": "aur_asm_listener_a",
+      "sprite": "villager_m",
+      "x": 5, "y": 8,
+      "facing": "up",
+      "movement": { "kind": "static" },
+      "script": "aur_asm_listener_a",
+      "hiddenIfFlag": "aur_assembly_clear"
+    },
+    {
+      "id": "aur_asm_listener_b",
+      "sprite": "townsfolk_f",
+      "x": 17, "y": 10,
+      "facing": "up",
+      "movement": { "kind": "static" },
+      "script": "aur_asm_listener_b",
+      "hiddenIfFlag": "aur_assembly_clear"
+    },
+    {
+      "id": "aur_asm_listener_c",
+      "sprite": "sailor",
+      "x": 6, "y": 12,
+      "facing": "up",
+      "movement": { "kind": "static" },
+      "script": "aur_asm_listener_c",
+      "hiddenIfFlag": "aur_assembly_clear"
+    },
+    {
+      "id": "aur_asm_latecomer",
+      "sprite": "kid",
+      "x": 13, "y": 14,
+      "facing": "up",
+      "movement": { "kind": "lookAround" },
+      "script": "aur_asm_latecomer",
+      "hiddenIfFlag": "aur_assembly_clear"
+    },
+    {
+      "id": "aur_asm_caretaker",
+      "sprite": "elder",
+      "x": 20, "y": 15,
+      "facing": "left",
+      "movement": { "kind": "static" },
+      "script": "aur_asm_caretaker"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 11, "y": 0,
+      "text": [
+        "Cut across the whole width of the wall above the stage:",
+        "WHAT IS UNDERSTOOD CAN BE WARNED OF. WHAT IS WARNED OF NEED KILL NOBODY.",
+        "It is a good sentence. Somebody meant it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 11, "y": 3,
+      "text": [
+        "The lectern, and the card in its holder.",
+        "TSUNAMI WARNING: THE FIRST NINE MINUTES. FREE. NO TICKET. ALL WELCOME.",
+        "Beside it a jug of water and one glass, filled and not touched."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 5, "y": 2,
+      "text": [
+        "A display board of nine minutes, drawn as nine panels.",
+        "The sea goes out. You run. You do not go back for anything.",
+        "The last panel is a hill with people on it and no caption at all."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18, "y": 2,
+      "text": [
+        "A board of the villages that have a warning bell and the ones that do not.",
+        "The second list used to be longer than the first. It is not any more.",
+        "Somebody crosses a name off it about once a month, in front of everyone."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 0, "y": 7,
+      "text": [
+        "Photographs of full houses. School parties, town councils, fishing crews.",
+        "Four hundred seats and a caption saying they are free and always have been.",
+        "In every picture, somebody in the front row is taking notes."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 23, "y": 11,
+      "text": [
+        "A framed page of the hall's rules, and the first of them is the shortest.",
+        "ANYONE MAY SPEAK FROM THIS FLOOR.",
+        "Under it, the second: AND ANYONE MAY BE ANSWERED FROM IT."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 0, "y": 16,
+      "text": [
+        "A door at the back of the hall marked STAFF, and beside it the stair",
+        "the caretaker uses, going down.",
+        "There is nothing on the plan of this building below the assembly hall."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 23, "y": 16,
+      "text": [
+        "The collection box, and a note on it in the Foundation's usual plain hand:",
+        "WE WOULD RATHER YOU CAME BACK THAN GAVE US ANYTHING.",
+        "It is very heavy anyway."
+      ]
+    }
+  ],
+  "_plan": "Four hundred free seats, a stage, a straight four-wide aisle from the back stairs (11,16)/(12,16) all the way to the lectern, and nothing in the room that is not honest. It is the Foundation's proudest room, and that is exactly why the confrontation belongs here: Cassian gets to make his case standing in the place his own organisation built for making cases. Set aur_assembly_clear to empty the audience and the speaker in one flag. The stage band y1-y4 is clear full width for actors; the service stair at (2,1)/(3,1) is how somebody arrives from the Deep Survey level without coming through the atrium."
+}

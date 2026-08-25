@@ -1,0 +1,65 @@
+{
+  "speakers": {
+    "aur_deep_lead": "SURVEY DIRECTOR",
+    "aur_deep_eng": "RING ENGINEER",
+    "aur_deep_ring": "RESONANCE LEAD",
+    "aur_deep_doubt": "SURVEY STAFF",
+    "aur_deep_young": "JUNIOR SURVEYOR",
+    "aur_deep_hand": "SURVEY HAND"
+  },
+  "entries": {
+    "aur_deep_lead": [
+      {
+        "lines": [
+          "You are down here, so somebody upstairs decided you should be. Fine.",
+          "This is a weather programme. Everything on this level is a weather programme.",
+          "Say that back to anybody who asks you and you will not have told them a lie."
+        ]
+      }
+    ],
+    "aur_deep_eng": [
+      {
+        "lines": [
+          "Twelve rings, cut out of four temple floors, and re-wound one turn at a time.",
+          "It took me six years. It is the best work I will ever do.",
+          "I have stopped asking what we are going to stand them round."
+        ]
+      }
+    ],
+    "aur_deep_ring": [
+      {
+        "lines": [
+          "The Aurelians tuned these to listen. We have tuned them to insist.",
+          "It is the same instrument. It is a completely different sentence."
+        ]
+      }
+    ],
+    "aur_deep_doubt": [
+      {
+        "lines": [
+          "Read the failure card on the split ring. Forty-one seconds, and then we stopped.",
+          "We stopped because it was in distress. We wrote that down. We are proud of that.",
+          "Then we ordered eleven more and a sailing date."
+        ]
+      }
+    ],
+    "aur_deep_young": [
+      {
+        "lines": [
+          "My mother lost her village to a hurricane and I have never once seen the sea.",
+          "They told me I could help make sure that stopped happening to anyone.",
+          "That is true. Everything they have told me is true. I check."
+        ]
+      }
+    ],
+    "aur_deep_hand": [
+      {
+        "lines": [
+          "Crates go up that stair and out through the hall when the hall is empty.",
+          "Never through the atrium. Nothing goes through the atrium.",
+          "Public floor, that. You do not walk cargo through where people are giving you money."
+        ]
+      }
+    ]
+  }
+}

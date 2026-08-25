@@ -1,0 +1,122 @@
+{
+  "speakers": {
+    "aur_mk_fish": "FISHMONGER",
+    "aur_mk_bread": "BAKER",
+    "aur_mk_cloth": "CLOTH SELLER",
+    "aur_mk_charms": "CHARM SELLER",
+    "aur_mk_feed": "FEED MERCHANT",
+    "aur_mk_ironmonger": "IRONMONGER",
+    "aur_mk_herbalist": "HERBALIST",
+    "aur_mk_foreign": "IMPORTER",
+    "aur_mk_shopper": "SHOPPER",
+    "aur_mk_inspector": "WEIGHTS INSPECTOR",
+    "aur_mk_busker": "BUSKER",
+    "aur_mk_gossip": "MARKET REGULAR"
+  },
+  "entries": {
+    "aur_mk_fish": [
+      {
+        "lines": [
+          "Three lines chalked out and no deep fish on this stall since spring.",
+          "Every deep-water skipper I buy from is beached with a full year's charter",
+          "paid up front by somebody who does not want the boat used. Work that one out."
+        ]
+      }
+    ],
+    "aur_mk_bread": [
+      {
+        "lines": [
+          "Nine tons a day, this city. Nine. I do about a hundredth of it.",
+          "You want to feel small, do not climb the tower. Stand behind this stall."
+        ]
+      }
+    ],
+    "aur_mk_cloth": [
+      {
+        "lines": [
+          "Wool from the west, linen from the wetlands, and the good stuff off a ship.",
+          "The girl measures against her arm because somebody walked off with the yard.",
+          "She is within a thumb every time and it drives the inspector to distraction."
+        ]
+      }
+    ],
+    "aur_mk_charms": [
+      {
+        "lines": [
+          "They are not Aurelian and I will say so to anybody who asks.",
+          "Nobody asks. They just want a spiral to put on the mantelpiece.",
+          "Forty years I have sold spirals to people who never once asked what they meant."
+        ]
+      }
+    ],
+    "aur_mk_feed": [
+      {
+        "lines": [
+          "Everybody in Aureline has a Kin and nobody in Aureline has any grass.",
+          "That is the whole of my trade and it will see me out."
+        ]
+      }
+    ],
+    "aur_mk_ironmonger": [
+      {
+        "lines": [
+          "Rings when a cart goes past. I stopped hearing it in about my second year.",
+          "My wife says I have stopped hearing several other things since."
+        ]
+      }
+    ],
+    "aur_mk_herbalist": [
+      {
+        "lines": [
+          "The shelf that says it does not work outsells the rest of the stall.",
+          "I could take the label off and sell twice as much and I am not going to.",
+          "There is a clinic four streets away and it is free. Go there first."
+        ]
+      }
+    ],
+    "aur_mk_foreign": [
+      {
+        "lines": [
+          "Nine weeks from the Sunder Isles and that is not the far side of anything.",
+          "There are leagues out there with Kin nobody here has a name for.",
+          "Caelora is a coastline, friend. Averra is the rest of it."
+        ]
+      }
+    ],
+    "aur_mk_shopper": [
+      {
+        "lines": [
+          "Four hundred and twelve stalls and I use the same eleven every week.",
+          "You do that here. You make a village out of it or it eats you."
+        ]
+      }
+    ],
+    "aur_mk_inspector": [
+      {
+        "lines": [
+          "Weights, measures, and the honesty of a chalk board. That is my entire remit.",
+          "Aureline is scrupulous about a pound of flour and cheerfully vague",
+          "about almost everything else, and I have never worked out why."
+        ]
+      }
+    ],
+    "aur_mk_busker": [
+      {
+        "lines": [
+          "Under the glass roof it comes back at you twice.",
+          "The market inspector says I need a licence. The baker says I do not.",
+          "I have decided to believe the baker."
+        ]
+      }
+    ],
+    "aur_mk_gossip": [
+      {
+        "lines": [
+          "Tuesdays and Fridays for thirty years and I could tell you every stallholder's",
+          "children's names.",
+          "None of them could tell you mine, and that is the fairest deal in the building."
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,199 @@
+{
+  "id": "aureline_summit",
+  "name": "Summit Registry",
+  "displayName": "THE CAELORA SUMMIT - REGISTRY",
+  "music": "station",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUUIIIIIIIIIIUUIII",
+    "IKKKKKKKFFKKKKKKKKKI",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IkkkkFF@@FF@@FFkkkkI",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IPFFAAAFFFFAAAFFFFPI",
+    "IFFFEEEFFFFEEEFFFFFI",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IkkFFFFFFFFFFFFFFkkI",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IFFFkkkkFFFFkkkkFFFI",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IPFF//rrFFFFrr//FFPI",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IPFFFFFFFFFFFFFFFFPI",
+    "IIIIIIIIIDDIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 9, "y": 15,
+      "toMap": "aureline", "toX": 62, "toY": 20,
+      "facing": "down", "style": "door"
+    },
+    {
+      "x": 10, "y": 15,
+      "toMap": "aureline", "toX": 63, "toY": 20,
+      "facing": "down", "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "aur_sum_registrar",
+      "sprite": "clerk",
+      "x": 8, "y": 1,
+      "facing": "down",
+      "movement": { "kind": "static" },
+      "script": "aur_sum_registrar"
+    },
+    {
+      "id": "aur_sum_steward",
+      "sprite": "elder",
+      "x": 4, "y": 4,
+      "facing": "right",
+      "movement": { "kind": "static" },
+      "script": "aur_sum_steward"
+    },
+    {
+      "id": "aur_sum_hopeful",
+      "sprite": "rival",
+      "x": 14, "y": 7,
+      "facing": "up",
+      "movement": { "kind": "static" },
+      "script": "aur_sum_hopeful"
+    },
+    {
+      "id": "aur_sum_veteran",
+      "sprite": "hiker",
+      "x": 5, "y": 9,
+      "facing": "right",
+      "movement": { "kind": "static" },
+      "script": "aur_sum_veteran"
+    },
+    {
+      "id": "aur_sum_child",
+      "sprite": "kid",
+      "x": 12, "y": 11,
+      "facing": "up",
+      "movement": { "kind": "wander", "radius": 2 },
+      "script": "aur_sum_child"
+    },
+    {
+      "id": "aur_sum_trainer",
+      "sprite": "townsfolk_m",
+      "x": 15, "y": 13,
+      "facing": "left",
+      "movement": { "kind": "lookAround" },
+      "script": "aur_sum_trainer"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 9, "y": 0,
+      "text": [
+        "Behind the desk, a pair of doors twenty feet high, shut, and polished",
+        "where a great many people have leaned on them and been asked not to.",
+        "Beyond them the Ascent begins, and there is nothing else beyond them at all."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 4, "y": 1,
+      "text": [
+        "The registry desk, and the rule, in letters nobody could pretend not to see:",
+        "EIGHT BOND CRESTS. NO EXCEPTIONS. NO SUBSTITUTIONS. NO APPEALS.",
+        "There is a second card under it reading WE HAVE HEARD YOUR REASON BEFORE."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 14, "y": 1,
+      "text": [
+        "The standing list. Every Trainer in Caelora with four Crests or more,",
+        "ranked, in a hand that is redone every week.",
+        "There are three hundred and eleven names on it and you are not high up."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2, "y": 3,
+      "text": [
+        "THE CHAMPIONS OF CAELORA. Eighty-one names in gold, oldest at the top.",
+        "The gaps are years nobody managed it. There are more gaps than names.",
+        "The last four years are gaps."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 7, "y": 3,
+      "text": [
+        "A case of the four Masters' standards, one per discipline, unlabelled.",
+        "The Summit does not publish who they are or what they use.",
+        "A card explains, drily, that finding out is considered part of the Ascent."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 12, "y": 3,
+      "text": [
+        "A cast of the eight Bond Crests, mounted in a ring, with the Halls named.",
+        "Briarbell. Stonewake. Tideglass. Emberfall. Mirehaven.",
+        "Frostmere. Skyreach. Crownspire. Five of them are warm to the touch."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 16, "y": 3,
+      "text": [
+        "A wall of failed ascents, by year, with the stage reached against each.",
+        "Nobody's name is on it. That was a decision taken a long time ago",
+        "and the card that explains it is the kindest thing in this building."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2, "y": 8,
+      "text": [
+        "Training halls beyond the far wall, and a timetable of who has them booked.",
+        "Every slot from six in the morning to eleven at night is taken.",
+        "The Summit is not a ceremony. It is a building full of people working."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 17, "y": 8,
+      "text": [
+        "A relief carving of the Ascent: the road up, the four halls, the last hall.",
+        "It is drawn from a long way off, deliberately, so that the figures",
+        "on the road are too small to have faces."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 4, "y": 10,
+      "text": [
+        "Reading shelves, free to anybody, of every published Hall record",
+        "and every Master's match going back sixty years.",
+        "Two people are here reading them and neither of them has looked up."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13, "y": 10,
+      "text": [
+        "A book on a stand, open, with a pencil on a string.",
+        "REGISTER OF INTENT. Anyone may sign it. It commits you to nothing.",
+        "There are nine thousand signatures. The last page has four."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 5, "y": 12,
+      "text": [
+        "Chairs, and a long window on to a training floor you cannot get to.",
+        "Somebody down there is doing the same switch, over and over,",
+        "and getting it very slightly better each time."
+      ]
+    }
+  ],
+  "_plan": "The glimpse, and nothing but the glimpse. The great doors are drawn in the wall as a sign and have no warp behind them, because the Ascent is Stage 7 and a player must never be able to walk into a stub. The barrier is a solid counter run with one gap, and the registrar stands in the gap. Everything else in the room is a reason to come back: eighty-one Champions with more gaps than names, five of the eight Crests warm to the touch, and a register of intent anybody may sign."
+}

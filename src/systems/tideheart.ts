@@ -23,7 +23,19 @@
  *      holding it, whether they have learned its name, whether it is stirring,
  *      how hard, which way the source lies, and which echoes it has taken.
  *
- *   3. THE NAME AND THE DESCRIPTION. Canon is explicit: the player does not
+ *   3. THE RECOIL. Act 4. One table, one map list, and the only place in the
+ *      game where the object is frightened instead of curious. Everything a
+ *      site does -- the cue on arrival, the changed bag row, the hot object --
+ *      happens in the Meridian workshop, and the needle does not appear,
+ *      because there is nothing there it wants to find. See RECOIL.
+ *
+ *   4. THE ABSENCE. Act 4 ends with Meridian taking it, and the object being
+ *      gone has to be a state this file knows about rather than the absence of
+ *      one. `readTideheart` on a robbed player says where it went; the item's
+ *      own registry entry says so too; and `tideheartTaken` is the one question
+ *      a later stage should ask before assuming the player is carrying it.
+ *
+ *   5. THE NAME AND THE DESCRIPTION. Canon is explicit: the player does not
  *      learn the name at once, so the *interface* must not say "Tideheart"
  *      until they do. That is done by rewriting the registry's own ItemData in
  *      place -- name, description and icon key -- so the bag, the shop, the
@@ -56,6 +68,32 @@
  * All four are ordinary story flags, so they save, they load and they can be
  * set from JSON with `setFlag`. No new event opcode exists for the Tideheart
  * and none should: a beat that needs it is `hasItem` plus `setFlag`.
+ *
+ * THE THEFT, AND WHAT ASKING FOR IT LOOKS LIKE AFTERWARDS
+ *
+ * Act 4's climax takes the object off the player, and it takes the *object*:
+ *
+ *     { "kind": "takeItem", "item": "tideheart" }
+ *     { "kind": "setFlag",  "flag": "tideheart_taken" }
+ *
+ * in that order, from data/events/common.json. The bag row goes, the key
+ * pocket empties, the screen the bag opens is no longer reachable because the
+ * row that opened it is not there, `siteForMap` stops answering because it is
+ * guarded on possession, and the arrival cue stops firing for the same reason.
+ * Nothing had to be told about it. That is what the possession guards in
+ * `readTideheart`, `refreshTideheart` and `tideheartEnteredMap` were for.
+ *
+ * TWO RULES FOR EVERY LATER STAGE, and Stage 5 is the one that breaks them:
+ *
+ *   - Ask `hasItem` (or `tideheartHeld`). NEVER `tideheart_given`, which means
+ *     "Mira handed it over in Act 1" and stays true forever. Act 3 has two
+ *     scripts that test `hasItem OR tideheart_given` as a belt-and-braces for a
+ *     save that missed the gift; both are behind `onceFlag`s that Act 4 cannot
+ *     be reached without, so they cannot fire after the theft. A new one would
+ *     not be so lucky.
+ *   - Giving it back is `giveItem` plus `setFlag tideheart_taken false`. The
+ *     echoes are kept on their own flags and are never cleared, so everything
+ *     the player heard in Acts 1 to 3 is still in it when it comes back.
  *
  * ADDING A SITE IN A LATER STAGE
  *
@@ -131,8 +169,17 @@ export interface AurelianSite {
  * sites Sorrell finds in Elias' notes. Raise this when a later stage ships,
  * and not before -- it is the switch that keeps unbuilt sites out of the
  * player's hands.
+ *
+ * STAGE 4 ADDS NO ROW, ON PURPOSE. Canon names three Aurelian sites and the
+ * third is the Frostmere Observatory, which is Stage 5. Aureline is a capital
+ * and a story act, not a ruin, and the temptation to give the biggest act in
+ * the game a fourth site should be resisted every time it comes back: what the
+ * object does in Act 4 is recoil from a workshop (see RECOIL below) and then
+ * get taken off the player. Stage 4 is listed here so that the number means
+ * "the game is built this far" rather than "the last stage that happened to
+ * add a ruin".
  */
-export const BUILT_STAGE = 3;
+export const BUILT_STAGE = 4;
 
 export const SITES: AurelianSite[] = [
   {
@@ -298,6 +345,56 @@ export function siteById(id: string): AurelianSite | null {
   return builtSites().find((s) => s.id === id) ?? null;
 }
 
+/* -------------------------------------------------------------- the recoil */
+
+/**
+ * Where it pulls AWAY.
+ *
+ * Act 4. Under the Meridian building there is a floor with sixty ring segments
+ * on cradles, cut down out of Aurelian salvage and rewired, and the object
+ * knows exactly what they are for, because it is the last thing left that was
+ * in the room the first time somebody built them.
+ *
+ * Modelled here rather than left to the scene that plays it, for the same
+ * reason the sites are: the scene fires once, and the player who comes back
+ * down the stair an hour later with the bag open should find the object still
+ * doing it. So a recoil map gets everything a site gets -- the unprompted cue
+ * on arrival, the changed row in the bag, the hot core on its own screen --
+ * with one thing taken away.
+ *
+ * NO NEEDLE. That is the whole design of it. Every other time in the game that
+ * the object has been this loud it has also been pointing, and a player who
+ * has learned to follow the needle is being told, without a line of dialogue,
+ * that this is not the same feeling. It is not looking for anything down here.
+ *
+ * It is also NOT a site: nothing is answered, no echo is filed, and the reading
+ * never settles, so the object goes on refusing the room for as long as the
+ * player stands in it. There is no wake script and there must not be one.
+ *
+ * The map list carries the alternates the capital's author might land on, the
+ * way `sunken_arch` carries its ruin's two possible ids -- a name that is not
+ * built is silent, and the cost of listing three is three strings.
+ */
+export interface TideheartRecoil {
+  /** Every map the object refuses. */
+  maps: string[];
+  /** The instrument's own line while it is doing it. */
+  reading: string;
+  /** ...and the bag row, which is where a player who is not looking finds out. */
+  bag: string;
+}
+
+export const RECOIL: TideheartRecoil = {
+  maps: ['aureline_meridian_deep', 'aureline_meridian_vault', 'aureline_meridian_works'],
+  reading: 'It is not pulling toward anything. It is pulling away from all of it.',
+  bag: 'The frame has gone cold and the core is turning the wrong way. It wants to be further from this room.',
+};
+
+/** Whether the object refuses this map. */
+export function recoilsOn(mapId: string | null | undefined): boolean {
+  return !!mapId && RECOIL.maps.includes(mapId);
+}
+
 /* ------------------------------------------------------------- the reading */
 
 export type Compass = 'north' | 'south' | 'east' | 'west'
@@ -306,13 +403,20 @@ export type Compass = 'north' | 'south' | 'east' | 'west'
 export interface TideheartReading {
   /** In the player's hands right now. */
   held: boolean;
+  /**
+   * Not in the player's hands because Meridian took it. Distinct from `!held`,
+   * which is also true for the ten minutes of Act 1 before Mira hands it over.
+   */
+  taken: boolean;
   /** The name the interface is allowed to use. */
   label: string;
   /** Whether that label is the real one. */
   named: boolean;
   /** The site it can feel, or null. */
   site: AurelianSite | null;
-  /** Feeling something. */
+  /** Refusing the room it is standing in. Act 4; see RECOIL. */
+  recoil: boolean;
+  /** Feeling something -- either answering a site, or refusing a room. */
   stirring: boolean;
   /** Already answered this one. */
   answered: boolean;
@@ -342,6 +446,18 @@ const NAMED_TEXT =
   'Aurelian work. Made to speak to something in the deep, and not to command it.';
 const NAMED_STIR_TEXT =
   'The Tideheart is hot in your hand. Whatever is near it is talking back.';
+/**
+ * The bag row after Act 4, for the one frame anything still asks for it.
+ *
+ * The row itself is gone -- the object is out of the inventory, which is the
+ * whole point of the beat -- so this is not on screen anywhere the player can
+ * reach. It is written anyway, because `refreshTideheart` rewrites the shared
+ * registry entry and leaving "hot in your hand" sitting in it while it is in
+ * somebody else's case is the kind of stale string that surfaces later in a
+ * place nobody predicted.
+ */
+const TAKEN_TEXT =
+  'Taken at Aureline, in a room under the Meridian building. You watched it go into the case.';
 
 /**
  * What it is, as opposed to what it is doing.
@@ -365,16 +481,27 @@ const ICON_LIT = 'key_tideheart_lit';
 
 export function readTideheart(state: GameState): TideheartReading {
   const held = state.hasItem(TIDEHEART);
+  const taken = !held && state.hasFlag(TH_FLAGS.taken);
   const named = state.hasFlag(TH_FLAGS.named);
   const site = held ? siteForMap(state.currentMap) : null;
   const answered = site ? state.hasFlag(echoFlag(site.id)) : false;
+  // A site wins over a recoil if a map ever managed to be both, which would be
+  // an authoring mistake -- see tideheartAudit, which reports it.
+  const recoil = held && !site && recoilsOn(state.currentMap);
+  // Never cleared by the theft: what the player heard in Acts 1 to 3 is still
+  // theirs, and it is all still in the object when Act 5 hands it back.
   const echoes = builtSites().filter((s) => state.hasFlag(echoFlag(s.id)));
 
   let intensity = 0;
   let bearing: Compass | null = null;
   let needle: { x: number; y: number } | null = null;
 
-  if (site) {
+  if (recoil) {
+    // Hard, and with nowhere to point. High rather than full: full is what the
+    // object does standing on top of an Aurelian mechanism, and this is not
+    // that -- it is the same instrument being held against its will.
+    intensity = 0.85;
+  } else if (site) {
     const at = site.at && site.at.map === state.currentMap ? site.at : null;
     if (at) {
       const dx = at.x - state.currentX;
@@ -397,29 +524,36 @@ export function readTideheart(state: GameState): TideheartReading {
   }
 
   // Answering a site does not switch it off -- the object is still in a place
-  // that talks to it -- but it stops it pulling.
-  const stirring = !!site && !answered;
+  // that talks to it -- but it stops it pulling. A recoil is never answered and
+  // so never settles: it goes on refusing the room for as long as it is in it.
+  const stirring = recoil || (!!site && !answered);
 
   return {
     held,
+    taken,
     label: named ? NAMED_LABEL : UNNAMED_LABEL,
     named,
     site,
+    recoil,
     stirring,
     answered,
     intensity: stirring ? intensity : site ? intensity * 0.4 : 0,
     bearing: stirring ? bearing : null,
     needle: stirring ? needle : null,
     echoes,
-    reading: readingLine(held, named, site, answered, echoes.length),
+    reading: readingLine(held, taken, named, site, recoil, answered, echoes.length),
   };
 }
 
 function readingLine(
-  held: boolean, named: boolean, site: AurelianSite | null,
-  answered: boolean, echoCount: number,
+  held: boolean, taken: boolean, named: boolean, site: AurelianSite | null,
+  recoil: boolean, answered: boolean, echoCount: number,
 ): string {
+  // The absence first, because "not in your hands" is true of both and only
+  // one of them is a thing that happened to the player.
+  if (taken) return 'Not in your hands. You could walk to the building it is in.';
   if (!held) return 'Not in your hands.';
+  if (recoil) return RECOIL.reading;
   if (site && !answered) return site.near;
   if (site && answered) return site.after;
   if (echoCount > 0) return 'Turning over, steady, the way it has since the coast.';
@@ -457,19 +591,44 @@ export function refreshTideheart(state: GameState): void {
   const item = registry.items.get(TIDEHEART);
   if (!item) return;
 
+  const held = state.hasItem(TIDEHEART);
+  const taken = !held && state.hasFlag(TH_FLAGS.taken);
   const named = state.hasFlag(TH_FLAGS.named);
-  const site = state.hasItem(TIDEHEART) ? siteForMap(state.currentMap) : null;
+  const site = held ? siteForMap(state.currentMap) : null;
   const answered = site ? state.hasFlag(echoFlag(site.id)) : false;
-  const stirring = !!site && !answered;
+  const recoil = held && !site && recoilsOn(state.currentMap);
+  const stirring = recoil || (!!site && !answered);
   const carried = builtSites().some((s) => state.hasFlag(echoFlag(s.id)));
 
   item.name = named ? NAMED_LABEL : UNNAMED_LABEL;
+  // The lit icon says "this row is doing something", which is as true of an
+  // object trying to get out of a room as of one answering a wall.
   item.icon = stirring ? ICON_LIT : ICON_QUIET;
-  item.description = stirring
-    ? (named ? NAMED_STIR_TEXT : STIR_TEXT)
-    : named ? NAMED_TEXT
-      : carried ? CARRIED_TEXT
-        : QUIET_TEXT;
+  item.description = taken ? TAKEN_TEXT
+    : recoil ? RECOIL.bag
+      : stirring ? (named ? NAMED_STIR_TEXT : STIR_TEXT)
+        : named ? NAMED_TEXT
+          : carried ? CARRIED_TEXT
+            : QUIET_TEXT;
+}
+
+/* ------------------------------------------------------ asking about it */
+
+/**
+ * Is the player carrying it right now?
+ *
+ * The question every later stage means when it reaches for `tideheart_given`.
+ * That flag says Mira handed it over in Act 1 and is true for the rest of the
+ * game, including the whole of Act 5, when the object is in a case under the
+ * Meridian building. This is the one to ask.
+ */
+export function tideheartHeld(state: GameState): boolean {
+  return state.hasItem(TIDEHEART);
+}
+
+/** Meridian have it: Act 4 happened and Act 5 has not given it back yet. */
+export function tideheartTaken(state: GameState): boolean {
+  return !state.hasItem(TIDEHEART) && state.hasFlag(TH_FLAGS.taken);
 }
 
 /* ----------------------------------------------------------- the world cue */
@@ -489,7 +648,21 @@ export function refreshTideheart(state: GameState): void {
  */
 export function tideheartEnteredMap(state: GameState, from: string, to: string): void {
   refreshTideheart(state);
+  // Guards the whole of the rest of this function, and is what makes the Act 4
+  // theft need no code anywhere: with the object out of the bag, arriving
+  // somewhere it used to answer is silent.
   if (!state.hasItem(TIDEHEART)) return;
+
+  // The recoil, first: walking down onto the workshop floor is the one arrival
+  // in the game that should not sound like curiosity. Same trick as below --
+  // `heal_cycle` bent out of shape -- but dropped further, played harder, and
+  // with a struck edge on top of it, so a player who has learned the swell
+  // hears that this is not the swell.
+  if (recoilsOn(to) && !recoilsOn(from)) {
+    audio.playSfx('heal_cycle', { pitch: 0.34, volume: 0.6 });
+    audio.playSfx('fx_iron', { pitch: 0.6, volume: 0.35 });
+    return;
+  }
 
   const now = siteForMap(to);
   if (!now) return;
@@ -516,5 +689,21 @@ export function tideheartAudit(): { site: string; missing: string[] }[] {
     // the list names alternatives on purpose.
     if (missing.length === site.maps.length) out.push({ site: site.id, missing });
   }
+
+  // The recoil, on the same terms and for the same reason. Act 4's workshop is
+  // somebody else's map, RECOIL lists the ids it might land under, and if none
+  // of them is on disk then the loudest thing the object does in the whole act
+  // is happening in a room that does not exist -- which is silent, and would
+  // stay silent until somebody played it.
+  const recoilMissing = RECOIL.maps.filter((m) => !registry.has('maps', m));
+  if (recoilMissing.length === RECOIL.maps.length) {
+    out.push({ site: 'recoil', missing: recoilMissing });
+  }
+  // A map that is both a site and a recoil is an authoring mistake rather than
+  // a missing file: the reading resolves it in the site's favour, so the object
+  // would quietly stop refusing the room instead of failing loudly.
+  const both = RECOIL.maps.filter((m) => siteForMap(m));
+  if (both.length) out.push({ site: 'recoil-collides-with-site', missing: both });
+
   return out;
 }

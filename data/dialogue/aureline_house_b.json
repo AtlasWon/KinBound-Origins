@@ -1,0 +1,44 @@
+{
+  "speakers": {
+    "aur_hb_father": "TOLLEN",
+    "aur_hb_gran": "GRAN VESK",
+    "aur_hb_student": "MARRA"
+  },
+  "entries": {
+    "aur_hb_father": [
+      {
+        "lines": [
+          "Three of them through those schoolbooks and the third name still in pencil,",
+          "because she has not decided whether she is stopping.",
+          "Neither have I, and I am the one paying for it."
+        ]
+      }
+    ],
+    "aur_hb_gran": [
+      {
+        "lines": [
+          "That chalk line on the floor was my joke, in the year thirty.",
+          "Somebody rubbed a bit of it out last week and nobody has mentioned it.",
+          "That is how a family gets bigger. Quietly, and by not mentioning it."
+        ]
+      }
+    ],
+    "aur_hb_student": [
+      {
+        "ifFlags": ["crest_5_taken"],
+        "lines": [
+          "Five Crests. Five. And you are my age.",
+          "I have the chart on the shelf and the dates written next to five of the Halls",
+          "and I have not left this district once. Right. Right."
+        ]
+      },
+      {
+        "lines": [
+          "I have the route planned. Briarbell first, then the quarry, then the coast.",
+          "Everybody in this city has a route planned.",
+          "About four of us a year actually go."
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,159 @@
+{
+  "id": "aureline_provisioner",
+  "name": "Interior",
+  "displayName": "HALLOWAY AND DAUGHTERS",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUUIIIIIIIIIIIIUUIII",
+    "I;;;;;;;;;;;;;;;;;;;;I",
+    "IPKKKKFKKKFFKKKFKKKKPI",
+    "IFFFFFFFFFFFFFFFFFFFFI",
+    "I;;;;FF;;;FF;;;FF;;;;I",
+    "IFFFFFFFFFFFFFFFFFFFFI",
+    "IFF;;;FFFFFFFFFF;;;FFI",
+    "IFFFFFFFFFFFFFFFFFFFFI",
+    "I;;;;FF;;;FF;;;FF;;;;I",
+    "IFFFFFFFFFFFFFFFFFFFFI",
+    "IPFFFFFFFFFFFFFFFFFFPI",
+    "IIIIIIIIIIDDIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 10, "y": 11,
+      "toMap": "aureline", "toX": 29, "toY": 24,
+      "facing": "down", "style": "door"
+    },
+    {
+      "x": 11, "y": 11,
+      "toMap": "aureline", "toX": 30, "toY": 24,
+      "facing": "down", "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "aur_shopkeeper",
+      "sprite": "merchant",
+      "x": 6, "y": 2,
+      "facing": "down",
+      "movement": { "kind": "static" },
+      "script": "aureline_shop"
+    },
+    {
+      "id": "aur_shop_second",
+      "sprite": "clerk",
+      "x": 15, "y": 2,
+      "facing": "down",
+      "movement": { "kind": "static" },
+      "script": "aur_shop_second"
+    },
+    {
+      "id": "aur_shop_stock",
+      "sprite": "porter",
+      "x": 3, "y": 5,
+      "facing": "up",
+      "movement": { "kind": "pace", "axis": "x", "distance": 3 },
+      "script": "aur_shop_stock"
+    },
+    {
+      "id": "aur_shop_buyer",
+      "sprite": "hiker",
+      "x": 16, "y": 7,
+      "facing": "left",
+      "movement": { "kind": "static" },
+      "script": "aur_shop_buyer"
+    },
+    {
+      "id": "aur_shop_kid",
+      "sprite": "kid",
+      "x": 8, "y": 9,
+      "facing": "up",
+      "movement": { "kind": "wander", "radius": 2 },
+      "script": "aur_shop_kid"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 6, "y": 1,
+      "text": [
+        "The back wall, floor to ceiling, and a ladder on a rail to reach the top.",
+        "Every vessel made in Caelora is up there somewhere, in nine sizes.",
+        "A village shop keeps two. This one keeps a wall."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 11, "y": 1,
+      "text": [
+        "A brass sign, old and well kept. HALLOWAY AND DAUGHTERS, 1041.",
+        "Under it a smaller one: AND STILL DAUGHTERS.",
+        "Somebody polishes both of them and does not polish anything else."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 15, "y": 1,
+      "text": [
+        "Imported stock, priced in three currencies, with the origin on each card.",
+        "Blackglass. The Sunder Isles. Somewhere called Veth.",
+        "Averra is a great deal larger than the map on your wall at home."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 3, "y": 4,
+      "text": [
+        "Potions by the case. Not the bottle. The case.",
+        "A card explains the discount and then explains, at length, why there is not",
+        "a bigger one, in the tone of a woman who has had this argument daily."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13, "y": 4,
+      "text": [
+        "Cures, by ailment, in alphabetical order, with a chart above them",
+        "showing which Kin gives you which.",
+        "Somebody has scratched out an entry and written GO TO THE CLINIC, IDIOT."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 4, "y": 6,
+      "text": [
+        "Expedition kit. Rope, oilskin, a lamp that works wet, and a boxed set",
+        "labelled FOR THE NORTHERN ROAD, which nobody has bought this month",
+        "because the northern road is shut."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 17, "y": 6,
+      "text": [
+        "A locked case of the good vessels, and a price on each that makes",
+        "the quarry wage in Stonewake look like a rumour.",
+        "The card says HANDMADE IN CROWNSPIRE. TWO YEARS' WAIT."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 3, "y": 8,
+      "text": [
+        "Bulk feed, in sacks, by type, with a scoop chained to every bin.",
+        "There is a queue for this and no queue for anything else in the shop.",
+        "A city of a hundred and sixty thousand keeps a great many Kin fed."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18, "y": 8,
+      "text": [
+        "Seconds and returns, in a bin, half price, sold as seen.",
+        "Half of it is Foundation surplus with the stencil sanded off.",
+        "It is perfectly good. It is also perfectly obvious where it came from."
+      ]
+    }
+  ]
+}

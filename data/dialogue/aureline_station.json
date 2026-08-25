@@ -1,0 +1,131 @@
+{
+  "speakers": {
+    "aur_st_gate_north": "GATE STAFF",
+    "aur_st_gate_east": "GATE STAFF",
+    "aur_st_gate_south": "GOODS GATE",
+    "aur_st_ticket": "BOOKING CLERK",
+    "aur_st_parcels": "PARCELS CLERK",
+    "aur_st_soldier": "RIDGE SURVEYOR",
+    "aur_st_leaver": "WOMAN LEAVING",
+    "aur_st_kid": "SMALL BOY",
+    "aur_st_bookstall": "BOOKSTALL",
+    "aur_st_flowers": "FLOWER SELLER",
+    "aur_st_porter": "PORTER",
+    "aur_st_sleeper": "OLD MAN",
+    "aur_st_waiting": "WAITING SAILOR"
+  },
+  "entries": {
+    "aur_st_gate_north": [
+      {
+        "lines": [
+          "North is suspended and has been for eleven days. Landslip above the tunnel.",
+          "No, I cannot say when. No, the Foundation did not predict it.",
+          "You are the fortieth person to ask me that and it is not yet noon."
+        ]
+      }
+    ],
+    "aur_st_gate_east": [
+      {
+        "lines": [
+          "East and south are running and running well, and you have walked in from one of them.",
+          "Tickets at the booking hall, and mind the queue: it looks like a wall but it moves."
+        ]
+      }
+    ],
+    "aur_st_gate_south": [
+      {
+        "lines": [
+          "Goods only past me. No passengers, no exceptions, not even for the pretty ones.",
+          "Everything this city eats comes through these five platforms.",
+          "Some of what goes out again, I could not tell you what it is."
+        ]
+      }
+    ],
+    "aur_st_ticket": [
+      {
+        "lines": [
+          "Nine windows and I could open eighteen and still have a queue.",
+          "A hundred and sixty thousand people, and every one of them going somewhere else."
+        ]
+      }
+    ],
+    "aur_st_parcels": [
+      {
+        "lines": [
+          "If it fits in a hole in that wall it is mine, and if it does not, it is still mine.",
+          "The Foundation crates go straight through and out to a yard address.",
+          "No street on the docket. Twenty years in parcels: everything has a street."
+        ]
+      }
+    ],
+    "aur_st_soldier": [
+      {
+        "lines": [
+          "Three days on the ridge with a chain and a level, and the hill is still moving.",
+          "It is not the rain. There has not been enough rain.",
+          "The ground is doing it by itself, which is a sentence I would like to unsay."
+        ]
+      }
+    ],
+    "aur_st_leaver": [
+      {
+        "lines": [
+          "Twenty-two years in this city and I am taking the coast train tonight.",
+          "Not running from anything. Just done.",
+          "You will understand when you have walked the length of the central road once."
+        ]
+      }
+    ],
+    "aur_st_kid": [
+      {
+        "lines": [
+          "I come and watch the board man on his ladder. He does forty-one of them.",
+          "One day he will do the north one and take the chalk off and that will be the day."
+        ]
+      }
+    ],
+    "aur_st_bookstall": [
+      {
+        "lines": [
+          "Timetables, novels, and the flood pamphlet, which is free and which I hand out anyway.",
+          "Sold four hundred postcards of the Grand Park this week.",
+          "Nobody ever buys a postcard of the street they actually live on."
+        ]
+      }
+    ],
+    "aur_st_flowers": [
+      {
+        "lines": [
+          "Everyone arriving here is arriving at somebody. That is the whole business.",
+          "Cheapest bunch I do is a penny, and I sell more of those than all the rest together."
+        ]
+      }
+    ],
+    "aur_st_porter": [
+      {
+        "lines": [
+          "Trunks, crates, cages, a harpsichord once, and a man who had lost his legs and his temper.",
+          "You want to know how big Aureline is? Stand here till the six o'clock comes in."
+        ]
+      }
+    ],
+    "aur_st_sleeper": [
+      {
+        "lines": [
+          "My son's ship is a week overdue and the board says HELD AT THE TUNNEL,",
+          "which is not about ships and I know it is not about ships.",
+          "I sit here because in here somebody eventually tells you something."
+        ]
+      }
+    ],
+    "aur_st_waiting": [
+      {
+        "lines": [
+          "Paid off out of Tideglass and there is no berth to be had anywhere on this coast.",
+          "Every deep-water crew I know is beached. The shallow boats are all working.",
+          "Somebody has bought up the deep hulls. All of them. Ask why and see what you get."
+        ]
+      }
+    ]
+  }
+}

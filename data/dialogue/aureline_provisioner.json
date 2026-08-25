@@ -1,0 +1,44 @@
+{
+  "speakers": {
+    "aur_shop_second": "SHOP ASSISTANT",
+    "aur_shop_stock": "STOCK HAND",
+    "aur_shop_buyer": "OUTFITTING TRAINER",
+    "aur_shop_kid": "SHOP CHILD"
+  },
+  "entries": {
+    "aur_shop_second": [
+      {
+        "lines": [
+          "Anything you cannot find, ask, because it is here. It is just up a ladder.",
+          "Four generations of Halloways and none of us has ever thrown anything out."
+        ]
+      }
+    ],
+    "aur_shop_stock": [
+      {
+        "lines": [
+          "Foundation surplus in the seconds bin and I am not supposed to say so.",
+          "They sand the stencil off before it comes to us. Badly. With a rasp.",
+          "Somebody down there is very good at instruments and very bad at hiding things."
+        ]
+      }
+    ],
+    "aur_shop_buyer": [
+      {
+        "lines": [
+          "Kitting out for the northern road and the northern road is shut.",
+          "So I am buying it all anyway and sitting on it, because when it opens",
+          "every shop in this city will be empty inside a day."
+        ]
+      }
+    ],
+    "aur_shop_kid": [
+      {
+        "lines": [
+          "I know where everything is. Everything. Try me.",
+          "Not the locked case. That is Mother's and she counts them."
+        ]
+      }
+    ]
+  }
+}

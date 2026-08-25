@@ -1,6 +1,21 @@
 {
-  "generated": "2026-08-25T18:41:51.802Z",
+  "generated": "2026-08-25T21:06:01.778Z",
   "maps": [
+    "aureline_clinic",
+    "aureline_conservatory",
+    "aureline_house_a",
+    "aureline_house_b",
+    "aureline_inn",
+    "aureline_market",
+    "aureline_meridian",
+    "aureline_meridian_deep",
+    "aureline_meridian_hall",
+    "aureline_meridian_offices",
+    "aureline_museum",
+    "aureline_press",
+    "aureline_provisioner",
+    "aureline_station",
+    "aureline_summit",
     "briarbell",
     "briarbell_clinic",
     "briarbell_greenhouse",
@@ -60,6 +75,7 @@
     "route_6",
     "route_6_grove",
     "route_6_waystation",
+    "route_7",
     "sorrell_lab",
     "stonewake",
     "stonewake_clinic",
@@ -117,6 +133,21 @@
     "tideglass_warehouse"
   ],
   "dialogue": [
+    "aureline_clinic",
+    "aureline_conservatory",
+    "aureline_house_a",
+    "aureline_house_b",
+    "aureline_inn",
+    "aureline_market",
+    "aureline_meridian",
+    "aureline_meridian_deep",
+    "aureline_meridian_hall",
+    "aureline_meridian_offices",
+    "aureline_museum",
+    "aureline_press",
+    "aureline_provisioner",
+    "aureline_station",
+    "aureline_summit",
     "briarbell",
     "common",
     "emberfall",
@@ -190,6 +221,9 @@
     "tideglass_warehouse"
   ],
   "events": [
+    "aureline_meridian",
+    "aureline_meridian_deep",
+    "aureline_provisioner",
     "briarbell",
     "briarbell_hall",
     "briarbell_inn",
@@ -238,6 +272,7 @@
     "route_5",
     "route_5_vent",
     "route_6",
-    "route_6_grove"
+    "route_6_grove",
+    "route_7"
   ]
 }

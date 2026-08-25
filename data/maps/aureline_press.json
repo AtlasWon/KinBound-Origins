@@ -1,0 +1,186 @@
+{
+  "id": "aureline_press",
+  "name": "The Courant",
+  "displayName": "THE AURELINE COURANT",
+  "music": "station",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUUIIIIIIIIIIUUIII",
+    "I++++FF??FF??FF++++I",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IKKKKFFFFFFFFFFKKKKI",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IPFFAAAFFFFFAAAFFFPI",
+    "IFFFEEEFFFFFEEEFFFFI",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IkkFFFFFFFFFFFFFFkkI",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IFFFAAAFFFFFAAAFFFFI",
+    "IFFFEEEFFFFFEEEFFFFI",
+    "IPFFFFFFFFFFFFFFFFPI",
+    "IIIIIIIIIDDIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 9, "y": 13,
+      "toMap": "aureline", "toX": 46, "toY": 24,
+      "facing": "down", "style": "door"
+    },
+    {
+      "x": 10, "y": 13,
+      "toMap": "aureline", "toX": 47, "toY": 24,
+      "facing": "down", "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "aur_pr_editor",
+      "sprite": "elder",
+      "x": 15, "y": 4,
+      "facing": "down",
+      "movement": { "kind": "static" },
+      "script": "aur_pr_editor"
+    },
+    {
+      "id": "aur_pr_counter",
+      "sprite": "clerk",
+      "x": 3, "y": 4,
+      "facing": "down",
+      "movement": { "kind": "static" },
+      "script": "aur_pr_counter"
+    },
+    {
+      "id": "aur_pr_reporter",
+      "sprite": "townsfolk_f",
+      "x": 7, "y": 6,
+      "facing": "right",
+      "movement": { "kind": "static" },
+      "script": "aur_pr_reporter"
+    },
+    {
+      "id": "aur_pr_setter",
+      "sprite": "dockhand",
+      "x": 5, "y": 2,
+      "facing": "up",
+      "movement": { "kind": "pace", "axis": "x", "distance": 3 },
+      "script": "aur_pr_setter"
+    },
+    {
+      "id": "aur_pr_boy",
+      "sprite": "kid",
+      "x": 13, "y": 9,
+      "facing": "up",
+      "movement": { "kind": "wander", "radius": 3 },
+      "script": "aur_pr_boy"
+    },
+    {
+      "id": "aur_pr_complainer",
+      "sprite": "villager_m",
+      "x": 2, "y": 11,
+      "facing": "right",
+      "movement": { "kind": "static" },
+      "script": "aur_pr_complainer"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 2, "y": 1,
+      "text": [
+        "The press itself, through a glass wall, running.",
+        "Forty thousand copies before dawn, and the whole building shakes with it.",
+        "A card says the noise is the reason nobody here can whisper."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 7, "y": 1,
+      "text": [
+        "The morning's front page, still wet, pinned up as it comes off.",
+        "NORTHERN LINE STILL SHUT. RENTS AGAIN. A DOG, APPARENTLY.",
+        "Column four is a full page from the Foundation about storm safety, unpaid."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 12, "y": 1,
+      "text": [
+        "The spike: everything the editor threw out this week, on a nail.",
+        "Most of it is nothing. Three of them are about boats.",
+        "They are the same story from three different harbours, and it did not run."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 17, "y": 1,
+      "text": [
+        "Bound volumes of the Courant, one per year, going back to 1004.",
+        "Anybody may read them. There is a stool and a lamp and no questions asked.",
+        "The volume for 1052 is out on the desk, and nobody will say who asked for it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2, "y": 3,
+      "text": [
+        "The public counter. Notices, births, deaths, and lost Kin, a penny a line.",
+        "The lost-Kin column is the longest in the paper and always has been.",
+        "It is also the only column the Courant has never charged for."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 17, "y": 3,
+      "text": [
+        "The masthead, in a frame, with the founding sentence under it:",
+        "A CITY THIS SIZE CANNOT SEE ITSELF WITHOUT HELP.",
+        "It is a good sentence too. This city is full of good sentences."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1, "y": 8,
+      "text": [
+        "The morgue: clippings, filed by subject, going back four decades.",
+        "The drawer marked MERIDIAN FOUNDATION is the fullest in the room",
+        "and almost every cutting in it is somebody being thanked."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18, "y": 8,
+      "text": [
+        "The drawer marked LOST AT SEA is thinner and better ordered.",
+        "One folder in it has been taken out and put back so many times",
+        "the tab has worn through and been rewritten twice."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 5, "y": 10,
+      "text": [
+        "A desk with three months of the same investigation on it,",
+        "held together with string, and a note to the editor on top",
+        "reading: I KNOW. I KNOW. GIVE ME ONE MORE WEEK."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13, "y": 10,
+      "text": [
+        "A map of the city on the wall stuck with pins where reporters are.",
+        "Twenty-two districts, eleven pins.",
+        "A city of this size is mostly unwatched, and everyone in this room knows it."
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 17, "y": 12,
+      "item": "escape_line",
+      "quantity": 1,
+      "flag": "item_aur_press"
+    }
+  ],
+  "_plan": "The newspaper is the room where the player can see the truth being nearly found by people who are not them. Three harbour stories that are the same story, spiked. A LOST AT SEA folder handled until the tab wore through. A reporter three months in asking for one more week. Nothing is confirmed, nobody names anybody, and the Foundation drawer is genuinely full of thank-yous."
+}

@@ -1,0 +1,493 @@
+[
+  {
+    "id": "am_arrive",
+    "_note": "ACT 4, BEAT 1: THE INFILTRATION. Meridian Foundation, the public atrium.\n\nCanon: 'Lyra gets the player and Tarin into Meridian headquarters.' The hard part is that it must not read as a defection. She is seventeen, she still believes in her father, and at the end of Act 3 she watched a Commander read a drowned country and file a finding about the diameter. She is not changing sides here. She is somebody who has run out of ways to explain a thing away and has decided to look, and she is frightened of what looking is going to cost her.\n\nSo she does not sneak anybody in. She walks them through the front doors of a public building at eleven in the morning on visitor passes she signs in her own name, and that is worse than a night entry, because it means nothing here is hidden. The Foundation does not need to hide. The atrium this map draws is full of people queueing for flood relief and every one of those grants is real.\n\nTHE SURNAME. Canon says the player does not learn Lyra is Cassian's daughter 'at once'. Act 4 is where it lands, and it lands off a passing clerk rather than off a confession, because a secret that gets out by accident in a lobby costs her more than one she chose to tell. She does not soften it afterwards.\n\nWHAT IT SETS. aur_hq_pass is this map's OWN flag and it was already built into it: aur_hq_gate is hidden by it, aur_hq_gate_open appears with it, and that one's line already says 'signed in by Miss Veyl herself'. This scene is the missing other end of that. aur_hq_gate is also removed live, because hiddenIfFlag is only evaluated when a map loads and the gate stands in the single gap in the counter at x=12.",
+    "trigger": "enter",
+    "map": "aureline_meridian",
+    "onceFlag": "am_arrived",
+    "when": { "kind": "flag", "flag": "tarin_committed" },
+    "actions": [
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "a4_lyra", "sprite": "lyra", "x": 13, "y": 16,
+          "facing": "down", "movement": { "kind": "static" }, "script": "am_lyra"
+        }
+      },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "a4_tarin", "sprite": "rival", "x": 11, "y": 16,
+          "facing": "right", "movement": { "kind": "static" }, "script": "am_tarin"
+        }
+      },
+      { "kind": "face", "who": "player", "dir": "up" },
+      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "say",
+        "lines": [
+          "The ceiling is forty feet up and most of it is glass.",
+          "Every sound in the atrium arrives twice."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The relief queue goes out through the doors, and it is moving,",
+          "and the woman at the front of it is being given money."
+        ]
+      },
+      { "kind": "wait", "frames": 12 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "I wanted this to be a horrible building.",
+          "I have wanted that since Stonewake and it is not going to happen, is it."
+        ]
+      },
+      { "kind": "wait", "frames": 14 },
+      {
+        "kind": "say",
+        "lines": [
+          "Somebody crosses the floor towards you at a completely normal speed,",
+          "which is how you can tell she has been waiting all morning."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "Three days. I have read the same page of the same report three days running.",
+          "You are late and I am glad."
+        ]
+      },
+      {
+        "kind": "choice",
+        "lines": [
+          "She has two visitor passes in her hand and she has been holding them long enough to bend them."
+        ],
+        "options": [
+          {
+            "label": "You asked us to come.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "LYRA",
+                "lines": [
+                  "I did, and then I spent three days hoping you would not.",
+                  "Both of those were true at once. It has been an unpleasant week."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "We came for the record.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "LYRA",
+                "lines": [
+                  "Good. I would rather that than loyalty.",
+                  "Loyalty is what got me twenty-two days of not asking anybody anything."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      { "kind": "wait", "frames": 12 },
+      {
+        "kind": "say",
+        "lines": [
+          "A clerk goes past at your shoulder with an armful of folders."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "RECEPTION CLERK",
+        "lines": [
+          "Morning, Miss Veyl."
+        ]
+      },
+      { "kind": "wait", "frames": 26 },
+      { "kind": "sfx", "sound": "denied" },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "...Veyl."
+        ]
+      },
+      { "kind": "wait", "frames": 22 },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "Cassian Veyl is my father.",
+          "I have known that since I was born and I should have said it on the ridge."
+        ]
+      },
+      {
+        "kind": "choice",
+        "lines": [
+          "She does not look away and she does not soften any part of it."
+        ],
+        "options": [
+          {
+            "label": "Why didn't you?",
+            "then": [
+              {
+                "kind": "say",
+                "who": "LYRA",
+                "lines": [
+                  "Because the moment I say it, everything I tell you afterwards is a daughter talking.",
+                  "I wanted one month of being believed on the evidence. I got it. It was worth having."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "It changes nothing.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "LYRA",
+                "lines": [
+                  "It changes everything, and you are being kind, which I am going to take.",
+                  "Take it back later if you need to. I will still be standing here."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Then you can get us in.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "LYRA",
+                "lines": [
+                  "Yes. That is the other half of it and I have been dreading you working it out.",
+                  "It is the only useful thing about me and I have never once used it."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "Hear the shape of this before we go anywhere.",
+          "I have not decided that he is wrong."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "I have asked four people in this building to tell me I am wrong.",
+          "All four of them changed the subject, and not one of them was clumsy about it."
+        ]
+      },
+      { "kind": "wait", "frames": 14 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "That is not four people disagreeing with you.",
+          "That is four people who have all been told the same thing to say."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "I know. I worked that out on Tuesday and I have not slept properly since."
+        ]
+      },
+      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "if",
+        "cond": { "kind": "hasItem", "item": "tideheart" },
+        "then": [
+          {
+            "kind": "say",
+            "who": "LYRA",
+            "lines": [
+              "Keep it in the bag and keep your hand out of the bag.",
+              "Nobody here can hear it. I would still rather nobody watched you holding it."
+            ]
+          },
+          {
+            "kind": "choice",
+            "lines": [
+              "She has never once said out loud what it is."
+            ],
+            "options": [
+              {
+                "label": "You know what it is.",
+                "then": [
+                  {
+                    "kind": "say",
+                    "who": "LYRA",
+                    "lines": [
+                      "I know what my father calls it and I know what it did to a room in a marsh.",
+                      "Those are two pieces of knowing and I have stopped putting them together."
+                    ]
+                  }
+                ]
+              },
+              {
+                "label": "Should I leave it outside?",
+                "then": [
+                  {
+                    "kind": "say",
+                    "who": "LYRA",
+                    "lines": [
+                      "In this city? No.",
+                      "There is nowhere in Aureline I would rather it was than in your bag. I hate that sentence."
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          { "kind": "wait", "frames": 12 }
+        ]
+      },
+      { "kind": "sfx", "sound": "sign" },
+      {
+        "kind": "say",
+        "lines": [
+          "She writes both passes out at the desk and signs them herself, in ink, with her own name.",
+          "The clerk countersigns without reading either of them."
+        ]
+      },
+      { "kind": "setFlag", "flag": "aur_hq_pass" },
+      { "kind": "setFlag", "flag": "act4_inside" },
+      { "kind": "removeNpc", "who": "aur_hq_gate" },
+      { "kind": "sfx", "sound": "door" },
+      { "kind": "wait", "frames": 14 },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "East stair is the assembly hall. West stair is offices, and Records is at the back of it.",
+          "Nobody will stop you on either. Nobody has ever needed to."
+        ]
+      },
+      { "kind": "wait", "frames": 14 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "{name}. Whatever is up there, we go up and we come back down.",
+          "Say it back to me."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "...Fine. Do not say it back to me.",
+          "Just do the second half of it."
+        ]
+      },
+      { "kind": "call", "script": "act4_cast_clear" }
+    ]
+  },
+
+  {
+    "id": "am_lyra",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "Records is at the back of the office floor and it is the dullest room in Caelora.",
+          "That is the whole trick of this place. I will be in there."
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "am_tarin",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Look at the relief queue. Forty people, and every one of those grants is real money.",
+          "I have been trying all morning to make that mean he is a good man. It will not go."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "It only means the building is real.",
+          "Right. Upstairs."
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "aur_act4_close",
+    "_note": "ACT 4, THE CLOSE. The player comes back down into the atrium with an empty key pocket and has to walk out through four hundred people being helped. That is the staging, and it is why the close is here rather than out in the square: the last thing Act 4 shows the player is the Foundation doing exactly the good it says it does, on the way out of the building that has just robbed them.\n\nWEIGHTLESS ON THE MAP ON PURPOSE. Lyra catches them up in narration and leaves in narration, so this names no NPC, moves nothing and warps nowhere.\n\nWHERE IT HANDS OFF. Lyra names Frostmere and the Observatory, which is where canon puts Elias' last message in Act 5, and she goes there herself, tonight, on a coach. NOTHING IN ACT 4 OPENS A ROAD NORTH and nothing should until Stage 5 builds one -- there must be no stub for a player to walk into -- so the thing the player is actually pointed at is Sorrell, in Hearthmere, which has existed since Act 1.\n\nListed after am_arrive because only the first 'enter' script that starts gets run: on this visit am_arrive declines on its onceFlag and this one takes its turn.",
+    "trigger": "enter",
+    "map": "aureline_meridian",
+    "onceFlag": "act4_after_done",
+    "when": { "kind": "flag", "flag": "act4_theft_done" },
+    "actions": [
+      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "say",
+        "lines": [
+          "The relief queue is shorter than it was this morning and it is still moving.",
+          "Nobody in this room knows. Nobody in it is ever going to know."
+        ]
+      },
+      { "kind": "wait", "frames": 22 },
+      {
+        "kind": "say",
+        "lines": [
+          "Somebody comes down the last of the west stair at a run,",
+          "which is the first thing she has done quickly all day."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "I am going north. Tonight, on the mail coach, out of the east yard."
+        ]
+      },
+      {
+        "kind": "choice",
+        "lines": [
+          "She has a coat over her arm and nothing else. She has not been home."
+        ],
+        "options": [
+          {
+            "label": "Where?",
+            "then": [
+              {
+                "kind": "say",
+                "who": "LYRA",
+                "lines": [
+                  "Frostmere. There is an observatory above the town and the Foundation pays for it,",
+                  "and nobody has been up there in four years because there is nothing to see."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "LYRA",
+                "lines": [
+                  "He kept a packet of your father's. Eleven years, unopened, and I know the drawer.",
+                  "If it is anywhere it is up there, because it is the one place he never goes."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "You do not have to.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "LYRA",
+                "lines": [
+                  "I have spent a year being his daughter about all of this.",
+                  "I am going to go and be somebody else about it for a while and see how that fits."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "LYRA",
+                "lines": [
+                  "Frostmere. The observatory above the town.",
+                  "He kept a packet of your father's for eleven years and never opened it. I know the drawer."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "I am not doing it for you, and I want that said where you can hear it."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "I signed his name this afternoon. That is mine now, whatever else happens.",
+          "I would like to find out what I signed it for."
+        ]
+      },
+      { "kind": "setFlag", "flag": "lyra_chose" },
+      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "say",
+        "lines": [
+          "She does not say goodbye.",
+          "She goes out through the doors at a walk and the street closes over her in about nine steps."
+        ]
+      },
+      { "kind": "wait", "frames": 28 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Frostmere.",
+          "I have never been anywhere with snow in it."
+        ]
+      },
+      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "That is the worst thing I have said all week and I know it was.",
+          "It was that or nothing, and I was not going to do nothing at you."
+        ]
+      },
+      { "kind": "wait", "frames": 22 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Sorrell first. She has written four times since the marsh and we have answered none of them.",
+          "She should hear this off us and not off a newspaper."
+        ]
+      },
+      { "kind": "wait", "frames": 26 },
+      {
+        "kind": "say",
+        "lines": [
+          "Out through the doors, and behind you the largest building in Caelora is going home.",
+          "The lights come off floor by floor, from the top."
+        ]
+      },
+      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "say",
+        "lines": [
+          "Halfway across the square you put your hand in your bag without deciding to.",
+          "There is nothing in it to find."
+        ]
+      },
+      { "kind": "setFlag", "flag": "act4_done" }
+    ]
+  }
+]

@@ -1,0 +1,65 @@
+{
+  "speakers": {
+    "aur_innkeeper": "INNKEEPER",
+    "aur_inn_potboy": "POT BOY",
+    "aur_inn_drover": "DROVER",
+    "aur_inn_clerk": "FOUNDATION CLERK",
+    "aur_inn_stranger": "PAID-OFF MATE",
+    "aur_inn_widow": "LONG LODGER"
+  },
+  "entries": {
+    "aur_innkeeper": [
+      {
+        "lines": [
+          "By the week, not the night. Nobody stays in Aureline for one night.",
+          "Sixteen beds in the common room and every one of them spoken for by dusk.",
+          "If you are only passing through, say so, and I will not sell you a week."
+        ]
+      }
+    ],
+    "aur_inn_potboy": [
+      {
+        "lines": [
+          "Do not move the chess. He comes back Thursdays.",
+          "He has come back every Thursday for two years and he has never once won."
+        ]
+      }
+    ],
+    "aur_inn_drover": [
+      {
+        "lines": [
+          "Brought sixty head up the central road and I will not do it again in summer.",
+          "Four days of walking and you can see the city on the second one.",
+          "That is what nobody tells you. You can see it for two whole days before you get there."
+        ]
+      }
+    ],
+    "aur_inn_clerk": [
+      {
+        "lines": [
+          "I work at the Foundation and I lodge in a common room. Both of those are true.",
+          "It is a good employer and this is an expensive city and there it is.",
+          "Do not let anybody tell you the people in that building are getting rich."
+        ]
+      }
+    ],
+    "aur_inn_stranger": [
+      {
+        "lines": [
+          "Paid off out of a deep-water hull and it never went to sea.",
+          "Full year's wages to sit at a mooring. I asked why once.",
+          "The owner said it was chartered. Would not say by whom. Paid me in Foundation notes."
+        ]
+      }
+    ],
+    "aur_inn_widow": [
+      {
+        "lines": [
+          "Eleven years in that bed by the wall. It is not sad. It is simply where I live.",
+          "Read the board by the door. Some of those notes are older than my stay.",
+          "Nobody takes them down because taking one down would mean deciding something."
+        ]
+      }
+    ]
+  }
+}

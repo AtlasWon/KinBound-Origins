@@ -230,6 +230,66 @@ export const TARIN_LEDGER: TarinBeat[] = [
     where: 'Mirehaven',
     doing: 'Heard what the Aurelians did. Has stopped talking about being the best.',
   },
+
+  /*
+   * Stage 4. Act 4, the capital.
+   *
+   * FIVE CRESTS FOR THE WHOLE ACT, AND THAT IS NOT AN OVERSIGHT. Canon puts
+   * Halls 6, 7 and 8 in Frostmere, Skyreach and Crownspire, all of which are
+   * Stage 5, so there is no Crest in Aureline for anybody to take. Every act
+   * so far has moved his number: Act 1 alternated ahead and behind, Act 2 held
+   * him level to show that what was changing was him and not the score, Act 3
+   * gave him two and then stopped. Act 4 is the first act where the column
+   * being flat is the *point* -- he is in the largest city in Caelora, there is
+   * a Summit qualifier running in it, and he is in a records office instead.
+   *
+   * FOUR BEATS AND THREE OF THEM ARE IN THE ROOM WITH THE PLAYER. This is the
+   * only act where that is true. The gossip voices in data/dialogue/common.json
+   * cannot report a boy who is standing next to you, so the Act 4 variants are
+   * written the other way round: what the *city* makes of the pair of you. See
+   * the note in the handover -- those variants are the dialogue owner's file,
+   * not this one, and without them these beats fall through to the ungated
+   * fallback at the bottom of each voice, which is survivable and dull.
+   *
+   * `northroad` opens on the road maps rather than on a flag because the road
+   * north is somebody else's build and a beat keyed to a map that does not
+   * exist is stepped over rather than stalling him (see tarinBeat). It lists
+   * both plausible ids for the same reason `capital` lists two.
+   */
+  {
+    id: 'northroad',
+    opens: { any: [{ visited: 'route_7' }, { visited: 'route_8' }] },
+    crests: 5,
+    where: 'the central road',
+    doing: 'Walking north beside you. Reads every milestone out loud and does not make anything of it.',
+  },
+  {
+    id: 'capital',
+    opens: { any: [{ visited: 'aureline' }, { visited: 'aureline_meridian' }] },
+    crests: 5,
+    where: 'Aureline',
+    doing: 'Stood in the gate square a quarter of an hour and did not say one word about it.',
+  },
+  {
+    id: 'headquarters',
+    opens: { flag: 'act4_inside' },
+    crests: 5,
+    where: 'the Meridian building',
+    doing: 'Went through the front doors in daylight on a borrowed pass, carrying a clipboard he found.',
+  },
+  {
+    id: 'robbed',
+    /*
+     * Opens on `tideheart_taken` rather than on a scene flag of its own, so it
+     * cannot get out of step with the object: the beat where Tarin is walking
+     * a robbed friend around a city is exactly the state where the bag is
+     * empty, and there is only one thing in the game that empties it.
+     */
+    opens: { flag: 'tideheart_taken' },
+    crests: 5,
+    where: 'Aureline',
+    doing: 'Has not once asked whether you are all right. He knows the answer and he is staying close.',
+  },
 ];
 
 /* ------------------------------------------------------------------ derived */

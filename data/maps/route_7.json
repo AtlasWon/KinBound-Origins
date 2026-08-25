@@ -1,0 +1,439 @@
+{
+  "id": "route_7",
+  "name": "The Central Road",
+  "displayName": "ROUTE 7 - THE LEVELS",
+  "music": "route_west",
+  "battleBackdrop": "highland",
+  "indoor": false,
+  "regionPos": {
+    "x": 33,
+    "y": 13
+  },
+  "encounterTable": "route_7",
+  "_design": "The first half of the long road north, and the map whose whole job is the change of country. For two acts the ground has been whatever happened to be there -- peat, reed, standing water, a plank walk somebody maintains -- and here the player crosses one row of earth bank and every rule changes at once. North of it the ground is FARMED: ditched on a line and a level, hedged into fields, ploughed, cropped, and cut through by a working railway. Nothing out here is where it is by accident, and that is the argument Act 4 has to make before Aureline is ever seen. The capital is not a big town. It is the thing all of this is FOR.",
+  "_plan": "THREE DECISIONS, IN ORDER.\n\nFIRST THE BANK. The bottom nine rows are Act 3 in Act 3's colours -- peat, reed, mangrove, a lantern-hung boardwalk in from Mirehaven -- and then row 52 is one solid line of earth from edge to edge with exactly two ways through it: the plank road at x9-11, and the sluice at x44-45 where the levels have to let their water out. The player steps off a plank onto macadam in four tiles. Everything after it is a different palette, and the reveal costs one row of map.\n\nSECOND THE LINE. Row 20 is a working main line and it is SOLID, which is the most important structural fact on the map. A railway laid across farmland does not decorate it, it halves it, and the road has to go and find the crossing at x28-30 like everybody else. There is one other way over -- the farm crossing at x45, a gate and two planks, leading only into the east pasture -- so the chokepoint has an alternative for anybody reading the map, and neither is a secret. The telegraph poles down the south verge are the quiet half of the same sentence: this country writes ahead. The wetlands ring a bell when somebody is late.\n\nTHIRD THE WATER, WHICH IS NOW A TOOL AND NOT A THREAT. Every drain here is wadeable and the player has had Wade since the Tide Hall, so a cut is a slow shortcut with encounters in it rather than a wall -- the exact inversion of the mire, where water was the thing that stopped you. The one piece of water that still refuses is the junction pool where the two great cuts meet, and there is an islet in the middle of it in plain sight with something on it. It is on the way to nothing, it is signed once at 47,29, and it stays shut until Swim.\n\nTHE ROAD IS THREE TILES WIDE and it is the first road in the game that is. Everything else in Caelora is a track; this is a trunk route with a hundred and fifty thousand people at the end of it, and the width is doing the same work as the milestones -- three of them, counting down, so nobody has to say the capital is close.\n\nTHE OPTIONAL BRANCH is the Old Fen, south off the bottom of the map at x20-21: the strip the Drainage Commission never got, where the tide still comes over. The rare Kin is there and so is the only place in the game where the country the levels used to be is still standing. MARLBECK is west along the lane at y47-48, and it is a small village with a clinic in it, because this road is long.",
+  "warps": [
+    {
+      "x": 0,
+      "y": 57,
+      "toMap": "mirehaven",
+      "toX": 58,
+      "toY": 22,
+      "facing": "left",
+      "style": "edge"
+    },
+    {
+      "x": 0,
+      "y": 58,
+      "toMap": "mirehaven",
+      "toX": 58,
+      "toY": 23,
+      "facing": "left",
+      "style": "edge"
+    },
+    {
+      "x": 28,
+      "y": 0,
+      "toMap": "route_7_north",
+      "toX": 28,
+      "toY": 61,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 29,
+      "y": 0,
+      "toMap": "route_7_north",
+      "toX": 29,
+      "toY": 61,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 30,
+      "y": 0,
+      "toMap": "route_7_north",
+      "toX": 30,
+      "toY": 61,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 0,
+      "y": 47,
+      "toMap": "marlbeck",
+      "toX": 41,
+      "toY": 20,
+      "facing": "left",
+      "style": "edge"
+    },
+    {
+      "x": 0,
+      "y": 48,
+      "toMap": "marlbeck",
+      "toX": 41,
+      "toY": 21,
+      "facing": "left",
+      "style": "edge"
+    },
+    {
+      "x": 20,
+      "y": 63,
+      "toMap": "route_7_fen",
+      "toX": 20,
+      "toY": 2,
+      "facing": "down",
+      "style": "edge"
+    },
+    {
+      "x": 21,
+      "y": 63,
+      "toMap": "route_7_fen",
+      "toX": 21,
+      "toY": 2,
+      "facing": "down",
+      "style": "edge"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "r7_bankman",
+      "sprite": "hiker",
+      "x": 12,
+      "y": 51,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r7_bankman",
+      "sightRange": 3
+    },
+    {
+      "id": "r7_dyke",
+      "sprite": "villager_m",
+      "x": 26,
+      "y": 33,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r7_dyke",
+      "sightRange": 3
+    },
+    {
+      "id": "r7_carter",
+      "sprite": "porter",
+      "x": 27,
+      "y": 30,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r7_carter",
+      "sightRange": 3
+    },
+    {
+      "id": "r7_gate",
+      "sprite": "dockhand",
+      "x": 31,
+      "y": 12,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r7_gate",
+      "sightRange": 3
+    },
+    {
+      "id": "r7_stubble",
+      "sprite": "villager_f",
+      "x": 40,
+      "y": 13,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r7_stubble",
+      "sightRange": 4
+    },
+    {
+      "id": "r7_keeper",
+      "sprite": "villager_f",
+      "x": 27,
+      "y": 22,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r7_keeper"
+    },
+    {
+      "id": "r7_commission",
+      "sprite": "villager_m",
+      "x": 26,
+      "y": 36,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r7_commission"
+    },
+    {
+      "id": "r7_drover",
+      "sprite": "porter",
+      "x": 26,
+      "y": 45,
+      "facing": "up",
+      "movement": {
+        "kind": "pace",
+        "axis": "y",
+        "distance": 1
+      },
+      "script": "r7_drover"
+    },
+    {
+      "id": "r7_pedlar",
+      "sprite": "netmender",
+      "x": 31,
+      "y": 40,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r7_pedlar"
+    },
+    {
+      "id": "r7_lookout",
+      "sprite": "fisher",
+      "x": 8,
+      "y": 51,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r7_lookout"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "script",
+      "x": 8,
+      "y": 53,
+      "text": [
+        "A Commission board at the foot of the bank, repainted more often than read.",
+        "THE BANK IS THE ONLY THING BETWEEN YOU AND THE TIDE. DO NOT CUT IT.",
+        "Under it, another hand: NINE FEET OF EARTH. EVERYTHING ELSE HERE IS BORROWED."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 8,
+      "y": 45,
+      "text": [
+        "A fingerpost where the lane leaves the road. Three arms, one of them newer.",
+        "MARLBECK, ONE MILE. AURELINE, TWENTY-SIX. MIREHAVEN, NINE AND THE TIDE.",
+        "Somebody has scratched under the last: NINE AND THE TIDE IS NOT A DISTANCE."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 27,
+      "y": 6,
+      "text": [
+        "A milestone, cut and lettered by somebody who was paid by the stone.",
+        "AURELINE XXI.",
+        "The moss on the north face is thicker than the letters are deep."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 27,
+      "y": 41,
+      "text": [
+        "A milestone. AURELINE XXV.",
+        "Two more have been chalked on the base by people with time to fill.",
+        "MARLBECK II. THE END OF IT, YOU WILL KNOW WHEN."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 31,
+      "y": 25,
+      "text": [
+        "A milestone, with a boot-scrape set into the verge beside it.",
+        "AURELINE XXIII.",
+        "The scrape is worn through. Everybody walking to the capital does it here."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 26,
+      "y": 18,
+      "text": [
+        "A signal, and the section board bolted to the foot of the mast.",
+        "DOWN SECTION: MARLBECK CROSSING TO HARROWGATE HALT. ELEVEN MINUTES.",
+        "The arm is down. Nothing is in the section. It is the only news it can give."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 45,
+      "y": 21,
+      "text": [
+        "A farm crossing: two planks, a gate either side, and a notice on both.",
+        "STOP. LOOK BOTH WAYS. THE ELEVEN FIFTY DOES NOT.",
+        "The plank is worn through in two places a yard apart, by two feet at a time."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 43,
+      "y": 51,
+      "text": [
+        "The sluice, and the counterweight beam that lifts it.",
+        "The board says the levels drop four inches an hour with the gate up.",
+        "It also says the sea is back at eleven, so somebody is always here at ten."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 47,
+      "y": 29,
+      "text": [
+        "The junction, where the two great cuts meet and turn round each other.",
+        "There is an islet out in the middle with something pale lying on it.",
+        "The Commission never dug this one out. Nobody has found the bottom either."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 22,
+      "y": 5,
+      "item": "great_potion",
+      "quantity": 2,
+      "flag": "item_r7_northwheat"
+    },
+    {
+      "kind": "item",
+      "x": 4,
+      "y": 30,
+      "item": "full_heal",
+      "quantity": 2,
+      "flag": "item_r7_westwheat"
+    },
+    {
+      "kind": "item",
+      "x": 51,
+      "y": 16,
+      "item": "fine_vessel",
+      "quantity": 5,
+      "flag": "item_r7_stubble"
+    },
+    {
+      "kind": "item",
+      "x": 19,
+      "y": 41,
+      "item": "strong_potion",
+      "quantity": 3,
+      "flag": "item_r7_lane"
+    },
+    {
+      "kind": "item",
+      "x": 45,
+      "y": 35,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_r7_islet"
+    },
+    {
+      "kind": "item",
+      "x": 36,
+      "y": 49,
+      "item": "wakebell",
+      "quantity": 2,
+      "flag": "item_r7_southplough"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 5,
+      "y": 55,
+      "item": "rouse",
+      "quantity": 1,
+      "flag": "item_r7_hidden_mire"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 50,
+      "y": 5,
+      "item": "ward_incense",
+      "quantity": 2,
+      "flag": "item_r7_hidden_north"
+    }
+  ],
+  "rows": [
+    "●●●●●●●●●●●●●●●●●●●●●●●●●●●●▦▦▦●●●●●●●●●●●●●●●●●●●●●●●●●",
+    "●●●●●●●●●●●●●●●●●●●●●●●●●●●●▦▦▦●●●●●●●●●●●●●●●●●●●●●●●●●",
+    "●●●..,.**...,,...*..,....●,.▦▦▦,*●.....,.,,*......,..●●●",
+    "●●●↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑●,.▦▦▦..●▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧●●●",
+    "●●●↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑●.,▦▦▦.,●▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧●●●",
+    "●●●↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑T..▦▦▦,.●▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧●●●",
+    "●●●↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑●.■▦▦▦.*.▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧●●●",
+    "●●●↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑●..▦▦▦,.●▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧●●●",
+    "●●.↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑..,▦▦▦..●▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧T●●",
+    "●●●↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑●,*▦▦▦..●▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧●●●",
+    "●●●↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑●..▦▦▦*.●●●●●●.●●●●●●●.●●●●●●●●",
+    "●●●↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑●..▦▦▦..●,,,\"\",,,,,,\",,,,\",,●●●",
+    "●●●●●●●●●..●●●●●●●●●●●●●●●..▦▦▦..T,,\"\",,\",,,\"\",\"\"\",,,.●●",
+    "●●●▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧●,.▦▦▦..●,\",▲,▲,,,,,,\",,,,▲,●●●",
+    "●●●▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧●.,▦▦▦,.●,,▲,,,\",,,\",,,\",\",,●●●",
+    "●●T▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▲▧▧▧●..▦▦▦,.●,\",,,,▲,,▲,,\",,,,,,●●●",
+    "●●●▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧..,▦▦▦..●,,,,,\",\",,,,,\"\",,,,●●●",
+    "●●●▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧●*.▦▦▦...,\",,,,,,,,,,,,▲▲,\",●●●",
+    "●●●▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧▧●┫.▦▦▦,,●,\",▲,\",,\",\",,\",,\",,●●●",
+    "●●●...,.......,..,,..,...●,,▦▦▦..●.,...,,..,*........●●●",
+    "●●━━━━━━━━━━━━━━━━━━━━━━━━━━╋╋╋━━━━━━━━━━━━━━╋━━━━━━━━●●",
+    "●●┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅▦▦▦┅┅┅┅┅┅┅┅┅┅┅┅┅┅-┅┅┅┅┅┅┅┅●●",
+    "●●●.,╪.,,╪,,,╪,.,╪...╪.,,●..▦▦▦..●,╪,..╪*..╪~~.,,╪.*╪●●●",
+    "●●●↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑●.,▦▦▦..●↑↑↑↑↑↑↑↑.,~~,*.▧▧▧▧●●●",
+    "●●●↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑●..▦▦▦..●↑↑↑↑↑↑↑↑.,~~..,▧▧▧▧●●●",
+    "●●●↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑●,,▦▦▦■.●↑↑↑↑↑↑↑↑,,~~.,.▧▧▧▧●●●",
+    "●●.↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑●,.▦▦▦...↑↑↑↑↑↑↑↑*.~~,..▧▧▧▧●●●",
+    "●●●↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑...▦▦▦.,●↑↑↑↑↑↑↑↑..~~...▧▧▧▧●●●",
+    "●●●↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑●..▦▦▦..●↑↑↑↑↑↑↑↑..~~.,.▧▧▧▧●●●",
+    "●●●↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑●.,▦▦▦..●↑↑↑↑↑↑↑↑..~~...▧▧▧▧●●●",
+    "●●●↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑●..▦▦▦..●↑↑↑↑↑↑↑WWWWWWWWW▧▧▧.●●",
+    "●●●↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑●..▦▦▦,*●↑↑↑↑↑↑↑WWWWWWWWW▧▧▧●●●",
+    "●●●↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑●.,▦▦▦,.●↑↑↑↑↑↑↑WWWWWWWWW▧▧▧●●●",
+    "●●T.*.,..........,..,,,..●,.▦▦▦.,●,.....,WWWWWWWWW*,,●●●",
+    "●●●~~~~~~~~~~~~~~~~~~~~~~~~~BBB~~~~~~~~~~WWW,,.WWW~~~●●●",
+    "●●●~~~~~~~~~~~~~~~~~~~~~~~~~BBB~~~~~~~~~~WWW...WWW~~~●●●",
+    "●●●●●●●.●●●●●●●●●●●●.●●●●,..▦▦▦,,●●●●●.●●WWW...WWW●.●●●●",
+    "●●●▧▧▧▧▧▧▧▧▧▧●,..●↑↑↑↑↑↑↑↑↑.▦▦▦.,●▧▧▧▧▧▧▧WWWWWWWWW↑↑↑T●●",
+    "●●●▧▧▧▧▧▧▧▧▧▧●.,.●↑↑↑↑↑↑↑↑↑,▦▦▦..●▧▧▧▧▧▧▧WWWWWWWWW↑↑↑●●●",
+    "●●●▧▧▧▧▧▧▧▧▧▧....●↑↑↑↑↑↑↑↑↑.▦▦▦..●▧▧▧▧▧▧▧WWWWWWWWW↑↑↑●●●",
+    "●●●▧▧▧▧▧▧▧▧▧▧●...●↑↑↑↑↑↑↑↑↑.▦▦▦...▧▧▧▧▧▧▧WWWWWWWWW↑↑↑●●●",
+    "●●●▧▧▧▧▧▧▧▧▧▧●....↑↑↑↑↑↑↑↑↑■▦▦▦.*●▧▧▧▧▧▧▧▧.,~~,,,↑↑↑↑●●●",
+    "●●●▧▧▧▧▧▧▧▧▧▧●...●↑↑↑↑↑↑↑↑↑.▦▦▦..●▧▧▧▧▧▧▧▧..~~...↑↑↑↑●●●",
+    "●●●▧▧▧▧▧▧▧▧▧▧●...●↑↑↑↑↑↑↑↑↑.▦▦▦..●▧▧▧▧▧▧▧▧..~~...↑↑↑↑●●●",
+    "●●....,,.▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦.,●●●●.●●●●●●~~●●●●.●●.●●",
+    "●●●,..,.!▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦..●,,,...,...~~.,.,...●●●",
+    "●●●●●●●●.▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦..●..........~~,,.....●●●",
+    "---------▦▦▦.,,,.,,...,,...▲*....●▧▧▧▧▧▧▧▧▧▧~~▧▧▧▧▧▧▧●●●",
+    "---------▦▦▦*....*.,....,...,...▲●▧▧▧▧▧▧▧▧▧▧~~▧▧▧▧▧▧▧●●●",
+    "●●●,\"\"\",,▦▦▦,▲,,,▲,,\"\",,\".,...,...▧▧▧▧▧▧▧▧▧▧~~▧▧▧▧▧▧▧●●●",
+    "●●●\",\"▲,,▦▦▦\"▲,,,,,\",,,▲,........●▧▧▧▧▧▧▧▧▧▧~~▧▧▧▧▧▧▧●●●",
+    "●●●,,,▲\",▦▦▦,,,\",\",t\",,\"▲.,...,.,●▧▧▧▧t▧▧▧▧▧~~▧▧▧▧▧▧▧●●●",
+    "●●┅┅┅┅┅┅┅▦▦▦┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅~~┅┅┅┅┅┅┅┅●●",
+    "ДДжюппжжЂдддюжпюжжпппппюжппппппююппппДжпююжжююжжппюДжюДД",
+    "ДДжжжппюпддджпжжппюжДпжжпжжпжжпжпДжппжпжююппююпДюжпжДжДД",
+    "ДДжююппппдддппппппюДпжюжпжпжпюпжжДпжппДжжпппююпжпппюжпДД",
+    "ДДюЛРююРюдддпжжжпппжДппжжжппжжжпжппжДжжДпюпюююжюжпжпжДДД",
+    "дддддддддддджппюпппппжжпюДюпюпжпДппжжпппжпжююююжжюжпппДД",
+    "дддддддддддджппппжпжппжжюпжююжпжжююпюжюппюжДююжююппппжДД",
+    "ДДююРюЛРюппжпююппюжпппппжпппжюжпжжжююпжДжюжпююппДжжппжДД",
+    "ДДппжппппжпжжппжжпДжпппжжжпппююпппжпппппппжжююжюжюпюпюДД",
+    "ДДпюжпюпжюжжжпппппжюпппДжжжпюппппДжюппжжпжжДююДюпппюююДД",
+    "ДДДДДДДДДДДДДДДДДДДДппДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДД",
+    "ДДДДДДДДДДДДДДДДДДДДппДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДД"
+  ]
+}

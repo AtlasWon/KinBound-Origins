@@ -1,0 +1,149 @@
+{
+  "id": "aureline_inn",
+  "name": "Interior",
+  "displayName": "THE LONG WAIT",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUUIIIIIIIIIIUUIII",
+    "IJNQFFFkkFFFFFFFFffI",
+    "IKKKKFFFFFFFFFFFFffI",
+    "IFFFFFFFFFFFFFFFFffI",
+    "IFAAFFAAFFAAFFAAFffI",
+    "IFEEFFEEFFEEFFEEFffI",
+    "IfFFFFFFFFFFFFFFFffI",
+    "IF/rrrr/FFFAAFFFFffI",
+    "IFFrrrrFFFFEEFFFFffI",
+    "IPfFFFFFFFFFFFFFFfPI",
+    "IfFFFFFFFFFFFFFFFffI",
+    "IbbFFbbFFFFbbFFbbffI",
+    "IeeFFeeFFFFeeFFeeffI",
+    "IIIIIIIIIDDIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 9, "y": 13,
+      "toMap": "aureline", "toX": 17, "toY": 24,
+      "facing": "down", "style": "door"
+    },
+    {
+      "x": 10, "y": 13,
+      "toMap": "aureline", "toX": 18, "toY": 24,
+      "facing": "down", "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "aur_innkeeper",
+      "sprite": "townsfolk_f",
+      "x": 2, "y": 3,
+      "facing": "down",
+      "movement": { "kind": "static" },
+      "script": "aur_innkeeper"
+    },
+    {
+      "id": "aur_inn_potboy",
+      "sprite": "kid",
+      "x": 12, "y": 3,
+      "facing": "down",
+      "movement": { "kind": "pace", "axis": "x", "distance": 4 },
+      "script": "aur_inn_potboy"
+    },
+    {
+      "id": "aur_inn_drover",
+      "sprite": "hiker",
+      "x": 5, "y": 6,
+      "facing": "up",
+      "movement": { "kind": "static" },
+      "script": "aur_inn_drover"
+    },
+    {
+      "id": "aur_inn_clerk",
+      "sprite": "clerk",
+      "x": 14, "y": 8,
+      "facing": "left",
+      "movement": { "kind": "static" },
+      "script": "aur_inn_clerk"
+    },
+    {
+      "id": "aur_inn_stranger",
+      "sprite": "sailor",
+      "x": 9, "y": 6,
+      "facing": "down",
+      "movement": { "kind": "lookAround" },
+      "script": "aur_inn_stranger"
+    },
+    {
+      "id": "aur_inn_widow",
+      "sprite": "elder",
+      "x": 3, "y": 10,
+      "facing": "right",
+      "movement": { "kind": "static" },
+      "script": "aur_inn_widow"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 2, "y": 2,
+      "text": [
+        "The counter, and the tariff, which is by the week and not by the night.",
+        "Nobody stays in Aureline for one night. It is not that kind of city.",
+        "The sign over the door says THE LONG WAIT and is a joke about the rail."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 7, "y": 1,
+      "text": [
+        "A shelf of left-behind books, free to take, free to bring back.",
+        "Three of them are the same flood pamphlet from the station bookstall.",
+        "Somebody has read one of the three all the way through. Only one."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2, "y": 7,
+      "text": [
+        "The good chairs by the fire, and an unwritten rule about who gets them",
+        "that nobody in this room could put into words",
+        "but which has never once been broken."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 11, "y": 7,
+      "text": [
+        "A table under the window with a chessboard on it, mid-game, unattended.",
+        "A card weighted down with a mug: DO NOT MOVE. HE COMES BACK THURSDAYS.",
+        "It is not Thursday."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1, "y": 11,
+      "text": [
+        "Beds in the common room, curtained off, at half the price of a room.",
+        "Sixteen of them, all made, all taken by nightfall.",
+        "This is what most people can afford in the capital and it is not a scandal here."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 16, "y": 11,
+      "text": [
+        "A board of notes pinned by people looking for other people.",
+        "WORK WANTED. ROOM WANTED. CAME UP FROM THE COAST, HAVE NOT FOUND HIM.",
+        "Some of the notes are years old. Nobody takes any of them down."
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 18, "y": 10,
+      "item": "potion",
+      "quantity": 1,
+      "flag": "item_aur_inn"
+    }
+  ]
+}

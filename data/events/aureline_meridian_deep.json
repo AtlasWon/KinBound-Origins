@@ -1,0 +1,1112 @@
+[
+  {
+    "id": "ad_arrive",
+    "_note": "ACT 4, BEAT 3: THE FLOOR UNDER RECORDS.\n\nThe object speaks before the player's eyes do, and it says the opposite of everything it has said so far. Every other time it has been this loud it has also been pointing; here there is no needle, because it is not looking for anything down here. See RECOIL in src/systems/tideheart.ts -- the bag row, the arrival cue and the object's own screen are all already saying this before the scene opens its mouth, so a player who checks their bag on the stair finds the game has told them the truth twice.\n\nThen the room, and the room is the whole of Project Abyss Crown as a physical object: sixty cradles, fifty-one of them full, and the metal in them is the metal in the palm-sized thing the player has been carrying since their birthday. Nobody says that. It is on the screen.\n\nAND THEN CASSIAN, ALREADY HERE, WORKING. Not summoned by an alarm, not hunting them, not surprised. A man alone at seven in the evening with his coat off, filing a burr off a piece of salvage, and doing it well. Canon says he must not read as a villain, and the cheapest way to buy that is to let the player watch him be good at something before he says a word.\n\nHe invites them to look before they talk. That is in character and it is also what keeps canon's freedom-between-beats rule alive in the last room of the act: the player can walk this floor, read the chart, and talk to the Commander who murdered their father, before they choose to go and start the conversation.",
+    "trigger": "enter",
+    "map": "aureline_meridian_deep",
+    "onceFlag": "ad_arrived",
+    "when": { "kind": "flag", "flag": "a4_records_read" },
+    "actions": [
+      { "kind": "face", "who": "player", "dir": "up" },
+      { "kind": "wait", "frames": 12 },
+      {
+        "kind": "if",
+        "cond": { "kind": "hasItem", "item": "tideheart" },
+        "then": [
+          { "kind": "sfx", "sound": "fx_iron" },
+          { "kind": "shake", "frames": 34, "power": 3 },
+          { "kind": "wait", "frames": 22 },
+          {
+            "kind": "say",
+            "lines": [
+              "Before the stair ends, the thing in your bag moves."
+            ]
+          },
+          {
+            "kind": "say",
+            "lines": [
+              "Not the way it moved at the Arch. Not the way it moved in the marsh.",
+              "It is not pulling toward anything. It is pulling away, and your bag is in the way."
+            ]
+          },
+          { "kind": "wait", "frames": 20 },
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "It has never done that.",
+              "In four months and three ruins it has never once done that."
+            ]
+          },
+          { "kind": "wait", "frames": 16 }
+        ]
+      },
+      { "kind": "music", "track": "stop" },
+      {
+        "kind": "say",
+        "lines": [
+          "The floor is longer than the hall upstairs and there is almost nothing on it.",
+          "Cradles. Sixty of them, in two rows, and fifty-one are full."
+        ]
+      },
+      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "say",
+        "lines": [
+          "You have seen this metal before.",
+          "You have been carrying a palm-sized piece of it since your birthday."
+        ]
+      },
+      { "kind": "wait", "frames": 22 },
+      {
+        "kind": "say",
+        "lines": [
+          "A chart on the end wall, nine feet across. A circle drawn on a sea floor.",
+          "Inside the circle, the subject, drawn to scale."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Beside it, for comparison, somebody has drawn a person.",
+          "The person is a pencil mark."
+        ]
+      },
+      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Somebody drew that.",
+          "Somebody drew that, and then put the pencil down, and went home for their tea."
+        ]
+      },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "lines": [
+          "There is a man at a bench halfway down, with his coat over the back of a chair.",
+          "He is taking a burr off a piece of the metal with a hand file, and he is doing it well."
+        ]
+      },
+      { "kind": "wait", "frames": 22 },
+      { "kind": "face", "who": "ad_veyl", "dir": "down" },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "Lyra."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "That is my countersign on the stair door, so I know exactly how the three of you got here.",
+          "I am not going to ask, and you are not going to have to invent anything."
+        ]
+      },
+      { "kind": "wait", "frames": 18 },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "Look at it first.",
+          "I would very much rather you had looked at it properly before we talk. Take as long as you like."
+        ]
+      },
+      { "kind": "setFlag", "flag": "a4_deep" },
+      { "kind": "wait", "frames": 14 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "He means it, and I hate that he means it.",
+          "Go on, then. Look at all of it. I am not leaving this spot."
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "ad_kell",
+    "_note": "The player, standing four feet from the woman who murdered their father, holding the night book that proves it, in a room where nobody is going to do anything about it.\n\nMISSABLE ON PURPOSE. Nothing requires this conversation and no flag depends on it, because the player who walks straight past her to Cassian has made a choice about what they came here for. But it is the payoff of the line the Sanctum note said must stay exactly as it was -- 'I have thought about him every day for eleven years' -- and it turns over on one word.\n\nShe does not deny it, does not perform, does not enjoy it and does not apologise. She keeps records. Lying to somebody holding an accurate record would be, to her, untidy. Her reason is Cassian's reason with the last restraint taken off, which is what makes her the one who overrides him in Act 5 rather than a second villain with a second motive.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "a4_kell_asked" },
+        "then": [
+          {
+            "kind": "say",
+            "who": "COMMANDER KELL",
+            "lines": [
+              "We have had the conversation. I am not going to improve on it and neither are you.",
+              "He is at the bench. He has been waiting since the marsh."
+            ]
+          },
+          { "kind": "end" }
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "You came up out of a marsh and then you came here.",
+          "That is a straight line and I have never once been sorry to be right about somebody."
+        ]
+      },
+      {
+        "kind": "choice",
+        "lines": [
+          "She has a notebook under her arm and a flat case at her feet, and the case has a lock on it."
+        ],
+        "options": [
+          {
+            "label": "Were you in the yard?",
+            "then": [
+              { "kind": "wait", "frames": 26 },
+              {
+                "kind": "say",
+                "who": "COMMANDER KELL",
+                "lines": [
+                  "Yes."
+                ]
+              },
+              { "kind": "wait", "frames": 22 },
+              {
+                "kind": "say",
+                "who": "COMMANDER KELL",
+                "lines": [
+                  "I am not going to perform anything for you. You have read a night book and it is accurate.",
+                  "I keep accurate books. It would be strange of me to argue with one."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Every day for eleven years.",
+            "then": [
+              { "kind": "wait", "frames": 26 },
+              {
+                "kind": "say",
+                "who": "COMMANDER KELL",
+                "lines": [
+                  "That was true. It is still true.",
+                  "You assumed something about what kind of thinking it was, and I let you."
+                ]
+              },
+              { "kind": "wait", "frames": 20 },
+              {
+                "kind": "say",
+                "who": "COMMANDER KELL",
+                "lines": [
+                  "I did not lie to you in that room. I have gone back over it twice.",
+                  "I would have told you if you had asked me the question. You were fifteen feet away and you did not."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      { "kind": "setFlag", "flag": "a4_kell_asked" },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "He was not going to delay it. He was going to end it.",
+          "One man, on his own, deciding for eleven hundred people a year, forever."
+        ]
+      },
+      {
+        "kind": "choice",
+        "lines": [
+          "She has not raised her voice once, in either of the rooms you have been in with her."
+        ],
+        "options": [
+          {
+            "label": "He was my father.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "COMMANDER KELL",
+                "lines": [
+                  "Yes. That is the part I have no answer for and I have stopped looking for one.",
+                  "You are entitled to every single thing you are feeling. It does not change the arithmetic."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Does he know you did it?",
+            "then": [
+              {
+                "kind": "say",
+                "who": "COMMANDER KELL",
+                "lines": [
+                  "He has known for eleven years and he has never asked me and I have never told him.",
+                  "That is not a conspiracy. That is two people being careful with each other."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      { "kind": "wait", "frames": 18 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "{name}. Walk away from her.",
+          "I am asking. I have never asked you for anything."
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "ad_tech",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "FOUNDATION FITTER",
+        "lines": [
+          "Nine short. We are nine elements short and we have been nine short since the spring.",
+          "There is no more of this metal. There is only ever what somebody dug up."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "FOUNDATION FITTER",
+        "lines": [
+          "Mind the cradles. Every one of those is older than the language you are complaining in.",
+          "I cut them down myself and I have not enjoyed a day of it."
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "ad_lyra",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "act4_theft_done" },
+        "then": [
+          {
+            "kind": "say",
+            "who": "LYRA",
+            "lines": [
+              "Go up. I will be behind you.",
+              "I am not going to cry in a room with sixty cradles in it. I have some standards left."
+            ]
+          },
+          { "kind": "end" }
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "I have been in this building since I was fifteen and I did not know this floor was here.",
+          "That is not him keeping a secret from the region. That is him keeping one from me."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "Talk to him when you are ready and not before.",
+          "He will wait. He is extremely good at waiting and it is the worst thing about him."
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "ad_tarin",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "act4_theft_done" },
+        "then": [
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "Up. Out. Air.",
+              "In that order and no talking on the stairs."
+            ]
+          },
+          { "kind": "end" }
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Fifty-one cradles full and nine to go, and a man with a hand file at the end of it.",
+          "I have got something to say to him. I have been building it since the marsh."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Not to hurt him. I do not think you can hurt him.",
+          "I want him to have to answer it. Go when you are ready."
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "ad_veyl",
+    "_note": "ACT 4, BEAT 4 AND 5: THE CONFRONTATION, AND MERIDIAN TAKE THE TIDEHEART.\n\nCANON IS EXPLICIT AND THIS SCENE IS BUILT ROUND IT: do not make him insane. His arguments must sound reasonable, because they are. So he denies nothing, he refuses to use his dead sister because it would work, he concedes Tarin's first two points out loud, and he wins the exchange about the diameter, because he is right about the diameter. A man the player can dismiss is not the man in CANON.md.\n\nTHE MORAL SHAPE, in his own mouth and in this order:\n  he did not order it -- a commander of his did, on her own judgement -- he found out\n  ninety-two days later -- he did nothing -- and then he wrote down that he was doing\n  nothing and filed it, so that he could never improve on the memory.\nA man who ordered a murder is a villain. This is worse and much more ordinary, and the player has to be able to feel the difference, so nothing in the scene blurs it.\n\nTARIN'S ARC PAYS OFF HERE AND HE IS NOT COMIC ONCE. His attack is a chain and each link has to survive the answer:\n  1. the sheet has a number on one side and nothing on the other -- Cassian concedes it,\n     and then correctly points out that nobody can cost a hurricane they did not have.\n  2. every person in the Aurelian record was as careful as you -- Cassian answers this\n     one properly and wins it.\n  3. in eleven years, has anybody written down a plan for ASKING it? -- no.\n     'Then you have not built a better machine. You have built a bigger one.'\nThat is BOND VS CONTROL, said out loud, by the rival, in the last room of the act. And Cassian's reply is the horror of the whole scene: he grants the argument, says he will think about it for years, and does not stop.\n\nLYRA IS THE ONE WHO IS BETRAYED, because she is the only person present who loved him. Her whole part is four boxes and none of them is an argument. She asks him about one afternoon when she was fifteen. He says yes. That is all she wanted.\n\nTHE THEFT IS REAL. takeItem removes the object from the inventory and the key pocket; tideheart_taken tells src/systems/tideheart.ts what has happened. From here the bag row is gone, the screen the bag opened is unreachable, the sites stop stirring and the arrival cue stops firing, and readTideheart says where it went. Nothing in Act 5 may assume the player is carrying it -- ask hasItem, never tideheart_given.\n\nNO BATTLE, AND THAT IS DELIBERATE. The Sanctum note already fixed Kell's character: a commander who has to fight a sixteen-year-old is a commander who is worried, and she is not. Nothing stops her. Tarin steps in front of the player and she goes round him without breaking stride. It is also the correct answer for a player who has asked four times for an easier game: the loss the act needs is a story loss, and there is nothing here to lose a battle to.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "act4_theft_done" },
+        "then": [
+          {
+            "kind": "say",
+            "who": "DR. VEYL",
+            "lines": [
+              "Go up. Nobody will stop you."
+            ]
+          },
+          { "kind": "end" }
+        ]
+      },
+
+      { "kind": "music", "track": "stop" },
+      {
+        "kind": "say",
+        "lines": [
+          "He puts the file down. The tool, not the folder.",
+          "You notice yourself noticing that, and you cannot work out why it matters."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "Lyra. Did you bring them?"
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "Yes."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "Thank you for saying it straight.",
+          "You could have made me ask twice and you have never once made me ask twice."
+        ]
+      },
+      { "kind": "wait", "frames": 22 },
+
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "You have read the sleeve. I am not going to tell you it is a forgery,",
+          "or a draft, or somebody else's hand having a bad afternoon."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "It is mine. I wrote it upstairs on a Thursday and I filed it myself."
+        ]
+      },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "I could tell you about my sister. I am not going to.",
+          "It would work on you, and it is not the reason. The reason is a number."
+        ]
+      },
+      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "Eleven hundred a year in this region. I have the parish returns for sixty years.",
+          "The line does not move. It has never moved. It is not going to move on its own."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "I can stop it. That is not a hope and it is not a prospectus.",
+          "The engineering is finished. It is in cradles behind you."
+        ]
+      },
+      {
+        "kind": "choice",
+        "lines": [
+          "He is not raising his voice and he is not enjoying any of it."
+        ],
+        "options": [
+          {
+            "label": "You cannot know that.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "DR. VEYL",
+                "lines": [
+                  "No. I can know it on paper to four figures and not at all in the water.",
+                  "That is true of every bridge anybody has ever stood under. It is not a reason to ford rivers."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "It is not yours to stop.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "DR. VEYL",
+                "lines": [
+                  "Then whose? Name them. I will have the drawings on a cart to them this evening.",
+                  "I have asked that question in six cities for eleven years and nobody has ever named anybody."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Say nothing.",
+            "then": [
+              {
+                "kind": "say",
+                "lines": [
+                  "You let it stand.",
+                  "He waits a long time to be sure that you have, and then he nods, as if you had scored something."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      { "kind": "wait", "frames": 24 },
+
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "Your father. I want to do this in the right order, because the order is the whole of it."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "I did not order it."
+        ]
+      },
+      {
+        "kind": "choice",
+        "lines": [
+          "He says it the way somebody says a thing they have said to themselves a great many times."
+        ],
+        "options": [
+          {
+            "label": "I do not believe you.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "DR. VEYL",
+                "lines": [
+                  "Good. It is the only part of this that helps me, so my word on it is worth nothing.",
+                  "Take the paper instead. The paper says I found out. It does not say I asked."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Then who did?",
+            "then": [
+              {
+                "kind": "say",
+                "who": "DR. VEYL",
+                "lines": [
+                  "A commander of mine. On her own judgement, without being asked,",
+                  "because she thought I was too fond of him to say it out loud."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "DR. VEYL",
+                "lines": [
+                  "She was right about the fondness."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      { "kind": "wait", "frames": 18 },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "I found out ninety-two days later.",
+          "I know it was ninety-two because I counted them afterwards. Twice."
+        ]
+      },
+      { "kind": "wait", "frames": 22 },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "And I did nothing.",
+          "And then I wrote down that I was doing nothing, and I filed it."
+        ]
+      },
+      {
+        "kind": "choice",
+        "lines": [
+          "Somewhere behind him a fitter puts a tool in a rack, and does not look over."
+        ],
+        "options": [
+          {
+            "label": "Why write it down?",
+            "then": [
+              {
+                "kind": "say",
+                "who": "DR. VEYL",
+                "lines": [
+                  "So that I could not improve on it later.",
+                  "Memory is very kind to people like me. I did not want the kindness."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Why nothing?",
+            "then": [
+              {
+                "kind": "say",
+                "who": "DR. VEYL",
+                "lines": [
+                  "Because a magistrate would have ended the programme inside a month.",
+                  "I weighed one dead man against forty thousand living ones."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "DR. VEYL",
+                "lines": [
+                  "I have never once got that sum to come out the other way,",
+                  "and I have never once been able to say it out loud without hearing what it is."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "You are a coward.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "DR. VEYL",
+                "lines": [
+                  "No. A coward would have burned the sheet.",
+                  "I am something with a worse name than that and I have not found the word for it."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      { "kind": "wait", "frames": 26 },
+
+      {
+        "kind": "say",
+        "lines": [
+          "Tarin has not said one word since the stair."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "You have put a number on one side of a sheet.",
+          "Where is the number on the other side?"
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Your own man upstairs told me there has never been one to put.",
+          "He said he would love one. He said it like it was a shame about the weather."
+        ]
+      },
+      { "kind": "wait", "frames": 18 },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "He is right and so are you. There is no number on that side.",
+          "That is a real weakness in the case and I have never pretended otherwise."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "It is also not a reason to do nothing.",
+          "Nobody has ever been able to cost the hurricane they did not have."
+        ]
+      },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "I have watched their record. The people who did this before you.",
+          "Not one person in that picture thought they were being reckless."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Not one. That is what the record is.",
+          "It is a room full of careful people, and then it is a sea standing up."
+        ]
+      },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "Their circle was a mile and a half and their instruments were bronze.",
+          "Ours is two point four miles and four hundred people check each other's arithmetic."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "That is not the same experiment. I am sorry. It is genuinely not the same experiment."
+        ]
+      },
+      { "kind": "wait", "frames": 26 },
+      {
+        "kind": "say",
+        "lines": [
+          "He is right, and everybody in the room can hear that he is right,",
+          "and Tarin does not look away from him for a second."
+        ]
+      },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "All right. Then answer this one instead."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Eleven years. Four hundred people. Every drawing in this room.",
+          "Has one of you, once, written down a plan for asking it?"
+        ]
+      },
+      { "kind": "wait", "frames": 34 },
+      { "kind": "sfx", "sound": "denied" },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "...No."
+        ]
+      },
+      { "kind": "wait", "frames": 28 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Then you have not built a better machine than they had."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "You have built a bigger one."
+        ]
+      },
+      { "kind": "wait", "frames": 34 },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "You are sixteen years old."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "That is the best argument anybody has put to me in eleven years,",
+          "and I am going to think about it for the rest of my life."
+        ]
+      },
+      { "kind": "wait", "frames": 22 },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "And I am not going to stop."
+        ]
+      },
+      { "kind": "wait", "frames": 30 },
+      {
+        "kind": "say",
+        "lines": [
+          "That is the moment.",
+          "Not the sleeve, and not the sheet, and not the night book. That."
+        ]
+      },
+      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "You had somebody who could ask it.",
+          "He walked out of this building because he knew you never would."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "And one of your people opened a valve for it.",
+          "You have already run this once. It came out with a man dead in the middle of it."
+        ]
+      },
+      { "kind": "wait", "frames": 30 },
+      {
+        "kind": "say",
+        "lines": [
+          "He does not answer that one.",
+          "He has an answer. You can watch him decide not to use it."
+        ]
+      },
+      { "kind": "wait", "frames": 26 },
+
+      {
+        "kind": "say",
+        "lines": [
+          "Lyra has been standing at the end of the bench the whole time, not moving."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "You told me the Corvane was weather."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "You told me twice. The second time I asked you,",
+          "because I was fifteen and I had started reading the reports."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "You put your hand on the back of my head and you said, weather, love."
+        ]
+      },
+      { "kind": "wait", "frames": 36 },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "Yes."
+        ]
+      },
+      { "kind": "wait", "frames": 28 },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "That is all I wanted.",
+          "I have wanted you to say no since Tuesday and now I can stop."
+        ]
+      },
+      { "kind": "wait", "frames": 22 },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "I have never lied to you about anything else in your life.",
+          "I understand that that is not a currency. I am saying it anyway."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "She does not answer him.",
+          "She has stopped looking at him, and she does not start again."
+        ]
+      },
+      { "kind": "wait", "frames": 30 },
+
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "Now the part I have been putting off since the marsh."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "He puts his hand out. Palm up. He does not come any closer."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "I am going to ask you for it.",
+          "Asking is the only piece of this evening I still get to choose, and I would like to have chosen something."
+        ]
+      },
+      {
+        "kind": "choice",
+        "lines": [
+          "Behind him, at the far end of the floor, somebody closes a notebook."
+        ],
+        "options": [
+          {
+            "label": "No.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "DR. VEYL",
+                "lines": [
+                  "Yes. I know."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "It was my father's.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "DR. VEYL",
+                "lines": [
+                  "It was the Foundation's, and then it was his, and then it was yours.",
+                  "I have never been able to make that sentence mean anything and I have tried in three languages."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Then take it.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "DR. VEYL",
+                "lines": [
+                  "Yes. That is what happens next.",
+                  "I am sorry you got there before I said it. I would have liked one more sentence."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      { "kind": "wait", "frames": 26 },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "Commander."
+        ]
+      },
+      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "say",
+        "lines": [
+          "She starts walking. She is not in a hurry and she does not put the notebook down."
+        ]
+      },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "lines": [
+          "Tarin steps in front of you.",
+          "She goes round him. She does not break stride and she does not touch him."
+        ]
+      },
+      { "kind": "wait", "frames": 26 },
+
+      {
+        "kind": "if",
+        "cond": { "kind": "hasItem", "item": "tideheart" },
+        "then": [
+          {
+            "kind": "say",
+            "lines": [
+              "She takes your wrist the way a nurse takes a wrist,",
+              "and opens your bag with the other hand."
+            ]
+          },
+          { "kind": "wait", "frames": 20 },
+          {
+            "kind": "say",
+            "lines": [
+              "She is not rough.",
+              "It is much worse that she is not rough."
+            ]
+          },
+          { "kind": "wait", "frames": 22 },
+          { "kind": "sfx", "sound": "fx_dark" },
+          { "kind": "shake", "frames": 16, "power": 2 },
+          { "kind": "takeItem", "item": "tideheart", "count": 1 },
+          { "kind": "setFlag", "flag": "tideheart_taken" },
+          { "kind": "wait", "frames": 28 },
+          {
+            "kind": "say",
+            "lines": [
+              "The case at her feet has a shaped hollow in it, cut to size, lined, waiting.",
+              "It has been waiting for a while."
+            ]
+          },
+          { "kind": "wait", "frames": 22 },
+          {
+            "kind": "say",
+            "lines": [
+              "Your bag is lighter than it was this morning.",
+              "The key pocket is empty."
+            ]
+          },
+          { "kind": "wait", "frames": 30 }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "lines": [
+              "She looks in the bag, and then she looks at the man at the bench,",
+              "and neither of them says anything at all."
+            ]
+          },
+          { "kind": "wait", "frames": 24 }
+        ]
+      },
+
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "I told you in the marsh that I would rather know where it is."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "It will be dry, and logged, and handled by nobody who has not signed for it.",
+          "That is the whole of what I can offer you and I am aware of what it is worth."
+        ]
+      },
+      { "kind": "wait", "frames": 26 },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "There is a stair behind you and nobody on any floor of this building will stop you.",
+          "Do not try the north door. It is alarmed, it is loud, and I would rather you left with your dignity."
+        ]
+      },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "Lyra. You are my daughter on Monday and you are on the payroll on Monday.",
+          "Neither of those is a threat and I have no idea how to make you believe that."
+        ]
+      },
+      { "kind": "wait", "frames": 24 },
+      { "kind": "setFlag", "flag": "act4_theft_done" },
+      { "kind": "setFlag", "flag": "act4_confronted" },
+      {
+        "kind": "say",
+        "lines": [
+          "They go out by the far stair together.",
+          "Before the door closes, one of them is already asking the other about the nine short elements."
+        ]
+      },
+      { "kind": "removeNpc", "who": "ad_veyl" },
+      { "kind": "removeNpc", "who": "ad_kell" },
+      { "kind": "sfx", "sound": "door_close" },
+      { "kind": "wait", "frames": 34 },
+      { "kind": "music", "track": "resume" },
+
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Right."
+        ]
+      },
+      { "kind": "wait", "frames": 26 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "We know where it is. We know who has it and we know what they want it for.",
+          "That is three more things than you have ever had about your dad."
+        ]
+      },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "It is not a good day. I am not going to tell you it was a good day.",
+          "Up the stairs. I will go first."
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "ad_contract",
+    "_note": "NOT A SCENE. Never triggered; here to be read by whoever builds this map.\n\nWHAT THIS FLOOR NEEDS FROM THE MAP:\n\n  NPC  id 'ad_veyl'   sprite 'veyl'                script 'ad_veyl'   hiddenIfFlag 'act4_theft_done'\n  NPC  id 'ad_kell'   sprite 'meridian_commander'  script 'ad_kell'   hiddenIfFlag 'act4_theft_done'\n  NPC  id 'ad_lyra'   sprite 'lyra'                script 'ad_lyra'\n  NPC  id 'ad_tarin'  sprite 'rival'               script 'ad_tarin'\n  NPC  id 'ad_tech'   sprite 'meridian_sci'        script 'ad_tech'   (optional flavour)\n\nad_veyl and ad_kell are both removed at the end of the confrontation and both carry hiddenIfFlag act4_theft_done, so that they are still gone when the player walks back down here later. Nothing is ever moved -- only face is used -- so every position is yours.\n\nPUT KELL A LONG WAY OFF. The confrontation says she is at the far end of the floor and that she starts walking; the further she is from the bench, the better the scene reads, and it is the only staging this act asks for.\n\n  WARP  up to 'aureline_meridian_records', ungated, always. It is the only way out\n        and the scene ends by telling the player to use it.\n\nTHE ROOM ITSELF, which the scenes assert and the map should show: two long rows of sixty cradles with fifty-one filled, a bench with a coat over the chair, and a nine-foot chart on the end wall of a circle on a sea floor with the subject drawn to scale. No Kin, no encounters, no items. It is a workshop at seven in the evening.\n\nThe map id 'aureline_meridian_deep' is also listed in RECOIL in src/systems/tideheart.ts, which is what makes the object react down here in the bag and on its own screen as well as in the arrival scene. If this floor ends up under a different id, add that id to RECOIL.maps -- the alternates already listed there are aureline_meridian_vault and aureline_meridian_works.",
+    "trigger": "call",
+    "actions": [
+      { "kind": "end" }
+    ]
+  }
+]

@@ -1,0 +1,178 @@
+{
+  "id": "aureline_conservatory",
+  "name": "The Great Glasshouse",
+  "displayName": "THE GREAT GLASSHOUSE",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUUIIIIIIIIIIIIUUIII",
+    "I....aa........aa....I",
+    "I....................I",
+    "I.aa....P....P....aa.I",
+    "I.....P........P.....I",
+    "Itt....pppppp....tt..I",
+    "I......pppppp........I",
+    "I....................I",
+    "I.aa..............aa.I",
+    "I....................I",
+    "Itt................ttI",
+    "I....................I",
+    "I.aa..............aa.I",
+    "IIIIIIIIIIDDIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 10, "y": 13,
+      "toMap": "aureline", "toX": 50, "toY": 36,
+      "facing": "down", "style": "door"
+    },
+    {
+      "x": 11, "y": 13,
+      "toMap": "aureline", "toX": 51, "toY": 36,
+      "facing": "down", "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "aur_gh_keeper",
+      "sprite": "villager_f",
+      "x": 10, "y": 4,
+      "facing": "down",
+      "movement": { "kind": "static" },
+      "script": "aur_gh_keeper"
+    },
+    {
+      "id": "aur_gh_ranger",
+      "sprite": "meridian_sci_f",
+      "x": 14, "y": 6,
+      "facing": "left",
+      "movement": { "kind": "static" },
+      "script": "aur_gh_ranger"
+    },
+    {
+      "id": "aur_gh_painter",
+      "sprite": "townsfolk_f",
+      "x": 5, "y": 9,
+      "facing": "right",
+      "movement": { "kind": "static" },
+      "script": "aur_gh_painter"
+    },
+    {
+      "id": "aur_gh_gardener",
+      "sprite": "elder",
+      "x": 16, "y": 11,
+      "facing": "left",
+      "movement": { "kind": "pace", "axis": "x", "distance": 3 },
+      "script": "aur_gh_gardener"
+    },
+    {
+      "id": "aur_gh_class",
+      "sprite": "kid",
+      "x": 7, "y": 11,
+      "facing": "up",
+      "movement": { "kind": "wander", "radius": 3 },
+      "script": "aur_gh_class"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 10, "y": 0,
+      "text": [
+        "Iron and glass, two hundred feet of it, warm as a summer nobody ordered.",
+        "GIVEN TO THE CITY. NOT OWNED BY IT.",
+        "There is a second, smaller line under that giving the donor. It is the Foundation."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 5, "y": 1,
+      "text": [
+        "Reed beds under glass, grown from wetland stock, with a card explaining",
+        "that they are here because the wetlands are drying and somebody",
+        "wanted a copy kept somewhere the weather could not reach."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 16, "y": 1,
+      "text": [
+        "Coastal grasses in a long tray of imported sand.",
+        "Nine species. Two of them no longer grow anywhere on the actual coast.",
+        "The card does not make a fuss about this and somehow that is worse."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 8, "y": 3,
+      "text": [
+        "A young tree with a rail round it and a plaque at the foot.",
+        "It is a cutting from the great bell tree at Briarbell, taken forty years ago.",
+        "It is doing well. It is a fifth the size."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13, "y": 3,
+      "text": [
+        "A bed of flowering scrub that only opens after a hot night,",
+        "and a bench in front of it that is the most-booked bench in the city.",
+        "There is a waiting list. For a bench."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 6, "y": 4,
+      "text": [
+        "The shallow pool. Ankle-deep, warm, and full of small things",
+        "that are not afraid of you.",
+        "A card asks you to walk through it slowly. Everyone does."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2, "y": 8,
+      "text": [
+        "A release register. Every Kin bred by the conservation programme,",
+        "where it went, and the date. Four thousand lines this year.",
+        "Anybody may add a sighting. The margin is full of other people's handwriting."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 19, "y": 8,
+      "text": [
+        "A bed left deliberately unplanted, roped off, with a card on a post.",
+        "THIS IS WHAT THIS ROOM LOOKS LIKE WITHOUT US.",
+        "It is a small square of dry grey soil and it is very effective."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1, "y": 10,
+      "text": [
+        "A trunk with a hundred names cut into it, some of them a century old.",
+        "The gardeners stopped fighting it around 1030 and started dating them instead.",
+        "The most recent is from this morning and is spelled wrong."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 19, "y": 12,
+      "text": [
+        "A bed of the flowers that grow along the central road, kept for people",
+        "who have moved to the capital and cannot go home often.",
+        "It is the only bed in the glasshouse with a bin beside it for handkerchiefs."
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 3, "y": 6,
+      "item": "clearleaf",
+      "quantity": 2,
+      "flag": "item_aur_glasshouse"
+    }
+  ],
+  "_plan": "The Grand Park's glasshouse, and the single most sympathetic thing the Foundation has built. Everything in it is a copy kept somewhere the weather cannot reach, which is Cassian's whole argument stated gently by a gardener. The unplanted roped-off square saying THIS IS WHAT THIS ROOM LOOKS LIKE WITHOUT US is the closest the game comes to letting him make his case before he makes it."
+}

@@ -1,0 +1,73 @@
+{
+  "speakers": {
+    "aur_sum_registrar": "SUMMIT REGISTRAR",
+    "aur_sum_steward": "SUMMIT STEWARD",
+    "aur_sum_hopeful": "SIX-CREST TRAINER",
+    "aur_sum_veteran": "OLD ASCENDER",
+    "aur_sum_child": "SMALL BOY",
+    "aur_sum_trainer": "CITY TRAINER"
+  },
+  "entries": {
+    "aur_sum_registrar": [
+      {
+        "ifFlags": ["crest_5_taken"],
+        "lines": [
+          "Five. Let me see them. Yes. Briarbell, Stonewake, Tideglass, Emberfall, Mirehaven.",
+          "That is a real five and you got them in a real order.",
+          "Come back with eight and I will open the doors myself. Not before. Not for anyone."
+        ]
+      },
+      {
+        "lines": [
+          "Eight Crests. It is the only rule this building has and it is not mine to bend.",
+          "Look at anything out here for as long as you like.",
+          "The doors have been shut for four years. Somebody is going to open them."
+        ]
+      }
+    ],
+    "aur_sum_steward": [
+      {
+        "lines": [
+          "Eighty-one Champions and more gaps than names. People find that grim.",
+          "I find it honest. It is a hard thing and it is meant to be a hard thing.",
+          "The gaps are not failures. They are years when nobody was quite ready."
+        ]
+      }
+    ],
+    "aur_sum_hopeful": [
+      {
+        "lines": [
+          "Six. Frostmere and Skyreach left and the northern road has been shut for eleven days.",
+          "So I am sitting in the registry looking at a wall of gold names",
+          "and getting slowly, magnificently worse at everything."
+        ]
+      }
+    ],
+    "aur_sum_veteran": [
+      {
+        "lines": [
+          "Got through two Masters, in the year sixty. Lost to the third and never went back.",
+          "No, my name is not on the wall of failures. Nobody's is. That was kind of them.",
+          "I put it on myself, in pencil, on the back. Somebody rubs it off. I put it back."
+        ]
+      }
+    ],
+    "aur_sum_child": [
+      {
+        "lines": [
+          "I signed the register of intent. You are allowed. It says anyone.",
+          "I am nine. It commits you to nothing. It says so."
+        ]
+      }
+    ],
+    "aur_sum_trainer": [
+      {
+        "lines": [
+          "Watch the one through the window doing the same switch over and over.",
+          "That is a Master's second. Been at it since six this morning.",
+          "Everybody thinks the Summit is about the eight Crests. The Crests are the easy part."
+        ]
+      }
+    ]
+  }
+}

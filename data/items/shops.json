@@ -389,5 +389,78 @@
         "requiresCrest": 4
       }
     ]
+  },
+  {
+    "id": "aureline_provisioner",
+    "name": "Halloway and Daughters",
+    "$comment": "The capital shop, and the only one in Caelora that stocks the whole ladder at once. It is not cheaper than anywhere else -- a capital never is -- it simply has everything, which after five settlements of rationed stock is the actual luxury.",
+    "greeting": [
+      "Everything is here. It is just a question of how far up the ladder somebody has to go."
+    ],
+    "stock": [
+      {
+        "item": "field_vessel"
+      },
+      {
+        "item": "fine_vessel"
+      },
+      {
+        "item": "net_vessel"
+      },
+      {
+        "item": "deep_vessel",
+        "requiresCrest": 3
+      },
+      {
+        "item": "potion"
+      },
+      {
+        "item": "strong_potion"
+      },
+      {
+        "item": "great_potion",
+        "requiresCrest": 3
+      },
+      {
+        "item": "clearleaf"
+      },
+      {
+        "item": "steadyroot"
+      },
+      {
+        "item": "coolsalve"
+      },
+      {
+        "item": "thawcloth"
+      },
+      {
+        "item": "wakebell"
+      },
+      {
+        "item": "full_heal"
+      },
+      {
+        "item": "rouse",
+        "requiresCrest": 3
+      },
+      {
+        "item": "ward_incense"
+      },
+      {
+        "item": "escape_line"
+      },
+      {
+        "item": "dusk_vessel",
+        "requiresCrest": 5
+      },
+      {
+        "item": "full_restore",
+        "requiresCrest": 5
+      },
+      {
+        "item": "full_rouse",
+        "requiresCrest": 6
+      }
+    ]
   }
 ]

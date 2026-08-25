@@ -1,0 +1,73 @@
+{
+  "speakers": {
+    "aur_clinic_nurse": "CLINIC STAFF",
+    "aur_clinic_night": "NIGHT KEEPER",
+    "aur_clinic_waiting": "WAITING MAN",
+    "aur_clinic_trainer": "CITY TRAINER",
+    "aur_clinic_child": "SMALL GIRL",
+    "aur_clinic_vet": "KIN NURSE"
+  },
+  "entries": {
+    "aur_clinic_nurse": [
+      {
+        "lines": [
+          "Thirty-one lamps and a second bank behind the wall, and on a bad night",
+          "we run every one of them.",
+          "Aureline does not have more accidents than anywhere else. It just has more people."
+        ]
+      }
+    ],
+    "aur_clinic_night": [
+      {
+        "lines": [
+          "Ten at night until six in the morning, and the tin on the counter pays for it.",
+          "Foundation offered to fund the night service outright, twice.",
+          "We said no, twice. Nobody could tell me why we did and I have stopped asking."
+        ]
+      }
+    ],
+    "aur_clinic_waiting": [
+      {
+        "lines": [
+          "Cart horse Kin. Bad foot. He is eleven and he is not going to work again.",
+          "They have not said it yet. I know it and they know I know it.",
+          "They are being slow about it on purpose and I am grateful."
+        ]
+      }
+    ],
+    "aur_clinic_trainer": [
+      {
+        "ifFlags": ["crest_5_taken"],
+        "lines": [
+          "Five Crests. You came up the eastern road with five Crests on you.",
+          "There are people in this city who have lived here forty years",
+          "and never once left it. You have seen more of Caelora than the mayor."
+        ]
+      },
+      {
+        "lines": [
+          "You can train in Aureline your whole life and never fight anyone twice.",
+          "Whether that makes you good, I could not honestly tell you."
+        ]
+      }
+    ],
+    "aur_clinic_child": [
+      {
+        "lines": [
+          "There is a flower drawn on the screen. I drew it.",
+          "The one behind it is asleep and I am not allowed to look.",
+          "So I drew the flower so it has something for when it wakes up."
+        ]
+      }
+    ],
+    "aur_clinic_vet": [
+      {
+        "lines": [
+          "The frightened ones are the hard ones. Hurt you can see. Frightened you cannot.",
+          "The leaflet is right. It is not angry with you.",
+          "It has just learned that people are a thing that happens to it."
+        ]
+      }
+    ]
+  }
+}

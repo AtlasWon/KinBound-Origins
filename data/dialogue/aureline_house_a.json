@@ -1,0 +1,35 @@
+{
+  "speakers": {
+    "aur_ha_mother": "ISBET",
+    "aur_ha_lodger": "LODGER",
+    "aur_ha_boy": "CORB"
+  },
+  "entries": {
+    "aur_ha_mother": [
+      {
+        "lines": [
+          "Come in, mind the crate, it is a chair, we have all agreed it is a chair.",
+          "I am second desk at the Foundation and I bring the ledgers home,",
+          "which is against the rules and which everybody on this stair does."
+        ]
+      }
+    ],
+    "aur_ha_lodger": [
+      {
+        "lines": [
+          "The rent went up twice this year and the sitting room became a bedroom.",
+          "It is not a hardship. It is just how a hundred and sixty thousand people fit."
+        ]
+      }
+    ],
+    "aur_ha_boy": [
+      {
+        "lines": [
+          "I have never been outside the city. Not once. Not even to the river mouth.",
+          "Mother says the sea is four days that way. I do not believe in it.",
+          "Have you seen it? Was it like the model in the atrium?"
+        ]
+      }
+    ]
+  }
+}

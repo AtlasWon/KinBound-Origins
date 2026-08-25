@@ -1,0 +1,70 @@
+{
+  "speakers": {
+    "aur_asm_speaker": "SPEAKER",
+    "aur_asm_listener_a": "FISHERMAN",
+    "aur_asm_listener_b": "SHOPKEEPER",
+    "aur_asm_listener_c": "SAILOR",
+    "aur_asm_latecomer": "LATECOMER",
+    "aur_asm_caretaker": "HALL CARETAKER"
+  },
+  "entries": {
+    "aur_asm_speaker": [
+      {
+        "lines": [
+          "Nine minutes. That is what the shelf out there gives you and it is not negotiable.",
+          "Sit anywhere. There is no ticket and there never has been."
+        ]
+      }
+    ],
+    "aur_asm_listener_a": [
+      {
+        "lines": [
+          "Come up from the coast for this. Third time.",
+          "Bring a different one of the crew every year, and every year one of them cries.",
+          "Better in here than out there."
+        ]
+      }
+    ],
+    "aur_asm_listener_b": [
+      {
+        "lines": [
+          "I sell buttons three streets away and I am here on a Tuesday afternoon.",
+          "They put the talks on when working people can come. That was somebody's decision.",
+          "Somebody good, I have always thought."
+        ]
+      }
+    ],
+    "aur_asm_listener_c": [
+      {
+        "lines": [
+          "The sea goes out and you run. Everyone knows it and nobody does it.",
+          "That is the whole talk. She says it for an hour so that one of us will."
+        ]
+      }
+    ],
+    "aur_asm_latecomer": [
+      {
+        "lines": [
+          "Missed the start. Is it the one with the nine drawings?",
+          "It is the best one. The last drawing has no words on it and I think about it a lot."
+        ]
+      }
+    ],
+    "aur_asm_caretaker": [
+      {
+        "ifFlags": ["aur_assembly_clear"],
+        "lines": [
+          "They have cleared the hall for the afternoon and given me no reason for it.",
+          "Forty years I have swept this floor. It has never once been cleared."
+        ]
+      },
+      {
+        "lines": [
+          "Four hundred seats, free, and I have seen them all full for a talk about drains.",
+          "The stair at the back is mine and the cellar under it is not.",
+          "Do not ask me what is down there. Ask me why I have never been told."
+        ]
+      }
+    ]
+  }
+}
