@@ -39,7 +39,7 @@
     "party": [
       {
         "species": "pipwing",
-        "level": 5
+        "level": 4
       }
     ],
     "intro": [
@@ -67,7 +67,7 @@
     "party": [
       {
         "species": "nibbet",
-        "level": 5
+        "level": 4
       }
     ],
     "intro": [
@@ -122,7 +122,7 @@
     "party": [
       {
         "species": "tuftail",
-        "level": 7
+        "level": 5
       }
     ],
     "intro": [
@@ -140,7 +140,8 @@
       "Stay out of the deep grass until that one of yours has some weight on it.",
       "Nothing on this route will kill you. Plenty of it will embarrass you.",
       "And watch the pond at dusk. Only at dusk. Do not ask me why. I have stopped asking."
-    ]
+    ],
+    "$comment": "Ranger, so he keeps the trained tier -- he is one of the few people on the road whose job is reading a fight. Level 7 down to 5 with the rest of the third pass."
   },
   {
     "id": "concord_surveyor_1",
@@ -152,7 +153,7 @@
     "party": [
       {
         "species": "fizzlet",
-        "level": 7
+        "level": 5
       }
     ],
     "intro": [
@@ -176,7 +177,7 @@
   },
   {
     "id": "r2_dell",
-    "$comment": "First trainer on Route 2 and the top of the old cliff. Route 1 ends with four one-kin novices; Dell opened with two kin at 9 and 10 AND a step up to trained AI, all at once, against a player who arrives at nine. Party size and tactics are step enough for one route sign, so the levels come down to 7 and 8 and the AI back to novice. Every trainer from here to the end of the content now climbs by about one level each, and the player stands three to four above whichever one they are standing in front of.",
+    "$comment": "First trainer on Route 2. Levels 7 and 8 now come down to 5 and 6 with the rest of the third pass. The rule this pass applies everywhere: an ORDINARY trainer stands three or more levels below the player who is raising a team, not the player who never switches. Those are two different people five levels apart by Brackwater, and the first two passes tuned for the average of them, which is nobody.",
     "name": "Dell",
     "className": "Student",
     "sprite": "villager_f",
@@ -185,11 +186,11 @@
     "party": [
       {
         "species": "nettlebug",
-        "level": 7
+        "level": 5
       },
       {
         "species": "tuftail",
-        "level": 8
+        "level": 6
       }
     ],
     "intro": [
@@ -211,16 +212,16 @@
     "name": "Pike",
     "className": "Hiker",
     "sprite": "hiker",
-    "ai": "trained",
+    "ai": "novice",
     "payout": 34,
     "party": [
       {
         "species": "chalkid",
-        "level": 8
+        "level": 6
       },
       {
         "species": "nibbet",
-        "level": 9
+        "level": 7
       }
     ],
     "intro": [
@@ -247,11 +248,11 @@
     "party": [
       {
         "species": "pipwing",
-        "level": 7
+        "level": 6
       },
       {
         "species": "tuftail",
-        "level": 9
+        "level": 7
       }
     ],
     "intro": [
@@ -278,11 +279,11 @@
     "party": [
       {
         "species": "gravelet",
-        "level": 9
+        "level": 7
       },
       {
         "species": "tuftail",
-        "level": 10
+        "level": 8
       }
     ],
     "intro": [
@@ -304,20 +305,20 @@
     "name": "Wren",
     "className": "Performer",
     "sprite": "villager_f",
-    "ai": "trained",
+    "ai": "novice",
     "payout": 44,
     "party": [
       {
         "species": "slatewing",
-        "level": 9
+        "level": 7
       },
       {
         "species": "sootmoth",
-        "level": 9
+        "level": 7
       },
       {
         "species": "pipwing",
-        "level": 11
+        "level": 8
       }
     ],
     "intro": [
@@ -344,11 +345,11 @@
     "party": [
       {
         "species": "chalkid",
-        "level": 11
+        "level": 7
       },
       {
         "species": "tuftail",
-        "level": 12
+        "level": 8
       }
     ],
     "intro": [
@@ -375,11 +376,11 @@
     "party": [
       {
         "species": "nettlebug",
-        "level": 11
+        "level": 8
       },
       {
         "species": "chalkid",
-        "level": 12
+        "level": 9
       }
     ],
     "intro": [
@@ -398,7 +399,7 @@
   },
   {
     "id": "bastion1_roxen",
-    "$comment": "Chalkmar is a 452-point fully evolved kin and it is the ace of the FIRST Bastion, so her difficulty was never really about her levels -- the two kin in front of it were. Her ace stays at 14, the reference badge-one level the content test pins, and the approach to it comes down instead: Gravelet and Slatewing 13/13 -> 11/12, her two hall guards 12/13 and 11/12 -> 11/12, and Perrin outside 12/12/15 -> 10/10/12. Measured with a party the size of hers and no items, at the level a player really walks in with (16): 48 to 100 percent of fights won, and 95 to 100 for a player who reads the type chart. Cinderpaw is the low number and that is the point -- Wick outside says in as many words that Verdant and Tide give her trouble.",
+    "$comment": "Chalkmar is a 452-point fully evolved kin and it is the ace of the FIRST Bastion. Its level is pinned at 14-18 by tests/content.test.js, so level was never the dial available here -- and two passes of lowering the kin AROUND it never touched the thing that was actually winning her the fight. Measured against a player raising a team, who arrives at Kellowmere at THIRTEEN with a starter that has not evolved yet (all three evolve at 16), Roxen beat a Cinderpaw 100 times out of 100. One move was doing it: stonefling is Stone, which is STAB on a Stone/Iron kin and doubles into Flame, so it landed at three times the weight of anything Chalkmar had. Taking that single move out took Cinderpaw from 0 to 81 percent and touched nothing else. Chalkmar keeps two Stone moves, both defensive -- Bulwark and Grit Field -- plus Gravelspray, so it is now literally the kin her own defeat line describes: something you out-wait rather than out-hit. Flat-zero IVs on top (Bastion kin, not hand-picked champions) and the escorts down to 8 and 9. Also removed: her bag Potion. Battle.doItem never consumes a foe-side item, so a single entry in that list is an UNLIMITED 20 HP heal fired at a 70 percent rate every turn she drops below thirty percent. Put it back when the engine consumes it. Measured now, party the size of hers, no items: 100/98/100.",
     "name": "Roxen Quill",
     "className": "Keeper",
     "sprite": "hiker",
@@ -407,19 +408,29 @@
     "party": [
       {
         "species": "gravelet",
-        "level": 11
+        "level": 8
       },
       {
         "species": "slatewing",
-        "level": 12
+        "level": 9
       },
       {
         "species": "chalkmar",
-        "level": 14
+        "level": 14,
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        },
+        "moves": [
+          "gravelspray",
+          "bulwark",
+          "grit_field"
+        ]
       }
-    ],
-    "items": [
-      "potion"
     ],
     "intro": [
       "Roxen Quill. I keep the Stone Bastion, and before that I kept the west face for nineteen years.",
@@ -448,15 +459,15 @@
     "party": [
       {
         "species": "nibbet",
-        "level": 10
+        "level": 8
       },
       {
         "species": "slatewing",
-        "level": 10
+        "level": 8
       },
       {
         "species": "cinderpaw",
-        "level": 12
+        "level": 10
       }
     ],
     "intro": [
@@ -487,15 +498,15 @@
     "party": [
       {
         "species": "nibbet",
-        "level": 10
+        "level": 8
       },
       {
         "species": "slatewing",
-        "level": 10
+        "level": 8
       },
       {
         "species": "rilltail",
-        "level": 12
+        "level": 10
       }
     ],
     "intro": [
@@ -526,15 +537,15 @@
     "party": [
       {
         "species": "nibbet",
-        "level": 10
+        "level": 8
       },
       {
         "species": "slatewing",
-        "level": 10
+        "level": 8
       },
       {
         "species": "sprigling",
-        "level": 12
+        "level": 10
       }
     ],
     "intro": [
@@ -560,16 +571,20 @@
     "name": "Bram",
     "className": "Drover",
     "sprite": "hiker",
-    "ai": "trained",
+    "ai": "novice",
     "payout": 48,
     "party": [
       {
         "species": "tuftail",
-        "level": 13
+        "level": 10
+      },
+      {
+        "species": "nibbet",
+        "level": 10
       },
       {
         "species": "mossback",
-        "level": 14
+        "level": 9
       }
     ],
     "intro": [
@@ -591,20 +606,20 @@
     "name": "Sill",
     "className": "Student",
     "sprite": "villager_f",
-    "ai": "trained",
+    "ai": "novice",
     "payout": 50,
     "party": [
       {
         "species": "chalkid",
-        "level": 13
+        "level": 11
       },
       {
         "species": "nettlebug",
-        "level": 13
+        "level": 11
       },
       {
         "species": "slatewing",
-        "level": 15
+        "level": 13
       }
     ],
     "intro": [
@@ -631,11 +646,11 @@
     "party": [
       {
         "species": "burrowen",
-        "level": 14
+        "level": 13
       },
       {
         "species": "kestrelle",
-        "level": 15
+        "level": 14
       }
     ],
     "intro": [
@@ -651,27 +666,28 @@
     "afterward": [
       "The last Turning took Old Tidefall. Whole town, one night.",
       "People forget that when they talk about the Concord like they are villains."
-    ]
+    ],
+    "$comment": "The ONLY trainer in the game left on the veteran tier, which is the tier that switches out of a bad matchup. That is deliberate: his class is literally Veteran and his opening line is forty years on this road. Everywhere else the third pass moved tiers down to describe the PERSON rather than the position on the map -- hikers, students, anglers, drovers, performers and swimmers all press the biggest number on the screen now, and Rangers, Surveyors, Bastion Hands and the rival read the type chart without switching. A novice trainer that switches optimally does not feel novice, it feels like the game cheating."
   },
   {
     "id": "concord_surveyor_2",
     "name": "Ivo",
     "className": "Concord Surveyor",
     "sprite": "concord",
-    "ai": "veteran",
+    "ai": "trained",
     "payout": 62,
     "party": [
       {
         "species": "fizzlet",
-        "level": 14
+        "level": 12
       },
       {
         "species": "chalkid",
-        "level": 15
+        "level": 13
       },
       {
         "species": "voltwick",
-        "level": 16
+        "level": 14
       }
     ],
     "items": [
@@ -698,16 +714,16 @@
     "name": "Teal",
     "className": "Student",
     "sprite": "villager_f",
-    "ai": "trained",
+    "ai": "novice",
     "payout": 58,
     "party": [
       {
         "species": "pipwing",
-        "level": 16
+        "level": 13
       },
       {
         "species": "spinnet",
-        "level": 17
+        "level": 14
       }
     ],
     "intro": [
@@ -729,16 +745,16 @@
     "name": "Gorse",
     "className": "Hiker",
     "sprite": "hiker",
-    "ai": "trained",
+    "ai": "novice",
     "payout": 60,
     "party": [
       {
         "species": "chalkid",
-        "level": 17
+        "level": 14
       },
       {
         "species": "burrowen",
-        "level": 18
+        "level": 15
       }
     ],
     "intro": [
@@ -760,20 +776,20 @@
     "name": "Nesh",
     "className": "Swimmer",
     "sprite": "villager_m",
-    "ai": "veteran",
+    "ai": "novice",
     "payout": 64,
     "party": [
       {
         "species": "shalefin",
-        "level": 17
+        "level": 14
       },
       {
         "species": "pinchel",
-        "level": 18
+        "level": 15
       },
       {
         "species": "currentail",
-        "level": 19
+        "level": 16
       }
     ],
     "intro": [
@@ -795,16 +811,16 @@
     "name": "Bay",
     "className": "Angler",
     "sprite": "villager_f",
-    "ai": "veteran",
+    "ai": "novice",
     "payout": 62,
     "party": [
       {
         "species": "pinchel",
-        "level": 18
+        "level": 15
       },
       {
         "species": "gullswift",
-        "level": 19
+        "level": 16
       }
     ],
     "intro": [
@@ -825,16 +841,16 @@
     "name": "Rill",
     "className": "Bastion Hand",
     "sprite": "villager_m",
-    "ai": "veteran",
+    "ai": "trained",
     "payout": 66,
     "party": [
       {
         "species": "shalefin",
-        "level": 18
+        "level": 14
       },
       {
         "species": "pinchel",
-        "level": 19
+        "level": 15
       }
     ],
     "intro": [
@@ -856,16 +872,16 @@
     "name": "Cove",
     "className": "Bastion Hand",
     "sprite": "villager_f",
-    "ai": "veteran",
+    "ai": "trained",
     "payout": 66,
     "party": [
       {
         "species": "pinchel",
-        "level": 18
+        "level": 15
       },
       {
         "species": "gullswift",
-        "level": 19
+        "level": 16
       }
     ],
     "intro": [
@@ -886,20 +902,20 @@
     "name": "Skell",
     "className": "Bastion Hand",
     "sprite": "hiker",
-    "ai": "veteran",
+    "ai": "trained",
     "payout": 70,
     "party": [
       {
         "species": "anchorling",
-        "level": 18
+        "level": 15
       },
       {
         "species": "shalefin",
-        "level": 19
+        "level": 16
       },
       {
         "species": "currentail",
-        "level": 20
+        "level": 17
       }
     ],
     "items": [
@@ -920,7 +936,7 @@
   },
   {
     "id": "bastion2_mabry",
-    "$comment": "The wall at the end of the content, and it was disproportionate long before this pass: at 22/22/23/25 she needed a player at 29, six levels past where anyone arrives. Two things were doing it. Her party carries two fully evolved kin (Currentail 452, Tidewrack 474) with hand-written all-attack movesets against a player whose starter is still mid-stage -- that part is correct, she is a Keeper. The other part is not: nothing in the battle engine consumes a trainer item, so the strong_potion in her bag is an UNLIMITED sixty-point heal, which on kin with 45 to 64 HP is a full restore every time any of them drops below thirty percent. Her ace also held a second one. The held item is gone and the bag item is a plain potion, which is a heal a player can out-damage. Levels 18/19/20/21. Measured with a party the size of hers and no items at all: about three fights in four at the level a player walks in with, and one in eight for a lone starter. She is still the hardest thing in the game by a wide margin and every other trainer now reads above ninety percent.",
+    "$comment": "The wall at the end of the content. Her party carries two fully evolved kin against a player whose starter is mid-stage, which is correct -- she is a Keeper. Third pass: levels 18/19/20/21 down to 16/17/18/19, flat-zero IVs on the Tidewrack, and the hand-written all-attack movesets stripped off the back two so their natural learnsets (which carry status moves) give the player a turn to breathe. Her bag Potion is gone for the same reason Roxen s is -- the engine never consumes a foe-side item, so it was an unlimited heal, not a Potion. Measured with a party the size of hers and no items at all, at the level a team-raiser really walks in with: 88/85/94 percent. She is still the hardest thing in the game and every other trainer now reads above ninety.",
     "name": "Mabry Sull",
     "className": "Keeper",
     "sprite": "villager_f",
@@ -929,7 +945,7 @@
     "party": [
       {
         "species": "pinchel",
-        "level": 18,
+        "level": 16,
         "moves": [
           "hullcrack",
           "shellstrike",
@@ -939,7 +955,7 @@
       },
       {
         "species": "gullswift",
-        "level": 19,
+        "level": 17,
         "moves": [
           "undertow",
           "wingbeat",
@@ -949,23 +965,19 @@
       },
       {
         "species": "currentail",
-        "level": 20,
-        "moves": [
-          "breakwater",
-          "hullcrack",
-          "undertow",
-          "quickstep"
-        ]
+        "level": 18
       },
       {
         "species": "tidewrack",
-        "level": 21,
-        "moves": [
-          "hullcrack",
-          "shale_edge",
-          "breakwater",
-          "gravelspray"
-        ]
+        "level": 19,
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
       }
     ],
     "intro": [
@@ -982,9 +994,6 @@
     ],
     "afterward": [
       "Ask the harbourmaster about the soundings. Then ask why the Concord took them at night."
-    ],
-    "items": [
-      "potion"
     ]
   },
   {

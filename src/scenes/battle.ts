@@ -19,6 +19,8 @@ import { kinAnchor } from '../gfx/kinanchor.js';
 import { kinBreath } from '../gfx/kinbreath.js';
 import { fxTargetsSelf, MoveFx } from '../gfx/movefx.js';
 import { ListMenu, type MenuItem } from '../ui/menu.js';
+import { itemArt, itemIcon, ITEM_ICON_SIZE } from '../gfx/itemart.js';
+import { inside, para, typeChip } from '../ui/layout.js';
 import { battleSpeedScale, textDelayFrames } from '../core/settings.js';
 import type { Kin } from '../systems/kin.js';
 import type { GameState } from '../systems/state.js';
@@ -76,8 +78,43 @@ const PLAYER_SPRITE = { x: 14, y: 40 };
 // feet actually land (design row 123) rather than from a guess. The old values
 // here had the foe's platform at y=70 with the horizon at 84 -- that pad was
 // drawn in the sky, which is why the far creature never looked planted.
-const FOE_BOX = { x: 6, y: 10, w: 100, h: 28 };
-const PLAYER_BOX = { x: 134, y: 68, w: 100, h: 36 };
+/*
+ * THE ROWS OF A STATUS PANEL, as offsets from the panel's own top edge.
+ *
+ * Written down together because the fault they replace came of choosing two of
+ * them independently: the HP readout was placed under the bar, the experience
+ * meter was placed against the bottom edge, and in a box 36 units tall those
+ * two landed on the same three rows. The status badge was placed under the bar
+ * as well, so on the player it sat on the experience meter and on the foe --
+ * whose box is shorter -- it fell straight out of the bottom of the window and
+ * onto the grass.
+ *
+ *   +3   the type strip, 2 tall
+ *   +7   name, gender mark and level, 7 tall
+ *   +16  the status badge, 9 tall; the HP bar at +17 is centred against it
+ *   +26  the HP readout, 7 tall           -- the player's panel only
+ *   +35  the experience meter, 2 tall     -- the player's panel only
+ *
+ * Every gap is at least two units, which is the least that still reads as a
+ * gap at 240x160 rather than as two things touching.
+ *
+ * The badge shares the HP row with the bar instead of having a row of its own,
+ * which is what lets the foe's short panel hold it: +16 plus nine units of
+ * badge plus the window's three of frame is exactly the 28 that box already
+ * was. The bar gives up the width the badge needs, and gives it up whether or
+ * not a status is showing, so a poisoning does not shorten the meter.
+ */
+const ROW_STRIP = 3;
+const ROW_NAME = 7;
+const ROW_CHIP = 16;
+const ROW_BAR = 17;
+const ROW_READ = 26;
+const ROW_EXP = 35;
+/** Units of window frame the panel spends below its last row. */
+const PANEL_FOOT = 3;
+
+const FOE_BOX = { x: 6, y: 10, w: 100, h: ROW_CHIP + 9 + PANEL_FOOT };
+const PLAYER_BOX = { x: 134, y: 68, w: 100, h: ROW_EXP + 2 + PANEL_FOOT };
 const MSG = { x: 0, y: 114, w: SCREEN_W, h: SCREEN_H - 114 };
 
 /**
@@ -94,6 +131,91 @@ const THROW_FROM: Record<SideId, { x: number; y: number }> = {
 
 /** Fallback split height, for a side with nothing measurable on it yet. */
 const OPEN_FALLBACK = 30;
+
+/** Half the height of a vessel on the field, for the clamps that keep one on
+ *  screen and out from behind a panel. The drawn art is a 16-unit cell. */
+const VESSEL_R = 8;
+
+/** The icon key a trainer's own vessel is drawn with. Send-outs and recalls
+ *  carry no item, so this is the one they show. */
+const OWN_VESSEL = 'vessel_field';
+
+/*
+ * THE BAG ROW, left to right: the selection arrow, the item's icon, its name.
+ *
+ * One set of offsets from the list's own x, so the icon column and the label
+ * column cannot drift apart -- `padX` handed to the widget is the same sum the
+ * icons are drawn from, rather than a number typed twice.
+ */
+/** Where the icon starts: past the arrow `ListMenu` draws at x+3. */
+const BAG_ICON_X = 9;
+/** The icon at 16 image pixels is eight logical units wide. */
+const BAG_ICON_W = ITEM_ICON_SIZE / DETAIL;
+const BAG_LABEL_X = BAG_ICON_X + BAG_ICON_W + 3;
+const BAG_ROW_H = 12;
+/**
+ * Width of the name column; the description takes what is left.
+ *
+ * Cut back from 150 when the icons arrived. The names in this list are short --
+ * "Strong Potion" is the longest thing in it -- and the column was carrying
+ * thirty units of white space that the description, which was breaking
+ * "clay-and-copper" across two lines, badly wanted.
+ */
+const BAG_LIST_W = 136;
+
+/** The message window's usable rectangle: what the bag has to fit inside. */
+function bagBox(): { x: number; y: number; w: number; h: number } {
+  return inside(MSG.x, MSG.y, MSG.w, MSG.h);
+}
+
+/** Rows of `BAG_ROW_H` that fit in it, each needing its full seven of ink. */
+function bagRows(): number {
+  return Math.max(1, Math.floor((bagBox().h - 7) / BAG_ROW_H) + 1);
+}
+
+/**
+ * Every word the game can put in a status badge, its colour, and the ink that
+ * is legible on it.
+ *
+ * Two of these six are pale -- frozen is ice and paralysis is a spark, and
+ * neither of those is a dark colour -- so white letters on them come out at
+ * about a fifth of the contrast the other four get. At seventeen units wide
+ * and seven tall there is no room to lose any. Those two take dark ink.
+ */
+const STATUS_CHIP: Record<string, { label: string; color: string; ink?: string }> = {
+  burn: { label: 'BRN', color: '#e06a3a' },
+  freeze: { label: 'FRZ', color: '#6ac0e0', ink: '#123648' },
+  paralysis: { label: 'PAR', color: '#d8c040', ink: '#463608' },
+  poison: { label: 'PSN', color: '#a05ab0' },
+  toxic: { label: 'TOX', color: '#8040a0' },
+  sleep: { label: 'SLP', color: '#8890a8' },
+};
+
+/**
+ * The padding `typeChip` puts round a word, spelled out here so the space a
+ * badge is PROMISED is measured the same way as the space it takes.
+ */
+const CHIP_PAD = 7;
+
+let statusSlotW = 0;
+
+/**
+ * How much of the HP row is kept for the status badge.
+ *
+ * Measured across every word in STATUS_CHIP rather than typed as a number.
+ * Twenty units was typed once, on the assumption of a three-letter word in a
+ * face nobody had measured, and PSN came out one column wider than its own box
+ * -- the badge the player reported. A four-letter status added later widens
+ * the slot instead of spilling out of it.
+ */
+function statusSlot(r: Renderer): number {
+  if (!statusSlotW) {
+    for (const s of Object.values(STATUS_CHIP)) {
+      statusSlotW = Math.max(statusSlotW, r.textWidth(s.label) + CHIP_PAD);
+    }
+  }
+  return statusSlotW;
+}
 
 /** 0 before `a`, 1 after `b`, linear between. Every beat below is cut from it. */
 function ramp(x: number, a: number, b: number): number {
@@ -193,12 +315,21 @@ interface Capsule {
   dust: number;
   /** The failure mark, drawn above the vessel. */
   tell: string | null;
+  /**
+   * Which vessel this is, as an item art key.
+   *
+   * On the capsule rather than read from the scene, because the three things
+   * that put a vessel on the field disagree about what it is: a capture throws
+   * whichever one came out of the bag, while a send-out and a recall are the
+   * trainer's own and carry no item at all.
+   */
+  icon: string;
 }
 
 function capsuleAt(x: number, y: number, o: Partial<Capsule> = {}): Capsule {
   return {
     x, y, open: 0, beam: 0, beamTo: null, spin: 0, burst: 0, land: 0,
-    trail: [], flow: 0, flare: 0, dust: 0, tell: null, ...o,
+    trail: [], flow: 0, flare: 0, dust: 0, tell: null, icon: OWN_VESSEL, ...o,
   };
 }
 
@@ -241,7 +372,7 @@ type Anim =
   | { kind: 'withdraw'; side: SideId; frames: number; t: number }
   | { kind: 'windup'; side: SideId; self: boolean; frames: number; t: number }
   | { kind: 'moveFx'; side: SideId; anim: string; type: TypeId; frames: number; t: number }
-  | { kind: 'vessel'; shakes: number; caught: boolean; ph: VesselPhases; frames: number; t: number }
+  | { kind: 'vessel'; shakes: number; caught: boolean; icon: string; ph: VesselPhases; frames: number; t: number }
   | { kind: 'exp'; kin: Kin; from: number; to: number; frames: number; t: number }
   | { kind: 'levelUp'; kin: Kin; level: number; frames: number; t: number }
   | { kind: 'weather'; weather: WeatherId; frames: number; t: number }
@@ -622,6 +753,9 @@ export class BattleScene implements Scene {
           };
           this.queue.push({
             kind: 'vessel', shakes: e.shakes, caught: e.caught, ph, t: 0,
+            // The vessel that was actually thrown, so a Net Vessel is not drawn
+            // as a Field one the day somebody draws a second piece of art.
+            icon: registry.getItem(e.item)?.icon ?? OWN_VESSEL,
             frames: ph.throw + ph.suck + ph.settle + e.shakes * ph.wobble + ph.finish,
           });
           break;
@@ -1444,7 +1578,11 @@ export class BattleScene implements Scene {
     }));
     if (items.length === 0) items.push({ label: 'Nothing usable', value: '', enabled: false });
     this.bagMenu.setItems(items, true);
-    this.bagMenu.visible = Math.min(5, items.length);
+    // How many rows the message window can actually hold, not how many somebody
+    // hoped it would. Five rows of eleven came to fifty-five units in a box with
+    // thirty-six of usable height: the fourth row was sliced by the frame and
+    // the fifth was drawn below the bottom of the screen.
+    this.bagMenu.visible = Math.min(bagRows(), items.length);
   }
 
   private updateActionMenu(game: Game): void {
@@ -1727,6 +1865,7 @@ export class BattleScene implements Scene {
       const q = t / ph.throw;
       const at = arcTo(THROW_FROM.player, open, easeOut(q), 34);
       this.capsule = capsuleAt(at.x, at.y, {
+        icon: a.icon,
         spin: 3.4 * q,
         trail: arcTrail(THROW_FROM.player, open, easeOut(q), 34),
       });
@@ -1738,6 +1877,7 @@ export class BattleScene implements Scene {
       const q = t / ph.suck;
       if (t === 1) audio.playSfx('withdraw');
       this.capsule = capsuleAt(open.x, open.y, {
+        icon: a.icon,
         open: ramp(q, 0, 0.22) - ramp(q, 0.72, 0.94),
         beam: ramp(q, 0.04, 0.26) - ramp(q, 0.70, 0.92),
         beamTo: { x: pad.x, y: pad.y },
@@ -1788,6 +1928,7 @@ export class BattleScene implements Scene {
         ? Math.pow(q / hit, 2)
         : 1 - Math.sin((q - hit) / (1 - hit) * Math.PI) * 0.10;
       this.capsule = capsuleAt(open.x, Math.round(open.y + (rest - open.y) * drop), {
+        icon: a.icon,
         dust: pop(q, hit, 0.30),
       });
       return;
@@ -1808,6 +1949,7 @@ export class BattleScene implements Scene {
       this.capsule = capsuleAt(
         pad.x + Math.round(Math.sin(q * Math.PI * 2) * 3),
         rest - Math.round(Math.sin(q * Math.PI) * 2),
+        { icon: a.icon },
       );
       return;
     }
@@ -1823,6 +1965,7 @@ export class BattleScene implements Scene {
         this.jolt(2.0);
       }
       this.capsule = capsuleAt(pad.x, rest, {
+        icon: a.icon,
         burst: pop(q, 0, 0.55), flare: pop(q, 0, 0.16),
       });
       return;
@@ -1833,6 +1976,7 @@ export class BattleScene implements Scene {
     // would have ten units to travel and the kin would appear to grow out of
     // the lid rather than to be poured onto the pad.
     this.capsule = capsuleAt(pad.x, Math.round(rest + (open.y - rest) * ramp(q, 0, 0.22)), {
+      icon: a.icon,
       open: ramp(q, 0, 0.18) - ramp(q, 0.62, 0.84),
       beam: ramp(q, 0.06, 0.26) - ramp(q, 0.62, 0.86),
       beamTo: { x: pad.x, y: pad.y },
@@ -1897,7 +2041,11 @@ export class BattleScene implements Scene {
     const back = side === 'player';
     const pos = back ? PLAYER_SPRITE : FOE_SPRITE;
     // The player's vessel rises over the pad that sits under the foe's panel.
-    const ceiling = back ? FOE_BOX.y + FOE_BOX.h + 6 : 12;
+    // Measured from the vessel's own half-height rather than from a typed
+    // clearance, so the drawn art -- a 16-unit cell, taller than the plotted
+    // capsule it replaced -- clears the panel by its top edge and not by its
+    // centre.
+    const ceiling = back ? FOE_BOX.y + FOE_BOX.h + VESSEL_R : VESSEL_R + 4;
     const kin = this.view[side].kin;
     if (!kin) return { x: pad.x, y: Math.max(ceiling, pad.y - OPEN_FALLBACK) };
     const top = pos.y + kinAnchor(kin.species, back).y0 / DETAIL;
@@ -2492,7 +2640,7 @@ export class BattleScene implements Scene {
       }
       r.rect(g.x - 1, g.y - 1, 2, 2, `rgba(255,250,224,${(a * 1.6).toFixed(3)})`);
     }
-    this.drawVesselIcon(r, c.x, c.y, c.open, c.spin);
+    this.drawVessel(r, c.x, c.y, c.open, c.spin, c.icon);
     if (c.burst > 0) this.drawBurst(r, c.x, c.y, c.burst);
     if (c.flare > 0) this.drawFlare(r, c.x, c.y, c.flare);
     if (c.tell) r.text(c.tell, c.x + 10, c.y - 22, { color: '#ffffff', shadow: '#000000' });
@@ -2607,6 +2755,44 @@ export class BattleScene implements Scene {
         r.rect(x - wide, top + i, wide * 2, 1, `rgba(255,255,246,${(0.55 * fade).toFixed(3)})`);
       }
     }
+  }
+
+  /**
+   * The vessel on the field: the drawing when one has shipped, the plotted
+   * capsule when it has not.
+   *
+   * The two frames in assets/items are a shut vessel and the same vessel with
+   * its lid up, seated together so one may be swapped for the other in place.
+   * That swap IS the opening: `open` is a 0..1 ramp the animations already
+   * drive, and the frame changes as it crosses the middle, so the vessel is
+   * shut on the way in, open from the burst to the moment the light stops, and
+   * shut again on the click. Nothing about the timing had to be invented -- the
+   * beats were already written, they were being spent on a capsule drawn in
+   * code.
+   *
+   * BOTH FRAMES OR NEITHER, which is what `itemArt` returning null is for. A
+   * vessel with a drawing but no open frame would swap to a copy of its own
+   * shut self at the split, which reads as the animation having stopped; that
+   * vessel keeps the plotted capsule, which does open, instead.
+   *
+   * The drawing does not tumble. The plotted capsule turns over by rotating its
+   * split line per pixel, which is free for a two-tone disc and impossible for
+   * a drawing: pixel art turned through anything but a right angle is a smear
+   * at 240x160, and a chest with a hinged lid turning end over end would have
+   * to land the right way up to open. The trail and the arc carry the throw.
+   */
+  private drawVessel(
+    r: Renderer, x: number, y: number, open: number, spin: number,
+    iconKey: string, alpha = 1,
+  ): void {
+    const shut = itemArt(iconKey);
+    const split = itemArt(iconKey, 'open');
+    if (!shut || !split) { this.drawVesselIcon(r, x, y, open, spin, alpha); return; }
+    const img = open > 0.5 ? split : shut;
+    // Seated by the cell's centre, which is where both frames are centred, so
+    // the lid goes up without the body moving.
+    r.image(img, x - img.width / DETAIL / 2, y - img.height / DETAIL / 2,
+      0, 0, img.width, img.height, false, false, Math.max(0, Math.min(1, alpha)));
   }
 
   /**
@@ -2745,6 +2931,10 @@ export class BattleScene implements Scene {
    * The name is measured and clipped against the space the level needs. A
    * nickname is player-supplied and can be any length, so a panel that assumes
    * it fits will collide the moment somebody types one.
+   *
+   * Every row is placed from the ROW_ constants above rather than from a
+   * number chosen here, which is what keeps the status badge, the HP readout
+   * and the experience meter off each other -- see the note beside them.
    */
   private renderInfo(r: Renderer, side: SideId): void {
     const kin = this.view[side].kin;
@@ -2759,13 +2949,15 @@ export class BattleScene implements Scene {
 
     // Type strip across the top of the panel.
     const stripC = registry.typeChart?.meta?.[kin.types[0]!]?.color ?? UI.shade;
-    r.rect(box.x + 3, box.y + 3, box.w - 6, 2, stripC);
+    r.rect(box.x + 3, box.y + ROW_STRIP, box.w - 6, 2, stripC);
     if (kin.types[1]) {
       const c2 = registry.typeChart?.meta?.[kin.types[1]]?.color ?? UI.shade;
-      r.rect(box.x + 3 + Math.floor((box.w - 6) / 2), box.y + 3, Math.ceil((box.w - 6) / 2), 2, c2);
+      r.rect(box.x + 3 + Math.floor((box.w - 6) / 2), box.y + ROW_STRIP,
+        Math.ceil((box.w - 6) / 2), 2, c2);
     }
 
     const left = box.x + 7;
+    const right = box.x + box.w - 7;
     // The player's own panel counts up on the beat the flourish plays; the
     // foe's has nothing to lag behind and reads its kin directly.
     const shownLevel = side === 'player' && this.view.player.kin === kin
@@ -2780,19 +2972,28 @@ export class BattleScene implements Scene {
     while (name.length > 1 && r.textWidth(name) > nameRoom) name = name.slice(0, -1);
     if (name !== kin.name) name = name.slice(0, -1) + '..';
 
-    const nameY = box.y + 7;
+    const nameY = box.y + ROW_NAME;
     r.text(name, left, nameY, { color: UI.ink });
     if (genderText) {
       r.text(genderText, left + r.textWidth(name) + 2, nameY, {
         color: kin.gender === 'female' ? '#d0608c' : '#5a86cc',
       });
     }
-    r.text(levelText, box.x + box.w - 7, nameY, { color: UI.ink, align: 'right' });
+    r.text(levelText, right, nameY, { color: UI.ink, align: 'right' });
 
-    const barY = box.y + 17;
-    const barX = left + 14;
-    const barW = box.w - (barX - box.x) - 7;
-    r.text('HP', left, barY - 1, { color: UI.inkSoft });
+    // The HP row. The badge's slot is at the left whether or not a badge is in
+    // it, and the "HP" label stands in that slot the rest of the time, so the
+    // bar begins in the same column all fight.
+    const barY = box.y + ROW_BAR;
+    const slot = statusSlot(r);
+    const barX = left + slot + 3;
+    const barW = right - barX;
+    // The label is set against the bar rather than against the panel's left
+    // margin: the slot is as wide as the widest badge, and "HP" left-aligned in
+    // it floats thirteen units clear of the meter it names, which reads as a
+    // label that has come adrift. Hung off the bar it reads as the bar's own.
+    if (kin.status !== 'none') this.renderStatusChip(r, left, box.y + ROW_CHIP, kin.status);
+    else r.text('HP', barX - 3, box.y + ROW_CHIP, { color: UI.inkSoft, align: 'right' });
     // The raw fraction goes to the meter, which fills at buffer resolution, so
     // the bar slides across half-units instead of stepping one HP at a time.
     // The readout is the same number rounded, so the digits fall in step with
@@ -2803,7 +3004,7 @@ export class BattleScene implements Scene {
     r.meter(barX, barY, barW, 6, frac, color, UI.hpBack, UI.frame);
 
     if (side === 'player') {
-      r.text(`${shown}/${kin.maxHp}`, box.x + box.w - 7, barY + 8, {
+      r.text(`${shown}/${kin.maxHp}`, right, box.y + ROW_READ, {
         color: UI.ink, align: 'right',
       });
       // Experience runs along the very bottom edge, full width, so it never
@@ -2816,27 +3017,25 @@ export class BattleScene implements Scene {
       const next = expForLevel(kin.growthRate, Math.min(100, shownLevel + 1));
       const prog = next > cur ? Math.max(0, Math.min(1, (this.displayExp - cur) / (next - cur))) : 1;
       const expLit = this.levelFx > 0 && Math.floor(this.levelFx / 4) % 2 === 0;
-      r.meter(box.x + 4, box.y + box.h - 5, box.w - 8, 2, prog,
+      r.meter(box.x + 4, box.y + ROW_EXP, box.w - 8, 2, prog,
         expLit ? '#ffffff' : UI.exp, '#39415c', null);
     }
-
-    if (kin.status !== 'none') this.renderStatusChip(r, left, barY + 8, kin.status);
   }
 
+  /**
+   * The status badge.
+   *
+   * `typeChip` already solves this exact problem for the type badges -- a box
+   * sized to the word rather than to an assumption about how long the word is
+   * -- so the badge is one, at nine units to match the row it shares with the
+   * HP bar. It was a hand-rolled 20-unit rectangle, and PSN measures 17 with a
+   * three-unit inset, which put the last column of the N on the box's own
+   * border.
+   */
   private renderStatusChip(r: Renderer, x: number, y: number, status: StatusId): void {
-    const map: Record<string, { label: string; color: string }> = {
-      burn: { label: 'BRN', color: '#e06a3a' },
-      freeze: { label: 'FRZ', color: '#6ac0e0' },
-      paralysis: { label: 'PAR', color: '#d8c040' },
-      poison: { label: 'PSN', color: '#a05ab0' },
-      toxic: { label: 'TOX', color: '#8040a0' },
-      sleep: { label: 'SLP', color: '#8890a8' },
-    };
-    const s = map[status];
+    const s = STATUS_CHIP[status];
     if (!s) return;
-    r.rect(x, y, 20, 9, s.color);
-    r.outline(x, y, 20, 9, '#282838');
-    r.text(s.label, x + 3, y + 1, { color: '#ffffff' });
+    typeChip(r, x, y, s.label, s.color, 9, s.ink ?? '#ffffff');
   }
 
   private renderMessage(game: Game, r: Renderer): void {
@@ -3176,17 +3375,49 @@ export class BattleScene implements Scene {
     r.text('OUT', x + 2, y + 1, { color: '#ffffff' });
   }
 
+  /**
+   * The bag, with each item's own icon beside its name.
+   *
+   * A list of item NAMES is a list a player has to read; a list with the
+   * drawings in it is one they recognise. The icons come from itemart, which
+   * hands back the hand-drawn 16px reduction where a file has shipped and the
+   * generated design where it has not, so this never has to ask which route an
+   * item is on.
+   *
+   * The icon column is laid out by the widget's own padding rather than beside
+   * it: `padX` is `BAG_LABEL_X`, and the icons are drawn into the space that
+   * padding opens up. Drawing them at a hand-picked x and hoping the labels
+   * cleared it is the same habit that put the status badge on the experience
+   * bar.
+   */
   private renderBagMenu(r: Renderer): void {
-    this.bagMenu.render(r, MSG.x + 2, MSG.y + 2, 150, {
-      rowHeight: 11, padY: 3, frame: false,
+    const box = bagBox();
+    const padY = 3;
+    const x = MSG.x + 2;
+    const y = box.y - padY;
+    this.bagMenu.render(r, x, y, BAG_LIST_W, {
+      rowHeight: BAG_ROW_H, padX: BAG_LABEL_X, padY, frame: false,
     });
+
+    // Same walk the widget just made, so a scrolled list draws the right icons.
+    const rows = Math.min(this.bagMenu.visible, this.bagMenu.items.length);
+    for (let row = 0; row < rows; row++) {
+      const entry = this.bagMenu.items[this.bagMenu.scroll + row];
+      if (!entry?.value) continue;
+      const data = registry.getItem(entry.value);
+      if (!data) continue;
+      // A pixel above the text's own top, so an eight-unit icon sits level
+      // with a seven-unit word rather than hanging off the bottom of it.
+      r.image(itemIcon(data.icon, data.category),
+        x + BAG_ICON_X, box.y + row * BAG_ROW_H - 1);
+    }
+
     const item = this.bagMenu.selectedValue;
     const data = item ? registry.getItem(item) : undefined;
     if (data) {
-      const px = MSG.x + 154;
-      r.text(r.wrapText(data.description, 80).slice(0, 4).join('\n'), px, MSG.y + 8, {
-        color: '#3a4258', lineHeight: 9,
-      });
+      const px = x + BAG_LIST_W + 4;
+      para(r, data.description, { x: px, y: box.y, w: box.x + box.w - px, h: box.h },
+        { color: '#3a4258' });
     }
   }
 }

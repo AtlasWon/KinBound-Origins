@@ -8,6 +8,50 @@ Add a new `## vX.Y.Z` heading above the others before running `npm run ship`.
 
 ---
 
+## v0.12.0
+
+### The real reason you were getting stuck
+
+Being spotted by a trainer while walking past them could leave you unable to
+move, permanently, after the fight -- and last release only fixed one specific
+case of it.
+
+The actual cause is that you are a body, not a square. For most of every step
+you are standing in two tiles at once. A trainer who spots you walks up to the
+tile in front of "your" tile -- but the game only ever counted the tile your
+middle was in, so the trainer walked into the half of you nobody was counting
+and became solid there. After that every direction is blocked, because you
+cannot leave a tile you are already standing in without passing through it.
+
+That is why it looked like nothing was wrong: nothing *was* wrong, in the sense
+of anything being stuck on or mid-animation. You were simply standing inside
+somebody. Eight trainers could do it, in 138 different positions. Now none can,
+and nothing in a cutscene can walk into you either.
+
+### Forty-six kin drawn
+
+Only two species left.
+
+### The opening, and a title screen
+
+The film plays first now and hands over to the start screen, rather than the
+menu coming first. The start screen has the world moving behind it -- the
+Hollow Sea at sunset, kin crossing the sky -- with the wordmark and the menu
+over the top.
+
+### Battle
+
+- Status badges fit inside their own box.
+- The experience bar and the health bar are no longer touching.
+- Your drawn vessel is used for the throw, and it opens and closes.
+- Items have icons in the bag, in battle and in shops.
+
+### Elsewhere
+
+- Easier again, measured across every trainer in the game.
+- Stronger, warmer colour across the whole outdoors, and more detail in the
+  world and everything standing in it.
+
 ## v0.11.0
 
 ### You can't get stuck any more

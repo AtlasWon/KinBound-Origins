@@ -68,8 +68,15 @@
  *   ITEM_ART_SIZE  32px = 16 logical   panels, messages, the overworld, battle
  *   ITEM_ICON_SIZE 16px =  8 logical   bag rows, shop rows, anywhere in a list
  *
- * and the second is the first halved, which is why the 2-pixel block rule from
- * the creature spec applies here too. Every generated design below is authored
+ * and the second is the first halved. Which one a screen wants is decided by
+ * the screen, once, at the bottom of this file: `drawItemSprite` for a panel
+ * and `drawItemRowIcon` for a list row. Nothing scales an item icon at a call
+ * site -- a 32px drawing squeezed into a 12-unit row is the exact blur the
+ * halving exists to avoid, and it is the kind of thing that looks fine in the
+ * code and is obvious in the picture.
+ *
+ * The 2-pixel block rule from the
+ * creature spec applies here too. Every generated design below is authored
  * on a 16x16 grid at 2x, so its halving is exact by construction; a hand-drawn
  * file has to earn that, and `npm run item:check` says whether it did.
  *
@@ -103,6 +110,8 @@
  */
 
 import type { ItemCategory } from '../data/schema.js';
+import { DETAIL, type Renderer } from '../engine/renderer.js';
+import { GLYPH_H } from './font.js';
 
 /** The folder the player drops PNGs into, relative to index.html. */
 export const ITEM_ART_DIR = 'assets/items';
@@ -313,6 +322,42 @@ export function itemArt(iconKey: string, state?: ItemFrameState | null): HTMLCan
   return (state ? frames.get(`${iconKey}:${state}`) : art.get(iconKey)) ?? null;
 }
 
+/**
+ * A key's base drawing together with named frames of it -- ALL of them or none.
+ *
+ *   const v = itemArtFrames('vessel_field', 'open');
+ *   if (v) { const [closed, open] = v; ... } else { plot the shape as before }
+ *
+ * Returns `[base, ...one canvas per state, in the order asked]`, or null the
+ * moment any one of them has not shipped. Never throws, never returns a short
+ * array, and never substitutes one frame for another.
+ *
+ * That all-or-nothing rule is the whole point, and it exists because the
+ * half-delivered case is a real one this loader already warns about: a folder
+ * can hold `vessel_field-open.png` and no `vessel_field.png`. Asking twice with
+ * `itemArt` and using whatever came back would then give an animation that
+ * plots its own closed vessel and cuts to a hand-drawn open one -- two
+ * different objects in the same beat, which is worse than plotting both.
+ *
+ * Because the frames of a key are seated as a group (see the top of this file),
+ * every canvas returned here is 32x32 with the object registered against the
+ * others: draw them at the same position on successive frames and nothing moves
+ * that the drawing did not move.
+ */
+export function itemArtFrames(
+  iconKey: string, ...states: ItemFrameState[]
+): HTMLCanvasElement[] | null {
+  const base = art.get(iconKey);
+  if (!base) return null;
+  const out = [base];
+  for (const state of states) {
+    const frame = frames.get(`${iconKey}:${state}`);
+    if (!frame) return null;
+    out.push(frame);
+  }
+  return out;
+}
+
 /** True if this key is drawn by hand rather than generated. */
 export function hasItemArt(iconKey: string): boolean {
   return art.has(iconKey);
@@ -337,6 +382,90 @@ export function itemArtKeys(): string[] {
 /** Every key the generated route draws by name. The spec's to-do list. */
 export function itemDesignKeys(): string[] {
   return Object.keys(DESIGNS).sort();
+}
+
+/* ------------------------------------------------- putting one on a screen */
+
+/**
+ * The two sizes again, in LOGICAL units this time.
+ *
+ * Everything above this line counts image pixels, because that is what a
+ * loader and a 2x2 block vote deal in. Everything below it, and every screen
+ * that calls it, counts logical units -- the 240x160 the game is laid out on.
+ * The two are related by DETAIL and nothing else, so they are converted once,
+ * here, rather than by a `/ 2` at each of the dozen call sites that would
+ * otherwise have to know that the renderer draws at double density.
+ */
+export const ITEM_SPRITE_UNITS = ITEM_ART_SIZE / DETAIL;
+export const ITEM_ICON_UNITS = ITEM_ICON_SIZE / DETAIL;
+
+/**
+ * Where a list icon sits inside a menu row, and the `padX` that row then needs.
+ *
+ * A `ListMenu` row is drawn as a selection cursor at `x + 3` and a label at
+ * `x + padX`. The cursor is an arrow seven buffer pixels wide, so it has
+ * finished by `x + 6.5`; the icon takes the eight units from `x + 8`, and the
+ * label starts two units after it.
+ *
+ * The first attempt spent half a unit on the left of the icon and one on the
+ * right, which is a single buffer pixel each, and at 1x the row read as one
+ * smeared object: arrow, drawing and the first letter of the name all touching.
+ * An item icon is not inset the way a glyph is -- the loader centres the
+ * drawing's own ink in the cell, so a drawing that fills its cell really does
+ * reach the edge -- which means the whole gap has to be spent out here. One and
+ * a half units on the left and two on the right is what reads as separate.
+ *
+ * These are exported because the bag, the shop's two lists and the battle bag
+ * all have to agree on them exactly. Two screens that each pick their own
+ * indent look like two different games in consecutive menus, and the number is
+ * not guessable from the outside -- it is a fact about `ui/menu.ts`.
+ */
+export const ITEM_ROW_ICON_X = 8;
+export const ITEM_ROW_PAD_X = ITEM_ROW_ICON_X + ITEM_ICON_UNITS + 2;
+
+/**
+ * What either drawing helper needs to know about an item.
+ *
+ * Structural, so an `ItemData` straight out of the registry is one already and
+ * nothing has to unpack it. Deliberately NOT an item id: this file has no
+ * registry and should not grow one -- the caller has the item in hand at every
+ * one of these call sites, and the `icon` field is the indirection that lets
+ * two items share a drawing.
+ */
+export interface ItemIconRef {
+  icon: string;
+  category?: ItemCategory;
+}
+
+/**
+ * The 16px icon for a menu row, vertically centred on that row's text.
+ *
+ * `textY` is the y the row's label is drawn at, not the top of the row: the
+ * icon is eight units and a line of the face is seven, so it hangs half a unit
+ * above the letters -- one buffer pixel, which the renderer can express and a
+ * "centre it in the row height" calculation could not, because rows are 11 in
+ * battle and 12 everywhere else.
+ *
+ * A missing or unknown item draws nothing rather than a crate: an empty row
+ * ("Nothing here.") is not an item and must not be given a picture.
+ */
+export function drawItemRowIcon(
+  r: Renderer, item: ItemIconRef | undefined | null, rowX: number, textY: number,
+): void {
+  if (!item?.icon) return;
+  r.image(itemIcon(item.icon, item.category),
+    rowX + ITEM_ROW_ICON_X, textY + (GLYPH_H - ITEM_ICON_UNITS) / 2);
+}
+
+/**
+ * The 32px icon at its full size, for a description panel, a message or the
+ * world. `x`/`y` are its top-left corner; it occupies ITEM_SPRITE_UNITS square.
+ */
+export function drawItemSprite(
+  r: Renderer, item: ItemIconRef | undefined | null, x: number, y: number,
+): void {
+  if (!item?.icon) return;
+  r.image(itemSprite(item.icon, item.category), x, y);
 }
 
 export function itemArtReport(): ItemArtReport {

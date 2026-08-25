@@ -1,137 +1,41 @@
 {
   "mapId": "route_4",
-  "$comment": "Lowered from 15-21 to 14-18 and reweighted. Six of the nine slots -- gale, chitin, venom and frost -- beat Verdant while resisting it, and they carried 65 of the 100 weight, so the Sprigling player alone was losing half the route: 36 percent of fights won at the arrival level against 66 and 71 for the other two starters. Weight moves to the neutral Beast and Terra slots, the same fix Route 1 had. Sprigling 36 -> 73 percent, and the spread between the three starters closes from 35 points to 23.",
+  "$comment": "Capped at 13-15 for the third pass -- a player raising a team arrives here at SEVENTEEN, so the whole route now sits two to four levels under them. It is still the route that punishes a Verdant starter: gale, chitin, venom and frost all beat Verdant while resisting it, and their combined weight comes down again, from 65 two passes ago to 44 now, with the space going to the neutral Beast and Terra slots. The three heavy payers -- Mossback (148 base experience), Kestrelle (128) and Gullswift (128) -- are pinned to 13-14 rather than 15-17, three or four levels under the arriving player, so the route still pays about 150 experience a fight while topping out three levels lower than it used to.",
   "methods": {
     "tallGrass": {
       "rate": 175,
       "slots": [
-        {
-          "species": "tuftail",
-          "minLevel": 15,
-          "maxLevel": 17,
-          "weight": 22
-        },
-        {
-          "species": "silthopper",
-          "minLevel": 14,
-          "maxLevel": 16,
-          "weight": 13
-        },
-        {
-          "species": "pipwing",
-          "minLevel": 14,
-          "maxLevel": 16,
-          "weight": 11
-        },
-        {
-          "species": "gravelet",
-          "minLevel": 15,
-          "maxLevel": 17,
-          "weight": 18
-        },
-        {
-          "species": "kestrelle",
-          "minLevel": 15,
-          "maxLevel": 17,
-          "weight": 7
-        },
-        {
-          "species": "spinnet",
-          "minLevel": 14,
-          "maxLevel": 16,
-          "weight": 9
-        },
-        {
-          "species": "gullswift",
-          "minLevel": 15,
-          "maxLevel": 17,
-          "weight": 7
-        },
-        {
-          "species": "mossback",
-          "minLevel": 16,
-          "maxLevel": 18,
-          "weight": 6
-        },
-        {
-          "species": "frostnip",
-          "minLevel": 15,
-          "maxLevel": 17,
-          "weight": 7,
-          "time": [
-            "night"
-          ]
-        }
+        { "species": "tuftail", "minLevel": 13, "maxLevel": 15, "weight": 26 },
+        { "species": "gravelet", "minLevel": 13, "maxLevel": 15, "weight": 19 },
+        { "species": "mossback", "minLevel": 13, "maxLevel": 14, "weight": 11 },
+        { "species": "silthopper", "minLevel": 13, "maxLevel": 15, "weight": 9 },
+        { "species": "kestrelle", "minLevel": 13, "maxLevel": 14, "weight": 8 },
+        { "species": "gullswift", "minLevel": 13, "maxLevel": 14, "weight": 8 },
+        { "species": "pipwing", "minLevel": 13, "maxLevel": 15, "weight": 7 },
+        { "species": "spinnet", "minLevel": 13, "maxLevel": 15, "weight": 7 },
+        { "species": "frostnip", "minLevel": 13, "maxLevel": 15, "weight": 5, "time": ["night"] }
       ]
     },
     "water": {
       "rate": 140,
       "slots": [
-        {
-          "species": "shalefin",
-          "minLevel": 14,
-          "maxLevel": 17,
-          "weight": 40
-        },
-        {
-          "species": "pinchel",
-          "minLevel": 14,
-          "maxLevel": 17,
-          "weight": 30
-        },
-        {
-          "species": "rillfry",
-          "minLevel": 13,
-          "maxLevel": 16,
-          "weight": 20
-        },
-        {
-          "species": "bladderwrack",
-          "minLevel": 16,
-          "maxLevel": 18,
-          "weight": 8
-        },
-        {
-          "species": "brinewisp",
-          "minLevel": 17,
-          "maxLevel": 19,
-          "weight": 2,
-          "time": [
-            "night"
-          ]
-        }
+        { "species": "shalefin", "minLevel": 13, "maxLevel": 15, "weight": 40 },
+        { "species": "pinchel", "minLevel": 13, "maxLevel": 15, "weight": 30 },
+        { "species": "rillfry", "minLevel": 12, "maxLevel": 14, "weight": 20 },
+        { "species": "bladderwrack", "minLevel": 14, "maxLevel": 16, "weight": 8 },
+        { "species": "brinewisp", "minLevel": 15, "maxLevel": 17, "weight": 2, "time": ["night"] }
       ]
     },
     "fishOld": {
       "slots": [
-        {
-          "species": "shalefin",
-          "minLevel": 11,
-          "maxLevel": 16,
-          "weight": 100
-        }
+        { "species": "shalefin", "minLevel": 10, "maxLevel": 14, "weight": 100 }
       ]
     },
     "fishGood": {
       "slots": [
-        {
-          "species": "pinchel",
-          "minLevel": 15,
-          "maxLevel": 19,
-          "weight": 55
-        },
-        {
-          "species": "currentail",
-          "minLevel": 16,
-          "maxLevel": 20,
-          "weight": 30
-        },
-        {
-          "species": "anchorling",
-          "minLevel": 17,
-          "maxLevel": 21,
-          "weight": 15
-        }
+        { "species": "pinchel", "minLevel": 14, "maxLevel": 16, "weight": 55 },
+        { "species": "currentail", "minLevel": 14, "maxLevel": 17, "weight": 30 },
+        { "species": "anchorling", "minLevel": 15, "maxLevel": 18, "weight": 15 }
       ]
     }
   }

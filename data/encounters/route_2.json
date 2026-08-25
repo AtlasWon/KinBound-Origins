@@ -1,98 +1,31 @@
 {
   "mapId": "route_2",
-  "$comment": "The route the player reported as overlevelled, and the measurement agreed. Grass here ran 8-13 while Route 1 grass tops out at 5, so the step across one route sign was +8 levels at the top of the band and +6.3 on the average roll -- by far the steepest boundary in the game. tests/helpers/simulate.mjs was extended to work out where the player actually IS rather than guessing: a player raising a team arrives here at level NINE, against a band averaging 10.1 and reaching 13. That is the \"a couple levels or so\" in the bug report, measured. Route 1 is left exactly as the previous pass tuned it and Route 2 comes down to meet it instead: bands are narrowed as well as lowered, because a wide band is what produces the one encounter three levels over your head. Average roll 10.1 -> 7.6, top 13 -> 10. A solo starter at the arrival level went from 46/33 percent of fights won to 71/60.",
+  "$comment": "Third difficulty pass, and the first one to measure this route against the player who actually files the reports rather than a middle-of-the-road average. Experience is split between everything that takes the field, so a player raising four kin arrives here at NINE, not the eleven a solo lead reaches; measured at nine, the old 6-10 band won only 64/61/83 percent of average rolls and 56/48/59 percent at the top of the band. The top of the band was doing nearly all of the damage. Every slot is now 5-7, so the worst roll on the route is two levels UNDER the arriving player instead of one over. Weight also moves onto the two neutral Beast slots and off the Stone and Terra ones: a Stone attack is STAB on a Chalkid or a Slatewing and doubles into Flame, which is why the Cinderpaw player specifically was losing half of this route.",
   "methods": {
     "tallGrass": {
       "rate": 170,
       "slots": [
-        {
-          "species": "nibbet",
-          "minLevel": 6,
-          "maxLevel": 8,
-          "weight": 18
-        },
-        {
-          "species": "pipwing",
-          "minLevel": 6,
-          "maxLevel": 8,
-          "weight": 18
-        },
-        {
-          "species": "tuftail",
-          "minLevel": 7,
-          "maxLevel": 9,
-          "weight": 16
-        },
-        {
-          "species": "gravelet",
-          "minLevel": 6,
-          "maxLevel": 9,
-          "weight": 16
-        },
-        {
-          "species": "chalkid",
-          "minLevel": 7,
-          "maxLevel": 9,
-          "weight": 14
-        },
-        {
-          "species": "nettlebug",
-          "minLevel": 6,
-          "maxLevel": 8,
-          "weight": 8
-        },
-        {
-          "species": "slatewing",
-          "minLevel": 8,
-          "maxLevel": 10,
-          "weight": 6
-        },
-        {
-          "species": "frostnip",
-          "minLevel": 8,
-          "maxLevel": 10,
-          "weight": 3,
-          "time": [
-            "evening",
-            "night"
-          ]
-        },
-        {
-          "species": "sootmoth",
-          "minLevel": 8,
-          "maxLevel": 10,
-          "weight": 1,
-          "time": [
-            "night"
-          ]
-        }
+        { "species": "tuftail", "minLevel": 5, "maxLevel": 7, "weight": 26 },
+        { "species": "nibbet", "minLevel": 5, "maxLevel": 7, "weight": 22 },
+        { "species": "gravelet", "minLevel": 5, "maxLevel": 7, "weight": 12 },
+        { "species": "pipwing", "minLevel": 5, "maxLevel": 7, "weight": 10 },
+        { "species": "chalkid", "minLevel": 5, "maxLevel": 7, "weight": 10 },
+        { "species": "slatewing", "minLevel": 5, "maxLevel": 7, "weight": 8 },
+        { "species": "frostnip", "minLevel": 5, "maxLevel": 7, "weight": 5, "time": ["evening", "night"] },
+        { "species": "nettlebug", "minLevel": 5, "maxLevel": 7, "weight": 4 },
+        { "species": "spinnet", "minLevel": 5, "maxLevel": 7, "weight": 3, "time": ["night"] }
       ]
     },
     "water": {
       "rate": 130,
       "slots": [
-        {
-          "species": "rillfry",
-          "minLevel": 6,
-          "maxLevel": 10,
-          "weight": 70
-        },
-        {
-          "species": "rilltail",
-          "minLevel": 8,
-          "maxLevel": 11,
-          "weight": 30
-        }
+        { "species": "rillfry", "minLevel": 5, "maxLevel": 8, "weight": 70 },
+        { "species": "rilltail", "minLevel": 6, "maxLevel": 9, "weight": 30 }
       ]
     },
     "fishOld": {
       "slots": [
-        {
-          "species": "rillfry",
-          "minLevel": 5,
-          "maxLevel": 9,
-          "weight": 100
-        }
+        { "species": "rillfry", "minLevel": 4, "maxLevel": 7, "weight": 100 }
       ]
     }
   }

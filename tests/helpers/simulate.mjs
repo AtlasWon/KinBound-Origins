@@ -26,10 +26,24 @@
  *      chart and always picks their best move, the *novice* presses the top
  *      move and hopes. The novice is the person who wrote the bug report.
  *
- *   3. WITH WHAT. A lone starter against a four-kin Keeper is not a fight
- *      anybody has; it is one kin against four with no healing. Trainer rows
- *      are therefore fought twice -- once solo, which is the floor, and once
- *      with a party the size of the trainer's own, which is the fight.
+ *   3. WITH WHAT, AND AT THE LEVEL THAT PARTY REALLY IS. A lone starter
+ *      against a four-kin Keeper is not a fight anybody has; it is one kin
+ *      against four with no healing. Trainer rows are therefore fought twice
+ *      -- once solo, which is the floor, and once with a party the size of
+ *      the trainer's own, which is the fight.
+ *
+ *      The two rows must be sampled at DIFFERENT levels, and for two passes
+ *      they were not. Experience is divided between everything that took the
+ *      field (Battle.awardExp splits by participant), so the player holding
+ *      four kin is the `rotating team` column of table 1 and the player
+ *      holding one is the `solo lead` column -- five or six levels apart by
+ *      Brackwater. Sampling both at the middle `two up` column handed the
+ *      party player a full bench at a level only a solo player ever reaches,
+ *      and the matched column duly read 100% for twenty-three of twenty-five
+ *      trainers while the bug reports kept coming. Nothing was wrong with the
+ *      game that column was describing; that player does not exist. Each row
+ *      is now sampled at its own share, so the party is one a player who
+ *      raised a party actually has.
  *
  * Starters evolve at 16 and again at 34, so every row past level 16 uses the
  * evolved form. Measuring a level-22 Sprigling measures a kin that cannot
@@ -298,6 +312,21 @@ export function progression(share = 1, starter = 'cinderpaw') {
 
 export const SHARES = [['solo lead', 1], ['two up', 1.6], ['rotating team', 2.5]];
 
+/** Experience share each of the two sampled players is really on. */
+export const SOLO_SHARE = 1;
+export const PARTY_SHARE = 2.5;
+
+/**
+ * Level a given player holds partway through a stage. Trainers are not met at
+ * the level you entered the route with -- you level up walking to them -- so
+ * each one is sampled between the arrive and leave levels of its own stage,
+ * spaced by where it stands in the running order.
+ */
+export function levelAt(share, stageIndex, slot, count) {
+  const r = progression(share)[stageIndex];
+  return Math.round(r.arrive + (r.leave - r.arrive) * ((slot + 0.5) / count));
+}
+
 /* ------------------------------------------------------------------ report */
 
 if (process.argv[1]?.endsWith('simulate.mjs')) {
@@ -317,36 +346,38 @@ if (process.argv[1]?.endsWith('simulate.mjs')) {
     console.log('  ' + r.stage.padEnd(16) + cells + '  |  ' + band.padEnd(12) + r.first + '-' + r.last);
   }
 
-  // Everything below is sampled at where the "two up" player actually stands
-  // when they walk in, which is the middle of the three columns above.
-  const arriveAt = new Map(progression(1.6).map((r) => [r.stage, r.arrive]));
+  // Each of the two players below is sampled at ITS OWN level, not at a shared
+  // middle one: the solo lead banks every point of experience, the player
+  // raising four kin splits it four ways and is genuinely levels behind.
+  const soloAt = new Map(progression(SOLO_SHARE).map((r) => [r.stage, r.arrive]));
+  const partyAt = new Map(progression(PARTY_SHARE).map((r) => [r.stage, r.arrive]));
 
-  console.log('\nGRASS AT ARRIVAL  novice play, solo lead, no items  (average roll / top of band)');
+  console.log('\nGRASS AT ARRIVAL  novice play, no items, one kin in front  (average roll / top of band)');
+  console.log('  route            solo lead                                   team-raiser');
   for (const st of STAGES) {
     if (!st.grass) continue;
-    const lv = arriveAt.get(st.name);
-    const cells = STARTERS.map((s) => evolveTo(s, lv).slice(0, 5).padEnd(5) + ' '
+    const cell = (lv) => 'L' + String(lv).padEnd(3) + STARTERS.map((s) =>
+      evolveTo(s, lv).slice(0, 5).padEnd(5) + ' '
       + pad(wildRate(st.grass, evolveTo(s, lv), lv, runs), 3) + '/'
-      + pad(wildRate(st.grass, evolveTo(s, lv), lv, runs, 'novice', true), 3) + '%');
-    console.log('  ' + st.grass.padEnd(15) + 'L' + String(lv).padEnd(3) + cells.join('  '));
+      + pad(wildRate(st.grass, evolveTo(s, lv), lv, runs, 'novice', true), 3) + '%').join(' ');
+    console.log('  ' + st.grass.padEnd(15) + cell(soloAt.get(st.name))
+      + '  ' + cell(partyAt.get(st.name)));
   }
 
-  // A trainer is not met at the level you entered the route with -- you level
-  // up walking to them. Each one is sampled where they actually stand in the
-  // stage, between the arrive and leave levels of the "two up" column.
-  console.log('\nTRAINERS WHERE THEY STAND  novice play  (lone starter / party the size of theirs)');
-  for (const r of progression(1.6)) {
-    const st = STAGES.find((s) => s.name === r.stage);
+  console.log('\nTRAINERS WHERE THEY STAND  novice play, no items');
+  console.log('  trainer             ace | lone starter, solo-lead level   | matched party, team-raiser level');
+  STAGES.forEach((st, si) => {
     st.trainers.forEach((raw, i) => {
-      const lv = Math.round(r.arrive + (r.leave - r.arrive) * ((i + 0.5) / st.trainers.length));
-      const cells = STARTERS.map((s) => {
-        const id = trainerFor(raw, s);
-        return s.slice(0, 4) + ' ' + pad(rate(s, lv, id, runs, 'novice'), 3) + '/'
-          + pad(matchedRate(s, lv, id, runs), 3) + '%';
-      });
-      console.log('  ' + raw.padEnd(20) + 'L' + String(lv).padEnd(3)
-        + 'ace' + pad(ace(trainerFor(raw, 'cinderpaw')), 3) + '  ' + cells.join('  '));
+      const soloLv = levelAt(SOLO_SHARE, si, i, st.trainers.length);
+      const partyLv = levelAt(PARTY_SHARE, si, i, st.trainers.length);
+      const solo = STARTERS.map((s) => s.slice(0, 4) + ' '
+        + pad(rate(s, soloLv, trainerFor(raw, s), runs, 'novice'), 3) + '%').join(' ');
+      const team = STARTERS.map((s) => s.slice(0, 4) + ' '
+        + pad(matchedRate(s, partyLv, trainerFor(raw, s), runs), 3) + '%').join(' ');
+      console.log('  ' + raw.padEnd(20) + pad(ace(trainerFor(raw, 'cinderpaw')), 3)
+        + ' | L' + String(soloLv).padEnd(3) + solo
+        + ' | L' + String(partyLv).padEnd(3) + team);
     });
-  }
+  });
   console.log('');
 }

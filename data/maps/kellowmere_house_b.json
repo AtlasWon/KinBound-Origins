@@ -8,10 +8,10 @@
     "IIIUIIIUIIII",
     "IKKKffffJQNI",
     "IffffffffKKI",
-    "IPfffff/fffI",
-    "IffffffrffSI",
-    "IfAAfffVffkI",
-    "IfEEffffffPI",
+    "IPfffff//ffI",
+    "IffffffrrfSI",
+    "IEAAfffVffkI",
+    "IkEEffffffPI",
     "IIIIIIDIIIII"
   ],
   "warps": [
@@ -19,8 +19,8 @@
       "x": 6,
       "y": 7,
       "toMap": "kellowmere",
-      "toX": 24,
-      "toY": 23,
+      "toX": 22,
+      "toY": 24,
       "facing": "down",
       "style": "door"
     },

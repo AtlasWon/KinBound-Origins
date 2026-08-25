@@ -57,7 +57,9 @@
  * 3. SOME FILES ARE FRAMES, NOT ICONS. `Vessel-open.png` is not an item -- no
  *    player holds an open vessel -- it is a state of one, drawn for the throw
  *    animation. It lands as `vessel_field-open.png` and the game reaches it
- *    through `itemArt(key, state)`. The frames of a key are seated TOGETHER:
+ *    through `itemArtFrames(key, state)`, which hands back the shut drawing and
+ *    the open one together or nothing at all. The frames of a key are seated
+ *    TOGETHER:
  *    the base does not move when the lid comes off, which it would if each
  *    frame were centred on its own ink. See `docs/ITEM-SPEC.md`.
  *
@@ -510,7 +512,7 @@ if (frames.length) {
   log('  Frames, not icons:');
   for (const f of frames) {
     log(`    ${f.file}  --  ${FRAME_STATES[f.state].what}`);
-    log(`      asked for as itemArt('${f.key}', '${f.state}'); used by ${FRAME_STATES[f.state].used}`);
+    log(`      asked for as itemArtFrames('${f.key}', '${f.state}'); used by ${FRAME_STATES[f.state].used}`);
   }
   log('    These are seated with their icon, not on their own, so the object does not');
   log('    move between them. They never appear in the bag and are not items.');

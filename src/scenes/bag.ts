@@ -11,6 +11,9 @@ import type { Scene } from '../core/scene.js';
 import { Renderer, SCREEN_H, SCREEN_W } from '../engine/renderer.js';
 import { ListMenu, type MenuItem } from '../ui/menu.js';
 import { fit, inside, para, GAP, LINE_TIGHT } from '../ui/layout.js';
+import {
+  drawItemRowIcon, drawItemSprite, ITEM_ROW_PAD_X, ITEM_SPRITE_UNITS,
+} from '../gfx/itemart.js';
 import { registry } from '../data/registry.js';
 import { say } from '../ui/dialogue.js';
 import { PartyScene } from './party.js';
@@ -195,16 +198,33 @@ export class BagScene implements Scene {
       });
     });
 
-    // The list was 140 wide for names that top out around 80, while the panel
-    // it starved had to break "clay-and-copper" across a line. Split the width
-    // where the content actually needs it.
     const footerY = SCREEN_H - 24;
-    // 124 is the narrowest the list can be and still spell "Warden Vessel"
-    // beside an "x99"; every unit past that goes to the description, which
-    // needs 89 of them to keep "clay-and-copper" on one line.
-    const listW = 124;
-    const panelX = 6 + listW + 6;
-    this.menu.render(r, 6, 22, listW, { rowHeight: 12 });
+    // The tightest fit on this screen, and every end of it is measured rather
+    // than chosen. The list must spell the longest name in the game beside its
+    // count: "Strong Potion" is 74 units, "x99" is 17, and a `ListMenu` spends
+    // padX on the left plus GAP, five units of right margin and a ten-unit
+    // scroll gutter -- 129 exactly, once the icon column is inside the padX.
+    // The description needs 87 to keep "clay-and-copper" on one line, and 87
+    // plus the frame is a 95-unit panel.
+    //
+    // 129 and 95 do not both fit beside a six-unit gutter, so the gutter is
+    // four. That is the cheapest of the three things that could have given way:
+    // a narrower list truncates "Strong Potion", a narrower panel breaks a word
+    // across a line, and this only brings two window shadows two units closer.
+    // Change any one of these and re-measure the other two.
+    const listW = 129;
+    const panelX = 6 + listW + 4;
+    const rowH = 12, padY = 4;
+    this.menu.render(r, 6, 22, listW, { rowHeight: rowH, padX: ITEM_ROW_PAD_X });
+
+    // The row icons go on after the list, over the gap its padX reserved.
+    // Drawing them here rather than inside the menu keeps `ListMenu` ignorant
+    // of items -- it carries labels for moves, saves and settings too.
+    const count = Math.min(this.menu.visible, this.menu.items.length);
+    for (let row = 0; row < count; row++) {
+      const rowId = this.menu.items[this.menu.scroll + row]?.value;
+      drawItemRowIcon(r, rowId ? registry.getItem(rowId) : null, 6, 22 + padY + row * rowH);
+    }
 
     const id = this.menu.selectedValue;
     const item = id ? registry.getItem(id) : undefined;
@@ -213,12 +233,27 @@ export class BagScene implements Scene {
     r.window(panelX, 22, panelW, panelH);
     if (item) {
       const box = inside(panelX, 22, panelW, panelH, 1);
-      r.text(fit(r, item.name, box.w), box.x, box.y, { color: '#282838' });
-      // A rule under the name, so the two blocks read as heading and body
+      // The icon heads the panel and the name sits beside it, because the panel
+      // has height to spare and no width at all: taking the 16 units off the
+      // top costs nothing, and taking them off the description would break
+      // "clay-and-copper" across a line.
+      drawItemSprite(r, item, box.x, box.y);
+      const nameX = box.x + ITEM_SPRITE_UNITS + 4;
+      const nameW = box.w - (ITEM_SPRITE_UNITS + 4);
+      // Centred against the icon, so a one-line name sits level with the middle
+      // of the drawing rather than perched on top of it. "Warden Vessel" is 74
+      // units against a 67-unit column and takes two lines; the column is 67
+      // because "Steadyroot" is a single 59-unit word and must not break.
+      const nameH = (Math.min(2, r.wrapText(item.name, nameW).length) - 1) * LINE_TIGHT + 7;
+      para(r, item.name,
+        { x: nameX, y: box.y + Math.floor((ITEM_SPRITE_UNITS - nameH) / 2), w: nameW, h: ITEM_SPRITE_UNITS },
+        { color: '#282838', lineHeight: LINE_TIGHT, maxLines: 2 });
+      // A rule under the heading, so the two blocks read as heading and body
       // rather than as one paragraph that starts with a noun.
-      r.rect(box.x, box.y + 10, box.w, 1, '#c2cadd');
+      const ruleY = box.y + ITEM_SPRITE_UNITS + 4;
+      r.rect(box.x, ruleY, box.w, 1, '#c2cadd');
       para(r, item.description,
-        { x: box.x, y: box.y + 15, w: box.w, h: box.h - 15 },
+        { x: box.x, y: ruleY + 5, w: box.w, h: box.y + box.h - ruleY - 5 },
         { color: '#3a4258', lineHeight: LINE_TIGHT });
     }
 

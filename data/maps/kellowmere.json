@@ -12,31 +12,31 @@
   "rows": [
     "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
     "TTCCCCCCCCCCCCCCCCCCCCCCCCCCTT",
-    "TTccccccccccccccccccccccccccTT",
-    "TT.,......o.......,....o....TT",
+    "TTccccCCCCccccccccCCCcccccccTT",
+    "TT.,..cccc...,..,.ccc..,,...TT",
     "TT.<%%>....[^^^^^^]..(&&)...TT",
     "TT.MddM....#wwwiww#..HZZH...TT",
     "TT.a--a...!========..a--a...TT",
-    "TT.....,......--......,.....TT",
-    "TT~~~~~~s.....--............TT",
-    "TT~~~~~~s.....--..144443....TT",
-    "TT~~~~~~s.....--..122523....TT",
-    "TT~~~~~~s.....--..GGhgGG....TT",
-    "TT~~~~~~s!....--..------.T!.TT",
-    "TT~~~~~~s.....--[^j]...T..TTTT",
-    "TT~~~~~~s.....--#ww#...TTTTTTT",
-    "TT~~~~~~s.....--a--a...TTT..TT",
-    "TT----------------------------",
-    "TT......699998--......[^^]..TT",
-    "TT......677078--......HZZH..TT",
-    "TT......GGmgGG--......a--a..TT",
-    "TT......--------............TT",
-    "TT..(&&)......--......<%%>..TT",
-    "TT..MdiM......--......HZiH..TT",
-    "TT.a---a......--......a---a.TT",
-    "TT.....!......--......!.....TT",
-    "TT..Y.........--.........Y..TT",
-    "TT............--............TT",
+    "TT.sss.,...,..--..,.o.,..t.,TT",
+    "TTss~~s.,...,.--..o,...,..,.TT",
+    "TTs~~~~s..,...--..144443.,..TT",
+    "TTs~~~~~s,...,--..122523,..,TT",
+    "TTs~~~~~s..,..--..GGhgGG..,.TT",
+    "TTs~~~~s!...,.--..------.T!.TT",
+    "TTs~~~s....,..--[^j]...T..TTTT",
+    "TTss~s.,,...,.--#ww#...TTTTTTT",
+    "TT.sss...,...,--a--a...TTT..TT",
+    "TTss--------------------------",
+    "TT.o.,..699998--.,....[^^].,TT",
+    "TT,....,677078--..,...HZZH,.TT",
+    "TT.,...aGGmgGG--...,..a--a..TT",
+    "TT..,...a-------..o.,...,..tTT",
+    "TT..(&&).,o...--.Y.,.....,..TT",
+    "TT..MdiM..,o..--..,t<%%>.,..TT",
+    "TT.a---a...,..--.,..HZiH..,.TT",
+    "TT...,.!..,...--..,.a--a.,..TT",
+    "TT..Y.,...o.,.--.t.,...o.,..TT",
+    "TT.,..t.,..o,!--.,..t.,..,..TT",
     "TTTTTTTTTTTTTT--TTTTTTTTTTTTTT"
   ],
   "warps": [
@@ -77,8 +77,8 @@
       "style": "door"
     },
     {
-      "x": 24,
-      "y": 22,
+      "x": 22,
+      "y": 23,
       "toMap": "kellowmere_house_b",
       "toX": 6,
       "toY": 6,
@@ -128,7 +128,7 @@
       "sprite": "hiker",
       "x": 10,
       "y": 7,
-      "facing": "right",
+      "facing": "down",
       "movement": {
         "kind": "static"
       },
@@ -149,8 +149,8 @@
     {
       "id": "km_angler",
       "sprite": "fisher",
-      "x": 10,
-      "y": 12,
+      "x": 6,
+      "y": 13,
       "facing": "left",
       "movement": {
         "kind": "static"
@@ -162,7 +162,7 @@
       "sprite": "villager_f",
       "x": 16,
       "y": 24,
-      "facing": "down",
+      "facing": "left",
       "movement": {
         "kind": "lookAround"
       },
@@ -193,8 +193,8 @@
     },
     {
       "kind": "sign",
-      "x": 22,
-      "y": 24,
+      "x": 13,
+      "y": 26,
       "text": [
         "Route 2 south to Ashgate.",
         "North road closed: quarry face unstable."
@@ -211,11 +211,20 @@
     },
     {
       "kind": "sign",
-      "x": 9,
+      "x": 8,
       "y": 12,
       "text": [
         "The lake never freezes, even in the hard months.",
         "The quarry hands do not swim in it. Ask them why and they change the subject."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 26,
+      "y": 12,
+      "text": [
+        "Someone has chalked on the stone: MOVE ME.",
+        "Underneath, in a different hand: WITH WHAT."
       ]
     },
     {
@@ -224,7 +233,7 @@
       "y": 3,
       "item": "great_potion",
       "quantity": 1,
-      "flag": "item_km_ledge"
+      "flag": "item_km_potion"
     },
     {
       "kind": "hiddenItem",
@@ -253,17 +262,9 @@
       "y": 13,
       "item": "deep_vessel",
       "quantity": 1,
-      "flag": "item_km_nook"
-    },
-    {
-      "kind": "sign",
-      "x": 26,
-      "y": 12,
-      "text": [
-        "Someone has chalked on the stone: MOVE ME.",
-        "Underneath, in a different hand: WITH WHAT."
-      ]
+      "flag": "item_km_alcove"
     }
   ],
-  "_legend": "Quarry face north, lake west, Stone Bastion on the top terrace. Waystation east of the road, Provisioner west of it, houses along the south street."
+  "_legend": "Quarry face north, its foot uneven where the stone was worked out in bays. The tarn fills the west hollow. Stone Bastion on the top terrace, Waystation east of the road, Provisioner west, houses along the south street.",
+  "_plan": "The tarn is the reason for the town before the quarry was: it never freezes, so the road runs down to its foot and the workings sit above it. Two roads reach the edge and both are exits -- south to Route 2 and east to Route 3. The west end of the east road stops on the shingle at the water, which is what a road to a lake does."
 }

@@ -10,7 +10,10 @@ import type { Game } from '../core/game.js';
 import type { Scene } from '../core/scene.js';
 import { Renderer, SCREEN_H, SCREEN_W } from '../engine/renderer.js';
 import { ListMenu, navDown, navLeft, navRight, navUp, type MenuItem } from '../ui/menu.js';
-import { fit, inside, para, GAP, LINE } from '../ui/layout.js';
+import { fit, inside, pair, para, GAP, LINE, LINE_TIGHT } from '../ui/layout.js';
+import {
+  drawItemRowIcon, drawItemSprite, ITEM_ROW_PAD_X, ITEM_SPRITE_UNITS,
+} from '../gfx/itemart.js';
 import { registry } from '../data/registry.js';
 import { say } from '../ui/dialogue.js';
 import type { GameState } from '../systems/state.js';
@@ -189,32 +192,67 @@ export class ShopScene implements Scene {
     const panelX = 6 + listW + 6;
     const panelW = SCREEN_W - 6 - panelX;
     const panelH = barY - 26 - 4;
-    this.list.render(r, 6, 26, listW, { rowHeight: 12 });
+    const rowH = 12, padY = 4;
+    // 144 already had the room: the widest row the shop can produce is "Strong
+    // Potion" at 74 beside "M~4000" at 28, which leaves 78 units of label space
+    // once the icon column is inside the padX. Nothing gives way here, so the
+    // side panel keeps every unit it had.
+    this.list.render(r, 6, 26, listW, { rowHeight: rowH, padX: ITEM_ROW_PAD_X });
+
+    // Same pass the bag makes, over the gap the padX reserved. Both lists go
+    // through it: a buy row and a sell row are the same row.
+    const rows = Math.min(this.list.visible, this.list.items.length);
+    for (let row = 0; row < rows; row++) {
+      const rowId = this.list.items[this.list.scroll + row]?.value;
+      drawItemRowIcon(r, rowId ? registry.getItem(rowId) : null, 6, 26 + padY + row * rowH);
+    }
 
     const id = this.list.selectedValue;
     const item = id ? registry.getItem(id) : undefined;
     r.window(panelX, 26, panelW, panelH);
     if (item) {
       const box = inside(panelX, 26, panelW, panelH, 1);
+      // Picture, name, rule, numbers -- the same card the bag draws, and for
+      // the same reason: these two screens are consecutive for anyone
+      // restocking, and an item that changes shape between them is the sort of
+      // thing a player reads as two different items.
+      //
+      // The one difference is that here the name goes UNDER the picture rather
+      // than beside it, and that is forced. This panel is 70 units across, so a
+      // name column beside a 16-unit icon would be 50 -- and "Steadyroot" is a
+      // single 59-unit word, which would hard-break in the middle. The bag's
+      // panel has 87 and can afford the wider arrangement.
+      //
+      // The picture belongs here rather than in the message bar below, which is
+      // where this screen's description lives. The bar is far wider and would
+      // have taken it easily, but the bar also carries the shopkeeper's line,
+      // and a drawing at its head reads as belonging to what she is saying.
+      drawItemSprite(r, item, box.x, box.y);
       // The name wraps here rather than truncating: this is the one place on
       // the screen where the player can read it in full.
-      let y = box.y + para(r, item.name, { x: box.x, y: box.y, w: box.w, h: 22 },
-        { color: '#282838', lineHeight: LINE }) + 4;
+      para(r, item.name,
+        { x: box.x, y: box.y + ITEM_SPRITE_UNITS + 3, w: box.w, h: LINE_TIGHT + 7 },
+        { color: '#282838', lineHeight: LINE_TIGHT, maxLines: 2 });
+      // Fixed, not stacked under the name: a rule that moves when the selection
+      // changes from "Rouse" to "Warden Vessel" makes the whole panel twitch.
+      let y = box.y + ITEM_SPRITE_UNITS + 22;
       r.rect(box.x, y, box.w, 1, '#c2cadd');
-      y += 5;
+      y += 6;
+      // Label and value on one row apiece. Stacked, they came to 41 units for
+      // the two the sell side needs, and the picture above has spent the height
+      // that used to pay for it. `pair` measures the value first and fits the
+      // label to what is left, so neither can run into the other.
+      //
       // Which side of the counter we are on is the mode, not `pendingBuy` --
       // that only means anything once a quantity is being chosen, and reading
       // it here made the sell panel quote the buying price.
       if (this.mode === 'buy' || (this.mode === 'quantity' && this.pendingBuy)) {
-        r.text('Price', box.x, y, { color: '#6a7490' });
-        r.text(`M~${item.price}`, box.x + box.w, y + 10, { color: '#282838', align: 'right' });
+        pair(r, box.x, y, box.w, 'Price', `M~${item.price}`, { detailColor: '#282838' });
       } else {
-        r.text('You have', box.x, y, { color: '#6a7490' });
-        r.text(`x${this.state.itemCount(item.id)}`, box.x + box.w, y + 10,
-          { color: '#282838', align: 'right' });
-        r.text('Each', box.x, y + 24, { color: '#6a7490' });
-        r.text(`M~${item.sellPrice ?? 0}`, box.x + box.w, y + 34,
-          { color: '#282838', align: 'right' });
+        pair(r, box.x, y, box.w, 'You have', `x${this.state.itemCount(item.id)}`,
+          { detailColor: '#282838' });
+        pair(r, box.x, y + 12, box.w, 'Each', `M~${item.sellPrice ?? 0}`,
+          { detailColor: '#282838' });
       }
     }
 

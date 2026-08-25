@@ -7,11 +7,11 @@
   "rows": [
     "IIIUIIIIIIUIII",
     "I;;;;;;;;;;;;I",
-    "IPKKKFKKKKFFFI",
+    "IPKKKFKKKKFF;I",
+    "I;FFFFFFFFFF;I",
+    "I;;;FFFF;;FF;I",
     "IFFFFFFFFFFFFI",
-    "IF;;FFFF;;FFFI",
-    "IFFFFFFFF;FFFI",
-    "IF;;FFFFFF;;FI",
+    "I;;FFFF;;;FF;I",
     "IFFFFFFFFFFFFI",
     "IPFFFFFFFFFFPI",
     "IIIIIIDIIIIIII"
@@ -21,8 +21,8 @@
       "x": 6,
       "y": 9,
       "toMap": "tanners_rest",
-      "toX": 21,
-      "toY": 4,
+      "toX": 19,
+      "toY": 9,
       "facing": "down",
       "style": "door"
     }

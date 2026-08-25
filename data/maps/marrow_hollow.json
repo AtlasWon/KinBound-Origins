@@ -10,29 +10,31 @@
     "y": 30
   },
   "encounterTable": "marrow_hollow",
-  "_legend": "Terracotta gable + chimney = the player house. Slate + timber = the Ashe house. Vess works out of the flat-roofed laboratory on the east side of the crossroads.",
+  "_legend": "Terracotta gable + chimney = the player house. Slate + timber = the Ashe house. Vess works out of the flat-roofed laboratory on the east side of the crossing.",
+  "_plan": "ONE road reaches the map edge -- the coast road, north at x=14. Everything else is a lane that ends at a door, a junction or the water, because a hamlet has no through traffic to justify a second highway and a road that stops dead in the treeline says so out loud. The high street (y=8) is one lane wide west of the crossing and two at the crossing itself, where carts turn for the laboratory. The village green with the wellhead sits in the fork, and the two houses on it are the only ones with paths to their doors. South of the green a footpath -- visibly narrower than the street -- runs from the Ashe doorstep east to the pond, which is the reason it exists.",
+  "_contract": "MARROW HOLLOW'S GEOMETRY IS LOAD-BEARING. data/events/marrow_hollow.json walks Perrin along it with scripted steps that ignore collision, so a tile that stops being a road here does not fail -- it puts him through a wall in front of the player. Do not narrow, move or interrupt: y=8 walkable from x=5 to x=18 and at x=21..23; y=9 walkable x=14..23; (18,7) plus the laboratory forecourt (19..25, y=7); the double door at (22,6),(23,6); column x=22 walkable from y=9 down to y=17; column x=15 walkable from y=3 up to y=0. (17,7) stays a sign: it is why Perrin climbs to the verge at x=18 and not sooner, and (20,8) is the hiker he would otherwise walk through.",
   "rows": [
     "TTTTTTTTTTTTTT--TTTTTTTTTTTTTT",
-    "TTTTTTTTTTTTT,--,TTTTTTTTTTTTT",
-    "TTTTTTTTTTTTT.--.TTTTTTTTTTTTT",
-    "TTT.,.*..(&&&)--.TTTTTTTTTTTTT",
-    "TTT..,...MdMdM--.TTTTTTTTTTTTT",
-    "TTT[^j^].a,a,a--.TvvyvvvvvvvTT",
-    "TTT#wwi#......--..lnnzquznnlTT",
-    "TTT.a--a..,..!--.!.=======.TTT",
-    "TTT.----------------------.TTT",
-    "TTT------------------------TTT",
-    "TTT<%%>.Y.,.,.--.......,...TTT",
-    "TTTMddM.......--.(&&&).,...TTT",
-    "TTT.aa....===,--.HZZZH.....TTT",
-    "TTT.<%%%>.=O=!--.a---a.[^^]TTT",
-    "TTT.HZiZH.===.--.......MZZMTTT",
-    "TTT.-----.....--...Y...a--aTTT",
-    "TTT------------------------TTT",
-    "TTT\"\"\"\"\"\"\".,..--.....!_____TTT",
-    "TTT\"\"\"\"\"\"\"....--..,...|~~~|TTT",
-    "TTT\"\"\"\"\"\"\".,..--......|~~~|TTT",
-    "TTT...........--......_____TTT",
+    "TTTTTTTTTTTTt,--,tTTTTTTTTTTTT",
+    "TTTTTTTTTTT.,.--.,.TTTTTTTTTTT",
+    "TTT.,*...(&&&)--.,tTTTTTTTTTTT",
+    "TTt..,...MdMdM--..,tTTTTTTTTTT",
+    "TT.[^j^]..a,a.--.tvvyvvvvvvvTT",
+    "TT.#wwi#.,...,--..lnnzquznnlTT",
+    "TT,.a--a.,..,!--.!.=======.,tT",
+    "TT.,-----p----------------.tTT",
+    "TT,.,...,.,...-----p----Y.,.TT",
+    "TTt.,..*.,....Y--.,..,--t.t.TT",
+    "TT.,..,...a=a..--(&&&)--.t..TT",
+    "TT,..,...!====.--HZZZH--t.t.TT",
+    "TT..<%%%>==~==.--a...a--..t,TT",
+    "TT..HZiZH.====.--..,..--..,.TT",
+    "TT.,.a-a..a=a..--,..,.--[^^]TT",
+    "TT.,..----p-------------MZZMTT",
+    "TT,.,\"\"\",..,..,.,\"_,ssss,!_,TT",
+    "TT,,\"\"\"\"\",.\"\",.,\"\"ss~~~~s.,.TT",
+    "TT,\"\"\"\"\"\"\",\"\"\",.,s~~~~~~~s,,TT",
+    "TT.,\"\"\",..\"\",.*..,sssssss.,.TT",
     "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT"
   ],
   "warps": [
@@ -95,9 +97,9 @@
     {
       "id": "hollow_villager",
       "sprite": "villager_f",
-      "x": 13,
-      "y": 14,
-      "facing": "left",
+      "x": 11,
+      "y": 12,
+      "facing": "down",
       "movement": {
         "kind": "lookAround"
       },
@@ -106,8 +108,8 @@
     {
       "id": "hollow_kid",
       "sprite": "kid",
-      "x": 11,
-      "y": 18,
+      "x": 10,
+      "y": 17,
       "facing": "down",
       "movement": {
         "kind": "pace",
@@ -154,8 +156,8 @@
     },
     {
       "kind": "sign",
-      "x": 13,
-      "y": 13,
+      "x": 9,
+      "y": 12,
       "text": [
         "The well runs dry every Turning.",
         "It has not run dry in sixty years."
@@ -188,7 +190,7 @@
     },
     {
       "kind": "sign",
-      "x": 21,
+      "x": 24,
       "y": 17,
       "text": [
         "THE HOLLOW POND",

@@ -15,7 +15,12 @@ const clear = () => {
 
 await d.loadWait(1400);
 
-for (let i = 0; i < 80 && top().name !== 'creator'; i++) d.key('Enter', 12);
+// Reach the title, then choose NEW JOURNEY deliberately -- the cursor starts
+// on CONTINUE whenever a save exists, so pressing Enter blindly loads that
+// save and skips the creator entirely.
+for (let i = 0; i < 90 && top().name !== 'title'; i++) d.key('Enter', 10);
+if (top().name === 'title' && top().menu) { top().menu.index = 0; d.key('Enter', 24); }
+for (let i = 0; i < 60 && top().name !== 'creator'; i++) d.key('Enter', 10);
 if (top().name !== 'creator') throw new Error(`never reached the creator; stuck on ${top().name}`);
 
 for (let i = 0; i < 30; i++) {

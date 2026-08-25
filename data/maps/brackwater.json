@@ -11,27 +11,27 @@
   },
   "rows": [
     "TTTTTTTTTTTTTT--TTTTTTTTTTTTTT",
-    "TT............--............TT",
-    "TT...144443...--...699998...TT",
-    "TT...122523...--...677078...TT",
-    "TT.a.GGhgGG!..--..!GGmgGG.a.TT",
-    "TT...------...--...------...TT",
-    "TT..Y.........--.........Y..TT",
-    "TT--------------------------TT",
-    "TT..,.........--............TT",
-    "TT~~~~~~s.....--....(&&&)...TT",
-    "TT~~~~~~s.....--....MddiM...TT",
-    "TT~~~~~~s.....--....a---a...TT",
-    "TT~~~~~~s.....--............TT",
-    "TT~~~~~~s.....--....!..[^^].TT",
-    "TT~~~~~~s....!--.......#ww#.TT",
-    "TTsspsssssspssBBsspsssssspssTT",
-    "TT~~~~~~WWWWWWBBWWWWWWWWWWWWTT",
-    "TT~~~~WWWWWBBBBBBBBWWWWWWWWWTT",
-    "TT~~~WWWWWWB<%%>BBBWWWWWWWWWTT",
-    "TTWWWWWWWWWBGGGgBBBWWWWWWWWWTT",
-    "TTWWWWWWWWWWWWWWWWWWWWWWWWWWTT",
-    "TTWWWWWWWWWWWWWWWWWWWWWWWWWWTT"
+    "TT..,.....,...--..,...t.,..tTT",
+    "TT.t.144443.,.--..,.t..t.,..TT",
+    "TT...122523,..--.,...,..o.,.TT",
+    "TT.a.GGhgGG!.,--...,....,...TT",
+    "TT..a======a..--..699998.,..TT",
+    "TT.Y....=...,.--..677078..,.TT",
+    "TT,.....=.,...--.!GGmgGG...,TT",
+    "TTssss-----p-------p----.,..TT",
+    "TTss~~sps.____--.Y,.(&&&).,.TT",
+    "TTs~~~~ss.|,.|--.,..MddiM,..TT",
+    "TTs~~~~sp,|.,|--...,a---a..,TT",
+    "TTss~~s----------p-------Y,.TT",
+    "TTs~~~~s..,...--.,..!..[^^].TT",
+    "TTs~~~sps,...!--..,....#ww#.TT",
+    "TTsspsssssspBBBBBBsspssssspsTT",
+    "TTs~~~~~WWWWWWBBWWWWWWWWWWWsTT",
+    "TTs~~~WWWWWBBBBBBBBWWWWWWWWsTT",
+    "TTs~~WWWWWWB<%%>BBBWWWWWWWWsTT",
+    "TTsWWWWWWWWBGGGgBBBWWWWWWWWsTT",
+    "TTsWWWWWWWWWWWWWWWWWWWWWWWWsTT",
+    "TTsWWWWWWWWWWWWWWWWWWWWWWWWsTT"
   ],
   "warps": [
     {
@@ -44,8 +44,8 @@
       "style": "door"
     },
     {
-      "x": 22,
-      "y": 4,
+      "x": 21,
+      "y": 7,
       "toMap": "brackwater_provisioner",
       "toX": 6,
       "toY": 8,
@@ -93,8 +93,8 @@
     {
       "id": "bw_harbourmaster",
       "sprite": "hiker",
-      "x": 18,
-      "y": 8,
+      "x": 16,
+      "y": 14,
       "facing": "down",
       "movement": {
         "kind": "static"
@@ -116,7 +116,7 @@
       "id": "bw_child",
       "sprite": "kid",
       "x": 18,
-      "y": 12,
+      "y": 13,
       "facing": "left",
       "movement": {
         "kind": "wander",
@@ -193,13 +193,14 @@
     },
     {
       "kind": "sign",
-      "x": 18,
-      "y": 4,
+      "x": 17,
+      "y": 7,
       "text": [
         "PROVISIONER",
         "Oilskin, line, hooks, and one shelf of things for Kin."
       ]
     }
   ],
-  "_legend": "Waystation and Provisioner on the landward street. Tidal flats west, deep water east, and the plank pier running south to the Bastion."
+  "_legend": "Waystation on the landward street, Provisioner two rows lower where the ground drops. Tidal flats west, cut by sandbars and standing water; deep bay east; the plank pier and its quay running south to the Bastion.",
+  "_plan": "One road reaches the edge, north to Route 4, because Brackwater is the end of the road -- past it there is only water. The landward street stops where the ground gives out into the flats at one end and at the Provisioner door at the other; the lower lane runs from the slipway to the net loft. The strand carries the whole coast, so the pier has a quay to stand on rather than beginning in mid-air."
 }

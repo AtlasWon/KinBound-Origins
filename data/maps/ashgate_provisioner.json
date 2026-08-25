@@ -8,11 +8,11 @@
   "rows": [
     "IIIUIIIIUIII",
     "I;;;;;;;;;;I",
-    "IPKKKFKKKFFI",
-    "IFFFFFFFFFFI",
-    "IF;;FFFF;;FI",
-    "IFFFFFFFFFFI",
-    "IPFFFFFFFFPI",
+    "IPKKKFKKKF;I",
+    "I;FFFFFFFF;I",
+    "I;;;FFF;;FFI",
+    "IFFFFFFFFF;I",
+    "IPFFFFFF;;PI",
     "IIIIIIDIIIII"
   ],
   "warps": [
@@ -20,8 +20,8 @@
       "x": 6,
       "y": 7,
       "toMap": "ashgate",
-      "toX": 23,
-      "toY": 7,
+      "toX": 22,
+      "toY": 9,
       "facing": "down",
       "style": "door"
     }

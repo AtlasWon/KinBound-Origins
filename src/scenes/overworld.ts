@@ -13,7 +13,7 @@ import { DETAIL, Renderer, SCREEN_H, SCREEN_W } from '../engine/renderer.js';
 import { T, TILE_PX, TILE_SIZE, Tileset } from '../gfx/tileset.js';
 import { TileMap, type AsciiMapFile } from '../world/tilemap.js';
 import { Actor, DIR_VEC, WALK_FRAMES } from '../world/actor.js';
-import { PlayerBody, SCRIPT_RUN_SPEED, WALK_SPEED } from '../world/body.js';
+import { BODY_H, BODY_W, PlayerBody, SCRIPT_RUN_SPEED, WALK_SPEED } from '../world/body.js';
 import { ask, say } from '../ui/dialogue.js';
 import type { Direction, MapNpc, MapObject, MapWarp } from '../data/schema.js';
 import { GameState } from '../systems/state.js';
@@ -472,6 +472,57 @@ export class OverworldScene implements Scene {
     if (i.pressed('confirm')) this.interact(game);
   }
 
+  /**
+   * Which tiles the player's feet box is standing in *right now*.
+   *
+   * THE PLAYER IS A BODY, NOT A GRID SQUARE. `tileX`/`tileY` name the single
+   * tile the centre of the feet box sits in, but the box is 11x9 on a 16px
+   * grid, so for most of every step it is inside two tiles at once -- up to
+   * eight pixels of it in the tile behind. Anything that asks "is the player
+   * on this tile" using those two numbers is therefore wrong by most of a
+   * tile, and the half it misses is a place other actors think is empty.
+   *
+   * Everything that decides whether somebody else may stand somewhere has to
+   * ask this instead. See trainerApproach and npcCanEnter.
+   */
+  private playerCovers(tx: number, ty: number): boolean {
+    const left = Math.floor(this.player.x / TILE_SIZE);
+    const right = Math.floor((this.player.x + BODY_W - 1) / TILE_SIZE);
+    const top = Math.floor(this.player.y / TILE_SIZE);
+    const bottom = Math.floor((this.player.y + BODY_H - 1) / TILE_SIZE);
+    return tx >= left && tx <= right && ty >= top && ty <= bottom;
+  }
+
+  /**
+   * Is this step carrying the player *out* of a tile their body is already
+   * standing in?
+   *
+   * A last line of defence, and the reason it exists is worth writing down: an
+   * actor that ends up occupying a tile the player is partly inside makes every
+   * direction solid at once, because collision is tested against the whole box
+   * and the box cannot leave a tile it is already in without being inside it on
+   * the way. That is a permanent freeze -- no fade, no flag, nothing on screen
+   * to explain it, and the only cure a reload.
+   *
+   * So a body that is already overlapping is always allowed to reduce the
+   * overlap. Only the direction that reduces it opens up, so nobody can be
+   * walked through: from outside, the box is not overlapping, and the tile is
+   * as solid as it ever was.
+   */
+  private escapingFrom(tx: number, ty: number, from: Direction): boolean {
+    if (!this.playerCovers(tx, ty)) return false;
+    const cx = tx * TILE_SIZE + TILE_SIZE / 2;
+    const cy = ty * TILE_SIZE + TILE_SIZE / 2;
+    const px = this.player.centerX;
+    const py = this.player.y + BODY_H / 2;
+    switch (from) {
+      case 'left': return cx >= px;
+      case 'right': return cx <= px;
+      case 'up': return cy >= py;
+      default: return cy <= py;
+    }
+  }
+
   /** Solid test used by the body. Bound once so it is cheap to pass around. */
   private solidTest = (tx: number, ty: number, from: Direction): boolean => {
     if (!this.map.inBounds(tx, ty)) return this.map.warpAt(tx, ty) === undefined;
@@ -479,8 +530,9 @@ export class OverworldScene implements Scene {
 
     if (this.boulderAt(tx, ty)) return true;
     for (const n of this.npcs) {
-      if (n.actor.tileX === tx && n.actor.tileY === ty) return true;
-      if (n.actor.moving && n.actor.targetX === tx && n.actor.targetY === ty) return true;
+      const there = (n.actor.tileX === tx && n.actor.tileY === ty)
+        || (n.actor.moving && n.actor.targetX === tx && n.actor.targetY === ty);
+      if (there) return !this.escapingFrom(tx, ty, from);
     }
 
     switch (c) {
@@ -830,13 +882,47 @@ export class OverworldScene implements Scene {
       audio.playSfx('encounter_trainer');
       this.scriptedWait(34, () => {
         this.alert = null;
-        // Stop one tile short so they end up face to face.
-        const steps: Direction[] = new Array(Math.max(0, distance - 1)).fill(npc.actor.facing);
+        /*
+         * Stop one tile short so they end up face to face -- but never on a
+         * tile the player's body is standing in.
+         *
+         * THIS IS THE LOCK. `distance` is measured to the player's *tile*, and
+         * the tile in front of it is very often a tile the player is also
+         * physically in: the moment a trainer spots you the field goes busy, so
+         * the body freezes exactly where the step had got to, and that is
+         * hardly ever the middle of a tile. Walk into a sight line moving
+         * sideways -- which is how anyone gets spotted on a road -- and the box
+         * is straddling a boundary by up to eight pixels. The trainer then
+         * walked into that overlap, became solid inside the player, and after
+         * the battle every one of the four directions was blocked: the game
+         * looked completely normal and the character simply could not move.
+         *
+         * So the walk stops at the last tile the player is not standing in. The
+         * gap that leaves is at most half a tile, and the player is standing in
+         * the half of it nearest the trainer, so it still reads as face to face.
+         */
+        const steps: Direction[] = new Array(
+          this.approachSteps(npc.actor.tileX, npc.actor.tileY, npc.actor.facing, distance),
+        ).fill(npc.actor.facing);
         this.scriptedMove(npc.data.id, steps, 'walk', () => {
           this.trainerChallenge(game, trainerId);
         });
       });
     });
+  }
+
+  /**
+   * How many tiles a spotted trainer may close before they are standing in the
+   * player. See the note in trainerApproach for why this is not `distance - 1`.
+   */
+  approachSteps(fromX: number, fromY: number, facing: Direction, distance: number): number {
+    const v = DIR_VEC[facing];
+    let room = 0;
+    for (let s = 1; s <= distance - 1; s++) {
+      if (this.playerCovers(fromX + v.x * s, fromY + v.y * s)) break;
+      room = s;
+    }
+    return room;
   }
 
   /** The trainer's challenge lines, delivered in the field before the wipe. */
@@ -1047,6 +1133,26 @@ export class OverworldScene implements Scene {
         m.done();
         continue;
       }
+      /*
+       * A cutscene may not walk somebody into the player.
+       *
+       * Scripted movement had no collision check at all, which is fine for
+       * walls -- an author places the path -- but not for the player, who is
+       * standing wherever they stopped. The player is a body, not a tile: for
+       * most of every step it straddles two tiles, and an author writing
+       * "walk Perrin to (22,9)" cannot know the player is half in that tile.
+       *
+       * The step is dropped rather than the path being abandoned, so the actor
+       * arrives as close as the room allows and the script still completes --
+       * a cutscene that never calls done() would hang the world, which is a
+       * far worse failure than an NPC stopping one tile short.
+       */
+      // Only NPCs reach here; scriptedMove walks the player down its own branch.
+      const v = DIR_VEC[next];
+      if (this.playerCovers(m.actor.tileX + v.x, m.actor.tileY + v.y)) {
+        m.actor.facing = next;
+        continue;
+      }
       m.actor.step(next, m.frames);
     }
   }
@@ -1124,7 +1230,10 @@ export class OverworldScene implements Scene {
   private npcCanEnter(x: number, y: number): boolean {
     if (!this.map.inBounds(x, y)) return false;
     if (this.map.collisionAt(x, y) !== 0 && this.map.collisionAt(x, y) !== 6) return false;
-    if (this.player.tileX === x && this.player.tileY === y) return false;
+    // The whole body, not just the tile its centre is in: a wandering
+    // townsperson that steps into the eight pixels of player nobody measured
+    // pins them in place until it happens to wander off again.
+    if (this.playerCovers(x, y)) return false;
     return !this.npcs.some((o) => (o.actor.tileX === x && o.actor.tileY === y) ||
       (o.actor.moving && o.actor.targetX === x && o.actor.targetY === y));
   }

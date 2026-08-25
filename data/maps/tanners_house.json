@@ -8,10 +8,10 @@
     "IIIIUIIIIUII",
     "IfNQJffffkkI",
     "IfKKKfffffPI",
-    "If/ffffAAffI",
+    "If//fffAAEfI",
     "IfrrfffEEfSI",
     "IfVffffffkfI",
-    "IPfffffffffI",
+    "IPffffffffkI",
     "IIIIIIDIIIII"
   ],
   "warps": [
@@ -19,8 +19,8 @@
       "x": 6,
       "y": 7,
       "toMap": "tanners_rest",
-      "toX": 23,
-      "toY": 17,
+      "toX": 21,
+      "toY": 18,
       "facing": "down",
       "style": "door"
     },

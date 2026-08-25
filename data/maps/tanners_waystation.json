@@ -9,10 +9,10 @@
     "I+++++kkF?FFFI",
     "IPKKFKKKFFFFkI",
     "IFFFFFFFFFFFFI",
-    "IFFFFFFFFFFFFI",
-    "IF/rrFFFF/rrFI",
-    "IFFrrFF/FFrrFI",
-    "IPFFFFFFFFFFPI",
+    "IkFFFFFFFFAAFI",
+    "IF/rr/FFFFEEFI",
+    "IFFrrFFFFFFFPI",
+    "IkFFFFFFFFFFkI",
     "IFFFFFFFFFFFFI",
     "IIIIIIDIIIIIII"
   ],
@@ -21,8 +21,8 @@
       "x": 6,
       "y": 9,
       "toMap": "tanners_rest",
-      "toX": 8,
-      "toY": 4,
+      "toX": 11,
+      "toY": 8,
       "facing": "down",
       "style": "door"
     }

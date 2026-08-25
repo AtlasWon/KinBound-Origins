@@ -1244,7 +1244,16 @@ function shotTurning(r: Renderer, t: number, p: number): void {
   // which is a tide going out by a hand's width. The caption over this shot
   // promises a sea that reverses; the picture has to give up enough ground for
   // that to be a thing that happened.
-  const hz = 78 + heave + withdraw * 34 - surge * 44;
+  //
+  // AND IT DOES NOT COME BACK TO WHERE IT WAS. The surge used to be forty-four
+  // against a withdrawal of thirty-four, so the water ended nine units above
+  // its own opening line -- which, on this scale, is a shot that goes out and
+  // comes back and leaves the sea where it found it. The next shot in the film
+  // is a town that has been underwater for seventy years BECAUSE of this, so
+  // the last frame of this one has to be a sea standing higher than the frame
+  // it started on, with the foot of the headland already gone under it. That is
+  // the difference between weather and a Turning.
+  const hz = 78 + heave + withdraw * 34 - surge * 50;
 
   let flash = 0;
   let bolt = -1;
@@ -1316,9 +1325,17 @@ function shotTurning(r: Renderer, t: number, p: number): void {
     // and it is grey where the water is blue. It also grades: darker at the
     // waterline where it is still awash, paler up by the old shore where it has
     // had a minute to drain.
+    //
+    // WARM grey, not another cool one. The last pass fixed this band against
+    // the sea and left it losing to the SKY: #4b4d5e is a blue-violet a shade
+    // darker than the storm sky's own underside, so at full withdrawal the
+    // uncovered seabed read as more weather. It cannot win on brightness -- the
+    // sky is what is lighting it -- so it wins on hue instead. A neutral-warm
+    // grey against a violet sky separates at any value, and it is also what wet
+    // sand actually is.
     for (let i = 0; i < Math.ceil(bare) + 3; i++) {
       const u = i / Math.max(1, bare);
-      r.rect(0, shore - 1 + i, SCREEN_W, 1, band('#4b4d5e', '#2b3247', Math.min(1, u)));
+      r.rect(0, shore - 1 + i, SCREEN_W, 1, band('#736c62', '#3b3a46', Math.min(1, u)));
     }
     // Runnels: the water finding its way off the flat. They point down the
     // slope, they are brighter than what they cross, and they are what turns a
@@ -1360,6 +1377,111 @@ function shotTurning(r: Renderer, t: number, p: number): void {
     r.rect(0, hz - 3, SCREEN_W, 1, 'rgba(198,218,246,0.3)');
   }
 
+  /*
+   * THE JETTY, AND WHY THE SHOT NEEDED ONE.
+   *
+   * A sea going out is a horizontal line moving down a frame, and a horizontal
+   * line moving down a frame is indistinguishable from a camera tilting up.
+   * Runnels and stones fixed the ground; they did not fix the MEASUREMENT,
+   * because everything on that ground arrives with the ground and so has
+   * nothing to say about how far the water has fallen.
+   *
+   * Six rotten posts do. They are in the frame from the first tick, standing
+   * out of the water; the sea slides down them; and each one carries a pale
+   * band at the height the water normally stands, with weed hanging off it. The
+   * band is the whole device. Once the eye has seen where the water is SUPPOSED
+   * to be on a post, every unit of post showing under that band is a unit the
+   * sea has given up, and it can read that off the picture without being told.
+   *
+   * Then the surge puts them back under, faster than they came out, and the
+   * last thing the shot does with them is take them away again.
+   *
+   * They are drawn here -- after the flat, before the cape and long before the
+   * water -- so the sea simply paints over whatever it currently covers. There
+   * is no "how much of this post is submerged" arithmetic anywhere, and there
+   * cannot be a frame where the two disagree.
+   */
+  const postX: number[] = [];
+  const postTop: number[] = [];
+  for (let i = 0; i < 6; i++) {
+    // Further down the frame is nearer, so a post that stands lower stands
+    // taller. Ranged left of the cape, and unevenly: a row of posts at a
+    // regular pitch is a fence, and nobody builds a jetty out of a fence.
+    const px = 14 + i * 20 + Math.round(hash(i + 2100) * 7);
+    const feet = shore + 4 + i * 5.2;
+    // Well clear of the water. The first version stood them thirteen units out
+    // of a seabed whose tide mark was two units off the crown, and six dark
+    // uprights with a pale band and a fringe of weed at the top of each is not
+    // a jetty, it is six people standing on a beach. A post has to carry most
+    // of its length ABOVE the line the water keeps, or the mark cannot be read
+    // as a mark.
+    const ph = 22 + i * 3.4;
+    const w = 2 + Math.floor(i / 3);
+    const lean = (hash(i + 2140) - 0.5) * 5;
+    const top = feet - ph;
+    postX.push(px + lean);
+    postTop.push(top);
+    for (let k = 0; k <= ph; k++) {
+      const u = k / ph;
+      r.rect(Math.round(px + lean * u * u), Math.round(feet - k), w, 1, '#0d1220');
+    }
+    // The crown catches the lightning, like everything else standing up in this
+    // shot. A frame where only the headland flashes is a frame with one light
+    // in it and two directions of shadow.
+    r.rect(Math.round(px + lean), Math.round(top), w, 1, flash > 0.3 ? '#7c88ae' : '#2a3350');
+    // The tide mark, at the height the water was standing when the shot opened.
+    // Two units of pale, and weed below it: the mark says how high, the weed
+    // says how long it has been true.
+    const markY = shore - 1;
+    if (markY > top && markY < feet) {
+      const mu = (feet - markY) / ph;
+      const mx = Math.round(px + lean * mu * mu);
+      r.rect(mx, markY - 1, w, 2, 'rgba(198,214,240,0.55)');
+      for (let k = 1; k < Math.min(11, feet - markY); k++) {
+        if (hash(i * 13 + k + 2180) < 0.42) continue;
+        r.rect(mx, markY + 1 + k, w, 1, '#1b2321');
+      }
+    }
+  }
+  // What is left of the deck. Three spans out of five, because a jetty with all
+  // of its decking on is a jetty somebody still uses, and this one has been
+  // standing in a sea that turns over twice a century.
+  for (let i = 0; i < 5; i++) {
+    if (i === 1 || i === 3) continue;
+    const x0 = postX[i]!;
+    const x1 = postX[i + 1]!;
+    const y0 = postTop[i]! + 2;
+    const y1 = postTop[i + 1]! + 2;
+    const steps = Math.max(2, Math.round(x1 - x0));
+    for (let k = 0; k <= steps; k++) {
+      const u = k / steps;
+      // A sag, so the beam is carrying its own weight rather than ruled on.
+      const y = y0 + (y1 - y0) * u + Math.sin(u * Math.PI) * 2.2;
+      r.rect(Math.round(x0 + (x1 - x0) * u), Math.round(y), 1, 2, '#0d1220');
+    }
+  }
+
+  /*
+   * The front.
+   *
+   * A tide has a level. A surge has an EDGE, and the edge arrives before the
+   * level does: water runs up a flat in tongues, well ahead of the line it will
+   * settle at, and it is the tongues rather than the line that make a returning
+   * sea look like it is coming for something. Without them the water simply
+   * rose, evenly, all the way across -- which is what a bath does.
+   */
+  if (surge > 0.02 && bare > 2) {
+    const reach = surge * 30;
+    for (let x = 0; x < SCREEN_W; x += 2) {
+      const run = reach * (0.45 + 0.55 * Math.sin(x * 0.052 + t * 0.19))
+        * (0.7 + 0.3 * Math.sin(x * 0.017 - t * 0.07));
+      if (run < 1.5) continue;
+      const y0 = Math.max(shore - 2, hz - run);
+      r.rect(x, y0, 2, hz - y0, 'rgba(26,48,78,0.62)');
+      r.rect(x, y0, 2, 1, 'rgba(228,242,255,0.8)');
+    }
+  }
+
   // A headland with a light on it, so the storm has something to be a threat
   // to. The dome carries a broken crest: a clean parabola reads as a hill in a
   // diagram rather than as rock in weather.
@@ -1378,8 +1500,14 @@ function shotTurning(r: Renderer, t: number, p: number): void {
   // rings, not one translucent disc: a single ellipse at a readable alpha draws
   // a hard-edged egg on the hillside instead of a glow.
   const towerY = shore - 34;
-  if (Math.sin(t * 0.05) > 0.35) {
-    const lamp = 0.55 + 0.45 * Math.sin(t * 0.05);
+  // The light stops sweeping and simply stays on once the sea starts coming
+  // back. That is the beat this shot ends on: the water climbs the rock the
+  // light is standing on, and the light is still lit when the picture cuts. A
+  // beam that happened to be pointed away on the last frame -- which is a coin
+  // toss, and lost it more often than not -- threw that away.
+  const held = surge > 0.66;
+  if (held || Math.sin(t * 0.05) > 0.35) {
+    const lamp = held ? 1 : 0.55 + 0.45 * Math.sin(t * 0.05);
     for (let k = 6; k >= 1; k--) {
       r.ellipsePixel(capeX * DETAIL, (towerY - 1) * DETAIL, k * 2.4 * DETAIL, k * 1.7 * DETAIL,
         `rgba(255,196,110,${(0.035 * lamp).toFixed(3)})`);
@@ -2572,12 +2700,30 @@ function shotShore(r: Renderer, t: number, p: number): void {
 
 /* ------------------------------------------------------------ title card */
 
+/**
+ * The title card's clock offset into the sea shot, and where the wordmark
+ * lands. Both are exported through HANDOFF so the start screen can take the
+ * picture over mid-move.
+ */
+const SEA_OFFSET = 900;
+const LOGO_Y = 84;
+
 let logoSprite: HTMLCanvasElement | null = null;
 let shineSprite: HTMLCanvasElement | null = null;
 let subSprite: HTMLCanvasElement | null = null;
 
-/** Built on first use: the cinematic is the only thing that ever asks for it. */
-function titleArt(): { logo: HTMLCanvasElement; shine: HTMLCanvasElement; sub: HTMLCanvasElement } {
+/**
+ * Built on first use, and shared.
+ *
+ * The film is no longer the only thing that asks for it: since the cinematic
+ * now runs BEFORE the start screen and hands straight into it, the wordmark on
+ * the film's last frame and the wordmark on the first frame of the menu have to
+ * be the same object at the same size in the same place, or the join -- which
+ * the player watches happen, with no black in between -- shows a seam.
+ * Rebuilding an identical sprite in the other file would have worked right up
+ * until somebody changed one palette and not the other.
+ */
+export function titleArt(): { logo: HTMLCanvasElement; shine: HTMLCanvasElement; sub: HTMLCanvasElement } {
   if (!logoSprite || !shineSprite || !subSprite) {
     // The same palette the title screen uses. Two different KINBOUNDs a minute
     // apart would read as two different games.
@@ -2608,6 +2754,51 @@ function titleArt(): { logo: HTMLCanvasElement; shine: HTMLCanvasElement; sub: H
 }
 
 /**
+ * The wordmark, centred, with AMBER VERSION under it.
+ *
+ * Centring measures in GAME units, not canvas pixels. A text sprite built at
+ * scale 4 is a canvas four font-pixels wide per glyph pixel, and the renderer
+ * draws it into a buffer that is DETAIL pixels per game unit -- so the sprite
+ * covers `width / DETAIL` units on screen, not `width`. The start screen used
+ * to centre on the raw canvas width and hung its logo forty units left of the
+ * middle of the screen for as long as the screen has existed. Nobody reads a
+ * title screen looking for a centring bug; they just think it looks cheap.
+ *
+ * Returns the logo's height in game units, so a caller can stack under it.
+ */
+export function wordmark(r: Renderer, y: number, alpha = 1, subAlpha = 1): number {
+  const { logo, sub } = titleArt();
+  const lw = logo.width / DETAIL;
+  const lh = Math.round(logo.height / DETAIL);
+  if (alpha > 0.004) {
+    r.image(logo, Math.round((SCREEN_W - lw) / 2), y,
+      0, 0, undefined, undefined, false, false, alpha);
+  }
+  if (subAlpha > 0.004) {
+    const sw = sub.width / DETAIL;
+    r.image(sub, Math.round((SCREEN_W - sw) / 2), y + lh + 3,
+      0, 0, undefined, undefined, false, false, subAlpha);
+  }
+  return lh;
+}
+
+/**
+ * The scrim the wordmark sits on: a soft band of dark, thickest through the
+ * middle of the letters.
+ *
+ * Amber type on an amber sky is type nobody can read, and the start screen has
+ * to survive five different backdrops rather than the one this was written for,
+ * so it is a function both files call rather than a loop either one owns.
+ */
+export function wordmarkScrim(r: Renderer, y: number, alpha: number, strength = 0.075): void {
+  if (alpha <= 0.004) return;
+  for (let i = 0; i < 16; i++) {
+    const a = strength * Math.sin((i / 15) * Math.PI) * alpha;
+    r.rect(0, y - 12 + i * 3, SCREEN_W, 3, `rgba(5,9,20,${a.toFixed(3)})`);
+  }
+}
+
+/**
  * The logo, over the shot the film opened on.
  *
  * Returning to the first image is the cheapest way to make a montage feel like
@@ -2618,24 +2809,22 @@ function shotTitle(r: Renderer, t: number, p: number): void {
   // Offset time so the flock is not caught in the same pose it left in, and
   // keep the sea camera creeping: a title card over a frozen picture is a plate
   // however pretty the picture is.
-  shotSea(r, t + 900, 0.86 + p * 0.14);
+  shotSea(r, t + SEA_OFFSET, 0.86 + p * 0.14);
 
-  const { logo, shine, sub } = titleArt();
+  const { logo, shine } = titleArt();
   const lw = logo.width / DETAIL;
   const lx = Math.round((SCREEN_W - lw) / 2);
   const rise = easeOut(t / 46);
   // Low in the frame, over the water. Centred, it sat on the brightest part of
   // the dawn sky -- an amber wordmark on an amber sky, which is a wordmark
   // nobody can read. The scrim below is the belt to that pair of braces.
-  const ly = Math.round(84 - 8 * (1 - rise));
+  const ly = Math.round(LOGO_Y - 8 * (1 - rise));
 
   const fade = Math.min(1, t / 26);
-  for (let i = 0; i < 16; i++) {
-    const a = 0.075 * Math.sin((i / 15) * Math.PI) * fade;
-    r.rect(0, ly - 12 + i * 3, SCREEN_W, 3, `rgba(5,9,20,${a.toFixed(3)})`);
-  }
+  wordmarkScrim(r, ly, fade);
 
-  if (rise > 0.01) r.image(logo, lx, ly, 0, 0, undefined, undefined, false, false, fade);
+  const subFade0 = Math.min(1, Math.max(0, (t - 60) / 40));
+  if (rise > 0.01) wordmark(r, ly, fade, subFade0);
 
   // The landing: a few frames of light off the whole frame, so the logo
   // arrives with a weight the fade alone cannot give it.
@@ -2657,13 +2846,6 @@ function shotTitle(r: Renderer, t: number, p: number): void {
       r.image(shine, lx + from / DETAIL, ly, from, 0, to - from, shine.height,
         false, false, 0.75);
     }
-  }
-
-  const subFade = Math.min(1, Math.max(0, (t - 60) / 40));
-  if (subFade > 0.01) {
-    const sw = sub.width / DETAIL;
-    r.image(sub, Math.round((SCREEN_W - sw) / 2), ly + Math.round(logo.height / DETAIL) + 3,
-      0, 0, undefined, undefined, false, false, subFade);
   }
 }
 
@@ -2751,23 +2933,215 @@ const SHOTS: Shot[] = [
     captions: [],
     open: true,
     fadeIn: 38,
+    // No fade out. The card is the last thing in the film and what happens
+    // after it is not a cut: either the start screen takes the live picture
+    // over (the dip in HANDOFF), or `leaving` takes it down slowly. A default
+    // 30-tick fade here put the frame most of the way to black before either
+    // of those got a chance to start.
+    fadeOut: 0,
     draw: shotTitle,
   },
 ];
 
 const FADE = 30;
 
+/** The title card. Every route through the film finishes on this one. */
+const CARD = SHOTS.length - 1;
+
+/* ------------------------------------------------------ the living backdrop */
+
+/**
+ * The shots the start screen is allowed to run behind its menu.
+ *
+ * These are the film's own shots, not new drawings of the same places. That is
+ * deliberate twice over: the start screen inherits four-layer parallax and a
+ * moving camera for nothing, and the region behind the menu is provably the
+ * region in the picture -- there is no second set of art to fall out of date
+ * when a species or a palette changes.
+ *
+ * Two things are authored per entry because a backdrop is not a shot:
+ *
+ *  `from`/`to` bound the camera move. A shot's move was written for four or
+ *   five seconds and a backdrop holds for ten, so it runs a slice rather than
+ *   the whole thing -- and the slice is chosen to keep the composition in the
+ *   part of the move that frames well AND to stay away from anything that
+ *   flashes. The Turning ends on a lightning strike that whites out the frame;
+ *   over a menu that is not weather, it is a fault. It stops at 0.82.
+ *
+ *  `lift` is how much extra scrim this particular picture needs under the
+ *   wordmark. Dawn over the sea is amber exactly where the amber logo goes; a
+ *   drowned town at night needs almost nothing.
+ */
+export interface Backdrop {
+  /** For the lower-third, and for shot lists. */
+  readonly place: string;
+  readonly from: number;
+  readonly to: number;
+  readonly lift: number;
+  draw(r: Renderer, t: number, p: number): void;
+}
+
+export const BACKDROPS: readonly Backdrop[] = [
+  { place: 'THE HOLLOW SEA', from: 0.10, to: 0.96, lift: 1.00, draw: shotSea },
+  { place: 'THE LONG GRASS', from: 0.06, to: 0.94, lift: 0.85, draw: shotPlains },
+  { place: 'BELOW THE SHELF', from: 0.05, to: 0.95, lift: 0.35, draw: shotDeep },
+  { place: 'THE TURNING', from: 0.08, to: 0.82, lift: 0.45, draw: shotTurning },
+  { place: 'OLD TIDEFALL', from: 0.05, to: 0.92, lift: 0.30, draw: shotDrowned },
+  { place: 'THE NORTH SHORE', from: 0.04, to: 0.88, lift: 0.55, draw: shotShore },
+];
+
+/**
+ * Where the film puts the wordmark down, so the start screen can pick it up
+ * without the player seeing the handover.
+ *
+ * The film no longer fades out and the menu no longer fades in: the last frame
+ * of the cinematic and the first frame of the start screen are the same
+ * picture, the same sea, at the same point in the same camera move, with the
+ * same logo in the same place. Everything in here is a number both files have
+ * to agree on for that to be true.
+ */
+export const HANDOFF = {
+  /**
+   * What to add to the card's own clock to get the sea's. `handOff` is called
+   * with the card's tick count, so the picture is picked up on the exact frame
+   * it was put down rather than on a number somebody wrote down once.
+   */
+  seaOffset: SEA_OFFSET,
+  /** Where the camera has come to rest by then. */
+  seaP: 1,
+  /** Where the wordmark sits, in game units. */
+  logoY: LOGO_Y,
+  /** How dark the picture is at the moment of the join. */
+  dip: 0.55,
+  /** How long the film spends dipping into it, and the start screen coming out. */
+  dipIn: 46,
+  dipOut: 44,
+} as const;
+
+/**
+ * The film's vignette, so the screen that takes over from it has the same
+ * edges. Without this the corners jump on the join.
+ */
+export function cineVignette(r: Renderer): void {
+  for (let i = 0; i < 10; i++) {
+    const c = `rgba(3,5,11,${(0.05 * (1 - i / 10)).toFixed(3)})`;
+    r.rect(0, i, SCREEN_W, 1, c);
+    r.rect(0, SCREEN_H - 1 - i, SCREEN_W, 1, c);
+    r.rect(i, 0, 1, SCREEN_H, c);
+    r.rect(SCREEN_W - 1 - i, 0, 1, SCREEN_H, c);
+  }
+}
+
+/** Build every icon the film and the backdrops need, before the first frame. */
+export function warmOpeningArt(): void {
+  for (const id of [...FLYERS, ...RUNNERS, ...SWIMMERS]) iconSprite(id);
+}
+
+/**
+ * Drop the scaled copies. Only worth calling when nothing is going to ask for
+ * a cinematic frame again -- which is the moment the player commits to a game,
+ * not the moment the film ends, because the start screen behind the menu is
+ * still drawing these shots.
+ */
+export function releaseOpeningArt(): void {
+  scaledCache.clear();
+}
+
 /**
  * How the cinematic was reached.
  *
  * `cold` is the film starting on its own: black screen, bars slide in, fade up.
- * `handed` is the title screen having already done all of that -- it closed its
- * own letterbox over the logo, took the picture to black, and started this
- * scene on the last frame of its own move. In that case the opening must NOT
- * play the same move again, or the bars slide in twice and the player watches
- * the film start over the top of itself.
+ * That is now the normal case -- the film is the first thing a launch shows.
+ * `handed` is some other screen having already closed the letterbox and taken
+ * the picture to black before starting this scene, in which case the opening
+ * must NOT play the same move again or the bars slide in twice and the player
+ * watches the film start over the top of itself.
  */
 export type OpeningEntry = 'cold' | 'handed';
+
+/**
+ * Which cut to run.
+ *
+ * `full` is the film: eight shots, half a minute, the whole argument.
+ *
+ * `overture` is for somebody who has played before. It is not the film with
+ * bits cut out of it -- it is one of the film's shots, played at its authored
+ * speed with its own line under it, and then the title card. Six seconds, a
+ * beginning, a middle and an end. A returning player is not made to sit through
+ * a story they already know, and they are not made to press a button to escape
+ * one either, which was the other way of solving this and is the way that makes
+ * a player feel they have skipped something.
+ *
+ * The shot rotates from launch to launch, so the thing a regular player sees
+ * every day is different every day.
+ */
+export type OpeningCut = 'full' | 'overture';
+
+export interface OpeningPlan {
+  entry?: OpeningEntry;
+  cut?: OpeningCut;
+  /**
+   * Which shot the overture is built on. Defaults to the rotation; passing one
+   * is how a capture driver gets the same six seconds twice.
+   */
+  overture?: number;
+  /**
+   * What to do when the last frame is gone. Defaults to character creation.
+   * Called with the title card's own tick count, which is the sea's clock minus
+   * HANDOFF.seaOffset -- everything the next screen needs to carry the picture
+   * on from where the film left it.
+   */
+  handOff?: (game: Game, cardT: number) => void;
+}
+
+/**
+ * The shots an overture may be built on: the ones that open on a picture rather
+ * than on a plot point. The archive is a room with a woman explaining something
+ * in it, which is a scene; these are places.
+ */
+const OVERTURE_SHOTS = [0, 1, 2, 3, 4, 6];
+
+/**
+ * Which one comes up this launch.
+ *
+ * Persisted, so it walks the list rather than rolling dice -- a player who
+ * opens the game twice in an evening should not see the same six seconds twice
+ * because a coin landed the same way. Storage failing is not an error worth
+ * having: an unwritable browser just gets the first shot every time.
+ */
+function nextOverture(): number {
+  let n = 0;
+  try {
+    const raw = localStorage.getItem('kinbound.overture');
+    n = raw ? (Number.parseInt(raw, 10) || 0) : 0;
+    localStorage.setItem('kinbound.overture', String((n + 1) % 1000));
+  } catch { /* private mode, or no storage at all. The first shot will do. */ }
+  return OVERTURE_SHOTS[n % OVERTURE_SHOTS.length]!;
+}
+
+/**
+ * The overture, built out of one of the film's shots plus the title card.
+ *
+ * The picture runs the MIDDLE of the source shot's camera move rather than all
+ * of it squeezed into three seconds. A camera move played at the wrong speed is
+ * the loudest way to say "this is an abridgement".
+ */
+function overtureCut(index: number): Shot[] {
+  const src = SHOTS[index]!;
+  const from = 0.22;
+  const to = 0.86;
+  const card = SHOTS[CARD]!;
+  return [
+    {
+      frames: 200,
+      captions: src.captions.slice(0, 1),
+      fadeIn: 26,
+      fadeOut: 26,
+      draw: (r, t, p) => src.draw(r, t + Math.round(src.frames * from), from + p * (to - from)),
+    },
+    { ...card, fadeIn: 30 },
+  ];
+}
 
 export class OpeningScene implements Scene {
   readonly name = 'opening';
@@ -2777,10 +3151,20 @@ export class OpeningScene implements Scene {
   /** 0 = clear, 1 = black. Doubles as the cross-fade between shots. */
   private veil = 1;
   private leaving = false;
-  /** Whether `leaving` was the player's doing or the film running out. */
-  private skipped = false;
+  /** The reel this run is playing: the whole film, or the overture. */
+  private reel: Shot[];
+  private entry: OpeningEntry;
+  /** True once the picture has been asked to go to its last page early. */
+  private hurried = false;
+  /** Ticks of the dip into the start screen. -1 until the card is over. */
+  private hand = -1;
 
-  constructor(private state: GameState, private entry: OpeningEntry = 'cold') {}
+  constructor(private state: GameState, private plan: OpeningPlan = {}) {
+    this.entry = plan.entry ?? 'cold';
+    this.reel = plan.cut === 'overture'
+      ? overtureCut(plan.overture ?? nextOverture())
+      : SHOTS;
+  }
 
   enter(): void {
     audio.playMusic('opening_theme');
@@ -2789,40 +3173,67 @@ export class OpeningScene implements Scene {
     // one tick it first showed a new species -- always right after a cut, where
     // it is most visible. One hitch under the transition beats five under the
     // picture.
-    for (const id of [...FLYERS, ...RUNNERS, ...SWIMMERS]) iconSprite(id);
+    warmOpeningArt();
   }
 
-  exit(): void {
-    // The scaled copies are only ever wanted by this scene, and it plays once
-    // per new game. Holding a few hundred canvases for the rest of the session
-    // buys nothing.
-    scaledCache.clear();
+  /** The last shot of whatever reel is running: always the title card. */
+  private get card(): number { return this.reel.length - 1; }
+
+  /**
+   * The way out that is not a skip.
+   *
+   * The film used to answer a keypress by fading to black in a fifth of a
+   * second and dropping the player somewhere else -- which is what abandoning
+   * something looks like, and it is what the player was told they were doing by
+   * a caption reading ENTER TO SKIP. It now answers by going to the LAST PAGE:
+   * the title card, over the sea the film opened on, with the wordmark rising
+   * out of it and the menu on the other side of it. Whatever route you take
+   * through the cinematic, it ends the same way and it ends on purpose.
+   */
+  private hurry(): void {
+    if (this.hurried) return;
+    this.hurried = true;
+    audio.playSfx('confirm', { volume: 0.35 });
+    if (this.shot === this.card) {
+      // Already on the card. Take it to the point where the logo has landed
+      // and let the ending play from there.
+      this.t = Math.max(this.t, 96);
+      return;
+    }
+    this.shot = this.card;
+    this.t = 0;
+    this.veil = 1;
   }
 
   update(game: Game, _dt: number): void {
     this.t++;
 
     if (this.leaving) {
-      // Two different exits, because they mean two different things. A player
-      // who pressed skip has told you they want out and every extra frame is an
-      // insult: a third of a second and gone. A film that has reached its own
-      // end has earned the other kind of exit -- the title card stays alive
-      // under the fade for the best part of a second while it goes. Running
-      // both at the same rate made the ending feel like an interruption.
-      this.veil = Math.min(1, this.veil + (this.skipped ? 0.06 : 0.019));
-      if (this.veil >= 1) game.scenes.replaceAll(new CreatorScene(this.state));
+      // The one remaining route that still goes to black: something asked for
+      // the old hand-off to character creation. The title card stays alive
+      // under the fade for the best part of a second while it goes.
+      this.veil = Math.min(1, this.veil + 0.019);
+      if (this.veil >= 1) this.finish(game);
+      return;
+    }
+
+    // The dip. Not a fade-out: it settles onto the start screen's own scrim and
+    // stops there, and the screen that takes over comes up out of the same
+    // number. See HANDOFF.
+    if (this.hand >= 0) {
+      this.hand++;
+      if (this.hand === 1) audio.playMusic('title_theme');
+      if (this.hand >= HANDOFF.dipIn) this.finish(game);
       return;
     }
 
     if (game.input.pressed('confirm') || game.input.pressed('cancel')
       || game.input.pressed('menu') || game.input.mouse.leftPressed) {
-      this.leaving = true;
-      this.skipped = true;
-      audio.playSfx('confirm', { volume: 0.4 });
+      this.hurry();
       return;
     }
 
-    const shot = SHOTS[this.shot]!;
+    const shot = this.reel[this.shot]!;
     const fin = shot.fadeIn ?? FADE;
     const fout = shot.fadeOut ?? FADE;
     if (fin > 0 && this.t < fin) this.veil = 1 - this.t / fin;
@@ -2831,22 +3242,42 @@ export class OpeningScene implements Scene {
     } else this.veil = 0;
 
     if (this.t >= shot.frames) {
+      if (this.shot >= this.card) {
+        // The film is over. If somebody is waiting to be handed the picture it
+        // is handed over live -- see `finish`. Note what does NOT happen here:
+        // `t` is not pinned. The card's clock keeps running all the way through
+        // the dip, so the sea under the wordmark is still moving at the instant
+        // the start screen takes it over. Freezing the frame for the last two
+        // thirds of a second is the one thing that would give the join away.
+        if (this.plan.handOff) this.hand = 0;
+        else this.leaving = true;
+        return;
+      }
       this.t = 0;
       this.shot++;
-      if (this.shot >= SHOTS.length) {
-        this.shot = SHOTS.length - 1;
-        this.leaving = true;
-      }
     }
   }
 
+  /**
+   * Give the screen away.
+   *
+   * `handOff` is how the cinematic reaches the start screen, and it is called
+   * with the picture still up rather than after a fade, because the two screens
+   * are drawing the same frame at that moment and the join is meant to be
+   * invisible.
+   */
+  private finish(game: Game): void {
+    if (this.plan.handOff) this.plan.handOff(game, this.t);
+    else game.scenes.replaceAll(new CreatorScene(this.state));
+  }
+
   render(_game: Game, r: Renderer): void {
-    const shot = SHOTS[this.shot]!;
+    const shot = this.reel[this.shot]!;
     const p = Math.min(1, this.t / shot.frames);
     r.clear('#05070d');
     shot.draw(r, this.t, p);
 
-    this.vignette(r);
+    cineVignette(r);
 
     // Letterbox. Cheap, and it tells the player at a glance that this is not a
     // screen they are meant to be pressing buttons at. The bars slide in at the
@@ -2886,25 +3317,21 @@ export class OpeningScene implements Scene {
       }
     }
 
-    if (this.shot === 0 && this.t < 190 && Math.floor(this.t / 34) % 2 === 0) {
-      r.text('ENTER TO SKIP', SCREEN_W - 6, 4, { color: '#6d7893', align: 'right' });
+    // What the key actually does, said honestly. It does not skip the film: it
+    // takes it to its last page and out into the menu, which is the same place
+    // sitting through the whole thing gets you. A caption that says SKIP tells
+    // a player that the thing in front of them is an obstacle.
+    if (this.shot === 0 && this.t < 240 && Math.floor(this.t / 34) % 2 === 0) {
+      r.text('ENTER TO BEGIN', SCREEN_W - 6, 4, { color: '#6d7893', align: 'right' });
     }
 
     if (this.veil > 0) r.tint('#05070d', this.veil);
-  }
 
-  /**
-   * A soft darkening at the edges. Every shot in here is lit from one place,
-   * and the vignette is what stops the flat borders of a procedural drawing
-   * from reading as the borders of a poster.
-   */
-  private vignette(r: Renderer): void {
-    for (let i = 0; i < 10; i++) {
-      const c = `rgba(3,5,11,${(0.05 * (1 - i / 10)).toFixed(3)})`;
-      r.rect(0, i, SCREEN_W, 1, c);
-      r.rect(0, SCREEN_H - 1 - i, SCREEN_W, 1, c);
-      r.rect(i, 0, 1, SCREEN_H, c);
-      r.rect(SCREEN_W - 1 - i, 0, 1, SCREEN_H, c);
+    // The dip, over everything including the veil, so the last thing on screen
+    // is the exact colour and weight the start screen's first frame opens on.
+    if (this.hand >= 0) {
+      r.tint('#060b18', HANDOFF.dip * smooth(this.hand / HANDOFF.dipIn));
     }
   }
+
 }

@@ -1,23 +1,23 @@
 {
   "mapId": "route_1",
-  "$comment": "The first grass a player ever walks into, carrying a level SIX starter and nothing else. It used to top out at six and seven -- level parity -- and in this game's early damage curve parity is a coin flip: a solo starter won only 37 to 52 percent of top-of-band fights here. Worse, gale, chitin and spark all beat Verdant while resisting it, and they carried 47 of the 100 encounter weight, so the Sprigling player specifically lost 11%, 1% and 0% of fights against Pipwing, Nettlebug and Sootmoth. Two changes: the two neutral Beast slots keep a 3-5 band and take the bulk of the weight, while the three starter-counters drop to 3-4 and get rarer. Mean wild level falls 4.61 -> 3.82, so about a sixth less experience per fight, in exchange for 86-94 percent win rates instead of 63-79.",
+  "$comment": "The first grass a player ever walks into, carrying a level SIX starter and nothing else. It used to top out at six and seven -- level parity -- and in this game's early damage curve parity is a coin flip. The two neutral Beast slots keep a 3-5 band and take the bulk of the weight, while the three starter-counters (gale, chitin and spark all beat Verdant while resisting it) are rarer still this pass: 35 weight down to 25, moved onto Nibbet and Tuftail. Tuftail also pays more experience than either, so the route gets slightly richer as it gets safer.",
   "methods": {
     "tallGrass": {
       "rate": 170,
       "slots": [
-        { "species": "nibbet", "minLevel": 3, "maxLevel": 5, "weight": 34 },
-        { "species": "tuftail", "minLevel": 3, "maxLevel": 5, "weight": 28 },
-        { "species": "pipwing", "minLevel": 3, "maxLevel": 4, "weight": 17 },
-        { "species": "nettlebug", "minLevel": 3, "maxLevel": 4, "weight": 11 },
-        { "species": "fizzlet", "minLevel": 3, "maxLevel": 4, "weight": 7 },
-        { "species": "sootmoth", "minLevel": 4, "maxLevel": 5, "weight": 3, "time": ["evening", "night"] }
+        { "species": "nibbet", "minLevel": 3, "maxLevel": 5, "weight": 39 },
+        { "species": "tuftail", "minLevel": 3, "maxLevel": 5, "weight": 34 },
+        { "species": "pipwing", "minLevel": 3, "maxLevel": 4, "weight": 12 },
+        { "species": "nettlebug", "minLevel": 3, "maxLevel": 4, "weight": 8 },
+        { "species": "fizzlet", "minLevel": 3, "maxLevel": 4, "weight": 5 },
+        { "species": "sootmoth", "minLevel": 4, "maxLevel": 5, "weight": 2, "time": ["evening", "night"] }
       ]
     },
     "water": {
       "rate": 120,
       "slots": [
-        { "species": "rillfry", "minLevel": 4, "maxLevel": 8, "weight": 80 },
-        { "species": "rilltail", "minLevel": 5, "maxLevel": 8, "weight": 20 }
+        { "species": "rillfry", "minLevel": 4, "maxLevel": 7, "weight": 80 },
+        { "species": "rilltail", "minLevel": 5, "maxLevel": 7, "weight": 20 }
       ]
     },
     "fishOld": {

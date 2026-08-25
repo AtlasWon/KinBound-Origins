@@ -164,6 +164,71 @@ The game draws your file at two sizes and only two:
 hand-tuned small version — see *Draw in 2 × 2 blocks* below, because that is what
 decides whether the halving is crisp or mushy.
 
+Every one of those places is live. A drawing dropped in this folder turns up in
+the bag's three pockets, the shop's buy and sell lists, and the description
+panel on both screens, at the right size for each, with no code change at all —
+and if you deliver nothing, all twenty-three keep their generated icons and
+those screens look exactly the same. That is the point of the two routes.
+
+---
+
+## Wiring a new screen (for whoever is writing the code)
+
+Everything above is about the file. This is the four-line version of how one
+reaches a screen, so that no screen invents its own answer.
+
+```ts
+import {
+  drawItemRowIcon, drawItemSprite, ITEM_ROW_PAD_X, ITEM_SPRITE_UNITS,
+} from '../gfx/itemart.js';
+
+// A list row. `item` is an ItemData; rowX and textY are the row's own left
+// edge and the y its label is drawn at. Render the ListMenu with
+// `padX: ITEM_ROW_PAD_X` first, and this lands in the gap that reserved.
+drawItemRowIcon(r, item, rowX, textY);
+
+// A panel, a message, the ground. Top-left corner; ITEM_SPRITE_UNITS square.
+drawItemSprite(r, item, x, y);
+```
+
+Three rules that are easy to get wrong and invisible in the code:
+
+- **Never scale at the call site.** The two sizes are two different reductions
+  of the file, not one image drawn small; a 32px drawing squeezed into a menu
+  row is exactly the blur the halving exists to prevent.
+- **`ITEM_ROW_PAD_X` is not negotiable between screens.** The bag, both shop
+  lists and the battle bag all indent by the same amount, or consecutive menus
+  look like two different games.
+- **Pass the item, not its id.** These take anything with an `icon` and a
+  `category`, which an `ItemData` from the registry already is. `icon` is not
+  the item id — see *The name is the icon key* above.
+
+For an animation that needs a frame rather than an icon:
+
+```ts
+const v = itemArtFrames('vessel_field', 'open');
+if (v) { const [closed, open] = v; /* draw the drawing */ }
+else   { /* keep whatever the scene plotted before */ }
+```
+
+`itemArtFrames(key, ...states)` returns the base drawing followed by one canvas
+per state asked for, **or null the moment any of them has not shipped**. It
+never throws and never returns a short array. All-or-nothing is the point: a
+folder can legitimately hold `vessel_field-open.png` and no `vessel_field.png`,
+and an animation that plotted its own shut vessel and then cut to a hand-drawn
+open one would be showing two different objects in the same beat. Take both or
+neither.
+
+Because the frames of a key are seated together, every canvas it returns is
+registered against the others — draw them at the same position on successive
+frames and nothing moves that the drawing did not move.
+
+`itemArt(key)` and `itemArt(key, state)` are the single-frame version of the
+same question, for the rare caller that really does want one. `itemSprite` and
+`itemIcon` never say no: they fall back to the generated design, which is right
+for a bag row and wrong for a scene choosing between a drawing and its own
+plotted shape.
+
 ---
 
 ## Centre it. There is no ground line

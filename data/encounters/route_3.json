@@ -1,102 +1,33 @@
 {
   "mapId": "route_3",
-  "$comment": "Lowered with the rest of the curve, from 12-17 to 11-15, and the weights pulled towards the two neutral Beast and Terra slots. Mossback is the reason the old table punished an unevolved starter: it is a 412-point second-stage kin standing in first-route grass, so it keeps its place but at the lowest weight. Measured at the level a player really arrives with (16): a solo starter went from 38/30 percent of fights won to 86/81.",
+  "$comment": "Same third-pass fix as Route 2. A player raising a team arrives here at THIRTEEN, not the seventeen a solo lead reaches, and -- this is the part two earlier passes never measured -- their starter has NOT EVOLVED YET, because all three starters evolve at 16. The whole middle of the game was being fought with a first-stage kin against a band built for a second-stage one, which read 70/50/85 percent on an average roll. Every slot is now 10-12, one to three levels under the arriving player. The experience that capping a band would ordinarily cost is bought back by pinning the two heaviest payers LOW rather than high: Mossback (148 base experience, 412 points) and Emberbore (96) sit at 10-11 with their weight raised. That is the whole trick of this pass -- a fat kin at a low level is free experience, a fat kin at your level is a wall. Mean roll 12.8 -> 10.8, top 15 -> 12, experience per fight 114 -> 104.",
   "methods": {
     "tallGrass": {
       "rate": 175,
       "slots": [
-        {
-          "species": "tuftail",
-          "minLevel": 12,
-          "maxLevel": 14,
-          "weight": 23
-        },
-        {
-          "species": "gravelet",
-          "minLevel": 11,
-          "maxLevel": 13,
-          "weight": 16
-        },
-        {
-          "species": "chalkid",
-          "minLevel": 12,
-          "maxLevel": 14,
-          "weight": 13
-        },
-        {
-          "species": "pipwing",
-          "minLevel": 11,
-          "maxLevel": 13,
-          "weight": 12
-        },
-        {
-          "species": "spinnet",
-          "minLevel": 12,
-          "maxLevel": 14,
-          "weight": 10
-        },
-        {
-          "species": "slatewing",
-          "minLevel": 12,
-          "maxLevel": 14,
-          "weight": 9
-        },
-        {
-          "species": "mossback",
-          "minLevel": 13,
-          "maxLevel": 15,
-          "weight": 5
-        },
-        {
-          "species": "frostnip",
-          "minLevel": 12,
-          "maxLevel": 14,
-          "weight": 7,
-          "time": [
-            "morning",
-            "evening",
-            "night"
-          ]
-        },
-        {
-          "species": "emberbore",
-          "minLevel": 13,
-          "maxLevel": 15,
-          "weight": 5
-        }
+        { "species": "tuftail", "minLevel": 10, "maxLevel": 12, "weight": 26 },
+        { "species": "nibbet", "minLevel": 10, "maxLevel": 12, "weight": 13 },
+        { "species": "gravelet", "minLevel": 10, "maxLevel": 12, "weight": 9 },
+        { "species": "chalkid", "minLevel": 10, "maxLevel": 12, "weight": 7 },
+        { "species": "slatewing", "minLevel": 10, "maxLevel": 12, "weight": 7 },
+        { "species": "spinnet", "minLevel": 10, "maxLevel": 12, "weight": 9 },
+        { "species": "emberbore", "minLevel": 10, "maxLevel": 11, "weight": 6 },
+        { "species": "mossback", "minLevel": 10, "maxLevel": 11, "weight": 9 },
+        { "species": "pipwing", "minLevel": 10, "maxLevel": 12, "weight": 9 },
+        { "species": "frostnip", "minLevel": 10, "maxLevel": 12, "weight": 5, "time": ["morning", "evening", "night"] }
       ]
     },
     "water": {
       "rate": 130,
       "slots": [
-        {
-          "species": "rillfry",
-          "minLevel": 10,
-          "maxLevel": 13,
-          "weight": 55
-        },
-        {
-          "species": "rilltail",
-          "minLevel": 11,
-          "maxLevel": 14,
-          "weight": 35
-        },
-        {
-          "species": "currentail",
-          "minLevel": 13,
-          "maxLevel": 15,
-          "weight": 10
-        }
+        { "species": "rillfry", "minLevel": 9, "maxLevel": 11, "weight": 55 },
+        { "species": "rilltail", "minLevel": 10, "maxLevel": 12, "weight": 35 },
+        { "species": "currentail", "minLevel": 11, "maxLevel": 12, "weight": 10 }
       ]
     },
     "fishOld": {
       "slots": [
-        {
-          "species": "rillfry",
-          "minLevel": 9,
-          "maxLevel": 13,
-          "weight": 100
-        }
+        { "species": "rillfry", "minLevel": 8, "maxLevel": 11, "weight": 100 }
       ]
     }
   }

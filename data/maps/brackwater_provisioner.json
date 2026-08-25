@@ -7,11 +7,11 @@
   "rows": [
     "IIIUIIIIIIUIII",
     "I;;;;;;;;;;;;I",
-    "IPKKKFKKKKFFFI",
+    "IPKKKFKKKKFF;I",
+    "I;FFFFFFFFFF;I",
+    "I;;;FFFF;;FF;I",
     "IFFFFFFFFFFFFI",
-    "IF;;FFFF;;FFFI",
-    "IFFFFFFFFFFFFI",
-    "IF;;FFFFFF;;FI",
+    "I;;;FFFFF;;;FI",
     "IFFFFFFFFFFFFI",
     "IPFFFFFFFFFFPI",
     "IIIIIIDIIIIIII"
@@ -22,7 +22,7 @@
       "y": 9,
       "toMap": "brackwater",
       "toX": 21,
-      "toY": 5,
+      "toY": 8,
       "facing": "down",
       "style": "door"
     }
