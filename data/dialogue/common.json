@@ -1,25 +1,31 @@
 {
   "speakers": {
-    "mother": "MOM",
-    "vess": "DR. VESS",
-    "vess_aide": "TIRREN",
+    "mother": "MIRA",
+    "sorrell": "PROF. SORRELL",
+    "sorrell_aide": "TIRREN",
     "ollet": "OLLET",
-    "ollet_child": "PERRIN",
-    "hollow_villager": "SAFFRA",
-    "hollow_kid": "BENNO",
-    "hollow_hiker": "GRUE",
+    "ollet_child": "TARIN",
+    "hearth_villager": "SAFFRA",
+    "hearth_kid": "BENNO",
+    "hearth_hiker": "GRUE",
+    "hearth_trader": "DOWSETT",
+    "hearth_elder": "OLD NELL",
+    "hearth_fisher": "CORRIN",
+    "hearth_farmer": "MABEN",
+    "ashe_gran": "NANNA ASHE",
+    "hm_clinic_local": "WICK",
     "r1_madden": "HIKER MADDEN",
     "r1_cale": "WATCHER ILSE",
-    "mh_perrin": "PERRIN"
+    "hm_tarin": "TARIN"
   },
   "entries": {
-    "mh_mother": [
+    "hm_mother": [
       {
         "ifFlags": [
-          "seal_1_taken"
+          "crest_1_taken"
         ],
         "lines": [
-          "A Seal. On my kitchen table. Well.",
+          "A Bond Crest. On my kitchen table. Well.",
           "Your father got his first one at nineteen and never once shut up about it.",
           "You have until the kettle boils. Then I want all of it."
         ]
@@ -36,29 +42,29 @@
       },
       {
         "lines": [
-          "There you are. I have unpacked exactly two boxes and I am calling that a day.",
-          "Dr. Vess came by at dawn asking for you. At DAWN.",
-          "Go on. The station is the big one with the charts in the window."
+          "There you are. Up before me, which has happened twice in sixteen years.",
+          "Professor Sorrell came by at dawn asking for you. At DAWN.",
+          "Go on. Over the bridge, the long low one with the charts in the windows."
         ]
       }
     ],
-    "mh_villager": [
+    "hm_villager": [
       {
         "ifFlags": [
-          "seal_2_taken"
+          "crest_2_taken"
         ],
         "lines": [
           "You've been out to the coast. Then you can tell me something.",
-          "Well's been dry four weeks and there's no drought. Ask anyone.",
+          "Wellhead's down to a hand's depth and there's been no drought. Ask anyone.",
           "Something is holding the water somewhere. It isn't holding it here."
         ]
       },
       {
         "ifFlags": [
-          "seal_1_taken"
+          "crest_1_taken"
         ],
         "lines": [
-          "A Seal already. Don't tell Ollet, he'll get competitive on Perrin's behalf.",
+          "A Crest already. Don't tell Ollet, he'll get competitive on Tarin's behalf.",
           "Listen. The well's stopped humming. Three nights now, nothing at all.",
           "I thought that would be a relief. It isn't."
         ]
@@ -68,20 +74,20 @@
           "got_starter"
         ],
         "lines": [
-          "So Vess gave you one after all. Look at the size of it.",
+          "So Sorrell gave you one after all. Look at the size of it.",
           "Do me a favour on your way out. Stand by the well a minute and just listen.",
           "Then come back and tell me I'm not going soft. Nobody else in this town will."
         ]
       },
       {
         "lines": [
-          "New face. You're the family that took the Corrin place, aren't you.",
-          "Fair warning: that well hums some nights. Everyone tells me it's the pipes.",
-          "It isn't the pipes."
+          "Morning, {name}. Sixteen today and off up that road, I'm told.",
+          "I've drawn water out of that wellhead since before your mother moved in.",
+          "It hums some nights. Everyone tells me it's the pipes. It isn't the pipes."
         ]
       }
     ],
-    "mh_kid": [
+    "hm_kid": [
       {
         "ifFlags": [
           "got_starter"
@@ -99,31 +105,93 @@
         ]
       }
     ],
-    "mh_hiker": [
-      "Ledges. Best thing in this region and nobody appreciates them.",
-      "Drop down one heading south and you save yourself an hour of walking.",
-      "Try climbing back UP one and you learn something about yourself. I've learned it twice."
-    ],
-    "mh_ollet": [
+    "hm_hiker": [
       {
         "ifFlags": [
           "got_starter"
         ],
         "lines": [
+          "So you're off. Right then, one piece of advice and it's free.",
+          "Deep grass is where the kin are and deep grass is where you can't see your feet.",
+          "Both of those are true at once. That's the whole job, that is."
+        ]
+      },
+      {
+        "lines": [
+          "Walked the coast road down from Briarbell this morning. Twelve miles, and this is the first water I've seen moving.",
+          "Everything else out there is standing still and going green.",
+          "Ask your professor about that. Don't ask me, I only walk past it."
+        ]
+      }
+    ],
+    "hm_ollet": [
+      {
+        "ifFlags": [
+          "tarin_at_quarry"
+        ],
+        "lines": [
+          "Two Crests. He sent a letter about the second one and spent most of it complaining it took three tries.",
+          "Not one word about the first. That is how I know which one he is proud of."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_stonewake"
+        ],
+        "lines": [
+          "He is in Stonewake and he has not been near the Hall. I can hear it in the handwriting.",
+          "Something has got hold of him out there. Better it were a Hallkeeper.",
+          "If you see him, {name} — do not tell him I asked."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_ruinwood"
+        ],
+        "lines": [
+          "A Crest. My child. There is a letter on that shelf I have read eleven times.",
+          "He says he pulled a cart out of a ford. Four lines on the Crest and a page and a half on the cart."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_briarbell"
+        ],
+        "lines": [
+          "Word came down the road before the letter did. Beat the Briarbell Keeper first ask.",
+          "His mother will be unbearable and she is two regions away.",
+          "Go and get yours. He will want somebody to measure himself against, and it had better be you."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_north"
+        ],
+        "lines": [
+          "He is somewhere up past the tarn by now. Sixteen and gone, just like that.",
+          "You caught him up, did you? Good. Keep doing that.",
+          "Not to beat him, {name}. So he has somebody to be sensible at."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_road"
+        ],
+        "lines": [
           "Gone, is he. Didn't take the lunch I packed him either.",
-          "His mother keeps a Bastion two provinces off. He's decided that's a debt.",
+          "His mother keeps a Kin Hall two regions off. He's decided that's a debt.",
           "It isn't. Tell him that somewhere I'm not standing. He might hear it from you."
         ]
       },
       {
         "lines": [
-          "Perrin hasn't sat down since Vess sent word. Wore a line in my floor.",
+          "Tarin hasn't sat down since Sorrell sent word. Wore a line in my floor.",
           "Two starters, two candidates, and my child has decided that's a duel.",
           "Try not to let it be a duel. That's all I'm asking. Try."
         ]
       }
     ],
-    "mh_ollet_child": [
+    "hm_ollet_child": [
       {
         "ifFlags": [
           "got_starter"
@@ -136,13 +204,13 @@
       },
       {
         "lines": [
-          "You're the new one. Good. I was worried Vess would hand me both of them.",
-          "That was a joke. Mostly.",
+          "Do not knock. You have never knocked. Do not start today of all days.",
+          "Two starters and two candidates in the whole village, {name}, and I have done the maths on that about nine hundred times.",
           "Go and pick. I'll wait. I'm excellent at waiting, ask my father."
         ]
       }
     ],
-    "vess_intro": [
+    "sorrell_intro": [
       {
         "ifFlags": [
           "met_kerrow"
@@ -167,11 +235,11 @@
         "lines": [
           "You came. Good. Sit, don't sit, whichever gets you talking faster.",
           "I study movement. Not battling, not breeding. Movement.",
-          "And something in the Hollow Sea is early this year. Decades early."
+          "And something in the Caeloran Sea is early this year. Decades early."
         ]
       }
     ],
-    "vess_aide": [
+    "sorrell_aide": [
       {
         "ifFlags": [
           "got_starter"
@@ -214,11 +282,299 @@
         ]
       }
     ],
-    "mh_perrin_idle": [
+    "hm_tarin_idle": [
       {
         "lines": [
-          "Go and see Vess. I'll be right behind you.",
+          "Go and see Sorrell. I'll be right behind you.",
           "Obviously I'll be right behind you. I've been up since four."
+        ]
+      }
+    ],
+    "hm_trader": [
+      {
+        "ifFlags": [
+          "got_starter"
+        ],
+        "lines": [
+          "Now don't come to me for vessels, {name}, I sell eggs and rope and bootlaces.",
+          "There's a proper Provisioner up the road with a blue roof on it. Ask for the blue roof.",
+          "And take a loaf. No. Take it. I have known you since you were a fortnight old."
+        ]
+      },
+      {
+        "lines": [
+          "Four stalls on a Tuesday and two of them are mine, so you can see how the market's going.",
+          "Everyone says go where the money is. The money is up the coast and I am not.",
+          "Big day for you, I hear. Your mother's told the whole square twice."
+        ]
+      }
+    ],
+    "hm_elder": [
+      {
+        "ifFlags": [
+          "crest_1_taken"
+        ],
+        "lines": [
+          "One already. I told them. I stood at that board and I told them.",
+          "Come here. Nearer. — No, I have nothing to say, I only wanted a proper look at you."
+        ]
+      },
+      {
+        "ifFlags": [
+          "got_starter"
+        ],
+        "lines": [
+          "Elias went up that same road at about your age with a bag and no sense at all.",
+          "I am not going to tell you to be careful. Nobody ever listened and I would not either.",
+          "I will tell you to come back, though. That part is allowed."
+        ]
+      },
+      {
+        "lines": [
+          "Eighty-one years in this village and I have been up that road four times.",
+          "Twice for a wedding, once for a funeral, once because I was cross.",
+          "You will do better than that by Tuesday."
+        ]
+      }
+    ],
+    "hm_fisher": [
+      {
+        "ifFlags": [
+          "got_starter"
+        ],
+        "lines": [
+          "Don't fall in on your way past. It would spoil the whole story.",
+          "Go on. And when you're somewhere with a harbour, look at the water and tell me what it's doing.",
+          "Nobody believes a man who only ever stood in one river."
+        ]
+      },
+      {
+        "lines": [
+          "Mere's running warm. In autumn. It has not run warm in autumn in my lifetime.",
+          "The fish know it too. They've all gone up under the far bank and they will not come out.",
+          "Your professor keeps writing it down. I keep telling him writing it down is not the same as doing something."
+        ]
+      }
+    ],
+    "hm_farmer": [
+      {
+        "ifFlags": [
+          "got_starter"
+        ],
+        "lines": [
+          "Off, then! Go on, out of my field.",
+          "...I do not mean that. Come here. Take a handful of these for the road.",
+          "They're only beans. But they are the good ones and I do not give them to just anybody."
+        ]
+      },
+      {
+        "lines": [
+          "Second cut of the year and it should be the last. Look at it. It is still growing.",
+          "Everything is early. The hay, the birds, the whole business.",
+          "Maben's law: when the ground is early, something is coming that the ground knows about first."
+        ]
+      }
+    ],
+    "hm_ashe_gran": [
+      {
+        "ifFlags": [
+          "got_starter"
+        ],
+        "lines": [
+          "So he's gone. He came in, ate nothing, and hugged me for about a second and a half.",
+          "That is a long hug for that boy. Do not tell him I counted."
+        ]
+      },
+      {
+        "lines": [
+          "Look at the pair of you. I have watched you two through that window since you could walk.",
+          "You will fight the whole length of this region and you will not mean a word of it.",
+          "Go on. And keep an eye on him, {name}. He does not keep one on himself."
+        ]
+      }
+    ],
+    "hm_clinic_local": [
+      {
+        "ifFlags": [
+          "got_starter"
+        ],
+        "lines": [
+          "That's a nice one. Mind the deep grass down the lower meadow, though.",
+          "Something in there put my dog up a tree last week. My dog. Up a tree."
+        ]
+      },
+      {
+        "lines": [
+          "I only come in here for the warm and the keeper knows it.",
+          "Nothing wrong with either of mine. Both fifteen years old and both furious about it."
+        ]
+      }
+    ],
+    "tarin_word_street": [
+      {
+        "ifFlags": [
+          "tarin_at_quarry"
+        ],
+        "lines": [
+          "That loud lad took the Stone Crest off the Keeper yesterday. Third go at it.",
+          "He told the whole square it was his third go. I did not expect that from him."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_stonewake"
+        ],
+        "lines": [
+          "There is a boy been sleeping on the Hall steps and he has not once gone inside it.",
+          "Spends his days stood outside that grey office instead. Somebody ought to feed him."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_ruinwood"
+        ],
+        "lines": [
+          "A lad hauled Wick's cart clean out of the ford yesterday. One kin and a lot of shouting.",
+          "Would not take a coin for it. Would not stop talking about it either."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_briarbell"
+        ],
+        "lines": [
+          "You have heard, then. The Hallkeeper, first ask, before half this town was up.",
+          "He has told me twice and I was standing there."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_north"
+        ],
+        "lines": [
+          "A boy came through at a dead run about an hour back. Did not stop.",
+          "Waved, mind. Ran into a fence doing it."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_road"
+        ],
+        "lines": [
+          "Ollet's boy went up the north road this morning like the ground was on fire behind him."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_dawn"
+        ],
+        "lines": [
+          "Ollet's boy has been stood outside the field station since before it was light.",
+          "In this. Would not come in for tea."
+        ]
+      },
+      {
+        "lines": [
+          "Quiet road, this one. Suits me. Does not suit everybody."
+        ]
+      }
+    ],
+    "tarin_word_hall": [
+      {
+        "ifFlags": [
+          "tarin_at_quarry"
+        ],
+        "lines": [
+          "Your friend came back a third time and took it off her.",
+          "She said afterwards she had never been so pleased to lose to anybody."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_stonewake"
+        ],
+        "lines": [
+          "The loud one? He signed the book his first day here and he has not been back to it since.",
+          "Signing the book is the easy half. I have told him."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_ruinwood"
+        ],
+        "lines": [
+          "The boy with the one Crest went east into the ruin wood.",
+          "Said he was going to catch something impossible. He may well have done."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_briarbell"
+        ],
+        "lines": [
+          "He beat her before breakfast. I hold the keys to this building and I was not even here yet."
+        ]
+      },
+      {
+        "lines": [
+          "Sign the book. Everybody signs the book, including the ones who never come back."
+        ]
+      }
+    ],
+    "tarin_word_clinic": [
+      {
+        "ifFlags": [
+          "tarin_at_stonewake"
+        ],
+        "lines": [
+          "Your friend, is he? He carries them in bruised and he is gone before I have finished.",
+          "He has been in four times this week and I still do not know his name."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_briarbell"
+        ],
+        "lines": [
+          "In at seven with a Slatewing and no manners whatsoever. Lovely boy. Filthy."
+        ]
+      },
+      {
+        "lines": [
+          "We put them back together and we do not charge you. That is the whole of it.",
+          "Last I heard your friend was somewhere about {tarin_where}, if you were going to ask."
+        ]
+      }
+    ],
+    "tarin_word_shop": [
+      {
+        "ifFlags": [
+          "tarin_at_quarry"
+        ],
+        "lines": [
+          "Cleaned me out of Strong Potions, that one, then came back and apologised for it."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_stonewake"
+        ],
+        "lines": [
+          "He bought rope. A lot of rope, and he would not say what for.",
+          "I have been in this trade thirty years. Rope is never nothing."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_briarbell"
+        ],
+        "lines": [
+          "Bought three Strong Potions and told me he only needed one. I did not follow the logic either."
+        ]
+      },
+      {
+        "lines": [
+          "Take your time. Nothing on that shelf is going anywhere."
         ]
       }
     ]

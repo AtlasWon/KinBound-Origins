@@ -1,7 +1,7 @@
 /**
  * Region map.
  *
- * A drawn chart of Veldras rather than a satellite view. The coastline, the
+ * A drawn chart of Caelora rather than a satellite view. The coastline, the
  * shelf, the woods and the hill country are generated from one angular field
  * and baked into a single parchment sheet when the scene opens; the towns, the
  * roads, the cursor and the panels are then drawn live on top of it. Baking is
@@ -14,8 +14,8 @@
  *    settlements out on a 40x30 grid. The ring, the strait and the southern
  *    reach are fitted to those coordinates, and any place the ring does not
  *    cover is given its own islet, so a town can never end up floating in open
- *    water when the data moves. That is how Solmere and Tidefall become
- *    islands in the Hollow Sea rather than drowned dots.
+ *    water when the data moves. That is how the Temple of the Deep becomes
+ *    an island off the east coast rather than a drowned dot.
  *  - The sheet is 240x160 logical units. Ornament only earns its place if it
  *    never makes a town harder to find, which is why the cartouche, the rose
  *    and the scale sit out in open ocean, and why only the selected place is
@@ -107,7 +107,7 @@ const ICON_TOWN = [
   '.#####.',
 ];
 
-const ICON_BASTION = [
+const ICON_HALL = [
   '#.#.#.#',
   '#######',
   '#ooooo#',
@@ -146,48 +146,49 @@ const ICON_UNKNOWN = [
 
 const ICONS: Record<string, string[]> = {
   town: ICON_TOWN,
-  bastion: ICON_BASTION,
+  hall: ICON_HALL,
   spire: ICON_SPIRE,
   route: ICON_ROUTE,
   unknown: ICON_UNKNOWN,
 };
 
 const ICON_INK: Record<string, string> = {
-  town: '#3a2c1c', bastion: '#3a2c1c', spire: '#33223a',
+  town: '#3a2c1c', hall: '#3a2c1c', spire: '#33223a',
   route: '#3a2c1c', unknown: '#7d6c52',
 };
 
 const ICON_FILL: Record<string, string> = {
-  town: '#f6efd8', bastion: '#e9b449', spire: '#c07aa8',
+  town: '#f6efd8', hall: '#e9b449', spire: '#c07aa8',
   route: '#f0e2bd', unknown: '#dccfae',
 };
 
 const KIND_LABEL: Record<string, string> = {
-  town: 'TOWN', bastion: 'BASTION', spire: 'SPIRE', route: 'ROUTE',
+  town: 'TOWN', hall: 'KIN HALL', spire: 'SPIRE', route: 'ROUTE',
 };
 
 /* ------------------------------------------------------------- networks */
 
 /** The crescent road, in place ids. Presentation only; places.json has no edges. */
 const ROADS: [string, string][] = [
-  ['marrow_hollow', 'route_1'],
-  ['route_1', 'ashgate'],
-  ['ashgate', 'route_2'],
-  ['route_2', 'kellowmere'],
-  ['kellowmere', 'tanners_rest'],
+  ['hearthmere', 'route_1'],
+  ['route_1', 'briarbell'],
+  ['briarbell', 'route_2'],
+  ['route_2', 'stonewake'],
+  ['stonewake', 'tanners_rest'],
   ['tanners_rest', 'brackwater'],
-  ['brackwater', 'cinderfall'],
-  ['cinderfall', 'hallowfen'],
-  ['hallowfen', 'vantry'],
-  ['vantry', 'kite_landing'],
-  ['kite_landing', 'gravehold'],
-  ['gravehold', 'northwatch'],
-  ['northwatch', 'the_spire'],
+  ['brackwater', 'frostmere'],
+  ['frostmere', 'aureline'],
+  ['aureline', 'the_ascent'],
+  ['aureline', 'skyreach'],
+  ['skyreach', 'crownspire'],
+  ['crownspire', 'mirehaven'],
+  ['mirehaven', 'tideglass'],
+  ['tideglass', 'emberfall'],
 ];
 
-// There are no sea lanes out to Solmere and Tidefall on purpose: the islands
-// sit close enough together, and far enough inside their own shelf, that a
-// dotted lane between them was five dots long and read as dirt on the paper.
+// No lane out to the Temple of the Deep on purpose. It is a long way off the
+// east coast, nothing on the chart connects to it by road, and a dotted line
+// running off the edge of the surveyed land is the honest way to draw that.
 
 /** Rivers, in grid units, running from the high ground down to a coast. */
 const RIVERS: [number, number][][] = [
@@ -204,7 +205,7 @@ interface Place {
   name: string;
   x: number;
   y: number;
-  kind: 'town' | 'route' | 'bastion' | 'spire';
+  kind: 'town' | 'route' | 'hall' | 'spire';
   blurb?: string;
 }
 
@@ -356,7 +357,7 @@ export class RegionMapScene implements Scene {
   readonly transparent = true;
 
   private places: Place[] = [];
-  private seaName = 'THE HOLLOW SEA';
+  private seaName = 'THE CAELORAN SEA';
   private index = 0;
   private t = 0;
 
@@ -397,7 +398,7 @@ export class RegionMapScene implements Scene {
     this.buildIslets();
     this.sheet = this.bakeSheet();
 
-    this.title = makeTextSprite('VELDRAS', {
+    this.title = makeTextSprite('CAELORA', {
       scale: 2,
       fill: ['#6b4f2a', '#513a1e'],
       outline: null,
@@ -408,8 +409,8 @@ export class RegionMapScene implements Scene {
   }
 
   /**
-   * The player's map id is as often an interior as a town -- `ashgate_house_a`
-   * rather than `ashgate` -- so the marker falls back to matching on the town's
+   * The player's map id is as often an interior as a town -- `briarbell_house_a`
+   * rather than `briarbell` -- so the marker falls back to matching on the town's
    * first id segment. Without this the "you are here" ring vanished every time
    * the player stepped through a door. Routes are excluded from the fallback
    * because route_3 exists as a map but not as a place, and it would otherwise
@@ -441,7 +442,7 @@ export class RegionMapScene implements Scene {
    * Both shorelines are one-dimensional: a radius per angle. That keeps the
    * coast smooth and closed by construction, and it means the strait is a
    * pinch in a curve rather than a wedge chopped out of a grid -- the old
-   * wedge cut straight through Gravehold, Northwatch and the Spire.
+   * wedge cut straight through Tideglass, Emberfall and the south coast.
    */
   private buildCoast(): void {
     for (let i = 0; i < LUT; i++) {
@@ -449,7 +450,7 @@ export class RegionMapScene implements Scene {
 
       const shore = 0.62 + 0.055 * Math.sin(3 * a + 0.9) + 0.03 * Math.sin(7 * a + 2.1);
       let coast = 1.16 + 0.05 * Math.sin(2 * a + 0.5) + 0.03 * Math.sin(5 * a + 3.0);
-      // The southern reach: the spit Marrow Hollow, Ashgate and Kellowmere sit
+      // The southern reach: the spit Hearthmere, Briarbell and Stonewake sit
       // on, which hangs well outside the ring the rest of the towns follow.
       coast += 0.26 * gauss(a, 2.35, 0.45);
 
@@ -1022,7 +1023,7 @@ export class RegionMapScene implements Scene {
     if (this.title) {
       r.image(this.title, x + (w - this.title.width / DETAIL) / 2, y + 6);
     } else {
-      r.text('VELDRAS', x + w / 2, y + 7, { color: INK, align: 'center' });
+      r.text('CAELORA', x + w / 2, y + 7, { color: INK, align: 'center' });
     }
     r.text('SEA CHART', x + w / 2, y + 17, { color: INK_SOFT, align: 'center' });
   }
@@ -1109,7 +1110,7 @@ export class RegionMapScene implements Scene {
       });
     }
 
-    const rows: [string, string][] = [['town', 'TOWN'], ['bastion', 'BASTION'], ['spire', 'SPIRE']];
+    const rows: [string, string][] = [['town', 'TOWN'], ['hall', 'KIN HALL'], ['spire', 'SPIRE']];
     rows.forEach(([kind, label], i) => {
       const ly = y + 4 + i * 10;
       this.drawIcon(r, kind, 166, ly + 3);

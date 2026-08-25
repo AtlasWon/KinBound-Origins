@@ -1,0 +1,78 @@
+{
+  "id": "route_2_cave",
+  "name": "Fernhollow Cave",
+  "displayName": "FERNHOLLOW",
+  "music": "town_indoor",
+  "battleBackdrop": "cave",
+  "indoor": true,
+  "encounterTable": "route_2_cave",
+  "_plan": "A small cave whose roof fell in a long time ago, so the far end is a green well of fern and light and the near end is dry stone. That is the whole idea: the only cave on the early road is the one with a garden at the back of it. The stone across the west pocket does not move for anyone who has not been to Stonewake.",
+  "rows": [
+    "CCCCCCCCCCCCCCCCCC",
+    "CCCC.\"\"\"\"\"\"\"\".CCCC",
+    "CCC.,\"\"\"\"\"\"\"..,CCC",
+    "CCC.\"\"\"\"\"o...,CCCC",
+    "CCC.,.\"\"\"\".,.s.CCC",
+    "CCCCC.sssssss.CCCC",
+    "CCCCCsssssssssCCCC",
+    "CCssssssssssssCCCC",
+    "CCCCCsssssssssCCCC",
+    "CCCCCCsssssssCCCCC",
+    "CCCCCCCsssssCCCCCC",
+    "CCCCCCCCDDCCCCCCCC"
+  ],
+  "warps": [
+    {
+      "x": 8,
+      "y": 11,
+      "toMap": "route_2",
+      "toX": 6,
+      "toY": 11,
+      "facing": "down",
+      "style": "cave"
+    },
+    {
+      "x": 9,
+      "y": 11,
+      "toMap": "route_2",
+      "toX": 6,
+      "toY": 11,
+      "facing": "down",
+      "style": "cave"
+    }
+  ],
+  "npcs": [],
+  "objects": [
+    {
+      "kind": "script",
+      "x": 15,
+      "y": 4,
+      "text": [
+        "The roof is gone above the far",
+        "end. The sky is a long way up",
+        "through it, and it is green."
+      ]
+    },
+    {
+      "kind": "pushable",
+      "x": 5,
+      "y": 7
+    },
+    {
+      "kind": "item",
+      "x": 3,
+      "y": 7,
+      "item": "strong_potion",
+      "quantity": 1,
+      "flag": "item_r2c_pocket"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 8,
+      "y": 2,
+      "item": "tonic_berry",
+      "quantity": 2,
+      "flag": "item_r2c_hidden"
+    }
+  ]
+}

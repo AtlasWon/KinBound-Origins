@@ -1,0 +1,162 @@
+{
+  "id": "briarbell_hall",
+  "name": "Bell Hall",
+  "displayName": "THE BELL HALL",
+  "music": "station",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIIIIIIIIIIIIIIII",
+    "I=a============a=I",
+    "I================I",
+    "I================I",
+    "IXXXXXXX==XXXXXXXI",
+    "I==x==========x==I",
+    "I================I",
+    "I================I",
+    "IXX=XXXXXXXXXX=XXI",
+    "I=X=X========X=X=I",
+    "I================I",
+    "I===XXXXXXXXXXXXXI",
+    "I================I",
+    "IXXXXXXXXXXX=====I",
+    "I=a============a=I",
+    "IXXXXXXX==XXXXXXXI",
+    "IIIIIIIIDIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 8,
+      "y": 16,
+      "toMap": "briarbell",
+      "toX": 23,
+      "toY": 9,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "bbhall_keeper",
+      "sprite": "elder",
+      "x": 8,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "bbhall_keeper"
+    },
+    {
+      "id": "bbhall_warden_a",
+      "sprite": "concord",
+      "x": 8,
+      "y": 4,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "bbhall_warden",
+      "hiddenIfFlag": "bbhall_gate_open"
+    },
+    {
+      "id": "bbhall_warden_b",
+      "sprite": "concord",
+      "x": 9,
+      "y": 4,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "bbhall_warden",
+      "hiddenIfFlag": "bbhall_gate_open"
+    },
+    {
+      "id": "bbhall_hand_a",
+      "sprite": "hiker",
+      "x": 12,
+      "y": 13,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "briar_hand_a",
+      "sightRange": 3
+    },
+    {
+      "id": "bbhall_hand_b",
+      "sprite": "villager_m",
+      "x": 3,
+      "y": 11,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "briar_hand_b",
+      "sightRange": 3
+    },
+    {
+      "id": "bbhall_guide",
+      "sprite": "villager_f",
+      "x": 6,
+      "y": 14,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "bbhall_guide"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "switch",
+      "x": 3,
+      "y": 5
+    },
+    {
+      "kind": "switch",
+      "x": 14,
+      "y": 5
+    },
+    {
+      "kind": "pushable",
+      "x": 3,
+      "y": 9
+    },
+    {
+      "kind": "pushable",
+      "x": 14,
+      "y": 9
+    },
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 15,
+      "text": [
+        "THE BELL HALL.",
+        "Planted the year the town was, and cut back every spring since.",
+        "The hedge is the Hall. The roof is only there for the rain."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 11,
+      "text": [
+        "Carved into the frame of the arch:",
+        "THE STRONGEST THING IN THIS GARDEN IS THE THING THAT WAITS."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 8,
+      "text": [
+        "Two seed-stones, two sun-plates. Roll one up each lane.",
+        "You can only push, so get behind them. If you wedge one, walk out and back in."
+      ]
+    }
+  ],
+  "freePush": true,
+  "$comment": "A hedge garden rather than a room: three walls of briar with one gap each, so the way to the arch is a single line and the two Hall Hands stand ABOVE the gaps rather than in them. That distinction is the whole layout. A trainer parked in a one-tile corridor is a locked door -- the first cut of this had a Hand standing on row fourteen, which is the only way east out of the lobby, and a defeated trainer does not move. Standing one row up in a five-wide gap they block nothing and still cannot be walked past: the corridor below them is one tile wide, so the player has to step through their line of sight to get anywhere. The sun-plates sit in the last row a stone can reach: push a seed-stone north up either lane and the hedge stops it exactly on the plate. That is deliberate, and it is the difference between a first puzzle and a first obstacle -- with the plate one row short, a fourth push wedges the stone against the hedge and the arch cannot be opened until the player works out that walking back out resets it. The thinking that is left is the thinking that was always the point: you can only push, so get on the right side of the thing first. Each seed-stone sits in a one-tile alcove with hedge either side of it, so the only way to touch one is from directly below. Out in the open it was worse than fiddly: walking east across the chamber shoved a stone sideways out of its lane, and the player would have had to notice that leaving the room is what puts it back."
+}

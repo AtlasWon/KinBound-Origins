@@ -1,0 +1,217 @@
+{
+  "speakers": {
+    "sw_foreman": "FOREMAN BRACK",
+    "sw_cutter": "STONE CUTTER",
+    "sw_banksman": "BANKSMAN",
+    "sw_bothy_kid": "NELLA",
+    "sw_hall_crier": "HALL STEWARD",
+    "sw_warden": "WARDEN OF THE RAMP",
+    "sw_gatehand": "GATE HAND",
+    "sw_marketeer": "MARKET CLERK",
+    "sw_market_kid": "OSK",
+    "sw_curator_out": "CURATOR HALE",
+    "sw_meridian_greeter": "FOUNDATION GREETER",
+    "sw_carter": "CARTER",
+    "sw_lamplighter": "LAMPLIGHTER",
+    "sw_clinic_queue": "WOMAN WITH A BASKET",
+    "town_tarin": "TARIN"
+  },
+  "entries": {
+    "sw_foreman": [
+      {
+        "ifFlags": ["crest_2_taken"],
+        "lines": [
+          "She gave you the Crest? Roxen doesn't hand those out, she loses them on purpose.",
+          "So you made her work. Good. Somebody should.",
+          "Now do me one. Next time somebody official asks what's under my quarry, tell me."
+        ]
+      },
+      {
+        "lines": [
+          "West working's stopped. Not unsafe, exactly. Just wrong.",
+          "Nineteen years I worked that face alongside Roxen and it never sounded hollow.",
+          "It sounds hollow now. Put your ear on it and tell me I'm imagining that."
+        ]
+      }
+    ],
+    "sw_cutter": [
+      {
+        "lines": [
+          "Four thousand people in this city cut stone and about eleven of us still do.",
+          "Rest are on the tramway, or the sheds, or the Foundation.",
+          "Nobody starves. It's just strange, walking a street full of people",
+          "who've never had their hands on the thing the street is made of."
+        ]
+      }
+    ],
+    "sw_banksman": [
+      {
+        "ifFlags": ["crest_2_taken"],
+        "lines": [
+          "You came up out of her hole with a Crest on you. That's a first this year.",
+          "There's a stopped working at the west end, if you're feeling strong.",
+          "Nobody's been in there since the shift walked out."
+        ]
+      },
+      {
+        "lines": [
+          "Sleepers stay, rails go. That's how a working shuts: quietly, over about four years,",
+          "and everybody keeps saying next spring right up until nobody says it.",
+          "Mind your feet on those. They're older than your mother."
+        ]
+      }
+    ],
+    "sw_bothy_kid": [
+      "I can lift a stone THIS big.",
+      "...I can push a stone this big.",
+      "Pushing is lifting sideways. Dad says that's not how it works. Dad is wrong."
+    ],
+    "sw_hall_crier": [
+      {
+        "ifFlags": ["crest_2_taken"],
+        "lines": [
+          "Four down this month. One up. You.",
+          "The board goes up on the Hall door at noon and the whole terrace comes to read it.",
+          "That is how much there is to do in Stonewake. Enjoy it, it lasts a day."
+        ]
+      },
+      {
+        "ifFlags": ["tarin_at_stonewake"],
+        "lines": [
+          "You want the Hall? Sign here, and then go down. Down, not in.",
+          "There was a lad through here yesterday with the same look on his face.",
+          "He went down cheerful and he came up not cheerful. Learn from that or don't."
+        ]
+      },
+      {
+        "lines": [
+          "You want the Hall? Sign here, and then go down. Down, not in.",
+          "Keeper Quill keeps her Hall at the bottom of the old workings.",
+          "She has been asked to move it upstairs eleven times. Eleven."
+        ]
+      }
+    ],
+    "sw_warden": [
+      {
+        "ifFlags": ["crest_2_taken"],
+        "lines": [
+          "Two Crests. Kerb Street east, then, and the coast road after that.",
+          "It is a long walk and the weather on the ridge does as it pleases.",
+          "Eat something before you go. That is not advice, that is an order."
+        ]
+      },
+      {
+        "ifFlags": ["crest_1_taken"],
+        "lines": [
+          "Ramp road behind me, up to the terrace: quarry works and the Stone Hall.",
+          "Down there: Kerb Street, the market, the clinic on the corner.",
+          "Museum and the Foundation are on the north square. Don't get lost. Everyone gets lost."
+        ]
+      },
+      {
+        "lines": [
+          "First time? You'll be looking at the roofs. Everybody looks at the roofs.",
+          "Nine thousand four hundred, last count, and the count is always out.",
+          "Ramp road up to the Hall. Kerb Street for everything else."
+        ]
+      }
+    ],
+    "sw_gatehand": [
+      {
+        "lines": [
+          "South out of that gate is Route 2, and Briarbell a good day beyond it.",
+          "You came up that way? Then you know it's mostly forest and one very old arch.",
+          "People go and look at the arch. I've never once heard anyone say what it's for."
+        ]
+      }
+    ],
+    "sw_marketeer": [
+      {
+        "lines": [
+          "Lower Market. Sixty stalls on a good day, and the good days are Thursdays.",
+          "Anything off this mountain, anything off that road, and lately",
+          "a great deal from further off than either. Coast goods. Cheap, too.",
+          "Somebody's paying for the carriage and it isn't the seller."
+        ]
+      }
+    ],
+    "sw_market_kid": [
+      "Dad says don't talk to trainers because you'll want one.",
+      "I want one.",
+      "I've been feeding a Gravelet behind the stall for a month. Don't tell him.",
+      "It's called Brick. It doesn't answer to Brick. It doesn't answer to anything."
+    ],
+    "sw_curator_out": [
+      {
+        "ifFlags": ["met_lyra"],
+        "lines": [
+          "Have you been in? Good. Go back. There's a case at the far end",
+          "with eleven things in it I have not been able to explain in thirty years,",
+          "and a young woman standing at it who has explained four of them to me this week."
+        ]
+      },
+      {
+        "lines": [
+          "Free on the first of the month, which is not today, but come in anyway.",
+          "You look like somebody who has been outdoors. We collect those.",
+          "Half the good donations came in off the road in muddy boots."
+        ]
+      }
+    ],
+    "sw_meridian_greeter": [
+      {
+        "ifFlags": ["crest_2_taken"],
+        "lines": [
+          "Congratulations on the Crest. Genuinely - the whole office heard about it.",
+          "If you're going east, do call in at our Tideglass rooms.",
+          "Dr Veyl is there this season. He likes meeting people who actually walk the region."
+        ]
+      },
+      {
+        "lines": [
+          "Good afternoon. Do go in - the office is open to anyone, there's a display,",
+          "and there is usually tea if you look like you have walked a long way.",
+          "We are the Meridian Foundation. Weather, water, and Kin. Mostly weather."
+        ]
+      }
+    ],
+    "sw_carter": [
+      {
+        "lines": [
+          "The cistern's been on the square since before the terrace was cut.",
+          "Fed off the mountain. Never dry, never once in living memory.",
+          "It went down four inches in the spring and came back up in a week.",
+          "Nobody could tell me why. Nobody even seemed to think it was a question."
+        ]
+      }
+    ],
+    "sw_lamplighter": [
+      {
+        "lines": [
+          "Three hundred and forty lamps between the gate and the terrace.",
+          "I light them going up and I put them out coming down and in between",
+          "I am the only person in Stonewake who sees the whole of it lit at once.",
+          "It is worth the walk. Come out at dusk and stand on the ramp."
+        ]
+      }
+    ],
+    "sw_clinic_queue": [
+      {
+        "lines": [
+          "The clinic's free, you know. Everywhere. Whole region.",
+          "Some people go their whole lives not quite believing that",
+          "and stand out here working out what the catch is."
+        ]
+      }
+    ],
+    "tarin_town": [
+      {
+        "lines": [
+          "There you are! Right. Two things.",
+          "One: the Foundation office has thrown me out twice and I have questions.",
+          "Two: Roxen Quill put me on the floor of her own mine. Twice. In one day."
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,585 @@
+{
+  "id": "stonewake",
+  "name": "Stonewake",
+  "displayName": "STONEWAKE",
+  "music": "town_hearth",
+  "battleBackdrop": "quarry",
+  "indoor": false,
+  "regionPos": {
+    "x": 21,
+    "y": 14
+  },
+  "rows": [
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCC---CCC----CC----CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCC---CCC----CC----CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCC-CCCC----CC----CCCCCCCCCCCCCCC<%%%%%%%%%%%%>CCCCCCCCCCC",
+    "CCC-----------------CCCCCCCCCCCCCCC<%%%%%%%%%%%%>CCCCCCCCCCC",
+    "CC------------------CCCCCCCCCCCCCCC<%%%%%%%%%%%%>CCCCCCCCCCC",
+    "CC------------------CCCCCCCCCCCCCCCGGGGGGGGGGGGGGCCCCCCCCCCC",
+    "CC------------------CCCCCCCCCCCCCCCGGGGGGgGGGGGGGCCCCCCCCCCC",
+    "CC-------------------------------==Y=================CCCCCCC",
+    "CC-vvvvvvvv---<%%%>---[^^^^^]----=========(&&&&&&&&&)CCCCCCC",
+    "CC-vyvvvvyv---HZZZH--pRRRRRRR----=========HZZZZZZZZZHCCCCCCC",
+    "CC-llnnnnll---HZZZH---#wwiww#----=========HZdZZdZZdZHCCCCCCC",
+    "CC-lnnnnnnl-!--------------------=a==========Y=====a=CCCCCCC",
+    "CC--BBBBBBBBBBBBBBBBB--BBBBBBBBBBBBBBBBBBBBBB--------CCCCCCC",
+    "CC-p------------------------------------------p------CCCCCCC",
+    "CC----Y-----------------Y-------------------Y--------CCCCCCC",
+    "CC--<%%%%><%%%%>-----------------<%%%%><%%%%>--------CCCCCCC",
+    "CC--MZZdZMHZdZdH-p-----------p---MZZdZMHddZdH--p-----CCCCCCC",
+    "CC---------------------------------------------------CCCCCCC",
+    "CCCCCCCC---CCCCCCCCCCCCCCCCC==CCCCCCCCCCCCCCCCCCCC=CCCCCCCCC",
+    "cccccccc---ccccccccccccccccc==cccccccccccccccccccc=ccccccccc",
+    "CC.....o--Y......o.--...a.o!==.....o..--.Y...o..--=....o..TT",
+    "CC--------------------------==----------------------------TT",
+    "CC--------------------------==----------------------------TT",
+    "CC<%%%%>--vvvvvvvvv--[^^^^^]==<%%%%%%>--(&&&&&&&&&&&&&&&&)TT",
+    "CCMZZiZM--vyvvvvvyv--#wwiww#==MZZdZZdM--(&&&&&&&&&&&&&&&&)TT",
+    "CC..,...--llnnnnnll--.,....,==....,...--GGGGGGGGGGGGGGGGGGTT",
+    "CC(&&&&)--lnnnqunnl--<%%%%%>==[^^^^^^]--GGGGGGGGgGGGGGGGGGTT",
+    "CCHZZdZH--.,....,..--MZdZZdM==#wwwwww#--==================TT",
+    "CC--------------------------==----------------------------TT",
+    "CC--------------------------==----------------------------TT",
+    "CC<%%%%>--699999998--(&&&&&)==<%%%%%%>--[^^^^^^]--<%%%%%%>TT",
+    "CC<%%%%>--677707778--HZZdZZH==MZZdZZdM--[^^^^^^]--MZZdZZdMTT",
+    "CCMZdZdM--GGGGmgGGG--[^^^^^]==.=~~~~=.--#wwwwww#--(&&&&&&)TT",
+    "CC,....Y--Y,a....,Y--#wwwww#==Y=~~~~=Y--YY....,!--HZZdZZdHTT",
+    "CC=====================================================-----",
+    "CC=====================================================-----",
+    "CC(&&&&)--144444443--,..,..,==[^^^^^^]--(&&&&&&)--<%%%%%%>TT",
+    "CCHZZdZH--122252223--,t,..,.==#wwiwww#--HZZdZZdH--MZZiZZdMTT",
+    "CC.,....--GGGGhgGGG--,,.*,..==.,....,.--...,....--,....,..TT",
+    "CC<%%%%>--=========--,..,,t,==<%%%%%%>--[^^^^^^]--(&&&&&&)TT",
+    "CCMZZdZM--=========--..,..,,==MZdZZdZM--#wwwwww#--HZdZZdZHTT",
+    "CC--------------------------==----------------------------TT",
+    "CC--------------------------==----------------------------TT",
+    "CC<%%%%>--==Y============Y====(&&&&&&)--<%%%%%%>--(&&&&&&)TT",
+    "CCMZidZM--KKK==KKK==KKK==KKK==HZZdZidH--MZZdZZdM--HZZdZZdHTT",
+    "CC....,.--====================...,..a.--.,....a,--....,...TT",
+    "CC[^^^^]--KKK==KKK==KKK==KKK==<%%%%%%>--[^^^^^^]--<%%%%%%>TT",
+    "CC#wwww#--====================MZZdZZdM--#wwwwww#--MZZdZZdMTT",
+    "CC========================================================TT",
+    "CC.,.,t.,.,.,t.,.,.,t.,.,.!t--.,.,.,t.,.,.,t.,.,.,t.,.,.,tTT",
+    "CCTTTTTTTTTTTTTTTTTTTTTTTTTT--TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT"
+  ],
+  "warps": [
+    {
+      "x": 41,
+      "y": 7,
+      "toMap": "stonewake_hall",
+      "toX": 10,
+      "toY": 17,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 25,
+      "y": 11,
+      "toMap": "stonewake_quarryoffice",
+      "toX": 6,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 5,
+      "y": 25,
+      "toMap": "stonewake_house_a",
+      "toX": 6,
+      "toY": 7,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 24,
+      "y": 25,
+      "toMap": "stonewake_house_b",
+      "toX": 6,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 14,
+      "y": 27,
+      "toMap": "stonewake_meridian",
+      "toX": 7,
+      "toY": 12,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 15,
+      "y": 27,
+      "toMap": "stonewake_meridian",
+      "toX": 8,
+      "toY": 12,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 48,
+      "y": 27,
+      "toMap": "stonewake_museum",
+      "toX": 11,
+      "toY": 15,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 15,
+      "y": 33,
+      "toMap": "stonewake_market",
+      "toX": 7,
+      "toY": 9,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 33,
+      "y": 38,
+      "toMap": "stonewake_house_c",
+      "toX": 6,
+      "toY": 7,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 53,
+      "y": 38,
+      "toMap": "stonewake_house_d",
+      "toX": 6,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 15,
+      "y": 39,
+      "toMap": "stonewake_clinic",
+      "toX": 7,
+      "toY": 10,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 4,
+      "y": 45,
+      "toMap": "stonewake_house_e",
+      "toX": 6,
+      "toY": 7,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 35,
+      "y": 45,
+      "toMap": "stonewake_house_f",
+      "toX": 6,
+      "toY": 7,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 28,
+      "y": 51,
+      "toMap": "route_2",
+      "toX": 14,
+      "toY": 1,
+      "facing": "down",
+      "style": "edge"
+    },
+    {
+      "x": 29,
+      "y": 51,
+      "toMap": "route_2",
+      "toX": 15,
+      "toY": 1,
+      "facing": "down",
+      "style": "edge"
+    },
+    {
+      "x": 59,
+      "y": 35,
+      "toMap": "route_3",
+      "toX": 1,
+      "toY": 13,
+      "facing": "right",
+      "style": "edge"
+    },
+    {
+      "x": 59,
+      "y": 36,
+      "toMap": "route_3",
+      "toX": 1,
+      "toY": 14,
+      "facing": "right",
+      "style": "edge"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "sw_foreman",
+      "sprite": "hiker",
+      "x": 24,
+      "y": 12,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sw_foreman"
+    },
+    {
+      "id": "sw_cutter",
+      "sprite": "villager_m",
+      "x": 11,
+      "y": 14,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "sw_cutter"
+    },
+    {
+      "id": "sw_banksman",
+      "sprite": "hiker",
+      "x": 31,
+      "y": 15,
+      "facing": "left",
+      "movement": {
+        "kind": "pace",
+        "axis": "x",
+        "distance": 3
+      },
+      "script": "sw_banksman"
+    },
+    {
+      "id": "sw_bothy_kid",
+      "sprite": "kid",
+      "x": 20,
+      "y": 15,
+      "facing": "down",
+      "movement": {
+        "kind": "wander",
+        "radius": 2
+      },
+      "script": "sw_bothy_kid"
+    },
+    {
+      "id": "sw_hall_crier",
+      "sprite": "villager_f",
+      "x": 39,
+      "y": 12,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "sw_hall_crier"
+    },
+    {
+      "id": "sw_warden",
+      "sprite": "villager_f",
+      "x": 30,
+      "y": 22,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sw_warden"
+    },
+    {
+      "id": "sw_gatehand",
+      "sprite": "villager_m",
+      "x": 26,
+      "y": 49,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sw_gatehand"
+    },
+    {
+      "id": "sw_marketeer",
+      "sprite": "clerk",
+      "x": 14,
+      "y": 46,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sw_marketeer"
+    },
+    {
+      "id": "sw_market_kid",
+      "sprite": "kid",
+      "x": 22,
+      "y": 46,
+      "facing": "left",
+      "movement": {
+        "kind": "wander",
+        "radius": 2
+      },
+      "script": "sw_market_kid"
+    },
+    {
+      "id": "sw_curator_out",
+      "sprite": "professor",
+      "x": 46,
+      "y": 28,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sw_curator_out"
+    },
+    {
+      "id": "sw_meridian_greeter",
+      "sprite": "concord",
+      "x": 16,
+      "y": 28,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sw_meridian_greeter"
+    },
+    {
+      "id": "town_tarin",
+      "sprite": "rival",
+      "x": 18,
+      "y": 28,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tarin_town",
+      "hiddenIfFlag": "tarin_stonewake_done"
+    },
+    {
+      "id": "sw_carter",
+      "sprite": "hiker",
+      "x": 30,
+      "y": 33,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sw_carter"
+    },
+    {
+      "id": "sw_lamplighter",
+      "sprite": "villager_m",
+      "x": 44,
+      "y": 36,
+      "facing": "down",
+      "movement": {
+        "kind": "pace",
+        "axis": "x",
+        "distance": 4
+      },
+      "script": "sw_lamplighter"
+    },
+    {
+      "id": "sw_clinic_queue",
+      "sprite": "villager_f",
+      "x": 17,
+      "y": 40,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "sw_clinic_queue"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 27,
+      "y": 21,
+      "text": [
+        "UPPER TERRACE. Quarry works, and the Stone Hall above them.",
+        "Hard hats past the weighbridge. Children off the sleepers.",
+        "Underneath, in chalk: OR ELSE WHAT"
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 26,
+      "y": 50,
+      "text": [
+        "STONEWAKE. Nine thousand four hundred souls and one mountain.",
+        "South: Route 2, and Briarbell beyond it.",
+        "East: Kerb Street, and the coast road after that."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 47,
+      "y": 34,
+      "text": [
+        "KERB STREET. Museum and Foundation north. Market south.",
+        "A second board lists eleven lodging houses. Nine are full."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 12,
+      "text": [
+        "THE WEST WORKING IS STOPPED.",
+        "By order of the Company, and of Keeper Quill, who does not work here",
+        "and put her name on it anyway."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 40,
+      "y": 7,
+      "text": [
+        "THE STONE HALL. Terra. Keeper Roxen Quill.",
+        "Challengers go down, not in. Bring a lamp, and better boots than those."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 47,
+      "y": 27,
+      "text": [
+        "THE STONEWAKE MUSEUM.",
+        "Stone, bones, and the people who were here first.",
+        "Free on the first day of the month. There is a queue on the first of the month."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 27,
+      "text": [
+        "THE MERIDIAN FOUNDATION - Stonewake Field Office.",
+        "Weather stations. Ocean survey. Kin conservation. Disaster relief.",
+        "The brass is polished. Somebody polishes it every morning."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 14,
+      "y": 33,
+      "text": [
+        "STONEWAKE PROVISIONER. Trade prices for anyone with quarry dust on them.",
+        "Everyone in Stonewake has quarry dust on them."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 14,
+      "y": 39,
+      "text": [
+        "KIN CLINIC. Open, always.",
+        "The night bell is on the left. Please do not ring it about a graze."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 22,
+      "y": 38,
+      "text": [
+        "THE GREEN. The only soft ground inside the city.",
+        "Planted the year the tramway went in, by a foreman who said Stonewake",
+        "needed somewhere to look at that was not grey."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 3,
+      "y": 2,
+      "text": [
+        "Cut into the chamber wall, in a hand nobody writes in any more:",
+        "WE STOPPED HERE. IT WAS NOT THE ROCK'S FAULT."
+      ]
+    },
+    {
+      "kind": "pushable",
+      "x": 5,
+      "y": 3
+    },
+    {
+      "kind": "item",
+      "x": 6,
+      "y": 1,
+      "item": "great_potion",
+      "quantity": 1,
+      "flag": "item_sw_westworking"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 4,
+      "y": 1,
+      "item": "deep_vessel",
+      "quantity": 1,
+      "flag": "item_sw_westworking2"
+    },
+    {
+      "kind": "item",
+      "x": 11,
+      "y": 1,
+      "item": "fine_vessel",
+      "quantity": 2,
+      "flag": "item_sw_bay_b"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 17,
+      "y": 1,
+      "item": "escape_line",
+      "quantity": 1,
+      "flag": "item_sw_bay_c"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 24,
+      "y": 41,
+      "item": "coolsalve",
+      "quantity": 1,
+      "flag": "item_sw_green"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 52,
+      "y": 12,
+      "item": "strong_potion",
+      "quantity": 1,
+      "flag": "item_sw_forecourt"
+    },
+    {
+      "kind": "item",
+      "x": 26,
+      "y": 46,
+      "item": "steadyroot",
+      "quantity": 1,
+      "flag": "item_sw_market"
+    },
+    {
+      "kind": "pushable",
+      "x": 13,
+      "y": 14
+    },
+    {
+      "kind": "pushable",
+      "x": 24,
+      "y": 14
+    },
+    {
+      "kind": "pushable",
+      "x": 12,
+      "y": 3
+    },
+    {
+      "kind": "pushable",
+      "x": 18,
+      "y": 2
+    }
+  ],
+  "_legend": "Stonewake climbs a quarried mountainside in two steps. The lower city is a grid: gravel lanes, two laid-stone thoroughfares (Kerb Street east to west, the ramp road north to south), and blocks of brick terraces between them. The museum takes the whole east end of the north block; the Meridian Foundation office faces it across the square in glass and steel. Above the retaining wall is the upper terrace -- three worked bays, the cutting shed, the powder store, the quarry office, the winding house, and the Stone Hall on its own bench with its back in the rock.",
+  "_plan": "Scale is carried by buildings that never open. Bothies, stores and shuttered terraces put thirteen doors among something over fifty roofs, which is what makes the place read as a city rather than as a village with more houses. Two ways up to the terrace -- the ramp road and the haul road -- plus the old adit at the east end, so the top of the city is never one corridor. The west working is stopped by a fallen stone, and Shoulder, which this Hall itself teaches, is what opens it."
+}

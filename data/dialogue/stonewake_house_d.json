@@ -1,0 +1,33 @@
+{
+  "speakers": {
+    "sw_house_d_resident": "CORWIN",
+    "sw_house_d_gran": "GRAN VESKE"
+  },
+  "entries": {
+    "sw_house_d": [
+      {
+        "ifFlags": [
+          "crest_2_taken"
+        ],
+        "lines": [
+          "You. You are today. I have written you on the board.",
+          "Four down, one up, and the one up walked past this window an hour ago.",
+          "Do not let it go to your head. Actually, no. Let it. Go on."
+        ]
+      },
+      {
+        "lines": [
+          "We keep the board. Every challenger, every day, twenty-two years.",
+          "Best year we ever had was nine Crests. Worst was none at all.",
+          "Roxen was the Keeper for both of those years, before you ask."
+        ]
+      }
+    ],
+    "sw_house_d_gran": [
+      "I have got that map because my husband drew it and he drew it wrong.",
+      "Plates move. They have never moved. He could not push a stone straight",
+      "and he went to his grave saying the Hall shifted them at night.",
+      "Forty years I let him say it. What would you have done?"
+    ]
+  }
+}

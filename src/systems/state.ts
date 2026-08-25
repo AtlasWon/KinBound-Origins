@@ -11,6 +11,8 @@ import { Kin } from './kin.js';
 import { worldRng } from '../core/rng.js';
 import { setToken } from '../core/tokens.js';
 import { DEFAULT_APPEARANCE, normaliseAppearance, type CharAppearance } from '../gfx/charsprite.js';
+import { refreshTideheart, tideheartEnteredMap, TIDEHEART } from './tideheart.js';
+import { tarinBeat, tarinFlagsFor, type TarinBeat } from './tarin.js';
 import type { Direction, TimeOfDay } from '../data/schema.js';
 
 export interface InventoryEntry {
@@ -22,7 +24,7 @@ export interface SaveHeader {
   slot: number;
   name: string;
   playTime: number;
-  seals: number;
+  crests: number;
   vellumCaught: number;
   savedAt: number;
   mapName: string;
@@ -46,13 +48,30 @@ export class GameState {
   // A new game opens in the player's own bedroom rather than in the middle of
   // the street. The walk down the stairs and past their mother is what gives
   // the first five minutes a reason to be happening.
-  currentMap = 'marrow_house_up';
+  private mapId = 'hearthmere_house_up';
+
+  /**
+   * Where the player is.
+   *
+   * A property rather than a field because arriving somewhere is an event, not
+   * just a number changing: the Tideheart reacts to the ground it is standing
+   * on, and it has to do that whether or not the map's author wrote a scene
+   * for it. `fromJSON` writes `mapId` directly, so loading a save into a place
+   * the object can feel does not fire the arrival cue over the load screen.
+   */
+  get currentMap(): string { return this.mapId; }
+  set currentMap(id: string) {
+    const from = this.mapId;
+    this.mapId = id;
+    if (from !== id) tideheartEnteredMap(this, from, id);
+  }
+
   currentX = 2;
   currentY = 2;
   currentFacing: Direction = 'down';
 
   /** Where the player returns to after a blackout. */
-  respawnMap = 'marrow_house_player';
+  respawnMap = 'hearthmere_house_player';
   respawnX = 6;
   respawnY = 5;
 
@@ -63,8 +82,8 @@ export class GameState {
 
   /** Field arts (traversal abilities) the player has earned. */
   arts = new Set<string>();
-  /** Earned seals, 1..8. */
-  seals = new Set<number>();
+  /** Earned Bond Crests, 1..8. */
+  crests = new Set<number>();
 
   inventory: InventoryEntry[] = [];
 
@@ -85,6 +104,8 @@ export class GameState {
     // player has picked one -- a {name} that resolves to nothing looks like a
     // bug in the writing rather than in the code.
     setToken('name', this.name);
+    // Same reason for {tarin_where}: it is on screen before any script has run.
+    this.syncTarin();
   }
 
   /* ---------------------------------------------------------- the party */
@@ -129,12 +150,19 @@ export class GameState {
   /* --------------------------------------------------------------- flags */
 
   hasFlag(flag: string): boolean {
-    return this.flags.has(flag);
+    return this.flags.has(flag) || this.tarinFlags.has(flag);
   }
 
   setFlag(flag: string, value = true): void {
     if (value) this.flags.add(flag);
     else this.flags.delete(flag);
+    // The Tideheart's name, description and icon are story state, so the
+    // interface has to follow the flag that changed it in the same tick the
+    // script set it. Narrowed to its own flags: this is the hottest setter in
+    // the game and most of what goes through it is nothing to do with the
+    // object.
+    if (flag.startsWith('tideheart')) refreshTideheart(this);
+    this.syncTarin();
   }
 
   getVar(name: string): number {
@@ -151,6 +179,10 @@ export class GameState {
 
   visitMap(id: string): void {
     this.visited.add(id);
+    // Some of Tarin's beats have to land the moment the player walks into a
+    // town -- "he beat the Hallkeeper this morning" is only news if the town is
+    // already saying it when you arrive, not after you have taken the Crest.
+    this.syncTarin();
   }
 
   hasVisited(id: string): boolean {
@@ -175,12 +207,45 @@ export class GameState {
     this.arts.add(art);
   }
 
-  giveSeal(n: number): void {
-    this.seals.add(n);
+  giveCrest(n: number): void {
+    this.crests.add(n);
+    this.syncTarin();
   }
 
-  get sealCount(): number {
-    return this.seals.size;
+  get crestCount(): number {
+    return this.crests.size;
+  }
+
+  /* ---------------------------------------------------------------- Tarin */
+
+  /**
+   * Where Tarin is and what he has done, derived from the ledger in tarin.ts.
+   *
+   * Held apart from `flags` and never serialised. The rival's off-screen
+   * journey is a *function* of the player's progress, so storing it would only
+   * create a second copy that could disagree with the first -- and a save
+   * written before a later stage extended the ledger would carry a beat that no
+   * longer exists. Recomputing costs a walk over seven rows.
+   */
+  private tarinFlags = new Set<string>();
+  /** The beat he is living in, for debugging and for the dev harness. */
+  tarin?: TarinBeat;
+
+  /** Re-derives Tarin's beat. Safe to call as often as anything changes. */
+  syncTarin(): void {
+    const beat = tarinBeat({
+      hasFlag: (f) => this.flags.has(f),
+      hasVisited: (m) => this.visited.has(m),
+      hasCrest: (n) => this.crests.has(n),
+      crestCount: this.crests.size,
+    });
+    // Recomputed whole rather than patched: a beat that closes has to take its
+    // flags with it. TARIN_FLAGS in tarin.ts is the complete list of what the
+    // ledger can ever publish, which is what the tests check against.
+    this.tarinFlags.clear();
+    for (const f of tarinFlagsFor(beat, this.crests.size)) this.tarinFlags.add(f);
+    this.tarin = beat;
+    setToken('tarin_where', beat?.where ?? 'the road');
   }
 
   /* ----------------------------------------------------------- inventory */
@@ -189,6 +254,7 @@ export class GameState {
     const existing = this.inventory.find((e) => e.item === item);
     if (existing) existing.count = Math.min(99, existing.count + count);
     else this.inventory.push({ item, count: Math.min(99, count) });
+    if (item === TIDEHEART) refreshTideheart(this);
   }
 
   takeItem(item: string, count = 1): boolean {
@@ -198,6 +264,7 @@ export class GameState {
     if (entry.count < count) return false;
     entry.count -= count;
     if (entry.count <= 0) this.inventory.splice(idx, 1);
+    if (item === TIDEHEART) refreshTideheart(this);
     return true;
   }
 
@@ -267,7 +334,7 @@ export class GameState {
       visited: [...this.visited],
       defeatedTrainers: [...this.defeatedTrainers],
       arts: [...this.arts],
-      seals: [...this.seals],
+      crests: [...this.crests],
       inventory: this.inventory,
       party: this.party.map((k) => k.toJSON()),
       boxes: this.boxes.map((b) => b.map((k) => (k ? k.toJSON() : null))),
@@ -285,7 +352,10 @@ export class GameState {
     // get the default one rather than a crash or an invisible player.
     s.appearance = normaliseAppearance(data.appearance);
     s.money = data.money ?? 3000;
-    s.currentMap = data.currentMap ?? 'marrow_house_up';
+    // Straight to the field, not through the setter: loading a save is not
+    // arriving anywhere, and a save made inside an Aurelian site must not
+    // sound its arrival cue over the load screen.
+    s.mapId = data.currentMap ?? 'hearthmere_house_up';
     s.currentX = data.currentX ?? 2;
     s.currentY = data.currentY ?? 2;
     s.currentFacing = data.currentFacing ?? 'down';
@@ -297,7 +367,7 @@ export class GameState {
     s.visited = new Set(data.visited ?? []);
     s.defeatedTrainers = new Set(data.defeatedTrainers ?? []);
     s.arts = new Set(data.arts ?? []);
-    s.seals = new Set(data.seals ?? []);
+    s.crests = new Set(data.crests ?? []);
     s.inventory = data.inventory ?? [];
     s.party = (data.party ?? []).map((k: any) => Kin.fromJSON(k, worldRng));
     if (data.boxes) {
@@ -307,6 +377,13 @@ export class GameState {
     s.seen = new Set(data.seen ?? []);
     s.caught = new Set(data.caught ?? []);
     s.playTime = data.playTime ?? 0;
+    // The object's name and description are derived from flags and from where
+    // the player is standing, and a load restores both at once.
+    refreshTideheart(s);
+    // Tarin's beat is derived, never stored, so a load has to place him again
+    // from the flags and Crests the save actually carries. This is also what
+    // lets a save made in an earlier stage pick up a later stage's ledger.
+    s.syncTarin();
     return s;
   }
 
@@ -315,7 +392,7 @@ export class GameState {
       slot,
       name: this.playerName,
       playTime: this.playTime,
-      seals: this.sealCount,
+      crests: this.crestCount,
       vellumCaught: this.caught.size,
       savedAt: Date.now(),
       mapName,

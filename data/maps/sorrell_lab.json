@@ -1,0 +1,222 @@
+{
+  "id": "sorrell_lab",
+  "name": "Sorrell Field Station",
+  "displayName": "SORRELL FIELD STATION",
+  "music": "station",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "_plan": "The biggest room in Hearthmere and it is not close. Instruments along the whole north wall, then a band of station tile, then the working floor: a turf enclosure on the left and a tank on the right, both fenced, both with something living in them, and the long counter between them where the three are sitting. Sorrell stands on the near side of that counter so the player meets him before they meet them. THE THREE STARTERS SIT ON (7,6), (9,6) AND (11,6) and are read from the row below; the whole of y=7 must stay walkable.",
+  "rows": [
+    "IIIUIIIIIIIIUIIIIIII",
+    "I+++?@@@KKKK$$$kkkkI",
+    "I::::::::::::::::::I",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "I_____FFFFFFFF_____I",
+    "I|,*,|FFFFFFFF|~~~|I",
+    "I|.,.|KKKKKKFF|~~~|I",
+    "I_____FFFFFFFF_____I",
+    "IkFFFFFFFFFFFFFFFFkI",
+    "IFrrFFFFFFF$$$FFFFFI",
+    "IFrrFFFFFFFFFFFFFFFI",
+    "IPFFFFFFFFFFFFFFFFFI",
+    "IIIIIIIIIIDIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 10,
+      "y": 12,
+      "toMap": "hearthmere",
+      "toX": 21,
+      "toY": 5,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "sorrell",
+      "sprite": "professor",
+      "x": 9,
+      "y": 8,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sorrell_intro"
+    },
+    {
+      "id": "sorrell_aide",
+      "sprite": "villager_f",
+      "x": 12,
+      "y": 10,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sorrell_aide"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 1,
+      "text": [
+        "A bank of humming machines. Rows of lamps",
+        "count something you cannot see.",
+        "A strip of tape reads: DO NOT UNPLUG. EVER."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 4,
+      "y": 1,
+      "text": [
+        "A console, and a paper roll creeping out of it a finger a day.",
+        "The line on it wanders, then goes flat, then wanders again.",
+        "Somebody has drawn an arrow at the flat part and written: HERE."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 6,
+      "y": 1,
+      "text": [
+        "A specimen tank, lit from beneath.",
+        "Something small turns over inside and",
+        "looks at you until you look away first."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 1,
+      "text": [
+        "The long counter. Scrubbed pale, warm from the",
+        "lamp above it, and worn smooth in three places",
+        "where something small used to sit all morning."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 1,
+      "text": [
+        "The sorting bench. Trays of scale, shell, seed and grit,",
+        "each labelled with a place and a date.",
+        "Every date this year is earlier than the same date last year."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 16,
+      "y": 1,
+      "text": [
+        "A wall of pinned charts. Arrows sweep",
+        "across the Caeloran Sea in one long curl.",
+        "Someone has written: 'IT IS EARLY.'"
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18,
+      "y": 1,
+      "text": [
+        "Forty years of field notebooks, oldest at the left.",
+        "One gap in the run, at eye height, where a set has been",
+        "taken down and not put back. The dust says recently."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 3,
+      "y": 4,
+      "text": [
+        "The turf enclosure. Real ground, cut and carried in,",
+        "with a burrow in it that somebody has fitted a glass side to.",
+        "Nothing is home. There is a very fresh hole in the turf."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 15,
+      "y": 4,
+      "text": [
+        "The tank. Brackish, moving faster than a tank should.",
+        "A brass gauge on the rail reads pressure and temperature.",
+        "The temperature is written up in chalk twice a day. It keeps rising."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 6,
+      "text": [
+        "The counter has been cleared of everything but three sets",
+        "of field notes, one for each of the three sitting up here.",
+        "Somebody has been awake a long time getting this right."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 6,
+      "text": [
+        "Three cards, hand-lettered, propped against three bowls.",
+        "SPRIGLING. CINDERPAW. RILLTAIL.",
+        "The lettering on all three has been done twice, and better the second time."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 6,
+      "y": 6,
+      "text": [
+        "Four long scrapes on the tile where this counter was dragged",
+        "out into the middle of the floor.",
+        "Professor Sorrell did that himself, and would not be helped."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 9,
+      "text": [
+        "The aide's bench. Flasks, a microscope,",
+        "and four months of water samples in a rack,",
+        "each one labelled with a place further inland."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 8,
+      "text": [
+        "A shelf of borrowed books with a slip in the front of each.",
+        "Half the slips are signed by the same hand, sixteen years ago,",
+        "and none of those half were ever brought back."
+      ]
+    },
+    {
+      "kind": "kin",
+      "species": "sprigling",
+      "x": 7,
+      "y": 6,
+      "hiddenIfFlag": "starter_sprigling"
+    },
+    {
+      "kind": "kin",
+      "species": "cinderpaw",
+      "x": 9,
+      "y": 6,
+      "hiddenIfFlag": "starter_cinderpaw"
+    },
+    {
+      "kind": "kin",
+      "species": "rilltail",
+      "x": 11,
+      "y": 6,
+      "hiddenIfFlag": "starter_rilltail"
+    }
+  ]
+}

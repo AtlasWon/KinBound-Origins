@@ -123,9 +123,35 @@ export class OverworldScene implements Scene {
 
   /* ------------------------------------------------------------ map load */
 
+  /**
+   * The last line of defence against a save naming a map that is not there.
+   *
+   * save.ts migrates ids forward, but a save carried across a rename that the
+   * table missed would otherwise land the player in a failed fetch and a black
+   * screen. The manifest is the truth about what exists, so anything not in it
+   * falls back to the respawn point and then to the player's own bedroom --
+   * both of which are always shipped.
+   */
+  private resolveMap(id: string): { id: string; x?: number; y?: number } {
+    if (registry.has('maps', id)) return { id };
+    console.warn(`map "${id}" does not exist; falling back`);
+    const respawn = this.state.respawnMap;
+    if (respawn !== id && registry.has('maps', respawn)) {
+      return { id: respawn, x: this.state.respawnX, y: this.state.respawnY };
+    }
+    return { id: 'hearthmere_house_player', x: 6, y: 5 };
+  }
+
   async loadMap(
-    game: Game, id: string, x: number, y: number, facing: Direction, showBanner = true,
+    game: Game, wanted: string, x: number, y: number, facing: Direction, showBanner = true,
   ): Promise<void> {
+    const fallback = this.resolveMap(wanted);
+    const id = fallback.id;
+    if (id !== wanted) {
+      x = fallback.x ?? x;
+      y = fallback.y ?? y;
+      facing = 'down';
+    }
     const file = await game.assets.loadJson<AsciiMapFile>(`data/maps/${id}.json`);
     this.map = new TileMap(file);
     this.state.currentMap = id;
@@ -165,9 +191,9 @@ export class OverworldScene implements Scene {
       this.banner = { text: this.map.displayName, t: 150 };
     }
 
-    // Waystations are the game's natural checkpoint, so that is where the
+    // Kin Clinics are the game's natural checkpoint, so that is where the
     // autosave fires rather than on some arbitrary timer.
-    if (game.settings.autosave && id.includes('waystation')) {
+    if (game.settings.autosave && id.includes('clinic')) {
       this.state.playTime = game.playTime;
       const result = autosave(this.state, this.map.name, game.playTime);
       if (!result.ok) console.warn('autosave failed:', result.error);
@@ -767,10 +793,10 @@ export class OverworldScene implements Scene {
     if (result === 'loss') {
       /*
        * A LOSS IS NOT ALWAYS A BLACKOUT, and assuming it was is what froze the
-       * game solid after the first battle in Marrow Hollow.
+       * game solid after the first battle in Hearthmere.
        *
        * That fight is authored `onLoss: "continue"`: the script is meant to
-       * carry on with Perrin's commiseration and then walk the player home to
+       * carry on with Tarin's commiseration and then walk the player home to
        * be patched up, which is the game's entire teaching pass on healing.
        * The blackout ran anyway, so two owners were driving the overworld at
        * once -- the blackout holding `busy` until its own fade called back, and
@@ -792,7 +818,7 @@ export class OverworldScene implements Scene {
     resume();
   }
 
-  /** Standard blackout: patch everyone up and wake at the last Waystation. */
+  /** Standard blackout: patch everyone up and wake at the last Kin Clinic. */
   private whiteout(game: Game): void {
     this.busy = true;
     say(game, [
@@ -1140,7 +1166,7 @@ export class OverworldScene implements Scene {
        * walls -- an author places the path -- but not for the player, who is
        * standing wherever they stopped. The player is a body, not a tile: for
        * most of every step it straddles two tiles, and an author writing
-       * "walk Perrin to (22,9)" cannot know the player is half in that tile.
+       * "walk Tarin to (22,9)" cannot know the player is half in that tile.
        *
        * The step is dropped rather than the path being abandoned, so the actor
        * arrives as close as the room allows and the script still completes --

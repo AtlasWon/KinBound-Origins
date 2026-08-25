@@ -1,0 +1,275 @@
+{
+  "id": "hearthmere",
+  "name": "Hearthmere",
+  "displayName": "HEARTHMERE",
+  "music": "town_hearth",
+  "battleBackdrop": "highland",
+  "indoor": false,
+  "regionPos": {
+    "x": 22,
+    "y": 30
+  },
+  "encounterTable": "hearthmere",
+  "_legend": "Terracotta gable with the chimney (x=16..20, y=22) is the player's house; the slate one next door (x=8..12) is the Ashe house, Tarin's. The long flat-roofed building across the water (x=16..27, y=2..4) is Sorrell's field station. Red roof west of the road (x=8..13, y=12) is the Kin Clinic. The wooden counters on the square (x=17..19, y=15) are the market.",
+  "_plan": "THE VILLAGE IS READ NORTH TO SOUTH AND IT IS ONE STREET LONG. The road comes out of the wood at x=14,15, runs the whole height of the map and stops at the lane in front of the two front doors -- there is no through traffic in Hearthmere and the map says so by having nowhere else to go. The mere cuts the map in half at y=9. Everything north of it is work: the fenced mill field, the orchard verge and the field station on the old mill bank. Everything south is home: the clinic, the square with its wellhead, the cottages, the two houses, the lower meadow. Two crossings, both real -- the road bridge at x=14,15 and the plank footbridge at x=24,25 that saves the walk when you are coming up the east side. THE OPENING WALK AND THE ENDING ARE THE SAME WALK: out of the front door, west along the lane, north up the street past everyone who knows you, over the water, to the station. Coming home reverses it.",
+  "_contract": "GEOMETRY IS LOAD-BEARING. data/events/hearthmere.json walks Tarin along it with scripted steps that ignore collision, so a tile that stops being a road here does not fail -- it puts him through a wall in front of the player. Do not narrow or interrupt: the lane y=24 walkable from x=4 to x=24; column x=14 walkable from y=24 up to y=7, the bridge tile at (14,9) included; the riverside street y=7 walkable from x=2 to x=27; the station forecourt y=5..6 from x=16 to x=27; the double door at (21,4),(22,4); column x=25 walkable from y=10 up to y=6, the footbridge tile at (25,9) included; the south bank y=10 walkable from x=17 to x=25. (18,24) is where the player lands leaving their own house and (10,24) is Tarin's doorstep -- keep both clear, and keep (16,24) and (17,24) clear as well, because that is where Tarin stops. NOTHING WALKABLE MAY BE ONE TILE WIDE WITH SOLID ON BOTH SIDES FOR MORE THAN A TILE OR TWO: the feet box is 11x9 in a 16px cell, so a body standing in row N can still be overlapping row N-1, and a one-tile corridor catches it on the scenery.",
+  "rows": [
+    "TTTTTTTTTTTTTT--TTTTTTTTTTTTTT",
+    "TTTTTTTTTTTT.,--.tTTTTTTTTTTTT",
+    "TTT__________,--vvvvvvvvvvvvTT",
+    "TTt|,*,,*,,,|!--vvvyvvvvyvvvTT",
+    "TTt|,,*,,,*,|.--lnnnzquznnnlTT",
+    "TTt____,,____!--============TT",
+    "TT.,.,*.,.,.,.--============TT",
+    "TT--------------------------TT",
+    "TTs~~~~~ssssssssssssssssssssTT",
+    "TT~~~~~~~~~~~~BB~~~~~~~~BB~~TT",
+    "TTs~~~~~ssssssssssssssssssssTT",
+    "TT.,t.,..,.,.,--!,.t.,.,t.,.TT",
+    "TT.,*.,.144443--.,.t.,.,t.,.TT",
+    "TT.,..a,122523--.,(&&&&).,.,TT",
+    "TT.,.,.!GGhgGG--.,HdZZdH,.,.TT",
+    "TT.,t.,,.========KKK=.,t.,.,TT",
+    "TT.,*.,.Y==~~========Y.,.,.,TT",
+    "TT.,.t.,.==~~=====a==.,.t.,.TT",
+    "TT.,..,..=Y========Y=.,.,t.,TT",
+    "TT.,<%%%>.,.,.--.,.,.(&&&).,TT",
+    "TT.,HdZdH,.,.,--.,.,.MdZdM.,TT",
+    "TT.a.,a.,.t.,.--.,.,a.a.,t.,TT",
+    "TT.,.,.,<%%%>.--[^j^].,.,t.,TT",
+    "TT.,..,.HdidH.--HZiZH.,.,.,tTT",
+    "TT.,---------------------.,tTT",
+    "TT,.*a.,.,.,.,.,..,..,tt,.,tTT",
+    "TT\"\"\"\"\".\"\"\"\"..,.,.,.\"\"\"\"\"\".tTT",
+    "TT\"\"\",.,.\"\"\".!.,.,.,\"\"\"\"\"\",tTT",
+    "TTTt\"\"\"\",.,.,.,.,.\"\"\"\"\"t.,tTTT",
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT"
+  ],
+  "warps": [
+    {
+      "x": 18,
+      "y": 23,
+      "toMap": "hearthmere_house_player",
+      "toX": 6,
+      "toY": 9,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 10,
+      "y": 23,
+      "toMap": "hearthmere_house_neighbour",
+      "toX": 6,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 11,
+      "y": 14,
+      "toMap": "hearthmere_clinic",
+      "toX": 6,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 21,
+      "y": 4,
+      "toMap": "sorrell_lab",
+      "toX": 10,
+      "toY": 11,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 22,
+      "y": 4,
+      "toMap": "sorrell_lab",
+      "toX": 10,
+      "toY": 11,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 14,
+      "y": 0,
+      "toMap": "route_1",
+      "toX": 14,
+      "toY": 30,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 15,
+      "y": 0,
+      "toMap": "route_1",
+      "toX": 15,
+      "toY": 30,
+      "facing": "up",
+      "style": "edge"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "hearth_villager",
+      "sprite": "villager_f",
+      "x": 13,
+      "y": 16,
+      "facing": "down",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "hm_villager"
+    },
+    {
+      "id": "hearth_trader",
+      "sprite": "villager_m",
+      "x": 18,
+      "y": 16,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hm_trader"
+    },
+    {
+      "id": "hearth_elder",
+      "sprite": "villager_f",
+      "x": 9,
+      "y": 16,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hm_elder"
+    },
+    {
+      "id": "hearth_kid",
+      "sprite": "kid",
+      "x": 16,
+      "y": 18,
+      "facing": "down",
+      "movement": {
+        "kind": "pace",
+        "axis": "x",
+        "distance": 2
+      },
+      "script": "hm_kid"
+    },
+    {
+      "id": "hearth_hiker",
+      "sprite": "hiker",
+      "x": 18,
+      "y": 11,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hm_hiker"
+    },
+    {
+      "id": "hearth_fisher",
+      "sprite": "villager_m",
+      "x": 9,
+      "y": 10,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hm_fisher"
+    },
+    {
+      "id": "hearth_farmer",
+      "sprite": "villager_f",
+      "x": 7,
+      "y": 3,
+      "facing": "down",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "hm_farmer"
+    },
+    {
+      "id": "hm_tarin",
+      "sprite": "rival",
+      "x": 13,
+      "y": 24,
+      "facing": "right",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "hm_tarin_idle",
+      "requiresFlag": "mom_sendoff",
+      "hiddenIfFlag": "met_tarin"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 3,
+      "text": [
+        "HEARTHMERE",
+        "Four hundred souls, one bridge, one road.",
+        "The road only goes one way and everybody here knows where."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 5,
+      "text": [
+        "THE MILL FIELD. Gate is for people, not for carts.",
+        "Below: SORRELL FIELD STATION, OVER THE BRIDGE.",
+        "Ring the bell. Do not open the tanks. In that order."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 16,
+      "y": 11,
+      "text": [
+        "THE MERE. Rebuilt in stone the year the old planks went.",
+        "Somebody has chalked the water level on the post.",
+        "The chalk marks from this spring are all lower than the ones before."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 14,
+      "text": [
+        "The village board. A lost cat. Two lambs found.",
+        "A card, pinned last of all: WHOEVER KEEPS TAKING WATER",
+        "FROM THE WELL AT NIGHT, IT IS NOT FUNNY AND WE KNOW."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 27,
+      "text": [
+        "THE LOWER MEADOW. Keep to the cut path.",
+        "Hay to the left, kin to the right, and neither of them",
+        "cares which of the two you are."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 25,
+      "y": 25,
+      "item": "potion",
+      "quantity": 1,
+      "flag": "item_hm_potion"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 5,
+      "y": 27,
+      "item": "field_vessel",
+      "quantity": 2,
+      "flag": "item_hm_hidden"
+    }
+  ]
+}

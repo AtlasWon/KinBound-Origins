@@ -1,0 +1,66 @@
+{
+  "id": "route_1_hollow",
+  "name": "Sunmeadow Hollow",
+  "displayName": "THE SUNMEADOW HOLLOW",
+  "music": "route_west",
+  "battleBackdrop": "highland",
+  "indoor": false,
+  "encounterTable": "route_1_hollow",
+  "_plan": "A walled meadow behind a gap in the hedge on Route 1's west lane, and the only place on the easy road where something big lives. The ring of stones in the middle is nobody's monument -- it is a sheepfold that stopped being one -- and the flowers inside it have not been cut in a lifetime.",
+  "rows": [
+    "TTTTTTTTTTTTTTTT",
+    "T..,..*...,....T",
+    "T.\"\"\"\",...*..,.T",
+    "T*\"\"\"\"\",.,\"\"\".*T",
+    "T.,\"\"\"\"....\"\"\",T",
+    "T..*,..oo...,..T",
+    "T.,...o**.o...*T",
+    "T*..,.o**.o.....",
+    "T..*...oooo.,..T",
+    "T.,\"\"\"\"..*..,..T",
+    "T*\"\"\"\"\"\".,\"\"\"\"*T",
+    "T.,\"\"\"\"..,.\"\"\".T",
+    "T..,..*...,....T",
+    "TTTTTTTTTTTTTTTT"
+  ],
+  "warps": [
+    {
+      "x": 15,
+      "y": 7,
+      "toMap": "route_1",
+      "toX": 3,
+      "toY": 15,
+      "facing": "right",
+      "style": "edge"
+    }
+  ],
+  "npcs": [],
+  "objects": [
+    {
+      "kind": "script",
+      "x": 8,
+      "y": 5,
+      "text": [
+        "A ring of stones, waist high,",
+        "with flowers grown up inside.",
+        "It was a sheepfold once."
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 7,
+      "y": 7,
+      "item": "tonic_berry",
+      "quantity": 2,
+      "flag": "item_r1h_hidden"
+    },
+    {
+      "kind": "item",
+      "x": 13,
+      "y": 10,
+      "item": "fine_vessel",
+      "quantity": 1,
+      "flag": "item_r1h_vessel"
+    }
+  ]
+}

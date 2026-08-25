@@ -109,7 +109,7 @@ export const DEFAULT_PALETTES: Record<string, CharPalette> = {
     shoes: '#3a3038', outline: '#1a1a22',
     hairStyle: 'bob', build: 'slim',
   },
-  /** Waystation keeper. Red and white, and visible across a room. */
+  /** Kin Clinic keeper. Red and white, and visible across a room. */
   healer: {
     skin: '#f0c9a4', skinShade: '#c99a72',
     hair: '#d07a96', hairShade: '#a1546e',

@@ -25,7 +25,7 @@
     ]
   },
   {
-    "id": "town_hollow",
+    "id": "town_hearth",
     "tempo": 116,
     "loop": true,
     "channels": [
@@ -223,7 +223,7 @@
     ]
   },
   {
-    "id": "battle_bastion",
+    "id": "battle_hall",
     "tempo": 172,
     "loop": true,
     "channels": [

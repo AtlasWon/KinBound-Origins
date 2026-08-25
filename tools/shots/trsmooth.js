@@ -70,14 +70,14 @@ const sweep = async (name, style, dir) => {
   out.push(`${name}: ${frames} frames (${(frames / 60).toFixed(2)}s each way)`);
 };
 
-await visit('ashgate', 15, 12, 'up');
+await visit('briarbell', 15, 12, 'up');
 await sweep('sm-door', 'door', 'down');
 await sweep('sm-warp', 'warp', 'down');
 
 await visit('route_1', 14, 12, 'down');
 await sweep('sm-edge', 'edge', 'down');
 
-await visit('marrow_house_player', 6, 5, 'up');
+await visit('hearthmere_house_player', 6, 5, 'up');
 await sweep('sm-stairs', 'stairs', 'up');
 
 // What the dither actually costs. Worst case is the iris at half closed, which

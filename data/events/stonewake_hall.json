@@ -1,0 +1,58 @@
+[
+  {
+    "id": "hall2_guide",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "hasCrest", "crest": 2 },
+        "then": [
+          {
+            "kind": "say",
+            "who": "HALL CLERK",
+            "lines": [
+              "You came up the ladder. Nobody comes up the ladder unless she says so.",
+              "Congratulations. Sign the roll on your way out - the UP column.",
+              "It is the only column anybody reads."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "if",
+            "cond": { "kind": "flag", "flag": "hall2_cage_open" },
+            "then": [
+              {
+                "kind": "say",
+                "who": "HALL CLERK",
+                "lines": [
+                  "Counterweight's set, then. She'll have felt that through the floor.",
+                  "Down you go. Round the water, not through it."
+                ]
+              }
+            ],
+            "else": [
+              {
+                "kind": "say",
+                "who": "HALL CLERK",
+                "lines": [
+                  "The Stone Hall doesn't have a floor to fight on. It has a mine.",
+                  "Keeper Quill is at the bottom of it and she is not coming up for you."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "HALL CLERK",
+                "lines": [
+                  "Take the cage down. Set the counterweight in the old workings -",
+                  "three plates, three stones - and the second cage will run.",
+                  "Terra, when you get to her. Bring something green or something wet."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

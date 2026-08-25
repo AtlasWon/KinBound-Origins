@@ -43,7 +43,7 @@
       }
     ],
     "intro": [
-      "I am counting pipwings for Dr. Vess. There are meant to be forty on this route.",
+      "I am counting pipwings for Professor Sorrell. There are meant to be forty on this route.",
       "There are eleven.",
       "...Battle me, I need to think about something else."
     ],
@@ -176,6 +176,122 @@
     ]
   },
   {
+    "id": "briar_hand_a",
+    "name": "Rowe",
+    "className": "Hall Hand",
+    "sprite": "hiker",
+    "ai": "trained",
+    "payout": 40,
+    "party": [
+      {
+        "species": "nibbet",
+        "level": 5
+      },
+      {
+        "species": "tuftail",
+        "level": 6
+      }
+    ],
+    "intro": [
+      "Everyone comes in swinging. Everyone.",
+      "Go on then. Swing at me and see how far it gets you."
+    ],
+    "defeat": [
+      "That was not swinging. That was thinking. Good."
+    ],
+    "victory": [
+      "Swinging. Told you."
+    ],
+    "afterward": [
+      "Nettlebug cannot hurt you. It was never trying to.",
+      "It was making you slow while I picked the fight I wanted."
+    ]
+  },
+  {
+    "id": "briar_hand_b",
+    "name": "Pell",
+    "className": "Hall Hand",
+    "sprite": "villager_m",
+    "ai": "trained",
+    "payout": 42,
+    "party": [
+      {
+        "species": "nibbet",
+        "level": 6
+      },
+      {
+        "species": "tuftail",
+        "level": 7
+      }
+    ],
+    "intro": [
+      "Two of mine. Neither of them fast, neither of them frightening.",
+      "See how long they last anyway."
+    ],
+    "defeat": [
+      "They lasted a while. You lasted longer."
+    ],
+    "victory": [
+      "Patience. That is all that was."
+    ],
+    "afterward": [
+      "Tove will put something in front of you that you cannot knock over.",
+      "When that happens, stop hitting it. Start asking what it is bad at."
+    ]
+  },
+  {
+    "id": "briar_keeper",
+    "$comment": "The first Hall in the game, and the one whose stated job is to teach that battling is strategy rather than damage. Bramblehusk is the lesson: 78 Defence, 78 Special Defence, a Brace to raise the first of them, and -- deliberately -- no second attack. You cannot out-hit it at level nine, so the fight is about type, order and patience. Its own offence is one Vinewhip, which is why a player who does not work it out still survives long enough to try again; and it carries flat-zero IVs and no bag item, because the engine never consumes a foe-side item and one Potion in that list is an unlimited heal. MEASURED, and not against the shipped harness: that harness unlocks Slatewing and Gravelet at level ten because level ten used to mean Route 2 had been walked, and Briarbell comes BEFORE Route 2. Against a party a Route 1 player really holds -- the starter plus Nibbet, Tuftail, Pipwing -- this reads 73/87/74 percent at level nine and 96/92/86 at level ten for Sprigling, Cinderpaw and Rilltail. Losable on arrival, comfortable after the two Hands. That is a first wall, not a stopping point.",
+    "name": "Tove Alder",
+    "className": "Hallkeeper",
+    "sprite": "elder",
+    "ai": "keeper",
+    "payout": 80,
+    "party": [
+      {
+        "species": "nibbet",
+        "level": 6
+      },
+      {
+        "species": "tuftail",
+        "level": 7
+      },
+      {
+        "species": "bramblehusk",
+        "level": 9,
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        },
+        "moves": [
+          "vinewhip",
+          "brace"
+        ]
+      }
+    ],
+    "intro": [
+      "Tove Alder. I keep the Bell Hall, and before that I kept the hedge, which is the same job.",
+      "You will want to knock my last one over. Everybody does.",
+      "You will not. Work out what else you have."
+    ],
+    "defeat": [
+      "There. That is the whole of it.",
+      "You stopped hitting it and started beating it. Those are different things."
+    ],
+    "victory": [
+      "It only had to stand there. That should tell you something.",
+      "Come back when you have a second idea."
+    ],
+    "afterward": [
+      "The bells were hung by people who could not have fought us for an afternoon.",
+      "They still put six bells in a tree that outlived them. Think about what that took."
+    ]
+  },
+  {
     "id": "r2_dell",
     "$comment": "First trainer on Route 2. Levels 7 and 8 now come down to 5 and 6 with the rest of the third pass. The rule this pass applies everywhere: an ORDINARY trainer stands three or more levels below the player who is raising a team, not the player who never switches. Those are two different people five levels apart by Brackwater, and the first two passes tuned for the average of them, which is nobody.",
     "name": "Dell",
@@ -235,7 +351,7 @@
       "Still uphill. Sorry."
     ],
     "afterward": [
-      "Kellowmere is over the rise. You will smell the quarry before you see it."
+      "Stonewake is over the rise. You will smell the quarry before you see it."
     ]
   },
   {
@@ -336,9 +452,9 @@
     ]
   },
   {
-    "id": "bastion1_guard_a",
+    "id": "hall1_guard_a",
     "name": "Corrin",
-    "className": "Bastion Hand",
+    "className": "Hall Hand",
     "sprite": "hiker",
     "ai": "trained",
     "payout": 46,
@@ -367,9 +483,9 @@
     ]
   },
   {
-    "id": "bastion1_guard_b",
+    "id": "hall1_guard_b",
     "name": "Wick",
-    "className": "Bastion Hand",
+    "className": "Hall Hand",
     "sprite": "villager_m",
     "ai": "trained",
     "payout": 46,
@@ -398,8 +514,8 @@
     ]
   },
   {
-    "id": "bastion1_roxen",
-    "$comment": "Chalkmar is a 452-point fully evolved kin and it is the ace of the FIRST Bastion. Its level is pinned at 14-18 by tests/content.test.js, so level was never the dial available here -- and two passes of lowering the kin AROUND it never touched the thing that was actually winning her the fight. Measured against a player raising a team, who arrives at Kellowmere at THIRTEEN with a starter that has not evolved yet (all three evolve at 16), Roxen beat a Cinderpaw 100 times out of 100. One move was doing it: stonefling is Stone, which is STAB on a Stone/Iron kin and doubles into Flame, so it landed at three times the weight of anything Chalkmar had. Taking that single move out took Cinderpaw from 0 to 81 percent and touched nothing else. Chalkmar keeps two Stone moves, both defensive -- Bulwark and Grit Field -- plus Gravelspray, so it is now literally the kin her own defeat line describes: something you out-wait rather than out-hit. Flat-zero IVs on top (Bastion kin, not hand-picked champions) and the escorts down to 8 and 9. Also removed: her bag Potion. Battle.doItem never consumes a foe-side item, so a single entry in that list is an UNLIMITED 20 HP heal fired at a 70 percent rate every turn she drops below thirty percent. Put it back when the engine consumes it. Measured now, party the size of hers, no items: 100/98/100.",
+    "id": "hall1_roxen",
+    "$comment": "Chalkmar is a 452-point fully evolved kin and it is the ace of the FIRST Kin Hall. Its level is pinned at 14-18 by tests/content.test.js, so level was never the dial available here -- and two passes of lowering the kin AROUND it never touched the thing that was actually winning her the fight. Measured against a player raising a team, who arrives at Kellowmere at THIRTEEN with a starter that has not evolved yet (all three evolve at 16), Roxen beat a Cinderpaw 100 times out of 100. One move was doing it: stonefling is Stone, which is STAB on a Stone/Iron kin and doubles into Flame, so it landed at three times the weight of anything Chalkmar had. Taking that single move out took Cinderpaw from 0 to 81 percent and touched nothing else. Chalkmar keeps two Stone moves, both defensive -- Bulwark and Grit Field -- plus Gravelspray, so it is now literally the kin her own defeat line describes: something you out-wait rather than out-hit. Flat-zero IVs on top (Hall kin, not hand-picked champions) and the escorts down to 8 and 9. Also removed: her bag Potion. Battle.doItem never consumes a foe-side item, so a single entry in that list is an UNLIMITED 20 HP heal fired at a 70 percent rate every turn she drops below thirty percent. Put it back when the engine consumes it. Measured now, party the size of hers, no items: 100/98/100.",
     "name": "Roxen Quill",
     "className": "Keeper",
     "sprite": "hiker",
@@ -433,7 +549,7 @@
       }
     ],
     "intro": [
-      "Roxen Quill. I keep the Stone Bastion, and before that I kept the west face for nineteen years.",
+      "Roxen Quill. I keep the Stone Hall, and before that I kept the west face for nineteen years.",
       "You moved the stones. Good. That is the whole lesson, really.",
       "Now find out whether you can move me."
     ],
@@ -450,120 +566,123 @@
     ]
   },
   {
-    "id": "perrin_km_sprigling",
-    "name": "Perrin",
+    "id": "tarin_stonewake_sprigling",
+    "$comment": "Tarin at Stonewake, two weeks and one Bond Crest later. The id names the starter he was GIVEN, not the form he brings. He is BEHIND the player here on purpose: he spent the week being thrown out of the Meridian office instead of fighting the Hallkeeper. His bench is two plain beast kin on purpose as well. Every elemental bench that was tried pulled the three branches apart -- a Slatewing (stone/gale) on its own dropped a Verdant player from 93 percent to nothing, because gale halves verdant while his ace is still weak to it. Beast is neutral to all three starters, so the only type relationship left in the fight is the one that belongs there: his ace loses to yours. Measured at 300 runs with simulate.mjs's rate(starter, level, id, 300, 'novice', 3) -- novice play, no items, three kin: 11/12/94 percent at level 14, 53/49/100 at 15, and 99/97/100 at 16 and up. The cliff at 16 is the starter evolving, not the tuning. Arriving at Stonewake underlevelled is meant to be a real fight; arriving on the curve is a win that still costs a kin.",
+    "name": "Tarin",
     "className": "Rival",
     "sprite": "rival",
     "ai": "trained",
-    "payout": 60,
+    "payout": 55,
     "party": [
       {
+        "species": "tuftail",
+        "level": 13
+      },
+      {
         "species": "nibbet",
-        "level": 8
+        "level": 14
       },
       {
-        "species": "slatewing",
-        "level": 8
-      },
-      {
-        "species": "cinderpaw",
-        "level": 10
+        "species": "bramblehusk",
+        "level": 16
       }
     ],
     "intro": [
-      "There you are. I have been in this town two days waiting for you.",
-      "Roxen said no. Twice. Said I was rushing it.",
-      "So I am going to beat you instead, and then I am going to ask her a third time."
+      "Three days in this town and that grey office has thrown me out twice.",
+      "The second time they carried me. Politely. That is the part that bothers me.",
+      "Come on. I need to hit something I am allowed to hit."
     ],
     "defeat": [
-      "Right. Right, all right.",
-      "She is going to say no again, isn't she.",
-      "Go on, take the Seal. I will get mine. Just later than you."
+      "Fine. FINE. Twice this week I have lost to somebody with a badge on.",
+      "Go and take the Crest off her, one of us should have it.",
+      "And {name} — ask that office what they want with the quarry cores. Watch their faces."
     ],
     "victory": [
-      "There. That is what rushing it looks like when it works.",
-      "Go and heal up. I will wait, I am very good at waiting."
+      "There. I needed that more than you did, and I am not sorry.",
+      "Go and get patched up. I have nowhere better to be thrown out of."
     ],
     "afterward": [
-      "Beat her yet? ...Do not answer that."
+      "Do not look at me like that. I am going back in tomorrow."
     ]
   },
   {
-    "id": "perrin_km_cinderpaw",
-    "name": "Perrin",
+    "id": "tarin_stonewake_cinderpaw",
+    "$comment": "Tarin at Stonewake, two weeks and one Bond Crest later. The id names the starter he was GIVEN, not the form he brings. He is BEHIND the player here on purpose: he spent the week being thrown out of the Meridian office instead of fighting the Hallkeeper. His bench is two plain beast kin on purpose as well. Every elemental bench that was tried pulled the three branches apart -- a Slatewing (stone/gale) on its own dropped a Verdant player from 93 percent to nothing, because gale halves verdant while his ace is still weak to it. Beast is neutral to all three starters, so the only type relationship left in the fight is the one that belongs there: his ace loses to yours. Measured at 300 runs with simulate.mjs's rate(starter, level, id, 300, 'novice', 3) -- novice play, no items, three kin: 11/12/94 percent at level 14, 53/49/100 at 15, and 99/97/100 at 16 and up. The cliff at 16 is the starter evolving, not the tuning. Arriving at Stonewake underlevelled is meant to be a real fight; arriving on the curve is a win that still costs a kin.",
+    "name": "Tarin",
     "className": "Rival",
     "sprite": "rival",
     "ai": "trained",
-    "payout": 60,
+    "payout": 55,
     "party": [
       {
+        "species": "tuftail",
+        "level": 13
+      },
+      {
         "species": "nibbet",
-        "level": 8
+        "level": 14
       },
       {
-        "species": "slatewing",
-        "level": 8
-      },
-      {
-        "species": "rilltail",
-        "level": 10
+        "species": "blazelynx",
+        "level": 16
       }
     ],
     "intro": [
-      "There you are. I have been in this town two days waiting for you.",
-      "Roxen said no. Twice. Said I was rushing it.",
-      "So I am going to beat you instead, and then I am going to ask her a third time."
+      "Three days in this town and that grey office has thrown me out twice.",
+      "The second time they carried me. Politely. That is the part that bothers me.",
+      "Come on. I need to hit something I am allowed to hit."
     ],
     "defeat": [
-      "Right. Right, all right.",
-      "She is going to say no again, isn't she.",
-      "Go on, take the Seal. I will get mine. Just later than you."
+      "Fine. FINE. Twice this week I have lost to somebody with a badge on.",
+      "Go and take the Crest off her, one of us should have it.",
+      "And {name} — ask that office what they want with the quarry cores. Watch their faces."
     ],
     "victory": [
-      "There. That is what rushing it looks like when it works.",
-      "Go and heal up. I will wait, I am very good at waiting."
+      "There. I needed that more than you did, and I am not sorry.",
+      "Go and get patched up. I have nowhere better to be thrown out of."
     ],
     "afterward": [
-      "Beat her yet? ...Do not answer that."
+      "Do not look at me like that. I am going back in tomorrow."
     ]
   },
   {
-    "id": "perrin_km_rilltail",
-    "name": "Perrin",
+    "id": "tarin_stonewake_rilltail",
+    "$comment": "Tarin at Stonewake, two weeks and one Bond Crest later. The id names the starter he was GIVEN, not the form he brings. He is BEHIND the player here on purpose: he spent the week being thrown out of the Meridian office instead of fighting the Hallkeeper. His bench is two plain beast kin on purpose as well. Every elemental bench that was tried pulled the three branches apart -- a Slatewing (stone/gale) on its own dropped a Verdant player from 93 percent to nothing, because gale halves verdant while his ace is still weak to it. Beast is neutral to all three starters, so the only type relationship left in the fight is the one that belongs there: his ace loses to yours. Measured at 300 runs with simulate.mjs's rate(starter, level, id, 300, 'novice', 3) -- novice play, no items, three kin: 11/12/94 percent at level 14, 53/49/100 at 15, and 99/97/100 at 16 and up. The cliff at 16 is the starter evolving, not the tuning. Arriving at Stonewake underlevelled is meant to be a real fight; arriving on the curve is a win that still costs a kin.",
+    "name": "Tarin",
     "className": "Rival",
     "sprite": "rival",
     "ai": "trained",
-    "payout": 60,
+    "payout": 55,
     "party": [
       {
+        "species": "tuftail",
+        "level": 13
+      },
+      {
         "species": "nibbet",
-        "level": 8
+        "level": 14
       },
       {
-        "species": "slatewing",
-        "level": 8
-      },
-      {
-        "species": "sprigling",
-        "level": 10
+        "species": "brookmaw",
+        "level": 16
       }
     ],
     "intro": [
-      "There you are. I have been in this town two days waiting for you.",
-      "Roxen said no. Twice. Said I was rushing it.",
-      "So I am going to beat you instead, and then I am going to ask her a third time."
+      "Three days in this town and that grey office has thrown me out twice.",
+      "The second time they carried me. Politely. That is the part that bothers me.",
+      "Come on. I need to hit something I am allowed to hit."
     ],
     "defeat": [
-      "Right. Right, all right.",
-      "She is going to say no again, isn't she.",
-      "Go on, take the Seal. I will get mine. Just later than you."
+      "Fine. FINE. Twice this week I have lost to somebody with a badge on.",
+      "Go and take the Crest off her, one of us should have it.",
+      "And {name} — ask that office what they want with the quarry cores. Watch their faces."
     ],
     "victory": [
-      "There. That is what rushing it looks like when it works.",
-      "Go and heal up. I will wait, I am very good at waiting."
+      "There. I needed that more than you did, and I am not sorry.",
+      "Go and get patched up. I have nowhere better to be thrown out of."
     ],
     "afterward": [
-      "Beat her yet? ...Do not answer that."
+      "Do not look at me like that. I am going back in tomorrow."
     ]
   },
   {
@@ -623,7 +742,7 @@
       }
     ],
     "intro": [
-      "Dr. Vess has me counting stream depth. Twice a day, same spot.",
+      "Professor Sorrell has me counting stream depth. Twice a day, same spot.",
       "It is down eleven centimetres since spring."
     ],
     "defeat": [
@@ -667,7 +786,7 @@
       "The last Turning took Old Tidefall. Whole town, one night.",
       "People forget that when they talk about the Concord like they are villains."
     ],
-    "$comment": "The ONLY trainer in the game left on the veteran tier, which is the tier that switches out of a bad matchup. That is deliberate: his class is literally Veteran and his opening line is forty years on this road. Everywhere else the third pass moved tiers down to describe the PERSON rather than the position on the map -- hikers, students, anglers, drovers, performers and swimmers all press the biggest number on the screen now, and Rangers, Surveyors, Bastion Hands and the rival read the type chart without switching. A novice trainer that switches optimally does not feel novice, it feels like the game cheating."
+    "$comment": "The ONLY trainer in the game left on the veteran tier, which is the tier that switches out of a bad matchup. That is deliberate: his class is literally Veteran and his opening line is forty years on this road. Everywhere else the third pass moved tiers down to describe the PERSON rather than the position on the map -- hikers, students, anglers, drovers, performers and swimmers all press the biggest number on the screen now, and Rangers, Surveyors, Hall Hands and the rival read the type chart without switching. A novice trainer that switches optimally does not feel novice, it feels like the game cheating."
   },
   {
     "id": "concord_surveyor_2",
@@ -837,9 +956,9 @@
     ]
   },
   {
-    "id": "bastion2_guard_a",
+    "id": "hall2_guard_a",
     "name": "Rill",
-    "className": "Bastion Hand",
+    "className": "Hall Hand",
     "sprite": "villager_m",
     "ai": "trained",
     "payout": 66,
@@ -868,9 +987,9 @@
     ]
   },
   {
-    "id": "bastion2_guard_b",
+    "id": "hall2_guard_b",
     "name": "Cove",
-    "className": "Bastion Hand",
+    "className": "Hall Hand",
     "sprite": "villager_f",
     "ai": "trained",
     "payout": 66,
@@ -898,9 +1017,9 @@
     ]
   },
   {
-    "id": "bastion2_guard_c",
+    "id": "hall2_guard_c",
     "name": "Skell",
-    "className": "Bastion Hand",
+    "className": "Hall Hand",
     "sprite": "hiker",
     "ai": "trained",
     "payout": 70,
@@ -935,7 +1054,7 @@
     ]
   },
   {
-    "id": "bastion2_mabry",
+    "id": "hall2_mabry",
     "$comment": "The wall at the end of the content. Her party carries two fully evolved kin against a player whose starter is mid-stage, which is correct -- she is a Keeper. Third pass: levels 18/19/20/21 down to 16/17/18/19, flat-zero IVs on the Tidewrack, and the hand-written all-attack movesets stripped off the back two so their natural learnsets (which carry status moves) give the player a turn to breathe. Her bag Potion is gone for the same reason Roxen s is -- the engine never consumes a foe-side item, so it was an unlimited heal, not a Potion. Measured with a party the size of hers and no items at all, at the level a team-raiser really walks in with: 88/85/94 percent. She is still the hardest thing in the game and every other trainer now reads above ninety.",
     "name": "Mabry Sull",
     "className": "Keeper",
@@ -981,7 +1100,7 @@
       }
     ],
     "intro": [
-      "Mabry Sull. Forty years on this channel, twenty-two of them keeping this Bastion.",
+      "Mabry Sull. Forty years on this channel, twenty-two of them keeping this Hall.",
       "You got across my floor without drowning. That is most of it.",
       "The rest is whether you can stand still while something bigger than you comes in."
     ],
@@ -997,45 +1116,19 @@
     ]
   },
   {
-    "id": "perrin_first_cinderpaw",
-    "$comment": "Level three with untrained stats. Dr. Vess hands the player a level SIX starter and Perrin picked the type that beats it, which made exactly one of the three openings unfair: Cinderpaw beat the level-four Rilltail only 69 times in 100 because Rilltail knows Spray from level one while the other two rivals have no super-effective move at all until level five. Level three plus flat zero IVs -- he got it this morning and has never trained a day -- lands all three openings at 97 to 100 percent while keeping the type-advantage joke intact.",
+    "id": "tarin_first_cinderpaw",
+    "$comment": "Tarin takes the starter the PLAYER'S beats. docs/TARIN.md carries the measurements that decided it; the short version is that the other way round has no fair setting at all. At equal level a rival holding the type advantage wins 71 to 100 percent of the time, and the level-three handicap that used to correct for that turned the fight into a 97 to 100 percent walkover in the other direction. Sorrell hands both of them a level six kin the same morning; Tarin's is one level up because he has been out on the road since before it was light picking fights, which is the only training either of them has done. Rolled IVs, novice play, one kin, no items. Measured at 300 runs with simulate.mjs's rate(starter, 6, id, 300, 'novice') -- pinned to level SIX, because the fight happens the minute the player leaves the lab and the harness's own table samples the Hearthmere stage at its midpoint instead: the player wins 99, 91 and 82 percent leading Sprigling, Cinderpaw and Rilltail. The surviving HP matters as much as the win -- a separate 400-run pass leaves the winner on 60, 55 and 40 percent of full over two and a half to four and a half turns. The scene immediately after this one has the player's mother put the party back together, and that scene is a lie if the fight costs nothing.",
+    "name": "Tarin",
     "className": "Rival",
-    "name": "Perrin",
     "sprite": "rival",
     "ai": "novice",
     "payout": 16,
-    "intro": [
-      "Do not go easy on me. I will be able to tell, and I will bring it up forever."
-    ],
-    "defeat": [
-      "Oh. So that is what that feels like."
-    ],
-    "victory": [
-      "Ha! I win. I WIN."
-    ],
     "party": [
       {
         "species": "cinderpaw",
-        "level": 3,
-        "ivs": {
-          "hp": 0,
-          "atk": 0,
-          "def": 0,
-          "spa": 0,
-          "spd": 0,
-          "spe": 0
-        }
+        "level": 7
       }
-    ]
-  },
-  {
-    "id": "perrin_first_rilltail",
-    "$comment": "Level three with untrained stats. Dr. Vess hands the player a level SIX starter and Perrin picked the type that beats it, which made exactly one of the three openings unfair: Cinderpaw beat the level-four Rilltail only 69 times in 100 because Rilltail knows Spray from level one while the other two rivals have no super-effective move at all until level five. Level three plus flat zero IVs -- he got it this morning and has never trained a day -- lands all three openings at 97 to 100 percent while keeping the type-advantage joke intact.",
-    "className": "Rival",
-    "name": "Perrin",
-    "sprite": "rival",
-    "ai": "novice",
-    "payout": 16,
+    ],
     "intro": [
       "Do not go easy on me. I will be able to tell, and I will bring it up forever."
     ],
@@ -1044,30 +1137,22 @@
     ],
     "victory": [
       "Ha! I win. I WIN."
-    ],
+    ]
+  },
+  {
+    "id": "tarin_first_rilltail",
+    "$comment": "Tarin takes the starter the PLAYER'S beats. docs/TARIN.md carries the measurements that decided it; the short version is that the other way round has no fair setting at all. At equal level a rival holding the type advantage wins 71 to 100 percent of the time, and the level-three handicap that used to correct for that turned the fight into a 97 to 100 percent walkover in the other direction. Sorrell hands both of them a level six kin the same morning; Tarin's is one level up because he has been out on the road since before it was light picking fights, which is the only training either of them has done. Rolled IVs, novice play, one kin, no items. Measured at 300 runs with simulate.mjs's rate(starter, 6, id, 300, 'novice') -- pinned to level SIX, because the fight happens the minute the player leaves the lab and the harness's own table samples the Hearthmere stage at its midpoint instead: the player wins 99, 91 and 82 percent leading Sprigling, Cinderpaw and Rilltail. The surviving HP matters as much as the win -- a separate 400-run pass leaves the winner on 60, 55 and 40 percent of full over two and a half to four and a half turns. The scene immediately after this one has the player's mother put the party back together, and that scene is a lie if the fight costs nothing.",
+    "name": "Tarin",
+    "className": "Rival",
+    "sprite": "rival",
+    "ai": "novice",
+    "payout": 16,
     "party": [
       {
         "species": "rilltail",
-        "level": 3,
-        "ivs": {
-          "hp": 0,
-          "atk": 0,
-          "def": 0,
-          "spa": 0,
-          "spd": 0,
-          "spe": 0
-        }
+        "level": 7
       }
-    ]
-  },
-  {
-    "id": "perrin_first_sprigling",
-    "$comment": "Level three with untrained stats. Dr. Vess hands the player a level SIX starter and Perrin picked the type that beats it, which made exactly one of the three openings unfair: Cinderpaw beat the level-four Rilltail only 69 times in 100 because Rilltail knows Spray from level one while the other two rivals have no super-effective move at all until level five. Level three plus flat zero IVs -- he got it this morning and has never trained a day -- lands all three openings at 97 to 100 percent while keeping the type-advantage joke intact.",
-    "className": "Rival",
-    "name": "Perrin",
-    "sprite": "rival",
-    "ai": "novice",
-    "payout": 16,
+    ],
     "intro": [
       "Do not go easy on me. I will be able to tell, and I will bring it up forever."
     ],
@@ -1076,11 +1161,168 @@
     ],
     "victory": [
       "Ha! I win. I WIN."
-    ],
+    ]
+  },
+  {
+    "id": "tarin_first_sprigling",
+    "$comment": "Tarin takes the starter the PLAYER'S beats. docs/TARIN.md carries the measurements that decided it; the short version is that the other way round has no fair setting at all. At equal level a rival holding the type advantage wins 71 to 100 percent of the time, and the level-three handicap that used to correct for that turned the fight into a 97 to 100 percent walkover in the other direction. Sorrell hands both of them a level six kin the same morning; Tarin's is one level up because he has been out on the road since before it was light picking fights, which is the only training either of them has done. Rolled IVs, novice play, one kin, no items. Measured at 300 runs with simulate.mjs's rate(starter, 6, id, 300, 'novice') -- pinned to level SIX, because the fight happens the minute the player leaves the lab and the harness's own table samples the Hearthmere stage at its midpoint instead: the player wins 99, 91 and 82 percent leading Sprigling, Cinderpaw and Rilltail. The surviving HP matters as much as the win -- a separate 400-run pass leaves the winner on 60, 55 and 40 percent of full over two and a half to four and a half turns. The scene immediately after this one has the player's mother put the party back together, and that scene is a lie if the fight costs nothing.",
+    "name": "Tarin",
+    "className": "Rival",
+    "sprite": "rival",
+    "ai": "novice",
+    "payout": 16,
     "party": [
       {
         "species": "sprigling",
-        "level": 3,
+        "level": 7
+      }
+    ],
+    "intro": [
+      "Do not go easy on me. I will be able to tell, and I will bring it up forever."
+    ],
+    "defeat": [
+      "Oh. So that is what that feels like."
+    ],
+    "victory": [
+      "Ha! I win. I WIN."
+    ]
+  },
+  {
+    "id": "sw_hall_delve_a",
+    "name": "Corrin",
+    "className": "Hall Hand",
+    "sprite": "hiker",
+    "ai": "trained",
+    "payout": 58,
+    "party": [
+      {
+        "species": "gravelet",
+        "level": 11
+      },
+      {
+        "species": "silthopper",
+        "level": 12
+      }
+    ],
+    "intro": [
+      "Stones first, then the Keeper.",
+      "Nobody has ever done it the other way round and lived to boast."
+    ],
+    "defeat": [
+      "Stones are yours, then."
+    ],
+    "victory": [
+      "Set the counterweight. Then come back."
+    ],
+    "afterward": [
+      "Three plates, three stones, and a fourth stone because somebody always",
+      "puts one somewhere daft. That fourth stone has saved this Hall a lot of shouting."
+    ]
+  },
+  {
+    "id": "sw_hall_delve_b",
+    "name": "Ferro",
+    "className": "Hall Hand",
+    "sprite": "villager_m",
+    "ai": "trained",
+    "payout": 58,
+    "party": [
+      {
+        "species": "pebblet",
+        "level": 10
+      },
+      {
+        "species": "chalkid",
+        "level": 12,
+        "moves": [
+          "strike",
+          "brace",
+          "gravelspray"
+        ]
+      }
+    ],
+    "intro": [
+      "Down here everything is heavy and everything is slow.",
+      "You will notice I said everything."
+    ],
+    "defeat": [
+      "...All right. Not everything."
+    ],
+    "victory": [
+      "Slow beats fast underground. Ask anyone who has run down here."
+    ],
+    "afterward": [
+      "Twelve years the Hall has had this gallery and it has never once flooded.",
+      "Three galleries below us have. The Keeper checks the level herself. Every day."
+    ]
+  },
+  {
+    "id": "sw_hall_delve_c",
+    "name": "Mattock",
+    "className": "Hall Hand",
+    "sprite": "villager_f",
+    "ai": "trained",
+    "payout": 66,
+    "party": [
+      {
+        "species": "silthopper",
+        "level": 11
+      },
+      {
+        "species": "gravelet",
+        "level": 12
+      },
+      {
+        "species": "chalkid",
+        "level": 12
+      }
+    ],
+    "intro": [
+      "Last one before her. That is not a warning, it is a courtesy.",
+      "Some people would rather turn round here and nobody thinks less of them."
+    ],
+    "defeat": [
+      "Go on, then. She has heard the cage."
+    ],
+    "victory": [
+      "Come back down when you have got your wind."
+    ],
+    "afterward": [
+      "She sits in that office at sixty fathom because she says a Keeper should be",
+      "somewhere real. I have never worked out whether that is wisdom or stubbornness.",
+      "Fifteen years down here and I have decided it does not matter which."
+    ]
+  },
+  {
+    "id": "sw_keeper_roxen",
+    "$comment": "Hall 2, Terra, and the whole party is built to be out-waited rather than out-hit, which is what her own defeat line claims. The type chart is the problem this row exists to solve: Terra is weak to Tide, Verdant and Frost, so Rilltail and Sprigling have an easy answer -- and Terra and Stone BOTH hit Flame for double, so a Cinderpaw player faces a Hall that punishes them for every kin on the field. First measured build (Emberbore 14, Burrowen 16, everything holding Gravelspray) read 83/49/89 on the matched-party row and 49 percent is not a fight, it is a wall. So her offence is almost all BEAST now: Gravelet carries Strike, Quickstep and Brace and no Terra move at all, and the ace is Burrowen at fifteen, which has not learned Gravelspray yet (level 18), so it swings Beast the whole fight -- neutral into Flame. Silthopper is the one kin that still carries Gravelspray, so a Sprigling player cannot walk it with one move. Flat-zero IVs on the ace and no bag item: Battle.doItem never consumes a foe-side item, so one Potion in that list is an unlimited 20 HP heal fired every turn she drops below thirty percent, not a Potion. Put it back when the engine consumes it. Measured, novice play, no items, a party the size of hers at the level a team-raiser really arrives with: 100/95/99 for Sprigling, Cinderpaw and Rilltail.",
+    "name": "Roxen Quill",
+    "className": "Keeper",
+    "sprite": "hiker",
+    "ai": "keeper",
+    "payout": 110,
+    "party": [
+      {
+        "species": "gravelet",
+        "level": 12,
+        "moves": [
+          "strike",
+          "quickstep",
+          "brace"
+        ]
+      },
+      {
+        "species": "silthopper",
+        "level": 13,
+        "moves": [
+          "quickstep",
+          "nibble",
+          "gravelspray"
+        ]
+      },
+      {
+        "species": "burrowen",
+        "level": 15,
         "ivs": {
           "hp": 0,
           "atk": 0,
@@ -1090,6 +1332,23 @@
           "spe": 0
         }
       }
+    ],
+    "intro": [
+      "Right. Lamps down, and let us find out what you have got.",
+      "Terra, weight and patience, and nothing in my hand that hits especially hard.",
+      "Nothing in my hand has to."
+    ],
+    "defeat": [
+      "Hah. All right.",
+      "You did not out-hit me. You out-waited me. That is the harder one."
+    ],
+    "victory": [
+      "Not yet. Go up, get your wind, and come back down.",
+      "The stones will still be where you left them. So will I."
+    ],
+    "afterward": [
+      "Kerb Street east when you are ready. Tideglass is a long way and worth it.",
+      "And take a look at the water when you get there. Just look at it."
     ]
   }
 ]

@@ -1,0 +1,137 @@
+{
+  "id": "stonewake_clinic",
+  "name": "Kin Clinic",
+  "displayName": "KIN CLINIC",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIIIUIII",
+    "I+++++kkF?FFFI",
+    "IPKKFKKKFFFFPI",
+    "IFFFFFFFFFFFFI",
+    "IkFFFFFFFFFFkI",
+    "IFFFFFAAAFFFFI",
+    "IPFFFFEEEFFFPI",
+    "IF/rr/FFFFFFkI",
+    "IFFrrFFFFFF//I",
+    "IFFFFFFFFFFFFI",
+    "IIIIIIIDIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 7,
+      "y": 10,
+      "toMap": "stonewake",
+      "toX": 15,
+      "toY": 40,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "sw_clinic_keeper",
+      "sprite": "healer",
+      "x": 4,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "clinic_heal"
+    },
+    {
+      "id": "sw_clinic_roost",
+      "sprite": "professor",
+      "x": 10,
+      "y": 1,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "roost_terminal"
+    },
+    {
+      "id": "sw_clinic_rester",
+      "sprite": "hiker",
+      "x": 3,
+      "y": 5,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sw_rester"
+    },
+    {
+      "id": "sw_clinic_orderly",
+      "sprite": "villager_f",
+      "x": 10,
+      "y": 8,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "sw_orderly"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 1,
+      "text": [
+        "A brass terminal. THE ROOST, stencilled on the side.",
+        "Kin you cannot carry wait here."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 2,
+      "text": [
+        "The restorative bank behind the counter, lamps in green,",
+        "and a second bank beside it, twice the size, with a card taped on:",
+        "QUARRY SHIFT. DO NOT USE FOR ROAD TRAFFIC."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 0,
+      "text": [
+        "The noticeboard. Pass conditions. Hall waiting times. A lost cat.",
+        "And a Foundation card, corners squared, asking anyone who sees a Kin",
+        "behaving oddly near water to report it. There are three signatures."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 6,
+      "y": 1,
+      "text": [
+        "Shelves of splints, bandage rolls and eye wash, in quarry quantities.",
+        "The eye wash is the shelf that empties."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 4,
+      "text": [
+        "A row of lamps on charge, borrowed from the Hall and never given back.",
+        "A sign above them: TAKE ONE DOWN. BRING IT UP."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 7,
+      "text": [
+        "A ledger of everyone treated this month, ruled into two columns:",
+        "QUARRY and OTHER. The quarry column is longer.",
+        "It is much shorter than it was ten years ago, and somebody is proud of that."
+      ]
+    }
+  ]
+}

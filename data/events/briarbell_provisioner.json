@@ -1,0 +1,24 @@
+[
+  {
+    "id": "briarbell_shop",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "not", "of": { "kind": "flag", "flag": "bb_shop_met" } },
+        "then": [
+          { "kind": "setFlag", "flag": "bb_shop_met" },
+          {
+            "kind": "say",
+            "who": "HARROW",
+            "lines": [
+              "Hall traffic, are you? I can always tell. You all come in looking at the ceiling.",
+              "Vessels first. Everything clever after that."
+            ]
+          }
+        ]
+      },
+      { "kind": "openShop", "shop": "briarbell_provisioner" }
+    ]
+  }
+]

@@ -1,0 +1,31 @@
+[
+  {
+    "id": "sw_arrival",
+    "trigger": "enter",
+    "map": "stonewake",
+    "onceFlag": "sw_arrived",
+    "actions": [
+      {
+        "kind": "say",
+        "lines": [
+          "The road stops being a road and becomes a street, and keeps going.",
+          "Roofs, and behind them more roofs, and behind those a quarried mountain",
+          "with a whole second town cut into the side of it."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "STONEWAKE.",
+          "Briarbell had a bell you could hear from the fields.",
+          "Here, nobody would hear it."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sw_shop_open",
+    "trigger": "call",
+    "actions": [{ "kind": "openShop", "shop": "stonewake_provisioner" }]
+  }
+]

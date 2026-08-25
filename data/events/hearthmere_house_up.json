@@ -1,0 +1,28 @@
+[
+  {
+    "id": "hm_wake",
+    "trigger": "enter",
+    "map": "hearthmere_house_up",
+    "onceFlag": "seen_wake",
+    "actions": [
+      {
+        "kind": "wait",
+        "frames": 24
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "You are awake before the light is.",
+          "Sixteen years in this room and you have never once seen it this early."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "It does not matter. Today is the day Professor Sorrell said to come down to the station.",
+          "You have been counting since spring, and you are not going to admit that to anyone."
+        ]
+      }
+    ]
+  }
+]

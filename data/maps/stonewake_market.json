@@ -1,0 +1,105 @@
+{
+  "id": "stonewake_market",
+  "name": "Provisioner",
+  "displayName": "PROVISIONER",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIUIIIIIIUIIII",
+    "I;;;;;;;;;;;;I",
+    "IPKKKKFKKKKK;I",
+    "I;FFFFFFFFFF;I",
+    "I;;;FFFFFF;;FI",
+    "IFFFFFFFFFFFFI",
+    "I;FFFFFFFF;;FI",
+    "IPFFFFFFFFFF;I",
+    "IFFFFFFFFFFFFI",
+    "IIIIIIIDIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 7,
+      "y": 9,
+      "toMap": "stonewake",
+      "toX": 15,
+      "toY": 34,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "sw_shopkeeper",
+      "sprite": "clerk",
+      "x": 6,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sw_shop"
+    },
+    {
+      "id": "sw_shop_hand",
+      "sprite": "villager_m",
+      "x": 10,
+      "y": 5,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "sw_shop_hand"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 4,
+      "text": [
+        "Vessels and tonics, one wall each, stacked to the ceiling.",
+        "A city shop, and it is stocked like one: nothing is rationed",
+        "and nobody is counting what you take."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 11,
+      "y": 4,
+      "text": [
+        "Working gear. Boots, lamps, oilskins, and a rack of pick handles",
+        "worn smooth at one end by people who did not buy them here."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 6,
+      "text": [
+        "The Hall shelf: everything a challenger comes back down wanting,",
+        "arranged in the order they usually want it.",
+        "Potions first. Then rope. Then, apparently, biscuits."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 7,
+      "text": [
+        "A pot plant that has been fed shop tea for six years and thrived on it.",
+        "There is a small sign on the pot with its name on."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 2,
+      "text": [
+        "A price board, chalked, with a second column headed QUARRY.",
+        "Every number in the second column is lower.",
+        "Nobody checks whether you work there. That is the whole system."
+      ]
+    }
+  ]
+}

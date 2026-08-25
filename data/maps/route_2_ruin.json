@@ -1,0 +1,92 @@
+{
+  "id": "route_2_ruin",
+  "name": "The Sunken Arch",
+  "displayName": "THE SUNKEN ARCH",
+  "music": "station",
+  "battleBackdrop": "cave",
+  "indoor": true,
+  "_plan": "Two rooms and a neck. The hall is low and close and carries the carvings that explain a civilisation; the chamber at the end is wide and holds still water and the one carving the whole game is about. Nothing here is a puzzle and nothing here is a fight. The player walks in, reads four pictures, reaches the back wall and the thing in their pack answers it.",
+  "rows": [
+    "CCCCCCCCCCCCCCCCCCCC",
+    "CCFFFFFFFFFFFFFFFFCC",
+    "CCFxFFFFFFFFFFFFxFCC",
+    "CCFFFFF~~~~~~FFFFFCC",
+    "CCFFFF~~~~~~~~FFFFCC",
+    "CCFFFFF~~~~~~FFFFFCC",
+    "CCFxFFFFFFFFFFFFxFCC",
+    "CCFFFFFFFFFFFFFFFFCC",
+    "CCCCCCCFFFFFFCCCCCCC",
+    "CCCCCCCFFFFFFCCCCCCC",
+    "CCFFFFFFFFFFFFFFFFCC",
+    "CCFCCFFFFFFFFFFCCFCC",
+    "CCFCCFFFFFFFFFFCCFCC",
+    "CCFFFFFFFFFFFFFFFFCC",
+    "CCFsFFFFFFFFFFFFsFCC",
+    "CCCCCCssFFFFssCCCCCC",
+    "CCCCCCssssssssCCCCCC",
+    "CCCCCCCCCDDCCCCCCCCC"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 17,
+      "toMap": "route_2",
+      "toX": 25,
+      "toY": 9,
+      "facing": "down",
+      "style": "cave"
+    },
+    {
+      "x": 10,
+      "y": 17,
+      "toMap": "route_2",
+      "toX": 25,
+      "toY": 9,
+      "facing": "down",
+      "style": "cave"
+    }
+  ],
+  "npcs": [],
+  "objects": [
+    {
+      "kind": "script",
+      "x": 1,
+      "y": 12,
+      "text": [
+        "Hundreds of people. Kin beside",
+        "them, not behind them.",
+        "Nobody leads. Nobody is tied."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 18,
+      "y": 12,
+      "text": [
+        "The sea, cut as a hundred",
+        "parallel lines. Under them,",
+        "a shape longer than the ships."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 1,
+      "y": 3,
+      "text": [
+        "Rings. Eight of them, drawn",
+        "around the shape in the water.",
+        "The people are standing in rows."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 18,
+      "y": 3,
+      "text": [
+        "The same coast as the panel",
+        "opposite. The same towns on it.",
+        "The water is drawn over them."
+      ]
+    }
+  ]
+}

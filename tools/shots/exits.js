@@ -33,12 +33,12 @@ const state = top().state;
 const Overworld = top().constructor;
 
 const SPOTS = [
-  ['brackwater_bastion', 8, 14],
-  ['kellowmere_bastion', 7, 13],
+  ['brackwater_hall', 8, 14],
+  ['kellowmere_hall', 7, 13],
   ['brackwater_house', 6, 5],
   ['kellowmere_house_b', 6, 5],
-  ['vess_station', 7, 7],
-  ['tanners_waystation', 6, 6],
+  ['sorrell_lab', 7, 7],
+  ['tanners_clinic', 6, 6],
 ];
 
 for (const s of SPOTS) {

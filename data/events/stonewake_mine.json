@@ -1,0 +1,91 @@
+[
+  {
+    "id": "hall2_gate",
+    "trigger": "step",
+    "map": "stonewake_mine",
+    "at": [{ "x": 11, "y": 12 }, { "x": 12, "y": 12 }],
+    "when": {
+      "kind": "all",
+      "of": [
+        { "kind": "var", "var": "stonewake_mine_plates", "op": ">=", "value": 3 },
+        { "kind": "not", "of": { "kind": "flag", "flag": "hall2_cage_open" } }
+      ]
+    },
+    "actions": [
+      { "kind": "sfx", "sound": "levelup" },
+      { "kind": "shake", "frames": 28, "power": 2 },
+      {
+        "kind": "say",
+        "lines": [
+          "Three plates. Three stones. Somewhere over your head a counterweight",
+          "finds out it is heavier than the thing holding it, and gives up.",
+          "The cage comes down the shaft behind the two hands, and they step aside."
+        ]
+      },
+      { "kind": "removeNpc", "who": "hall2_hand_a" },
+      { "kind": "removeNpc", "who": "hall2_hand_b" },
+      { "kind": "setFlag", "flag": "hall2_cage_open" }
+    ]
+  },
+  {
+    "id": "hall2_hand",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "HALL HAND",
+        "lines": [
+          "Cage doesn't run till the counterweight's set. Three plates, three stones.",
+          "You can't pull them, only push. So think about which side you want to be on."
+        ]
+      },
+      {
+        "kind": "if",
+        "cond": { "kind": "not", "of": { "kind": "flag", "flag": "hall2_hint" } },
+        "then": [
+          { "kind": "setFlag", "flag": "hall2_hint" },
+          {
+            "kind": "say",
+            "who": "HALL HAND",
+            "lines": [
+              "And if you wedge one somewhere stupid, walk out and walk back in.",
+              "They go home. Everything in here goes home eventually.",
+              "That's the joke. It is not a very good joke. We tell it a lot."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "hall2_banks",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "hall2_cage_open" },
+        "then": [
+          {
+            "kind": "say",
+            "who": "BANKSWOMAN",
+            "lines": [
+              "Cage is down. Mind the gap at the bottom, it's wider than it looks.",
+              "And keep to the road round the water. The water is not a road."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "who": "BANKSWOMAN",
+            "lines": [
+              "This gallery worked for sixty years and the Hall has had it for twelve.",
+              "Everything in it still does the job it always did. That's her doing.",
+              "She wouldn't let them take the gear out. Said a Hall ought to be somewhere real."
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

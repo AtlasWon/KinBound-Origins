@@ -1,0 +1,55 @@
+{
+  "speakers": {
+    "hall2_clerk": "HALL BOOKKEEPER",
+    "hall2_waiting": "WAITING CHALLENGER",
+    "hall2_banksman": "BANKSMAN"
+  },
+  "entries": {
+    "hall2_clerk": [
+      {
+        "ifFlags": [
+          "crest_2_taken"
+        ],
+        "lines": [
+          "UP column, third from the bottom, and I have written it in ink.",
+          "Twelve years I have kept this roll and I still like doing that bit."
+        ]
+      },
+      {
+        "lines": [
+          "Name in the DOWN column, please. No, I do not need it now.",
+          "I write both columns myself when you come back up.",
+          "Everybody comes back up. Some of them take a week over it."
+        ]
+      }
+    ],
+    "hall2_waiting": [
+      {
+        "ifFlags": [
+          "crest_2_taken"
+        ],
+        "lines": [
+          "You did it in a day.",
+          "I have been sitting on this bench for four days.",
+          "...Right. Right. Fine. Move over, I am going down."
+        ]
+      },
+      {
+        "lines": [
+          "I went down on Tuesday. I got two stones onto two plates",
+          "and then I put the third one somewhere extremely stupid.",
+          "So I am sitting here until I stop being angry about it."
+        ]
+      }
+    ],
+    "hall2_banksman": [
+      {
+        "lines": [
+          "Cage takes two. Hands inside, and do not lean on the gate.",
+          "Sixty fathom, and it is the same sixty fathom whether you look down it or not,",
+          "so my advice is do not look down it."
+        ]
+      }
+    ]
+  }
+}

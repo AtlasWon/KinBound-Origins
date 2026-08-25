@@ -1,0 +1,105 @@
+{
+  "id": "brackwater_clinic",
+  "name": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIIIUIII",
+    "I+++++kkF?FFkI",
+    "IPKKFKKKFFFFFI",
+    "IFFFFFFFFFFFSI",
+    "IkFFFFFFFFFFFI",
+    "IF/rr/FFFAAFPI",
+    "IFFrrFFFFEEFFI",
+    "IkFFFFFFFFFFkI",
+    "IFFFFFFFFFFFPI",
+    "IIIIIIDIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 9,
+      "toMap": "brackwater",
+      "toX": 8,
+      "toY": 5,
+      "facing": "down",
+      "style": "door"
+    },
+    {
+      "x": 12,
+      "y": 3,
+      "toMap": "brackwater_clinic_up",
+      "toX": 12,
+      "toY": 4,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "bw_clinic_keeper",
+      "sprite": "healer",
+      "x": 4,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "clinic_heal"
+    },
+    {
+      "id": "bw_clinic_roost",
+      "sprite": "professor",
+      "x": 10,
+      "y": 1,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "roost_terminal"
+    },
+    {
+      "id": "bw_clinic_sailor",
+      "sprite": "sailor",
+      "x": 3,
+      "y": 5,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "bw_sailor"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 1,
+      "text": [
+        "A brass terminal. THE ROOST, stencilled on the side.",
+        "Kin you cannot carry wait here."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 1,
+      "text": [
+        "Tide tables, harbour notices, and three crew lists",
+        "with names crossed off and written in again.",
+        "Nobody is sailing the same water twice this season."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 2,
+      "text": [
+        "Over the counter, the restorative bank, lamps in green.",
+        "Somebody has wedged a folded chart under one leg",
+        "to keep it level on a floor that salt has warped."
+      ]
+    }
+  ]
+}

@@ -12,7 +12,7 @@
 //    NPC that also names a dialogue entry can never reach it.
 //  - Dialogue files load per-map and merge cumulatively, so an entry only
 //    resolves once its own town has been entered. Jumping straight into a
-//    waystation reports "no dialogue" for a key that is perfectly fine in play.
+//    clinic reports "no dialogue" for a key that is perfectly fine in play.
 //
 // Usage: npx electron tools/capture.cjs tools/shots/speech.js
 
@@ -96,23 +96,23 @@ async function talkTo(sc, npcId, shotBase) {
   await readBox(shotBase);
 }
 
-/* ---- 1. the Marrow Hollow well thread, one chapter per story stage ------ */
+/* ---- 1. the Hearthmere well thread, one chapter per story stage ------ */
 // Saffra stands on the well itself, so the picture and the line have to agree.
 
 {
-  const sc = await go('marrow_hollow');
-  await talkTo(sc, 'hollow_villager', 'sp-well-0');
+  const sc = await go('hearthmere');
+  await talkTo(sc, 'hearth_villager', 'sp-well-0');
   state.setFlag('got_starter');
-  await talkTo(sc, 'hollow_villager', 'sp-well-1');
-  state.setFlag('seal_1_taken');
-  await talkTo(sc, 'hollow_villager', 'sp-well-2');
-  state.setFlag('seal_2_taken');
-  await talkTo(sc, 'hollow_villager', 'sp-well-3');
+  await talkTo(sc, 'hearth_villager', 'sp-well-1');
+  state.setFlag('crest_1_taken');
+  await talkTo(sc, 'hearth_villager', 'sp-well-2');
+  state.setFlag('crest_2_taken');
+  await talkTo(sc, 'hearth_villager', 'sp-well-3');
 }
 
 /* ---- 2. `afterward`, which is what a beaten trainer actually says ------- */
 
-for (const t of ['r1_madden', 'r1_cale', 'r3_bram', 'r3_holt', 'r4_gorse', 'bastion2_guard_a']) {
+for (const t of ['r1_madden', 'r1_cale', 'r3_bram', 'r3_holt', 'r4_gorse', 'hall2_guard_a']) {
   state.markDefeated(t);
 }
 {
@@ -131,13 +131,13 @@ for (const t of ['r1_madden', 'r1_cale', 'r3_bram', 'r3_holt', 'r4_gorse', 'bast
 }
 
 /* ---- 3. the rester, reached the way a player reaches him ---------------- */
-// Straight into the waystation this reports "no dialogue": tanners_rest.json
+// Straight into the clinic this reports "no dialogue": tanners_rest.json
 // has not been loaded yet. Entering the town first is what a player does.
 
 await go('tanners_rest');
 {
-  const sc = await go('tanners_waystation');
-  await talkTo(sc, 'tr_ways_rester', 'sp-rester');
+  const sc = await go('tanners_clinic');
+  await talkTo(sc, 'tr_clinic_rester', 'sp-rester');
 }
 
 /* ---- 4. intro / defeat / victory, which never appear on the field ------- */
@@ -156,9 +156,9 @@ const CHECK = [
   ['r3_bram', 'intro'], ['r3_bram', 'defeat'], ['r3_bram', 'victory'],
   ['r3_sill', 'victory'], ['r3_holt', 'defeat'], ['r3_holt', 'victory'],
   ['r4_gorse', 'intro'], ['r4_gorse', 'defeat'], ['r4_gorse', 'victory'],
-  ['perrin_first_cinderpaw', 'intro'],
-  ['perrin_first_cinderpaw', 'defeat'],
-  ['perrin_first_cinderpaw', 'victory'],
+  ['tarin_first_cinderpaw', 'intro'],
+  ['tarin_first_cinderpaw', 'defeat'],
+  ['tarin_first_cinderpaw', 'victory'],
 ];
 
 let n = 0;

@@ -1,4 +1,4 @@
-// Walks up to the waystation keeper and reads the whole exchange back.
+// Walks up to the clinic keeper and reads the whole exchange back.
 const d = window.dev;
 const top = () => d.game.scenes.top;
 const lines = [];
@@ -23,7 +23,7 @@ for (let i = 0; i < 16 && top().name === 'dialogue'; i++) d.key('Enter', 10);
 
 const state = top().state;
 state.playerName = 'MARA';
-d.game.scenes.replaceAll(new (top().constructor)(state, 'ashgate_waystation', 4, 3, 'up'));
+d.game.scenes.replaceAll(new (top().constructor)(state, 'briarbell_clinic', 4, 3, 'up'));
 await d.loadWait(1400);
 
 d.key('Enter', 20);

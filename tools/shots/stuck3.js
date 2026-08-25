@@ -1,4 +1,4 @@
-﻿// JOB 1 repro, the real one: LOSE the first battle against Perrin in Marrow
+﻿// JOB 1 repro, the real one: LOSE the first battle against Tarin in Hearthmere
 // Hollow. That script declares onLoss:"continue", so the scene carries on --
 // while the overworld also runs its standard blackout. Two owners, one fade.
 const d = window.dev;
@@ -32,7 +32,7 @@ const state = ow().state;
 d.game.settings.battleSpeed = 'brisk';
 d.game.settings.textSpeed = 'fast';
 
-state.setFlag('met_perrin');
+state.setFlag('met_tarin');
 state.setFlag('got_starter');
 state.setFlag('starter_cinderpaw');
 state.party.length = 0;
@@ -40,7 +40,7 @@ const mine = kinMod.createKin('cinderpaw', 5, d.game.rng, { originalTrainer: 'pl
 mine.currentHp = 1;
 state.party.push(mine);
 
-d.game.scenes.replaceAll(new OW(state, 'marrow_hollow', 22, 9, 'up'));
+d.game.scenes.replaceAll(new OW(state, 'hearthmere', 22, 9, 'up'));
 await d.loadWait(1600);
 for (let i = 0; i < 20 && top().name === 'dialogue'; i++) d.key('Enter', 10);
 

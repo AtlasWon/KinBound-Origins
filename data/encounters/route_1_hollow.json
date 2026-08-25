@@ -1,0 +1,17 @@
+{
+  "mapId": "route_1_hollow",
+  "$comment": "The rare-Kin pocket for Route 1, and the only reason to walk through a gap in a hedge on the safest road in the region. It is NOT a harder version of the route table: the four common slots are the same creatures at the same band the player has already been beating outside, so a curious player is never punished for looking. The whole of the difference is one slot. BRISTLEBUCK at 7-8 is four percent, sits two to three levels over an arriving starter, has a 75 catch rate and is the friendship evolution of the Tuftail the player has been catching all route -- so the memorable thing about the hollow is a grown-up version of the commonest creature on Route 1, which is exactly the lesson the Vellum is trying to teach. It can be fled from on the first turn like anything else. Rate is 190 rather than 170 because the hollow is small and a player who came here came here on purpose.",
+  "methods": {
+    "tallGrass": {
+      "rate": 190,
+      "slots": [
+        { "species": "pipwing", "minLevel": 3, "maxLevel": 5, "weight": 34 },
+        { "species": "nibbet", "minLevel": 3, "maxLevel": 5, "weight": 22 },
+        { "species": "tuftail", "minLevel": 4, "maxLevel": 6, "weight": 22 },
+        { "species": "fizzlet", "minLevel": 4, "maxLevel": 5, "weight": 12 },
+        { "species": "nettlebug", "minLevel": 3, "maxLevel": 5, "weight": 6 },
+        { "species": "bristlebuck", "minLevel": 7, "maxLevel": 8, "weight": 4 }
+      ]
+    }
+  }
+}

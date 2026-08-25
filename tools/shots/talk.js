@@ -86,12 +86,12 @@ function ask(sc, tileX, tileY, offX, offY, facing) {
 }
 
 // --- round the end of a counter ------------------------------------------
-// marrow_house_player row 2 is "IKKffffffkfI": (1,2) and (2,2) are counter,
+// hearthmere_house_player row 2 is "IKKffffffkfI": (1,2) and (2,2) are counter,
 // (3,2) is open floor. An NPC at (3,2) may be reached from (2,3) leaning
 // right -- that is stepping round the counter, not through it. An NPC put on
 // the far side of a solid run must not be reachable at all.
 {
-  const sc = await go('marrow_house_player', 4, 3, 'up');
+  const sc = await go('hearthmere_house_player', 4, 3, 'up');
   // (2,3) and (3,3) are a table: solid. (3,2) and (4,2) are open floor.
   sc.addNpcRuntime({ id: 'behindTable', sprite: 'girl', x: 3, y: 2, facing: 'down', movement: { kind: 'static' } });
   d.tick(2);
@@ -108,10 +108,10 @@ function ask(sc, tileX, tileY, offX, offY, facing) {
 }
 
 // --- through a wall -------------------------------------------------------
-// marrow_house_player row 0 is all wall except the windows. An NPC standing in
+// hearthmere_house_player row 0 is all wall except the windows. An NPC standing in
 // the wall line cannot be talked to from the room below.
 {
-  const sc = await go('marrow_house_player', 5, 2, 'up');
+  const sc = await go('hearthmere_house_player', 5, 2, 'up');
   sc.addNpcRuntime({ id: 'ghost', sprite: 'girl', x: 4, y: 1, facing: 'down', movement: { kind: 'static' } });
   d.tick(2);
   // (4,1) is 'f' floor; (5,1) is 'f' too, so this one should work. Use the

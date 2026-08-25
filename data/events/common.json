@@ -1,24 +1,48 @@
 [
   {
-    "id": "waystation_heal",
+    "id": "clinic_heal",
     "trigger": "interact",
     "actions": [
       {
         "kind": "if",
-        "cond": { "kind": "flag", "flag": "ways_met" },
+        "cond": {
+          "kind": "flag",
+          "flag": "clinic_met"
+        },
         "then": [
           {
             "kind": "ask",
             "who": "KEEPER",
-            "lines": ["Back again, {name}. Shall I have a look at them?"],
+            "lines": [
+              "Back again, {name}. Shall I have a look at them?"
+            ],
             "yes": [
-              { "kind": "setRespawn" },
-              { "kind": "healParty" },
-              { "kind": "wait", "frames": 10 },
-              { "kind": "say", "who": "KEEPER", "lines": ["There. Right as rain, the lot of them."] }
+              {
+                "kind": "setRespawn"
+              },
+              {
+                "kind": "healParty"
+              },
+              {
+                "kind": "wait",
+                "frames": 10
+              },
+              {
+                "kind": "say",
+                "who": "KEEPER",
+                "lines": [
+                  "There. Right as rain, the lot of them."
+                ]
+              }
             ],
             "no": [
-              { "kind": "say", "who": "KEEPER", "lines": ["Suit yourself. I'm here either way."] }
+              {
+                "kind": "say",
+                "who": "KEEPER",
+                "lines": [
+                  "Suit yourself. I'm here either way."
+                ]
+              }
             ]
           }
         ],
@@ -28,20 +52,38 @@
             "who": "KEEPER",
             "lines": [
               "Come in, come in. You've the look of a long road about you.",
-              "I'm the keeper here. Every waystation has one and we all do the same job.",
+              "I'm the keeper here. Every Kin Clinic has one and we all do the same job.",
               "We put your kin back together, and we don't charge you for it. Ever."
             ]
           },
-          { "kind": "setFlag", "flag": "ways_met" },
+          {
+            "kind": "setFlag",
+            "flag": "clinic_met"
+          },
           {
             "kind": "ask",
             "who": "KEEPER",
-            "lines": ["Well then. May I see them?"],
+            "lines": [
+              "Well then. May I see them?"
+            ],
             "yes": [
-              { "kind": "setRespawn" },
-              { "kind": "healParty" },
-              { "kind": "wait", "frames": 10 },
-              { "kind": "say", "who": "KEEPER", "lines": ["There. All patched up. Try to keep them that way."] },
+              {
+                "kind": "setRespawn"
+              },
+              {
+                "kind": "healParty"
+              },
+              {
+                "kind": "wait",
+                "frames": 10
+              },
+              {
+                "kind": "say",
+                "who": "KEEPER",
+                "lines": [
+                  "There. All patched up. Try to keep them that way."
+                ]
+              },
               {
                 "kind": "say",
                 "who": "KEEPER",
@@ -52,7 +94,13 @@
               }
             ],
             "no": [
-              { "kind": "say", "who": "KEEPER", "lines": ["When you're ready, then. The counter doesn't move."] }
+              {
+                "kind": "say",
+                "who": "KEEPER",
+                "lines": [
+                  "When you're ready, then. The counter doesn't move."
+                ]
+              }
             ]
           }
         ]
@@ -63,11 +111,701 @@
     "id": "roost_terminal",
     "trigger": "interact",
     "actions": [
-      { "kind": "say", "lines": [
-        "The Roost terminal hums awake.",
-        "Somewhere a long way off, a great many things shuffle and settle."
-      ]},
-      { "kind": "openStorage" }
+      {
+        "kind": "say",
+        "lines": [
+          "The Roost terminal hums awake.",
+          "Somewhere a long way off, a great many things shuffle and settle."
+        ]
+      },
+      {
+        "kind": "openStorage"
+      }
+    ]
+  },
+  {
+    "id": "tideheart_gift",
+    "trigger": "call",
+    "when": {
+      "kind": "not",
+      "of": {
+        "kind": "hasItem",
+        "item": "tideheart"
+      }
+    },
+    "actions": [
+      {
+        "kind": "say",
+        "who": "MIRA",
+        "lines": [
+          "One more thing, and then I will stop fussing.",
+          "Sit down a second."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "MIRA",
+        "lines": [
+          "This came in the post four months after the coast. No letter with it.",
+          "Just this, wrapped in one of your father's shirts."
+        ]
+      },
+      {
+        "kind": "giveItem",
+        "item": "tideheart",
+        "count": 1
+      },
+      {
+        "kind": "setFlag",
+        "flag": "tideheart_given"
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "You received your father's keepsake."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "MIRA",
+        "lines": [
+          "I have never known what it is. I have never had it valued and I never will."
+        ]
+      },
+      {
+        "kind": "sfx",
+        "sound": "warp"
+      },
+      {
+        "kind": "shake",
+        "frames": 20,
+        "power": 2
+      },
+      {
+        "kind": "wait",
+        "frames": 14
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The core turns over once, hard, and goes warm in your hand."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "MIRA",
+        "lines": [
+          "...",
+          "It has never done that."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "MIRA",
+        "lines": [
+          "Take it with you. It came a long way to reach this house.",
+          "It can go a bit further."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tideheart_wake_sunken_arch",
+    "trigger": "call",
+    "when": {
+      "kind": "hasItem",
+      "item": "tideheart"
+    },
+    "actions": [
+      {
+        "kind": "say",
+        "lines": [
+          "The keepsake is shaking. You hold it up to the stone."
+        ]
+      },
+      {
+        "kind": "sfx",
+        "sound": "warp"
+      },
+      {
+        "kind": "shake",
+        "frames": 30,
+        "power": 3
+      },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Light runs along a groove nobody has cleaned in three thousand years."
+        ]
+      },
+      {
+        "kind": "setFlag",
+        "flag": "tideheart_echo_sunken_arch"
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Whatever the Arch just said, it said in the wrong language for you.",
+          "It is in the keepsake now. It will play it back."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tideheart_learn_name",
+    "trigger": "call",
+    "when": {
+      "kind": "hasItem",
+      "item": "tideheart"
+    },
+    "actions": [
+      {
+        "kind": "setFlag",
+        "flag": "tideheart_named"
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Tideheart.",
+          "The thing in your bag has a name, and nobody had to tell you twice."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tideheart_carried",
+    "trigger": "enter",
+    "map": "route_1",
+    "when": {
+      "kind": "all",
+      "of": [
+        {
+          "kind": "any",
+          "of": [
+            {
+              "kind": "flag",
+              "flag": "mom_sendoff"
+            },
+            {
+              "kind": "flag",
+              "flag": "got_starter"
+            }
+          ]
+        },
+        {
+          "kind": "not",
+          "of": {
+            "kind": "flag",
+            "flag": "tideheart_given"
+          }
+        },
+        {
+          "kind": "not",
+          "of": {
+            "kind": "hasItem",
+            "item": "tideheart"
+          }
+        }
+      ]
+    },
+    "actions": [
+      {
+        "kind": "say",
+        "lines": [
+          "Something in your bag is warm."
+        ]
+      },
+      {
+        "kind": "sfx",
+        "sound": "warp"
+      },
+      {
+        "kind": "giveItem",
+        "item": "tideheart",
+        "count": 1
+      },
+      {
+        "kind": "setFlag",
+        "flag": "tideheart_given"
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Your father's keepsake, wrapped in one of his shirts.",
+          "Your mother put it in there while you were not looking."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tarin_town",
+    "_note": "TARIN 3 and 4 of 4 -- see docs/TARIN.md. ONE script for every town he ever turns up in. It branches on the ledger flags published by src/systems/tarin.ts (tarin_at_<beat>), so the town decides what scene this is, not the map. A later stage adds him to a settlement by appending a branch here and putting an NPC on the map with id \"town_tarin\" and script \"tarin_town\", hidden by that branch's done-flag. No new file, no new plumbing. The removeNpc names \"town_tarin\" and is a no-op on a map that wraps this script in one of its own.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
+          "flag": "tarin_at_briarbell"
+        },
+        "then": [
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "There you are! I had started telling people you had been eaten.",
+              "Right. Before you say a single word."
+            ]
+          },
+          {
+            "kind": "sfx",
+            "sound": "badge"
+          },
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "The Hallkeeper. This morning. First ask, in front of about nine people and a dog.",
+              "Do not look at me like that. I have been up at four every day of my life. It was always going to be one of us."
+            ]
+          },
+          {
+            "kind": "choice",
+            "lines": [
+              "Well? Say something."
+            ],
+            "options": [
+              {
+                "label": "Congratulations",
+                "then": [
+                  {
+                    "kind": "say",
+                    "who": "TARIN",
+                    "lines": [
+                      "...Oh. Right. Thank you. I had a whole thing prepared for if you sulked."
+                    ]
+                  }
+                ]
+              },
+              {
+                "label": "I was going to do that",
+                "then": [
+                  {
+                    "kind": "say",
+                    "who": "TARIN",
+                    "lines": [
+                      "You still are! That is the entire point of there being eight of them."
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "Here. Take these. I bought three and I only need one, which is maths."
+            ]
+          },
+          {
+            "kind": "giveItem",
+            "item": "strong_potion",
+            "count": 2
+          },
+          {
+            "kind": "say",
+            "lines": [
+              "Tarin handed over 2 Strong Potions."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "Go and get yours. I want the version of this where we both have one.",
+              "The other version has me stood about waiting and I am terrible at it."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "Oh — and go and look under the bell tree before you leave.",
+              "There is a stone down in the roots with writing on it and nobody here can read a word of it.",
+              "I stood there like an idiot for an hour. See if it does anything for you."
+            ]
+          },
+          {
+            "kind": "setFlag",
+            "flag": "tarin_briarbell_done"
+          },
+          {
+            "kind": "removeNpc",
+            "who": "town_tarin"
+          },
+          {
+            "kind": "say",
+            "lines": [
+              "He is off up the street before you can answer. He always is."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "if",
+            "cond": {
+              "kind": "flag",
+              "flag": "tarin_at_stonewake"
+            },
+            "then": [
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "Do not say it.",
+                  "Three days I have been in this town and I have not once been near the Hall."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "There is an office on the square with grey coats in it. Meridian, the plate says. Very tidy.",
+                  "They took a crate of quarry cores out of the back of it at two in the morning."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "So I asked them why. Politely! And they carried me out into the road.",
+                  "Twice. The second time they had clearly practised."
+                ]
+              },
+              {
+                "kind": "if",
+                "cond": {
+                  "kind": "flag",
+                  "flag": "starter_sprigling"
+                },
+                "then": [
+                  {
+                    "kind": "battleTrainer",
+                    "trainer": "tarin_stonewake_rilltail",
+                    "onLoss": "continue"
+                  }
+                ],
+                "else": [
+                  {
+                    "kind": "if",
+                    "cond": {
+                      "kind": "flag",
+                      "flag": "starter_cinderpaw"
+                    },
+                    "then": [
+                      {
+                        "kind": "battleTrainer",
+                        "trainer": "tarin_stonewake_sprigling",
+                        "onLoss": "continue"
+                      }
+                    ],
+                    "else": [
+                      {
+                        "kind": "battleTrainer",
+                        "trainer": "tarin_stonewake_cinderpaw",
+                        "onLoss": "continue"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "if",
+                "cond": {
+                  "kind": "var",
+                  "var": "last_battle_won",
+                  "op": "==",
+                  "value": 1
+                },
+                "then": [
+                  {
+                    "kind": "setFlag",
+                    "flag": "tarin_stonewake_done"
+                  },
+                  {
+                    "kind": "say",
+                    "who": "TARIN",
+                    "lines": [
+                      "One Crest each and you are still standing there doing that.",
+                      "Fine. Go and take the second one off her. One of us should be getting on with it."
+                    ]
+                  },
+                  {
+                    "kind": "say",
+                    "who": "TARIN",
+                    "lines": [
+                      "I am not leaving that office alone, {name}. I want you to know that in advance.",
+                      "When somebody carries you out of a building twice, there is something in the building."
+                    ]
+                  },
+                  {
+                    "kind": "removeNpc",
+                    "who": "town_tarin"
+                  },
+                  {
+                    "kind": "say",
+                    "lines": [
+                      "Tarin goes back across the square. Not towards the Hall."
+                    ]
+                  }
+                ]
+              }
+            ],
+            "else": [
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "Passing through. Same as you, by the look of the state of you.",
+                  "I would stay and gloat but I have a Hallkeeper to go and annoy. Catch me up."
+                ]
+              },
+              {
+                "kind": "setFlag",
+                "flag": "tarin_passing_done"
+              },
+              {
+                "kind": "removeNpc",
+                "who": "town_tarin"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tarin_route1",
+    "_note": "TARIN 2 of 4. See docs/TARIN.md. He is waiting at the top of Route 1; the actor is the route_tarin NPC on data/maps/route_1.json, which carries requiresFlag tarin_first_done and hiddenIfFlag tarin_route1_done so he appears and disappears without a script. THE TRIGGER IS A BAND, rows 2 and 3 from x=12 to x=18, not a tile on the road: a player who comes up the left-hand verge can reach the northern seam without ever standing on the spine, and would have walked past the whole scene. Anything that reaches the exit crosses this band. Tiles in it that are solid are simply never stepped on, so the band costs nothing and survives the route being reshaped around it. Nobody walks the player anywhere: the player body is only ticked by updatePlayer, which overworld.update skips for the whole time an event is running, so a scripted move who:\"player\" never completes and hangs the runner. The last of the road they walk together is carried by the writing, which is cheaper than staging it and does not break when the map moves. The spawnNpc at the top is a safety net and normally does nothing: addNpcRuntime is a no-op when an actor with that id is already on the map, and he normally is, because he is on data/maps/route_1.json. It only fires if that entry has been lost in a rewrite, and then the scene still plays -- he pops into view instead of having been stood there, which is worse to look at but very much better than a conversation with nobody.",
+    "trigger": "step",
+    "map": "route_1",
+    "at": [
+      {
+        "x": 12,
+        "y": 2
+      },
+      {
+        "x": 13,
+        "y": 2
+      },
+      {
+        "x": 14,
+        "y": 2
+      },
+      {
+        "x": 15,
+        "y": 2
+      },
+      {
+        "x": 16,
+        "y": 2
+      },
+      {
+        "x": 17,
+        "y": 2
+      },
+      {
+        "x": 18,
+        "y": 2
+      },
+      {
+        "x": 12,
+        "y": 3
+      },
+      {
+        "x": 13,
+        "y": 3
+      },
+      {
+        "x": 14,
+        "y": 3
+      },
+      {
+        "x": 15,
+        "y": 3
+      },
+      {
+        "x": 16,
+        "y": 3
+      },
+      {
+        "x": 17,
+        "y": 3
+      },
+      {
+        "x": 18,
+        "y": 3
+      }
+    ],
+    "when": {
+      "kind": "all",
+      "of": [
+        {
+          "kind": "flag",
+          "flag": "tarin_first_done"
+        },
+        {
+          "kind": "not",
+          "of": {
+            "kind": "flag",
+            "flag": "tarin_route1_done"
+          }
+        }
+      ]
+    },
+    "onceFlag": "tarin_route1_done",
+    "actions": [
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "route_tarin",
+          "sprite": "rival",
+          "x": 16,
+          "y": 2,
+          "facing": "left",
+          "movement": {
+            "kind": "static"
+          }
+        }
+      },
+      {
+        "kind": "sfx",
+        "sound": "spotted"
+      },
+      {
+        "kind": "face",
+        "who": "route_tarin",
+        "dir": "left"
+      },
+      {
+        "kind": "face",
+        "who": "player",
+        "dir": "up"
+      },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "THERE you are. I have been sat on this gate having a very one-sided argument with a bird.",
+          "It won. I would like that on the record alongside everything else."
+        ]
+      },
+      {
+        "kind": "choice",
+        "lines": [
+          "Come on. Briarbell is over that rise and I want a witness to my face when I see it."
+        ],
+        "options": [
+          {
+            "label": "Walk up with him",
+            "then": [
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "Good. Keep up, I have got a long stride and no patience left."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "You look terrible",
+            "then": [
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "I have slept in a hedge, {name}. Twice. On purpose the first time."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 10
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "You walk the last of the road together. He talks for most of it."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 12
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "My mother keeps the Mirehaven Kin Hall. Fifth of the eight, since you did not ask.",
+          "Everyone hears that and decides I have got an easy run at this."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "It means the exact opposite, and I would rather nobody said it out loud again.",
+          "...Right. That is quite enough of that."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 12
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Race you to the bell. I have already started."
+        ]
+      },
+      {
+        "kind": "move",
+        "who": "route_tarin",
+        "steps": [
+          "left",
+          "up",
+          "up"
+        ],
+        "speed": "run"
+      },
+      {
+        "kind": "removeNpc",
+        "who": "route_tarin"
+      },
+      {
+        "kind": "wait",
+        "frames": 10
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "He is over the rise before you have got your breath back."
+        ]
+      }
     ]
   }
 ]

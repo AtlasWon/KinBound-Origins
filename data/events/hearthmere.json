@@ -1,0 +1,520 @@
+[
+  {
+    "id": "hm_tarin_meet",
+    "trigger": "step",
+    "map": "hearthmere",
+    "_note": "The player's front door drops them on (18,24) and loadMap resets lastTile, so the landing tile itself never fires a step script -- the trigger has to be every tile they can reach from it, and there are exactly three: west, east and south. (18,23) is the door back inside. Tarin waits on his own doorstep at (13,24), two doors west, and runs east to (16,24), so (16,24) and (17,24) must stay clear of scenery -- scripted movers ignore collision and he would otherwise finish standing inside a flower bed. THE EXIT: west two, then straight up the street. He does NOT walk all the way to the station: it is twenty tiles and a bridge away, and a scripted run that long is a minute of the player watching somebody else's back. He is off the top of a 240x160 view by the time he reaches the square, and the line after the move is what reports the rest of it.",
+    "at": [
+      {
+        "x": 17,
+        "y": 24
+      },
+      {
+        "x": 19,
+        "y": 24
+      },
+      {
+        "x": 18,
+        "y": 25
+      }
+    ],
+    "when": {
+      "kind": "all",
+      "of": [
+        {
+          "kind": "flag",
+          "flag": "mom_sendoff"
+        },
+        {
+          "kind": "not",
+          "of": {
+            "kind": "flag",
+            "flag": "met_tarin"
+          }
+        }
+      ]
+    },
+    "onceFlag": "met_tarin",
+    "actions": [
+      {
+        "kind": "sfx",
+        "sound": "spotted"
+      },
+      {
+        "kind": "wait",
+        "frames": 18
+      },
+      {
+        "kind": "face",
+        "who": "player",
+        "dir": "left"
+      },
+      {
+        "kind": "move",
+        "who": "hm_tarin",
+        "steps": [
+          "right",
+          "right",
+          "right"
+        ],
+        "speed": "run"
+      },
+      {
+        "kind": "face",
+        "who": "hm_tarin",
+        "dir": "right"
+      },
+      {
+        "kind": "wait",
+        "frames": 10
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "FINALLY. {name}. I have been stood on my own doorstep since it was dark.",
+          "Saffra came past with a bucket and asked twice if I was locked out."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Sorrell has three of them over the bridge. Three. Sat up on the counter, in the open, like a bowl of apples.",
+          "I have not touched them. I want it on record that I have not touched them."
+        ]
+      },
+      {
+        "kind": "choice",
+        "lines": [
+          "Well? Are you coming or not?"
+        ],
+        "options": [
+          {
+            "label": "Let's go",
+            "then": [
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "Yes. Good. Right. Try to keep up."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "You go first",
+            "then": [
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "Absolutely not, it is your day.",
+                  "I have had mine explained to me since I was four. Yours is still yours."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Who are you?",
+            "then": [
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "Tarin. Ashe. That house. Sixteen years, two gardens between us, one fence I put through.",
+                  "...Unbelievable. Come on."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 12
+      },
+      {
+        "kind": "face",
+        "who": "hm_tarin",
+        "dir": "left"
+      },
+      {
+        "kind": "wait",
+        "frames": 12
+      },
+      {
+        "kind": "move",
+        "who": "hm_tarin",
+        "steps": [
+          "left",
+          "left",
+          "up",
+          "up",
+          "up",
+          "up",
+          "up",
+          "up",
+          "up",
+          "up",
+          "up",
+          "up"
+        ],
+        "speed": "run"
+      },
+      {
+        "kind": "removeNpc",
+        "who": "hm_tarin"
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Tarin is across the square and over the bridge before you have moved."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "hm_tarin_first",
+    "_note2": "THE CODA. After Tarin goes, the script warps the player home and has their mother put the party back together. This is the game's only teaching pass on where healing happens, and it is deliberately not a line of instruction: the first battle is also the first time the player's kin are hurt, so being taken home and fixed at exactly that moment is the lesson. The landing tile is (5,5), directly below the mother's (5,4), and the player faces up -- so the pair are face to face on the frame the fade lifts with nobody having to walk. NOBODY WALKS HERE ON PURPOSE. `move who:\"player\"` cannot be used inside a cutscene at all: the player body is only ticked by updatePlayer, which overworld.update skips for the whole time an event is running, so a scripted player walk never completes and hangs the script. Moving the mother is possible but would name an NPC from another map inside a hearthmere script, which tests/content.test.js rejects. Standing them where they need to be is cheaper than either. mom_rest is set here rather than left to her own script, which hands her 'interact' dialogue straight to the repeatable 'Do you want to rest before you go?' branch -- so the very next time the player talks to her, the thing they were just shown is offered again on a button press. The healParty is followed by a wait because healParty does not block; see OverworldEventHost.healParty.",
+    "_note": "Fires on the station forecourt. The player lands on (21,5) coming out of the double door; (21,4) is the door back in, so the only three tiles they can step to are west, east and south, and all three are listed. Tarin is NOT on the map at this point: hm_tarin_meet ran removeNpc on him and its onceFlag hides him for good, which is why this scene used to be delivered by a disembodied voice with nobody on screen. He is spawned again on the far bank at (25,10) and comes UP THE PLANK FOOTBRIDGE into frame before a word is said, and he leaves the same way. That route is chosen because scripted movers ignore collision: the forecourt is three rows deep and a run across it would pass straight through wherever the player happens to be standing, whereas the bridge column x=25 is the one line they cannot be on. The removeNpc before the spawn is belt and braces: spawnNpc is a no-op if an actor with that id already exists.",
+    "trigger": "step",
+    "map": "hearthmere",
+    "at": [
+      {
+        "x": 20,
+        "y": 5
+      },
+      {
+        "x": 22,
+        "y": 5
+      },
+      {
+        "x": 21,
+        "y": 6
+      }
+    ],
+    "when": {
+      "kind": "all",
+      "of": [
+        {
+          "kind": "flag",
+          "flag": "got_starter"
+        },
+        {
+          "kind": "not",
+          "of": {
+            "kind": "flag",
+            "flag": "tarin_first_done"
+          }
+        }
+      ]
+    },
+    "onceFlag": "tarin_first_done",
+    "actions": [
+      {
+        "kind": "face",
+        "who": "player",
+        "dir": "right"
+      },
+      {
+        "kind": "removeNpc",
+        "who": "hm_tarin"
+      },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "hm_tarin",
+          "sprite": "rival",
+          "x": 25,
+          "y": 10,
+          "facing": "up",
+          "movement": {
+            "kind": "static"
+          }
+        }
+      },
+      {
+        "kind": "sfx",
+        "sound": "spotted"
+      },
+      {
+        "kind": "wait",
+        "frames": 14
+      },
+      {
+        "kind": "move",
+        "who": "hm_tarin",
+        "steps": [
+          "up",
+          "up",
+          "up",
+          "up"
+        ],
+        "speed": "run"
+      },
+      {
+        "kind": "move",
+        "who": "hm_tarin",
+        "steps": [
+          "left",
+          "left"
+        ],
+        "speed": "walk"
+      },
+      {
+        "kind": "face",
+        "who": "hm_tarin",
+        "dir": "left"
+      },
+      {
+        "kind": "wait",
+        "frames": 14
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "{name}. HEY. Don't you dare walk off up that road yet.",
+          "Sorrell gave me one too. I picked mine on looks and I have since been shown a chart."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Apparently there is an order to them, and mine is at the wrong end of it from yours.",
+          "I have decided that is a detail and not a problem."
+        ]
+      },
+      {
+        "kind": "choice",
+        "lines": [
+          "One battle. Right here. Before either of us knows what we are doing."
+        ],
+        "options": [
+          {
+            "label": "Bring it",
+            "then": [
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "THERE it is."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "We just got them",
+            "then": [
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "Exactly. That is the only moment this is ever going to be fair.",
+                  "In a month you will be insufferable. Fight me now."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "_note": "Tarin takes the starter the PLAYER'S beats -- see docs/TARIN.md and the $comment on tarin_first_* in data/trainers/trainers.json. The branch names TARIN'S kin, not the player's: Sprigling beats Rilltail beats Cinderpaw beats Sprigling.",
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
+          "flag": "starter_sprigling"
+        },
+        "then": [
+          {
+            "kind": "battleTrainer",
+            "trainer": "tarin_first_rilltail",
+            "onLoss": "continue"
+          }
+        ],
+        "else": [
+          {
+            "kind": "if",
+            "cond": {
+              "kind": "flag",
+              "flag": "starter_cinderpaw"
+            },
+            "then": [
+              {
+                "kind": "battleTrainer",
+                "trainer": "tarin_first_sprigling",
+                "onLoss": "continue"
+              }
+            ],
+            "else": [
+              {
+                "kind": "battleTrainer",
+                "trainer": "tarin_first_cinderpaw",
+                "onLoss": "continue"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "var",
+          "var": "last_battle_won",
+          "op": "==",
+          "value": 1
+        },
+        "then": [
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "Right. Yes. The chart was not a detail. The chart was the whole thing.",
+              "Noted. Written down. Look at the state of yours, though — I got something out of that."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "HA. With the bad end of the chart and everything.",
+              "Sorry. I am not sorry. Go on, get them patched up before you fall over."
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Listen, {name}, before you go. There were people on the north road last week.",
+          "Grey coats, brass instruments, very polite. Meridian, the badges said.",
+          "They were not measuring the road. They were kneeling on it, measuring what is underneath."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "My mother keeps a Kin Hall two regions off. She has never once sounded frightened on paper.",
+          "Her last letter asked whether the sea near you had stopped moving too.",
+          "...Go. Fill Sorrell's book. I will see you up the road."
+        ]
+      },
+      {
+        "kind": "move",
+        "who": "hm_tarin",
+        "steps": [
+          "right",
+          "right",
+          "down",
+          "down",
+          "down",
+          "down",
+          "left",
+          "left",
+          "left",
+          "left",
+          "left",
+          "left",
+          "left",
+          "left"
+        ],
+        "speed": "run"
+      },
+      {
+        "kind": "removeNpc",
+        "who": "hm_tarin"
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Tarin is back over the plank bridge and away along the bank before you can answer."
+        ]
+      },
+      {
+        "kind": "setVar",
+        "var": "act",
+        "value": 1
+      },
+      {
+        "kind": "wait",
+        "frames": 18
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "That took more out of them than you expected.",
+          "The house is five minutes back down the street, over the bridge and past the well."
+        ]
+      },
+      {
+        "kind": "warp",
+        "map": "hearthmere_house_player",
+        "x": 5,
+        "y": 5,
+        "facing": "up"
+      },
+      {
+        "kind": "wait",
+        "frames": 24
+      },
+      {
+        "kind": "say",
+        "who": "MIRA",
+        "lines": [
+          "Back already? You have not even been gone an hour.",
+          "...Oh. Oh, come here."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 10
+      },
+      {
+        "kind": "say",
+        "who": "MIRA",
+        "lines": [
+          "Give them here. Don't argue with me about it."
+        ]
+      },
+      {
+        "kind": "healParty"
+      },
+      {
+        "kind": "wait",
+        "frames": 12
+      },
+      {
+        "kind": "setFlag",
+        "flag": "mom_rest"
+      },
+      {
+        "kind": "say",
+        "who": "MIRA",
+        "lines": [
+          "There. Warm, cross, and entirely fine."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "MIRA",
+        "lines": [
+          "{name}. This house does not move, and neither do I.",
+          "Whenever they get into that state, you bring them home. I will do that again. Every time."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "MIRA",
+        "lines": [
+          "Now go. Tarin will be halfway up Route 1 telling people he won."
+        ]
+      }
+    ]
+  }
+]

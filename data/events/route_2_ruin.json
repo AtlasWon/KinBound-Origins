@@ -1,0 +1,96 @@
+[
+  {
+    "id": "r2_ruin_deep",
+    "_note": "The back wall of the chamber, and the only scripted beat inside. Everything else in this room is a `script` object on a wall tile that the player has to choose to read -- four panels that between them say: people and Kin lived alongside each other, there is something enormous under the sea, somebody put rings around it, and then the water came over the towns. The carvings do the work. This one is the proof that the thing in the player's pack is not a keepsake.",
+    "_note2": "Fires on the four floor tiles against the north wall, so it cannot happen without standing in front of the picture. The still water across the middle of the chamber means the way to this wall is round one side, which is the only reason the pool is there. Setting tideheart_echo_sunken_arch is what files the playback into the object itself -- see src/systems/tideheart.ts, SITES, id sunken_arch -- so the echo text and this scene have to keep agreeing with each other.",
+    "trigger": "step",
+    "map": "route_2_ruin",
+    "at": [
+      { "x": 8, "y": 1 }, { "x": 9, "y": 1 }, { "x": 10, "y": 1 }, { "x": 11, "y": 1 }
+    ],
+    "when": { "kind": "not", "of": { "kind": "flag", "flag": "r2_ruin_read" } },
+    "onceFlag": "r2_ruin_read",
+    "actions": [
+      { "kind": "face", "who": "player", "dir": "up" },
+      { "kind": "wait", "frames": 12 },
+      {
+        "kind": "say",
+        "lines": ["The back wall is one picture,", "cut floor to ceiling."]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "A shape in deep water. Fins like",
+          "sails, a crown of growths round",
+          "the head."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": ["The tail runs off the edge", "of the stone."]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The people below it are drawn",
+          "a finger high. Not running.",
+          "Kneeling, hands on the floor."
+        ]
+      },
+      { "kind": "sfx", "sound": "fx_charge" },
+      { "kind": "wait", "frames": 18 },
+      { "kind": "sfx", "sound": "fx_light" },
+      { "kind": "shake", "frames": 26, "power": 2 },
+      { "kind": "wait", "frames": 26 },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "any",
+          "of": [
+            { "kind": "hasItem", "item": "tideheart" },
+            { "kind": "flag", "flag": "tideheart_given" }
+          ]
+        },
+        "then": [
+          {
+            "kind": "say",
+            "lines": [
+              "Your father's keepsake answers.",
+              "Every line in the carving fills",
+              "with cold light, then goes out."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "lines": [
+              "Something in the room answers.",
+              "Every line in the carving fills",
+              "with cold light, then goes out."
+            ]
+          }
+        ]
+      },
+      { "kind": "wait", "frames": 18 },
+      {
+        "kind": "say",
+        "lines": ["The room is as dark as it was.", "Nothing in it has moved."]
+      },
+      {
+        "kind": "say",
+        "lines": ["You are not going to be able", "to explain this to anybody."]
+      },
+      { "kind": "setFlag", "flag": "saw_aurelian_carvings" },
+      { "kind": "setFlag", "flag": "tideheart_echo_sunken_arch" },
+      {
+        "kind": "say",
+        "lines": [
+          "Whatever the Arch just said,",
+          "it said in the wrong language.",
+          "It is in the keepsake now."
+        ]
+      }
+    ]
+  }
+]

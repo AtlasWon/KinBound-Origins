@@ -1,0 +1,38 @@
+{
+  "speakers": {
+    "sw_weighclerk": "WEIGH CLERK",
+    "sw_old_hand": "OLD HAND"
+  },
+  "entries": {
+    "sw_weighclerk": [
+      {
+        "lines": [
+          "I weigh what comes up. Nothing comes up. So I keep the books,",
+          "and the books are the only reason this office is still an office.",
+          "Somebody has to know what the mountain is worth when they come asking.",
+          "They came asking in the spring."
+        ]
+      }
+    ],
+    "sw_old_hand": [
+      {
+        "ifFlags": [
+          "crest_2_taken"
+        ],
+        "lines": [
+          "She gave you it. Well.",
+          "I worked the west face beside her for eleven years and I will tell you",
+          "the thing nobody tells challengers: she wants you to win.",
+          "She just will not make it easy, because easy is not worth having."
+        ]
+      },
+      {
+        "lines": [
+          "Second gauge moves. I have said so for two years.",
+          "Not much. Not steadily. But a face that is settling settles once and stops.",
+          "This one keeps thinking about it."
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "id": "briarbell_inn",
+  "name": "The Bell and Barrow",
+  "displayName": "THE BELL AND BARROW",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIIIIUIIII",
+    "IKKKKfffbebefffI",
+    "IffffffffffffffI",
+    "IPfffffffbebeffI",
+    "IfAAffffffffffPI",
+    "IfEEffffkfffffkI",
+    "IffffffffffAAffI",
+    "If//fffffffEEffI",
+    "IfrrfffffffffffI",
+    "IPffffffffffffPI",
+    "IIIIIIDIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 10,
+      "toMap": "briarbell",
+      "toX": 6,
+      "toY": 30,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "bb_innkeeper",
+      "sprite": "villager_f",
+      "x": 3,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "bb_innkeeper"
+    },
+    {
+      "id": "bb_inn_guest",
+      "sprite": "sailor",
+      "x": 12,
+      "y": 7,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "bb_inn_guest"
+    },
+    {
+      "id": "bb_inn_scholar",
+      "sprite": "professor",
+      "x": 2,
+      "y": 8,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "bb_inn_scholar"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 5,
+      "text": [
+        "The shelf by the fire. Ledgers, a jar of pressed leaves,",
+        "and a bell the size of a thumb on a nail, which nobody rings."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 14,
+      "y": 5,
+      "text": [
+        "A guest book. Most of it is Trainers on their way to the Hall.",
+        "Every fourth entry says the same thing: SHE DOES NOT HIT HARD."
+      ]
+    }
+  ]
+}

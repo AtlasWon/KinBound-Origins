@@ -1,7 +1,7 @@
 /**
  * The Vellum.
  *
- * Dr. Vess's field record. Unseen entries are shown as blanks rather than
+ * Professor Sorrell's field record. Unseen entries are shown as blanks rather than
  * hidden, because the gaps are the point: a list with holes in it is an
  * invitation, and a list that grows as you walk is the quiet second objective
  * running underneath the whole game.

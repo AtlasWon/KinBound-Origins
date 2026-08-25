@@ -17,6 +17,8 @@ import {
 import { registry } from '../data/registry.js';
 import { say } from '../ui/dialogue.js';
 import { PartyScene } from './party.js';
+import { TideheartScene } from './tideheart.js';
+import { TIDEHEART } from '../systems/tideheart.js';
 import type { GameState } from '../systems/state.js';
 import type { ItemCategory } from '../data/schema.js';
 
@@ -103,6 +105,14 @@ export class BagScene implements Scene {
   private useItem(game: Game, id: string): void {
     const item = registry.getItem(id);
     if (!item) return;
+
+    // A key item that has a screen of its own opens it rather than announcing
+    // itself. There is exactly one so far; when there is a second, this turns
+    // into a lookup rather than growing another branch.
+    if (id === TIDEHEART) {
+      game.scenes.push(new TideheartScene(this.state));
+      return;
+    }
 
     if (!item.usableInField) {
       say(game, ['That is not something you can use out here.']);

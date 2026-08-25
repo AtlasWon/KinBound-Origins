@@ -10,14 +10,14 @@ const go = async (m, x, y, f) => { d.game.scenes.replaceAll(new Overworld(state,
 const out = [];
 // Both leaves of the lab's double door must lead inside.
 for (const x of [22, 23]) {
-  await go('marrow_hollow', x, 7, 'up');
+  await go('hearthmere', x, 7, 'up');
   d.hold('KeyW', 40); await d.loadWait(1400); clear();
   out.push(`lab leaf x=${x} -> ${d.probe().map} ${d.probe().pos}`);
 }
 // And every interior door, walked into from the tile in front of it.
 for (const [m, x, y] of [
-  ['marrow_house_player', 6, 6], ['ashgate_provisioner', 6, 6],
-  ['ashgate_waystation', 6, 8], ['tanners_concord', 6, 8], ['vess_station', 8, 9],
+  ['hearthmere_house_player', 6, 6], ['briarbell_provisioner', 6, 6],
+  ['briarbell_clinic', 6, 8], ['tanners_concord', 6, 8], ['sorrell_lab', 8, 9],
 ]) {
   await go(m, x, y, 'down');
   d.hold('KeyS', 40); await d.loadWait(1400); clear();

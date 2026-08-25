@@ -1,0 +1,23 @@
+{
+  "speakers": {
+    "sw_house_a_resident": "MERRAN",
+    "sw_house_a_child": "PIP"
+  },
+  "entries": {
+    "sw_house_a": [
+      {
+        "lines": [
+          "My father cut stone. His father cut stone. I keep the accounts.",
+          "Somebody has to know what the stone is actually worth.",
+          "Lately the Foundation pays over the odds for anything off the west face.",
+          "Chippings. Dust. I sold them a barrow of dust in June and they thanked me."
+        ]
+      }
+    ],
+    "sw_house_a_child": [
+      "That gap on the wall is Grandad's chisel. He's got it with him.",
+      "He's been retired eleven years. He still takes it out.",
+      "Mum says he goes and sits on the terrace and doesn't cut anything."
+    ]
+  }
+}

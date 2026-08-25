@@ -63,7 +63,7 @@ function mobile(o) {
 }
 
 const maps = ['route_1', 'route_2', 'route_3', 'route_4',
-  'kellowmere_bastion', 'brackwater_bastion'];
+  'kellowmere_hall', 'brackwater_hall'];
 
 let totalTraps = 0;
 for (const map of maps) {

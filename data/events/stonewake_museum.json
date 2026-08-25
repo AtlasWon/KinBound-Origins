@@ -1,0 +1,170 @@
+[
+  {
+    "id": "sw_lyra",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "lyra_saw_tideheart" },
+        "then": [
+          {
+            "kind": "say",
+            "who": "LYRA",
+            "lines": [
+              "Still here. They have stopped bringing me tea, which I think is a hint.",
+              "Go and beat Roxen. She is a nightmare and you will feel wonderful afterwards.",
+              "And keep that thing in your bag. Not hidden. Just... in your bag."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "if",
+            "cond": { "kind": "flag", "flag": "met_lyra" },
+            "then": [
+              {
+                "kind": "say",
+                "who": "LYRA",
+                "lines": [
+                  "Eleven pieces. Eleven, in the whole region, and none of them match.",
+                  "Either the Aurelians made eleven things, or somebody has the rest of them."
+                ]
+              }
+            ],
+            "else": [
+              {
+                "kind": "say",
+                "who": "LYRA",
+                "lines": [
+                  "Sorry. You wanted to look at the case and I am standing in front of it.",
+                  "I have been standing in front of it for two days.",
+                  "The staff have started bringing me tea. I think they have given up on me."
+                ]
+              },
+              { "kind": "setFlag", "flag": "met_lyra" },
+              {
+                "kind": "say",
+                "who": "LYRA",
+                "lines": [
+                  "Lyra. I catalogue things for the Meridian Foundation.",
+                  "Which mostly means I look at something very old and write down,",
+                  "in a very neat hand, that nobody knows what it is."
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "if",
+            "cond": { "kind": "hasItem", "item": "tideheart" },
+            "then": [
+              { "kind": "wait", "frames": 20 },
+              { "kind": "sfx", "sound": "warp" },
+              { "kind": "shake", "frames": 16, "power": 1 },
+              {
+                "kind": "say",
+                "lines": [
+                  "Something in your bag turns over, once, and goes warm."
+                ]
+              },
+              { "kind": "face", "who": "sw_lyra", "dir": "down" },
+              {
+                "kind": "say",
+                "who": "LYRA",
+                "lines": [
+                  "...",
+                  "That. In your bag. May I -",
+                  "No. Sorry. That was extremely rude and I am going to sit down."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "LYRA",
+                "lines": [
+                  "It has the same marks as the disc. Circles inside circles,",
+                  "and the spiral running out of the middle of them.",
+                  "That is not a pattern people invented twice."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "LYRA",
+                "lines": [
+                  "Where did you get it? - no. Don't answer that either.",
+                  "People go strange about the things their families leave them,",
+                  "and I have watched enough of them regret telling me."
+                ]
+              },
+              { "kind": "setFlag", "flag": "lyra_saw_tideheart" },
+              {
+                "kind": "if",
+                "cond": { "kind": "flag", "flag": "tideheart_echo_sunken_arch" },
+                "then": [
+                  {
+                    "kind": "say",
+                    "who": "LYRA",
+                    "lines": [
+                      "It has been somewhere, hasn't it. It is warmer than the case.",
+                      "There is an arch in the forest on Route 2 with those marks on it.",
+                      "I could not get it to do anything at all. Two days I tried."
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "LYRA",
+                "lines": [
+                  "Here. Take this before you go down the Hall's mine.",
+                  "The workings are wet and the lamps they lend you are worse than they say."
+                ]
+              },
+              { "kind": "giveItem", "item": "escape_line", "count": 2 },
+              { "kind": "say", "lines": ["Lyra handed over 2 Escape Lines."] },
+              {
+                "kind": "say",
+                "who": "LYRA",
+                "lines": [
+                  "And - look. I write things down for a living, and I write down",
+                  "everything I see. I am not going to write this one down.",
+                  "I would rather find out what it is before anybody else does."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sw_curator",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "met_lyra" },
+        "then": [
+          {
+            "kind": "say",
+            "who": "CURATOR HALE",
+            "lines": [
+              "The young woman at the Aurelian case has been here nine days.",
+              "She has better manners than most of my trustees and she pays for her own tea.",
+              "I have stopped asking who sent her. It seemed impolite."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "who": "CURATOR HALE",
+            "lines": [
+              "Welcome. Forty kinds of rock, six thousand years of people,",
+              "and one case at the far end that I cannot explain to schoolchildren.",
+              "Start at the rock. Everyone runs to the far end. Start at the rock."
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

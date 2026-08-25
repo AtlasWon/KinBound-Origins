@@ -3,8 +3,8 @@
  *
  * The single most-remembered screen in the genre, so it gets its own scene
  * rather than a dialogue list -- and it is staged as a *place*, not a menu:
- * three kin sitting along the counter at the back of Dr. Vess's field station,
- * with Vess himself stood in front of it. That is the picture the player is
+ * three kin sitting along the counter at the back of Professor Sorrell's field station,
+ * with Sorrell himself stood in front of it. That is the picture the player is
  * meant to keep, so the picture is what the scene draws.
  *
  * Choosing then plays out in the room rather than cutting away. The one that
@@ -13,7 +13,7 @@
  * enough for that to register before it hands back to the script.
  *
  * The room is drawn in code from the same wood and plaster the tileset uses,
- * so it matches the counter that is actually on the map behind Vess. The only
+ * so it matches the counter that is actually on the map behind Sorrell. The only
  * imported art is the creature sprites, and they arrive through iconSprite()
  * -- a full 128px battle sprite is nearly the height of the screen; the 64px
  * icon is about two tiles, which is the size a kin sitting on a counter is.
@@ -51,13 +51,13 @@ const ROLE_BLURB: Record<string, string> = {
 
 const PANEL_H = 56;
 const PANEL_Y = SCREEN_H - PANEL_H - 2;
-/** Dr. Vess stands on the floor in front of the counter. */
+/** Professor Sorrell stands on the floor in front of the counter. */
 const VESS_X = Math.floor(SCREEN_W / 2);
 const VESS_FOOT = PANEL_Y - 3;
 /** Counter: the panelled face, the front lip, then the top surface. */
 const CTR_X0 = 0;
 const CTR_X1 = SCREEN_W;
-/** Its foot clears the top of Vess's head, so he is plainly in front of it. */
+/** Its foot clears the top of Sorrell's head, so he is plainly in front of it. */
 const FLOOR_Y = VESS_FOOT - 25;
 const FACE_H = 22;
 const FACE_Y = FLOOR_Y - FACE_H;
@@ -196,7 +196,7 @@ export class StarterScene implements Scene {
       // Level six, not five. The first fights were measured at a few percent
       // with a level-five starter and no second kin to fall back on.
       const kin = createKin(sp.id, 6, game.rng, { originalTrainer: 'player' });
-      kin.metAt = 'vess_station';
+      kin.metAt = 'sorrell_lab';
       this.state.addKin(kin);
       this.state.setFlag('got_starter');
       // The rival picks the type that beats this one, so record the choice.
@@ -209,7 +209,7 @@ export class StarterScene implements Scene {
       this.phase = 'take';
       this.phaseT = 0;
       this.confirming = false;
-    }, 'DR. VESS');
+    }, 'PROF. SORRELL');
   }
 
   private finish(game: Game): void {
@@ -243,7 +243,7 @@ export class StarterScene implements Scene {
       if (selected) this.drawCaret(r, this.slotX(i), i, lift - bob);
     });
 
-    this.drawVess(r);
+    this.drawSorrell(r);
     if (this.phase === 'take') this.drawTaken(r);
 
     this.renderPanel(r);
@@ -385,8 +385,8 @@ export class StarterScene implements Scene {
     this.drawKin(r, i, Math.round(x), Math.round(y));
   }
 
-  /** Dr. Vess, stood on the floor with the counter behind him. */
-  private drawVess(r: Renderer): void {
+  /** Professor Sorrell, stood on the floor with the counter behind him. */
+  private drawSorrell(r: Renderer): void {
     const sheet = getCharSheet('professor');
     const src = sheet.src('down', 0);
     const x = VESS_X - CHAR_W / 4;

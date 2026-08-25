@@ -1,0 +1,92 @@
+{
+  "id": "stonewake_house_b",
+  "name": "House",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIUIIII",
+    "IKKKfffJQNfI",
+    "IffffffffKKI",
+    "IPfffff//ffI",
+    "IffffffrrfSI",
+    "IEAAfffVffkI",
+    "IkEEffffffPI",
+    "IfffffffffkI",
+    "IIIIIIDIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 8,
+      "toMap": "stonewake",
+      "toX": 24,
+      "toY": 26,
+      "facing": "down",
+      "style": "door"
+    },
+    {
+      "x": 10,
+      "y": 4,
+      "toMap": "stonewake_house_b_up",
+      "toX": 9,
+      "toY": 3,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "sw_house_b_resident",
+      "sprite": "villager_m",
+      "x": 4,
+      "y": 4,
+      "facing": "down",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "sw_house_b"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 1,
+      "text": [
+        "A long bench under the window, and on it a rope-walk in miniature:",
+        "hemp, wax, and three strands going into one.",
+        "Every haulage rope in the workings came off a bench like this one."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 2,
+      "text": [
+        "The kitchen, squeezed into what the workshop left of the room.",
+        "The workshop got the window. The cooking got the corner."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 5,
+      "text": [
+        "Coils of finished rope stacked to the ceiling, sized by fathom.",
+        "None of them have been sold. The Hall buys one a year now",
+        "and the Hall is the only customer left."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 6,
+      "text": [
+        "A framed certificate: STONEWAKE ROPEWORKS, EST. 71 YEARS.",
+        "Underneath it, unframed, a letter from the Foundation offering to buy",
+        "the whole of the ropewalk, the premises, and the name."
+      ]
+    }
+  ]
+}

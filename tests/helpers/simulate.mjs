@@ -98,12 +98,12 @@ function evolveTo(id, level) {
 }
 
 /**
- * A plausible bench. Nobody walks into a Bastion with one kin, so trainer
+ * A plausible bench. Nobody walks into a Kin Hall with one kin, so trainer
  * fights are also measured with a party the size of the trainer's own: the
  * lead is the starter line, the rest are ordinary catchables one level down.
  *
  * The bench has to be one a player of that level would really have. A fixed
- * list read as a Bastion fought with three Nibbets, which made every late
+ * list read as a Kin Hall fought with three Nibbets, which made every late
  * fight look unwinnable and would have had the whole back half of the game
  * nerfed to compensate for the harness. Each entry is the level by which the
  * route that holds it has been walked, and the party is the strongest three
@@ -241,26 +241,35 @@ export function wildRate(routeId, playerSpecies, playerLevel, runs, tier = 'novi
  * the grass on the way through and back for the items.
  */
 export const STAGES = [
-  { name: 'Marrow Hollow', grass: 'marrow_hollow', wilds: 5,
-    trainers: ['perrin_first'] },
+  { name: 'Hearthmere', grass: 'hearthmere', wilds: 5,
+    trainers: ['tarin_first'] },
   { name: 'Route 1', grass: 'route_1', wilds: 14,
     trainers: ['r1_madden', 'r1_ottel', 'r1_cale', 'concord_surveyor_1'] },
+  { name: 'Briarbell', grass: null, wilds: 0,
+    trainers: ['briar_hand_a', 'briar_hand_b', 'briar_keeper'] },
   { name: 'Route 2', grass: 'route_2', wilds: 14,
     trainers: ['r2_dell', 'r2_juna', 'r2_pike', 'r2_wren'] },
-  { name: 'Kellowmere', grass: null, wilds: 0,
-    trainers: ['perrin_km', 'bastion1_guard_a', 'bastion1_guard_b', 'bastion1_roxen'] },
+  { name: 'Stonewake', grass: null, wilds: 0,
+    trainers: ['tarin_town', 'sw_hall_delve_a', 'sw_hall_delve_b', 'sw_hall_delve_c', 'sw_keeper_roxen'] },
   { name: 'Route 3', grass: 'route_3', wilds: 14,
     trainers: ['r3_bram', 'r3_sill', 'r3_holt', 'concord_surveyor_2'] },
   { name: 'Route 4', grass: 'route_4', wilds: 14,
     trainers: ['r4_teal', 'r4_gorse', 'r4_nesh', 'r4_bay'] },
   { name: 'Brackwater', grass: null, wilds: 0,
-    trainers: ['bastion2_guard_a', 'bastion2_guard_b', 'bastion2_guard_c', 'bastion2_mabry'] },
+    trainers: ['hall2_guard_a', 'hall2_guard_b', 'hall2_guard_c', 'hall2_mabry'] },
 ];
 
-/** Perrin mirrors the starter, so his id depends on which one you picked. */
+/**
+ * Tarin mirrors the starter, so his id depends on which one you picked.
+ *
+ * He takes the one the PLAYER'S beats -- sprigling > rilltail > cinderpaw >
+ * sprigling -- and every id below is keyed by the species HE leads with, not by
+ * the player's. See docs/TARIN.md; getting this table backwards measures a fight
+ * nobody has, which is how the opening ended up tuned to a 97 percent walkover.
+ */
 const RIVAL = {
-  perrin_first: { sprigling: 'perrin_first_cinderpaw', cinderpaw: 'perrin_first_rilltail', rilltail: 'perrin_first_sprigling' },
-  perrin_km: { sprigling: 'perrin_km_sprigling', cinderpaw: 'perrin_km_cinderpaw', rilltail: 'perrin_km_rilltail' },
+  tarin_first: { sprigling: 'tarin_first_rilltail', cinderpaw: 'tarin_first_sprigling', rilltail: 'tarin_first_cinderpaw' },
+  tarin_town: { sprigling: 'tarin_stonewake_rilltail', cinderpaw: 'tarin_stonewake_sprigling', rilltail: 'tarin_stonewake_cinderpaw' },
 };
 export const trainerFor = (id, starter) => RIVAL[id]?.[starter] ?? id;
 
@@ -287,7 +296,7 @@ export const ace = (id) => Math.max(0, ...(byId.get(id)?.party ?? []).map((p) =>
 
 /**
  * Level the player holds at the start and end of each stage, for a given
- * experience share. Dr. Vess hands out a level six starter (src/scenes/
+ * experience share. Professor Sorrell hands out a level six starter (src/scenes/
  * starter.ts) and all three are mediumSlow.
  *
  * `share` is the mean number of kin that took the field per fight, because

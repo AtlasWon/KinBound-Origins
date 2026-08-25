@@ -1,0 +1,97 @@
+{
+  "id": "hearthmere_clinic",
+  "name": "Kin Clinic",
+  "displayName": "KIN CLINIC",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "_plan": "Hearthmere's clinic is one room and a kettle. No Roost terminal -- a village of four hundred does not get one, and the keeper says so, which is the first time the player hears that there are bigger places than this.",
+  "rows": [
+    "IIIUIIIIIIUIII",
+    "I++KKKKFFFFkkI",
+    "IPFFFFFFFFFFFI",
+    "IFFFFFFFFFAAFI",
+    "IkFFFFFFFFEEFI",
+    "IF/rrFFFFFFFPI",
+    "IFFrrFFFFFFFkI",
+    "IPFFFFFFFFFFFI",
+    "IFFFFFFFFFFFFI",
+    "IIIIIIDIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 9,
+      "toMap": "hearthmere",
+      "toX": 11,
+      "toY": 15,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "clinic_keeper",
+      "sprite": "healer",
+      "x": 5,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "clinic_heal"
+    },
+    {
+      "id": "hm_clinic_local",
+      "sprite": "villager_m",
+      "x": 5,
+      "y": 5,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hm_clinic_local"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 1,
+      "text": [
+        "The restorative bank, lamps in green.",
+        "Four cradles. Three of them have never been used at once."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 4,
+      "y": 1,
+      "text": [
+        "The counter, and a kettle on it, which is not regulation.",
+        "The keeper has been told about the kettle.",
+        "The kettle is still there."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 1,
+      "text": [
+        "The noticeboard. A rota for the hay. A lost dog, found.",
+        "A card from the Stillwater Concord asking anyone who sees kin",
+        "moving inland in numbers to report it. It has been there two months."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 11,
+      "y": 3,
+      "text": [
+        "A table by the window with two chairs and a chessboard.",
+        "Nobody is playing. The pieces have not moved since the spring",
+        "and somebody dusts around them."
+      ]
+    }
+  ]
+}

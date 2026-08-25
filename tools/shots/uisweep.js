@@ -116,10 +116,10 @@ d.key('Escape', 10);
 
 // ------------------------------------------------------------------- save
 const saveSys = await import('/build/js/systems/save.js');
-saveSys.save(1, state, 'Cinderfall Works Approach and the Long Stair', 987654);
-saveSys.save(2, state, 'Marrow Hollow', 4321);
+saveSys.save(1, state, 'Emberfall Works Approach and the Long Stair', 987654);
+saveSys.save(2, state, 'Hearthmere', 4321);
 const saveMod = await import('/build/js/scenes/saveScene.js');
-d.game.scenes.push(new saveMod.SaveScene(state, 'Cinderfall Works Approach and the Long Stair'));
+d.game.scenes.push(new saveMod.SaveScene(state, 'Emberfall Works Approach and the Long Stair'));
 d.tick(6);
 await d.shoot('ui-13-save', 8);
 d.key('KeyS', 8);
@@ -158,7 +158,7 @@ d.key('Escape', 8);
 // --------------------------------------------------------------- dialogue
 const dlg = await import('/build/js/ui/dialogue.js');
 d.game.scenes.push(new dlg.DialogueScene([
-  'The Warden of the Cinderfall Works will not see you without a seal.',
+  'The Warden of the Emberfall Works will not see you without a Bond Crest.',
   'Come back when you have one, and bring something to trade.',
 ], { who: 'Quartermaster Ellowbrand' }));
 d.tick(80);

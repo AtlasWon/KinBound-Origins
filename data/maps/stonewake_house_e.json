@@ -1,0 +1,92 @@
+{
+  "id": "stonewake_house_e",
+  "name": "House",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIUIIIIIIUII",
+    "IkfffffNQJfI",
+    "IffffffKKKPI",
+    "IPffAAfff//I",
+    "IfrrEEffrrfI",
+    "IkffffffVffI",
+    "IffffffffkfI",
+    "IIIIIIDIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 7,
+      "toMap": "stonewake",
+      "toX": 4,
+      "toY": 46,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "sw_house_e_resident",
+      "sprite": "villager_m",
+      "x": 4,
+      "y": 5,
+      "facing": "right",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "sw_house_e"
+    },
+    {
+      "id": "sw_house_e_child",
+      "sprite": "kid",
+      "x": 9,
+      "y": 4,
+      "facing": "left",
+      "movement": {
+        "kind": "wander",
+        "radius": 1
+      },
+      "script": "sw_house_e_child"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "Crates stacked where furniture should be, stencilled with the family name.",
+        "Everything in this house is either a stall or on its way to one."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 2,
+      "text": [
+        "The kitchen, and a scale on the counter that is a market scale,",
+        "brought home at the end of every day because it is worth more",
+        "than anything else in the building."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 3,
+      "text": [
+        "Two armchairs facing each other with a crate between them for a table.",
+        "The crate has been there long enough to have rings on it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 5,
+      "text": [
+        "A wireless, and a jar beside it labelled STALL RENT in a child's hand.",
+        "It has actual money in it."
+      ]
+    }
+  ]
+}

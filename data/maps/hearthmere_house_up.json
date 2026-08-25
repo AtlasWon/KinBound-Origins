@@ -1,0 +1,141 @@
+{
+  "id": "hearthmere_house_up",
+  "name": "Upstairs",
+  "displayName": "UPSTAIRS",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "_plan": "Three rooms off one landing, all connected along y=8. Your room west, the landing and the stair east of it, Mira's room east again. Her room is the tidiest place in the house and the one thing in it that is not tidy is the drawer she has not opened in sixteen years.",
+  "rows": [
+    "IIUIIIIIIUIIIIIIUIII",
+    "IbfffkIfffffSIkffbfI",
+    "IefffkIffffffIkffefI",
+    "IfffffIkfffffIfffffI",
+    "IAAffkIffffffIAffffI",
+    "IfEfrrIffrrffIEfrrfI",
+    "IfffrrIffrrffIffrrfI",
+    "IVffffIPfffffIkfffPI",
+    "IffffffffffffffffffI",
+    "IPffffffffffPfffffPI",
+    "IIIIIIIIIIIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 12,
+      "y": 1,
+      "toMap": "hearthmere_house_player",
+      "toX": 12,
+      "toY": 2,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "Your bed. Made, for once, because you were awake before it was light.",
+        "You have been awake since the sky went grey and you have",
+        "been ready since roughly the spring."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 5,
+      "y": 1,
+      "text": [
+        "Your shelf. Six of your father's field journals, borrowed",
+        "from downstairs one at a time over about nine years",
+        "and never once carried back."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 4,
+      "text": [
+        "Your desk. A folded map of Caelora with the whole coast road",
+        "traced in pencil, twice, and the second time in a straighter line",
+        "because you were sixteen by then and had stopped guessing."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 4,
+      "text": [
+        "A list, in your own writing, headed THINGS TO TAKE.",
+        "Nine items. Four are crossed out. One says JOURNAL - ASK MUM.",
+        "You have not asked."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 7,
+      "text": [
+        "A television on a crate, and the rug from the old front room.",
+        "It is the only corner of this house that is entirely yours."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 3,
+      "text": [
+        "The landing shelf. Boot polish, a lamp, a jar of buttons,",
+        "and a tin measuring stick pencilled up the door frame beside it.",
+        "The last mark is dated four years ago. You stopped growing. You did not stop asking."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 7,
+      "text": [
+        "The airing cupboard. Blankets, and behind them, folded flat,",
+        "a coat far too big for anyone currently living here."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 17,
+      "y": 1,
+      "text": [
+        "Your mother's bed. One side of it.",
+        "The other side has the good blanket on it and is never slept in."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 14,
+      "y": 1,
+      "text": [
+        "Her shelves. Ledgers, seed accounts, the school reports she kept,",
+        "and every letter you ever wrote her from four streets away",
+        "when you were seven and running away for the afternoon."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 14,
+      "y": 4,
+      "text": [
+        "Her dressing table. The top drawer sticks.",
+        "The bottom one is not stuck. It has simply not been opened."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 14,
+      "y": 7,
+      "text": [
+        "A wardrobe. Her things on the left, and space on the right",
+        "that has stayed space rather than becoming storage."
+      ]
+    }
+  ]
+}

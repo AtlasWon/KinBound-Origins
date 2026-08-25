@@ -1,0 +1,80 @@
+{
+  "id": "stonewake_house_c",
+  "name": "House",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIUIIIIIIUII",
+    "IkkfffffQNJI",
+    "IffffffffKKI",
+    "IPffbeffff/I",
+    "IffffffrrfkI",
+    "IfAAffffVffI",
+    "IfEEffffffPI",
+    "IIIIIIDIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 7,
+      "toMap": "stonewake",
+      "toX": 33,
+      "toY": 39,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "sw_house_c_resident",
+      "sprite": "villager_f",
+      "x": 4,
+      "y": 4,
+      "facing": "down",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "sw_house_c"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 1,
+      "text": [
+        "A shelf of ledgers: forty years of taking in lodgers,",
+        "ruled by week, by name and by trade.",
+        "The trade column used to say QUARRY all the way down. Now it says FOUNDATION."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 1,
+      "text": [
+        "The kitchen, laid for a household of two and cooking for five."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 4,
+      "y": 3,
+      "text": [
+        "A made-up bed in the front room, because the back rooms are all let.",
+        "A grey coat is folded over the end of it, brushed, with the badge outward."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 4,
+      "text": [
+        "A shelf of things lodgers have left behind. Mostly gloves.",
+        "One brass instrument nobody has claimed, with a maker's mark",
+        "and a serial number, and no idea at all what it measures."
+      ]
+    }
+  ]
+}

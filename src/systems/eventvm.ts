@@ -228,12 +228,12 @@ export class EventRunner {
       case 'weather': this.host.setWeather(a.weather); break;
 
       case 'giveArt': s.giveArt(a.art); break;
-      case 'giveSeal': s.giveSeal(a.seal); break;
+      case 'giveCrest': s.giveCrest(a.crest); break;
       case 'openShop': this.host.openShop(a.shop); break;
       case 'openStorage': this.host.openStorage(); break;
       case 'setRespawn': {
         // Defaults to wherever the player is standing, which is what a
-        // Waystation wants: rest here, wake up here.
+        // A Kin Clinic wants: rest here, wake up here.
         s.respawnMap = a.map ?? s.currentMap;
         s.respawnX = a.x ?? s.currentX;
         s.respawnY = a.y ?? s.currentY;
@@ -273,7 +273,7 @@ export class EventRunner {
         return false;
       }
       case 'hasItem': return s.hasItem(cond.item, cond.count ?? 1);
-      case 'hasSeal': return s.seals.has(cond.seal);
+      case 'hasCrest': return s.crests.has(cond.crest);
       case 'defeated': return s.hasDefeated(cond.trainer);
       case 'partyHas': return s.party.some((k) => k.species === cond.species);
       case 'partyCount': {

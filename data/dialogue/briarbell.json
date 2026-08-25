@@ -1,0 +1,238 @@
+{
+  "speakers": {
+    "bb_bellwright": "OLD HESK",
+    "bb_kid": "PIP",
+    "bb_grocer": "DALLOW",
+    "bb_florist": "NENNA",
+    "bb_baker": "OTT",
+    "bb_gardener": "SERRA",
+    "bb_hallhand": "HALL HAND",
+    "bb_farmer": "COBB",
+    "bb_traveller": "TRAVELLER",
+    "bb_sweeper": "WREN THE YOUNGER",
+    "bb_clinic_child": "CHILD",
+    "bb_clinic_hand": "ORDERLY",
+    "bb_shop_regular": "REGULAR",
+    "bb_inn_guest": "DECKHAND",
+    "bb_inn_scholar": "SCHOLAR",
+    "bb_greenkeeper": "MISTRESS ILVE",
+    "bb_grafter": "THE GRAFTER",
+    "bb_house_a_resident": "HANWELL",
+    "bb_house_a_child": "MARGE'S BOY",
+    "bb_house_b_resident": "AUNT BRIL",
+    "bb_house_b_hand": "TEO"
+  },
+  "entries": {
+    "bb_bellwright": [
+      {
+        "ifFlags": ["crest_1_taken"],
+        "lines": [
+          "Heard the fourth bell go while you were in there. It only does that for a good one.",
+          "That is superstition and I know it is superstition.",
+          "I have been up that tree six hundred times and I still believe it."
+        ]
+      },
+      {
+        "lines": [
+          "Six bells. Bronze, and older than the deeds to every house you can see.",
+          "My family has kept them since there was a family to keep them.",
+          "We do not tune them. Tuned bells argue. These ones just talk."
+        ]
+      }
+    ],
+    "bb_kid": [
+      {
+        "ifFlags": ["crest_1_taken"],
+        "lines": [
+          "You BEAT her? Nobody beats her, she's ANCIENT.",
+          "...that came out wrong and I'd like it back please."
+        ]
+      },
+      {
+        "lines": [
+          "You're not allowed to climb it. I've climbed it eleven times.",
+          "There's a bell up top that you can't see from down here.",
+          "It's got writing on it and it isn't in any letters I know."
+        ]
+      }
+    ],
+    "bb_grocer": [
+      "Roots, greens, four kinds of bean, and apples that came off the wrong tree.",
+      "Not that tree. Nobody eats off that tree.",
+      "It fruits, mind. Every autumn. We rake it up and burn it and nobody says why."
+    ],
+    "bb_florist": [
+      {
+        "lines": [
+          "Cuttings, seed, and grafting stock from the Glasshouse up the lane.",
+          "Ask Ilve about the bell tree cuttings if you want to watch a calm woman go quiet.",
+          "Forty years of trying. Not one has taken. Not one."
+        ]
+      }
+    ],
+    "bb_baker": [
+      "Bread, and honey off the hives out past the allotments.",
+      "The bees work the bell tree and nothing else will touch it.",
+      "The honey's dark as a bruise and sweeter than it has any right to be."
+    ],
+    "bb_gardener": [
+      {
+        "ifFlags": ["crest_1_taken"],
+        "lines": [
+          "So she gave you the Crest and the knife with it. Course she did.",
+          "Mind where you cut. Half the thorn in this valley is holding a bank up."
+        ]
+      },
+      {
+        "lines": [
+          "Beds, frames, and the long borders down to the fence. All mine.",
+          "Tove keeps the Hall hedge herself. Won't let anyone else near it.",
+          "Sixty years of one woman and one hedge learning each other's habits."
+        ]
+      }
+    ],
+    "bb_hallhand": [
+      {
+        "ifFlags": ["crest_1_taken"],
+        "lines": [
+          "Word's out already. It always is.",
+          "She'll have gone back to the hedge. She always does. Says it stops her getting proud."
+        ]
+      },
+      {
+        "ifFlags": ["bbhall_gate_open"],
+        "lines": [
+          "Arch is open, then. That is the easy half.",
+          "The hard half does not have a puzzle in it, I'm afraid."
+        ]
+      },
+      {
+        "lines": [
+          "Bell Hall. Verdant and Beast, and the first Crest in Caelora if you can take it.",
+          "Word of advice, and I give it to everyone: she does not hit hard.",
+          "Work out what that means before you go in, not while you're in there."
+        ]
+      }
+    ],
+    "bb_farmer": [
+      {
+        "lines": [
+          "Twelve acres of barley and a fence I'm always mending.",
+          "The kin come down out of the wood at dusk and go straight past it. Every night.",
+          "They're going to the tree. I stopped asking why about thirty years ago."
+        ]
+      }
+    ],
+    "bb_traveller": [
+      {
+        "lines": [
+          "Walked down from Stonewake. Two days, and one of them uphill in both directions.",
+          "There's a ruin off Route 2 that wasn't marked on my chart.",
+          "Stone, and old. I couldn't get in. Door with no handle on it."
+        ]
+      }
+    ],
+    "bb_sweeper": [
+      {
+        "lines": [
+          "I sweep the square. Leaves, mostly. It never runs out of leaves.",
+          "My grandmother swept it. Hers did too.",
+          "Somebody has swept under that tree every day for longer than the town's had a name."
+        ]
+      }
+    ],
+    "bb_clinic_child": [
+      "My Nibbet's asleep. It's not hurt, it just does that.",
+      "The lady says that's called being a Nibbet."
+    ],
+    "bb_clinic_hand": [
+      {
+        "lines": [
+          "Hall week doubles our work and I would not swap it.",
+          "Everyone comes in the same door, cheerful. Half of them come back through it quiet.",
+          "They all go back a second time. That's the part I like."
+        ]
+      }
+    ],
+    "bb_shop_regular": [
+      "I come in for twine and I leave with tonics. Every time.",
+      "Harrow could sell rain to a river.",
+      "Buy the vessels though. Genuinely. The road north is not empty."
+    ],
+    "bb_inn_guest": [
+      {
+        "lines": [
+          "Off a coaster out of Tideglass, three weeks inland and I'm still walking odd.",
+          "The sea's wrong down there. Flat wrong. You can feel it through the hull.",
+          "Come this far up and all anyone worries about is bees. It's restful."
+        ]
+      }
+    ],
+    "bb_inn_scholar": [
+      {
+        "lines": [
+          "I have measured that tree four times and got four answers.",
+          "Rings say nine hundred years. The bells say four hundred. The town says always.",
+          "Somebody hung metal in a living thing and the living thing grew around it and kept it."
+        ]
+      }
+    ],
+    "bb_greenkeeper": [
+      {
+        "lines": [
+          "Forty cuttings off the bell tree. Warmth, water, grafting stock, prayer.",
+          "Not one has taken root. Not in forty years, and I am good at this.",
+          "It does not want copies. I have come round to finding that admirable."
+        ]
+      }
+    ],
+    "bb_grafter": [
+      {
+        "lines": [
+          "Splice two plants and one of them has to give way. That is the whole trade.",
+          "The one that gives way is usually the stronger. It has more to spare.",
+          "Take that how you like. I mean it about pears."
+        ]
+      }
+    ],
+    "bb_house_a": [
+      {
+        "ifFlags": ["crest_1_taken"],
+        "lines": [
+          "Tove's Crest. Well now.",
+          "I'll write to Sorrell tonight. He asked us to send word the moment it happened.",
+          "The moment it happened, he wrote. Not IF. He is going to be insufferable."
+        ]
+      },
+      {
+        "lines": [
+          "You're Sorrell's, then. He wrote ahead. Four pages.",
+          "Three of them were about currents in the Caeloran and one was about you.",
+          "He is a good man and a terrible correspondent."
+        ]
+      }
+    ],
+    "bb_house_a_child": [
+      "There's a book about my dad's shelf that Dad won't let anyone borrow.",
+      "It's by somebody from Hearthmere. That's where you're from, isn't it?",
+      "Dad went quiet when I said that. He does that a lot."
+    ],
+    "bb_house_b": [
+      {
+        "lines": [
+          "Honey, jam, and three years of both in that cupboard.",
+          "Take a jar up to Tove if you're going. She never asks and she always finishes it."
+        ]
+      }
+    ],
+    "bb_house_b_up": [
+      {
+        "lines": [
+          "Best window in Briarbell and my aunt keeps the shutters half closed.",
+          "Look at the top bell. Go on. The small one, right up in the crown.",
+          "It's not bronze. It's never been bronze. Nobody in this town will say what it is."
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "id": "stonewake_house_b_up",
+  "name": "Upstairs",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIUIIIIUIIII",
+    "IKKKfffPfkkI",
+    "IffffffffffI",
+    "IfAAAffffSfI",
+    "IfEffffffffI",
+    "IPffrrfffkfI",
+    "IIIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 3,
+      "toMap": "stonewake_house_b",
+      "toX": 10,
+      "toY": 4,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 1,
+      "text": [
+        "The loft runs the whole length of the house, and so does the rope in it,",
+        "stretched out on hooks from one gable to the other.",
+        "You cannot make a rope in a room. You can only make one in a corridor."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 1,
+      "text": [
+        "Hanks of hemp to the rafters, and a smell of tar and cut grass.",
+        "It is the smell every quarryman in Stonewake grew up on",
+        "and half of them cannot walk past this house without slowing down."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 3,
+      "text": [
+        "A tally board of every rope this house has made for the Hall.",
+        "Sixty-one entries. Beside each one, a depth.",
+        "The last four all read the same depth, and it is not the deepest."
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 4,
+      "y": 5,
+      "item": "strong_potion",
+      "quantity": 1,
+      "flag": "item_sw_house_b_up"
+    }
+  ],
+  "displayName": "THE ROPE LOFT",
+  "_plan": "A rope loft is a corridor, which is exactly the shape the interior shell already is. The rope tally on the wall is the second time the game says out loud that the workings stopped going deeper, without anybody saying why."
+}

@@ -282,7 +282,7 @@ export const SFX: Record<string, SfxLayer[]> = {
   ],
   no_money: [p(0.1, 260, 0.16, { to: 150, duty: 0.5 }), n(0.08, 300, 0.06)],
   /**
-   * The Waystation, and the player's mother: the two places the whole party is
+   * The Kin Clinic, and the player's mother: the two places the whole party is
    * put right at once.
    *
    * It is two cues rather than one because the event is two things. The screen

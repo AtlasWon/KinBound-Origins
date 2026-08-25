@@ -16,10 +16,10 @@ const clear = () => { for (let i = 0; i < 20 && top().name === 'dialogue'; i++) 
 
 // down map, tile to stand on, direction onto the stairs, the way back down
 const PAIRS = [
-  ['ashgate_house_b', 10, 2, 'up', 'down'],
+  ['briarbell_house_b', 10, 2, 'up', 'down'],
   ['kellowmere_house_b', 10, 3, 'down', 'up'],
   ['tanners_house', 10, 5, 'up', 'down'],
-  ['brackwater_waystation', 12, 4, 'up', 'down'],
+  ['brackwater_clinic', 12, 4, 'up', 'down'],
 ];
 
 for (const [m, x, y, dir, back] of PAIRS) {

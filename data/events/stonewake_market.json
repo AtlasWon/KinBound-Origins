@@ -1,0 +1,17 @@
+[
+  {
+    "id": "sw_shop",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "PROVISIONER",
+        "lines": [
+          "Quarry prices if you look like you've been up the terrace.",
+          "You look like you've been up the terrace."
+        ]
+      },
+      { "kind": "openShop", "shop": "stonewake_provisioner" }
+    ]
+  }
+]

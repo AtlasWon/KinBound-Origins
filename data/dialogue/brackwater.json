@@ -5,7 +5,7 @@
     "bw_child": "WICK",
     "bw_greeter": "DOCKHAND",
     "bw_surveyor": "CONCORD SURVEYOR",
-    "bw_ways_sailor": "OLD SAILOR",
+    "bw_clinic_sailor": "OLD SAILOR",
     "brackwater_house_resident": "WIDOW CARRAN",
     "bw_shopkeeper": "PROVISIONER"
   },
@@ -13,10 +13,10 @@
     "bw_harbourmaster": [
       {
         "ifFlags": [
-          "seal_2_taken"
+          "crest_3_taken"
         ],
         "lines": [
-          "She gave you the Seal. Right. Then I'll tell you what I told her.",
+          "She gave you the Crest. Right. Then I'll tell you what I told her.",
           "The Concord took soundings off my pier for six weeks. Always after dark.",
           "A survey's a survey. But an honest one doesn't need the dark."
         ]
@@ -42,7 +42,7 @@
     "bw_greeter": [
       {
         "ifFlags": [
-          "seal_2_taken"
+          "crest_3_taken"
         ],
         "lines": [
           "Beat Mabry, did you. She'll be insufferable. She's always insufferable.",
@@ -52,7 +52,7 @@
       },
       {
         "lines": [
-          "Waystation west, provisioner east, Bastion at the end of the pier.",
+          "Kin Clinic west, provisioner east, Kin Hall at the end of the pier.",
           "Mind the lanes either side of the hall when you get there.",
           "The middle one's deep. It doesn't forgive and it doesn't warn you."
         ]

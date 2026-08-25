@@ -40,7 +40,7 @@ const RUN_FRAMES = 8;
  * Frames per tile for the part of a run nobody can see.
  *
  * A cutscene that walks somebody out of the shot and on to somewhere else --
- * Perrin leaving the player's front door for the laboratory, which is fifteen
+ * Tarin leaving the player's front door for the laboratory, which is fifteen
  * tiles east -- has to keep stepping them all the way there, because the script
  * cannot continue until the move reports back. On a 240x160 view he is gone
  * from the frame after eight of those tiles and the remaining nine play out as
@@ -266,7 +266,7 @@ export class OverworldEventHost implements EventHost {
   /**
    * Heal the party, and show it happening.
    *
-   * Every heal in the game funnels through here -- the Waystation keeper, the
+   * Every heal in the game funnels through here -- the Kin Clinic keeper, the
    * player's mother, and anything a future script asks for -- so the whole
    * presentation lives in one place and no author has to remember to wrap a
    * `healParty` in fades. The scripts that used to do that by hand no longer

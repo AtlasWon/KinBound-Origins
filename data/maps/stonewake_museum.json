@@ -1,0 +1,204 @@
+{
+  "id": "stonewake_museum",
+  "name": "Stonewake Museum",
+  "displayName": "THE STONEWAKE MUSEUM",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIIIIIIIIIIIIIIIIIIII",
+    "IUUFFFFFFFFFFFFFFFFUUI",
+    "IFkFFFF@@@@@@@@FFFFkFI",
+    "IFkFFFFFFFFFFFFFFFFkFI",
+    "IFFFFFFFFFFFFFFFFFFFFI",
+    "IFKKKFFFFFFFFFFFFKKKFI",
+    "IFFFFFFFFFFFFFFFFFFFFI",
+    "IFFFFFFFFFFFFFFFFFFFFI",
+    "IFkkkFFFFFFFFFFFFkkkFI",
+    "IFFFFFFFFFFFFFFFFFFFFI",
+    "IFFFFFFFFFFFFFFFFFFFFI",
+    "IFFFKKKFFFFFFFFKKKFFFI",
+    "IFFFFFFFFFFFFFFFFFFFFI",
+    "IPFF/rrFFFFFFFFrr/FFPI",
+    "IFFFFrrFFFFFFFFrrFFFFI",
+    "IIIIIIIIIIIDIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 11,
+      "y": 15,
+      "toMap": "stonewake",
+      "toX": 48,
+      "toY": 28,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "sw_lyra",
+      "sprite": "villager_f",
+      "x": 11,
+      "y": 4,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sw_lyra"
+    },
+    {
+      "id": "sw_curator",
+      "sprite": "professor",
+      "x": 4,
+      "y": 10,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sw_curator"
+    },
+    {
+      "id": "sw_museum_kid",
+      "sprite": "kid",
+      "x": 17,
+      "y": 7,
+      "facing": "left",
+      "movement": {
+        "kind": "wander",
+        "radius": 2
+      },
+      "script": "sw_museum_kid"
+    },
+    {
+      "id": "sw_museum_warden",
+      "sprite": "villager_m",
+      "x": 15,
+      "y": 13,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "sw_museum_warden"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 2,
+      "text": [
+        "THE AURELIAN CASE.",
+        "Eleven pieces of worked metal, none of them from a mine anyone can name.",
+        "The card says: FOUND IN CAELORA. MAKERS UNKNOWN. AGE UNKNOWN."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 2,
+      "text": [
+        "A disc the size of a saucer, cut with circles inside circles",
+        "and a spiral running out of the middle of them.",
+        "Whatever it was, somebody made it to be looked at closely."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 2,
+      "text": [
+        "A rubbing taken from a wall somewhere out in the forest.",
+        "People. Kin standing beside them, not behind them. Then the sea.",
+        "Then a shape too big for the paper, and the rubbing stops."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 2,
+      "text": [
+        "The stone gallery. Forty kinds of rock out of one mountain,",
+        "each with the name of the man who first cut it under the label.",
+        "Nine of them are Quills."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 19,
+      "y": 2,
+      "text": [
+        "Kin of the high country: bones, casts, and one very cross-looking",
+        "stuffed Gravelet from a century when people did that.",
+        "A modern card beside it apologises, at some length."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 5,
+      "text": [
+        "A plinth: the first cart wheel off the Stonewake tramway.",
+        "Iron, worn oval, and heavier than it looks.",
+        "Everyone tries to lift it. There is a small notice asking you not to."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18,
+      "y": 5,
+      "text": [
+        "A plinth of survey instruments, brass and glass, donated this year.",
+        "The donor plate reads: THE MERIDIAN FOUNDATION.",
+        "It is the newest thing in the building by about ninety years."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 3,
+      "y": 8,
+      "text": [
+        "Shelf after shelf of pit records. Shift books, wage books, inquests.",
+        "Somebody has been reading the inquests. There is a bookmark in one.",
+        "The bookmark is a Hall challenger's ticket, four years out of date."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18,
+      "y": 8,
+      "text": [
+        "The drowned galleries, in photographs taken before the pumps went.",
+        "Water standing black and perfectly still in a worked-out chamber.",
+        "The card notes that the level has not changed since spring."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 4,
+      "y": 11,
+      "text": [
+        "A model of Stonewake before the terrace was cut: forty houses,",
+        "one road, and a mountain nobody had put a mark on yet."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 16,
+      "y": 11,
+      "text": [
+        "A visitors' book. The last four pages are the same handwriting",
+        "on four different days, asking the same question in the comments column:",
+        "WHO ELSE HAS ASKED ABOUT THE DISC"
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 20,
+      "y": 14,
+      "item": "clearleaf",
+      "quantity": 1,
+      "flag": "item_sw_museum"
+    }
+  ],
+  "_plan": "One long hall, because a museum the player has to navigate is a museum they leave. The Aurelian case is the far wall, so Lyra is the first person you walk towards. Everything else in the room is Stonewake talking about itself -- rock, pit records, drowned galleries -- which is what makes the one case of unexplained metal stand out without a single line of dialogue pointing at it."
+}

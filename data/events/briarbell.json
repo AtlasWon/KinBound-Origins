@@ -1,0 +1,53 @@
+[
+  {
+    "id": "bb_bells",
+    "trigger": "step",
+    "map": "briarbell",
+    "onceFlag": "bb_heard_bells",
+    "at": [
+      {
+        "x": 17,
+        "y": 20
+      },
+      {
+        "x": 19,
+        "y": 20
+      },
+      {
+        "x": 25,
+        "y": 20
+      },
+      {
+        "x": 27,
+        "y": 20
+      },
+      {
+        "x": 19,
+        "y": 21
+      },
+      {
+        "x": 25,
+        "y": 21
+      }
+    ],
+    "actions": [
+      {
+        "kind": "sfx",
+        "sound": "heal_done"
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The wind comes across the fields and the boughs take it.",
+          "Six bells, none of them tuned to each other, all of them going at once."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "It is not a tune. It is more like a room full of people agreeing about something."
+        ]
+      }
+    ]
+  }
+]

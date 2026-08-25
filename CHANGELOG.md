@@ -8,6 +8,102 @@ Add a new `## vX.Y.Z` heading above the others before running `npm run ship`.
 
 ---
 
+## v0.13.0
+
+### Hearthmere, and the thing your father sent home
+
+Home is one street with a mere across the middle of it, a mill pool at one end
+and two ways over the water. It is the smallest place in Caelora and it is meant
+to be: the whole point of the road is that one day you come back to it.
+
+Upstairs in your house is **Elias' study**. Nobody explains it to you. The
+charts, the rubbings, the half-packed case and the sea glass do that.
+
+Before you go, Mira gives you what he posted home the week he died. Nobody in
+Hearthmere knows what it is, including her, and the game does not tell you
+either — it is **Father's Keepsake** in your bag until somebody who knows better
+looks at it. It is a real object. Carry it near the right kind of old stone and
+it will tell you so.
+
+### Sunmeadow Path and Bramblewood
+
+Route 1 is a ring rather than a corridor: a lane out of the village that bends
+eight times, crosses a burn on the only plank on the map and comes back on
+itself, with everything worth finding on the inside of it.
+
+Route 2 is the first real forest — dense trees, fallen logs, a small cave, two
+ways round, and a stone doorway that has been shut for a very long time.
+
+**Take the Keepsake into that doorway.** Somebody is watching when you do.
+
+### Tarin
+
+Your friend has his own journey now, and it happens whether you are looking or
+not. He takes the same Crests you do, sometimes before you and sometimes after,
+and the people you meet have usually just seen him: he beat a Hallkeeper this
+morning, he lost badly to somebody on the road, he caught something rare, he
+broke something. Sometimes you arrive and he has already been.
+
+### The region has a name now
+
+Everything that was carrying a working name has its real one. The region is
+**Caelora**, and the great sea it wraps is the **Caeloran Sea**. Home is
+**Hearthmere**. The professor is **Professor Sorrell**, your mother is **Mira**,
+and the friend who is stood outside your door before dawn is **Tarin**.
+
+The gyms are **Kin Halls**, kept by Hallkeepers, and what they award you is a
+**Bond Crest** — eight of them, and they are what gets you into the Caelora
+Summit. The building with the red roof that puts your kin back together is a
+**Kin Clinic**; "waystation" now means only the rest stops out on the roads.
+
+The chart in your bag has been redrawn to Caelora's shape, with marks on it for
+places nobody has walked yet.
+
+Older entries in these notes still use the working names. Saves from before the
+rename carry over: the ids are migrated as the save loads, so nothing is lost
+and nobody wakes up in a town that no longer exists.
+
+### Briarbell, and the first Bond Crest
+
+The town at the top of Route 1 has been rebuilt as **Briarbell** — a thousand
+people at the forest edge, with a market, a glasshouse, an inn and a Kin Clinic,
+and in the middle of it the tree the place is named after: nine rows of it, six
+bronze bells hanging under the boughs, and a green you can walk across to stand
+underneath.
+
+The **Bell Hall** is there, kept by Tove Alder, and it is the first Crest in
+Caelora. Her last kin will not be knocked over by hitting it, which is the whole
+lesson of the first Hall. Beat her and you learn **CLEAR**, which cuts thorn.
+
+Old saves standing in the town it replaces are moved into it as they load.
+
+### Stonewake, and a Hall at the bottom of a mine
+
+Over Route 2 the quarry village has become **Stonewake**: nine thousand people
+cut into a mountainside in two steps, with a gravel lane grid, a Lower Market of
+open stalls, a green in the middle of it, a museum, and above the retaining wall
+a whole industrial terrace of worked bays, sheds and bothies. Most of the roofs
+are not doors. That is deliberate — a city should be bigger than the part of it
+you can walk into.
+
+The **Stone Hall** is up there, and Roxen Quill does not keep it in a nice room
+at the top. The challenge is the old workings: down the cage, set a counterweight
+with three stones and three plates, past the hands, and down again to an office
+at sixty fathom with a kettle in it. Beat her for the **Quarry Crest** and
+**SHOULDER**, which shifts heavy stone — starting with the working her own quarry
+stopped, which is a short walk from her front door.
+
+The **Meridian Foundation** has a field office on the north square. Everything in
+it is true and most of it is good work. Look at the wall of weather traces
+anyway. And at the museum, at the far case, there is a young woman called Lyra
+who has been standing in front of eleven pieces of unexplained metal for nine
+days, and who will recognise the markings on the thing your father sent home.
+
+Old saves in the village it replaces are carried across, including the Hall's
+own puzzle.
+
+---
+
 ## v0.12.0
 
 ### The real reason you were getting stuck

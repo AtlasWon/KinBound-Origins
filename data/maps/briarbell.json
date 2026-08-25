@@ -1,0 +1,416 @@
+{
+  "id": "briarbell",
+  "name": "Briarbell",
+  "displayName": "BRIARBELL",
+  "music": "town_hearth",
+  "battleBackdrop": "forest",
+  "indoor": false,
+  "regionPos": {
+    "x": 22,
+    "y": 22
+  },
+  "_legend": "Forest edge and farmland, and in the middle of it the bell tree: thirteen cells of crown, three of trunk, and six bronze bells hanging under the boughs where a person can walk among them. The road runs north to south past its west side, so you meet the tree by walking under it. Civic buildings west of the road -- Clinic, Provisioner, market, greenhouse, inn. The Kin Hall stands at the north end of the tree's square, facing it.",
+  "rows": [
+    "TTTTTTTTTTTTTT--TTTTTTTTTTTTTTTTTT",
+    "TTT.......,..!--......,....*.tTTTT",
+    "TTT(&&)..[^j^]--<%%>..,,.(&&&),.TT",
+    "TT.HZZH,.#www#--MddM*..ttHZZZH..TT",
+    "TT.,,...,....,--.....a.....a..XXTT",
+    "TT,.144443....--..(&&&&&&&&&)[j]TT",
+    "TT,,122523....--..(&&&&&&&&&)MdMTT",
+    "TT..GGhgGG!.,.--..HZZHHHHHZZH.,.TT",
+    "TTta,,.---------..HZZHHiHHZZHss.TT",
+    "TT..,..---------.*..,,==....,s~.TT",
+    "TT<%%>..-(&&).--..ta!.==...a,s~.TT",
+    "TTMddM..-HZZH.--=============ss.TT",
+    "TT..t..,--*.,Y--=Y==========Y==.TT",
+    "TT.-------------===============.TT",
+    "TT..699998.<%>--.t.,'''''....==,TT",
+    "TT.*677078*MdM--..'''''''''..==.TT",
+    "TT.aGGmgGGa!..--,'''''''''''.==.TT",
+    "TT.-------------'''''''''''''==*TT",
+    "TT.Y------------'''''''''''''==.TT",
+    "TT!<%>=(&)=[^]--`.`.`{{{`.`.`==.TT",
+    "TTTKKK=KKK=KKK--.*,*.{{{.....==TTT",
+    "TTT==========.--..t..{{{.*...==.TT",
+    "TTa________--,--.,..}}}}}*...==.TT",
+    "TT.vvvvvvvv(&)--=Y!=========Y==,TT",
+    "TT.nnnnnnnnHZH--===============.TT",
+    "TT!nnnquunn--.--.=.[^j^]=(&&)<%>TT",
+    "TT.-------------,=.HZiZH=MddMHZHTT",
+    "TTa[^^j^^],[j]--a=.,.-..=.*.,...TT",
+    "TT.#wwwww#.MdM-------Y---------.TT",
+    "TT.#wwiww#!...-----------------.TT",
+    "TT,-------Y-----.....,....a,..a.TT",
+    "TT....--____a_--.[^j].<%%%>.(&&)TT",
+    "TTt<%%>*.(&&)|--.MddM.HZZZH.MddMTT",
+    "TT.MdiM..HZZH|--.......,..,.....TT",
+    "TTT..-......*|--!*............,TTT",
+    "TTTTTTTTTTTTTT--TTTTTTTTTTTTTTTTTT"
+  ],
+  "warps": [
+    {
+      "x": 14,
+      "y": 1,
+      "toMap": "route_2",
+      "toX": 14,
+      "toY": 32,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 15,
+      "y": 1,
+      "toMap": "route_2",
+      "toX": 15,
+      "toY": 32,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 14,
+      "y": 35,
+      "toMap": "route_1",
+      "toX": 14,
+      "toY": 1,
+      "facing": "down",
+      "style": "edge"
+    },
+    {
+      "x": 15,
+      "y": 35,
+      "toMap": "route_1",
+      "toX": 15,
+      "toY": 1,
+      "facing": "down",
+      "style": "edge"
+    },
+    {
+      "x": 7,
+      "y": 7,
+      "toMap": "briarbell_clinic",
+      "toX": 6,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 7,
+      "y": 16,
+      "toMap": "briarbell_provisioner",
+      "toX": 6,
+      "toY": 6,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 23,
+      "y": 8,
+      "toMap": "briarbell_hall",
+      "toX": 8,
+      "toY": 15,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 6,
+      "y": 25,
+      "toMap": "briarbell_greenhouse",
+      "toX": 5,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 7,
+      "y": 25,
+      "toMap": "briarbell_greenhouse",
+      "toX": 5,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 6,
+      "y": 29,
+      "toMap": "briarbell_inn",
+      "toX": 6,
+      "toY": 9,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 5,
+      "y": 33,
+      "toMap": "briarbell_house_a",
+      "toX": 6,
+      "toY": 6,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 21,
+      "y": 26,
+      "toMap": "briarbell_house_b",
+      "toX": 6,
+      "toY": 6,
+      "facing": "up",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "bb_bellwright",
+      "sprite": "elder",
+      "x": 19,
+      "y": 21,
+      "facing": "right",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "bb_bellwright"
+    },
+    {
+      "id": "bb_kid",
+      "sprite": "kid",
+      "x": 26,
+      "y": 21,
+      "facing": "left",
+      "movement": {
+        "kind": "wander",
+        "radius": 2
+      },
+      "script": "bb_kid"
+    },
+    {
+      "id": "bb_grocer",
+      "sprite": "clerk",
+      "x": 4,
+      "y": 21,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "bb_grocer"
+    },
+    {
+      "id": "bb_florist",
+      "sprite": "villager_f",
+      "x": 8,
+      "y": 21,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "bb_florist"
+    },
+    {
+      "id": "bb_baker",
+      "sprite": "villager_m",
+      "x": 12,
+      "y": 21,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "bb_baker"
+    },
+    {
+      "id": "bb_gardener",
+      "sprite": "villager_f",
+      "x": 9,
+      "y": 26,
+      "facing": "down",
+      "movement": {
+        "kind": "pace",
+        "axis": "x",
+        "distance": 2
+      },
+      "script": "bb_gardener"
+    },
+    {
+      "id": "bb_hallhand",
+      "sprite": "hiker",
+      "x": 22,
+      "y": 10,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "bb_hallhand"
+    },
+    {
+      "id": "bb_farmer",
+      "sprite": "villager_m",
+      "x": 19,
+      "y": 30,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "bb_farmer"
+    },
+    {
+      "id": "bb_traveller",
+      "sprite": "hiker",
+      "x": 17,
+      "y": 4,
+      "facing": "down",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "bb_traveller"
+    },
+    {
+      "id": "bb_sweeper",
+      "sprite": "villager_f",
+      "x": 26,
+      "y": 24,
+      "facing": "up",
+      "movement": {
+        "kind": "pace",
+        "axis": "x",
+        "distance": 2
+      },
+      "script": "bb_sweeper"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 1,
+      "text": [
+        "The north road out of Briarbell. Route 2, and Stonewake beyond it.",
+        "Somebody has tied a strip of red cloth to the post. Nobody remembers why."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 7,
+      "text": [
+        "KIN CLINIC - rest here, it costs nothing."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 11,
+      "y": 16,
+      "text": [
+        "PROVISIONER - vessels, tonics, rope, boot wax.",
+        "Open when the bells go, shut when the bells go."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 20,
+      "y": 10,
+      "text": [
+        "THE BELL HALL",
+        "Verdant and Beast. Hallkeeper Tove Alder.",
+        "Challengers welcome. Bring something other than a big stick."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18,
+      "y": 23,
+      "text": [
+        "THE BELL TREE",
+        "Older than the town. The town is named for it, not the other way round.",
+        "Six bells. Do not add a seventh. People have tried."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 19,
+      "text": [
+        "MARKET - Sixth day, dawn to bells.",
+        "Today is not the sixth day. They are here anyway."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 25,
+      "text": [
+        "THE GLASSHOUSE - seed stock for the whole valley.",
+        "Mind the door. It sticks, and it is worth more than you are."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 29,
+      "text": [
+        "THE BELL AND BARROW. Beds, board, and a fire that is always too hot."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 16,
+      "y": 34,
+      "text": [
+        "BRIARBELL",
+        "Kin Clinic and market west. The Hall is under the tree. You cannot miss the tree."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 22,
+      "y": 22,
+      "text": [
+        "Bark like rope, and a hollow at the foot big enough to sit in.",
+        "Somebody has been sitting in it. There is a cushion, and it is dry."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 20,
+      "y": 19,
+      "text": [
+        "A bell the size of a bucket, green with age, on a rope as thick as your wrist.",
+        "The rim is worn bright where four hundred years of hands have steadied it."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 2,
+      "y": 4,
+      "item": "strong_potion",
+      "quantity": 1,
+      "flag": "item_bb_potion"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 17,
+      "y": 21,
+      "item": "tonic_berry",
+      "quantity": 2,
+      "flag": "item_bb_hidden"
+    },
+    {
+      "kind": "item",
+      "x": 31,
+      "y": 2,
+      "item": "fine_vessel",
+      "quantity": 2,
+      "flag": "item_bb_nook"
+    },
+    {
+      "kind": "cuttable",
+      "x": 30,
+      "y": 4,
+      "flag": "bb_thorn_a"
+    },
+    {
+      "kind": "cuttable",
+      "x": 31,
+      "y": 4,
+      "flag": "bb_thorn_b"
+    }
+  ],
+  "_plan": "Two roads leave the map and both are real: north through the gate to Route 2, south to Route 1. Everything else is a lane serving a frontage. The bell tree stands on its own turf inside a paved ring, and the ring is the only paving on the east side, so the green under the boughs stays green."
+}

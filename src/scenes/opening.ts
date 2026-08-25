@@ -4,8 +4,8 @@
  * It has one job, and for three cuts it did not do it: explain why the game
  * starts. The film now argues in a straight line -- there is a sea, the kin
  * live by it, every seventy years it turns over, the last Turning drowned a
- * town called Old Tidefall in a night, a woman named Vess has spent ten years
- * charting the next one, the next one has arrived eleven years early, and she
+ * town called Old Tidefall in a night, Professor Sorrell has spent ten years
+ * charting the next one, the next one has arrived eleven years early, and he
  * needs somebody out in the region writing down what they see. The last shot is
  * that somebody's house, with the water already gone off the flats in front of
  * it. Nothing in the ending is a mood any more; every frame of it is a reason.
@@ -495,7 +495,7 @@ const DEEP_SEEDS = series(24, 5150);
 const TOWN_SEEDS = series(60, 8080);
 
 /**
- * Dawn over the Hollow Sea, with the flocks going out over it.
+ * Dawn over the Caeloran Sea, with the flocks going out over it.
  *
  * The camera starts on the sky and drifts down onto the water over the whole
  * shot. Everything hangs off `par(depth)`: the sky barely moves, the birds move
@@ -1915,7 +1915,7 @@ function shotDrowned(r: Renderer, t: number, p: number): void {
 }
 
 /**
- * Dr. Vess's room over the harbour office, and the wall she has spent ten years
+ * Professor Sorrell's room over the harbour office, and the wall he has spent ten years
  * covering.
  *
  * This is the shot the film kept ducking, and the reason the ending never
@@ -1923,7 +1923,7 @@ function shotDrowned(r: Renderer, t: number, p: number): void {
  * a house, and the player is entirely right to ask what one has to do with the
  * other. So: the coast pinned up with every arrow on it pointing inward at one
  * stretch of shore, a red ring struck through the town that is already gone, a
- * thread running from that ring to a fresh pin on the north shore, and a woman
+ * thread running from that ring to a fresh pin on the north shore, and a man
  * still awake at four in the morning at the far end of the thread. The next
  * shot is the address that pin is pointing at.
  *
@@ -2038,7 +2038,7 @@ function shotCharts(r: Renderer, t: number, p: number): void {
 
     // Every arrow on the sheet points at the same forty units of shore. They
     // ink in one at a time across the shot, and the last one arrives while
-    // Vess has her arm up at the wall.
+    // Sorrell has his arm up at the wall.
     const inked = Math.min(6, Math.floor(p * 7.4));
     const tx = ax + TARGET, ty = ay + coast(TARGET);
     for (let i = 0; i < inked; i++) {
@@ -2160,8 +2160,8 @@ function shotCharts(r: Renderer, t: number, p: number): void {
     r.rect(bkX + lean + w - 2, deskY - 5 - k * 5, 2, 5, '#191322');
   }
 
-  // The open ledger, ruled and half filled: the thing she wants somebody else
-  // to be filling in, out in the region, instead of her at this desk.
+  // The open ledger, ruled and half filled: the thing he wants somebody else
+  // to be filling in, out in the region, instead of him at this desk.
   const ldX = 72 + px(0.95);
   r.rect(ldX, deskY - 9, 48, 10, '#c8bd9c');
   r.rect(ldX, deskY - 10, 48, 1, '#e2d9ba');
@@ -2204,15 +2204,15 @@ function shotCharts(r: Renderer, t: number, p: number): void {
   r.image(kin('nibbet', 28, null, -0.06 + stir * 0.16, Math.sin(t * 0.045) * 0.22),
     nbX, deskY - 14, 0, 0, undefined, undefined, facing(-1));
 
-  /* ---------------------------------------------------------------- Vess */
+  /* ---------------------------------------------------------------- Sorrell */
 
-  // Far enough right that she is barely in frame when the shot opens: the wall
-  // gets the first half of the track to itself and she arrives into the second,
-  // which is the order the story wants. Parked nearer the middle she sat on top
+  // Far enough right that he is barely in frame when the shot opens: the wall
+  // gets the first half of the track to itself and he arrives into the second,
+  // which is the order the story wants. Parked nearer the middle he sat on top
   // of the two smaller sheets for the whole shot.
   const vx = 236 + px(0.95);
   if (vx > -44 && vx < SCREEN_W + 48) {
-    // She looks up at the wall and back down at the ledger on a cycle far
+    // He looks up at the wall and back down at the ledger on a cycle far
     // slower than anything else in the room.
     const look = (Math.sin(t * 0.021) + 1) / 2;
     const reach = Math.max(0, Math.sin(t * 0.021));
@@ -2222,7 +2222,7 @@ function shotCharts(r: Renderer, t: number, p: number): void {
       const half = 8 + u * u * 17;
       r.rect(vx - half, deskY - 32 + k, half * 2, 1, '#100c14');
       // One amber edge on the lamp side and nothing else. A face at this size
-      // is a smudge with two dots in it, and the shot does not need her
+      // is a smudge with two dots in it, and the shot does not need his
       // features -- it needs the fact of somebody still being up.
       r.rect(vx - half, deskY - 32 + k, 1, 1, `rgba(216,142,74,${(0.55 * flame).toFixed(2)})`);
     }
@@ -2231,7 +2231,7 @@ function shotCharts(r: Renderer, t: number, p: number): void {
     r.ellipsePixel((vx + tip + 7) * DETAIL, (headY - 4) * DETAIL, 5 * DETAIL, 4 * DETAIL, '#100c14');
     r.rect(vx + tip - 8, headY - 5, 2, 11, `rgba(216,142,74,${(0.5 * flame).toFixed(2)})`);
 
-    // The arm goes up to the wall on the same clock as her head, with a pin in
+    // The arm goes up to the wall on the same clock as his head, with a pin in
     // it. The last arrow on the chart inks in while it is up there.
     const hx = vx - 18 - reach * 26;
     const hy = deskY - 14 - reach * 50;
@@ -2247,7 +2247,7 @@ function shotCharts(r: Renderer, t: number, p: number): void {
 
   /* ---------------------------------------------------------------- lens */
 
-  // The back of the chair she is not sitting in, swinging out of frame in the
+  // The back of the chair he is not sitting in, swinging out of frame in the
   // first third of the track. Something leaving the lens sideways is the only
   // cue a flat drawing has for saying the camera moved rather than the room.
   // Anchored off the left edge, not the middle: at 34 it stood across the big
@@ -2291,7 +2291,7 @@ function shotCharts(r: Renderer, t: number, p: number): void {
  * afloat at midnight, and the kin have already started walking out after the
  * water -- which is the behaviour the second shot of the film promised. The
  * Turning has begun, it has begun HERE, and the house with the light on is the
- * address at the end of Vess's thread. The last beat of the shot is a candle
+ * address at the end of Sorrell's thread. The last beat of the shot is a candle
  * being carried into the dark window upstairs, which is the game starting.
  *
  * The push works the way the old town shot's did: every coordinate goes through
@@ -2876,7 +2876,7 @@ function shotTitle(r: Renderer, t: number, p: number): void {
 const SHOTS: Shot[] = [
   {
     frames: 230,
-    captions: ['Veldras. A ring of land around a sea with no bottom.'],
+    captions: ['Caelora. A ring of land around a sea with no bottom.'],
     fadeOut: 16,
     draw: shotSea,
   },
@@ -2914,7 +2914,7 @@ const SHOTS: Shot[] = [
   {
     frames: 300,
     captions: [
-      'Dr. Vess has been pinning charts of it for ten years.',
+      'Professor Sorrell has been pinning charts of it for ten years.',
       'The next is eleven years out. It began this spring.',
     ],
     draw: shotCharts,
@@ -2922,7 +2922,7 @@ const SHOTS: Shot[] = [
   {
     frames: 290,
     captions: [
-      'She needs somebody out in it, writing down what they see.',
+      'He needs somebody out in it, writing down what they see.',
       'North shore. One light on. You are asleep under it.',
     ],
     fadeOut: 38,
@@ -2982,7 +2982,7 @@ export interface Backdrop {
 }
 
 export const BACKDROPS: readonly Backdrop[] = [
-  { place: 'THE HOLLOW SEA', from: 0.10, to: 0.96, lift: 1.00, draw: shotSea },
+  { place: 'THE CAELORAN SEA', from: 0.10, to: 0.96, lift: 1.00, draw: shotSea },
   { place: 'THE LONG GRASS', from: 0.06, to: 0.94, lift: 0.85, draw: shotPlains },
   { place: 'BELOW THE SHELF', from: 0.05, to: 0.95, lift: 0.35, draw: shotDeep },
   { place: 'THE TURNING', from: 0.08, to: 0.82, lift: 0.45, draw: shotTurning },

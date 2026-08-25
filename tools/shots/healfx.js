@@ -1,4 +1,4 @@
-// Drives the Waystation heal and photographs the new transition frame by frame.
+// Drives the Kin Clinic heal and photographs the new transition frame by frame.
 // Two runs: a full six (worst case for length) and a lone starter, which is the
 // party the player actually has the first time they ever see this.
 const d = window.dev;
@@ -30,7 +30,7 @@ async function run(tag, species, hurt, marks) {
   });
   out.push(tag + ' before: ' + state.party.map((k) => k.currentHp + '/' + k.maxHp).join(' '));
 
-  d.game.scenes.replaceAll(new Overworld(state, 'ashgate_waystation', 4, 3, 'up'));
+  d.game.scenes.replaceAll(new Overworld(state, 'briarbell_clinic', 4, 3, 'up'));
   await d.loadWait(1200);
   // Take the default (YES) through the keeper's ask. Stop the moment the
   // overlay appears: another Enter would fire its skip.

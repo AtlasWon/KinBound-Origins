@@ -34,7 +34,7 @@
     "height": 0.4,
     "weight": 7.2,
     "category": "the Hedge Sprout",
-    "vellumEntry": "It plants both feet and refuses to be moved. Hollow children use them to hold gates shut.",
+    "vellumEntry": "It plants both feet and refuses to be moved. Hearthmere children use them to hold gates shut.",
     "habitat": "highland hedgerow",
     "learnset": [
       {
@@ -528,7 +528,7 @@
     "height": 1.7,
     "weight": 88.6,
     "category": "the Ridge Burner",
-    "vellumEntry": "It fights standing up, which no other cat in Veldras does. The stance is learned, not born.",
+    "vellumEntry": "It fights standing up, which no other cat in Caelora does. The stance is learned, not born.",
     "habitat": "highland scrub",
     "learnset": [
       {
@@ -617,7 +617,7 @@
     "height": 0.4,
     "weight": 8.8,
     "category": "the Brook Reader",
-    "vellumEntry": "It taps the water surface in patterns. Vess is convinced this is counting. Nobody can say what it is counting.",
+    "vellumEntry": "It taps the water surface in patterns. Sorrell is convinced this is counting. Nobody can say what it is counting.",
     "habitat": "streams and ponds",
     "learnset": [
       {
@@ -907,7 +907,7 @@
     "height": 0.3,
     "weight": 3.4,
     "category": "the Pantry Thief",
-    "vellumEntry": "Every household in Veldras has a story about one. Most of the stories end with a missing loaf.",
+    "vellumEntry": "Every household in Caelora has a story about one. Most of the stories end with a missing loaf.",
     "habitat": "everywhere, unfortunately",
     "learnset": [
       {
@@ -1086,7 +1086,7 @@
     "height": 0.3,
     "weight": 2.1,
     "category": "the First Flock",
-    "vellumEntry": "The first thing to leave before weather turns. Hollow farmers watch the pipwings, not the sky.",
+    "vellumEntry": "The first thing to leave before weather turns. Hearthmere farmers watch the pipwings, not the sky.",
     "habitat": "open route and treeline",
     "learnset": [
       {
@@ -1956,7 +1956,7 @@
     "height": 2.4,
     "weight": 460,
     "category": "the Standing Stone",
-    "vellumEntry": "There are nineteen on the Northwatch ridge. There were eighteen last spring. Nobody saw it arrive.",
+    "vellumEntry": "There are nineteen on the Skyreach cliffs. There were eighteen last spring. Nobody saw it arrive.",
     "habitat": "quarry and cave",
     "learnset": [
       {
@@ -2126,7 +2126,7 @@
     "height": 1,
     "weight": 22.5,
     "category": "the Live Line",
-    "vellumEntry": "Cinderfall pays a bounty for every one removed from the substation. The bounty has never been reduced.",
+    "vellumEntry": "Emberfall pays a bounty for every one removed from the substation. The bounty has never been reduced.",
     "habitat": "cinderfall works and route wires",
     "learnset": [
       {
@@ -2362,7 +2362,7 @@
     "height": 0.5,
     "weight": 6.2,
     "category": "the Ash Drifter",
-    "vellumEntry": "Lays its eggs in still-warm hearths. Householders in Cinderfall have simply given up.",
+    "vellumEntry": "Lays its eggs in still-warm hearths. Householders in Emberfall have simply given up.",
     "habitat": "chimneys and warm caves",
     "learnset": [
       {

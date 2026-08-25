@@ -1,0 +1,23 @@
+{
+  "speakers": {
+    "sw_house_e_resident": "DAVRIN",
+    "sw_house_e_child": "OSK"
+  },
+  "entries": {
+    "sw_house_e": [
+      {
+        "lines": [
+          "Four generations on the same three feet of the Lower Market.",
+          "Coast goods coming in cheap now. Cheaper than I can buy them.",
+          "Somebody is paying the carriage, and when somebody pays your carriage",
+          "they are not being kind, they are buying the road."
+        ]
+      }
+    ],
+    "sw_house_e_child": [
+      "I am not allowed a Kin until I can keep the stall rent jar full for a year.",
+      "It has been full since spring. He keeps not noticing.",
+      "You would not like to mention it to him? On your way out? Casually?"
+    ]
+  }
+}

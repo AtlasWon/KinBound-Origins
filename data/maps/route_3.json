@@ -44,18 +44,18 @@
     {
       "x": 0,
       "y": 13,
-      "toMap": "kellowmere",
-      "toX": 28,
-      "toY": 16,
+      "toMap": "stonewake",
+      "toX": 58,
+      "toY": 35,
       "facing": "left",
       "style": "edge"
     },
     {
       "x": 0,
       "y": 14,
-      "toMap": "kellowmere",
-      "toX": 28,
-      "toY": 16,
+      "toMap": "stonewake",
+      "toX": 58,
+      "toY": 36,
       "facing": "left",
       "style": "edge"
     },
@@ -148,7 +148,7 @@
       "y": 12,
       "text": [
         "ROUTE 3",
-        "Kellowmere west. Tanners Rest east.",
+        "Stonewake west. Tanners Rest east.",
         "Bridge is sound. The stream under it is not where it was last year."
       ]
     },
@@ -186,7 +186,7 @@
       "y": 12,
       "text": [
         "THE SHOULDER - loose above, loose below.",
-        "Kellowmere took its stone out of this hill for two hundred years",
+        "Stonewake took its stone out of this hill for two hundred years",
         "and then stopped, and nobody who stopped will say why."
       ]
     },

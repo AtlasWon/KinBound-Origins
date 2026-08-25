@@ -32,8 +32,8 @@ await d.loadWait(1200);
 clear();
 
 // Warp straight to the town sign rather than walking the whole way.
-top().state.currentMap = 'marrow_hollow';
-d.game.scenes.replaceAll(new (top().constructor)(top().state, 'marrow_hollow', 13, 9, 'up'));
+top().state.currentMap = 'hearthmere';
+d.game.scenes.replaceAll(new (top().constructor)(top().state, 'hearthmere', 13, 9, 'up'));
 await d.loadWait(1200);
 clear();
 out.push('at:' + d.probe().pos + ' on ' + d.probe().map);

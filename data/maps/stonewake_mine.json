@@ -1,0 +1,212 @@
+{
+  "id": "stonewake_mine",
+  "name": "The Workings",
+  "displayName": "THE OLD WORKINGS",
+  "music": "station",
+  "battleBackdrop": "quarry",
+  "indoor": true,
+  "freePush": true,
+  "rows": [
+    "CCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCssCCCCCCCCCCCC",
+    "CCCCCCCCCCssCCCCCCCCCCCC",
+    "CCssssssssssssssssssssCC",
+    "CCssBBBBBBBBBBBBBBBBssCC",
+    "CCssCCssssssssssCCssssCC",
+    "CCssCCssssssssssCCssssCC",
+    "CCssssssssssssssssssssCC",
+    "CCssssssssssssssssssssCC",
+    "CCssCCssssssssssCCssssCC",
+    "CCssCCsssssCssssCCssssCC",
+    "CCssssssssssssssssssssCC",
+    "CCssssssssssssssssssssCC",
+    "CCCCCCCCCCCssCCCCCCCCCCC",
+    "CCCCCCCCCsppppsCCCCCCCCC",
+    "CCCCCCCCCssssssCCCCCCCCC",
+    "CCCCCCCCCCCssCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCC"
+  ],
+  "warps": [
+    {
+      "x": 10,
+      "y": 1,
+      "toMap": "stonewake_hall",
+      "toX": 10,
+      "toY": 3,
+      "facing": "down",
+      "style": "stairs"
+    },
+    {
+      "x": 11,
+      "y": 1,
+      "toMap": "stonewake_hall",
+      "toX": 11,
+      "toY": 3,
+      "facing": "down",
+      "style": "stairs"
+    },
+    {
+      "x": 11,
+      "y": 16,
+      "toMap": "stonewake_deep",
+      "toX": 9,
+      "toY": 14,
+      "facing": "up",
+      "style": "stairs"
+    },
+    {
+      "x": 12,
+      "y": 16,
+      "toMap": "stonewake_deep",
+      "toX": 10,
+      "toY": 14,
+      "facing": "up",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "hall2_banks",
+      "sprite": "villager_f",
+      "x": 14,
+      "y": 3,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hall2_banks"
+    },
+    {
+      "id": "hall2_guard_stope",
+      "sprite": "hiker",
+      "x": 3,
+      "y": 11,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "sw_hall_delve_a",
+      "sightRange": 4
+    },
+    {
+      "id": "hall2_guard_rise",
+      "sprite": "villager_m",
+      "x": 20,
+      "y": 11,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "sw_hall_delve_b",
+      "sightRange": 4
+    },
+    {
+      "id": "hall2_hand_a",
+      "sprite": "hiker",
+      "x": 11,
+      "y": 13,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hall2_hand",
+      "hiddenIfFlag": "hall2_cage_open"
+    },
+    {
+      "id": "hall2_hand_b",
+      "sprite": "villager_m",
+      "x": 12,
+      "y": 13,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hall2_hand",
+      "hiddenIfFlag": "hall2_cage_open"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "switch",
+      "x": 3,
+      "y": 6
+    },
+    {
+      "kind": "switch",
+      "x": 20,
+      "y": 6
+    },
+    {
+      "kind": "switch",
+      "x": 13,
+      "y": 12
+    },
+    {
+      "kind": "pushable",
+      "x": 3,
+      "y": 4
+    },
+    {
+      "kind": "pushable",
+      "x": 20,
+      "y": 4
+    },
+    {
+      "kind": "pushable",
+      "x": 11,
+      "y": 8
+    },
+    {
+      "kind": "pushable",
+      "x": 17,
+      "y": 7
+    },
+    {
+      "kind": "sign",
+      "x": 5,
+      "y": 5,
+      "text": [
+        "The cart road, and what is left of the sleepers.",
+        "The rails went for scrap the year the working shut.",
+        "The sleepers stayed because nobody wanted to bend down that far."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 11,
+      "y": 10,
+      "text": [
+        "A pillar of unworked stone, left standing to hold the roof up.",
+        "Chalked on it, in a hand that has been chalked over four times:",
+        "LEAVE IT. LEAVE IT. LEAVE IT. LEAVE IT."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 16,
+      "y": 5,
+      "text": [
+        "Chalk marks up the pillar, one a year, each one a hand higher.",
+        "The lowest is a child's. The highest is a long way up.",
+        "The name beside all of them is the same three letters: ROX."
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 4,
+      "y": 8,
+      "item": "great_potion",
+      "quantity": 1,
+      "flag": "item_sw_mine_a"
+    },
+    {
+      "kind": "item",
+      "x": 19,
+      "y": 8,
+      "item": "strong_potion",
+      "quantity": 2,
+      "flag": "item_sw_mine_b"
+    }
+  ],
+  "_plan": "Three plates and four stones, in a hall wide enough that nothing can be jammed anywhere it cannot come out of. The fourth stone is spare on purpose: a player who wedges one still has three, and the hand at the cage says out loud that walking out and back in puts them all home. The pillar at 11,10 is the only obstacle in the open floor, and it exists so the middle stone has to be walked around rather than shoved in a straight line. Two Hall hands stand across the neck at 11-12,13, which is one tile wide, so they cannot be sidestepped."
+}

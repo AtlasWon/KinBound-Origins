@@ -17,7 +17,7 @@ const state = await import('/build/js/systems/state.js');
 localStorage.clear();
 const st = new state.GameState();
 st.playTime = 60 * 62 + 30;
-out.push('wrote: ' + JSON.stringify(saves.save(1, st, 'Tidefall Rise', st.playTime)));
+out.push('wrote: ' + JSON.stringify(saves.save(1, st, 'Tideglass Rise', st.playTime)));
 out.push('loads back: ' + !!saves.load(1));
 
 mod.resetTitleSession();

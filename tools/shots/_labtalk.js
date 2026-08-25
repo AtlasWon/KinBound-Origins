@@ -1,4 +1,4 @@
-// Walk in the lab's front door, cross to Dr. Vess, and take a starter.
+// Walk in the lab's front door, cross to Professor Sorrell, and take a starter.
 const d = window.dev;
 const top = () => d.game.scenes.top;
 const out = [];
@@ -13,7 +13,7 @@ const Overworld = (await import('/build/js/scenes/overworld.js')).OverworldScene
 const KEY = { up: 'KeyW', down: 'KeyS', left: 'KeyA', right: 'KeyD' };
 const go = (dir, tiles) => { d.down(KEY[dir]); d.tick(Math.ceil(tiles * 14) + 2); d.up(KEY[dir]); d.tick(6); };
 
-d.game.scenes.replaceAll(new Overworld(state, 'vess_station', 8, 10, 'up'));
+d.game.scenes.replaceAll(new Overworld(state, 'sorrell_lab', 8, 10, 'up'));
 await d.loadWait(1000);
 for (let i = 0; i < 20 && top().name === 'dialogue'; i++) d.key('Enter', 10);
 d.tick(6);
@@ -25,7 +25,7 @@ go('right', 3);
 out.push('b ' + d.probe().pos);
 go('up', 1);
 out.push('c ' + d.probe().pos + ' ' + d.probe().facing);
-await d.shoot('lt-03-facing-vess', 8, 1);
+await d.shoot('lt-03-facing-sorrell', 8, 1);
 d.key('Enter', 8);
 for (let i = 0; i < 50 && top().name !== 'starter'; i++) d.key('Enter', 8);
 out.push('scene ' + top().name);

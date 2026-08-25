@@ -1,0 +1,54 @@
+{
+  "id": "briarbell_house_b_up",
+  "name": "House",
+  "displayName": "BRIARBELL",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIUIIIIIUIII",
+    "IkkkffPffkkI",
+    "IffffffffffI",
+    "IfAAAfffKKfI",
+    "IfEEffffffSI",
+    "IPfffffffPfI",
+    "IffrrrfPffkI",
+    "IIIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 10,
+      "y": 4,
+      "toMap": "briarbell_house_b",
+      "toX": 10,
+      "toY": 1,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "bb_house_b_hand",
+      "sprite": "villager_m",
+      "x": 4,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "bb_house_b_up"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 6,
+      "y": 1,
+      "text": [
+        "A window straight onto the crown of the bell tree.",
+        "From up here you can see all six bells at once.",
+        "You can also see that one of them is not like the others."
+      ]
+    }
+  ]
+}

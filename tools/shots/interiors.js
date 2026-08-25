@@ -34,13 +34,13 @@ const state = top().state;
 const Overworld = top().constructor;
 
 const MAPS = [
-  'marrow_house_player', 'marrow_house_up', 'marrow_house_neighbour',
-  'ashgate_house_a', 'ashgate_house_b', 'ashgate_waystation', 'ashgate_provisioner',
-  'brackwater_house', 'brackwater_waystation', 'brackwater_provisioner', 'brackwater_bastion',
-  'kellowmere_house_a', 'kellowmere_house_b', 'kellowmere_waystation',
-  'kellowmere_provisioner', 'kellowmere_bastion',
-  'tanners_house', 'tanners_waystation', 'tanners_provisioner', 'tanners_concord',
-  'vess_station',
+  'hearthmere_house_player', 'hearthmere_house_up', 'hearthmere_house_neighbour',
+  'briarbell_house_a', 'briarbell_house_b', 'briarbell_clinic', 'briarbell_provisioner',
+  'brackwater_house', 'brackwater_clinic', 'brackwater_provisioner', 'brackwater_hall',
+  'kellowmere_house_a', 'kellowmere_house_b', 'kellowmere_clinic',
+  'kellowmere_provisioner', 'kellowmere_hall',
+  'tanners_house', 'tanners_clinic', 'tanners_provisioner', 'tanners_concord',
+  'sorrell_lab',
 ];
 
 for (const m of MAPS) {

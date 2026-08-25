@@ -1,23 +1,123 @@
 {
-  "$comment": "Region-map layout on a 40x30 logical grid. Places whose map does not exist yet still appear as unlabelled marks, which is the point: the region should look bigger than the part you have walked.",
-  "seaName": "THE HOLLOW SEA",
+  "$comment": "Caelora on a 40x30 logical grid. The region wraps the Caeloran Sea, so every settlement sits on the ring of land around it; see src/scenes/regionmap.ts, which fits the coastline to these coordinates. Places whose map does not exist yet still appear, and that is the point: until the player has stood in one it draws as an uncharted mark with no name, so the chart looks bigger than the part that has been walked. Names here are the canon ones from docs/CANON.md. Tanners Rest and Brackwater are the working-name settlements still standing from before Stage 1 and keep the names their own signposts use.",
+  "seaName": "THE CAELORAN SEA",
   "places": [
-    { "id": "marrow_hollow", "name": "Marrow Hollow", "x": 7, "y": 25, "kind": "town", "blurb": "Six houses, one well." },
-    { "id": "route_1", "name": "Route 1", "x": 7, "y": 23, "kind": "route", "blurb": "The last quiet road." },
-    { "id": "ashgate", "name": "Ashgate", "x": 7, "y": 21, "kind": "town", "blurb": "Waystation and provisioner." },
-    { "id": "route_2", "name": "Route 2", "x": 7, "y": 19, "kind": "route", "blurb": "Uphill, both ways." },
-    { "id": "kellowmere", "name": "Kellowmere", "x": 7, "y": 17, "kind": "bastion", "blurb": "Quarry town. Stone Bastion." },
-
-    { "id": "tanners_rest", "name": "Tanners Rest", "x": 8, "y": 13, "kind": "town" },
-    { "id": "brackwater", "name": "Brackwater", "x": 12, "y": 7, "kind": "bastion" },
-    { "id": "cinderfall", "name": "Cinderfall", "x": 19, "y": 5, "kind": "bastion" },
-    { "id": "hallowfen", "name": "Hallowfen", "x": 26, "y": 6, "kind": "bastion" },
-    { "id": "vantry", "name": "Vantry", "x": 31, "y": 10, "kind": "bastion" },
-    { "id": "kite_landing", "name": "Kite Landing", "x": 32, "y": 15, "kind": "bastion" },
-    { "id": "solmere", "name": "Solmere", "x": 18, "y": 14, "kind": "bastion" },
-    { "id": "gravehold", "name": "Gravehold", "x": 31, "y": 20, "kind": "bastion" },
-    { "id": "northwatch", "name": "Northwatch", "x": 28, "y": 24, "kind": "town" },
-    { "id": "the_spire", "name": "The Spire", "x": 24, "y": 26, "kind": "spire" },
-    { "id": "tidefall", "name": "Tidefall", "x": 22, "y": 18, "kind": "town" }
+    {
+      "id": "hearthmere",
+      "name": "Hearthmere",
+      "x": 7,
+      "y": 25,
+      "kind": "town",
+      "blurb": "Six houses, one well."
+    },
+    {
+      "id": "route_1",
+      "name": "Route 1",
+      "x": 7,
+      "y": 23,
+      "kind": "route",
+      "blurb": "The last quiet road."
+    },
+    {
+      "id": "briarbell",
+      "name": "Briarbell",
+      "x": 7,
+      "y": 21,
+      "kind": "hall",
+      "blurb": "The bell tree, and the first Kin Hall."
+    },
+    {
+      "id": "route_2",
+      "name": "Route 2",
+      "x": 7,
+      "y": 19,
+      "kind": "route",
+      "blurb": "Uphill, both ways."
+    },
+    {
+      "id": "stonewake",
+      "name": "Stonewake",
+      "x": 7,
+      "y": 17,
+      "kind": "hall",
+      "blurb": "Quarry city, cut into the mountain. The Stone Hall."
+    },
+    {
+      "id": "tanners_rest",
+      "name": "Tanners Rest",
+      "x": 8,
+      "y": 13,
+      "kind": "town"
+    },
+    {
+      "id": "brackwater",
+      "name": "Brackwater",
+      "x": 12,
+      "y": 7,
+      "kind": "hall"
+    },
+    {
+      "id": "frostmere",
+      "name": "Frostmere",
+      "x": 16,
+      "y": 4,
+      "kind": "hall"
+    },
+    {
+      "id": "aureline",
+      "name": "Aureline",
+      "x": 21,
+      "y": 4,
+      "kind": "town"
+    },
+    {
+      "id": "the_ascent",
+      "name": "The Ascent",
+      "x": 25,
+      "y": 6,
+      "kind": "spire"
+    },
+    {
+      "id": "skyreach",
+      "name": "Skyreach",
+      "x": 27,
+      "y": 7,
+      "kind": "hall"
+    },
+    {
+      "id": "crownspire",
+      "name": "Crownspire",
+      "x": 31,
+      "y": 11,
+      "kind": "hall"
+    },
+    {
+      "id": "mirehaven",
+      "name": "Mirehaven",
+      "x": 32,
+      "y": 15,
+      "kind": "hall"
+    },
+    {
+      "id": "tideglass",
+      "name": "Tideglass",
+      "x": 31,
+      "y": 20,
+      "kind": "hall"
+    },
+    {
+      "id": "emberfall",
+      "name": "Emberfall",
+      "x": 25,
+      "y": 25,
+      "kind": "hall"
+    },
+    {
+      "id": "temple_of_the_deep",
+      "name": "Temple of the Deep",
+      "x": 36,
+      "y": 21,
+      "kind": "spire"
+    }
   ]
 }

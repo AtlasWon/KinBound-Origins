@@ -632,9 +632,9 @@ export class BattleScene implements Scene {
    */
   private battleTrack(trainer: TrainerData | undefined): string {
     if (this.opts.isWild) return 'battle_wild';
-    if (this.opts.trainerId?.startsWith('perrin')) return 'battle_rival';
+    if (this.opts.trainerId?.startsWith('tarin')) return 'battle_rival';
     const tier = this.opts.aiTier ?? trainer?.ai;
-    if (tier === 'keeper' || tier === 'elite') return 'battle_bastion';
+    if (tier === 'keeper' || tier === 'elite') return 'battle_hall';
     return 'battle_trainer';
   }
 
@@ -2640,7 +2640,7 @@ export class BattleScene implements Scene {
       }
       r.rect(g.x - 1, g.y - 1, 2, 2, `rgba(255,250,224,${(a * 1.6).toFixed(3)})`);
     }
-    this.drawVessel(r, c.x, c.y, c.open, c.spin, c.icon);
+    this.drawSorrellel(r, c.x, c.y, c.open, c.spin, c.icon);
     if (c.burst > 0) this.drawBurst(r, c.x, c.y, c.burst);
     if (c.flare > 0) this.drawFlare(r, c.x, c.y, c.flare);
     if (c.tell) r.text(c.tell, c.x + 10, c.y - 22, { color: '#ffffff', shadow: '#000000' });
@@ -2781,13 +2781,13 @@ export class BattleScene implements Scene {
    * at 240x160, and a chest with a hinged lid turning end over end would have
    * to land the right way up to open. The trail and the arc carry the throw.
    */
-  private drawVessel(
+  private drawSorrellel(
     r: Renderer, x: number, y: number, open: number, spin: number,
     iconKey: string, alpha = 1,
   ): void {
     const shut = itemArt(iconKey);
     const split = itemArt(iconKey, 'open');
-    if (!shut || !split) { this.drawVesselIcon(r, x, y, open, spin, alpha); return; }
+    if (!shut || !split) { this.drawSorrellelIcon(r, x, y, open, spin, alpha); return; }
     const img = open > 0.5 ? split : shut;
     // Seated by the cell's centre, which is where both frames are centred, so
     // the lid goes up without the body moving.
@@ -2815,7 +2815,7 @@ export class BattleScene implements Scene {
    * frame is nothing, and a capsule that visibly turns over is worth far more
    * than the two colours flickering that stood in for it.
    */
-  private drawVesselIcon(r: Renderer, x: number, y: number, open = 0, spin = 0, alpha = 1): void {
+  private drawSorrellelIcon(r: Renderer, x: number, y: number, open = 0, spin = 0, alpha = 1): void {
     const gap = Math.round(open * 6);
     const a = Math.max(0, Math.min(1, alpha));
     if (a <= 0) return;

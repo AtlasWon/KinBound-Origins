@@ -46,12 +46,12 @@ Three different projects wear the same words.
 Both players are in the same world file. Both story flags, both seal counts, both Vellums are
 the same object. Whatever happens, happens to both of you.
 
-**What it feels like.** Two people in one save. You beat the Bastion and *we* have the seal.
+**What it feels like.** Two people in one save. You beat the Kin Hall and *we* have the Bond Crest.
 You can both be in different rooms of the same town. Genuinely, this is the fantasy.
 
 **What it costs.** The thing nobody says out loud: two players cannot share one set of story
 flags without merging them, and merging story flags is a class of bug you cannot test your way
-out of. If `seal_2_taken` is set on one machine and not the other — because of a disconnect
+out of. If `crest_2_taken` is set on one machine and not the other — because of a disconnect
 mid-cutscene, a crash, a warp that raced a flag write — you get a world state no script in
 `data/events/` was written for. There are 23 scripts today and there will be a hundred. The
 symptoms are unreproducible and they arrive weeks later in someone's saved game.
@@ -66,7 +66,7 @@ and to battle. Optionally, a "visit" mode where one walks around the other's wor
 advancing anything.
 
 **What it feels like.** The link cable. You each play your own game, and the multiplayer is a
-thing you go and do — you meet at the Waystation, you trade a Sprigling for a Cinderpaw, you
+thing you go and do — you meet at the Kin Clinic, you trade a Sprigling for a Cinderpaw, you
 fight. It is not co-op and it does not pretend to be. It is also the multiplayer that this
 genre actually ran on for twenty years, and people played it for thousands of hours.
 
@@ -80,7 +80,7 @@ party, their own bag, and their own Vellum, but the story belongs to the host's 
 the guest disconnects, they keep their creatures and lose the plot.
 
 **What it feels like.** Stardew Valley's farmhand. You are meaningfully playing the game — you
-catch things, you fight trainers, you walk into the Bastion beside your friend and you are
+catch things, you fight trainers, you walk into the Kin Hall beside your friend and you are
 *there* for it — but it is their journey. If you want your own eight seals you have to host
 your own world, and your friend joins yours.
 
@@ -518,7 +518,7 @@ the arithmetic for a ninth entry: `rowH = max(11, min(13, floor(96 / 9))) = 11`,
 and the pause menu scrolls for the first time in the game's life.** See
 `build/shots/mp-04-pause-menu.png` for how full it already is.
 
-Put the in-world connection somewhere else. A terminal in the Waystation is the genre-correct
+Put the in-world connection somewhere else. A terminal in the Kin Clinic is the genre-correct
 answer, it costs one map object and one event script rather than an engine change, and it gives
 the player a defined safe place to be standing when a link opens — which matters, because
 "where was I when the connection dropped" is a question the save system has to be able to
@@ -556,8 +556,8 @@ service. Cap message sizes, never trust a length prefix, never `eval` anything f
 and validate every field of a peer's `Kin` against the registry before constructing one (§2.6).
 This is a boundary the project does not currently have anywhere.
 
-**Autosave under someone else's feet.** `autosave` fires on entering a waystation
-(`overworld.ts:163`). In co-op the guest walking into the host's waystation would write the
+**Autosave under someone else's feet.** `autosave` fires on entering a clinic
+(`overworld.ts:163`). In co-op the guest walking into the host's clinic would write the
 host's save. Probably fine — decide it deliberately rather than discovering it.
 
 **Scope, said plainly.** `src/` is 53,000 lines, of which the loop, state, battle and scenes

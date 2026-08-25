@@ -1,7 +1,7 @@
 [
   {
-    "id": "ashgate_provisioner",
-    "name": "Ashgate Provisioner",
+    "id": "briarbell_provisioner",
+    "name": "Briarbell Provisioner",
     "greeting": [
       "First time on the road? You will want vessels before you want anything clever."
     ],
@@ -23,47 +23,47 @@
       },
       {
         "item": "fine_vessel",
-        "requiresSeal": 1
+        "requiresCrest": 1
       },
       {
         "item": "strong_potion",
-        "requiresSeal": 1
+        "requiresCrest": 1
       },
       {
         "item": "escape_line",
-        "requiresSeal": 1
+        "requiresCrest": 1
       },
       {
         "item": "full_heal",
-        "requiresSeal": 3
+        "requiresCrest": 3
       },
       {
         "item": "great_potion",
-        "requiresSeal": 4
+        "requiresCrest": 4
       },
       {
         "item": "deep_vessel",
-        "requiresSeal": 4
+        "requiresCrest": 4
       },
       {
         "item": "rouse",
-        "requiresSeal": 5
+        "requiresCrest": 5
       },
       {
         "item": "full_restore",
-        "requiresSeal": 7
+        "requiresCrest": 7
       },
       {
         "item": "full_rouse",
-        "requiresSeal": 7
+        "requiresCrest": 7
       }
     ]
   },
   {
-    "id": "kellowmere_provisioner",
-    "name": "Kellowmere Provisioner",
+    "id": "stonewake_provisioner",
+    "name": "Stonewake Provisioner",
     "greeting": [
-      "Quarry prices. Which is to say, the same as everywhere, but dustier."
+      "City prices, quarry discount, and nobody checks whether you work there."
     ],
     "stock": [
       {
@@ -88,6 +88,9 @@
         "item": "coolsalve"
       },
       {
+        "item": "wakebell"
+      },
+      {
         "item": "ward_incense"
       },
       {
@@ -95,19 +98,23 @@
       },
       {
         "item": "full_heal",
-        "requiresSeal": 2
+        "requiresCrest": 2
       },
       {
         "item": "great_potion",
-        "requiresSeal": 3
+        "requiresCrest": 2
+      },
+      {
+        "item": "net_vessel",
+        "requiresCrest": 2
       },
       {
         "item": "deep_vessel",
-        "requiresSeal": 4
+        "requiresCrest": 4
       },
       {
         "item": "rouse",
-        "requiresSeal": 4
+        "requiresCrest": 4
       }
     ]
   },
@@ -156,31 +163,31 @@
       },
       {
         "item": "full_heal",
-        "requiresSeal": 2
+        "requiresCrest": 2
       },
       {
         "item": "great_potion",
-        "requiresSeal": 3
+        "requiresCrest": 3
       },
       {
         "item": "deep_vessel",
-        "requiresSeal": 3
+        "requiresCrest": 3
       },
       {
         "item": "dusk_vessel",
-        "requiresSeal": 4
+        "requiresCrest": 4
       },
       {
         "item": "rouse",
-        "requiresSeal": 4
+        "requiresCrest": 4
       },
       {
         "item": "full_restore",
-        "requiresSeal": 6
+        "requiresCrest": 6
       },
       {
         "item": "full_rouse",
-        "requiresSeal": 6
+        "requiresCrest": 6
       }
     ]
   },
@@ -232,27 +239,27 @@
       },
       {
         "item": "great_potion",
-        "requiresSeal": 2
+        "requiresCrest": 2
       },
       {
         "item": "deep_vessel",
-        "requiresSeal": 2
+        "requiresCrest": 2
       },
       {
         "item": "dusk_vessel",
-        "requiresSeal": 3
+        "requiresCrest": 3
       },
       {
         "item": "rouse",
-        "requiresSeal": 3
+        "requiresCrest": 3
       },
       {
         "item": "full_restore",
-        "requiresSeal": 6
+        "requiresCrest": 6
       },
       {
         "item": "full_rouse",
-        "requiresSeal": 6
+        "requiresCrest": 6
       }
     ]
   }

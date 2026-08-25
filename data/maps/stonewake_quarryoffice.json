@@ -1,0 +1,114 @@
+{
+  "id": "stonewake_quarryoffice",
+  "name": "Quarry Office",
+  "displayName": "THE QUARRY OFFICE",
+  "music": "town_indoor",
+  "battleBackdrop": "quarry",
+  "indoor": true,
+  "rows": [
+    "IIUIIIIIIUII",
+    "IkkkFFF$$FFI",
+    "IFFFFFFFFFKI",
+    "IFAAFFFFFFFI",
+    "IFEEFFFF??FI",
+    "IFFFFFFFFFFI",
+    "IPFFFFFFFkPI",
+    "IFFFFFFFFFFI",
+    "IIIIIIDIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 8,
+      "toMap": "stonewake",
+      "toX": 25,
+      "toY": 12,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "sw_weighclerk",
+      "sprite": "clerk",
+      "x": 9,
+      "y": 3,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sw_weighclerk"
+    },
+    {
+      "id": "sw_old_hand",
+      "sprite": "hiker",
+      "x": 4,
+      "y": 4,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sw_old_hand"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 1,
+      "text": [
+        "Shift books back sixty years, one to a spine, in date order.",
+        "The last four are thinner than the ones before them.",
+        "The very last one has three months in it and then stops."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 1,
+      "text": [
+        "The sample bench. Chippings in trays, labelled by face and by depth.",
+        "Half the trays have a second label stuck over the first, printed:",
+        "MERIDIAN FOUNDATION - COLLECTED. And a date this spring."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 2,
+      "text": [
+        "The weighbridge counter, and the great brass wheel of the scale",
+        "coming up through the floor behind it.",
+        "It reads zero. It has read zero for two years."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 4,
+      "text": [
+        "Two dial gauges plumbed into the rock, watching the west face.",
+        "One of them has not moved since it was fitted.",
+        "The other one moves. Not much. Not steadily. But it moves."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 6,
+      "text": [
+        "A shelf of things brought up out of the workings and never claimed:",
+        "a boot, a tin whistle, a child's slate with sums on it,",
+        "and a lamp that somebody in this office still fills every Friday."
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 2,
+      "y": 7,
+      "item": "escape_line",
+      "quantity": 1,
+      "flag": "item_sw_office"
+    }
+  ]
+}

@@ -88,12 +88,12 @@ export class SaveScene implements Scene {
       y += 10;
       // The place name is the one line here that can wrap, so the block under
       // it starts where the wrap actually ended rather than 16 units down.
-      // "Cinderfall Works Approach" took two lines and the Seals row was
+      // "Emberfall Works Approach" took two lines and the Crests row was
       // written across the second one.
       y += para(r, header.mapName, { x: box.x, y, w: box.w, h: 30 },
         { color: '#485068', lineHeight: LINE }) + 6;
       for (const [label, value] of [
-        ['Seals', `${header.seals}/8`],
+        ['Crests', `${header.crests}/8`],
         ['Vellum', String(header.vellumCaught)],
         ['Time', formatPlayTime(header.playTime)],
       ] as [string, string][]) {

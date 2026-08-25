@@ -1,0 +1,140 @@
+{
+  "id": "hearthmere_house_neighbour",
+  "name": "Ashe House",
+  "displayName": "THE ASHE HOUSE",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "_plan": "Tarin's house. Three generations, one room, and a map of Caelora on the wall with a pin in a town nobody here has ever been to. His mother is not in it and is not going to be: she keeps the Mirehaven Kin Hall, five regions of road away, and the house is arranged around her absence in a way nobody mentions.",
+  "rows": [
+    "IIIUIIIIIIUIIIII",
+    "IKNQKJffffffkkkI",
+    "IfffffffffffffPI",
+    "IffAAffff//fffkI",
+    "IffEEffffrrffffI",
+    "IffffffffVfffkfI",
+    "IkffffffffffffkI",
+    "IffffffffffffffI",
+    "IPffffffffffffPI",
+    "IIIIIIDIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 9,
+      "toMap": "hearthmere",
+      "toX": 10,
+      "toY": 24,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "ollet",
+      "sprite": "villager_m",
+      "x": 3,
+      "y": 2,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hm_ollet"
+    },
+    {
+      "id": "ashe_gran",
+      "sprite": "villager_f",
+      "x": 12,
+      "y": 4,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "hm_ashe_gran"
+    },
+    {
+      "id": "ollet_child",
+      "sprite": "rival",
+      "x": 10,
+      "y": 5,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "hm_ollet_child",
+      "hiddenIfFlag": "mom_sendoff",
+      "_note": "Tarin is in exactly one place at a time. Up to the send-off he is here, wearing a hole in his father's floor; the moment Mira lets the player go he is out on the lane as hm_tarin in data/maps/hearthmere.json, which is gated the other way on the same flag."
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 1,
+      "text": [
+        "Shelves of ledgers, every spine dated.",
+        "The Ashes have kept books in this house",
+        "since before there was a road to it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 14,
+      "y": 1,
+      "text": [
+        "A map of Caelora, and one pin, east, in the marshes.",
+        "MIREHAVEN, in a child's handwriting, gone brown at the edges.",
+        "The pin has been moved twice and put back both times."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 4,
+      "y": 1,
+      "text": [
+        "A kitchen counter worn pale in one spot",
+        "where somebody has stood and chopped",
+        "at the same board for thirty years."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 3,
+      "y": 3,
+      "text": [
+        "The table, laid for three, and three is the correct number.",
+        "It has been the correct number for eleven years",
+        "and Tarin still counts the chairs when he sits down."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 5,
+      "text": [
+        "The television is on with the sound off.",
+        "A coast survey boat, filmed from the air,",
+        "circling water that is the wrong colour."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 6,
+      "text": [
+        "Tarin's bag, packed, by the door. Packed a week ago.",
+        "Repacked twice since, both times at about four in the morning,",
+        "which you know because he told you at four in the morning."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 5,
+      "text": [
+        "Letters, bulldog-clipped by year. The clips get thinner.",
+        "The last one has three in it and it is nearly autumn."
+      ]
+    }
+  ]
+}

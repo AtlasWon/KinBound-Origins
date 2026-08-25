@@ -1,0 +1,83 @@
+{
+  "id": "briarbell_greenhouse",
+  "name": "The Glasshouse",
+  "displayName": "THE GLASSHOUSE",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIUIII",
+    "I:@::::::@:I",
+    "I::::::::::I",
+    "I:$$:PP:$$:I",
+    "I::::::::::I",
+    "IP::PP::::PI",
+    "I:$$::::$$:I",
+    "I::::::::::I",
+    "IP::::::::PI",
+    "IIIIIDIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 5,
+      "y": 9,
+      "toMap": "briarbell",
+      "toX": 6,
+      "toY": 26,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "bb_greenkeeper",
+      "sprite": "villager_f",
+      "x": 3,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "bb_greenkeeper"
+    },
+    {
+      "id": "bb_grafter",
+      "sprite": "elder",
+      "x": 8,
+      "y": 7,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "bb_grafter"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 1,
+      "text": [
+        "A tank of standing water, warm to the hand.",
+        "Cuttings of the bell tree, forty of them, and not one has taken."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 1,
+      "text": [
+        "Seed trays by the hundred, every one labelled and dated.",
+        "The oldest label is in a hand nobody here can read any more."
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 6,
+      "y": 4,
+      "item": "tonic_berry",
+      "quantity": 3,
+      "flag": "item_bb_glass"
+    }
+  ]
+}

@@ -34,24 +34,24 @@ const state = top().state;
 const Overworld = top().constructor;
 
 const SPOTS = [
-  ['marrow_house_player', 6, 4, 'up', 'b-in-player'],
-  ['marrow_house_neighbour', 6, 4, 'up', 'b-in-neighbour'],
-  ['ashgate_house_a', 6, 4, 'up', 'b-in-house-a'],
-  ['ashgate_waystation', 6, 5, 'up', 'b-in-waystation'],
-  ['ashgate_provisioner', 6, 4, 'up', 'b-in-shop'],
-  ['vess_station', 7, 6, 'up', 'b-in-lab'],
+  ['hearthmere_house_player', 6, 4, 'up', 'b-in-player'],
+  ['hearthmere_house_neighbour', 6, 4, 'up', 'b-in-neighbour'],
+  ['briarbell_house_a', 6, 4, 'up', 'b-in-house-a'],
+  ['briarbell_clinic', 6, 5, 'up', 'b-in-clinic'],
+  ['briarbell_provisioner', 6, 4, 'up', 'b-in-shop'],
+  ['sorrell_lab', 7, 6, 'up', 'b-in-lab'],
   ['tanners_concord', 6, 5, 'up', 'b-in-concord'],
-  ['marrow_house_up', 6, 4, 'up', 'b-in-upstairs'],
-  ['marrow_hollow', 6, 8, 'up', 'b-out-marrow-house'],
-  ['marrow_hollow', 6, 16, 'up', 'b-out-marrow-timber'],
-  ['ashgate', 5, 14, 'up', 'b-out-ashgate-row'],
-  ['ashgate', 6, 8, 'up', 'b-out-ashgate-civic'],
+  ['hearthmere_house_up', 6, 4, 'up', 'b-in-upstairs'],
+  ['hearthmere', 6, 8, 'up', 'b-out-hearthmere-house'],
+  ['hearthmere', 6, 16, 'up', 'b-out-hearthmere-timber'],
+  ['briarbell', 5, 14, 'up', 'b-out-briarbell-row'],
+  ['briarbell', 6, 8, 'up', 'b-out-briarbell-civic'],
   ['kellowmere', 15, 7, 'up', 'b-out-kellow-wide'],
   ['kellowmere', 24, 24, 'up', 'b-out-kellow-timber'],
   ['tanners_rest', 6, 13, 'up', 'b-out-tanners'],
   ['brackwater', 21, 12, 'up', 'b-out-brack'],
-  ['marrow_hollow', 24, 19, 'up', 'b-out-fence'],
-  ['ashgate', 5, 20, 'right', 'b-out-fence2'],
+  ['hearthmere', 24, 19, 'up', 'b-out-fence'],
+  ['briarbell', 5, 20, 'right', 'b-out-fence2'],
 ];
 
 for (const s of SPOTS) {

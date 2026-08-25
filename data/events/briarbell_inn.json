@@ -1,0 +1,37 @@
+[
+  {
+    "id": "bb_innkeeper",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "ask",
+        "lines": [
+          "Room's yours if you want it. Hall week, so nobody pays.",
+          "Sleep here a while?"
+        ],
+        "yes": [
+          { "kind": "fade", "to": "black", "frames": 24 },
+          { "kind": "wait", "frames": 30 },
+          { "kind": "healParty" },
+          { "kind": "sfx", "sound": "heal_done" },
+          { "kind": "fade", "to": "clear", "frames": 24 },
+          {
+            "kind": "say",
+            "who": "MARROD",
+            "lines": [
+              "The bells woke you twice and you slept through both. Everybody does, by the second night.",
+              "Everything you brought in is on its feet again."
+            ]
+          }
+        ],
+        "no": [
+          {
+            "kind": "say",
+            "who": "MARROD",
+            "lines": ["Fair enough. The fire's there if you change your mind."]
+          }
+        ]
+      }
+    ]
+  }
+]

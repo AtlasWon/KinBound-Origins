@@ -47,13 +47,13 @@ const visit = async (map, x, y, facing, name, scale) => {
   await d.shoot(name, 8, scale || 2);
 };
 
-await visit('marrow_hollow', 15, 9, 'up', 'tour-01-hollow');
-await visit('marrow_hollow', 21, 8, 'up', 'tour-02-lab-outside');
-await visit('vess_station', 7, 8, 'up', 'tour-03-lab-inside');
-await visit('marrow_house_player', 6, 5, 'up', 'tour-04-home');
-await visit('ashgate', 15, 12, 'up', 'tour-05-ashgate');
-await visit('ashgate_waystation', 4, 4, 'up', 'tour-06-waystation');
-await visit('ashgate_provisioner', 5, 4, 'up', 'tour-07-shop');
+await visit('hearthmere', 15, 9, 'up', 'tour-01-hollow');
+await visit('hearthmere', 21, 8, 'up', 'tour-02-lab-outside');
+await visit('sorrell_lab', 7, 8, 'up', 'tour-03-lab-inside');
+await visit('hearthmere_house_player', 6, 5, 'up', 'tour-04-home');
+await visit('briarbell', 15, 12, 'up', 'tour-05-briarbell');
+await visit('briarbell_clinic', 4, 4, 'up', 'tour-06-clinic');
+await visit('briarbell_provisioner', 5, 4, 'up', 'tour-07-shop');
 await visit('route_1', 14, 12, 'down', 'tour-08-route');
 
 return { out, probe: d.probe() };

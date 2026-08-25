@@ -65,7 +65,7 @@ const sample = async (name, style, dir, frames) => {
 };
 
 // A door: the town outside a shop.
-await visit('ashgate', 15, 12, 'up');
+await visit('briarbell', 15, 12, 'up');
 out.push('door frames: ' + tr.areaFrames('door'));
 await sample('trans-door', 'door', 'down', tr.areaFrames('door'));
 
@@ -76,7 +76,7 @@ await sample('trans-edge-down', 'edge', 'down', tr.areaFrames('edge'));
 await sample('trans-edge-right', 'edge', 'right', tr.areaFrames('edge'));
 
 // Stairs, inside a building.
-await visit('marrow_house_player', 6, 5, 'up');
+await visit('hearthmere_house_player', 6, 5, 'up');
 out.push('stairs frames: ' + tr.areaFrames('stairs'));
 await sample('trans-stairs', 'stairs', 'up', tr.areaFrames('stairs'));
 

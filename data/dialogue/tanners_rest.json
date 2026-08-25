@@ -4,8 +4,8 @@
     "tr_drover": "DROVER MASK",
     "tr_clerk": "CONCORD CLERK",
     "tr_child": "PIP",
-    "tr_vess_runner": "RUNNER",
-    "tr_ways_rester": "RESTING TRADER",
+    "tr_sorrell_runner": "RUNNER",
+    "tr_clinic_rester": "RESTING TRADER",
     "tr_shop_hand": "SHOP HAND",
     "tr_concord_clerk": "CLERK OSWIN",
     "tr_concord_hand": "SURVEY HAND",
@@ -68,12 +68,12 @@
         "lines": [
           "You met her, then. Everyone says the same thing afterwards.",
           "That she was reasonable. Always that word. Never once anything else.",
-          "I've a letter to carry back to Vess and I don't know what to put in it."
+          "I've a letter to carry back to Sorrell and I don't know what to put in it."
         ]
       },
       {
         "lines": [
-          "You're the one Vess sent out? He writes to this office every week.",
+          "You're the one Sorrell sent out? He writes to this office every week.",
           "They keep the letters. Filed, dated, never answered. I've seen the drawer.",
           "Go in and look for yourself. The Director came down herself two days ago."
         ]

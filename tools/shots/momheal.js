@@ -1,4 +1,4 @@
-// Plays the tail of mh_perrin_first -- the walk home and the mother's heal --
+// Plays the tail of hm_tarin_first -- the walk home and the mother's heal --
 // without fighting the battle first. Takes the real script out of the registry
 // and starts it from the action after `setVar act 1`, so what runs here is
 // exactly the shipped data.
@@ -31,11 +31,11 @@ state.party.push(k);
 state.setFlag('got_starter');
 state.setFlag('mom_sendoff');
 
-d.game.scenes.replaceAll(new Overworld(state, 'marrow_hollow', 22, 8, 'down'));
+d.game.scenes.replaceAll(new Overworld(state, 'hearthmere', 22, 8, 'down'));
 await d.loadWait(1400);
 clear(10);
 
-const full = registry.scripts.get('mh_perrin_first');
+const full = registry.scripts.get('hm_tarin_first');
 out.push('script found: ' + !!full + ' actions=' + (full ? full.actions.length : 0));
 const cut = full.actions.findIndex((a) => a.kind === 'setVar' && a.var === 'act');
 out.push('coda starts after index ' + cut);
@@ -70,7 +70,7 @@ for (let i = 0; i < 400; i++) {
     }
     continue;
   }
-  if (t.name === 'overworld' && sc.map.id === 'marrow_house_player' && !logged) {
+  if (t.name === 'overworld' && sc.map.id === 'hearthmere_house_player' && !logged) {
     logged = true;
     out.push('in house: player@' + sc.player.tileX + ',' + sc.player.tileY
       + ' facing ' + sc.player.facing

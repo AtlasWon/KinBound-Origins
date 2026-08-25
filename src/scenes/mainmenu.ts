@@ -98,7 +98,7 @@ export class MainMenuScene implements Scene {
   private showTrainerCard(game: Game): void {
     say(game, [
       `${this.state.playerName}`,
-      `Seals: ${this.state.sealCount} of 8`,
+      `Bond Crests: ${this.state.crestCount} of 8`,
       `Vellum: ${this.state.caught.size} caught, ${this.state.seen.size} seen`,
       `Marks: ${this.state.money}`,
       `Time: ${formatPlayTime(this.state.playTime)}`,
@@ -121,11 +121,11 @@ export class MainMenuScene implements Scene {
     const sx = x + 6;
     const sw = w - 12;
     r.text(fit(r, `M~${this.state.money}`, sw), sx, sy + 6, { color: '#282838' });
-    r.text(`SEALS ${this.state.sealCount}/8`, sx, sy + 17, { color: '#282838' });
+    r.text(`CRESTS ${this.state.crestCount}/8`, sx, sy + 17, { color: '#282838' });
     r.text(formatPlayTime(game.playTime), sx, sy + 28, { color: '#485068' });
 
     // Location plate on the left, mirroring where the world banner appears.
-    // Sized to the name: "Cinderfall Works Approach" is half again as wide as
+    // Sized to the name: "Emberfall Works Approach" is half again as wide as
     // the 96 units this used to be nailed to.
     const plateMax = x - 12;
     const plateW = Math.min(plateMax, r.textWidth(this.mapName) + 14);

@@ -26,7 +26,7 @@ const state = new stateMod.GameState();
 state.playerName = 'AVEN';
 state.party.push(kinMod.createKin('cinderpaw', 12, d.game.rng, { originalTrainer: 'player' }));
 state.giveItem('vellum', 1);
-d.game.scenes.replaceAll(new owMod.OverworldScene(state, 'marrow_hollow', 10, 12, 'down'));
+d.game.scenes.replaceAll(new owMod.OverworldScene(state, 'hearthmere', 10, 12, 'down'));
 d.tick(2);
 await d.loadWait(1600);
 d.tick(40);

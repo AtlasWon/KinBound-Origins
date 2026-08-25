@@ -395,7 +395,7 @@ this order.
 |---|---|---|---|
 | `vessel_field.png` | vessel | Field Vessel | plain clay-and-copper capsule, standard issue, cheap enough to waste |
 | `vessel_fine.png` | vessel | Fine Vessel | tighter seams and a truer weight; brighter, better made |
-| `vessel_deep.png` | vessel | Deep Vessel | cold-forged for the Hollow Sea trade; deep blue |
+| `vessel_deep.png` | vessel | Deep Vessel | cold-forged for the Caeloran Sea trade; deep blue |
 | `vessel_dusk.png` | vessel | Dusk Vessel | smoked glass, works after dark |
 | `vessel_net.png` | vessel | Net Vessel | wide-mouthed and lined with mesh |
 | `vessel_warden.png` | vessel | Warden Vessel | one of a handful ever made; white and gold, and it does not fail |
@@ -414,8 +414,8 @@ this order.
 | `revive_full.png` | revive | Full Rouse | the same feather, brighter, with a glow on it |
 | `repel.png` | exploration | Ward Incense | a cone of incense with smoke rising |
 | `escape.png` | exploration | Escape Line | a cord and a hook — an anchor shape |
-| `key_vellum.png` | key | The Vellum | Dr. Vess's bound field record |
-| `key_map.png` | key | Region Map | Veldras, drawn in 1913 and stubbornly not redrawn since |
+| `key_vellum.png` | key | The Vellum | Professor Sorrell's bound field record |
+| `key_map.png` | key | Region Map | Caelora, drawn in 1913 and stubbornly not redrawn since |
 
 Those descriptions are what the game's own data says each item is, so the shop
 lines and the bag text already assume them. You are free to reinterpret any of

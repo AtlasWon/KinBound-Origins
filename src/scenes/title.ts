@@ -21,7 +21,7 @@
  * that makes that true is in HANDOFF, in opening.ts, and is read from there
  * rather than copied.
  *
- * WHAT IS BEHIND THE MENU. The film's own shots, live -- the Hollow Sea at
+ * WHAT IS BEHIND THE MENU. The film's own shots, live -- the Caeloran Sea at
  * dawn, the long grass with the herds crossing it, the shelf below the water,
  * the Turning, drowned Old Tidefall, the north shore. One at a time, ten
  * seconds each, dissolving into one another underneath a wordmark and a menu
@@ -495,7 +495,7 @@ export class TitleScene implements Scene {
    *
    * It costs eight units of type and it turns six pretty loops into a tour of a
    * region -- the difference between "there is something moving back there" and
-   * "that is the shelf below the Hollow Sea, and I am going to go and look at
+   * "that is the shelf below the Caeloran Sea, and I am going to go and look at
    * it". It fades with its own picture, so it is never naming the wrong one.
    */
   private renderPlace(r: Renderer, place: string, ui: number): void {

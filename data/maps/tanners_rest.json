@@ -2,7 +2,7 @@
   "id": "tanners_rest",
   "name": "Tanners Rest",
   "displayName": "TANNERS REST",
-  "music": "town_hollow",
+  "music": "town_hearth",
   "battleBackdrop": "highland",
   "indoor": false,
   "regionPos": {
@@ -36,7 +36,7 @@
     {
       "x": 11,
       "y": 7,
-      "toMap": "tanners_waystation",
+      "toMap": "tanners_clinic",
       "toX": 6,
       "toY": 8,
       "facing": "up",
@@ -155,7 +155,7 @@
       "script": "tr_child"
     },
     {
-      "id": "tr_vess_runner",
+      "id": "tr_sorrell_runner",
       "sprite": "villager_f",
       "x": 12,
       "y": 8,
@@ -181,7 +181,7 @@
       "x": 3,
       "y": 11,
       "text": [
-        "Route 3 west, and uphill the whole way to Kellowmere.",
+        "Route 3 west, and uphill the whole way to Stonewake.",
         "Water your stock here. There is none on the shelf roads."
       ]
     },
@@ -208,7 +208,7 @@
       "x": 8,
       "y": 8,
       "text": [
-        "WAYSTATION",
+        "KIN CLINIC",
         "Beds for drovers, and the other kind of bed for what they drive."
       ]
     },
@@ -217,7 +217,7 @@
       "x": 22,
       "y": 8,
       "text": [
-        "PROVISIONER - largest stock this side of Vantry."
+        "PROVISIONER - largest stock this side of Aureline."
       ]
     },
     {
@@ -245,6 +245,6 @@
       "flag": "item_tr_hidden"
     }
   ],
-  "_legend": "Waystation and Provisioner face each other across the drovers lane, one set a row lower than the other so the street is not a mirror. The Concord survey office and a house sit on the back lane south. The east road is closed by fallen stone.",
+  "_legend": "Kin Clinic and Provisioner face each other across the drovers lane, one set a row lower than the other so the street is not a mirror. The Concord survey office and a house sit on the back lane south. The east road is closed by fallen stone.",
   "_plan": "Four roads meet here and the sign says so: Route 3 west, Route 4 south, the drovers lane north to the holding pens, and the east road, shut by a rockfall since before anyone here was born. They meet on the paved yard, which is why the town exists -- a halt where stock is watered at the trough before the last push to the coast. Every lane ends at a door, a gate or a junction; the only ones that reach the map edge are the two that are actually exits."
 }

@@ -59,7 +59,7 @@ const run = async (name, map, x, y, facing, code, frames) => {
   out.push(`${name} ended on ${d.probe().map} at ${d.probe().pos}`);
 };
 
-await run('lv-door', 'marrow_house_player', 6, 5, 'down', 'KeyS', 72);
-await run('lv-stair', 'marrow_house_player', 10, 2, 'up', 'KeyW', 76);
+await run('lv-door', 'hearthmere_house_player', 6, 5, 'down', 'KeyS', 72);
+await run('lv-stair', 'hearthmere_house_player', 10, 2, 'up', 'KeyW', 76);
 
 return { out };

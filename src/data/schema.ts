@@ -411,7 +411,7 @@ export type EventCondition =
   | { kind: 'flag'; flag: string; value?: boolean }
   | { kind: 'var'; var: string; op: '==' | '!=' | '>' | '<' | '>=' | '<='; value: number }
   | { kind: 'hasItem'; item: string; count?: number }
-  | { kind: 'hasSeal'; seal: number }
+  | { kind: 'hasCrest'; crest: number }
   | { kind: 'defeated'; trainer: string }
   | { kind: 'partyHas'; species: string }
   | { kind: 'partyCount'; op: '>' | '<' | '=='; value: number }
@@ -450,7 +450,7 @@ export type EventAction =
   | { kind: 'camera'; to: { x: number; y: number } | 'player'; frames?: number }
   | { kind: 'weather'; weather: WeatherId }
   | { kind: 'giveArt'; art: string }
-  | { kind: 'giveSeal'; seal: number; name: string }
+  | { kind: 'giveCrest'; crest: number; name: string }
   | { kind: 'openShop'; shop: string }
   | { kind: 'openStorage' }
   | { kind: 'setRespawn'; map?: string; x?: number; y?: number }
@@ -480,5 +480,5 @@ export interface ShopData {
   id: string;
   name: string;
   greeting: string[];
-  stock: { item: string; requiresSeal?: number; requiresFlag?: string }[];
+  stock: { item: string; requiresCrest?: number; requiresFlag?: string }[];
 }

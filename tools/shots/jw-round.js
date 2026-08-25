@@ -35,7 +35,7 @@ clear();
 
 const state = top().state;
 const Overworld = top().constructor;
-d.game.scenes.replaceAll(new Overworld(state, 'ashgate', 6, 9, 'up'));
+d.game.scenes.replaceAll(new Overworld(state, 'briarbell', 6, 9, 'up'));
 await d.loadWait(1200);
 clear();
 
@@ -58,7 +58,7 @@ const go = async (key, limit, label) => {
   return t.map.id !== from;
 };
 
-await go('KeyW', 90, 'into the Waystation');
+await go('KeyW', 90, 'into the Kin Clinic');
 clear();
 await d.shoot('jround-inside', 0); shots.push('jround-inside');
 await go('KeyS', 90, 'back out');
@@ -66,7 +66,7 @@ clear();
 await d.shoot('jround-town', 0); shots.push('jround-town');
 
 // Down the main road to the route seam.
-d.game.scenes.replaceAll(new Overworld(state, 'ashgate', 14, 18, 'down'));
+d.game.scenes.replaceAll(new Overworld(state, 'briarbell', 14, 18, 'down'));
 await d.loadWait(1200);
 clear();
 await go('KeyS', 200, 'south to Route 1');

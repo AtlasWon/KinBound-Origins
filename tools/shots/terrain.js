@@ -50,13 +50,13 @@ await visit('route_1', 10, 12, 'down', 'ter-02-pond');
 // Map border treeline, top of route.
 await visit('route_1', 20, 3, 'up', 'ter-03-treeline');
 // The rock edge, used as a vertical wall.
-await visit('marrow_hollow', 5, 12, 'left', 'ter-04-cliff-vertical');
+await visit('hearthmere', 5, 12, 'left', 'ter-04-cliff-vertical');
 // The rock edge, used as a horizontal wall.
 await visit('kellowmere', 8, 5, 'up', 'ter-05-cliff-horizontal');
 await visit('route_2', 6, 31, 'up', 'ter-06-cliff-route2');
 // Deep water.
 await visit('brackwater', 14, 14, 'down', 'ter-07-water');
 // Tall grass in town.
-await visit('marrow_hollow', 6, 19, 'down', 'ter-08-hollow-grass');
+await visit('hearthmere', 6, 19, 'down', 'ter-08-hollow-grass');
 
 return { out, probe: d.probe() };

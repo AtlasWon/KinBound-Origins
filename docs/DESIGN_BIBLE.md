@@ -1,3 +1,8 @@
+> **SUPERSEDED.** This is the pre-Caelora design draft, kept for reference only.
+> [CANON.md](CANON.md) is the authority on names, people, places and story beats;
+> where the two disagree, CANON wins. The names in here were swept by the Caelora
+> rename, but the structure behind them was not, and much of it is now wrong.
+
 # KINBOUND — Amber Version
 ## Design Bible v1
 
@@ -9,14 +14,14 @@ pacing only*.
 
 # 1. PITCH
 
-> Every seventy years the currents of the Hollow Sea reverse, and the whole of Veldras moves.
+> Every seventy years the currents of the Caeloran Sea reverse, and the whole of Caelora moves.
 > Herds swim, flocks turn, whole species walk to the other side of the world. They call it
 > **the Turning**, and it has drowned three cities in living memory.
 >
 > A guild of engineers has decided it will never happen again. They are not cruel. They are not
 > wrong about the drowning. They are simply about to kill the region to save it.
 
-The player is a newcomer to Veldras who is handed their first companion, walks the whole crescent
+The player is a newcomer to Caelora who is handed their first companion, walks the whole crescent
 of the region, earns eight Seals, and ends up the only person standing between the Stillwater
 Concord and the machinery that holds the sea still.
 
@@ -38,22 +43,22 @@ Concord and the machinery that holds the sea still.
 | HM-style traversal | **Field Art** |
 | Elite Four | **the Standing Four** |
 | Final venue | **the Spire** |
-| Storage system | **the Roost** (waystation terminal) |
+| Storage system | **the Roost** (clinic terminal) |
 | Villains | **the Stillwater Concord** |
 | Legendary creatures | **the Wardens** |
 
 ---
 
-# 3. REGION: VELDRAS
+# 3. REGION: CAELORA
 
-A crescent landmass curled around a vast inland sea (**the Hollow Sea**), open to the ocean at one
+A crescent landmass curled around a vast inland sea (**the Caeloran Sea**), open to the ocean at one
 southeastern strait. Cold pine highlands in the north-west, temperate farmland and quarry country
 in the west, a hot volcanic spine in the south, marsh and delta in the south-east, and a
-storm-battered cliff coast running back up the east. The Hollow Sea itself holds islands the player
+storm-battered cliff coast running back up the east. The Caeloran Sea itself holds islands the player
 cannot reach until late.
 
 **Travel shape:** the player walks the crescent clockwise — west highlands, then south coast, then
-east cliffs, then north peaks — and only then goes *inward*, onto and under the Hollow Sea, for the
+east cliffs, then north peaks — and only then goes *inward*, onto and under the Caeloran Sea, for the
 climax. The inner sea is visible from almost everywhere, all game, and is unreachable until Act 4.
 That is the region's single biggest "look at what you cannot have yet" hook.
 
@@ -61,7 +66,7 @@ That is the region's single biggest "look at what you cannot have yet" hook.
 
 | # | Place | Role | Bastion |
 |---|---|---|---|
-| 1 | **Marrow Hollow** | Home village. Highland, six buildings, a well. | — |
+| 1 | **Hearthmere** | Home village. Highland, six buildings, a well. | — |
 | 2 | **Ashgate** | First real town. First Waystation + Provisioner. | — |
 | 3 | **Kellowmere** | Quarry town on a cold lake. | **1 — Stone** |
 | 4 | **Tanners Rest** | Trade crossroads, big Provisioner, cycle shop. | — |
@@ -82,7 +87,7 @@ Routes 1–26 following the clockwise crescent, plus named wild areas:
 **Thistlemoor Wood**, **Kettle Caves**, **Quarry Descent**, **Sablewash Beach**, **Cinderfall
 Undermine**, **Drownmarsh Deep**, **The Sunken Span**, **Skyreach Stair**, **Gravehold Ossuary**,
 **Northwatch Pass** (victory-road analogue), **The Anchorage** (Act 4 mega-dungeon beneath the
-Hollow Sea), and postgame **The Drowned Choir**.
+Caeloran Sea), and postgame **The Drowned Choir**.
 
 ## 3.3 Region design rules (enforced during map authoring)
 
@@ -106,7 +111,7 @@ Hollow Sea), and postgame **The Drowned Choir**.
 | **Wade** | Bastion 4 | cross shallow marsh water |
 | **Swim** | Bastion 5 | traverse deep water |
 | **Updraft** | Bastion 6 | ride thermals up cliff faces |
-| **Delve** | Bastion 7 | dive beneath the Hollow Sea |
+| **Delve** | Bastion 7 | dive beneath the Caeloran Sea |
 | **Recall** | Bastion 8 | fast-travel to visited Waystations |
 
 ---
@@ -124,11 +129,11 @@ of true immunities exist so that immunity stays memorable rather than routine.
 
 # 6. STORY
 
-## Act 1 — Marrow Hollow (levels 5–18)
+## Act 1 — Hearthmere (levels 5–18)
 
-The player's family moves to Marrow Hollow. **Doctor Halcyon Vess**, a field naturalist who studies
+The player's family moves to Hearthmere. **Doctor Halcyon Sorrell**, a field naturalist who studies
 migration rather than combat, gives the player a starter and a blank Vellum, and asks — not orders —
-for help filling it. **Rival: Perrin Ashe**, the child of Hallowfen's Keeper; talented, competitive,
+for help filling it. **Rival: Tarin Ashe**, the child of Hallowfen's Keeper; talented, competitive,
 generous, and quietly terrified of being only ever "the Keeper's kid."
 
 Beats: starter choice, first catch, Thistlemoor Wood, Ashgate, Kellowmere, Bastion 1.
@@ -137,20 +142,20 @@ Beats: starter choice, first catch, Thistlemoor Wood, Ashgate, Kellowmere, Basti
 
 The crescent opens up. Concord surveyors appear on routes taking measurements and are polite,
 helpful, and slightly evasive. They fund the Cinderfall Bastion. They pay for a Waystation roof.
-Bastions 2–4. First excavation site. First Warden rumours. Perrin beats the player at least once.
+Kin Halls 2–4. First excavation site. First Warden rumours. Tarin beats the player at least once.
 
 ## Act 3 — Stillwater (levels 34–42)
 
 Reveal: the Concord is building **the Stillwater Array**, a ring of anchors intended to lock the
-Hollow Sea currents permanently. **Director Isolde Kerrow** lost Old Tidefall — and her brother —
+Caeloran Sea currents permanently. **Director Isolde Kerrow** lost Old Tidefall — and her brother —
 in the last Turning. She is warm, reasonable, and utterly immovable. The player watches the first
 anchor fire; the sea goes glassy; weather across three routes changes permanently.
-Bastions 5–6. Ecosystem damage becomes visible on routes the player already walked.
+Kin Halls 5–6. Ecosystem damage becomes visible on routes the player already walked.
 
 ## Act 4 — The Anchorage (levels 42–50)
 
 The Array wakes **Vauros**, the Deep Warden, in pain. Storms shred the east coast. The player
-descends into the Anchorage with Perrin and Vess, fights through Concord engineers who are
+descends into the Anchorage with Tarin and Sorrell, fights through Concord engineers who are
 *evacuating civilians while they work*, and reaches Kerrow at the core. The final question is not
 whether to stop her — it is whether to break the Array or **re-tune** it. Vauros is faceable here.
 
@@ -158,7 +163,7 @@ Payoff: Kerrow is not defeated by argument. She is defeated by being shown a wor
 
 ## Act 5 — The Spire (levels 50–62)
 
-Bastions 7–8, Northwatch Pass, the Standing Four, the Champion, credits.
+Kin Halls 7–8, Northwatch Pass, the Standing Four, the Champion, credits.
 
 ## Postgame
 

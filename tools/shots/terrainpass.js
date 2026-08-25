@@ -44,20 +44,20 @@ const visit = async (map, x, y, facing, name) => {
   await d.shoot(name + '-x2', 0, 2);
 };
 
-await visit('marrow_house_up', 6, 5, 'up', 'tp-15-bedroom');
+await visit('hearthmere_house_up', 6, 5, 'up', 'tp-15-bedroom');
 await visit('route_2', 14, 13, 'up', 'tp-14-cliffs');
 await visit('kellowmere', 14, 12, 'up', 'tp-10-kellowmere');
 await visit('brackwater', 14, 12, 'up', 'tp-11-brackwater');
 await visit('route_3', 12, 12, 'up', 'tp-12-route3');
 await visit('tanners_concord', 14, 12, 'up', 'tp-13-tanners');
 await visit('route_1', 14, 12, 'down', 'tp-01-route');
-await visit('marrow_hollow', 15, 9, 'up', 'tp-02-hollow');
-await visit('ashgate', 15, 12, 'up', 'tp-03-ashgate');
-await visit('ashgate', 8, 20, 'up', 'tp-04-ashgate-s');
-await visit('marrow_hollow', 21, 8, 'up', 'tp-05-lab-outside');
-await visit('marrow_house_player', 6, 5, 'up', 'tp-06-home');
-await visit('ashgate_waystation', 4, 4, 'up', 'tp-07-waystation');
-await visit('ashgate_provisioner', 5, 4, 'up', 'tp-08-shop');
-await visit('vess_station', 7, 8, 'up', 'tp-09-lab-inside');
+await visit('hearthmere', 15, 9, 'up', 'tp-02-hollow');
+await visit('briarbell', 15, 12, 'up', 'tp-03-briarbell');
+await visit('briarbell', 8, 20, 'up', 'tp-04-briarbell-s');
+await visit('hearthmere', 21, 8, 'up', 'tp-05-lab-outside');
+await visit('hearthmere_house_player', 6, 5, 'up', 'tp-06-home');
+await visit('briarbell_clinic', 4, 4, 'up', 'tp-07-clinic');
+await visit('briarbell_provisioner', 5, 4, 'up', 'tp-08-shop');
+await visit('sorrell_lab', 7, 8, 'up', 'tp-09-lab-inside');
 
 return { out, probe: d.probe() };

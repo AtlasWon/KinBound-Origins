@@ -1,0 +1,45 @@
+{
+  "speakers": {
+    "sw_mer_desk": "FOUNDATION CLERK",
+    "sw_mer_tech": "FIELD TECHNICIAN",
+    "sw_mer_visitor": "VISITOR"
+  },
+  "entries": {
+    "sw_mer_desk": [
+      {
+        "ifFlags": [
+          "crest_2_taken"
+        ],
+        "lines": [
+          "A Crest already. You will be going east, then, and everybody going east",
+          "should have one of our storm cards. Take two. They are free, they are always free."
+        ]
+      },
+      {
+        "lines": [
+          "Come in, look at anything, ask anything. That is the whole idea of the place.",
+          "We are a Foundation. People give us money, so people are owed a look at it."
+        ]
+      }
+    ],
+    "sw_mer_tech": [
+      {
+        "lines": [
+          "Forty weather stations and I service eleven of them, on a bicycle.",
+          "You would not believe what it does to a person, reading rain for a living.",
+          "Ask me about April. Do not actually ask me about April."
+        ]
+      }
+    ],
+    "sw_mer_visitor": [
+      {
+        "lines": [
+          "My brother went to them in the spring. Better wage than the sheds,",
+          "and a coat, and they taught him to read an instrument.",
+          "He is on the coast now. He writes. He does not say very much in the letters,",
+          "but he writes, which he never once did when he worked here."
+        ]
+      }
+    ]
+  }
+}

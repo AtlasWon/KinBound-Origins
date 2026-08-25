@@ -57,7 +57,7 @@ const run = async (label, map, sx, sy, wx, wy) => {
   await d.loadWait(700);
 };
 
-await run('jd', 'ashgate', 14, 8, 6, 6);
-await run('je', 'ashgate', 14, 20, 14, 23);
+await run('jd', 'briarbell', 14, 8, 6, 6);
+await run('je', 'briarbell', 14, 20, 14, 23);
 
 return { out, shots };

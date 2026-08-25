@@ -67,9 +67,9 @@ const run = async (label, map, sx, sy, wx, wy, shoot) => {
 };
 
 // Cold: neither of these has been visited this session.
-await run('door', 'ashgate', 14, 8, 6, 6, true);
-await run('edge', 'ashgate', 14, 20, 14, 23, true);
+await run('door', 'briarbell', 14, 8, 6, 6, true);
+await run('edge', 'briarbell', 14, 20, 14, 23, true);
 // Warm: straight back through a door that is already in the cache.
-await run('door-warm', 'ashgate', 14, 8, 6, 6, false);
+await run('door-warm', 'briarbell', 14, 8, 6, 6, false);
 
 return { out, shots };

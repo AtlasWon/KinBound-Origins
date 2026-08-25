@@ -1,0 +1,62 @@
+{
+  "id": "briarbell_house_b",
+  "name": "House",
+  "displayName": "BRIARBELL",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIUIIII",
+    "IkkkffJQNfSI",
+    "IkffffKKKffI",
+    "I//ffffffPfI",
+    "IrrfAAEffffI",
+    "IVffEEffrrfI",
+    "IPffffffffkI",
+    "IIIIIIDIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 7,
+      "toMap": "briarbell",
+      "toX": 21,
+      "toY": 27,
+      "facing": "down",
+      "style": "door"
+    },
+    {
+      "x": 10,
+      "y": 1,
+      "toMap": "briarbell_house_b_up",
+      "toX": 10,
+      "toY": 4,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "bb_house_b_resident",
+      "sprite": "villager_f",
+      "x": 3,
+      "y": 6,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "bb_house_b"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "Shelves of jam. Bell-tree honey, three years of it,",
+        "and one jar at the back with no label at all."
+      ]
+    }
+  ]
+}

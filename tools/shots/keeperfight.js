@@ -1,4 +1,4 @@
-// Plays the retuned first-Bastion fight in the real game, with the party a
+// Plays the retuned first-Hall fight in the real game, with the party a
 // player raising a team actually walks in with: an unevolved level-13 starter
 // and two level-12 catches. Balance work is measured in tests/helpers/
 // simulate.mjs, but the simulator drives Battle directly -- this is the only
@@ -42,7 +42,7 @@ state.party.push(kinMod.createKin('gravelet', 12, d.game.rng, { originalTrainer:
 // added to Roxen's ace (flat-zero IVs, the rewritten moveset) are really in
 // play and not just in the JSON.
 const { registry } = await import('/build/js/data/registry.js');
-const roxen = registry.trainers.get('bastion1_roxen');
+const roxen = registry.trainers.get('hall1_roxen');
 const foeParty = roxen.party.map((m) => kinMod.createKin(m.species, m.level, d.game.rng, {
   moves: m.moves, ability: m.ability, item: m.item, nature: m.nature,
   ivs: m.ivs, evs: m.evs, originalTrainer: roxen.name,
@@ -52,7 +52,7 @@ console.log('ace=' + foeParty[2].species + ' L' + foeParty[2].level
 
 d.game.scenes.push(new battleMod.BattleScene({
   state, playerParty: state.party, foeParty, isWild: false,
-  trainerId: 'bastion1_roxen', skipIntroLines: true,
+  trainerId: 'hall1_roxen', skipIntroLines: true,
   backdrop: 'grass', onFinish: () => {},
 }));
 d.tick(2);

@@ -1,0 +1,93 @@
+{
+  "id": "stonewake_house_a",
+  "name": "House",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIUIIIIIIUII",
+    "IkkkfffNQJfI",
+    "IfffffffKKKI",
+    "IPffAAffff/I",
+    "IfrrEEffrrfI",
+    "IkfffffffVfI",
+    "IfffffffkfPI",
+    "IIIIIIDIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 7,
+      "toMap": "stonewake",
+      "toX": 5,
+      "toY": 26,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "sw_house_a_resident",
+      "sprite": "villager_f",
+      "x": 3,
+      "y": 4,
+      "facing": "right",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "sw_house_a"
+    },
+    {
+      "id": "sw_house_a_child",
+      "sprite": "kid",
+      "x": 6,
+      "y": 6,
+      "facing": "left",
+      "movement": {
+        "kind": "wander",
+        "radius": 1
+      },
+      "script": "sw_house_a_child"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 1,
+      "text": [
+        "A wall of tools on pegs, every one of them for cutting stone,",
+        "every one of them oiled, and a gap in the middle of the row",
+        "exactly the shape of the one that is out being used."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 2,
+      "text": [
+        "The kitchen counter, and a window over it looking at the mountain.",
+        "Every house on this street has that window. It is not a view,",
+        "it is a habit: you look up at the face before you go out to it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 4,
+      "y": 3,
+      "text": [
+        "Four chairs at a table laid for four, and a fifth chair against the wall",
+        "that has clearly not been at the table for some time."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 5,
+      "text": [
+        "A wireless set with a brass dial, tuned to the pit whistle band.",
+        "It has not carried a whistle in two years and nobody has retuned it."
+      ]
+    }
+  ]
+}

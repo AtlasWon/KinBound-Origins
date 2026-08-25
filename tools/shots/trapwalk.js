@@ -188,7 +188,7 @@ async function tryTrainer(map, id, extra) {
 const plan = [
   ['route_1', 'r1_madden'], ['route_1', 'r1_ottel'], ['route_1', 'r1_cale'],
   ['route_2', 'r2_juna'], ['route_3', 'r3_holt'], ['route_4', 'r4_bay'],
-  ['kellowmere_bastion', 'bastion1_guard_a'], ['brackwater_bastion', 'bastion2_guard_c'],
+  ['kellowmere_hall', 'hall1_guard_a'], ['brackwater_hall', 'hall2_guard_c'],
 ];
 
 // A/B, so the driver has to prove it can still see the bug. `playerCovers` is

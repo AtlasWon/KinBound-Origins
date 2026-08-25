@@ -57,7 +57,7 @@ export const TERRAIN: Record<string, TerrainDef> = {
    * The rock border below ('C' and 'c') is the exception and has to earn its
    * place: a cliff edge is a statement that this place is up against a
    * mountain, so it belongs on a highland map, on a settlement genuinely ringed
-   * by rock -- Kellowmere, which is a quarry town -- and in a cave. Anywhere
+   * by rock -- Stonewake, which is quarried into a mountain -- and in a cave. Anywhere
    * else it reads as a quarry the map is not.
    */
   'T': { ground: T.GRASS, over: T.TREE, collision: 1, tag: 'grass' },
@@ -96,7 +96,7 @@ export const TERRAIN: Record<string, TerrainDef> = {
   'X': { ground: T.GRASS, over: T.BRAMBLE, collision: 1, tag: 'grass' },
   'x': { ground: T.PLATE, collision: 0, tag: 'floor', step: 'stone' },
 
-  // --- Waystation (healing). Red roof, white cross crest. --------------
+  // --- Kin Clinic (healing). Red roof, white cross crest. --------------
   '1': { ground: T.ROOF_RED_L, collision: 1, tag: 'floor' },
   '2': { ground: T.ROOF_RED, collision: 1, tag: 'floor' },
   '3': { ground: T.ROOF_RED_R, collision: 1, tag: 'floor' },
@@ -180,6 +180,24 @@ export const TERRAIN: Record<string, TerrainDef> = {
   // paving, whichever the map put there. ---------------------------------
   'a': { over: T.FLOWER_BED, collision: 1, tag: 'grass' },
   'Y': { over: T.LAMP_POST, collision: 1, tag: 'grass' },
+
+  // --- The great bell tree of Briarbell. ------------------------------
+  //
+  // Four characters for a landmark thirteen cells wide and nine tall. The
+  // crown is drawn as one outline with a single character and TileMap picks
+  // its nine-slice edges from the neighbours (see autoGreatTree), which is the
+  // only way a shape this size stays editable: move one row of apostrophes and
+  // the silhouette follows.
+  //
+  // All four are overlays with no ground of their own, so the turf, path or
+  // paving the map put under the tree shows through the gaps in the canopy and
+  // between the roots. The bells are the exception that has to be walkable --
+  // walking under the boughs with them hanging round you is the entire point of
+  // standing here, and the overlay pass draws the row you are on after you.
+  "'": { over: T.GREAT_LEAF_C, collision: 1, tag: 'grass' },
+  '`': { over: T.GREAT_BELL, collision: 0, tag: 'grass', step: 'grass' },
+  '{': { over: T.GREAT_TRUNK_C, collision: 1, tag: 'grass' },
+  '}': { over: T.GREAT_ROOT_C, collision: 1, tag: 'grass' },
 };
 
 /**

@@ -14,7 +14,7 @@
         "kind": "say",
         "who": "???",
         "lines": [
-          "{name}. You're the one filling in a Vellum for Halcyon Vess."
+          "{name}. You're the one filling in a Vellum for Halcyon Sorrell."
         ]
       },
       {
@@ -40,7 +40,7 @@
         "who": "ISOLDE KERROW",
         "lines": [
           "I'd rather tell you why to your face than let you work it out from the filing.",
-          "Seventy years ago the Hollow Sea turned over and took a town called Old Tidefall.",
+          "Seventy years ago the Caeloran Sea turned over and took a town called Old Tidefall.",
           "One night. Two hundred and forty people. My brother was one. I was six."
         ]
       },
@@ -48,7 +48,7 @@
         "kind": "say",
         "who": "ISOLDE KERROW",
         "lines": [
-          "Dr. Vess would like us to observe the Turning. Record it. Understand it.",
+          "Professor Sorrell would like us to observe the Turning. Record it. Understand it.",
           "He's right that it is the greater science. He is usually right."
         ]
       },
@@ -81,8 +81,8 @@
         "kind": "say",
         "who": "ISOLDE KERROW",
         "lines": [
-          "Go on to Brackwater. Take your Seals, they're a fine thing to have.",
-          "And the next time Vess writes to you about the Turning, ask him one question.",
+          "Go on to Brackwater. Take your Crests, they're a fine thing to have.",
+          "And the next time Sorrell writes to you about the Turning, ask him one question.",
           "Ask him what he intends to say to the next Old Tidefall."
         ]
       },

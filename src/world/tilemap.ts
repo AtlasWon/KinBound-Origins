@@ -141,6 +141,7 @@ export class TileMap {
       }
     }
 
+    this.autoGreatTree();
     this.inheritGround(floorless);
     this.autoPathEdges();
 
@@ -240,6 +241,68 @@ export class TileMap {
       if (votes > bestVotes || (votes === bestVotes && g < best)) { best = g; bestVotes = votes; }
     }
     return best;
+  }
+
+  /**
+   * Give the great tree its edges.
+   *
+   * The crown is authored as a solid block of one character, because a
+   * thirteen-by-five outline drawn from nineteen different characters is a
+   * shape nobody can edit: nudge one row and every corner has to be retyped by
+   * hand. So the map says *where the crown is* and this works out what each
+   * cell has to be -- a nine-slice for the crown, left/middle/right for the
+   * trunk and the roots, and the three bole cells where the trunk comes up
+   * through the underside.
+   *
+   * Every cell is read before any is written, or a cell rewritten to an edge
+   * would stop counting as part of the crown for the cell beside it.
+   */
+  private autoGreatTree(): void {
+    const isLeaf: boolean[] = [];
+    const isTrunk: boolean[] = [];
+    const isRoot: boolean[] = [];
+    let any = false;
+    for (let i = 0; i < this.over.length; i++) {
+      isLeaf[i] = this.over[i] === T.GREAT_LEAF_C;
+      isTrunk[i] = this.over[i] === T.GREAT_TRUNK_C;
+      isRoot[i] = this.over[i] === T.GREAT_ROOT_C;
+      if (isLeaf[i] || isTrunk[i] || isRoot[i]) any = true;
+    }
+    if (!any) return;
+
+    const at = (set: boolean[], x: number, y: number): boolean =>
+      this.inBounds(x, y) && set[this.index(x, y)] === true;
+
+    const LEAF = [
+      [T.GREAT_LEAF_NW, T.GREAT_LEAF_N, T.GREAT_LEAF_NE],
+      [T.GREAT_LEAF_W, T.GREAT_LEAF_C, T.GREAT_LEAF_E],
+      [T.GREAT_LEAF_SW, T.GREAT_LEAF_S, T.GREAT_LEAF_SE],
+    ];
+    const BOLE = [T.GREAT_BOLE_L, T.GREAT_BOLE_C, T.GREAT_BOLE_R];
+    const TRUNK = [T.GREAT_TRUNK_L, T.GREAT_TRUNK_C, T.GREAT_TRUNK_R];
+    const ROOT = [T.GREAT_ROOT_L, T.GREAT_ROOT_C, T.GREAT_ROOT_R];
+    /** 0 for the left column of a run, 1 for the middle, 2 for the right. */
+    const span = (set: boolean[], x: number, y: number): number =>
+      (at(set, x - 1, y) ? 1 : 0) + (at(set, x + 1, y) ? 1 : 0) === 2 ? 1
+        : at(set, x - 1, y) ? 2 : 0;
+
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        const i = this.index(x, y);
+        if (isLeaf[i]) {
+          // The three cells the trunk pushes up through are drawn as bole
+          // rather than as plain underside; nothing in the map file says so.
+          if (at(isTrunk, x, y + 1)) { this.over[i] = BOLE[span(isTrunk, x, y + 1)]!; continue; }
+          const col = at(isLeaf, x - 1, y) ? (at(isLeaf, x + 1, y) ? 1 : 2) : 0;
+          const row = at(isLeaf, x, y - 1) ? (at(isLeaf, x, y + 1) ? 1 : 2) : 0;
+          this.over[i] = LEAF[row]![col]!;
+        } else if (isTrunk[i]) {
+          this.over[i] = TRUNK[span(isTrunk, x, y)]!;
+        } else if (isRoot[i]) {
+          this.over[i] = ROOT[span(isRoot, x, y)]!;
+        }
+      }
+    }
   }
 
   /**

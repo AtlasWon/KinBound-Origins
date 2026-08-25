@@ -1,0 +1,18 @@
+{
+  "mapId": "route_2_cave",
+  "$comment": "Fernhollow. The engine only rolls encounters on tall grass, so the fern under the fallen roof is what carries this table -- which is also why the cave has a fallen roof. Levels sit one over Route 2's own band because the player arrives here with the route already half walked, and the mix is what Route 2 does not have: SOOTMOTH is the flame/chitin the surface table only offers after dark, and MOSSBACK at eight percent is the prize -- verdant/stone, 90 catch rate, no evolution, and a genuinely useful wall for the Terra Hall at Stonewake, which is the next thing the player is going to walk into. Weights are stacked on the two commons so a player farming here for Mossback still gains levels while they do it.",
+  "methods": {
+    "tallGrass": {
+      "rate": 165,
+      "slots": [
+        { "species": "pebblet", "minLevel": 6, "maxLevel": 8, "weight": 22 },
+        { "species": "nettlebug", "minLevel": 6, "maxLevel": 8, "weight": 20 },
+        { "species": "chalkid", "minLevel": 6, "maxLevel": 8, "weight": 16 },
+        { "species": "sootmoth", "minLevel": 7, "maxLevel": 8, "weight": 14 },
+        { "species": "gravelet", "minLevel": 6, "maxLevel": 8, "weight": 12 },
+        { "species": "spinnet", "minLevel": 7, "maxLevel": 8, "weight": 8 },
+        { "species": "mossback", "minLevel": 8, "maxLevel": 9, "weight": 8 }
+      ]
+    }
+  }
+}

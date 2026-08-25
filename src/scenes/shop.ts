@@ -2,7 +2,7 @@
  * Provisioner (shop).
  *
  * Buy and sell with a live quantity spinner. Stock is data-driven and can be
- * gated on seals or story flags, which is how the item economy keeps pace with
+ * gated on Bond Crests or story flags, which is how the item economy keeps pace with
  * progression instead of handing out full restores in the first town.
  */
 
@@ -48,7 +48,7 @@ export class ShopScene implements Scene {
 
   private buildBuy(): void {
     const stock = (this.shop?.stock ?? []).filter((entry) => {
-      if (entry.requiresSeal && this.state.sealCount < entry.requiresSeal) return false;
+      if (entry.requiresCrest && this.state.crestCount < entry.requiresCrest) return false;
       if (entry.requiresFlag && !this.state.hasFlag(entry.requiresFlag)) return false;
       return true;
     });

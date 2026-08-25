@@ -11,23 +11,23 @@ loadRegistry();
 function populated() {
   const rng = new Rng('state-fixture');
   const s = new GameState();
-  s.playerName = 'PERRIN';
+  s.playerName = 'TARIN';
   s.money = 4820;
   s.currentMap = 'route_1';
   s.currentX = 14;
   s.currentY = 18;
   s.currentFacing = 'left';
-  s.respawnMap = 'ashgate_waystation';
+  s.respawnMap = 'briarbell_clinic';
   s.respawnX = 6;
   s.respawnY = 7;
   s.setFlag('got_starter');
   s.setFlag('ag_gate_asked');
   s.setVar('turning_progress', 3);
-  s.visitMap('marrow_hollow');
+  s.visitMap('hearthmere');
   s.visitMap('route_1');
   s.markDefeated('r1_madden');
   s.giveArt('clear');
-  s.giveSeal(1);
+  s.giveCrest(1);
   s.giveItem('potion', 4);
   s.giveItem('field_vessel', 12);
   s.playTime = 3725;
@@ -49,13 +49,13 @@ test('a full game state survives a save and load round trip', () => {
   const json = JSON.parse(JSON.stringify(before.toJSON()));
   const after = GameState.fromJSON(json);
 
-  assert.equal(after.playerName, 'PERRIN');
+  assert.equal(after.playerName, 'TARIN');
   assert.equal(after.money, 4820);
   assert.equal(after.currentMap, 'route_1');
   assert.equal(after.currentX, 14);
   assert.equal(after.currentY, 18);
   assert.equal(after.currentFacing, 'left');
-  assert.equal(after.respawnMap, 'ashgate_waystation');
+  assert.equal(after.respawnMap, 'briarbell_clinic');
 
   assert.equal(after.hasFlag('got_starter'), true);
   assert.equal(after.hasFlag('never_set'), false);
@@ -63,7 +63,7 @@ test('a full game state survives a save and load round trip', () => {
   assert.equal(after.hasVisited('route_1'), true);
   assert.equal(after.hasDefeated('r1_madden'), true);
   assert.equal(after.hasArt('clear'), true);
-  assert.equal(after.sealCount, 1);
+  assert.equal(after.crestCount, 1);
   assert.equal(after.itemCount('potion'), 4);
   assert.equal(after.itemCount('field_vessel'), 12);
   assert.equal(after.playTime, 3725);
@@ -178,8 +178,8 @@ test('a save header summarises the run', () => {
   const s = populated();
   const h = s.header(2, 'Route 1');
   assert.equal(h.slot, 2);
-  assert.equal(h.name, 'PERRIN');
-  assert.equal(h.seals, 1);
+  assert.equal(h.name, 'TARIN');
+  assert.equal(h.crests, 1);
   assert.equal(h.mapName, 'Route 1');
   assert.equal(h.vellumCaught, s.caught.size);
   assert.ok(h.savedAt > 0);
@@ -192,7 +192,7 @@ test('loading a save written by a future version is refused rather than guessed 
   assert.equal(minimal.money, 3000);
   assert.equal(minimal.party.length, 0);
   // A save with no position falls back to where a new game begins.
-  assert.equal(minimal.currentMap, 'marrow_house_up');
+  assert.equal(minimal.currentMap, 'hearthmere_house_up');
 });
 
 test('every item referenced by a shop exists', () => {

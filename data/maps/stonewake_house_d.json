@@ -1,0 +1,95 @@
+{
+  "id": "stonewake_house_d",
+  "name": "House",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIUIIIIIIUII",
+    "IkkkffffQNJI",
+    "IfffffffKKKI",
+    "IPffff//fffI",
+    "IfrrffrrffkI",
+    "IfAAAfffVffI",
+    "IfEEEfffffPI",
+    "IkfffffffkfI",
+    "IIIIIIDIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 8,
+      "toMap": "stonewake",
+      "toX": 53,
+      "toY": 39,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "sw_house_d_resident",
+      "sprite": "villager_m",
+      "x": 7,
+      "y": 6,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "sw_house_d"
+    },
+    {
+      "id": "sw_house_d_gran",
+      "sprite": "villager_f",
+      "x": 3,
+      "y": 4,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sw_house_d_gran"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 1,
+      "text": [
+        "Shelf after shelf of Hall challenge tickets, kept, sorted and dated,",
+        "going back further than anyone in this house has been alive.",
+        "They are all for the same Hall. This family collects one thing."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 1,
+      "text": [
+        "The kitchen. A chalkboard by the door with today's date on it",
+        "and, under the date, a number: 4. Then a second number: 0.",
+        "Challengers down. Challengers with a Crest."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 4,
+      "text": [
+        "A ledger of every Keeper the Stone Hall has had, with dates.",
+        "The current entry has been open for twelve years and counting.",
+        "Somebody has written NOT LIKELY in the margin, in pencil, kindly."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 7,
+      "text": [
+        "A map of the workings, hand-copied, pinned up and annotated",
+        "in a dozen hands over a dozen years: where the plates are,",
+        "where the stones go, and one furious line reading THEY MOVE THEM."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "id": "brackwater_clinic_up",
+  "name": "Clinic Bunks",
+  "displayName": "TRAVELLERS' BUNKS",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIIIUIII",
+    "IbFFbFFbFFbFFI",
+    "IeFFeFFeFFeFFI",
+    "IFFFFFFFFFFFFI",
+    "IPFFFFFFFFFFSI",
+    "IFF/rr/FFFFFFI",
+    "IkFFrrFFFFFFPI",
+    "IIIIIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 12,
+      "y": 4,
+      "toMap": "brackwater_clinic",
+      "toX": 12,
+      "toY": 3,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "Four bunks, and a card over each one giving the rate.",
+        "Somebody has crossed out every rate and written",
+        "FREE THIS SEASON. Nobody has crossed that out."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 1,
+      "text": [
+        "The third bunk is slept in and the other three are not.",
+        "Whoever has it has been here long enough to have",
+        "a shelf, a mug, and a very settled opinion of the tide."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 3,
+      "y": 5,
+      "text": [
+        "Two settles with a rug laid between them, close enough",
+        "that strangers end up talking whether they meant to",
+        "or not. The keeper arranged it that way on purpose."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 6,
+      "text": [
+        "A shelf of things left behind: a boot, a spare strap,",
+        "three keys to nothing. The keeper will not throw any",
+        "of it out in case the owner comes back through."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 9,
+      "y": 6,
+      "item": "rouse",
+      "quantity": 1,
+      "flag": "item_bw_clinic_up_rouse"
+    }
+  ]
+}

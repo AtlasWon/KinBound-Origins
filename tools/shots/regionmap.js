@@ -22,7 +22,7 @@ for (let i = 0; i < 16 && top().name === 'dialogue'; i++) d.key('Enter', 10);
 
 // Visit a few places so the map has something filled in.
 const state = top().state;
-for (const m of ['marrow_hollow', 'route_1', 'ashgate', 'route_2']) state.visitMap(m);
+for (const m of ['hearthmere', 'route_1', 'briarbell', 'route_2', 'stonewake']) state.visitMap(m);
 
 d.key('KeyM', 6);
 // The scene fetches places.json in its enter(), and ticks alone never let a

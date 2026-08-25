@@ -1,0 +1,82 @@
+{
+  "id": "briarbell_provisioner",
+  "name": "Provisioner",
+  "displayName": "PROVISIONER",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIUIII",
+    "I;;;;;;;;;;I",
+    "IPKKKFKKKF;I",
+    "I;FFFFFFFF;I",
+    "I;;;FFF;;FFI",
+    "IFFFFFFFFF;I",
+    "IPFFFFFF;;PI",
+    "IIIIIIDIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 7,
+      "toMap": "briarbell",
+      "toX": 7,
+      "toY": 17,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "bb_shopkeeper",
+      "sprite": "clerk",
+      "x": 5,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "briarbell_shop"
+    },
+    {
+      "id": "bb_shop_regular",
+      "sprite": "fisher",
+      "x": 3,
+      "y": 5,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "bb_shop_regular"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 3,
+      "y": 4,
+      "text": [
+        "Vessels stacked to the ceiling, and a hand-lettered card:",
+        "A VESSEL IS NOT A TRAP. IF IT DOES NOT WANT TO COME, IT WILL NOT."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 4,
+      "text": [
+        "Seed trays, twine, grafting knives, a tin of bell polish.",
+        "The polish sells four times a year and never to a stranger."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 2,
+      "text": [
+        "Tonics on green cloth, each with the berry it was pressed from.",
+        "The top shelf card says ASK. The shelf below it says PLEASE DO NOT."
+      ]
+    }
+  ]
+}

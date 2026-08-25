@@ -578,7 +578,7 @@ async function runSmokeTest() {
     // Drive the update panel through its states without touching the network,
     // so the layout of each one can actually be reviewed.
     for (const state of [
-      { status: 'available', current: app.getVersion(), info: { version: '0.2.0', releaseNotes: 'New Bastion, rebuilt tileset, launcher update flow.' }, progress: 0, repo: 'example/kinbound' },
+      { status: 'available', current: app.getVersion(), info: { version: '0.2.0', releaseNotes: 'New Kin Hall, rebuilt tileset, launcher update flow.' }, progress: 0, repo: 'example/kinbound' },
       { status: 'downloading', current: app.getVersion(), info: { version: '0.2.0' }, progress: 46, repo: 'example/kinbound' },
       { status: 'downloaded', current: app.getVersion(), info: { version: '0.2.0' }, progress: 100, repo: 'example/kinbound' },
     ]) {

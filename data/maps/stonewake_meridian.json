@@ -1,0 +1,170 @@
+{
+  "id": "stonewake_meridian",
+  "name": "Meridian Field Office",
+  "displayName": "THE MERIDIAN FOUNDATION",
+  "music": "concord",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIIIIIIIIIIIIII",
+    "IUU::::::::::UUI",
+    "I:?::::::::::?:I",
+    "I::::::::::::::I",
+    "I:KKKKK::KKKKK:I",
+    "I::::::::::::::I",
+    "I:+::::::::::+:I",
+    "I::::::::::::::I",
+    "I:$::::::::::@:I",
+    "I::::::::::::::I",
+    "I:P::::::::::P:I",
+    "I::::::::::::::I",
+    "IIIIIIIDDIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 7,
+      "y": 12,
+      "toMap": "stonewake",
+      "toX": 14,
+      "toY": 28,
+      "facing": "down",
+      "style": "door"
+    },
+    {
+      "x": 8,
+      "y": 12,
+      "toMap": "stonewake",
+      "toX": 15,
+      "toY": 28,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "sw_mer_desk",
+      "sprite": "concord",
+      "x": 7,
+      "y": 3,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sw_mer_desk"
+    },
+    {
+      "id": "sw_mer_tech",
+      "sprite": "concord",
+      "x": 4,
+      "y": 7,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sw_mer_tech"
+    },
+    {
+      "id": "sw_mer_visitor",
+      "sprite": "villager_f",
+      "x": 11,
+      "y": 9,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "sw_mer_visitor"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 2,
+      "text": [
+        "A wall of weather traces, one long roll per station, forty stations.",
+        "Rain, pressure, wind, all of it going along in ordinary wiggles.",
+        "The coastal rolls are the flattest. Somebody has ringed them in pencil."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 2,
+      "text": [
+        "The Foundation's own account of itself, in a handsome frame.",
+        "Labs. Archaeology. Weather stations. Kin conservation. Ocean research.",
+        "Disaster relief. It is a good list. Most of it is true."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 4,
+      "y": 4,
+      "text": [
+        "The public counter. Leaflets, in neat fans.",
+        "STORM SAFETY IN THE UPLANDS. REPORT A SICK KIN. GIVING TO THE FOUNDATION.",
+        "One leaflet has run out. The empty slot is labelled DEEP SURVEY."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 11,
+      "y": 4,
+      "text": [
+        "A recruiting card. FIELD ASSISTANTS WANTED. NO EXPERIENCE REQUIRED.",
+        "Board and lodging, a coat, and a wage better than the quarry pays.",
+        "Nine names on the sheet under it. Six of them are quarry names."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 6,
+      "text": [
+        "A relief map of Caelora under glass, pins in it, and pale grey thread",
+        "run between the pins. The threads all end in the same place:",
+        "open sea, a long way off the east coast, where there is nothing to survey."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 6,
+      "text": [
+        "A cabinet of core samples in numbered tubes, drilled from under the city.",
+        "The numbers run to two hundred and eleven.",
+        "Nobody drills two hundred and eleven holes looking for stone."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 8,
+      "text": [
+        "A workbench, and on it a buoy stripped to its frame:",
+        "a float, an anchor chain, and an instrument nobody here can name",
+        "sitting where a thermometer ought to be."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 8,
+      "text": [
+        "A tank of clear water with a scale model of a harbour wall in it,",
+        "and a paddle that makes waves to order.",
+        "The card says the Foundation rebuilt Tideglass's sea defences for nothing."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 10,
+      "text": [
+        "A door at the back, plain, with a good lock on it.",
+        "The plate says STORES. The lock does not say STORES."
+      ]
+    }
+  ],
+  "_plan": "Everything in this room is true and everything in this room is doing good, and the player should walk out liking the Foundation. The unease is entirely in the margins -- flat coastal weather traces, two hundred core samples, threads on a map that end in open water, one very good lock on a stores cupboard -- and none of it is pointed at. Cassian is not named. Nobody is sinister. Come back after Act 4 and every one of these labels reads differently."
+}

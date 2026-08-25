@@ -1,0 +1,31 @@
+{
+  "speakers": {
+    "sw_museum_kid": "SCHOOL PARTY",
+    "sw_museum_warden": "MUSEUM WARDEN"
+  },
+  "entries": {
+    "sw_museum_kid": [
+      "We come every year and every year it is the rock.",
+      "I have written FORTY KINDS OF ROCK four times now.",
+      "The good case is at the back and we are never allowed to the back."
+    ],
+    "sw_museum_warden": [
+      {
+        "ifFlags": [
+          "met_lyra"
+        ],
+        "lines": [
+          "The girl at the far case. Nine days.",
+          "She asked me on the second day whether the museum had a fire plan.",
+          "Not what to do in a fire. What we would carry out. Nobody has ever asked me that."
+        ]
+      },
+      {
+        "lines": [
+          "Do not touch the glass, do not lift the wheel, and do enjoy yourself.",
+          "In that order. The wheel is the one everybody argues about."
+        ]
+      }
+    ]
+  }
+}

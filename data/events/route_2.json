@@ -1,0 +1,167 @@
+[
+  {
+    "id": "r2_ruin_door",
+    "_note": "THE FIRST STORY BEAT OF THE GAME, and the reason the road was routed through this clearing instead of past it. The trigger is BOTH rows of the clearing floor, x20-29, because there are three ways in -- down the road from the east, up the spur from the cave, and back down off the pass -- and the beat is not allowed to be missed by any of them. Every tile in the list is paving or road; none of it is a detour.",
+    "_note2": "THE KEEPSAKE. Mira's gift is item `tideheart` and her script sets flag `tideheart_given` (data/events/common.json). Both are tested, because a player who somehow has not got it must still be able to open the arch and reach the Act 2 beats -- the else branch says the same thing without naming what did it. Nothing here says the word Tideheart: the player does not learn its name until Stage 2, and Mira calls it your father's keepsake.",
+    "_note3": "EVERY BOX FITS ONE SCREEN. The dialogue box wraps to three lines of about thirty-two characters at the narrowest view, so a four-line box leaves one orphan word alone on a second page. tools/shots/rt-boxcheck.js measures these against the renderer's own wrapText and reports anything that spills.",
+    "trigger": "step",
+    "map": "route_2",
+    "at": [
+      { "x": 20, "y": 9 }, { "x": 21, "y": 9 }, { "x": 22, "y": 9 }, { "x": 23, "y": 9 },
+      { "x": 24, "y": 9 }, { "x": 25, "y": 9 }, { "x": 26, "y": 9 }, { "x": 27, "y": 9 },
+      { "x": 28, "y": 9 }, { "x": 29, "y": 9 },
+      { "x": 20, "y": 10 }, { "x": 21, "y": 10 }, { "x": 22, "y": 10 }, { "x": 23, "y": 10 },
+      { "x": 24, "y": 10 }, { "x": 25, "y": 10 }, { "x": 26, "y": 10 }, { "x": 27, "y": 10 },
+      { "x": 28, "y": 10 }, { "x": 29, "y": 10 }
+    ],
+    "when": { "kind": "not", "of": { "kind": "flag", "flag": "r2_ruin_open" } },
+    "onceFlag": "r2_ruin_open",
+    "actions": [
+      { "kind": "face", "who": "player", "dir": "up" },
+      {
+        "kind": "say",
+        "lines": [
+          "The ground stops being ground.",
+          "Somebody cut these slabs flat",
+          "and fitted them without mortar."
+        ]
+      },
+      { "kind": "sfx", "sound": "fx_charge" },
+      { "kind": "wait", "frames": 22 },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "any",
+          "of": [
+            { "kind": "hasItem", "item": "tideheart" },
+            { "kind": "flag", "flag": "tideheart_given" }
+          ]
+        },
+        "then": [
+          {
+            "kind": "say",
+            "lines": [
+              "Your father's keepsake goes warm",
+              "against your back. Then it pulls",
+              "once, hard, towards the rock."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "lines": [
+              "Something in your pack goes hot.",
+              "Then it pulls, once and hard,",
+              "towards the rock face."
+            ]
+          }
+        ]
+      },
+      { "kind": "sfx", "sound": "warp" },
+      { "kind": "shake", "frames": 28, "power": 2 },
+      { "kind": "wait", "frames": 28 },
+      { "kind": "sfx", "sound": "stairs" },
+      {
+        "kind": "say",
+        "lines": [
+          "A seam runs up the rock, turns",
+          "over, and comes down again.",
+          "It is an arch. It is open."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Cold air comes out of it.",
+          "It smells of the sea. The sea",
+          "is four days from here."
+        ]
+      },
+      { "kind": "wait", "frames": 16 },
+      { "kind": "sfx", "sound": "spotted" },
+      { "kind": "wait", "frames": 18 },
+      {
+        "kind": "say",
+        "lines": [
+          "Movement on the shelf above",
+          "the door. Somebody is up there",
+          "behind a brass tripod."
+        ]
+      },
+      { "kind": "say", "lines": ["It is not pointed at the cliff."] },
+      { "kind": "face", "who": "r2_scout", "dir": "down" },
+      { "kind": "wait", "frames": 22 },
+      {
+        "kind": "say",
+        "who": "SCOUT",
+        "lines": ["...", "Thank you. That is exactly", "what I needed."]
+      },
+      { "kind": "wait", "frames": 12 },
+      { "kind": "face", "who": "r2_scout", "dir": "right" },
+      { "kind": "wait", "frames": 10 },
+      {
+        "kind": "move",
+        "who": "r2_scout",
+        "steps": ["right", "right", "right", "right", "right", "right", "right", "right"],
+        "speed": "run"
+      },
+      { "kind": "removeNpc", "who": "r2_scout" },
+      { "kind": "setFlag", "flag": "r2_scout_gone" },
+      {
+        "kind": "say",
+        "lines": [
+          "She is along the cliff top and",
+          "gone before you have found",
+          "a way up to it."
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "r2_ruin_pin",
+    "_note": "You were seen, and here is the proof, delivered on the way out rather than in dialogue. The warp back from the arch lands the player on 25,9 and OverworldScene.loadMap seeds lastTile with the arrival tile, so a step script on the landing square itself would never fire -- hence the ring of tiles around the door instead. The mark on the pin is deliberately unreadable: the player learns here only that somebody with a budget was standing over them, not who.",
+    "trigger": "step",
+    "map": "route_2",
+    "at": [
+      { "x": 23, "y": 9 }, { "x": 24, "y": 9 }, { "x": 26, "y": 9 }, { "x": 27, "y": 9 },
+      { "x": 24, "y": 10 }, { "x": 25, "y": 10 }, { "x": 26, "y": 10 }
+    ],
+    "when": {
+      "kind": "all",
+      "of": [
+        { "kind": "flag", "flag": "r2_ruin_read" },
+        { "kind": "not", "of": { "kind": "flag", "flag": "r2_pin_seen" } }
+      ]
+    },
+    "onceFlag": "r2_pin_seen",
+    "actions": [
+      { "kind": "sfx", "sound": "sign" },
+      {
+        "kind": "say",
+        "lines": [
+          "A brass pin is driven into the",
+          "paving. It was not there when",
+          "you went in."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "It carries a maker's mark you",
+          "do not know, and it is level",
+          "to a hair."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Somebody came down off that",
+          "shelf, measured where you stood,",
+          "and went away again."
+        ]
+      }
+    ]
+  }
+]

@@ -38,7 +38,7 @@ const body = await import('/build/js/world/body.js');
 out.push('WALK_SPEED ' + body.WALK_SPEED);
 
 const tryDoor = async (offset) => {
-  d.game.scenes.replaceAll(new Overworld(state, 'ashgate', 6, 9, 'up'));
+  d.game.scenes.replaceAll(new Overworld(state, 'briarbell', 6, 9, 'up'));
   await d.loadWait(1100);
   clear();
   const s = top();

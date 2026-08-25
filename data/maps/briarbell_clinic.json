@@ -1,0 +1,108 @@
+{
+  "id": "briarbell_clinic",
+  "name": "Kin Clinic",
+  "displayName": "KIN CLINIC",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIIIUIII",
+    "I+++++kkF?FFkI",
+    "IPKKFKKKFFFFFI",
+    "IFFFFFFFFFFFPI",
+    "IkFFFFFFFAAFFI",
+    "IFFFFFFFFEEFFI",
+    "IF/rr/FFFFFFkI",
+    "IFFrrFFFFFFFFI",
+    "IPFFFFFFFFFFPI",
+    "IIIIIIDIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 9,
+      "toMap": "briarbell",
+      "toX": 7,
+      "toY": 8,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "clinic_keeper",
+      "sprite": "healer",
+      "x": 4,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "clinic_heal"
+    },
+    {
+      "id": "clinic_roost",
+      "sprite": "professor",
+      "x": 10,
+      "y": 1,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "roost_terminal"
+    },
+    {
+      "id": "bb_clinic_child",
+      "sprite": "kid",
+      "x": 3,
+      "y": 6,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "bb_clinic_child"
+    },
+    {
+      "id": "bb_clinic_hand",
+      "sprite": "villager_m",
+      "x": 10,
+      "y": 5,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "bb_clinic_hand"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 1,
+      "text": [
+        "A brass terminal. THE ROOST, stencilled on the side.",
+        "Kin you cannot carry wait here."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 11,
+      "y": 0,
+      "text": [
+        "The noticeboard. A lost goat. A found goat, different goat.",
+        "And a Hall notice: BEFORE YOU CHALLENGE, READ THE TYPE CHART.",
+        "Somebody has written under it: OR DO NOT. TOVE LIKES THE PRACTICE."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 2,
+      "text": [
+        "Over the counter, the restorative bank, lamps in green.",
+        "The whole rack is planted out with cuttings from the bell tree.",
+        "The keeper says they take better in here. Nobody argues with her."
+      ]
+    }
+  ]
+}

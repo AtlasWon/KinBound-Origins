@@ -26,7 +26,7 @@ async function crop(name, tx, ty, tw, th, scale) {
 }
 
 for (const [tag, px, py] of [['front', 7, 5], ['beside', 3, 4], ['behind', 7, 3]]) {
-  d.game.scenes.replaceAll(new Overworld(state, 'vess_station', px, py, 'up'));
+  d.game.scenes.replaceAll(new Overworld(state, 'sorrell_lab', px, py, 'up'));
   await d.loadWait(900);
   for (let i = 0; i < 20 && top().name === 'dialogue'; i++) d.key('Enter', 10);
   d.tick(6);

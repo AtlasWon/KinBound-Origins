@@ -76,7 +76,7 @@ test('every track is playable and its channels are the same length', () => {
 
 test('the tracks the maps ask for all exist', () => {
   const ids = new Set(TRACKS.map((t) => t.id));
-  const needed = ['town_hollow', 'town_indoor', 'station', 'route_west',
+  const needed = ['town_hearth', 'town_indoor', 'station', 'route_west',
     'battle_wild', 'battle_trainer', 'victory', 'title_theme'];
   for (const id of needed) assert.ok(ids.has(id), `missing track "${id}"`);
 });

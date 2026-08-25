@@ -1,0 +1,36 @@
+{
+  "speakers": {
+    "sw_clinic_rester": "RESTING HAND",
+    "sw_clinic_orderly": "ORDERLY"
+  },
+  "entries": {
+    "sw_rester": [
+      {
+        "lines": [
+          "Walked up from Briarbell in one go. Do not do that. I am serious.",
+          "There is a ledge halfway you can drop down on the way home.",
+          "Only on the way home, mind. It is a ledge, not a staircase."
+        ]
+      }
+    ],
+    "sw_orderly": [
+      {
+        "ifFlags": [
+          "crest_2_taken"
+        ],
+        "lines": [
+          "Straight down the mine and straight back up with a Crest.",
+          "Do you know how many of you we get in here on a stretcher?",
+          "Three a month. Do not make it four. Sit down for ten minutes."
+        ]
+      },
+      {
+        "lines": [
+          "Going to the Hall? Come and see me first, not after.",
+          "It is a working mine with the machinery still in it.",
+          "The Hall has never lost anybody. I would like that sentence to stay true."
+        ]
+      }
+    ]
+  }
+}

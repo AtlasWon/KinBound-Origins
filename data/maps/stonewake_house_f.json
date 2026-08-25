@@ -1,0 +1,81 @@
+{
+  "id": "stonewake_house_f",
+  "name": "House",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIUIIII",
+    "IkkkfffQNJfI",
+    "IffffffffKKI",
+    "IPffbeffff/I",
+    "IfffffffrrfI",
+    "IfAAffffVfkI",
+    "IfEEfffffkPI",
+    "IIIIIIDIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 7,
+      "toMap": "stonewake",
+      "toX": 35,
+      "toY": 46,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "sw_house_f_resident",
+      "sprite": "hiker",
+      "x": 4,
+      "y": 4,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sw_house_f"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 1,
+      "text": [
+        "A row of lamps on a shelf, thirty of them, each with a number stamped on.",
+        "A banksman gives out the lamps at the shaft head and takes them back,",
+        "and the numbers are how he knows whether everybody came up."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 1,
+      "text": [
+        "The kitchen. One cup out. One chair pulled out."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 4,
+      "y": 3,
+      "text": [
+        "A bed made up in the front room, on the ground floor, near the door.",
+        "The stairs to the proper bedroom have a coat hung over the rail",
+        "and have not been used in a while."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 5,
+      "text": [
+        "A framed lamp check, number 12, mounted on its own.",
+        "The card under it gives a date and a name and nothing else.",
+        "Everyone in Stonewake over forty knows the date."
+      ]
+    }
+  ]
+}

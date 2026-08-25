@@ -89,8 +89,8 @@ test('every warp sits on a tile the player can actually stand on', () => {
 });
 
 test('the world is one connected graph reachable from the starting town', () => {
-  const seen = new Set(['marrow_hollow']);
-  const queue = ['marrow_hollow'];
+  const seen = new Set(['hearthmere']);
+  const queue = ['hearthmere'];
   while (queue.length) {
     const id = queue.shift();
     for (const warp of MAPS[id]?.warps ?? []) {
@@ -101,7 +101,7 @@ test('the world is one connected graph reachable from the starting town', () => 
     }
   }
   const unreachable = Object.keys(MAPS).filter((id) => !seen.has(id));
-  assert.deepEqual(unreachable, [], `maps unreachable from Marrow Hollow: ${unreachable.join(', ')}`);
+  assert.deepEqual(unreachable, [], `maps unreachable from Hearthmere: ${unreachable.join(', ')}`);
 });
 
 test('every door warp has a matching way back', () => {
@@ -200,8 +200,8 @@ test('every event action references content that exists', () => {
       if (a.kind === 'giveArt') {
         assert.ok(ARTS.has(a.art), `${where} grants unknown field art "${a.art}"`);
       }
-      if (a.kind === 'giveSeal') {
-        assert.ok(a.seal >= 1 && a.seal <= 8, `${where} grants seal ${a.seal}`);
+      if (a.kind === 'giveCrest') {
+        assert.ok(a.crest >= 1 && a.crest <= 8, `${where} grants crest ${a.crest}`);
       }
       if (a.kind === 'warp') {
         assert.ok(MAPS[a.map], `${where} warps to unknown map "${a.map}"`);
@@ -310,7 +310,7 @@ test('every map that declares an encounter table has one', () => {
 /* -------------------------------------------------------- progression -- */
 
 test('trainer levels rise along the intended route order', () => {
-  const order = ['r1_', 'r2_', 'bastion1_', 'r3_'];
+  const order = ['r1_', 'r2_', 'hall1_', 'r3_'];
   const peak = order.map((prefix) => {
     const levels = Object.values(TRAINERS)
       .filter((t) => t.id.startsWith(prefix))
@@ -322,7 +322,7 @@ test('trainer levels rise along the intended route order', () => {
       `trainer levels drop from ${order[i - 1]} (${peak[i - 1]}) to ${order[i]} (${peak[i]})`);
   }
   // The first Keeper should sit at the reference badge-one level.
-  const roxen = TRAINERS.bastion1_roxen;
+  const roxen = TRAINERS.hall1_roxen;
   const top = Math.max(...roxen.party.map((m) => m.level));
   assert.ok(top >= 14 && top <= 18, `first Keeper tops out at level ${top}, expected 14-18`);
 });
@@ -331,10 +331,10 @@ test('shop stock is gated so early towns cannot sell late-game items', () => {
   for (const shop of read('data/items/shops.json')) {
     for (const entry of shop.stock) {
       const item = read('data/items/items.json').find((i) => i.id === entry.item);
-      // Anything expensive must be behind at least one Seal.
+      // Anything expensive must be behind at least one Bond Crest.
       if (item.price >= 1500) {
-        assert.ok(entry.requiresSeal >= 1,
-          `${shop.id} sells ${item.id} (${item.price}) with no Seal requirement`);
+        assert.ok(entry.requiresCrest >= 1,
+          `${shop.id} sells ${item.id} (${item.price}) with no Crest requirement`);
       }
     }
   }

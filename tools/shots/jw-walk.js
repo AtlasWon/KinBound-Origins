@@ -84,16 +84,16 @@ const tap = async (map, x, y, key, ticks) => {
     + (Math.hypot(p.x - x0, p.y - y0) / 16).toFixed(2) + ' tiles), facing ' + p.facing);
 };
 
-await cross('ashgate north-south', 'ashgate', 14, 4, 'KeyS', 400);
+await cross('briarbell north-south', 'briarbell', 14, 4, 'KeyS', 400);
 await cross('route_1 north-south', 'route_1', 14, 2, 'KeyS', 500);
 await cross('route_1 east-west', 'route_1', 3, 12, 'KeyD', 500);
 
-await tap('ashgate', 14, 8, 'KeyS', 1);
-await tap('ashgate', 14, 8, 'KeyS', 4);
-await tap('ashgate', 14, 8, 'KeyS', 12);
+await tap('briarbell', 14, 8, 'KeyS', 1);
+await tap('briarbell', 14, 8, 'KeyS', 4);
+await tap('briarbell', 14, 8, 'KeyS', 12);
 
 // The walk cycle, sampled across one tile of travel, judged at 1x.
-const s = await at('ashgate', 14, 8);
+const s = await at('briarbell', 14, 8);
 d.down('KeyS');
 for (let i = 0; i < 13; i++) {
   d.tick(1);

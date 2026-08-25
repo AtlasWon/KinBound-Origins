@@ -261,7 +261,7 @@ right.
 > It is 1.7 m tall and weighs 88.6 kg. Draw it **115-126 px tall** inside the
 > 128 × 128 canvas, so its size on screen is honest next to the others — this one is large and should nearly fill the canvas.
 >
-> Lore, for character rather than literal detail: It fights standing up, which no other cat in Veldras does. The stance is learned, not born.
+> Lore, for character rather than literal detail: It fights standing up, which no other cat in Caelora does. The stance is learned, not born.
 >
 > It is stage 3 of 3 in a family: Cinderpaw → Blazelynx → **Volcatrix**. It evolves FROM Blazelynx at level 34, so it should look like the same animal grown up — keep a shared silhouette signature and a related palette, but change the proportions and add complexity.
 >
@@ -294,7 +294,7 @@ right.
 > It is 0.4 m tall and weighs 8.8 kg. Draw it **65-85 px tall** inside the
 > 128 × 128 canvas, so its size on screen is honest next to the others.
 >
-> Lore, for character rather than literal detail: It taps the water surface in patterns. Vess is convinced this is counting. Nobody can say what it is counting.
+> Lore, for character rather than literal detail: It taps the water surface in patterns. Sorrell is convinced this is counting. Nobody can say what it is counting.
 >
 > It is stage 1 of 3 in a family: **Rilltail** → Brookmaw → Maelstrix. It evolves INTO Brookmaw at level 16, so leave room for it to grow — this stage should read as younger and simpler.
 >
@@ -393,7 +393,7 @@ right.
 > It is 0.3 m tall and weighs 3.4 kg. Draw it **50-65 px tall** inside the
 > 128 × 128 canvas, so its size on screen is honest next to the others — this one is small and should have plenty of empty canvas above it.
 >
-> Lore, for character rather than literal detail: Every household in Veldras has a story about one. Most of the stories end with a missing loaf.
+> Lore, for character rather than literal detail: Every household in Caelora has a story about one. Most of the stories end with a missing loaf.
 >
 > It is stage 1 of 2 in a family: **Nibbet** → Burrowen. It evolves INTO Burrowen at level 18, so leave room for it to grow — this stage should read as younger and simpler.
 >

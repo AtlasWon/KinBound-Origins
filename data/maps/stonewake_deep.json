@@ -1,0 +1,150 @@
+{
+  "id": "stonewake_deep",
+  "name": "The Deep Gallery",
+  "displayName": "THE DEEP GALLERY",
+  "music": "station",
+  "battleBackdrop": "quarry",
+  "indoor": true,
+  "rows": [
+    "CCCCCCCCCCCCCCCCCCCC",
+    "CCCSssssssssssssssCC",
+    "CCCssssssssssssssCCC",
+    "CCCssssssssssssssCCC",
+    "CCCssssssssssssssCCC",
+    "CCCCCCCssssssCCCCCCC",
+    "CCCCCCCssssssCCCCCCC",
+    "CCssssssssssssssssCC",
+    "CCsBBBBBBBBBBBBBBsCC",
+    "CCssCCCC~~~~CCCCssCC",
+    "CCssCCCC~~~~CCCCssCC",
+    "CCssssssssssssssssCC",
+    "CCssssssssssssssssCC",
+    "CCCCCCCCsppppsCCCCCC",
+    "CCCCCCCCsspsssCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCC"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 14,
+      "toMap": "stonewake_mine",
+      "toX": 11,
+      "toY": 16,
+      "facing": "down",
+      "style": "stairs"
+    },
+    {
+      "x": 10,
+      "y": 14,
+      "toMap": "stonewake_mine",
+      "toX": 12,
+      "toY": 16,
+      "facing": "down",
+      "style": "stairs"
+    },
+    {
+      "x": 3,
+      "y": 1,
+      "toMap": "stonewake_hall",
+      "toX": 4,
+      "toY": 3,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "hall2_roxen",
+      "sprite": "hiker",
+      "x": 9,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hall2_roxen"
+    },
+    {
+      "id": "hall2_guard_sump",
+      "sprite": "villager_f",
+      "x": 5,
+      "y": 12,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "sw_hall_delve_c",
+      "sightRange": 4
+    },
+    {
+      "id": "hall2_lampman",
+      "sprite": "hiker",
+      "x": 14,
+      "y": 11,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hall2_lampman"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 8,
+      "text": [
+        "The last stretch of cart road anyone bothered to keep.",
+        "It runs to the edge of the water and stops.",
+        "Three galleries below this one are the water."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 6,
+      "y": 5,
+      "text": [
+        "A pump house, or what a pump house leaves behind.",
+        "Bolt holes in the floor in the shape of something enormous,",
+        "and a bill of sale nailed to the rock. Sold. Not replaced."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 5,
+      "text": [
+        "A survey stake driven into the gallery floor, brass-capped, new.",
+        "MERIDIAN FOUNDATION - GEOLOGICAL. DO NOT DISTURB.",
+        "Somebody has disturbed it. Somebody has bent it right over."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 4,
+      "text": [
+        "A desk, a lamp, a kettle and a folding cot, sixty fathom down.",
+        "Whoever works here does not think of it as being underground.",
+        "Whoever works here thinks of it as being at work."
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 16,
+      "y": 3,
+      "item": "rouse",
+      "quantity": 1,
+      "flag": "item_sw_deep_a"
+    },
+    {
+      "kind": "item",
+      "x": 3,
+      "y": 11,
+      "item": "great_potion",
+      "quantity": 1,
+      "flag": "item_sw_deep_b"
+    }
+  ],
+  "_plan": "Roxen's Hall is her office at the bottom of her own mine, and the room says so: a desk, a kettle and a cot at sixty fathom. The flooded middle of the gallery is why the route round is a ring rather than a straight walk, and the Meridian survey stake at 13,5 is the first thing in the game that puts the Foundation somewhere it was not invited. The man-engine at 3,1 is one-way up to the Hall, so nobody re-walks the workings after winning."
+}

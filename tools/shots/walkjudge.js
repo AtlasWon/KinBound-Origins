@@ -67,7 +67,7 @@ for (const off of [0, 6, 10, 14, -10, -14]) {
 out.push('off-centre talk, real key press: ' + tries.join(' '));
 
 // --- a look at the town at 1x --------------------------------------------
-d.game.scenes.replaceAll(new Overworld(state, 'marrow_hollow', 15, 9, 'up'));
+d.game.scenes.replaceAll(new Overworld(state, 'hearthmere', 15, 9, 'up'));
 await d.loadWait(1400);
 clear();
 await d.shoot('judge-town-1x', 6, 1);

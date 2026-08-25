@@ -1,6 +1,7 @@
 # KinBound — Amber Version
 
-An original GBA-era monster-catching RPG. Original region, creatures, story, art and music;
+An original GBA-era monster-catching RPG set in **Caelora**, a region of land wrapped around
+the Caeloran Sea. Original region, creatures, story, art and music;
 built in TypeScript on an HTML5 canvas with **no runtime dependencies**.
 
 Reference games of the era were studied for *systems and pacing only* — see
@@ -114,13 +115,13 @@ the scene plays back, so battle speed and animation settings never change the ru
 attentive player could see. Higher tiers understand type matchups, KO range, setup timing,
 switching out of bad matchups and healing.
 
-**Field arts** — traversal gating. Bastion Keepers grant arts that retroactively open places the
+**Field arts** — traversal gating. Hallkeepers grant arts that retroactively open places the
 player has already walked past: **Shoulder** pushes heavy stones, **Wade** crosses shallow water.
-Each gym teaches its art inside the Bastion (where the puzzle is set up for it) before awarding it
+Each Hall teaches its art on the floor where the puzzle is set up for it, before awarding it
 for use in the world.
 
 **Systems** — party, the Roost (storage), bag with pockets, the Vellum (encyclopedia), the region
-map, shops, Waystations, save/load with three manual slots plus autosave at every Waystation, full
+map, shops, Kin Clinics, save/load with three manual slots plus autosave at every Clinic, full
 options with key rebinding, and a JSON event VM that drives all story content.
 
 **Art & audio** — the world is generated at runtime from code and data: the 5x7 bitmap font, the
@@ -199,7 +200,7 @@ without art keeps its generated sprite. `npm run kinart` indexes the folder and 
 that will look wrong. Full spec: [assets/kin/README.md](assets/kin/README.md).
 
 **A new story beat** — add an `EventScript` to `data/events/<mapId>.json` and point an NPC's
-`script` field at its id. Scripts have conditions (`flag`, `hasItem`, `hasSeal`, `defeated`,
+`script` field at its id. Scripts have conditions (`flag`, `hasItem`, `hasCrest`, `defeated`,
 `partyHas`, …) and actions (`say`, `ask`, `choice`, `giveItem`, `giveKin`, `battleTrainer`,
 `move`, `warp`, `fade`, `setFlag`, `openShop`, `starterChoice`, …). NPCs with no script fall back
 to the flag-aware dialogue table in `data/dialogue/`.
@@ -266,8 +267,8 @@ strand the player mid-battle.
 
 ## Current content scale
 
-Act 1 is playable end to end: Marrow Hollow through Route 1, Ashgate, Route 2, Kellowmere and the
-Stone Bastion, then Route 3, Tanners Rest, Route 4 and Brackwater with the Tide Bastion — two Seals,
+Act 1 is playable end to end: Hearthmere through Route 1, Ashgate, Route 2, Kellowmere and the
+Stone Hall, then Route 3, Tanners Rest, Route 4 and Brackwater with the Tide Hall — two Bond Crests,
 two field arts, and the antagonist's first appearance. The systems are finished; the world is
 half-built.
 
@@ -278,8 +279,8 @@ half-built.
 | Maps | 29 | 40+ |
 | Trainers | 29 (24 placed) | hundreds |
 | Settlements | 5 of 14 | 14 |
-| Bastions (gyms) | 2 of 8 | 8 |
+| Kin Halls (gyms) | 2 of 8 | 8 |
 | Field arts | 2 of 8 | 8 |
 
-The design for the full region, story and roster is in
-[docs/DESIGN_BIBLE.md](docs/DESIGN_BIBLE.md).
+The authority on names, people, places and story beats is
+[docs/CANON.md](docs/CANON.md), which also carries the staged build order.

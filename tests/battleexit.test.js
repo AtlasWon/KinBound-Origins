@@ -1,8 +1,8 @@
 /**
  * Regression: handing control back after a battle.
  *
- * The game-breaking version of this was losing the first fight in Marrow
- * Hollow. That script is authored `onLoss: "continue"` -- Perrin commiserates
+ * The game-breaking version of this was losing the first fight in
+ * Hearthmere. That script is authored `onLoss: "continue"` -- Tarin commiserates
  * and the scene walks the player home to be patched up -- but the overworld ran
  * its standard blackout on every loss regardless. Two owners then drove the
  * field at once: the blackout held `busy` until its own fade called back, and
@@ -141,7 +141,7 @@ test('every authored onLoss:continue battle is one the blackout will skip', asyn
     if (!f.endsWith('.json')) continue;
     walk(JSON.parse(readFileSync(resolve(dir, f), 'utf8')));
   }
-  assert.ok(found > 0, 'the first battle in Marrow Hollow is authored onLoss:continue');
+  assert.ok(found > 0, 'the first battle in Hearthmere is authored onLoss:continue');
 
   // And the host maps that flag through for every one of them.
   const scene = stubScene();

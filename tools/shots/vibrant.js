@@ -41,29 +41,29 @@ const visit = async (map, x, y, facing, name, scale) => {
   await d.shoot(name, 8, scale);
 };
 
-await visit('marrow_hollow', 15, 9, 'up', 'vb-1x-hollow', 1);
+await visit('hearthmere', 15, 9, 'up', 'vb-1x-hollow', 1);
 await visit('route_1', 14, 12, 'down', 'vb-1x-route', 1);
-await visit('ashgate', 15, 8, 'up', 'vb-1x-civic', 1);
-await visit('ashgate', 10, 15, 'up', 'vb-1x-houses', 1);
-await visit('ashgate', 7, 21, 'up', 'vb-1x-pond', 1);
-await visit('marrow_hollow', 15, 9, 'up', 'vb-3x-hollow', 3);
+await visit('briarbell', 15, 8, 'up', 'vb-1x-civic', 1);
+await visit('briarbell', 10, 15, 'up', 'vb-1x-houses', 1);
+await visit('briarbell', 7, 21, 'up', 'vb-1x-pond', 1);
+await visit('hearthmere', 15, 9, 'up', 'vb-3x-hollow', 3);
 await visit('route_1', 14, 12, 'down', 'vb-3x-route', 3);
-await visit('ashgate', 15, 8, 'up', 'vb-3x-civic', 3);
-await visit('ashgate', 10, 15, 'up', 'vb-3x-houses', 3);
-await visit('ashgate', 7, 21, 'up', 'vb-3x-pond', 3);
+await visit('briarbell', 15, 8, 'up', 'vb-3x-civic', 3);
+await visit('briarbell', 10, 15, 'up', 'vb-3x-houses', 3);
+await visit('briarbell', 7, 21, 'up', 'vb-3x-pond', 3);
 await visit('kellowmere', 15, 12, 'up', 'vb-1x-quarry', 1);
 await visit('kellowmere', 15, 12, 'up', 'vb-3x-quarry', 3);
 await visit('brackwater', 15, 12, 'up', 'vb-1x-coast', 1);
 await visit('brackwater', 15, 12, 'up', 'vb-3x-coast', 3);
-await visit('marrow_house_player', 6, 5, 'up', 'vb-1x-home', 1);
-await visit('marrow_house_player', 6, 5, 'up', 'vb-3x-home', 3);
-await visit('marrow_hollow', 11, 18, 'up', 'vb-1x-shore', 1);
-await visit('marrow_hollow', 11, 18, 'up', 'vb-3x-shore', 3);
-await visit('marrow_hollow', 11, 13, 'up', 'vb-3x-court', 3);
+await visit('hearthmere_house_player', 6, 5, 'up', 'vb-1x-home', 1);
+await visit('hearthmere_house_player', 6, 5, 'up', 'vb-3x-home', 3);
+await visit('hearthmere', 11, 18, 'up', 'vb-1x-shore', 1);
+await visit('hearthmere', 11, 18, 'up', 'vb-3x-shore', 3);
+await visit('hearthmere', 11, 13, 'up', 'vb-3x-court', 3);
 // Standing in the route_1 patch: the check that the tall-grass skirt still
 // covers a character's legs and paints nothing pale across their chest.
 await visit('route_1', 6, 24, 'up', 'vb-4x-wade', 4);
-await visit('ashgate_waystation', 4, 4, 'up', 'vb-1x-way', 1);
-await visit('vess_station', 7, 8, 'up', 'vb-1x-lab', 1);
+await visit('briarbell_clinic', 4, 4, 'up', 'vb-1x-way', 1);
+await visit('sorrell_lab', 7, 8, 'up', 'vb-1x-lab', 1);
 
 return { out };

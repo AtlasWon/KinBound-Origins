@@ -1,0 +1,139 @@
+[
+  {
+    "id": "hall2_roxen",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "hasCrest", "crest": 2 },
+        "then": [
+          {
+            "kind": "say",
+            "who": "ROXEN QUILL",
+            "lines": [
+              "Still down here? The kettle's over there and it's nobody's job but yours.",
+              "When you go east, look at the water in Tideglass and tell me if it moves.",
+              "Everyone says I'm imagining mine. I would like to be imagining it."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "who": "ROXEN QUILL",
+            "lines": [
+              "You came down. Most of them get as far as the cage and stand there thinking.",
+              "Roxen Quill. Nineteen years on the west face, twelve keeping the Hall,",
+              "and I have never once done the job from a nice room at the top."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "ROXEN QUILL",
+            "lines": [
+              "Terra, since you'll be wanting to know. Weight and patience.",
+              "Nothing I have hits especially hard. Nothing I have has to."
+            ]
+          },
+          { "kind": "battleTrainer", "trainer": "sw_keeper_roxen" },
+          {
+            "kind": "if",
+            "cond": { "kind": "var", "var": "last_battle_won", "op": "==", "value": 1 },
+            "then": [
+              { "kind": "giveCrest", "crest": 2, "name": "Quarry Crest" },
+              { "kind": "sfx", "sound": "levelup" },
+              {
+                "kind": "say",
+                "lines": [
+                  "You received the QUARRY CREST.",
+                  "Two of eight."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "ROXEN QUILL",
+                "lines": [
+                  "Hah. Good.",
+                  "You didn't out-hit me. You out-waited me. That's the harder one to learn",
+                  "and nobody ever believes me when I say so."
+                ]
+              },
+              { "kind": "giveArt", "art": "shoulder" },
+              {
+                "kind": "say",
+                "lines": [
+                  "You learned the field art SHOULDER.",
+                  "Heavy stones out in the world can be pushed now."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "ROXEN QUILL",
+                "lines": [
+                  "Nineteen years underground taught me exactly one thing worth passing on.",
+                  "Anything moves. Most of it just wants a shoulder and a reason.",
+                  "That goes for stone. It goes for a great deal that is not stone."
+                ]
+              },
+              { "kind": "giveItem", "item": "great_potion", "count": 2 },
+              { "kind": "say", "lines": ["Roxen handed over 2 Great Potions."] },
+              { "kind": "wait", "frames": 18 },
+              {
+                "kind": "say",
+                "who": "ROXEN QUILL",
+                "lines": [
+                  "One more thing, {name}, and I'd like you to actually hear this one.",
+                  "The Foundation surveyed my workings in the spring. Depth soundings, they said.",
+                  "Two hundred and eleven holes. I counted, because nobody else was going to."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "ROXEN QUILL",
+                "lines": [
+                  "They weren't measuring the rock. Nobody drills that for rock.",
+                  "They were measuring what the rock is standing on.",
+                  "Ask them about it sometime. Watch how fast they stop being friendly."
+                ]
+              },
+              { "kind": "setFlag", "flag": "crest_2_taken" },
+              { "kind": "setVar", "var": "act", "value": 2 }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "hall2_lampman",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "hasCrest", "crest": 2 },
+        "then": [
+          {
+            "kind": "say",
+            "who": "LAMP MAN",
+            "lines": [
+              "Beat her. Right. I owe four people money.",
+              "Take the man-engine up out of her office, it's quicker than the cage.",
+              "It only goes up. She had it built that way. She would."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "who": "LAMP MAN",
+            "lines": [
+              "Lamp check, please. No? Nobody ever has one.",
+              "She's straight on through, past the water. She'll have heard the cage.",
+              "She hears everything down here. It's the only quiet place left in the city."
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

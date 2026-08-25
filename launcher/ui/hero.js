@@ -4,8 +4,8 @@
  * Drawn to a canvas rather than shipped as a PNG, for the same reason the game
  * generates its own tiles and sprites: no binary assets anywhere in the repo,
  * and the art stays editable by anyone who can read the file. It is the game's
- * own title composition -- a banded dusk sky, the Hollow Sea, the crescent
- * coast with the Bastion light on it, kin in the air, and the Warden rolling
+ * own title composition -- a banded dusk sky, the Caeloran Sea, the crescent
+ * coast with the Kin Hall light on it, kin in the air, and the Warden rolling
  * just under the surface.
  *
  * One routine paints it at any size, so the shelf thumbnail is the same picture
@@ -117,7 +117,7 @@
    * Height of the coast at a given x.
    *
    * Steep exponent on purpose: the land should be two headlands closing in from
-   * the sides, not a dome across the whole sky. The Bastion reads its own
+   * the sides, not a dome across the whole sky. The Kin Hall reads its own
    * footing from the same curve, so the tower always stands *on* the rock.
    */
   function coastHeight(x, W, horizon) {
@@ -137,8 +137,8 @@
     }
   }
 
-  /** The Bastion light on the right headland: the one lit window in the world. */
-  function bastion(ctx, W, H, horizon, t, px) {
+  /** The Kin Hall light on the right headland: the one lit window in the world. */
+  function hall(ctx, W, H, horizon, t, px) {
     const x = Math.round(W * 0.93);
     const base = horizon - coastHeight(x, W, horizon);
     const h = Math.max(10, Math.round(horizon * 0.20));
@@ -232,7 +232,7 @@
     clouds(ctx, W, horizon, t);
     sea(ctx, W, H, horizon, t, px);
     coast(ctx, W, H, horizon, px);
-    bastion(ctx, W, H, horizon, t, px);
+    hall(ctx, W, H, horizon, t, px);
     warden(ctx, W, H, horizon, t, px);
     flyers(ctx, W, horizon, t, px);
   }

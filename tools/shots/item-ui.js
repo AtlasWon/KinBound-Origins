@@ -62,9 +62,9 @@ state.money = 999999;
 // Every item, so no pocket is empty and every generated design is on screen
 // next to the two that are drawn.
 for (const it of reg.items.values()) state.giveItem(it.id, 99);
-// Seal count opens the whole shelf, which is the longest buy list the game can
+// Crest count opens the whole shelf, which is the longest buy list the game can
 // produce and therefore the one whose rows are tightest.
-state.seals = state.seals || [];
+state.crests = state.crests || [];
 out.push('drawn: ' + art.itemArtKeys().join(', '));
 out.push('frames: ' + JSON.stringify(art.itemArtReport().frames));
 

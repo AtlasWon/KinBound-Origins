@@ -1,0 +1,65 @@
+{
+  "id": "briarbell_house_a",
+  "name": "House",
+  "displayName": "BRIARBELL",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIUIIIIIUIII",
+    "INQJffffffkI",
+    "IKKffffffPfI",
+    "IfAAEfffffkI",
+    "IfEEffff//fI",
+    "IffffffrrffI",
+    "IPfffffVffkI",
+    "IIIIIIDIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 7,
+      "toMap": "briarbell",
+      "toX": 5,
+      "toY": 34,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "bb_house_a_resident",
+      "sprite": "villager_m",
+      "x": 4,
+      "y": 5,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "bb_house_a"
+    },
+    {
+      "id": "bb_house_a_child",
+      "sprite": "kid",
+      "x": 9,
+      "y": 2,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "bb_house_a_child"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 1,
+      "text": [
+        "A bookshelf, mostly almanacs. One spine is newer than the rest:",
+        "ON THE KIN OF THE OLD FORESTS, by E. of Hearthmere.",
+        "It has been read to pieces and mended twice."
+      ]
+    }
+  ]
+}

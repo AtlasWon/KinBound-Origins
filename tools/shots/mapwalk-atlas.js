@@ -13,7 +13,7 @@ const state = top().state;
 const Overworld = (await import('/build/js/scenes/overworld.js')).OverworldScene;
 
 const MAPS = [
-  'marrow_hollow', 'route_1', 'ashgate', 'route_2', 'tanners_rest',
+  'hearthmere', 'route_1', 'briarbell', 'route_2', 'tanners_rest',
   'route_3', 'kellowmere', 'route_4', 'brackwater', 'tanners_concord',
 ];
 const out = [];

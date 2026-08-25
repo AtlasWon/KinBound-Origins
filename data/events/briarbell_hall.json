@@ -1,0 +1,158 @@
+[
+  {
+    "id": "bbhall_gate",
+    "trigger": "step",
+    "map": "briarbell_hall",
+    "at": [{ "x": 8, "y": 5 }, { "x": 9, "y": 5 }],
+    "when": {
+      "kind": "all",
+      "of": [
+        { "kind": "var", "var": "briarbell_hall_plates", "op": ">=", "value": 2 },
+        { "kind": "not", "of": { "kind": "flag", "flag": "bbhall_gate_open" } }
+      ]
+    },
+    "actions": [
+      { "kind": "sfx", "sound": "fx_leaf" },
+      { "kind": "shake", "frames": 20, "power": 2 },
+      {
+        "kind": "say",
+        "lines": [
+          "Both plates go down together, and the two woven figures come apart at the waist.",
+          "Not broken. Unwound, the way a plait unwinds, back into the hedge they were cut from."
+        ]
+      },
+      { "kind": "removeNpc", "who": "bbhall_warden_a" },
+      { "kind": "removeNpc", "who": "bbhall_warden_b" },
+      { "kind": "setFlag", "flag": "bbhall_gate_open" }
+    ]
+  },
+  {
+    "id": "bbhall_warden",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "lines": [
+          "A figure the height of a person, woven out of living briar and still rooted.",
+          "It is not guarding the arch so much as growing across it.",
+          "Two sun-plates in the floor behind you. Both are up."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bbhall_guide",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "hasCrest", "crest": 1 },
+        "then": [
+          {
+            "kind": "say",
+            "who": "HAND",
+            "lines": [
+              "She has not lost in here since the spring before last.",
+              "She will tell you she has. She counts a draw as a loss. Nobody else does."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "who": "HAND",
+            "lines": [
+              "Two seed-stones, two sun-plates. One on each and the arch opens.",
+              "You can only push them, so think about which side you want to stand on."
+            ]
+          },
+          {
+            "kind": "if",
+            "cond": { "kind": "not", "of": { "kind": "flag", "flag": "bbhall_hint" } },
+            "then": [
+              { "kind": "setFlag", "flag": "bbhall_hint" },
+              {
+                "kind": "say",
+                "who": "HAND",
+                "lines": [
+                  "And if you wedge one in a corner, walk out of the door and walk back in.",
+                  "The hedge puts everything back where it was. It is very patient about it."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "HAND",
+                "lines": [
+                  "One more thing. Tove will not out-hit you and she knows it.",
+                  "She has never needed to."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bbhall_keeper",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "hasCrest", "crest": 1 },
+        "then": [
+          {
+            "kind": "say",
+            "who": "TOVE ALDER",
+            "lines": [
+              "North road, then. Route 2 out of the gate and keep going.",
+              "There is a ruin in the trees up there. Older than my hedge and older than my bells.",
+              "Go and look at it. You will know why when you are standing in front of it."
+            ]
+          }
+        ],
+        "else": [
+          { "kind": "battleTrainer", "trainer": "briar_keeper" },
+          {
+            "kind": "if",
+            "cond": { "kind": "var", "var": "last_battle_won", "op": "==", "value": 1 },
+            "then": [
+              { "kind": "giveCrest", "crest": 1, "name": "Bell Crest" },
+              { "kind": "sfx", "sound": "badge" },
+              {
+                "kind": "say",
+                "lines": ["You received the BELL CREST.", "The first of eight."]
+              },
+              {
+                "kind": "say",
+                "who": "TOVE ALDER",
+                "lines": [
+                  "Sixty years I have kept a hedge that would kill me if I stopped cutting it.",
+                  "You do not win against a thing like that. You learn its year and you work with it."
+                ]
+              },
+              { "kind": "giveArt", "art": "clear" },
+              {
+                "kind": "say",
+                "lines": [
+                  "You learned the field art CLEAR.",
+                  "Thorn walls out in the world can be cut away now."
+                ]
+              },
+              { "kind": "giveItem", "item": "strong_potion", "count": 2 },
+              { "kind": "say", "lines": ["Tove handed over two Strong Potions."] },
+              {
+                "kind": "say",
+                "who": "TOVE ALDER",
+                "lines": [
+                  "Use it carefully, {name}. Anything you can cut, somebody planted."
+                ]
+              },
+              { "kind": "setFlag", "flag": "crest_1_taken" }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

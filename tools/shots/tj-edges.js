@@ -16,14 +16,14 @@ const Overworld = (await import('/build/js/scenes/overworld.js')).OverworldScene
 
 // map, x, y -- a spot near an edge worth looking at.
 const SPOTS = [
-  ['marrow_hollow', 4, 6, 'nw'],
-  ['marrow_hollow', 26, 18, 'se'],
+  ['hearthmere', 4, 6, 'nw'],
+  ['hearthmere', 26, 18, 'se'],
   ['route_1', 4, 4, 'nw'],
   ['route_1', 26, 28, 'se'],
   ['route_2', 4, 4, 'nw'],
   ['route_3', 5, 4, 'nw'],
   ['route_4', 26, 20, 'se'],
-  ['ashgate', 4, 5, 'nw'],
+  ['briarbell', 4, 5, 'nw'],
   ['brackwater', 4, 5, 'nw'],
   ['kellowmere', 4, 5, 'nw'],
   ['kellowmere', 26, 24, 'se'],

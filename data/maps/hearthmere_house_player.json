@@ -1,0 +1,185 @@
+{
+  "id": "hearthmere_house_player",
+  "name": "Your House",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "_plan": "Ground floor. Kitchen along the north wall, the table your mother still lays for two, the living room, and -- through the gap at x=13 -- Elias' study. The study is a dead end with nothing in it but furniture and eight things to read, and that is the point: the room says who your father was without anybody being in it. It is also where the Tideheart came from and where it goes back at the end of the game, so leave the far corner (17,5) clear.",
+  "rows": [
+    "IIIUIIIIIIUIIIIUIIII",
+    "IKNQKJffffffSIkkkkkI",
+    "IfAAfffffffffIfKKfkI",
+    "IfEEffffffffkIffEfkI",
+    "IffffffffffffIffffkI",
+    "Ikfffff//fffkIAAfffI",
+    "IPfffffrrffffIffrrfI",
+    "IffffffVffffkIkfrrPI",
+    "IffffrrrfffffffffffI",
+    "IPfffrrrffffPffffffI",
+    "IIIIIIDIIIIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 10,
+      "toMap": "hearthmere",
+      "toX": 18,
+      "toY": 24,
+      "facing": "down",
+      "style": "door"
+    },
+    {
+      "x": 12,
+      "y": 1,
+      "toMap": "hearthmere_house_up",
+      "toX": 12,
+      "toY": 2,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "mother",
+      "sprite": "villager_f",
+      "x": 5,
+      "y": 4,
+      "facing": "down",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "hm_mother"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 1,
+      "text": [
+        "The kitchen sink, under the window that looks at the lane.",
+        "Your mother has stood at it every morning of your life",
+        "and can tell you who is out there without turning round."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 3,
+      "y": 1,
+      "text": [
+        "The stove. Two burners work, one has never worked,",
+        "and the fourth is where the kettle lives so nobody",
+        "has to admit the fourth does not work either."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 2,
+      "text": [
+        "The table. Two chairs, and a third against the wall",
+        "that nobody moved and nobody talks about moving."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 5,
+      "text": [
+        "The bookcase. Almanacs, a seed catalogue, a coast atlas",
+        "with sixteen years of tide tables in the back.",
+        "The atlas is the only one with a broken spine."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 7,
+      "text": [
+        "The television. Coast weather, on a loop.",
+        "The presenter keeps saying 'unseasonal' like",
+        "it is a word that explains anything."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 15,
+      "y": 1,
+      "text": [
+        "Your father's shelves. Survey reports, harbour records,",
+        "four volumes on Aurelian stonework, and one whole shelf",
+        "of notebooks in a hand that gets faster towards the end."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 17,
+      "y": 1,
+      "text": [
+        "Charcoal rubbings, pinned up and never taken down.",
+        "Spirals, rings inside rings, a shape like a wave folding over.",
+        "The paper has gone the colour of tea."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 15,
+      "y": 2,
+      "text": [
+        "The desk. A lamp, a magnifier, a tin of pins,",
+        "and a chart of the Caeloran Sea with one bay circled",
+        "so many times the ink has gone through the paper."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 16,
+      "y": 2,
+      "text": [
+        "A field case, half packed. Boots, oilskin, a folding rule.",
+        "Sixteen years, and nobody in this house has finished",
+        "packing it and nobody has unpacked it either."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18,
+      "y": 3,
+      "text": [
+        "A jar of sea glass on the sill. Green, brown, one blue.",
+        "He brought a piece back from every coast he ever stood on.",
+        "The blue one is from a coast that is not on any of his maps."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 14,
+      "y": 5,
+      "text": [
+        "A photograph in a frame that does not match the room.",
+        "A man on a jetty, laughing at whoever is holding the camera,",
+        "with a small child on his shoulders and one hand up to hold you on."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 15,
+      "y": 5,
+      "text": [
+        "A crate, addressed in his hand, opened once and closed again.",
+        "The customs docket on the lid is dated three weeks after",
+        "the day the coastguard came to the door."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 14,
+      "y": 7,
+      "text": [
+        "Rolled charts standing in a bin like umbrellas.",
+        "Your mother dusts this room every week",
+        "and has not moved one single thing in it."
+      ]
+    }
+  ]
+}

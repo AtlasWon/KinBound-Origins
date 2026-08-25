@@ -33,11 +33,11 @@ const state = top().state;
 const Overworld = top().constructor;
 
 const SPOTS = [
-  ['marrow_house_player', 6, 4, 'up', 'z-in-player'],
-  ['ashgate_provisioner', 6, 4, 'up', 'z-in-shop'],
-  ['marrow_hollow', 6, 8, 'up', 'z-out-marrow'],
-  ['marrow_hollow', 24, 19, 'up', 'z-out-fence'],
-  ['ashgate', 5, 14, 'up', 'z-out-ashgate'],
+  ['hearthmere_house_player', 6, 4, 'up', 'z-in-player'],
+  ['briarbell_provisioner', 6, 4, 'up', 'z-in-shop'],
+  ['hearthmere', 6, 8, 'up', 'z-out-hearthmere'],
+  ['hearthmere', 24, 19, 'up', 'z-out-fence'],
+  ['briarbell', 5, 14, 'up', 'z-out-briarbell'],
 ];
 
 for (const s of SPOTS) {

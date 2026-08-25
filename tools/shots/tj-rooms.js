@@ -28,16 +28,16 @@ async function crop(name, tx, ty, tw, th, scale) {
 
 // map, [doorX, doorY], [stairX, stairY] or null
 const ROOMS = [
-  ['marrow_house_player', [6, 6], [10, 1]],
-  ['marrow_house_up', [null, null], [10, 4]],
-  ['ashgate_house_a', [6, 6], null],
-  ['ashgate_waystation', [6, 8], null],
-  ['vess_station', [7, 9], null],
+  ['hearthmere_house_player', [6, 6], [10, 1]],
+  ['hearthmere_house_up', [null, null], [10, 4]],
+  ['briarbell_house_a', [6, 6], null],
+  ['briarbell_clinic', [6, 8], null],
+  ['sorrell_lab', [7, 9], null],
   // The two rooms that already put their doorway in the wall run rather than
   // on the floor in front of it. This is the arrangement every other interior
   // needs, so it is the one worth photographing.
-  ['brackwater_bastion', [8, 16], null],
-  ['kellowmere_bastion', [7, 15], null],
+  ['brackwater_hall', [8, 16], null],
+  ['kellowmere_hall', [7, 15], null],
 ];
 
 for (const [m, door, stair] of ROOMS) {

@@ -1,0 +1,14 @@
+{
+  "mapId": "hearthmere",
+  "methods": {
+    "tallGrass": {
+      "rate": 140,
+      "slots": [
+        { "species": "nibbet", "minLevel": 2, "maxLevel": 4, "weight": 45 },
+        { "species": "tuftail", "minLevel": 2, "maxLevel": 4, "weight": 35 },
+        { "species": "pipwing", "minLevel": 3, "maxLevel": 4, "weight": 15, "time": ["morning", "day"] },
+        { "species": "sootmoth", "minLevel": 3, "maxLevel": 5, "weight": 5, "time": ["evening", "night"] }
+      ]
+    }
+  }
+}

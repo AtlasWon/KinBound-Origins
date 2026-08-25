@@ -1,0 +1,176 @@
+{
+  "id": "stonewake_hall",
+  "name": "Stone Hall",
+  "displayName": "THE STONE HALL",
+  "music": "station",
+  "battleBackdrop": "quarry",
+  "indoor": true,
+  "rows": [
+    "IIIIIIIIIIIIIIIIIIII",
+    "IUUFFFFFFFFFFFFFFUUI",
+    "IFkFFFFFFFFFFFFFFkFI",
+    "IFFFSFFFFFSSFFFFFFFI",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IFFkFFFFFFFFFFFFkFFI",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IIIIIIFFFFFFFFIIIIII",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IFF+FFFFFFFFFFFF+FFI",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IFF/rrFFFFFFFFrr/FFI",
+    "IFFFrrFFFFFFFFrrFFFI",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IPFFFFFFFFFFFFFFFFPI",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IIIIIIIIIIDIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 10,
+      "y": 17,
+      "toMap": "stonewake",
+      "toX": 41,
+      "toY": 8,
+      "facing": "down",
+      "style": "door"
+    },
+    {
+      "x": 10,
+      "y": 3,
+      "toMap": "stonewake_mine",
+      "toX": 10,
+      "toY": 1,
+      "facing": "down",
+      "style": "stairs"
+    },
+    {
+      "x": 11,
+      "y": 3,
+      "toMap": "stonewake_mine",
+      "toX": 11,
+      "toY": 1,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "hall2_guide",
+      "sprite": "villager_f",
+      "x": 8,
+      "y": 8,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hall2_guide"
+    },
+    {
+      "id": "hall2_clerk",
+      "sprite": "clerk",
+      "x": 4,
+      "y": 10,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hall2_clerk"
+    },
+    {
+      "id": "hall2_waiting",
+      "sprite": "villager_m",
+      "x": 14,
+      "y": 14,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "hall2_waiting"
+    },
+    {
+      "id": "hall2_banksman",
+      "sprite": "hiker",
+      "x": 13,
+      "y": 4,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hall2_banksman"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 2,
+      "text": [
+        "The Hall roll: every challenger since the Hall took the workings on,",
+        "in one long column, and a second column beside it headed DOWN and UP.",
+        "Everybody has an UP. Some of them took a week over theirs."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 17,
+      "y": 2,
+      "text": [
+        "A chalked board by the shaft head.",
+        "TODAY'S DEPTH: SIXTY FATHOM. WATER: LOW. GAS: NONE.",
+        "The GAS line has been wiped and rewritten so often the slate has gone soft."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 3,
+      "y": 5,
+      "text": [
+        "Eight Bond Crests in a glass case, one for every Hall in Caelora.",
+        "The Quarry Crest sits second from the left, and is the plainest thing there.",
+        "The case is dusty. Somebody polishes the brass outside instead."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 16,
+      "y": 5,
+      "text": [
+        "A cutaway model of the workings, six galleries deep.",
+        "Three of them are hatched over in red pencil.",
+        "The label under the red says only: WATER."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 3,
+      "y": 9,
+      "text": [
+        "The counterweight gear, dressed and greased and going nowhere.",
+        "A rope comes off it and disappears into the floor.",
+        "Whatever is on the other end of that rope is not in this room."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 16,
+      "y": 9,
+      "text": [
+        "A photograph, faded: a shift of forty on the west face, hats off.",
+        "Second from the left, arms folded, refusing to smile at the camera,",
+        "is a much younger woman with exactly the same expression she has now."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 15,
+      "text": [
+        "A fern in a pot, thriving, at the top of a mine shaft.",
+        "Somebody has been carrying it out to the light and back every day",
+        "for what the leaf count suggests is about eleven years."
+      ]
+    }
+  ],
+  "_plan": "The Hall is a waiting room and a shaft head, not an arena. Roxen keeps her Hall the way she kept the west face -- at the bottom of it -- so the challenge is the old workings and the Keeper is at the far end of them. The man-engine ladder at 4,3 is the way back up once she is beaten; it only opens from below, which is why nobody walks in the front door and straight down to her."
+}

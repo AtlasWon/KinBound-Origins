@@ -1,7 +1,7 @@
 {
   "id": "route_2",
-  "name": "Route 2",
-  "displayName": "ROUTE 2",
+  "name": "Bramblewood",
+  "displayName": "ROUTE 2 - BRAMBLEWOOD",
   "music": "route_west",
   "battleBackdrop": "highland",
   "indoor": false,
@@ -10,47 +10,49 @@
     "y": 19
   },
   "encounterTable": "route_2",
+  "_design": "Four shelves rising north out of Briarbell, each closed by a two-row rock band with exactly one pass through it, and the passes deliberately not above one another -- so the road zigzags the whole width of the map to find them: north, east, north, west, north. Ledges are the way back down and only work that way. The three branches hang off the road rather than lying along it: the tarn west of shelf 1 (Wade), the thorn alcove east of shelf 1 (Clear), the cave west of shelf 2 (Shoulder, inside it). THE ARCH IS NOT A BRANCH. The road runs straight across its apron, because it is the first story beat of the game and is not allowed to be optional.",
+  "_plan": "The first real forest. Canopy goes down as overlapping discs rather than as a per-tile probability, because a probability gives evenly spaced trunks on a lawn and a wood is clumps with holes between them; the road is laid last so nothing can grow across it. The bands read as terraces rather than walls because the north row of each carries the turf lip of the shelf above -- 'c' on top, 'C' underneath, which is the way round the tileset draws them -- and because only the stretches carrying a pass, a ledge or the arch are rock at all. The rest of every terrace is a wall of trees. The thorn on the east spur is one season old and three people on this route say so.",
   "rows": [
-    "TTTTTTTTTTTTTT--TTTTTTTTTTTTTT",
-    "TT.,\"\"\"\"...,,.--,.......CCCCTT",
-    "TT\"\"\"\",.t.\"\"\"*--..,.....cCCCTT",
-    "TT.,\"*,....,\",--o........cccTT",
-    "TT..\"..*.-------....*.t.....TT",
-    "TTt......--.,.--........TTTTTT",
-    "TT.......--.,...!.CCCC.T.,..TT",
-    "TT..CCCC.--......CCCCC......TT",
-    "TT,CCCCc.--.o....cccc..T...*TT",
-    "TT.cccc.,--..o.....*.o..TTTTTT",
-    "TTCCCCoCC--CCC...CCCoC...CCCTT",
-    "TTccccccc--cccLLLcccccLLLcccTT",
-    "TT..t....--.,\"\"\",......,....TT",
-    "TT.t.....--\"\"\"\"\"\"o..,.....*.TT",
-    "TT....o.!--.,\"\"\",o....t.....TT",
-    "TTsssssss-----------.....t..TT",
-    "TTs~~~~ss-----------........TT",
-    "TTs~~~~~~s..,..\"..--.TTTTTTTTT",
-    "TTs~~~~~~s...,\"\",.--!T....*.TT",
-    "TTss~~~~~s..,\"\"\"\"\"--.X..,...TT",
-    "TTsss~~sss..,\"\"\",.--.T.,....TT",
-    "TTCCosss.CCCC..\"CC--CCCCoCCCTT",
-    "TTcccLLLLcCccLLLcc--ccccccccTT",
-    "TT................--....TTTTTT",
-    "TT...........,....--....TTTTTT",
-    "TT................--.TTTTTt.TT",
-    "TT.TTT..TTTT.....!--.tTTTTT.TT",
-    "TT.T,....,.T..------....,...TT",
-    "TT.T\"*o....T..------....\"...TT",
-    "TT.,\"\"\",TTTTt.--.....,\"\"\",,.TT",
-    "TT\"\"\"\"\"\"......--.o...\"\"\"\"\",.TT",
-    "TT.,\"\"\",.....!--..o.t,\"\"\"\",.TT",
-    "TT*.\"...,.....--........\"..,TT",
-    "TTTTTTTTTTTTTT--TTTTTTTTTTTTTT"
+    "TTTTTTTTTTTTTT--TTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+    "TTTTTTTTo,,,,*--..*tTTTTTttTt,.\".\"\"o\"TTtTTTT",
+    "TTTTT.\"\".*\"\"o.--!tTTTTTtTTTTTT\"\"\"\"\"\"\"..tTTTT",
+    "TTTTt\"\"\".\"\"\"*.--------TT.T,TTT\"\"\"\"..\".oTTTTT",
+    "TTTTT.\"\".\"\".,,--------tT*..tTTTT.**tt..tTTTT",
+    "TTTT.\"\"\".\".\"*.TTtt..--.*..,tToTt.*,,...TTTTT",
+    "TTTT.,...,..,,......--...*,,...*.......tTTTT",
+    "TTTTtTTTTTTTTTcccccc--cccccccc.*ccTTTTTTTTTT",
+    "TTTTtTtTttTtTTCCCCCC--CCCDCCCCLLCCtTTTTtTTTT",
+    "TTTTcccccc,,..,.,,,.--=======-tttTtTTTtTTTTT",
+    "TTTTCCDCCCtt,tTt.t,o--=======-T\".\"\",\"\"TtTTTT",
+    "TT*.......,,...,...**o,=,==.....\"\"\"\"\".TTTTTT",
+    "TT.t*..,o,,.**..,,.........!.,o.\"\"\"\".\"T,TTTT",
+    "TT.TTTTTTTTo\".\"\"\",\"\"T.TTTTTt----------,,TTTT",
+    "TT.TTTTTTtTT,\"\"\"\"\"\"\".*T.*...----------*,TTTT",
+    "TT..ttTtTTTT\".\".\"\"\"\",.tT.TTtt**o....--.tTTTT",
+    "TTTtTTttttcc,*,cccccctTTtTcc,.cccccc--cTtTTT",
+    "TTTtTTTTTtCCLLLCCCCCCTTTTTCCLLCCCCCC--CTTTTT",
+    "TTTtTTttTTTtT,T..,.,,TTT\".\"\",T,..,,T--TttTTT",
+    "TTTT~~~~~tt*.tTT.,,..tTT\"\"\"\"\"T.,...T--TTTTTT",
+    "TTt~~~~~~~,...T,,t,..*tT\"\"\"\"\"TTTXTTT--TTttTT",
+    "TT~~~,.~~~~,,tTTTtT.,.t.,..\"\"\"\"!..Tt--TTTTTT",
+    "TTt~~~~~~~,..!..*..,------------------TtTtTT",
+    "TTttt~~~Tt..........------------------ttT*TT",
+    "TTTTTtTTTTt,ttTtTTTt--TTTtTtTTTT*.,,....*,TT",
+    "TTTTTTccTTTccccTtTcc--ccccTtTtTcc,*ccccTTTTT",
+    "TTTttTCCLLLCCCCTTTCC--CCCCtTTTTCCLLCCCCTTtTT",
+    "TT...,.,,..,*,.,...!--..~~T\".,,\".\"TTTTTTTTTT",
+    "TT..\".\"\"\"\"\"..*...,.t--..~~.\"\"\"\"\"\"\"tTTTTTTTTT",
+    "TT..\"\"\"\"\"\"\",..--------,.BB.,.,..\"\"tTTTTTTTTT",
+    "TTT,,\"\"\"\"\"\"tt,--------..~~.,...,.\"TtttttTTTT",
+    "TT..\".,.\".\",t!--TtTTTtTT~~.....,.....,.*TTTT",
+    "TT..tT,,tt..,.--...TTTTT~~.ttTTTtTt...,,TTTT",
+    "TTTTTTTTTTTTTT--TTTTTTTTTTTTTTTTTTTTTTTTTTTT"
   ],
   "warps": [
     {
       "x": 14,
       "y": 33,
-      "toMap": "ashgate",
+      "toMap": "briarbell",
       "toX": 14,
       "toY": 2,
       "facing": "down",
@@ -59,7 +61,7 @@
     {
       "x": 15,
       "y": 33,
-      "toMap": "ashgate",
+      "toMap": "briarbell",
       "toX": 15,
       "toY": 2,
       "facing": "down",
@@ -68,20 +70,38 @@
     {
       "x": 14,
       "y": 0,
-      "toMap": "kellowmere",
-      "toX": 14,
-      "toY": 26,
+      "toMap": "stonewake",
+      "toX": 28,
+      "toY": 50,
       "facing": "up",
       "style": "edge"
     },
     {
       "x": 15,
       "y": 0,
-      "toMap": "kellowmere",
-      "toX": 15,
-      "toY": 26,
+      "toMap": "stonewake",
+      "toX": 29,
+      "toY": 50,
       "facing": "up",
       "style": "edge"
+    },
+    {
+      "x": 25,
+      "y": 8,
+      "toMap": "route_2_ruin",
+      "toX": 9,
+      "toY": 16,
+      "facing": "up",
+      "style": "cave"
+    },
+    {
+      "x": 6,
+      "y": 10,
+      "toMap": "route_2_cave",
+      "toX": 8,
+      "toY": 10,
+      "facing": "up",
+      "style": "cave"
     }
   ],
   "npcs": [
@@ -89,31 +109,33 @@
       "id": "r2_dell",
       "sprite": "villager_f",
       "x": 16,
-      "y": 26,
-      "facing": "down",
+      "y": 30,
+      "facing": "left",
       "movement": {
         "kind": "static"
       },
       "trainer": "r2_dell",
-      "sightRange": 3
+      "sightRange": 3,
+      "_note": "On the two-wide road out of Briarbell, so the route opens with a battle whatever the player does."
     },
     {
       "id": "r2_juna",
-      "sprite": "villager_m",
-      "x": 17,
-      "y": 24,
-      "facing": "right",
+      "sprite": "hiker",
+      "x": 16,
+      "y": 23,
+      "facing": "left",
       "movement": {
         "kind": "static"
       },
       "trainer": "r2_juna",
-      "sightRange": 3
+      "sightRange": 4,
+      "_note": "Guards the tarn spur. She says she checks the ledges, the pond and the thorn; all three are within sight of here."
     },
     {
       "id": "r2_pike",
       "sprite": "hiker",
-      "x": 11,
-      "y": 14,
+      "x": 26,
+      "y": 21,
       "facing": "down",
       "movement": {
         "kind": "static"
@@ -122,22 +144,10 @@
       "sightRange": 3
     },
     {
-      "id": "r2_wren",
-      "sprite": "villager_f",
-      "x": 13,
-      "y": 3,
-      "facing": "down",
-      "movement": {
-        "kind": "static"
-      },
-      "trainer": "r2_wren",
-      "sightRange": 3
-    },
-    {
       "id": "r2_walker",
       "sprite": "villager_m",
-      "x": 24,
-      "y": 12,
+      "x": 28,
+      "y": 23,
       "facing": "down",
       "movement": {
         "kind": "pace",
@@ -145,6 +155,43 @@
         "distance": 3
       },
       "script": "r2_walker"
+    },
+    {
+      "id": "r2_shale",
+      "sprite": "villager_m",
+      "x": 18,
+      "y": 3,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r2_shale",
+      "sightRange": 4
+    },
+    {
+      "id": "r2_wren",
+      "sprite": "villager_f",
+      "x": 33,
+      "y": 4,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r2_wren",
+      "sightRange": 4
+    },
+    {
+      "id": "r2_scout",
+      "sprite": "concord",
+      "x": 25,
+      "y": 6,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r2_scout",
+      "hiddenIfFlag": "r2_scout_gone",
+      "_note": "Stands on the shelf directly above the ruin door, across a cliff the player cannot climb. She is on the map from the moment they walk into the clearing -- being seen is the beat, so it is not hidden behind a spawn."
     }
   ],
   "objects": [
@@ -153,99 +200,114 @@
       "x": 13,
       "y": 31,
       "text": [
-        "ROUTE 2",
-        "Ashgate south. Kellowmere north, uphill all the way.",
-        "The ledges only go one way. Plan accordingly."
+        "ROUTE 2 - BRAMBLEWOOD",
+        "Briarbell behind, Stonewake",
+        "above. Four shelves to climb."
       ]
     },
     {
       "kind": "sign",
-      "x": 17,
-      "y": 26,
+      "x": 19,
+      "y": 27,
       "text": [
-        "The stair starts here. One way up per shelf, and the ways up",
-        "are not above one another, so stop looking for a straight line."
+        "The way up is here and nowhere",
+        "else on this shelf.",
+        "The ledges go down only."
       ]
     },
     {
       "kind": "sign",
-      "x": 20,
-      "y": 18,
+      "x": 13,
+      "y": 22,
       "text": [
-        "A stake in the ground, Concord-stamped.",
-        "Beyond it: thorn, grown across in a single season."
+        "THE BRAMBLEWOOD TARN.",
+        "There is a stone out in it.",
+        "Usually something is on it."
       ]
     },
     {
       "kind": "sign",
-      "x": 8,
-      "y": 14,
+      "x": 31,
+      "y": 21,
       "text": [
-        "The way up the next shelf is west of here, not above it.",
-        "Follow the tarn. If the water is on your left you are going the right way."
+        "A survey stake, driven deep,",
+        "stamped with a brass disc.",
+        "Beyond it, thorn. One season."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 27,
+      "y": 12,
+      "text": [
+        "The ground stops being stone",
+        "and starts being paving.",
+        "Somebody laid this, and left."
       ]
     },
     {
       "kind": "sign",
       "x": 16,
-      "y": 6,
+      "y": 2,
       "text": [
-        "KELLOWMERE QUARRY - WORKINGS BEYOND",
-        "Loose stone. Mind your feet and mind the heaps."
+        "STONEWAKE QUARRY - BEYOND",
+        "Loose stone. Mind your feet,",
+        "and mind the slatewings."
       ]
     },
     {
       "kind": "cuttable",
-      "x": 21,
-      "y": 19,
+      "x": 32,
+      "y": 20,
       "flag": "r2_thorn_cut"
     },
     {
-      "kind": "pushable",
-      "x": 24,
-      "y": 7
-    },
-    {
       "kind": "item",
-      "x": 26,
-      "y": 19,
+      "x": 32,
+      "y": 18,
       "item": "fine_vessel",
       "quantity": 2,
       "flag": "item_r2_alcove"
     },
     {
       "kind": "item",
-      "x": 8,
-      "y": 20,
+      "x": 5,
+      "y": 21,
       "item": "strong_potion",
       "quantity": 1,
-      "flag": "item_r2_pond"
+      "flag": "item_r2_tarn"
     },
     {
       "kind": "item",
-      "x": 26,
-      "y": 7,
+      "x": 30,
+      "y": 30,
+      "item": "potion",
+      "quantity": 1,
+      "flag": "item_r2_grove"
+    },
+    {
+      "kind": "item",
+      "x": 9,
+      "y": 12,
       "item": "clearleaf",
       "quantity": 2,
-      "flag": "item_r2_rocks"
+      "flag": "item_r2_cavemouth"
     },
     {
       "kind": "hiddenItem",
-      "x": 5,
-      "y": 28,
+      "x": 17,
+      "y": 14,
       "item": "tonic_berry",
       "quantity": 2,
       "flag": "item_r2_hidden"
     },
     {
       "kind": "hiddenItem",
-      "x": 25,
-      "y": 30,
+      "x": 34,
+      "y": 2,
       "item": "ward_incense",
       "quantity": 1,
       "flag": "item_r2_hidden2"
     }
-  ],
-  "_design": "Three shelves rising north, each closed by a rock band with one notch to climb and two ledges to come down. The notches are deliberately far apart, so the road zigzags to find them. The stone at 23,7 stays shut until Kellowmere -- at the top of this route -- hands over Shoulder.",
-  "_plan": "The climb to Kellowmere, in shelves. Each shelf is a cliff with exactly one way up, and the ways up are deliberately not above one another. The ledges are the way back down and only work that way. The stone heaps are quarry spoil, stepped rather than square, because nothing tipped out of a cart lands in a rectangle."
+  ]
 }

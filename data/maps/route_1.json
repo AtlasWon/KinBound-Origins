@@ -1,7 +1,7 @@
 {
   "id": "route_1",
-  "name": "Route 1",
-  "displayName": "ROUTE 1",
+  "name": "Sunmeadow Path",
+  "displayName": "ROUTE 1 - SUNMEADOW PATH",
   "music": "route_west",
   "battleBackdrop": "highland",
   "indoor": false,
@@ -10,46 +10,47 @@
     "y": 27
   },
   "encounterTable": "route_1",
-  "_design": "Three rooms stacked: the gate field forks two ways north, the hollow keeps those two ways apart (grass hollow west, pond shore east), and the terrace lets them meet again under the two harder trainers. Two southbound ledges: y24 x14-15 drops out of the hollow onto the road home, y18 x3-5 cuts the shelf inside the west lane.",
+  "_design": "A ring, not a fork, and the ring bends eight times, because a loop drawn as a rectangle reads as a racetrack round a lawn. The road out of Hearthmere jogs east, crosses the burn on the only plank on the map, jogs back and reaches a junction at y22. From there a west lane (x6-7) and an east lane (x31-32) go round and rejoin on the cross road at y8, and the spine carries on to Briarbell through a gap in the march fence. Everything worth finding is INSIDE the ring -- the fenced hay field, the tarn, the long grass -- so a player who guesses wrong at the junction loses nothing but time, and a player who walks the whole ring has seen the route. The burn is the one hard line across the map: gate meadow below it, ring above.",
+  "_plan": "Meadow, light woodland, a burn, wooden fences, gentle rises: the safest road in Caelora, and the one that has to teach everything. The first long grass is a planted patch beside the gate. The first trainer stands north of the plank, which is the only crossing, so she cannot be walked past -- but far enough up that the player has waded some grass and picked something up first. Gathering is four pickups lying in plain sight and two buried ones, and two of the four sit across water and cannot be had until the player can wade, which is this route's reason to come back. The fences do most of the reading: a rectangle of long grass with a rail round it and a gate in the bottom is a hay field; the same rectangle without the rail is scenery.",
   "rows": [
-    "TTTTTTTTTTTTTT--TTTTTTTTTTTTTT",
-    "TT.\".,..t..*.=--=.TTTTtTo.,.TT",
-    "TT\"\"\"\",,.t*..=--=.TTTTTo....TT",
-    "TT..,\"\"\"....,.--..tTTTT..t..TT",
-    "TTTTTTTTTT....--..........TTTT",
-    "TTT,\"\"\"\",T....--.,..tTTT..TTTT",
-    "TTT\"\"\"\"\"\"T.,..--..*.TTTT,.TTTT",
-    "TTT*\"\"\"\",T....--....TTTt..TTTT",
-    "TT.tt...o.....--.!......TTTTTT",
-    "TT,...*.o....,..TTTt....tTTTTT",
-    "TTTTTt...tTTT...tTTT..,.....TT",
-    "TTTTTT...TTTt,...,..pp...*..TT",
-    "TTTTtT..TtTTTTTTTTTtTTssTTtTTT",
-    "TT..........tTTTt.o....\"\"\"\"\"TT",
-    "TT....\"..o..TTTTT.sssssssss.TT",
-    "TT.,\"\"\",..o.TTTTTss~~~~~~~ssTT",
-    "TT.\"\"\"\"\",..*TTTTTs~~~~~~~~~sTT",
-    "TT.,\"\"\"\",...TTTTTs~~~~~~~~~sTT",
-    "TTTLLLTTT...TTTTTs~~~~~~~~ssTT",
-    "TT.,.\".,.\"..TTTTTss~~~~~~~s.TT",
-    "TT,\"\"\",.,\",.TTTTT.ss~~~~~ss.TT",
-    "TT\"\"\"\"\"\"\"\"\"\"TTTTT..ssssssss.TT",
-    "TT,\"\"\",.,\",.tTTTt.\"\"\"!.....,TT",
-    "TT,..\"...\".......*.......,..TT",
-    "TTTTTTTTT..TtTLLTtT..TTtTTTTTT",
-    "TT....*..--.,.,....--.......TT",
-    "TT..oo...------------.,.....TT",
-    "TT..o...*..,------...TTTTTTTTT",
-    "TT..,\"\"\"\"...t.--\"!...T....*.TT",
-    "TT.,\"\"\",...t.!--\"\"\"*.T..,...TT",
-    "TT\"\"\"\",,*..,..--,\"\"\"\".,.....TT",
-    "TTTTTTTTTTTTTT--TTTTTTTTTTTTTT"
+    "TTTTTTTTTTTTTT--TTTTTTTTTTTTTTTTTTTTTTTT",
+    "TTt,,.,t._____--______..t*..,....TotTTTT",
+    "TTtTTt.t..,*.!--,....*...\"\"\"\"\"\"..oTtTtTT",
+    "TTTtt......,..----*..t.,T.\"\"\"\"\"\".TttTtTT",
+    "TTt,.\"\".\".\"..T----,,.T,..\"\"\"\"\"\".tttTttTT",
+    "TTt.\"\"\"\"\"\"\",...,--..*.T,*.\"\"..\".oTtTttTT",
+    "TTT_____________--__ccc____________tttTT",
+    "TT...\"\"\"\".......--,.CCC.....,,,..T,tTtTT",
+    "TTtT....,--------------------*T...,..TTT",
+    "TTtt...,.--------------------...,.T..,TT",
+    "TT*T,T..t--,,.*,.o,\".\"..\"..--ott..tt.TTT",
+    "TT,.TT-----.T,t....\"\"\"\"\"\".,------..totTT",
+    "TT.Ttt-----.T.....,..\"\"\"\".,------,..,tTT",
+    "TT...*--*_______.....ss~s~s....--.,,tTTT",
+    "TTTT..--*|\"\".\".|,...s~~~~~~~ss,--,T,*.TT",
+    "TT....--.|.\"\"\"\"|*,,s~~~~~~~~~~s--TTTtTTT",
+    "TTTT!t--.|.\".\"\"|,.ts~~~~.~~~~~s--tttttTT",
+    "TTtt..--.__..___,,*s~~~~~~~~~~*--TTtttTT",
+    "TTt...--..,,..,....sss~~~~~~~s.--,tTTTTT",
+    "TT....--,\"\"\"\".\".T,..!*s~~ss..o*--...TTTT",
+    "TT.,,,---\"\"\"\"\"\"...,...,.,,tt*o.--..,.TTT",
+    "TT....---\"\"\"\".\".....,,..*,....,--ot..tTT",
+    "TT.,T.t*tt-----------------------t.,,tTT",
+    "TT...,T.,.-----------------------t.,ttTT",
+    "TT~~~~~..,~..o.t!--..TT..~,,,.,*,.,,ttTT",
+    "TT~..~~,~~~~~~~~~BB~..,~~~~t.,~~.~~otTTT",
+    "TT~~~~~~~.,~~~~..BB~~~~~.,~~~~~~~~~~~~TT",
+    "TTt.o.t.,....,-----..TT....________TTtTT",
+    "TT.\"\"...\"\".T..-----\"\"\"..\"\".|,,,*,*|TtTTT",
+    "TTt\"\"\"\"\"\".,,..--.t.\"\"\"\"\"\"\"..,,,,,,|tTTTT",
+    "TT.\"\"....\",,,!--...\"\".\"\"\"\"t________ttTTT",
+    "TTTTTTTTTTTTTT--TTTTTTTTTTTTTTTTTTTTTTTT"
   ],
   "warps": [
     {
       "x": 14,
       "y": 31,
-      "toMap": "marrow_hollow",
+      "toMap": "hearthmere",
       "toX": 14,
       "toY": 1,
       "facing": "down",
@@ -58,7 +59,7 @@
     {
       "x": 15,
       "y": 31,
-      "toMap": "marrow_hollow",
+      "toMap": "hearthmere",
       "toX": 15,
       "toY": 1,
       "facing": "down",
@@ -67,29 +68,51 @@
     {
       "x": 14,
       "y": 0,
-      "toMap": "ashgate",
+      "toMap": "briarbell",
       "toX": 14,
-      "toY": 22,
+      "toY": 34,
       "facing": "up",
       "style": "edge"
     },
     {
       "x": 15,
       "y": 0,
-      "toMap": "ashgate",
+      "toMap": "briarbell",
       "toX": 15,
-      "toY": 22,
+      "toY": 34,
       "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 2,
+      "y": 15,
+      "toMap": "route_1_hollow",
+      "toX": 14,
+      "toY": 7,
+      "facing": "left",
       "style": "edge"
     }
   ],
   "npcs": [
     {
+      "id": "r1_bex",
+      "sprite": "kid",
+      "x": 19,
+      "y": 24,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r1_bex",
+      "sightRange": 3,
+      "_note": "North of the plank, on the only crossing of the creek, so the first trainer battle in the game cannot be walked past -- but far enough up the road that the player has met the long grass and picked something up first."
+    },
+    {
       "id": "r1_madden",
       "sprite": "hiker",
-      "x": 12,
-      "y": 25,
-      "facing": "left",
+      "x": 6,
+      "y": 16,
+      "facing": "down",
       "movement": {
         "kind": "static"
       },
@@ -99,105 +122,176 @@
     },
     {
       "id": "r1_ottel",
-      "sprite": "villager_m",
-      "x": 17,
-      "y": 25,
+      "sprite": "fisher",
+      "x": 30,
+      "y": 16,
       "facing": "right",
       "movement": {
         "kind": "static"
       },
       "trainer": "r1_ottel",
-      "sightRange": 4
+      "sightRange": 3
     },
     {
-      "id": "r1_cale",
-      "sprite": "hiker",
+      "id": "r1_wray",
+      "sprite": "villager_m",
       "x": 13,
-      "y": 6,
-      "facing": "right",
+      "y": 7,
+      "facing": "down",
       "movement": {
-        "kind": "static"
+        "kind": "lookAround"
       },
-      "trainer": "r1_cale",
-      "sightRange": 3,
-      "script": "r1_watcher"
+      "trainer": "r1_wray",
+      "sightRange": 3
     },
     {
       "id": "r1_surveyor",
       "sprite": "concord",
+      "x": 23,
+      "y": 7,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "concord_surveyor_1",
+      "sightRange": 3,
+      "_note": "Working at the old stone, which is the point: the Order is already interested in Aurelian stonework before the player knows there is an Order."
+    },
+    {
+      "id": "route_tarin",
+      "sprite": "rival",
       "x": 16,
       "y": 2,
       "facing": "left",
       "movement": {
         "kind": "static"
       },
-      "trainer": "concord_surveyor_1",
-      "sightRange": 3
+      "requiresFlag": "tarin_first_done",
+      "hiddenIfFlag": "tarin_route1_done",
+      "_note": "NOT this route's own NPC. He is the actor for tarin_route1 in data/events/common.json, and both flags belong to the rival ledger; see docs/TARIN.md. That scene triggers on a band across rows 2 and 3, x12-18, so he has to stand inside it and the road has to cross it -- it does, at x14-17 on row 3 and x14-15 on row 2. He is sitting on the march fence at the top of the route, which is why there is one."
+    },
+    {
+      "id": "r1_cale",
+      "sprite": "hiker",
+      "x": 18,
+      "y": 5,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r1_cale",
+      "sightRange": 3,
+      "script": "r1_watcher"
     }
   ],
   "objects": [
     {
       "kind": "sign",
       "x": 13,
-      "y": 29,
+      "y": 30,
       "text": [
-        "ROUTE 1",
-        "Marrow Hollow south. Ashgate north.",
-        "Mind the ledges. They only go one way."
+        "ROUTE 1 - SUNMEADOW PATH",
+        "Hearthmere behind. Briarbell",
+        "ahead, over the rise."
       ]
     },
     {
       "kind": "sign",
-      "x": 17,
-      "y": 28,
+      "x": 16,
+      "y": 24,
       "text": [
-        "The road splits here and joins up again at the top.",
-        "West is the hollow. East is the tarn and the long way round.",
-        "Somebody has scratched underneath: BOTH ARE THE SAME LENGTH. LIARS."
+        "Beyond the plank the road forks",
+        "and joins up again at the top.",
+        "In chalk: BOTH THE SAME. LIARS."
       ]
     },
     {
       "kind": "sign",
+      "x": 4,
+      "y": 16,
+      "text": [
+        "A gap in the hedge, worn by",
+        "something smaller than a person.",
+        "On the post: THE HOLLOW."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 20,
+      "y": 19,
+      "text": [
+        "THE SUNMEADOW TARN.",
+        "Deeper than it looks, and",
+        "colder than that."
+      ]
+    },
+    {
+      "kind": "script",
       "x": 21,
-      "y": 22,
+      "y": 7,
       "text": [
-        "STILL WATER. Deeper than it looks and colder than that.",
-        "Rilltails winter in it. Do not stand on the edge and lean."
+        "A grey stone, sunk to its",
+        "shoulders in the turf.",
+        "Rings cut into the face."
       ]
     },
     {
       "kind": "sign",
-      "x": 17,
-      "y": 8,
+      "x": 13,
+      "y": 2,
       "text": [
-        "ASHGATE - one mile",
-        "Waystation, provisioner, and the road on to Kellowmere."
+        "BRIARBELL - half a mile.",
+        "Clinic, provisioner, and the",
+        "Hall under the bell tree."
       ]
     },
     {
       "kind": "item",
-      "x": 25,
-      "y": 29,
+      "x": 30,
+      "y": 28,
       "item": "potion",
       "quantity": 1,
       "flag": "item_r1_potion"
     },
     {
       "kind": "item",
-      "x": 4,
-      "y": 6,
+      "x": 20,
+      "y": 24,
       "item": "field_vessel",
       "quantity": 3,
       "flag": "item_r1_vessels"
     },
     {
+      "kind": "item",
+      "x": 24,
+      "y": 16,
+      "item": "fine_vessel",
+      "quantity": 2,
+      "flag": "item_r1_islet"
+    },
+    {
+      "kind": "item",
+      "x": 4,
+      "y": 25,
+      "item": "clearleaf",
+      "quantity": 2,
+      "flag": "item_r1_creek"
+    },
+    {
       "kind": "hiddenItem",
-      "x": 27,
-      "y": 19,
+      "x": 12,
+      "y": 15,
       "item": "tonic_berry",
-      "quantity": 1,
+      "quantity": 2,
       "flag": "item_r1_hidden"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 24,
+      "y": 12,
+      "item": "ward_incense",
+      "quantity": 1,
+      "flag": "item_r1_hidden2"
     }
-  ],
-  "_plan": "The first road out of the Hollow, and the first tall grass anyone walks into. It forks below the wood and joins again at the top, so a player who takes the wrong side loses nothing but time -- the west side is grass and the east side is the pool, and both come out at Ashgate. Every patch of tall grass here is frayed at the edge on purpose: a rectangle of it reads as a field somebody planted."
+  ]
 }

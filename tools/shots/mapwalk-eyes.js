@@ -8,7 +8,7 @@ d.key('Enter', 20); await d.loadWait(600);
 const state = top().state;
 const Overworld = (await import('/build/js/scenes/overworld.js')).OverworldScene;
 
-const SPOTS = [["in2-house","marrow_house_player",6,5,"up"],["in2-brack","brackwater_house",6,5,"up"],["in2-kb","kellowmere_house_b",6,5,"up"]];
+const SPOTS = [["in2-house","hearthmere_house_player",6,5,"up"],["in2-brack","brackwater_house",6,5,"up"],["in2-kb","kellowmere_house_b",6,5,"up"]];
 const out = [];
 for (const [name, map, x, y, facing] of SPOTS) {
   d.game.scenes.replaceAll(new Overworld(state, map, x, y, facing || 'down'));

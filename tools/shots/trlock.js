@@ -142,7 +142,7 @@ async function playBattle(mode, mash) {
 
 /* ------------------------------------------------ trainer placements */
 const maps = ['route_1', 'route_2', 'route_3', 'route_4',
-  'kellowmere_bastion', 'brackwater_bastion', 'kellowmere'];
+  'kellowmere_hall', 'brackwater_hall', 'kellowmere'];
 
 // One case: reach `npcId` on `map` by `how`, fight to `mode`, then try to walk.
 async function runCase(map, npcId, how, mode, mash) {
@@ -232,7 +232,7 @@ for (const map of maps) {
   await goTo(map, 5, 5, 'down');
   const o = ow();
   for (const n of o.npcs) {
-    if (!n.data.trainer && !(n.data.script && /keeper|perrin/i.test(n.data.script))) continue;
+    if (!n.data.trainer && !(n.data.script && /keeper|tarin/i.test(n.data.script))) continue;
     plan.push({ map: map, id: n.data.id, sight: !!n.data.trainer });
   }
 }

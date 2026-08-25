@@ -1,4 +1,4 @@
-// Stands the new NPC looks side by side in the waystation.
+// Stands the new NPC looks side by side in the clinic.
 const d = window.dev;
 const top = () => d.game.scenes.top;
 await d.loadWait(1200);
@@ -27,7 +27,7 @@ const go = async (map, x, y, name) => {
   for (let i = 0; i < 16 && top().name === 'dialogue'; i++) d.key('Enter', 10);
   await d.shoot(name, 6, 2);
 };
-await go('ashgate_waystation', 4, 4, 'npc-01-waystation');
-await go('ashgate_provisioner', 5, 4, 'npc-02-provisioner');
-await go('ashgate', 12, 10, 'npc-03-town');
+await go('briarbell_clinic', 4, 4, 'npc-01-clinic');
+await go('briarbell_provisioner', 5, 4, 'npc-02-provisioner');
+await go('briarbell', 12, 10, 'npc-03-town');
 return 'ok';

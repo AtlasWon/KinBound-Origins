@@ -37,7 +37,7 @@
     {
       "x": 8,
       "y": 4,
-      "toMap": "brackwater_waystation",
+      "toMap": "brackwater_clinic",
       "toX": 6,
       "toY": 8,
       "facing": "up",
@@ -64,7 +64,7 @@
     {
       "x": 15,
       "y": 19,
-      "toMap": "brackwater_bastion",
+      "toMap": "brackwater_hall",
       "toX": 8,
       "toY": 16,
       "facing": "up",
@@ -154,7 +154,7 @@
       "y": 13,
       "text": [
         "BRACKWATER",
-        "Tidal flats west. Deep water east. Bastion at the end of the pier."
+        "Tidal flats west. Deep water east. Kin Hall at the end of the pier."
       ]
     },
     {
@@ -187,7 +187,7 @@
       "x": 11,
       "y": 4,
       "text": [
-        "WAYSTATION",
+        "KIN CLINIC",
         "Beds are dry. That is the whole boast."
       ]
     },
@@ -201,6 +201,6 @@
       ]
     }
   ],
-  "_legend": "Waystation on the landward street, Provisioner two rows lower where the ground drops. Tidal flats west, cut by sandbars and standing water; deep bay east; the plank pier and its quay running south to the Bastion.",
+  "_legend": "Kin Clinic on the landward street, Provisioner two rows lower where the ground drops. Tidal flats west, cut by sandbars and standing water; deep bay east; the plank pier and its quay running south to the Kin Hall.",
   "_plan": "One road reaches the edge, north to Route 4, because Brackwater is the end of the road -- past it there is only water. The landward street stops where the ground gives out into the flats at one end and at the Provisioner door at the other; the lower lane runs from the slipway to the net loft. The strand carries the whole coast, so the pier has a quay to stand on rather than beginning in mid-air."
 }

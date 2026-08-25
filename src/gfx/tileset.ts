@@ -63,7 +63,7 @@ export enum T {
   BOULDER_FREE,
   PLATE,
   PLATE_DOWN,
-  // Waystation: red roof, healing crest.
+  // Kin Clinic: red roof, healing crest.
   ROOF_RED,
   ROOF_RED_L,
   ROOF_RED_R,
@@ -142,6 +142,41 @@ export enum T {
    */
   PATH_EDGE_W,
   PATH_EDGE_E,
+  /**
+   * The great bell tree of Briarbell.
+   *
+   * One landmark spread across a 13x9 block of the map, because no single 16x16
+   * cell can be "gigantic" -- that is the whole point of it. The crown is a
+   * nine-slice blob so an author draws its outline with one character and the
+   * map compiler picks the edges (see TileMap.autoGreatTree); the bole tiles are
+   * the three cells where the trunk comes up through the underside of the crown;
+   * and the bells hang in the open air under the boughs on their own walkable
+   * row, which is what makes them visible at all rather than buried in leaf.
+   *
+   * Appended at the very end of the enum, and none of these painters touches the
+   * shared Rng: tile ids are atlas indices and the alternates are painted from
+   * one ordered stream, so anything that inserts an id above an existing one or
+   * draws a random number moves every varied tile in the world.
+   */
+  GREAT_LEAF_NW,
+  GREAT_LEAF_N,
+  GREAT_LEAF_NE,
+  GREAT_LEAF_W,
+  GREAT_LEAF_C,
+  GREAT_LEAF_E,
+  GREAT_LEAF_SW,
+  GREAT_LEAF_S,
+  GREAT_LEAF_SE,
+  GREAT_BOLE_L,
+  GREAT_BOLE_C,
+  GREAT_BOLE_R,
+  GREAT_BELL,
+  GREAT_TRUNK_L,
+  GREAT_TRUNK_C,
+  GREAT_TRUNK_R,
+  GREAT_ROOT_L,
+  GREAT_ROOT_C,
+  GREAT_ROOT_R,
   COUNT,
 }
 
@@ -254,7 +289,7 @@ export const PAL = {
   waterFoam: '#e6fbff',
 
   // Deep water gets a ramp of its own rather than borrowing the shallows'
-  // bottom end. Every coastline and the whole Tide Bastion puzzle depend on
+  // bottom end. Every coastline and the whole Tide Hall puzzle depend on
   // reading "wall" from colour alone, so this is built to a rule: the brightest
   // tone here is still darker than the *body* of the shallows, and it gets its
   // separation from chroma instead of from light. The old face was mixed from
@@ -304,7 +339,7 @@ export const PAL = {
   roofLight: '#f7a441',
   roofPale: '#ffc76b',
 
-  // Waystation red. Loud on purpose: it is a landmark, not decoration.
+  // Kin Clinic red. Loud on purpose: it is a landmark, not decoration.
   redDeep: '#8d0f1d',
   redDark: '#c11d2b',
   redMid: '#ec2f3c',
@@ -386,6 +421,15 @@ export const PAL = {
   // tile and turf alike rather than stamp one colour of its own.
   contact: 'rgba(38,32,34,0.34)',
   contactSoft: 'rgba(38,32,34,0.15)',
+
+  // Cast bronze, for the bells in the great tree. Warmer and darker than the
+  // brass end of the wood ramp so a bell reads as metal hanging in leaf rather
+  // than as a knot of the tree it hangs from.
+  bronzeDeep: '#4a2f0c',
+  bronzeDark: '#7d5518',
+  bronzeMid: '#ac7d28',
+  bronzeLight: '#d5a94a',
+  bronzePale: '#f3d98d',
 } as const;
 
 /**
@@ -469,6 +513,15 @@ const VARIED: Partial<Record<number, number>> = {
   // gold planted outside every building in the world is a municipal contract,
   // not a garden. The alternates carry different flowers.
   [T.FLOWER_BED]: 3,
+  // The great tree's crown is thirteen cells wide and five deep, and sixty-five
+  // copies of one cell is a lattice of identical clumps however good the cell
+  // is -- the tile repeat was the only thing left in it that read as tiling.
+  // Appended last, as the note above requires. The three alternates differ in
+  // their foliage noise only: their outlines come from functions that do not
+  // fold the variant seed, so any two of them still meet without a step.
+  [T.GREAT_LEAF_C]: 3,
+  [T.GREAT_LEAF_N]: 3,
+  [T.GREAT_LEAF_S]: 3,
 };
 
 /**
@@ -487,6 +540,11 @@ const ANIMATED: Partial<Record<number, number>> = {
   [T.WATER]: 4,
   [T.WATER_EDGE_N]: 4,
   [T.WATER_DEEP]: 4,
+  // The bells swing. Four frames -- middle, out, middle, back -- so the loop is
+  // a pendulum rather than a twitch, and the clapper lags the shell by a frame
+  // the way a real one does. Safe to append: frames are allocated and painted
+  // last of all, after every base cell and every alternate.
+  [T.GREAT_BELL]: 4,
 };
 
 /** How long one frame of an animated tile is held, in milliseconds. */
@@ -539,6 +597,19 @@ function wrapNoise(x: number, y: number, cell: number, seed = 0): number {
   const sy = fy * fy * (3 - 2 * fy);
   const a = at(gx, gy), b = at(gx + 1, gy), c = at(gx, gy + 1), d = at(gx + 1, gy + 1);
   return (a + (b - a) * sx) * (1 - sy) + (c + (d - c) * sx) * sy;
+}
+
+/**
+ * A wobble that repeats exactly every tile.
+ *
+ * Used for the outline of anything drawn across several cells of the same
+ * tile -- the crown and the trunk of the great tree. Both harmonics have a
+ * whole number of periods inside TILE_SIZE, so the profile meets itself at the
+ * seam and a five-cell-tall edge has no step in it.
+ */
+function wave(t: number, a: number, b: number, p1: number, p2: number): number {
+  const u = (t / TILE_SIZE) * Math.PI * 2;
+  return Math.sin(u + p1) * a + Math.sin(u * 2 + p2) * b;
 }
 
 /** Position noise that must not shift between variants. */
@@ -774,6 +845,25 @@ export class Tileset {
       case T.SHOP_SHELF: this.shopShelf(px); break;
       case T.FLOWER_BED: this.flowerBed(px); break;
       case T.LAMP_POST: this.lampPost(px); break;
+      case T.GREAT_LEAF_NW: this.greatLeaf(px, 0); break;
+      case T.GREAT_LEAF_N: this.greatLeaf(px, 1); break;
+      case T.GREAT_LEAF_NE: this.greatLeaf(px, 2); break;
+      case T.GREAT_LEAF_W: this.greatLeaf(px, 3); break;
+      case T.GREAT_LEAF_C: this.greatLeaf(px, 4); break;
+      case T.GREAT_LEAF_E: this.greatLeaf(px, 5); break;
+      case T.GREAT_LEAF_SW: this.greatLeaf(px, 6); break;
+      case T.GREAT_LEAF_S: this.greatLeaf(px, 7); break;
+      case T.GREAT_LEAF_SE: this.greatLeaf(px, 8); break;
+      case T.GREAT_BOLE_L: this.greatLeaf(px, 7, -1); break;
+      case T.GREAT_BOLE_C: this.greatLeaf(px, 7, 0); break;
+      case T.GREAT_BOLE_R: this.greatLeaf(px, 7, 1); break;
+      case T.GREAT_BELL: this.greatBell(px); break;
+      case T.GREAT_TRUNK_L: this.greatTrunk(px, -1); break;
+      case T.GREAT_TRUNK_C: this.greatTrunk(px, 0); break;
+      case T.GREAT_TRUNK_R: this.greatTrunk(px, 1); break;
+      case T.GREAT_ROOT_L: this.greatRoot(px, -1); break;
+      case T.GREAT_ROOT_C: this.greatRoot(px, 0); break;
+      case T.GREAT_ROOT_R: this.greatRoot(px, 1); break;
       default: fill('#ff00ff'); break; // loud, so a missing tile is obvious
     }
   }
@@ -1395,7 +1485,7 @@ export class Tileset {
 
   /**
    * Deep water, kept firmly distinct from the shallows: every coastline and the
-   * whole Tide Bastion puzzle depend on reading "walkable" or "wall" from
+   * whole Tide Hall puzzle depend on reading "walkable" or "wall" from
    * colour alone.
    */
   private deepWater(px: Px, fill: (c: string) => void, rng: Rng): void {
@@ -1858,6 +1948,313 @@ export class Tileset {
     for (let x = 0; x < S; x++) { P(x, 0, PAL.outline); P(x, S - 1, PAL.outline); }
   }
 
+  /* ------------------------------------------------- the great bell tree */
+
+  /**
+   * One cell of the crown of the great tree, as a nine-slice.
+   *
+   * `slice` is the cell's place in a 3x3: 0 is the north-west corner, 4 the
+   * interior, 8 the south-east. A cell only cuts away the sides it is actually
+   * on the edge of, so the interior is a full square of foliage and the ring
+   * around it carries the silhouette.
+   *
+   * The edges are drawn from functions that are *periodic over the tile*, which
+   * is the property the whole thing hangs on: the west edge of a crown five
+   * cells tall is the same tile five times, so a profile that did not meet
+   * itself at the seam would print a step straight across the outline.
+   *
+   * Foliage comes from three lobes measured with a wrapped delta, so a block of
+   * interior cells is a mass of clumps with lit tops and shaded undersides
+   * rather than one flat green -- the difference between a canopy and cladding.
+   * Over the top of that sits one dome of light spanning the whole crown, taken
+   * from where the cell stands in the nine-slice.
+   *
+   * `bole`, when given, is the cell where the trunk comes up through the
+   * underside: -1, 0 and 1 for its left, middle and right columns.
+   */
+  private greatLeaf(px: Px, slice: number, bole?: number): void {
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    // One species for the whole crown. `this.leaf()` picks its ramp from the
+    // variant seed, which is right for a wood of separate trees and wrong for
+    // one tree: the alternates here exist to break the tile repeat, and taking
+    // the ramp with them would put three different greens in a single canopy.
+    const r0 = CANOPY[0]!;
+    const R: Leaf = { deep: r0[0]!, dark: r0[1]!, mid: r0[2]!, light: r0[3]!, hi: r0[4]!, tip: r0[5]! };
+    const col = slice % 3;
+    const row = (slice / 3) | 0;
+    const cutL = col === 0, cutR = col === 2, cutT = row === 0, cutB = row === 2;
+
+    const edgeL = (y: number) => 2.4 + wave(y, 1.9, 1.0, 0.4, 1.1);
+    const edgeR = (y: number) => S - 3.4 - wave(y, 1.9, 1.0, 2.3, 0.4);
+    const edgeT = (x: number) => 2.2 + wave(x, 1.6, 1.1, 0.7, 2.0);
+    /**
+     * The underside hangs, and hangs unevenly.
+     *
+     * It used to stop three units short of the foot of the cell with a gentle
+     * wobble on it, and thirteen copies of a gentle wobble in a row is a
+     * straight line: the crown read as the flat top of a hedge, and the bells
+     * on the row below hung from nothing with daylight between. This reaches
+     * past the foot of the cell at its low points and pulls up five units at
+     * its high ones, so leaf comes down into the row the bells hang in.
+     */
+    const edgeB = (x: number) => S - 1.4 - wave(x, 2.7, 1.7, 1.9, 2.2);
+
+    // Five clumps, deliberately not on a lattice. Three of them sat on a
+    // diagonal and sixty-five copies of a diagonal is corduroy: the crown came
+    // out as green roof shingles laid at forty-five degrees.
+    const LOBES = [
+      [3.5, 3.0, 5.2], [10.0, 5.5, 5.6], [6.0, 10.5, 5.4],
+      [13.0, 12.5, 5.0], [1.5, 13.5, 4.8],
+    ];
+    const wrap = (d: number): number => ((d + S * 1.5) % S) - S / 2;
+
+    // Where this cell sits in the crown, so all thirteen columns of it carry
+    // one light rather than each looking lit from its own corner.
+    const dome = -(col - 1) * 0.26 - (row - 1) * 0.30;
+
+    /** How far inside the crown a pixel is, in units. Negative is outside. */
+    const depth = (x: number, y: number): number => {
+      let out = 99;
+      if (cutL) out = Math.min(out, x - edgeL(y));
+      if (cutR) out = Math.min(out, edgeR(y) - x);
+      if (cutT) out = Math.min(out, y - edgeT(x));
+      if (cutB) out = Math.min(out, edgeB(x) - y);
+      // Corner cells lose their square corner to a wobbled chamfer, or the
+      // crown comes out as a rectangle with four bites taken out of it.
+      if (cutL && cutT) out = Math.min(out, x + y - (7.6 + wave(x - y, 0.8, 0.5, 1.3, 0.2)));
+      if (cutR && cutT) out = Math.min(out, S - 1 - x + y - (7.6 + wave(x + y, 0.8, 0.5, 0.3, 1.2)));
+      if (cutL && cutB) out = Math.min(out, x + S - 1 - y - (7.0 + wave(x + y, 0.7, 0.5, 2.1, 0.6)));
+      if (cutR && cutB) out = Math.min(out, 2 * S - 2 - x - y - (7.0 + wave(x - y, 0.7, 0.5, 1.7, 2.4)));
+      return out;
+    };
+
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const d = depth(x, y);
+        if (d < 0) {
+          // Turf just outside the crown is turf in shadow. Translucent, so it
+          // darkens whatever the map put down rather than stamping one green.
+          if (d > -2.4) P(x, y, 'rgba(20,40,18,0.30)');
+          continue;
+        }
+        let near = LOBES[0]!, t = 9;
+        for (const L of LOBES) {
+          const q = Math.hypot(wrap(x - L[0]!), wrap(y - L[1]!)) / L[2]!;
+          if (q < t) { t = q; near = L; }
+        }
+        const ldx = wrap(x - near[0]!), ldy = wrap(y - near[1]!);
+        // Two scales of wrapping noise over the lobes. The lobes alone put the
+        // same three clumps in every one of sixty-five cells, and sixty-five
+        // copies of three clumps is corduroy -- the crown came out as diagonal
+        // ridges of cladding. The noise breaks the repeat and, at the low end,
+        // opens dark hollows where boughs would part.
+        const lit = dome
+          + (-(x - 7.5) * 0.5 - (y - 7.5)) / S * 0.36
+          + ((-ldx * 0.8 - ldy) / (near[2]! * 1.7)) * 0.45
+          - Math.max(0, t - 0.70) * 0.6
+          + (wrapNoise(x * DETAIL, y * DETAIL, 8, 51) - 0.5) * 0.62
+          + (wrapNoise(x * DETAIL, y * DETAIL, 4, 53) - 0.5) * 0.34
+          + (hash2(x >> 1, y >> 1, 131) - 0.5) * 0.24;
+        let c: string;
+        if (d < 1.1) c = R.deep;
+        else if (d < 2.1) c = lit > 0.40 ? R.mid : lit > 0.05 ? R.dark : R.deep;
+        else if (lit > 0.60) c = R.tip;
+        else if (lit > 0.32) c = R.hi;
+        else if (lit > 0.04) c = R.light;
+        else if (lit > -0.28) c = R.mid;
+        else if (lit > -0.62) c = R.dark;
+        else c = R.deep;
+        P(x, y, c);
+      }
+    }
+
+    if (bole !== undefined) this.greatBole(P, bole);
+  }
+
+  /** The trunk coming up out of the underside of the crown. */
+  private greatBole(P: Px, side: number): void {
+    const S = TILE_SIZE;
+    const R = this.leaf();
+    for (let y = 3; y < S; y++) {
+      const spread = (y - 3) * 0.58;
+      const lo = side < 0 ? 8.4 - spread : 0;
+      const hi = side > 0 ? 7.6 + spread : S - 1;
+      for (let x = Math.max(0, Math.ceil(lo)); x <= Math.min(S - 1, Math.floor(hi)); x++) {
+        // A ragged top, so the bark rises out of the leaf rather than being
+        // pasted over it on a straight line. Two units of raggedness, not four:
+        // four gave the trunk a row of teeth where it met the crown.
+        if (y < 5 + Math.floor(hash2(x >> 1, 1, 271) * 2)) continue;
+        const edge = Math.min(x - lo, hi - x);
+        const band = hash2((side * S + x) >> 1, 0, 613);
+        const step = band > 0.68 ? 0.18 : band < 0.34 ? -0.14 : 0;
+        const lit = -side * 0.42 + (7.5 - x) / S * 0.55 + step;
+        let c: string = lit > 0.34 ? PAL.trunkLit
+          : lit > 0.08 ? PAL.trunkLight
+          : lit > -0.18 ? PAL.trunkMid : PAL.trunkDark;
+        if (edge < 1) c = PAL.trunkDeep;
+        P(x, y, c);
+      }
+    }
+    // Leaf hanging over the shoulders of the bole, so the join is foliage and
+    // not a seam.
+    for (let i = 0; i < 30; i++) {
+      const lx = Math.floor(hash2(i, 3, 811) * S);
+      const ly = 3 + Math.floor(hash2(i, 7, 823) * 5);
+      P(lx, ly, hash2(i, 11, 829) > 0.5 ? R.dark : R.mid);
+      P(lx, ly + 1, R.deep);
+    }
+  }
+
+  /**
+   * One cell of the trunk. -1, 0 and 1 are its left, middle and right columns.
+   *
+   * The light runs across all three cells rather than resetting inside each,
+   * which is what makes forty-eight pixels of bark read as one round trunk
+   * instead of three planks standing side by side.
+   */
+  private greatTrunk(px: Px, side: number): void {
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    for (let y = 0; y < S; y++) {
+      const lo = side < 0 ? 1.2 + wave(y, 0.6, 0.35, 0.9, 2.2) : 0;
+      const hi = side > 0 ? S - 2.2 - wave(y, 0.6, 0.35, 2.7, 1.4) : S - 1;
+      for (let x = Math.max(0, Math.ceil(lo)); x <= Math.min(S - 1, Math.floor(hi)); x++) {
+        const gx = side * S + x;
+        /**
+         * Bark, as vertical grain rather than as speckle.
+         *
+         * The ridges belong to a *column* of the trunk and run its whole
+         * height; hashing per pixel gave the middle cell a rash of light chips
+         * that read as gravel glued to a post. One value per two-unit column,
+         * plus occasional short fissures four units long.
+         */
+        const band = hash2(gx >> 1, 0, 613);
+        let step = band > 0.68 ? 0.5 : band < 0.34 ? -0.4 : 0;
+        if (hash2(gx, y >> 2, 641) > 0.86) step = -1.1;
+        const lit = -((gx - 8) / 24) * 0.85 + 0.10 + step * 0.35;
+        let c: string = lit > 0.72 ? PAL.trunkLit
+          : lit > 0.34 ? PAL.trunkLight
+          : lit > -0.06 ? PAL.trunkMid
+          : lit > -0.44 ? PAL.trunkDark : PAL.trunkDeep;
+        // Moss up the shaded flank, because the thing is a thousand years old.
+        if (side > 0 && x > 9 && hash2(x, y, 401) > 0.82) c = PAL.mossDark;
+        if (side < 0 && x < 5 && hash2(x, y, 409) > 0.90) c = PAL.mossDeep;
+        // The silhouette, and only where there is one: the middle cell has no
+        // outside edge, and outlining it drew a dark seam down both sides of
+        // the trunk, which is what made forty-eight pixels of bark read as
+        // three planks stood side by side.
+        if (side < 0 && x - lo < 1) c = PAL.trunkDeep;
+        if (side > 0 && hi - x < 1) c = PAL.trunkDeep;
+        P(x, y, c);
+      }
+    }
+  }
+
+  /** The root flare. -1 and 1 are the roots that run out onto the turf. */
+  private greatRoot(px: Px, side: number): void {
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    const bark = (x: number, y: number, lit: number, edge: boolean): void => {
+      let c: string = lit > 0.5 ? PAL.trunkLight
+        : lit > 0.1 ? PAL.trunkMid
+        : lit > -0.3 ? PAL.trunkDark : PAL.trunkDeep;
+      if (hash2(x, y, 617) > 0.76) c = mixDown(c);
+      if (edge) c = PAL.trunkDeep;
+      P(x, y, c);
+    };
+
+    if (side === 0) {
+      for (let x = 0; x < S; x++) {
+        // Buttresses: the foot of the trunk is scalloped, not cut off square.
+        const base = 10.5 + Math.abs(Math.sin((x / S) * Math.PI * 3 + 0.6)) * 3.4;
+        for (let y = 0; y <= base; y++) {
+          bark(x, y, (7.5 - x) / S * 1.1 + 0.15, y > base - 1.2);
+        }
+        for (let y = Math.ceil(base); y < S; y++) P(x, y, 'rgba(20,32,18,0.26)');
+      }
+      return;
+    }
+
+    // A single root running out of the flare and dying away into the turf.
+    for (let x = 0; x < S; x++) {
+      const t = side < 0 ? x / (S - 1) : (S - 1 - x) / (S - 1);
+      const cy = 4.5 + (1 - t) * 7.5;
+      const th = 0.4 + Math.pow(t, 0.7) * 3.6;
+      for (let y = Math.round(cy - th); y <= Math.round(cy + th); y++) {
+        if (y < 0 || y >= S) continue;
+        const e = Math.min(y - (cy - th), cy + th - y);
+        bark(x, y, (cy - y) / Math.max(1, th) * 0.6 + 0.1, e < 0.9);
+      }
+      for (let y = Math.round(cy + th) + 1; y <= Math.round(cy + th) + 3; y++) {
+        if (y < S) P(x, y, 'rgba(20,32,18,0.24)');
+      }
+    }
+  }
+
+  /**
+   * A bell hanging on its cord under the boughs.
+   *
+   * Four frames: middle, out, middle, back. The clapper is given its own
+   * offsets a frame out of step with the shell, because a bell whose clapper
+   * moves with it is a lamp.
+   */
+  private greatBell(px: Px): void {
+    const P = this.unit(px);
+    const swing = [0, -1.5, 0, 1.5][animFrame % 4]!;
+    const clap = [0, -2.6, 0.5, 2.6][animFrame % 4]!;
+
+    // The cord runs from the very top of the cell so it meets the leaf hanging
+    // out of the cell above; a bell with a gap over it is a bell on a pole.
+    for (let y = 0; y < 3; y++) {
+      const cx = 8 + Math.round(swing * (y / 3) * 0.5);
+      P(cx - 1, y, PAL.trunkDeep);
+      P(cx, y, PAL.woodDark);
+    }
+    // The yoke, so the thing is hung rather than balanced.
+    const yx = 8 + Math.round(swing * 0.25);
+    for (let x = yx - 2; x <= yx + 1; x++) P(x, 3, PAL.bronzeDark);
+    P(yx - 1, 2, PAL.bronzeMid);
+
+    /**
+     * The shell.
+     *
+     * Straight-ish shoulders, a hard flare into the lip, and an outline the
+     * whole way round. The first cut of this was a smooth quadratic taper with
+     * no rim on it, which at sixteen units reads as a traffic cone -- what says
+     * "bell" at this size is the sudden widening at the bottom and the dark
+     * band of the mouth under it, not the curve above.
+     */
+    for (let y = 4; y <= 13; y++) {
+      const t = (y - 4) / 9;
+      // Wide shoulders, not a spire. At sixteen units a shell that starts
+      // narrow and only flares at the lip reads as a little pine tree hanging
+      // in a big one; the mass has to be there from the top.
+      const half = y >= 12 ? 5.6 : 2.4 + t * t * 2.6;
+      const cx = 8 + swing * (0.3 + t * 0.8);
+      const lo = Math.round(cx - half), hi = Math.round(cx + half);
+      for (let x = lo; x <= hi; x++) {
+        const lit = (cx - x) / half;
+        let c: string = lit > 0.5 ? PAL.bronzePale
+          : lit > 0.12 ? PAL.bronzeLight
+          : lit > -0.4 ? PAL.bronzeMid : PAL.bronzeDark;
+        // A single vertical highlight, the way cast metal catches a sky.
+        if (Math.abs(cx - 1.6 - x) < 0.7 && y < 11) c = PAL.bronzePale;
+        if (y === 11) c = PAL.bronzeDark;        // the moulding above the lip
+        if (y >= 12) c = y === 13 ? PAL.bronzeDeep : PAL.bronzeDark;
+        if (x === lo || x === hi) c = PAL.bronzeDeep;
+        P(x, y, c);
+        if (y === 4) P(x, 3, PAL.bronzeDeep);   // top edge, drawn over the yoke
+      }
+    }
+    // Clapper, swinging a frame behind the shell, and its shadow inside the
+    // mouth so the bell reads as hollow.
+    const clx = 8 + Math.round(clap);
+    P(clx - 1, 14, PAL.bronzeDeep);
+    P(clx, 14, PAL.bronzeDark);
+    P(clx, 15, PAL.bronzeDeep);
+  }
+
   /* -------------------------------------------------------------- stone */
 
   private rock(px: Px, fill: (c: string) => void, rng: Rng, big: boolean, ground: boolean): void {
@@ -1920,8 +2317,8 @@ export class Tileset {
    *
    * Both axes wrap. Band heights add up to the cell, block widths add up to the
    * cell, and every wave is a whole number of periods across it, so a cliff of
-   * any size and any shape -- the vertical wall down the side of Marrow Hollow,
-   * the horizontal shelf above Kellowmere -- has no seam in it anywhere.
+   * any size and any shape -- the vertical wall down the side of Hearthmere,
+   * the horizontal shelf above Stonewake -- has no seam in it anywhere.
    */
   private cliff(px: Px, fill: (c: string) => void, rng: Rng, top: boolean): void {
     const P = this.unit(px);
@@ -2429,7 +2826,7 @@ export class Tileset {
    * it. Ribs alone are planks; laps alone are slate. Together, and with the
    * whole field falling one step darker towards the eave, it reads as a tiled
    * roof from a screen away -- which is what has to happen, because colour on
-   * this tile is how a player finds the Waystation.
+   * this tile is how a player finds the Kin Clinic.
    */
   private roof(
     px: Px, fill: (c: string) => void,
@@ -2508,7 +2905,7 @@ export class Tileset {
   /**
    * The crest on a civic roof.
    *
-   * A white disc carrying one bold glyph: a cross for the Waystation, a crate
+   * A white disc carrying one bold glyph: a cross for the Kin Clinic, a crate
    * for the Provisioner. Two shapes, maximum contrast, no lettering -- the
    * player has to resolve this from across a town at a glance, and at this size
    * a glyph beats text every time.
@@ -3790,7 +4187,7 @@ export class Tileset {
   }
 
   /**
-   * Waystation floor: pale tiles, laid square.
+   * Kin Clinic floor: pale tiles, laid square.
    *
    * Every public building in the reference art has a hard, light floor and
    * every house has boards. It is the fastest way to tell a player which kind
@@ -3804,7 +4201,7 @@ export class Tileset {
     // player knows at a glance which kind of room they walked into -- but it no
     // longer stays *colourless*. A near-white tile with a near-white figure on
     // it was the flattest surface in the game, and it covers more of a
-    // Waystation than anything else in the room. The chroma all goes into the
+    // clinic than anything else in the room. The chroma all goes into the
     // inlay below; the field only warms enough to stop reading as paper.
     const tileA = '#f0f5f6';
     const tileB = '#e4ecee';

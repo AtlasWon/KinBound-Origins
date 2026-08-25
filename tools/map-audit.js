@@ -6,7 +6,7 @@
 // a sign nobody can face, an item on an island.
 //
 //   node tools/map-audit.js            # every map
-//   node tools/map-audit.js ashgate    # one map
+//   node tools/map-audit.js briarbell    # one map
 //
 // Kept in step with TERRAIN in src/world/terrain.ts by hand.
 import { readFileSync, readdirSync } from 'node:fs';
