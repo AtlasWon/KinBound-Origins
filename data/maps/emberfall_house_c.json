@@ -1,0 +1,55 @@
+{
+  "id": "emberfall_house_c",
+  "name": "Tenement Landing",
+  "displayName": "TENEMENT LANDING",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIIUIIIUIII",
+    "IbfffffNQJfI",
+    "IeffffffKKfI",
+    "IfffffffffPI",
+    "I/rrAAffffkI",
+    "IrrrEEfffffI",
+    "IPffffffffkI",
+    "IkfffffffffI",
+    "IIIIIDIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 5,
+      "y": 8,
+      "toMap": "emberfall",
+      "toX": 18,
+      "toY": 53,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "ef_house_c_widow",
+      "sprite": "elder",
+      "x": 3,
+      "y": 5,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ef_house_c_widow"
+    },
+    {
+      "id": "ef_house_c_lodger",
+      "sprite": "townsfolk_m",
+      "x": 9,
+      "y": 6,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "ef_house_c_lodger"
+    }
+  ],
+  "objects": []
+}

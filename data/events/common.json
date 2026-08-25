@@ -1167,6 +1167,64 @@
     ]
   },
   {
+    "id": "tideheart_wake_embercoil_temple",
+    "_note": "ACT 3. The stock close for the first Aurelian site, called at the end of data/events/embercoil_temple.json/ect_recording once the fragment has played -- the map owns the scene, this owns the object. Kept here with the other two so every site's wake script lives in one file and tests/tideheart.test.js can find one per built site. A later map that wants the temple's playback without the scene can call this on its own.",
+    "trigger": "call",
+    "when": {
+      "kind": "hasItem",
+      "item": "tideheart"
+    },
+    "actions": [
+      {
+        "kind": "sfx",
+        "sound": "fx_light"
+      },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The light goes out of the grooves, all four at once. The room is a room."
+        ]
+      },
+      {
+        "kind": "setFlag",
+        "flag": "tideheart_echo_embercoil_temple"
+      }
+    ]
+  },
+  {
+    "id": "tideheart_wake_mirehaven_sanctum",
+    "_note": "ACT 3. The stock close for the second Aurelian site. data/events/mirehaven_sanctum_heart.json/msh_record owns the playback itself -- the pictures, the rings and the nine people on the hill -- because that scene is the climax of the act and has to be read in one run with Kell writing in the middle of it. This is the object's half, kept here with the other three so tests/tideheart.test.js finds one wake script per built site, and so a later map that wants the Sanctum's playback without the scene has something to call.",
+    "trigger": "call",
+    "when": {
+      "kind": "hasItem",
+      "item": "tideheart"
+    },
+    "actions": [
+      {
+        "kind": "sfx",
+        "sound": "fx_light"
+      },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The light goes out of the floor, and the lamp on the stand is the only lamp again."
+        ]
+      },
+      {
+        "kind": "setFlag",
+        "flag": "tideheart_echo_mirehaven_sanctum"
+      }
+    ]
+  },
+  {
     "id": "act2_ridge_convoy_body",
     "_note": "ACT 2 sighting 1 of 3 -- see CANON: on Eastwind Ridge the player repeatedly sees Meridian equipment moving toward the coast. Deliberately actorless and coordinate-free: it is a thing seen from the road at a distance, so it survives the ridge being laid out any way at all.",
     "trigger": "call",

@@ -195,6 +195,41 @@ export const TARIN_LEDGER: TarinBeat[] = [
     where: 'Tideglass',
     doing: 'Heard what happened on the north road. Has not made a joke since.',
   },
+
+  /*
+   * Stage 3. Act 3, the past.
+   *
+   * THE OTHER ACT 3 BEATS BELONG ABOVE THESE TWO. Embercoil, Emberfall, the
+   * wetlands and Mirehaven each want a row and they all come before the
+   * Sanctum in the road order; the ledger is read top to bottom and the LAST
+   * opened beat wins, so a beat appended under `sanctum` would drag him back
+   * out of the dungeon he is standing in. Insert, do not append.
+   *
+   * These two are the only rows in the whole ledger where he is not off doing
+   * his own thing somewhere the player is not, and that is the point of the
+   * act. `sanctum` is the one beat with no Crest movement in it at all -- he
+   * walks past a Kin Hall to come down a hole in a marsh with somebody, which
+   * is the first time in the game he has chosen anything over the count.
+   *
+   * `sanctum_after` opens on ms_second_truth rather than on leaving the map,
+   * because what changed him is the record, not the walk. A player who somehow
+   * gets out of the Sanctum without playing it stays on `sanctum`, which is
+   * exactly right: he has not heard it yet either.
+   */
+  {
+    id: 'sanctum',
+    opens: { any: [{ visited: 'mirehaven_sanctum' }, { flag: 'ms_arrived' }] },
+    crests: 5,
+    where: 'the Sanctum',
+    doing: 'Walked away from a Hall to come down a hole in a marsh. Went first.',
+  },
+  {
+    id: 'sanctum_after',
+    opens: { flag: 'ms_second_truth' },
+    crests: 5,
+    where: 'Mirehaven',
+    doing: 'Heard what the Aurelians did. Has stopped talking about being the best.',
+  },
 ];
 
 /* ------------------------------------------------------------------ derived */

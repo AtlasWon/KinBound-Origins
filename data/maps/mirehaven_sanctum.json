@@ -1,0 +1,207 @@
+{
+  "id": "mirehaven_sanctum",
+  "name": "The Mirehaven Sanctum",
+  "displayName": "THE SANCTUM",
+  "music": "station",
+  "battleBackdrop": "cave",
+  "indoor": true,
+  "_plan": "THE PUMPED FLOOR. The first room of the second Aurelian site, and the first place in the game the player is not the one who got there first. Everything the room says, it says before anybody speaks: a pontoon walk bolted down the middle of a drowned hall, cable, floodlamps, a pump and two settling tanks running against water that has been in here for three thousand years, and crates stacked on stone that has never had a crate on it. The Sanctum is open, lit, catalogued and staffed. Meridian did all of that last week.\n\nThe symmetry is broken on purpose. The west pool is where their intake sits and the stone is chewed about; the east pool is untouched silt nobody has been paid to care about, and that is where the hidden item is. The pontoon runs x7-x10 from the mire door at the bottom to the dry floor at the top, so a player who never leaves it walks the room in a straight line and sees the work, and a player who wades either side finds the ruin under the work. It is four wide and not six: at 1x a six-wide slab of bridge tile read as a stack of planks rather than as a walkway, and the water has to be visible down both sides of it for the room to say that somebody laid this last week over something that has been flooded for three thousand years.\n\nNothing here fights. The one guard on the door lets you in, because the Commander three floors down left word that you were to be let in, and that is a much worse thing to be told than 'stop'.\n\nFOUR LAMP STANDS, at 6,9 and 13,9 where the walk meets the dry floor and at 6,13 and 11,13 halfway down the pontoon. They are the only thing in the room that is not either three thousand years old or a crate, and at 1x they are what makes the hall read as lit rather than as a hall.\n\nWHY ms_tarin_stair CARRIES hiddenIfFlag msd_entered. He waits at the head of the stair from the moment he joins until the moment the two of you actually go down it, and not one second longer -- otherwise a player who walks back up here after the record finds a second Tarin standing about at the top of the stair while the real one is three floors below in the Sanctum. Every Tarin in this dungeon is behind a flag pair for the same reason; between them exactly one is ever on screen.",
+  "rows": [
+    "CCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCSSCCCCCCCCCC",
+    "CC================CC",
+    "CC==+=========@@==CC",
+    "CC==?=========@@==CC",
+    "CC================CC",
+    "CC===;========;;==CC",
+    "CC================CC",
+    "CC~~~==========~~~CC",
+    "CC~~~~Y======Y~~~~CC",
+    "CCC~~~~BBBB~~~~~~~CC",
+    "CC~~~~~BBBB~~~~~~CCC",
+    "CC-~~~YBBBBY~~~~~-CC",
+    "CC--~~~BBBB~~~~~--CC",
+    "CC---~~BBBB~~~~---CC",
+    "CC----~BBBB~~~----CC",
+    "CC----------------CC",
+    "CCCCCCCCCDDCCCCCCCCC"
+  ],
+  "_handover": "THE MIREHAVEN SEAM, and it is wired. Out: the mire door at 9,17 and 10,17 goes to `mirehaven` 25,21, which is the tile below Mirehaven's own sanctum door at 25,20. In: Mirehaven warps 25,20 -> mirehaven_sanctum 9,17.\n\nONE TILE STILL WANTS CHANGING, on Mirehaven's side, not here. That inbound warp should land the player at 9,16 rather than 9,17, because 9,17 is this map's own exit warp: arriving on it is safe (loadMap seeds lastTile, so it does not fire), but the first press of Down after arriving does nothing, since row 17 is the wall the door is cut into. The player has to step up and back down to leave. Every shipped door in the game lands one tile inside the room -- hearthmere 18,23 -> hearthmere_house_player 6,9, with the interior warp on 6,10 -- and this is the only one that does not. Row 16 is silt, walkable end to end.",
+  "warps": [
+    {
+      "x": 9,
+      "y": 17,
+      "toMap": "mirehaven",
+      "toX": 25,
+      "toY": 21,
+      "facing": "down",
+      "style": "cave"
+    },
+    {
+      "x": 10,
+      "y": 17,
+      "toMap": "mirehaven",
+      "toX": 25,
+      "toY": 21,
+      "facing": "down",
+      "style": "cave"
+    },
+    {
+      "x": 8,
+      "y": 1,
+      "toMap": "mirehaven_sanctum_deep",
+      "toX": 9,
+      "toY": 18,
+      "facing": "up",
+      "style": "stairs"
+    },
+    {
+      "x": 9,
+      "y": 1,
+      "toMap": "mirehaven_sanctum_deep",
+      "toX": 10,
+      "toY": 18,
+      "facing": "up",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "ms_gate_agent",
+      "sprite": "meridian",
+      "x": 8,
+      "y": 15,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ms_gate_agent"
+    },
+    {
+      "id": "ms_tarin_gate",
+      "sprite": "rival",
+      "x": 10,
+      "y": 15,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ms_tarin_gate",
+      "hiddenIfFlag": "ms_tarin_joined"
+    },
+    {
+      "id": "ms_tarin_stair",
+      "sprite": "rival",
+      "x": 10,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ms_tarin_stair",
+      "requiresFlag": "ms_tarin_joined",
+      "hiddenIfFlag": "msd_entered"
+    },
+    {
+      "id": "ms_hydro",
+      "sprite": "meridian_sci_f",
+      "x": 5,
+      "y": 4,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ms_hydro"
+    },
+    {
+      "id": "ms_porter",
+      "sprite": "porter",
+      "x": 13,
+      "y": 7,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ms_porter"
+    },
+    {
+      "id": "ms_clerk",
+      "sprite": "clerk",
+      "x": 14,
+      "y": 5,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ms_clerk"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 4,
+      "y": 4,
+      "text": [
+        "A gauge board wired into the pump, and a chalk column beside it.",
+        "WATER OUT, DAY 1: 900. DAY 4: 900. DAY 9: 900.",
+        "Somebody has written under it, in different chalk: WHERE IS IT GOING."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 15,
+      "y": 3,
+      "text": [
+        "Two settling tanks on a stone floor that is not stone.",
+        "Where the frames are bolted down the drill went in a finger and stopped.",
+        "The bit is still in the hole. They have gone round it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 14,
+      "y": 6,
+      "text": [
+        "Crates, stencilled and stacked square.",
+        "MERIDIAN FOUNDATION - SITE 2 - CATALOGUE AND LIFT.",
+        "AUTH: V. KELL, COMMANDER. Every crate. Same hand."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 8,
+      "text": [
+        "The wall here was cut with a picture on it, and the picture is gone.",
+        "Not worn away. Taken out, clean, in one rectangle, with a saw.",
+        "The dust in the cut is a week old."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18,
+      "y": 12,
+      "text": [
+        "Past the lamps the hall goes on into water nobody has bothered with.",
+        "Reeds have come up through a floor somebody polished, once.",
+        "This half of the room is three thousand years old. The other half is nine days."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 4,
+      "y": 11,
+      "item": "great_potion",
+      "quantity": 1,
+      "flag": "item_ms_west_pool"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 16,
+      "y": 14,
+      "item": "rouse",
+      "quantity": 1,
+      "flag": "item_ms_east_silt"
+    }
+  ]
+}

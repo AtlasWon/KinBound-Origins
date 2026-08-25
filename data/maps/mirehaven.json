@@ -1,0 +1,416 @@
+{
+  "id": "mirehaven",
+  "name": "Mirehaven",
+  "displayName": "MIREHAVEN",
+  "music": "station",
+  "battleBackdrop": "coast",
+  "indoor": false,
+  "fog": 0.34,
+  "regionPos": {
+    "x": 32,
+    "y": 15
+  },
+  "_design": "Four to six thousand people living above a marsh, and the map is built so that water is the default and every walkable tile is something somebody had to pay for. It is painted in that order too: the whole rectangle is open water, then the boat channel, then the piling field, then the platforms, then the nine walks that join them. Nothing here is a street grid with posts drawn under it. The gaps ARE the town, and the shape of the place is which platforms happen to be joined to which.",
+  "_plan": "Two levels, said in materials rather than in height, because a tile map has no height. STONE is the old town: the Rock is the only stone within a day of here, it is why there is a settlement at all, and it carries the Sanctum, the Kin Hall and both chartered buildings. PLANK is everything after -- the Landing, the West Quay, the three South Rows, the East Stage -- lower, wetter, and where the working end of the town lives. Crossing between them is going up or down without one tile of it being drawn in perspective, and the two ramps either side of the Rock are the stairs.\n\nThe gaps do the rest of the work. The West Quay hangs off ONE bridge, two tiles long, at row 29. The three South Rows read as one street from the Rock and are three separate decks joined end to end, so walking from the first to the third is four times the distance it looks. The East Stage is four tiles from the Landing across the boat channel and thirty-eight on foot, which is why everybody here owns a punt. And the oldest lamp in Mirehaven is still burning on a stage in the north-east that cannot be walked to at all: visible from the causeway, four rows of deep water out, and shut until the player can swim.",
+  "rows": [
+    "ДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДддДДДДДДДДДДДДДДДДДДДДДДДДДДДД",
+    "ДДщщСщщщщщщщщщщщщщщщщщщщщщщСРддддРСщщщщщщщщщщщщщщщщщСщщщщщДД",
+    "ДДщщщщщщщщщщщщщщщСщщщСщщщщщщРддддРщщщщщщщщщщщщСщщщщщСщщщщщДД",
+    "ДДщСщщщщщщщССщСщщщщщщщщщщщщщРЛдддщщщщщщщщщщщщщщщщщщщщщСщСщДД",
+    "ДДщщщСщщщщСщщщщщщщщСщщщщщщщщРддддРщщщщщСщщщщщщщщщщщщщщщщщщДД",
+    "ДДщщщСщщщщщСщщщщщщщщщщщщщщщщРддддРщщщщщщщщщщщщщщщщСщщРРРРРДД",
+    "ДДщщщщщщщщщщщщщщщщщщщщССщщщщРдддЛРщщщщщщщщщщщщщщщщщщСдддддДД",
+    "ДДщщщщщщщщщщСщщщщщщРРРРРРРРРРддддРРРРСРРБщСщщщщщщщщщРддЛддДД",
+    "ДДщщщщщщщССщСщщщщщРЛддддддддддддддддддддЛРщщщщщщщщщСРдддддДД",
+    "ДДщщщщщщщщщщщщщщСщщЭШШШЄдЭШШШШШЄдЭШШШШШЄдщщщщщщщщщщщРдддддДД",
+    "ДДщщщщщщщщщщщщщщщщщЯЧЪЧЯдЯЧЪЧЪЧЯдЯЯЧЯЪЯЯдССщщщщщщщщщщдддддДД",
+    "ДДщщщщщщщщСщщщщщщщщЯЯЏЯЯдЯЯЯЯЯЯЯдЯЯЯЏЯЯЯдРщщщщщщщщщщщдддддДД",
+    "ДДщщСщщщщщщщщщщщщщРддддддддддддддддддддддщщщщщщщщщщщРЛдддЛДД",
+    "ДДщщщщщщщщщщщщщщСщСдддcccccccдЭШШШЄЭШШШЄдРщщщщщщщСщщСРРРРРДД",
+    "ДДщщщщщщщщщщщщщщщщРдддCCCCCCCдЯЧЪЧЯЯЧЪЧЯдРщСщщщщщщщСщщщщщСДД",
+    "ДДщщщщщщщщщщщщщщщщСдддCCCCCCCдЯЯЯЯЯЯЯЯЯЯдРщщщщщщщщщщщщщщщщДД",
+    "ДДщщщщщщщщщСщщщщщСРЛддCCCCCCCддддддддддддРщщщщщСщщщщщщщщщщДД",
+    "ДДщщщщщщщщщщщщщщщщРддСCCCCCCCщРРРРщщРддРРщщщщщщСБРРСРРРРРщДД",
+    "ДДщщщщщщщщщщщщщщщщщддСCCCCCCCщщщСщщщщддРщщщщщРЛдддддддддЛРДД",
+    "ДДщСщщщСщщщщщщСщщСщддРCCCCCCCРРРРРРРРддРСщщщщРдддддддддддРДД",
+    "ДДщщССщщщщщщщщщщщЛ====Л=CSC=Л==========ЛРСщщщщдЭШШШЄдддддРДД",
+    "ДДщщРРРщРРщРРщСщР=============ЭШШШШШЄ===РщщщщщдЯЧЪЧЯдддддРДД",
+    "ДДщРдддддддддЛРщР=============ЯЪЯЧЯЪЯ===щщщщщщдЯЯЯЯЯдддддРДД",
+    "ДДщРдЭШШШШШЄддРщР=============ЯЯЯЏЯЯЯ===СщщщщщдддддддддддРДД",
+    "ДДщРдЯЧЪЧЪЧЯддРщСЛ=Ђ===================ЛРщщщщРддддддЭШШШЄщДД",
+    "ДДщСдЯЯЯЯЯЯЯддРщщ=144443==6999998=======РСщщщРддддддЯЧЪЧЯщДД",
+    "ДДщщЭШШШЄдддддРщР=122523==6770778=ЭШШШЄ=щщщщщщддддддЯЯЯЯЯщДД",
+    "ДДщщЯЧЪЧЯдддддРщР=GGhgGG==GGmgGGG=ЯЧЪЧЯ=РСщщщщдддддддддддРДД",
+    "ДДщщЯЯЯЯЯдддддРщР=================ЯЯЯЯЯ=РщщщщРддддддддддЛРДД",
+    "ДДщРддддддддддддд=======================щщщщщРддЭШШШШШЄддРДД",
+    "ДДщРдЭШШШШШЄддРщР=======ЭШШШЄ=ЭШШШЄ=====РщщщщРддЯЧЪЧЪЧЯддРДД",
+    "ДДщРдЯЧЪЧЪЧЯддРщР=======ЯЧЪЧЯ=ЯЧЪЧЯ=====РСщщщРддЯЯЯЯЯЯЯддРДД",
+    "ДДщщдЯЯЯЏЯЯЯддРСРЛ======ЯЯЯЯЯ=ЯЯЯЯЯ====ЛРщщщщРдддддддддддРДД",
+    "ДДщРдддддЭШШШЄщщщРРРддРРщСщщСРССщщСРРРРРССщщщРдддддддддддРДД",
+    "ДДщРдддддЯЧЪЧЯщщщщщРддРщщщщщщщщщщСщщщщщщщщщщщСЭШШШЄддддддРДД",
+    "ДДщщдддддЯЯЯЯЯСРРРРРддРРРРщщщщщщщщщщщСщщщщщщщщЯЧЪЧЯддддддщДД",
+    "ДДщщЛдддддддЂЛРЛдддддддддЛРщщщщщщщщщщщщщщщщщщщЯЯЯЯЯддддддРДД",
+    "ДДщщРРРщРРРРщРРддЭШШШЄддддщРРРщРРРРРщРСщщщщщщщдддддддддддщДД",
+    "ДДщщщщщщщщщщщщРддЯЧЪЧЯддддРЛдддддддддЛРщщщщщССЛдддддддддЛРДД",
+    "ДДщщщщщщСщщщщщщддЯЯЏЯЯддддРддддддЭШШШЄщщщщщщщРддРРРщРРРРРщДД",
+    "ДДщщщщщщщщщщщщРдддддддддддРдддЭШШЯЧЪЧЯщщщщщщщРддРщщщщщщщщщДД",
+    "ДДщщщщщщщщщщСщРдддддддддддддддЯЧЪЯЯЯЯЯщщщщщСщщддРщщщщщщСщСДД",
+    "ДДщщщСщщщщщщщщРдЭШШШЄдддддщдддЯЯЏЯЯдддРщщщщщщРддщщщщщщщСщщДД",
+    "ДДщщщщщщщщщщщщРдЯЧЪЧЯдддддРдддддддддддРщщщщщщРддРщщщСщщщщщДД",
+    "ДДщщщщщщщщщщСщСЛЯЯЯЯЯддддЛСдЭШШШЄдддддРСщщщщщРддРщщщщщщщСщДД",
+    "ДДщщщщСщщСщщщРРРРРРРддщРСРРдЯЧЪЧЯдддддщРщщщщщСддщщщщщщщщщСДД",
+    "ДДСщщщщщщщщщРЛдддддддддддЛРЛЯЯЯЯЯдддддддРщщщщРддщщСщщщщщщщДД",
+    "ДДщщщщщщСщщщщдЭШШШЄдЭШШШЄдРРщщщСщРРРССддРщщщщРддРщщщщщщщщщДД",
+    "ДДщщщщщщщщщщРдЯЧЪЧЯдЯЧЪЧЯдРщщщщщщщщщщРддРРРРщРддщщщщщщщщщщДД",
+    "ДДщщСщщщщщщщщдЯЯЯЯЯдЯЯЯЯЯдРщщщщщщщСщщРдддддддддЂРщщщСщщСщщДД",
+    "ДДщщщщщщщщщщРдддддддддддддРщщщщщщСщСщщРдЛддддддЛРщщщщщщщщСДД",
+    "ДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДД"
+  ],
+  "warps": [
+    {
+      "x": 30,
+      "y": 0,
+      "toMap": "route_6",
+      "toX": 30,
+      "toY": 50,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 31,
+      "y": 0,
+      "toMap": "route_6",
+      "toX": 31,
+      "toY": 50,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 25,
+      "y": 20,
+      "toMap": "mirehaven_sanctum",
+      "toX": 9,
+      "toY": 17,
+      "facing": "up",
+      "style": "cave"
+    },
+    {
+      "x": 33,
+      "y": 23,
+      "toMap": "mirehaven_hall",
+      "toX": 11,
+      "toY": 12,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 21,
+      "y": 27,
+      "toMap": "mirehaven_clinic",
+      "toX": 7,
+      "toY": 10,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 29,
+      "y": 27,
+      "toMap": "mirehaven_provisioner",
+      "toX": 7,
+      "toY": 10,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 21,
+      "y": 11,
+      "toMap": "mirehaven_inn",
+      "toX": 8,
+      "toY": 12,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 36,
+      "y": 11,
+      "toMap": "mirehaven_market",
+      "toX": 9,
+      "toY": 12,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 8,
+      "y": 32,
+      "toMap": "mirehaven_boatyard",
+      "toX": 9,
+      "toY": 12,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 19,
+      "y": 39,
+      "toMap": "mirehaven_house_a",
+      "toX": 5,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 32,
+      "y": 42,
+      "toMap": "mirehaven_house_b",
+      "toX": 5,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "mh_harbourmaster",
+      "sprite": "villager_f",
+      "x": 24,
+      "y": 8,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mh_harbourmaster"
+    },
+    {
+      "id": "mh_lampwright",
+      "sprite": "porter",
+      "x": 33,
+      "y": 12,
+      "facing": "down",
+      "movement": {
+        "kind": "pace",
+        "axis": "x",
+        "distance": 3
+      },
+      "script": "mh_lampwright"
+    },
+    {
+      "id": "mh_ferrywoman",
+      "sprite": "fisher",
+      "x": 38,
+      "y": 8,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mh_ferrywoman"
+    },
+    {
+      "id": "mh_elder",
+      "sprite": "villager_m",
+      "x": 27,
+      "y": 21,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mh_elder"
+    },
+    {
+      "id": "mh_warden",
+      "sprite": "villager_f",
+      "x": 21,
+      "y": 22,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mh_warden"
+    },
+    {
+      "id": "mh_meridian_clerk",
+      "sprite": "meridian",
+      "x": 30,
+      "y": 20,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mh_meridian_clerk"
+    },
+    {
+      "id": "mh_boatwright",
+      "sprite": "villager_m",
+      "x": 6,
+      "y": 29,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mh_boatwright"
+    },
+    {
+      "id": "mh_netmender",
+      "sprite": "netmender",
+      "x": 12,
+      "y": 23,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "mh_netmender"
+    },
+    {
+      "id": "mh_reedcutter",
+      "sprite": "hiker",
+      "x": 50,
+      "y": 23,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mh_reedcutter"
+    },
+    {
+      "id": "mh_child",
+      "sprite": "villager_f",
+      "x": 22,
+      "y": 38,
+      "facing": "down",
+      "movement": {
+        "kind": "wander",
+        "radius": 2
+      },
+      "script": "mh_child"
+    },
+    {
+      "id": "mh_stiltwright",
+      "sprite": "porter",
+      "x": 34,
+      "y": 44,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mh_stiltwright"
+    },
+    {
+      "id": "mh_rower",
+      "sprite": "fisher",
+      "x": 18,
+      "y": 50,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mh_rower"
+    },
+    {
+      "id": "mh_gossip",
+      "sprite": "villager_f",
+      "x": 33,
+      "y": 29,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "mh_gossip"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "script",
+      "x": 25,
+      "y": 19,
+      "text": [
+        "A slot cut square into the face of the rock, and the cut is not weathered.",
+        "Whoever made it did not chisel it. There are no tool marks at all.",
+        "A rope is strung across the mouth with a card on it: FOUNDATION SURVEY. NO ENTRY."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 19,
+      "y": 24,
+      "text": [
+        "POST 15, and the last one. The count runs out here, at the Rock.",
+        "Under the number, in the same paint as every post since Emberfall:",
+        "MIREHAVEN. FOUR THOUSAND SOULS AND NOT ONE FOOT OF GROUND."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 12,
+      "y": 36,
+      "text": [
+        "The tide board on the quay post. Somebody marks the water on it every morning.",
+        "The marks climb for nine feet and then stop climbing, three years ago, exactly",
+        "where the decks are. That is not luck. That is where they rebuilt them to."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 18,
+      "y": 12,
+      "text": [
+        "The Landing board, on the west rail. Sailings, tides, and the channel notice.",
+        "Under them, newer and better printed: SURVEY VESSELS HAVE PRIORITY AT THE STAIRS.",
+        "Somebody has written NO under it eleven times in eleven different hands."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 20,
+      "y": 27,
+      "text": [
+        "THE MIRE CLINIC. Open all hours, which out here means all of them."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 28,
+      "y": 27,
+      "text": [
+        "THE PROVISIONER. Lamp oil sold at cost, by order of the town."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 34,
+      "y": 23,
+      "text": [
+        "THE VENOM HALL OF MIREHAVEN. Keeper Tallow. Knock and wait; she will be up."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 53,
+      "y": 36,
+      "item": "full_heal",
+      "quantity": 2,
+      "flag": "item_mh_stage"
+    },
+    {
+      "kind": "item",
+      "x": 5,
+      "y": 36,
+      "item": "net_vessel",
+      "quantity": 5,
+      "flag": "item_mh_quay"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 16,
+      "y": 50,
+      "item": "deep_vessel",
+      "quantity": 1,
+      "flag": "item_mh_hidden"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 55,
+      "y": 23,
+      "item": "rouse",
+      "quantity": 1,
+      "flag": "item_mh_hidden2"
+    }
+  ]
+}

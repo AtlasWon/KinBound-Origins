@@ -1,0 +1,242 @@
+{
+  "id": "mirehaven_sanctum_deep",
+  "name": "The Drowned Gallery",
+  "displayName": "THE DROWNED GALLERY",
+  "music": "station",
+  "battleBackdrop": "cave",
+  "indoor": true,
+  "_plan": "Below the pump's reach, so this is the half of the Sanctum Meridian have NOT tidied: no cable, no lamps, no crates, and standing water everywhere the causeway is not. The player has Wade from the Tide Crest, which is the whole reason the room can be built like this -- the raised stone is the route, the water is the room, and everything worth finding is a step off the route into it.\n\nShape: one causeway up the middle from the stair, a crossroads at y11 where two arms fold back north-west and north-east round a flooded court, and a gallery across the top with the shutter in it. The arms are not optional decoration. The west arm holds the mechanism -- one plate and one stone, and the stone has to be shoved sideways first and then wound five tiles up a column the player can only reach by wading round it. The east arm holds four cut panels that are the second truth in pieces, in the wrong order, without the sentence that joins them.\n\nThe shutter at 9-10,y2 is solid on purpose. It is the one door in the game that needs two people: the plate takes the weight off it and Tarin takes the rest, and the player cannot do either half alone. See data/events/mirehaven_sanctum_deep.json, msd_shutter.\n\nROW 3 IS A GUTTER AND ROW 2 IS A WALL, AND BOTH ARE LOAD-BEARING. Playing it found the stone going straight over the top of an open plate and parking against the north wall, where nothing in this engine can pull it back -- pushing is one-directional. So the whole west half of row 2 is solid: every column a stone can be wound up terminates on row 3, row 3 runs west into the plate at 4,3, and 3,3 stops it there. Whichever line the player takes, the last push they can make is the one that puts it home. The remaining way to strand it is to shove it the length of row 3 eastwards and then north into the shutter apron, which nobody does by accident and which msd_tarin_door will undo on request.\n\nTHE THRESHOLD AT 9-10,2 IS THE SAME PALE METAL AS THE PLATE, and that is the only signposting the shutter gets. Shot at 1x, a solid wall row is a solid wall row: nothing told the player there was a door in it. Two disc tiles under the arch say 'this is the same stuff as the thing in the west arm' without a word of dialogue, and the sign at 9,1 and Tarin at 11,3 do the rest for anybody who asks.",
+  "rows": [
+    "CCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCC=xx=======CC",
+    "CC=Cx=============CC",
+    "CC================CC",
+    "CC====CC~~~~CC====CC",
+    "CC~~==CC~~~~CC==~~CC",
+    "CC~~==CC~~~~CC==~~CC",
+    "CC~~====~~~~====~~CC",
+    "CC~~~~==~~~~==~~~~CC",
+    "CC~~~~==~~~~==~~~~CC",
+    "CC~~~~========~~~~CC",
+    "CC~~~~~======~~~~~CC",
+    "CC~~~~~~====~~~~~~CC",
+    "CCC~~~~~====~~~~~CCC",
+    "CCCC~~~~====~~~~CCCC",
+    "CCCCC~~~====~~~CCCCC",
+    "CCCCCC~~====~~CCCCCC",
+    "CCCCCCCs====sCCCCCCC",
+    "CCCCCCCCCSSCCCCCCCCC"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 19,
+      "toMap": "mirehaven_sanctum",
+      "toX": 8,
+      "toY": 2,
+      "facing": "down",
+      "style": "stairs"
+    },
+    {
+      "x": 10,
+      "y": 19,
+      "toMap": "mirehaven_sanctum",
+      "toX": 9,
+      "toY": 2,
+      "facing": "down",
+      "style": "stairs"
+    },
+    {
+      "x": 9,
+      "y": 2,
+      "toMap": "mirehaven_sanctum_heart",
+      "toX": 8,
+      "toY": 12,
+      "facing": "up",
+      "style": "stairs"
+    },
+    {
+      "x": 10,
+      "y": 2,
+      "toMap": "mirehaven_sanctum_heart",
+      "toX": 9,
+      "toY": 12,
+      "facing": "up",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "msd_tarin",
+      "sprite": "rival",
+      "x": 11,
+      "y": 17,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "msd_tarin",
+      "hiddenIfFlag": "msd_split"
+    },
+    {
+      "id": "msd_tarin_door",
+      "sprite": "rival",
+      "x": 11,
+      "y": 3,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "msd_tarin_door",
+      "requiresFlag": "msd_split",
+      "hiddenIfFlag": "ms_shutter_open"
+    },
+    {
+      "id": "msd_sweep_west",
+      "sprite": "meridian",
+      "x": 7,
+      "y": 10,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "hiddenIfFlag": "msd_swept"
+    },
+    {
+      "id": "msd_sweep_east",
+      "sprite": "meridian",
+      "x": 12,
+      "y": 10,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "hiddenIfFlag": "msd_swept"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "switch",
+      "x": 4,
+      "y": 3
+    },
+    {
+      "kind": "pushable",
+      "x": 5,
+      "y": 8
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 1,
+      "text": [
+        "A slab of pale metal fills the arch, floor to lintel, without a seam.",
+        "It is not rusted, it is not bolted, and it has no handle on this side.",
+        "There is one plate in the floor of the west arm. It is up."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 3,
+      "text": [
+        "The plate is a disc of the same pale metal, set flush in the floor.",
+        "Around it, cut small: a ring, and inside the ring a weight.",
+        "Three thousand years, and it still stands a finger proud."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 6,
+      "y": 7,
+      "text": [
+        "A stone the size of a barrel, square-dressed, standing on its own.",
+        "Nothing else in this room is loose. This was left loose."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 6,
+      "text": [
+        "The west arm goes up into the dark and the water goes with it.",
+        "No cable down here. No lamps, no crates, no chalk.",
+        "Nine days of Meridian stopped one floor above your head."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18,
+      "y": 5,
+      "text": [
+        "PANEL. Rings on a sea floor, cut small and cut often.",
+        "Cable strung between them. People standing along the cable.",
+        "Everyone in the picture is looking the same way, at the same thing."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18,
+      "y": 6,
+      "text": [
+        "PANEL. The rings again. And again. And again, down the whole wall.",
+        "The mason cut this row a hundred times and did not get tired of it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18,
+      "y": 7,
+      "text": [
+        "PANEL. A figure with both hands clamped over its ears.",
+        "Behind it, the rings, cut deeper than anything else on this wall.",
+        "Whoever held the chisel leaned on it here."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 5,
+      "text": [
+        "PANEL. Nothing on this one but water.",
+        "It runs off the edge of the stone and onto the next stone along.",
+        "The next stone along is blank. They never finished it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 6,
+      "y": 6,
+      "text": [
+        "A pillar, and a tide line round it at the height of your chest.",
+        "Above the line the stone is dry and cut and perfect.",
+        "Below it, three thousand years of the marsh coming in."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 3,
+      "y": 13,
+      "item": "full_heal",
+      "quantity": 1,
+      "flag": "item_msd_west_pool"
+    },
+    {
+      "kind": "item",
+      "x": 16,
+      "y": 12,
+      "item": "great_potion",
+      "quantity": 1,
+      "flag": "item_msd_east_pool"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 9,
+      "y": 7,
+      "item": "deep_vessel",
+      "quantity": 1,
+      "flag": "item_msd_court"
+    }
+  ]
+}

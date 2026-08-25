@@ -34,6 +34,7 @@ import {
 import { ICON_SIZE, iconSprite } from '../gfx/kinsprite.js';
 import { createKin, type Kin } from '../systems/kin.js';
 import { registry } from '../data/registry.js';
+import { drawFog } from '../gfx/fog.js';
 import type { Battle } from '../battle/battle.js';
 import type { AiTier, EncounterMethod, EncounterTable } from '../data/schema.js';
 
@@ -1560,6 +1561,12 @@ export class OverworldScene implements Scene {
         r.rect(bx + Math.round(w / 2) - 1, by + h + 1, 3, 1, '#282838');
         r.text('!', bx + Math.round(w / 2) - 1, by + Math.round((h - 7) / 2), { color: '#d03838' });
       }
+    }
+
+    // Weather, under the night tint rather than over it, so fog at midnight is
+    // dark fog and src/gfx/fog.ts never has to know what time it is.
+    if (this.map.fog > 0) {
+      drawFog(r, this.map, this.player.centerX, this.player.footY - TILE_SIZE / 2, game.ticks);
     }
 
     if (!this.map.indoor) {

@@ -1,0 +1,104 @@
+{
+  "id": "embercoil_temple_vault",
+  "name": "Embercoil Temple",
+  "displayName": "THE RING VAULT",
+  "music": "station",
+  "battleBackdrop": "cave",
+  "indoor": true,
+  "_plan": "The optional room, and the only one where these people stop being admirable. Everything else in the temple says the Aurelians listened; this says they went on to build something to hold what they were listening to, and that somebody among them came back afterwards to break the drawings of it out of the wall. Nothing is stated. The player who never opens this door loses one good item and the single hardest thing in the act to un-notice.",
+  "rows": [
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΘΘΘΘΘΘΘΘΘΘΘΘΩΩ",
+    "ΩΩΘΘΘΘΘΘΘΘΘΘΘΘΩΩ",
+    "ΩΩΘΘΦΘΘΘΘΘΘΦΘΘΩΩ",
+    "ΩΩΘΘθ≡≡≡≡≡≡θΘΘΩΩ",
+    "ΩΩΘΘΘΘΘ≡≡ΘΘΘΘΘΩΩ",
+    "ΩΩΘΘΘΘΘ≡≡ΘΘΘΘΘΩΩ",
+    "ΩΩΘΘΘΘΘΘΘΘΘΘΘΘΩΩ",
+    "ΩΩΘθΘΘΘΘΘΘΘΘθΘΩΩ",
+    "ΩΩΘΘΘΘΘΘΘΘΘΘΘΘΩΩ",
+    "ΩΩΩΩΩΩΩΘΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΘΩΩΩΩΩΩΩΩ"
+  ],
+  "warps": [
+    {
+      "x": 7,
+      "y": 12,
+      "toMap": "embercoil_temple_deep",
+      "toX": 25,
+      "toY": 18,
+      "facing": "left",
+      "style": "door"
+    }
+  ],
+  "npcs": [],
+  "objects": [
+    {
+      "kind": "script",
+      "x": 4,
+      "y": 1,
+      "text": [
+        "A ring, unfinished. The bronze",
+        "stops halfway round and the",
+        "tools are still on the bench."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 11,
+      "y": 1,
+      "text": [
+        "Eight rings drawn in a row,",
+        "each one larger than the last.",
+        "The eighth fills the panel."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 1,
+      "y": 6,
+      "text": [
+        "The shape in the water again.",
+        "This time the rings are round",
+        "it, and it is drawn small."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 14,
+      "y": 6,
+      "text": [
+        "The last panel has been broken",
+        "out of the wall, and the",
+        "pieces carried away."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 8,
+      "y": 11,
+      "text": [
+        "One word cut over the door,",
+        "deep, by somebody who came",
+        "back to do it."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 12,
+      "y": 10,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_ectv_bench"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 3,
+      "y": 10,
+      "item": "warden_vessel",
+      "quantity": 1,
+      "flag": "item_ectv_rubble"
+    }
+  ]
+}

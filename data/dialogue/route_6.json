@@ -1,0 +1,71 @@
+{
+  "speakers": {
+    "r6_planker": "PLANKWRIGHT",
+    "r6_bellringer": "BELL KEEPER",
+    "r6_ferryman": "FERRYMAN",
+    "r6_surveyor": "SURVEY HAND",
+    "r6_lampman": "LAMPLIGHTER"
+  },
+  "entries": {
+    "r6_planker": [
+      {
+        "lines": [
+          "Every plank on this road was carried out here on somebody's shoulder.",
+          "You are welcome to walk on it. You are not welcome to call it a path.",
+          "A path is what the ground does. This is what we do instead of ground."
+        ]
+      }
+    ],
+    "r6_bellringer": [
+      {
+        "ifFlags": ["crest_4_taken"],
+        "lines": [
+          "I ring it at dusk and I ring it for anybody late, and lately I ring it a lot.",
+          "There are more people on this road this season than in the nine years before it.",
+          "None of them are going to Mirehaven. They stop at the Rock and they go down."
+        ]
+      },
+      {
+        "lines": [
+          "You will not see the Waystation from the road. That is what the bell is for.",
+          "Two strokes on the hour. If you are lost, stand still and count them.",
+          "People try to walk toward a sound in fog. Do not. Walk at it. There is a difference."
+        ]
+      }
+    ],
+    "r6_ferryman": [
+      {
+        "lines": [
+          "Fifty years my family has poled this reach and I have never once seen the far bank.",
+          "You get to know a place by its bottom instead. Where it is firm, where it is not.",
+          "I could take you across blind. I could not draw you a map of it to save my life."
+        ]
+      }
+    ],
+    "r6_surveyor": [
+      {
+        "ifFlags": ["crest_4_taken"],
+        "lines": [
+          "Foundation work. Ground survey, pile depths, water table, all of it above board.",
+          "No, I do not know what for. I take the readings and somebody else reads them.",
+          "They only want the numbers from one place, though. Right under the Rock."
+        ]
+      },
+      {
+        "lines": [
+          "Foundation survey. Depths and bearings. Do not touch the stakes, they are shot in.",
+          "Twelve of us came out. Nine went on to the town. I am the one who counts piles."
+        ]
+      }
+    ],
+    "r6_lampman": [
+      {
+        "lines": [
+          "Fourteen posts in, fourteen posts back out, every evening of my life.",
+          "People thank me for the light. The light is not the point of it.",
+          "The point is that if a lamp is out when I get to it, somebody has been at it."
+        ]
+      }
+    ]
+  }
+}

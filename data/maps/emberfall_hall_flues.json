@@ -1,0 +1,252 @@
+{
+  "id": "emberfall_hall_flues",
+  "name": "The Stack",
+  "music": "station",
+  "battleBackdrop": "cave",
+  "indoor": true,
+  "rows": [
+    "§§§§§§¤¤¤¤¤¤¤¤¤§§§§§§",
+    "§===============S===§",
+    "§=µ==============µ==§",
+    "§====··=============§",
+    "§====··=============§",
+    "§===================§",
+    "§§§§§§§§§§§§§§§§§§§§§",
+    "§µ======µ§§§µ==¶¶==µ§",
+    "§====··==§§§==§§====§",
+    "§====··==§§§==xx====§",
+    "§========§§§§======§§",
+    "§§xx==··§§§§§xx==··§§",
+    "§§xx==··§§§§§xx==··§§",
+    "§§§§§§§§§§§§§§§§§§§§§",
+    "§°=================°§",
+    "§====Ø===Ø¶Ø===Ø====§",
+    "§===================§",
+    "§===§§=========§§===§",
+    "§==§··§§§§§§§§§··§==§",
+    "§µ=================µ§",
+    "§===================§",
+    "§===§§§§§§§§§§§§§===§",
+    "§===================§",
+    "§=========S=========§",
+    "§§§§§§§§§§§§§§§§§§§§§"
+  ],
+  "warps": [
+    {
+      "x": 10,
+      "y": 23,
+      "toMap": "emberfall_hall",
+      "toX": 9,
+      "toY": 3,
+      "facing": "down",
+      "style": "stairs"
+    },
+    {
+      "x": 16,
+      "y": 1,
+      "toMap": "emberfall_hall",
+      "toX": 9,
+      "toY": 3,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "ef_beamhand",
+      "sprite": "hiker",
+      "x": 10,
+      "y": 16,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ef_beamhand"
+    },
+    {
+      "id": "ef_tap_a",
+      "sprite": "villager_m",
+      "x": 7,
+      "y": 19,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "ef_tap_a",
+      "sightRange": 4
+    },
+    {
+      "id": "ef_tap_b",
+      "sprite": "sailor",
+      "x": 12,
+      "y": 19,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "ef_tap_b",
+      "sightRange": 4
+    },
+    {
+      "id": "ef_bath_crew",
+      "sprite": "villager_f",
+      "x": 18,
+      "y": 10,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "ef_bath_crew",
+      "sightRange": 5
+    },
+    {
+      "id": "ef_sharehand",
+      "sprite": "elder",
+      "x": 16,
+      "y": 8,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ef_sharehand"
+    },
+    {
+      "id": "ef_keeper",
+      "sprite": "villager_m",
+      "x": 11,
+      "y": 4,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ef_keeper"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 24,
+      "text": [
+        "Cut into the bottom step, in letters a foot deep because they had the heat to spare:",
+        "ONE FIRE. IT IS ALREADY GOING SOMEWHERE.",
+        "Under it, in chalk, much newer: SO FIND OUT WHERE AND THEN ASK."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 11,
+      "y": 21,
+      "text": [
+        "A rail across the mouth of the floor, and a board hung on it.",
+        "WEST TAP: GLASSHOUSES, POTTERIES, THE LONG KILN.",
+        "EAST TAP: BATHS, HOTHOUSES, THE LAUNDRY. Below both: ONE BEAM. YOUR CHOICE."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 6,
+      "y": 18,
+      "text": [
+        "THE WEST TAP. A crack in the floor with a coping cut round it,",
+        "and a stripe of soot up the wall above showing how far the draught throws.",
+        "The stripe is old. It has not thrown anything for a fortnight."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 14,
+      "y": 18,
+      "text": [
+        "THE EAST TAP. Same crack, same coping, and the soot stripe here is fresh.",
+        "You can feel it from a tile away, and it is not warm. It is a shove.",
+        "A brass plate: STAND IN IT AND IT WILL TAKE YOU UP. THAT IS THE WHOLE JOB."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 5,
+      "y": 13,
+      "text": [
+        "Cut into the coping at the head of the west shaft, facing whoever it just spat out:",
+        "THE STACK ABOVE YOU IS THE KEEPER'S OWN AND IT IS NOT SET FROM HERE.",
+        "IT IS SET FROM THE EAST GALLERY. IT HAS BEEN THAT WAY SINCE THE CAPPING."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 0,
+      "y": 10,
+      "text": [
+        "A wheel bolted to the wall with no chain on it, and a card wired to the spokes.",
+        "NOTHING ON THIS FLOOR OPENS ANYTHING ABOVE THIS FLOOR.",
+        "Every hand who has ever worked here has tried it anyway."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 15,
+      "y": 8,
+      "text": [
+        "The east gallery's own stack, capped in stone and plated over at your feet.",
+        "A date on the cap, and it is a long time ago.",
+        "The plate is worn brightest where people stand on it and look up."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 20,
+      "y": 8,
+      "text": [
+        "A drop board for the east gallery. Two columns: SENT UP, and KEPT.",
+        "The KEPT column has a single entry, from the year the stack was capped.",
+        "Everything since is in the other one."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 20,
+      "y": 3,
+      "text": [
+        "The head of the stack, and the only window in the building that looks down.",
+        "Four hundred and eleven chimneys, and you can see which ones are drawing.",
+        "Tonight, from up here, most of the city is a dark grey shape with holes in it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 0,
+      "y": 2,
+      "text": [
+        "A tally rack: one wooden peg for every flue in Emberfall, hung in rows.",
+        "The Keeper takes them down and puts them up with his own hands, every morning.",
+        "There is a worn patch on the floor exactly one man wide in front of it."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 2,
+      "y": 7,
+      "item": "coolsalve",
+      "quantity": 3,
+      "flag": "item_ef_hall_a"
+    },
+    {
+      "kind": "item",
+      "x": 13,
+      "y": 7,
+      "item": "great_potion",
+      "quantity": 2,
+      "flag": "item_ef_hall_b"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 18,
+      "y": 14,
+      "item": "rouse",
+      "quantity": 1,
+      "flag": "item_ef_hall_c"
+    }
+  ],
+  "_plan": "THE ROOM IS THE PUZZLE AND THE PUZZLE IS THAT HEAT RISES AND THERE IS ONLY ONE LOT OF IT. The Tide Hall taught \"you cannot move water, you only choose which water to be standing in\". This is the opposite lesson in the opposite material, and it had to be, or it is the race with orange tiles. Here you CAN move the heat -- Emberfall moves it all day, that is the whole city -- and the price is that every foot of it you move comes off somebody. Opening is always a closing. That is what a share is.\n\nTHE MECHANIC IN ONE LINE: a shaft with the draught in it lifts you; a shaft without it is a hole and you fall down it. Same tile, opposite direction, and which one you get is a variable. Nothing here needed engine work -- every vent is a step trigger in data/events/emberfall_hall_flues.json that reads ef_low and ef_head and warps accordingly.\n\nTHE STACK, BOTTOM TO TOP. The FISSURE FLOOR (rows 14-23) is reached by the stair at 10,23 and holds the two low taps -- WEST at 4-5,18 and EAST at 15-16,18 -- and Brom Sett, who owns the beam that decides which of them breathes (var ef_low: 0 west, 1 east, and it starts 0 so the player rides before anybody explains anything). Above it are TWO GALLERIES that do not connect to each other: the WEST (rows 7-12, x1-8), where the west tap puts you, holding the head stack at 5-6,8-9; and the EAST (x12-19), where the east tap puts you, which is a dead end because its own stack was capped generations ago. Above both is THE HEAD, the Keeper's floor, reached only by the head stack.\n\nWHY IT IS NOT A FETCH QUEST. The head stack rises out of the WEST gallery and is opened from the EAST one. You cannot open your own door. A woman standing on a stone cap has to give away the only draught she can reach, to a floor she will never stand on, and the west gallery's coping sign says so to the player's face the moment the shaft spits them out. That is the Hall's argument about fire and it is the game's argument about everything: the heat you got came off somebody who did not have to give it.\n\nTHE LOOP, MEASURED IN WHO GOES COLD. Ride west (live at the start) -> the head stack is dark, so it drops you the whole way to the floor -> Brom shifts the beam east and names the glasshouse -> ride east -> beat the bath crew, ask Calla Morn, she opens the head stack -> the east tap is live so its head refuses to be climbed down, so take the plated downcast -> Brom shifts back west and names the bath-house -> ride west -> up the head stack -> Orrin Cade. Two shifts minimum, counted in ef_shifts, and the Keeper reads the number off Brom's own book before he says anything else. That counter is the point of the whole room.\n\nROW 18 IS A WALL WITH TWO NOTCHES CUT IN IT, AND THAT IS A COLLISION FIX, NOT A DECORATION. The first cut had the taps in pockets with stone cheeks either side, standing in an otherwise open floor -- so the ceiling above the walking row changed from open to solid halfway along it. The player's feet box is 11x9 pixels and straddles two rows for a moment after every vertical step; interrupt that step (a trainer's sight line does exactly this, freezing the body mid-stride) and the body is left half in row 18 and half in row 19, and then walking east is tested against BOTH rows. The three-pixel corner assist in world/body.ts cannot recover a two-pixel straddle. A driver walking the room reported the entire east half unreachable, four attempts running, while the map's own collisionAt said the tile was fine. The fix is that row 18 is now solid from x3 to x17 with only the two tap mouths open in it: the ceiling over the corridor never changes, so there is nothing to wedge on, and the floor's two halves connect through the 2-wide passages at x1-2 and x18-19 instead.\n\nTHE CORRIDOR IS TWO ROWS AND THE TAP LIPS ARE TWO TILES, FOR THE SAME REASON. A beaten trainer stops one tile short of wherever the player was standing, which on this floor is often a tap lip -- so a one-tile lip would be plugged by the man who was guarding it. Rows 19 and 20 are both open across the whole floor, and each tap has two lips, so whatever a trainer parks on, the way in is still there.\n\nTRAINERS BLOCK NOTHING AND ARE AVOIDED BY NOBODY. Wick at 7,19 watches x3-x6 of row 19 and Ferrow at 12,19 watches x13-x16, which between them is every tile that touches a tap. Their range is 4 rather than 5 on purpose: at 5 the lines reached x2 and x17, the mouths of the two north-south passages, which are the only places on this floor where an interrupted step can still leave a body straddling. Dess stands at 18,10 in the east gallery watching x13-x17 of row 10, and both ends of that row are rock, so Calla Morn's wheel cannot be reached around her.\n\nNOBODY IS EVER STRANDED AND NOTHING IS EVER LOST. Each gallery has a plated DOWNCAST -- 2-3,11-12 west and 13-14,11-12 east -- that always drops the player at the stair end of the floor, so leaving to heal is a step away whatever the beam is doing. The head has its own stair at 16,1 that only goes up. A cold shaft costs a walk and never a kin.\n\nTHE MATERIALS. Basalt wall from the city author's Emberfall tile family, dressed STONE_FLOOR for everything walkable, and the walkable VENT tile for every shaft mouth, because a vent already draws a glowing crack that breathes on a slow cycle. The downcasts are the old iron PLATE tile precisely because it does not glow. That pair is the whole legend and it needs no tutorial: at 1x, live rock is the way up and cold metal is the way down, and the player has that in the first ten seconds. The floor was basalt too in the first cut and the room read as one unbroken dark speckle -- wall and floor were the same material and the room had no shape at all."
+}

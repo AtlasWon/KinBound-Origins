@@ -1,0 +1,70 @@
+{
+  "id": "embercoil_temple_heart",
+  "name": "Embercoil Temple",
+  "displayName": "THE LISTENING ROOM",
+  "music": "station",
+  "battleBackdrop": "cave",
+  "indoor": true,
+  "_plan": "One room, and the only one in the building with no fire in it. Eight seats set well back from the middle, facing in, and every groove in the floor running to the same place. It is a room built for sitting still in, which is the whole argument of the civilisation that built it, and the player is meant to read that off the furniture rather than be told it. The scene at the middle is deliberately short: the room and the quiet carry it, and the man speaking gets five boxes and no explanation.",
+  "rows": [
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΩΩ",
+    "ΩΩΘΘΘΘΞΘΘ≈ΘΘΞΘΘΘΘΩΩ",
+    "ΩΩΘΘΞΘΘΘΘ≈ΘΘΘΘΞΘΘΩΩ",
+    "ΩΩΘΘΘΘΘΘΘ≈ΘΘΘΘΘΘΘΩΩ",
+    "ΩΩΘΘΘΘΘΘΘ≈ΘΘΘΘΘΘΘΩΩ",
+    "ΩΩΘ≈≈≈≈≈≈θ≈≈≈≈≈≈ΘΩΩ",
+    "ΩΩΘΘΘΘΘΘΘ≈ΘΘΘΘΘΘΘΩΩ",
+    "ΩΩΘΘΘΘΘΘΘ≈ΘΘΘΘΘΘΘΩΩ",
+    "ΩΩΘΘΞΘΘΘΘ≈ΘΘΘΘΞΘΘΩΩ",
+    "ΩΩΘΘΘΘΞΘΘ≈ΘΘΞΘΘΘΘΩΩ",
+    "ΩΩΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΘΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΘΩΩΩΩΩΩΩΩΩ"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 14,
+      "toMap": "embercoil_temple_deep",
+      "toX": 13,
+      "toY": 11,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [],
+  "objects": [
+    {
+      "kind": "script",
+      "x": 4,
+      "y": 4,
+      "text": [
+        "A seat cut from one block.",
+        "The stone is worn hollow where",
+        "people sat in it."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 14,
+      "y": 10,
+      "text": [
+        "Eight seats, all facing in.",
+        "Nothing in this room faces",
+        "the way out."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 9,
+      "y": 1,
+      "text": [
+        "One line cut over the seats,",
+        "and the same three marks",
+        "repeated the whole way along."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,214 @@
+{
+  "id": "mirehaven_hall",
+  "name": "The Pile House",
+  "displayName": "THE VENOM HALL",
+  "music": "station",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIIIIIIIIIIIIIII",
+    "IUUfffffSfffffUUI",
+    "If@@@fffffff$$$fI",
+    "Ifkkkfffffffff;;I",
+    "IfffffffffffffffI",
+    "IKKKKKKfffffffffI",
+    "IfffffffffffffffI",
+    "IEAEffffffffffPfI",
+    "IfffffffffffffffI",
+    "I/frrrrrfffffAEfI",
+    "IffrrrrrffffffffI",
+    "IPfffffffffffffPI",
+    "IIIIIIIIIIIDIIIII"
+  ],
+  "warps": [
+    {
+      "x": 11,
+      "y": 12,
+      "toMap": "mirehaven",
+      "toX": 33,
+      "toY": 24,
+      "facing": "down",
+      "style": "door"
+    },
+    {
+      "x": 8,
+      "y": 1,
+      "toMap": "mirehaven_hall_under",
+      "toX": 2,
+      "toY": 1,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "mh_hall_clerk",
+      "sprite": "clerk",
+      "x": 7,
+      "y": 5,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mh_hall_clerk"
+    },
+    {
+      "id": "mh_hall_dresser",
+      "sprite": "healer",
+      "x": 5,
+      "y": 2,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mh_hall_dresser"
+    },
+    {
+      "id": "mh_hall_winder",
+      "sprite": "netmender",
+      "x": 14,
+      "y": 4,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mh_hall_winder"
+    },
+    {
+      "id": "mh_hall_offshift",
+      "sprite": "fisher",
+      "x": 5,
+      "y": 10,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "mh_hall_offshift"
+    },
+    {
+      "id": "mh_hall_child",
+      "sprite": "kid",
+      "x": 10,
+      "y": 7,
+      "facing": "left",
+      "movement": {
+        "kind": "wander",
+        "radius": 2
+      },
+      "script": "mh_hall_child"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 0,
+      "text": [
+        "Painted straight onto the boards above the hatch, in a hand nobody has bettered:",
+        "THE MUD WILL NOT HAVE YOU. THE BOARDS WILL NOT HOLD FOREVER.",
+        "WHERE A CAP GROWS, THE TWO OF THEM MEET. THAT IS THE ONLY PLACE THEY DO."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 2,
+      "text": [
+        "A rack of stoppered jars, each one a different sulky green.",
+        "Bites, by kin, by year. The Weaverjaw column is the longest and the calmest:",
+        "eleven entries in two hundred years, and every one of them says PROVOKED."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 4,
+      "y": 2,
+      "text": [
+        "The antivenin bench. Marsh work, milked and cut and boiled here since the town was four huts.",
+        "A card, curling: MIREHAVEN SELLS THIS TO EIGHT REGIONS AND KEEPS THE WORST BATCH.",
+        "Under it, another hand: BECAUSE WE ARE THE ONES WHO EARNED IT."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 2,
+      "text": [
+        "The winding bench, and six weeks of somebody's patience wound onto one reel.",
+        "Raw silk goes on soft and sets like lacquer, and lacquered wood does not rot.",
+        "That is the entire reason there is a town here and not a bog with a name."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 3,
+      "text": [
+        "THE PILE LEDGER. Ten thousand posts, numbered, each with its last reading.",
+        "SOUND. SOUND. SOUND. WATCHING. SOUND. Column after column of it.",
+        "Somebody goes under the town and writes that word ten thousand times a year."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 4,
+      "y": 3,
+      "text": [
+        "The back of the ledger, where the readings stop and the arguments start.",
+        "1841: PILE 6 THROUGH 40 REWRAPPED BY US, IN TAR, PROPERLY, AT LAST.",
+        "1849: PILE 6 THROUGH 40 REPLACED. TAR IS NOT SILK. WE HAVE APOLOGISED."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 14,
+      "y": 3,
+      "text": [
+        "Bolts of cut silk stacked to the ceiling, sorted by which quarter they came off.",
+        "A tally board beside them: TAKEN THIS YEAR. UNDER what the colony can spare.",
+        "There is no column for what it cannot. Nobody here has ever needed one."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 5,
+      "text": [
+        "The crew board. Names, shifts, and one line at the bottom in older paint:",
+        "NOBODY GOES UNDER ALONE AND NOBODY GOES UNDER ANGRY.",
+        "The second half has been rubbed and repainted more often than the first."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 16,
+      "y": 6,
+      "text": [
+        "Eight Bond Crests in a case, one for every Hall in Caelora.",
+        "The Silk Crest is fifth, and it is the only one that is not metal.",
+        "It is a disc of set silk, and it has been in that case for a hundred and sixty years."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 0,
+      "y": 8,
+      "text": [
+        "A framed strip of pile, sawn through and polished, from the year the town was founded.",
+        "Two hundred years of black water outside, and clean pale timber inside.",
+        "The thin bright rind holding the two apart is not paint and it never was."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 12,
+      "text": [
+        "A notice by the street door, hung at the height of a sixteen-year-old:",
+        "THE COLONY IS NOT AN ATTRACTION AND IT IS NOT A PROBLEM.",
+        "IT IS THE LANDLORD. BEHAVE ACCORDINGLY AND KEEP TO THE WALK."
+      ]
+    }
+  ],
+  "_plan": "THE PUBLIC FACE OF A HALL WHOSE CHALLENGE IS UNDERNEATH THE TOWN. Mirehaven stands on ten thousand tarred piles in a peat marsh, wood in a marsh rots, and Mirehaven's does not -- because a Weaverjaw colony has lived under the town since before the town and its silk sets like lacquer. The Pile House is the office of the crew who go under at low water and read every post, and everything in the room is that job: the ledger with SOUND written ten thousand times, the antivenin bench, the winding bench, the sawn pile in a frame showing the bright rind that has kept two hundred years of black water out of the timber.\n\nIT IS SEVENTEEN BY THIRTEEN AND IT WAS NINETEEN BY FIFTEEN. The first cut was drawn at the Tide Hall's size and photographed as a barn: a plan view of it is four pieces of furniture round the edge of an acre of plank, because a working office is dense and a lobby is not. Two rows and two columns came out and the furniture came in off the walls, which is the whole fix -- the room did not need more things in it, it needed to be the size of the things it already had.\n\nTHE STREET DOOR IS AT 11,12 AND THE COLUMN IS NOT A CHOICE. Mirehaven's own map put the Hall's front door at 33,23 and pointed it at mirehaven_hall 11,17 -- a room eighteen rows deep, which this one is not and was never going to be. Eleven is kept so that the town's warp needs one number changed rather than two; the tile inside this door is 11,11 and the tile outside it in the town is 33,24.\n\nTHE ROOM IS NOT AN ARENA and the Keeper is not in it. Annik Tallow is down among the piles, because that is where the work is; the hatch at 8,1 is the only way to her and the street door at 11,12 is the only way out. Same shape as the Tide Hall and the Quarry Hall before it, for the same reason -- a Hall that keeps a trade tests you at the trade, not in the waiting room.\n\nTHE SIGN OVER THE HATCH IS THE WHOLE RULEBOOK. Three lines, and the third one is the map: where a glowcap grows, the boards and the water meet, and that is the only place they do. Everything the player has to work out downstairs is answered by reading that before they climb down."
+}

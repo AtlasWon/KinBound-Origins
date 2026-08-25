@@ -1,0 +1,402 @@
+{
+  "id": "route_5",
+  "name": "Embercoil Pass",
+  "displayName": "ROUTE 5 - EMBERCOIL PASS",
+  "music": "route_west",
+  "battleBackdrop": "quarry",
+  "indoor": false,
+  "regionPos": {
+    "x": 29,
+    "y": 22
+  },
+  "encounterTable": "route_5",
+  "_design": "Four shelves down into the volcanic interior, and the whole point of the map is that the GROUND changes along the road rather than at a door. The player leaves Tideglass on turf and gold dirt; nine rows later the turf is in patches, the road is black clinker, and the trees are dead standing. Nothing announces it. The three basalt bands are columnar rather than stratified, which is the one visual difference that stops this reading as the quarry two acts back.",
+  "_plan": "The road coils: east along the top shelf, south down the eastern wall, west across the middle, south past the Coil, east along the Cinderfall, south to the gate. That is six legs and it doubles back on itself twice, so the Coil is seen from three sides before it is walked past. The optional branch is the steam terraces on the west, which rejoin the road lower down rather than dead-ending; the pool at the back of them is too deep to wade and is the reason to come back. Meridian have stopped moving and started digging: two fenced sites, numbered trenches, spoil graded and stacked, a generator running with nobody near it. Nobody on the map explains any of it.",
+  "rows": [
+    "TTTTTTTTTTTTTTTTÞÞÞÞÞÞÞÞÞÞÞÞÞÞÞÞÞÞÞÞÞÞÞÞÞÞÞÞ",
+    "Ttt,ot*tTTt.,,,..,.....¨¨¨¨¨¨¨¸¨¨ø¸ø¨¨¨¨¨¨¨Þ",
+    "T\"o,.\"\"\"...,o.,,,....\"\"¨¨¨¥¥¥¨ø¨¨¨¥¸¨¨¸¥¥¥øÞ",
+    "T.\"*...*\"..........¨¨¨¨¥¥ø¥¸¨¨¨ø¨¨¨¨¥¸¥¥¥¨¸Þ",
+    "T\",,\"\"\"\"o..o..**..¨¨¨¥¥¥¥¡¥¥¨¥¨¨¨¥¨¥¨¥¨¥¨¨¸Þ",
+    "T*.´.*,,,,.o.,..¨¨¨¨¨¨¥¨¨¥¥¥ø¥¸¸¡¥¨¥¥¥¥¸¥¥¨Þ",
+    "-------------ßßßßßßßßßßßßßßßßßßßßßßßßßßß¨¥¨Þ",
+    "-------------ßßßßßßßßßßßßßßßßßßßßßßßßßßß¨¸¨Þ",
+    "To.,,......¨¸¨ø´¨¨¸¨¨¨¨¨¨¨¨¨¨¸¨¨¨¨¨¸¨¨ßß¨ø¸Þ",
+    "Þ.**.....æææææææææææ¸¸ææææææææææææææææßßæææÞ",
+    "Þ,.....¨¨ÆÆÆÆÆÆÆÆÆÆÆ¿¿ÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆßßÆÆÆÞ",
+    "Þ...,¨.¨øþ¨¨þ¨¨¨ø¨¸¨¨¨¨¨¨¨´¨¨¨¨¨¨¨¨¨¸¨ßß¸¥¥Þ",
+    "Þ¸¨¸¨¸¨¨¨¨¨¨´¸¥ø¸¥¥¥¸¨¯¯¯¯¯¸¸¯¯¯¯¯¯¯¨¥ßß¥¨¥Þ",
+    "Þ¸¡¨¨¨¨¨¸¸¸¸¨¥¨¥¥¥¸¥ø¸¹¨¸¸¨¸¸¨²¨¨¸¨¹¥¥ßß¨¨¸Þ",
+    "Þ¨¨¸¨¸¨¡¨¨¨ø¨¥¨¥¥¨¨¥¨¸¹¸ªªªª¨¸¸¸¨¨¨¹¥¥ßß¥¥¥Þ",
+    "Þ¨¸©©©¨¨¸¸¸¨ø¨¨¥¥¨¨¡¥¸¹¨¨¸¨¸¸¨¨¨¸³¨¹¸¨ßß¸¥øÞ",
+    "Þ¨©©©©©¨¸¨¸¨ø¨¨¥¨¥¥¥¥¸¹¾¸¸¨¨¸¸¸¨¨¸¨¹¥¥ßß¸¡¥Þ",
+    "Þ®®®©©©©¸¸¨¸¨¥¨¨¸¥¥¥¥¨¹¨¸¸¸¸¨ªªªª¸¨¹¥¨ßß¥¨¥Þ",
+    "Þ®®®©©©¨¸¨¨ø¨¥¨¥¥¥¥¥¥¸¹¸ªª¸¨¨¨¨¨¨¾¸¹¨¨ßß¨¥¥Þ",
+    "Þ¸¸®©©¨¸¡¨¸¨¡¨¨¥¥¨¥¸¥¸¹¨¨¨¨¨¸¸¨¨¨¨¸¹¨¨ßß¥¥¸Þ",
+    "Þ®®®©©©¨¨¨¨¸¨¥¥¨¥¥¥¥¨¨¯¯¯¯¯¯¯¯¯¯¯¯¯¯ø¨ßß¥¥¥Þ",
+    "Þ¨¨¨¨¨¨¸¨¸¨¸¨¨¨¨¨þ¨¨¸¨¨¨¨¨¨¨ø¸¨¡¨¸ø¨¨¸ßß¨¸¸Þ",
+    "Þææææææææ¨¨¨æ¸¸æææææææææææææææææææææææßßæææÞ",
+    "ÞÆÆÆÆÆÆÆÆ¸¨¨Æ¿¿ÆÐÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆßßÆÆÆÞ",
+    "Þ¨¨¸¨¸¸¨¨¨ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß¸¸¨Þ",
+    "Þ¨¨¨¨¨¨¸¨¸ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß¸¨¨Þ",
+    "Þ¨¨¨ø¨¸¨¨¨ßß´¨¥´¨¨¨¨¨¸¨æææææææ¨¸¨¨¨¨¨¥¡¸¨¥¸Þ",
+    "Þ¨¨¸¨¨¨¨¨¸ßßø¨¨¸¥¨¨¨¨ææÆ×××××××æ¨¨¸¨¸ø¥¥¨¨¥Þ",
+    "Þ¨¸¨ø¨¸¨ø¸ßß¨¥¥¡¥¨¨×æÆ××ÆÆÆÆÆÆÆ××æ¨¨¸¨¨¥¨¥¸Þ",
+    "Þ¨¨¨¨¨¸¸¨¨ßß¨¥¥¥¥¨øÆÆ××ÆÆ×××××ÆÆ××¨¨¨¨¥¥¥¥¨Þ",
+    "Þ¨¨¨¸¨ø¸¨¨ßß¸¨¸¸¥¸×ÆÆ×ÆÆ××ÆÆÆ××ÆÆ××¨¡¨¥¥¨¥¥Þ",
+    "Þ¨¸¨¨¨¨¨¸¨ßß¨¨¨¥¨¸××ÆÆ×ÆÆ×××ÆÆ××ÆÆ×¨¨¥¥¨ø¨¥Þ",
+    "Þø¨¸¨ø¨¨¨¨ßß¨¸¥¥¨¨Æ×ÆÆ×××Æ××ÆÆ××ÆÆ×¨¸¥¥¥¨¥¨Þ",
+    "Þ¨ø¸¸¨¨¨¨¨ßß¨¥¥¨¨¡¨××ÆÆÆÆ××ÆÆÆ×ÆÆ×¨¨¨¥¨¥¨¥¥Þ",
+    "Þ¨¨¸¨¨¨¨¨¡ßß¨¥ø¨¥¨¨ÆÆ××ÆÆÆÆÆ××ÆÆÆ×¨¨¨ø¥¥¸¥¥Þ",
+    "Þ¨¨¨¨¨ø¸¨¨ßß¨¨ø¥¥¨¨¸¨ÆÆ×××××ÆÆÆÆ¸¨¨¨¨¥¥¨¨¥¨Þ",
+    "Þ¨¨¨øøø¨¨¨ßß¸¨¸¸¨ø¨¨¨¡¸ÆÆÆÆÆÆ×¨ø¨¨¸¸¨¨¨ø¨¨¨Þ",
+    "Þæææææææææßß¨¨¨¸¸¨¨¨¨¨¸¨×××æææ¸¸æææææææææææÞ",
+    "ÞÆÆÆÆÆÆÆÆÆßß¨¨¨¨¨¨ø¨¨¨¨º×××ºÆÆ¿¿ÆÆÆÆÆÆÆÆÆÆÆÞ",
+    "Þ¨¨¨¨¨¨¨¨øßßßßßßßßßßßßøº×××º¨¨¨¨¨¨¸¨¸¨¨¨¨××Þ",
+    "Þ¨¨¨¨¨¸¨¸¨ßßßßßßßßßßßß¨¸×××¨¸¨¨¨¨¨¨¨¨´¨¨¨××Þ",
+    "Þ¸¨¨¸¨¨¸¨¨¨¨þ¨¨ø¸¨¸¨ººø¨ººº¨¨¯¯¯¯¯¯¯¯¯¯¯¯××Þ",
+    "Þ¸¨¸¨¸¨¨¸¨¨¸¨×××××××ºº××××××××¨¾¨¸¸²¨¸¨ªª××Þ",
+    "Þ¨¨¨ø¨¨¨¨¨¨¨¨×××××××ºº××××××××¨¸³¸¸¸¸¨³¨¹××Þ",
+    "Þ¸¸¸¨¨¨¸ø¨¨¨¨¥¥¥¥¨¸¥ºº¨¨¥¨¨¨¥¥¨¸¨¨¨¸¸¸¸¸¹××Þ",
+    "Þ¨ø¨¨¨¨¨¨¨¨¨¨¨¥¥¥¨¨¨ßß´¨¡¥¨¨¨¥¨¨¨ªªªªª¨¾¹××Þ",
+    "Þ¨¨¨ø¨¨ø¨¨¸¨¨¥¸¥¨¥¨¨ßß¨¥¥¥¨¨þ¯¯¯¯¯¯¯¯¯¯¯¯××Þ",
+    "ÞÞÞÞÞÞÞÞÞÞÞÞÞÞÞÞÞÞÞÞßßÞÞÞÞÞÞÞÞÞÞÞÞÞÞÞÞÞÞÞÞÞÞ"
+  ],
+  "warps": [
+    {
+      "x": 0,
+      "y": 6,
+      "toMap": "tideglass",
+      "toX": 84,
+      "toY": 46,
+      "facing": "left",
+      "style": "edge"
+    },
+    {
+      "x": 0,
+      "y": 7,
+      "toMap": "tideglass",
+      "toX": 84,
+      "toY": 47,
+      "facing": "left",
+      "style": "edge"
+    },
+    {
+      "x": 16,
+      "y": 23,
+      "toMap": "route_5_vent",
+      "toX": 9,
+      "toY": 16,
+      "facing": "up",
+      "style": "cave"
+    },
+    {
+      "x": 20,
+      "y": 47,
+      "toMap": "emberfall",
+      "toX": 36,
+      "toY": 1,
+      "facing": "down",
+      "style": "edge"
+    },
+    {
+      "x": 21,
+      "y": 47,
+      "toMap": "emberfall",
+      "toX": 37,
+      "toY": 1,
+      "facing": "down",
+      "style": "edge"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "r5_dunnock",
+      "sprite": "hiker",
+      "x": 7,
+      "y": 5,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r5_dunnock",
+      "sightRange": 3
+    },
+    {
+      "id": "r5_carrow",
+      "sprite": "villager_f",
+      "x": 14,
+      "y": 5,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r5_carrow"
+    },
+    {
+      "id": "r5_marrow",
+      "sprite": "porter",
+      "x": 36,
+      "y": 16,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r5_marrow",
+      "sightRange": 3
+    },
+    {
+      "id": "r5_kell",
+      "sprite": "meridian",
+      "x": 29,
+      "y": 15,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r5_kell",
+      "sightRange": 3
+    },
+    {
+      "id": "r5_bellow",
+      "sprite": "villager_m",
+      "x": 21,
+      "y": 26,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r5_bellow"
+    },
+    {
+      "id": "r5_tem",
+      "sprite": "villager_f",
+      "x": 30,
+      "y": 26,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r5_tem",
+      "sightRange": 2
+    },
+    {
+      "id": "r5_shale",
+      "sprite": "hiker",
+      "x": 13,
+      "y": 32,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r5_shale",
+      "sightRange": 3
+    },
+    {
+      "id": "r5_ravel",
+      "sprite": "meridian",
+      "x": 17,
+      "y": 41,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r5_ravel",
+      "sightRange": 2
+    },
+    {
+      "id": "r5_pell",
+      "sprite": "porter",
+      "x": 31,
+      "y": 40,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r5_pell"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 3,
+      "y": 5,
+      "text": [
+        "ROUTE 5. EMBERCOIL PASS. TIDEGLASS BEHIND YOU. EMBERFALL 14, AND ALL OF IT UPHILL.",
+        "Carry water. There is plenty of water up there and none of it is any use to you."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 15,
+      "y": 8,
+      "text": [
+        "END OF THE GRAZING. NOTHING PAST THIS POST IS ANYBODY'S.",
+        "Below, in a newer hand: it was somebody's as of the spring."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 15,
+      "y": 26,
+      "text": [
+        "A road marker, sunk to its shoulders in ash. The figure on it is a nine, or a four.",
+        "Somebody has scraped the face clear at least once, and then given up."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 12,
+      "text": [
+        "THE STEAM TERRACES. WADE IF YOU MUST. DO NOT SWIM.",
+        "The near pans are shin-deep and hot. The back one has no bottom anybody has found."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 26,
+      "y": 11,
+      "text": [
+        "MERIDIAN FOUNDATION - SURVEY SITE 2. AUTHORISED PERSONS.",
+        "The gate is standing open. It has been standing open long enough for ash to bank against it."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 30,
+      "y": 13,
+      "text": [
+        "A survey mast, guyed to the rock, with an instrument turning slowly on the head of it.",
+        "It is not pointed at the sky. It is pointed straight down."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 33,
+      "y": 15,
+      "text": [
+        "A generator, running. Fuel to the top of the glass, and the frame is warm.",
+        "There is nobody in the compound. There are no marks in the ash but yours."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 25,
+      "y": 14,
+      "text": [
+        "TRENCH 2-4. Cut, logged, backfilled. The board at the end lists what came out of it:",
+        "BASALT. BASALT. ASH. BASALT. WORKED STONE, NOT LOCAL - SEE 2-7."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 31,
+      "y": 17,
+      "text": [
+        "TRENCH 2-7. Not backfilled. Shored, floored, and roped off, and much deeper than the rest.",
+        "Whatever was at the bottom of it has been lifted out and the shape of it is still in the ash."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 26,
+      "text": [
+        "THE EMBERCOIL. The flow came out of the mountain, met the old shelf, and turned back into itself.",
+        "It has been going round for two hundred years. The pass is named for it and so is the town."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 17,
+      "y": 23,
+      "text": [
+        "THE CINDER VENT. A tube the lava emptied out of and left behind, and it is still warm in there.",
+        "Rope down the first drop. Whatever the Emberfall children tell you, do not go left at the bottom."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 22,
+      "y": 45,
+      "text": [
+        "EMBERFALL 4, THROUGH THE NARROWS. KEEP LEFT OF THE FLOW AND KEEP MOVING.",
+        "Chalked underneath, and not by the same hand: FOUR MILE OF THIS. FOUR. MILE."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 37,
+      "y": 40,
+      "text": [
+        "MERIDIAN FOUNDATION - SURVEY SITE 4. Bigger than Site 2, and newer, and busier.",
+        "Nine trenches, all of them cut on the same bearing, all of them pointing at the mountain."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 4,
+      "y": 3,
+      "item": "great_potion",
+      "quantity": 1,
+      "flag": "item_r5_gorse"
+    },
+    {
+      "kind": "item",
+      "x": 7,
+      "y": 21,
+      "item": "coolsalve",
+      "quantity": 3,
+      "flag": "item_r5_terrace"
+    },
+    {
+      "kind": "item",
+      "x": 2,
+      "y": 19,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_r5_backpool"
+    },
+    {
+      "kind": "item",
+      "x": 41,
+      "y": 21,
+      "item": "ward_incense",
+      "quantity": 1,
+      "flag": "item_r5_eastshelf"
+    },
+    {
+      "kind": "item",
+      "x": 38,
+      "y": 34,
+      "item": "full_heal",
+      "quantity": 1,
+      "flag": "item_r5_coilfoot"
+    },
+    {
+      "kind": "item",
+      "x": 15,
+      "y": 46,
+      "item": "fine_vessel",
+      "quantity": 5,
+      "flag": "item_r5_cinderfall"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 26,
+      "y": 19,
+      "item": "rouse",
+      "quantity": 1,
+      "flag": "item_r5_hidden_site2"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 33,
+      "y": 5,
+      "item": "strong_potion",
+      "quantity": 2,
+      "flag": "item_r5_hidden_ash"
+    }
+  ]
+}

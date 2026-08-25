@@ -1,0 +1,53 @@
+{
+  "speakers": {
+    "mhi_host": "INNKEEPER",
+    "mhi_surveyor": "FOUNDATION SURVEYOR",
+    "mhi_cutter": "REED CUTTER",
+    "mhi_traveller": "TRAVELLER"
+  },
+  "entries": {
+    "mhi_host": [
+      {
+        "lines": [
+          "Beds are up, meals are down, and the lamps in your room stay lit all night.",
+          "That is not hospitality, it is policy. Guests who wake in the dark here panic."
+        ]
+      }
+    ],
+    "mhi_surveyor": [
+      {
+        "ifFlags": [
+          "crest_5_taken"
+        ],
+        "lines": [
+          "I have been taking water readings in this marsh for four months.",
+          "Sixty years of the level rising, and then three years of it not.",
+          "I put that in my report. Somebody sent it back and asked me to check it again."
+        ]
+      },
+      {
+        "lines": [
+          "Hydrology. Water table, flow, salinity. Honest work and I am good at it.",
+          "The others came for the Rock. I did not ask what for. You learn not to."
+        ]
+      }
+    ],
+    "mhi_cutter": [
+      {
+        "lines": [
+          "Two months on the stage, two months in the beds, and one month arguing about prices.",
+          "Best reed in Caelora and everybody east of here roofs with slate. No accounting for it."
+        ]
+      }
+    ],
+    "mhi_traveller": [
+      {
+        "lines": [
+          "Averra is a big place and I have seen a fair amount of it, and I will tell you this:",
+          "there are eleven towns in the world built over water and this is the only good one.",
+          "The others are all ports. This one is not going anywhere. It is just standing there."
+        ]
+      }
+    ]
+  }
+}

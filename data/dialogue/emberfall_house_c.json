@@ -1,0 +1,16 @@
+{
+  "speakers": {
+    "ef_house_c_widow": "WIDOW",
+    "ef_house_c_lodger": "LODGER"
+  },
+  "entries": {
+    "ef_house_c_widow": [
+      "Sixty-one years in this building. Four floors, and I have not once been cold in it.",
+      "My husband was a pourer. He was warm the whole of his life, and it did not make it a long one."
+    ],
+    "ef_house_c_lodger": [
+      "I came here from Stonewake. Quarry town, cold as the inside of a hole.",
+      "Here the floor is warm and the rent is double, and I am not going back."
+    ]
+  }
+}

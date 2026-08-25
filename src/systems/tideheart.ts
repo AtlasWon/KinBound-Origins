@@ -126,11 +126,13 @@ export interface AurelianSite {
 /**
  * The stage the game is built to. Stage 1 is Act 1: Hearthmere, Route 1,
  * Briarbell, Route 2's ruin, Stonewake. Stage 2 is Act 2: Eastwind Ridge, the
- * coast road and Tideglass. Raise this when a later stage ships, and not
- * before -- it is the switch that keeps unbuilt sites out of the player's
- * hands.
+ * coast road and Tideglass. Stage 3 is Act 3: Embercoil, Emberfall, the
+ * wetlands and Mirehaven, and it carries the first two of the three Aurelian
+ * sites Sorrell finds in Elias' notes. Raise this when a later stage ships,
+ * and not before -- it is the switch that keeps unbuilt sites out of the
+ * player's hands.
  */
-export const BUILT_STAGE = 2;
+export const BUILT_STAGE = 3;
 
 export const SITES: AurelianSite[] = [
   {
@@ -188,6 +190,93 @@ export const SITES: AurelianSite[] = [
         'Boats tied along it. People sitting on the edge with their feet in the sea.',
         'Something enormous goes by underneath them, slow, and lights the whole bay green.',
         'Nobody stands up. Nobody runs. A child waves at it.',
+      ],
+    },
+  },
+  {
+    id: 'embercoil_temple',
+    stage: 3,
+    name: 'The Embercoil Temple',
+    /*
+     * ACT 3, and the first of the three sites Sorrell finds in Elias' notes.
+     * The first time the player is properly inside Aurelian architecture
+     * rather than looking at a doorway in a wood: a listening station wound
+     * round a volcanic shaft, because these people worked through resonance
+     * and the mountain was already loud.
+     *
+     * FOUR MAPS AND THE CITY OUTSIDE. Emberfall is on the list deliberately.
+     * The temple is up the stair cut into the city's west cliff, and an object
+     * that only wakes once the player is already indoors has told them
+     * nothing: the point of listing the approach is that the player arrives in
+     * a geothermal town, feels the thing in their bag start pulling west, and
+     * goes looking before anybody has said a word to them. It is the Glass
+     * Quay's trick from Act 2, done with a mountain instead of a harbour.
+     *
+     * The `at` tile is what stops that being a nag. It names a tile on
+     * `embercoil_temple` only, so out in the city the object pulls at a steady
+     * half with no needle, and the needle only appears once the player is
+     * inside and it has something to point at.
+     *
+     * The tile is the head of the stair in the outer coil rather than the
+     * listening room three floors down, because the object should pull the
+     * player toward the way in, not through the rock at the answer.
+     */
+    maps: [
+      'emberfall',
+      'embercoil_temple',
+      'embercoil_temple_deep',
+      'embercoil_temple_vault',
+      'embercoil_temple_heart',
+    ],
+    at: { map: 'embercoil_temple', x: 14, y: 10 },
+    near: 'It is pulling. Not toward a wall this time -- toward the floor.',
+    after: 'Warm, and turning over, and no longer in any hurry.',
+    echo: {
+      title: 'The Embercoil Temple',
+      lines: [
+        'A room of seats, all facing in, and every groove in the floor lit.',
+        'A great many voices at once, in a language nobody alive has heard.',
+        'One of them asking. A long way down, something answering it.',
+        'The same voices later, not asking, and something underneath in pain.',
+        'Then a man, close and tired, saying a name and saying it was a mistake.',
+      ],
+    },
+  },
+  {
+    id: 'mirehaven_sanctum',
+    stage: 3,
+    name: 'The Mirehaven Sanctum',
+    /*
+     * ACT 3, the second of the three sites, and the one that carries the
+     * second truth: the Great Deluge was not something Neravoss did to the
+     * Aurelians, it was something the Aurelians did to Neravoss, and Meridian
+     * are repeating it line for line.
+     *
+     * The `at` tile is the plinth in the sealed chamber, three floors down,
+     * which means the needle points *through* the dungeon the whole way in.
+     * That is the only navigation the Sanctum offers and it is deliberately
+     * enough: the pumped floor is a room with a walkway across it and the
+     * drowned gallery is a ring with two arms, and a player who is lost only
+     * has to look at the thing in their bag.
+     *
+     * Mirehaven itself is NOT on this list. The town is somebody else's map
+     * and a row that names a map nobody has built is silent rather than
+     * broken (see tideheartAudit) -- but a row that names a map somebody else
+     * builds *differently* is worse than silent, so the site claims only the
+     * three maps its own author owns. If the town wants the object stirring on
+     * its eastern boardwalk, add 'mirehaven' here and nothing else moves.
+     */
+    maps: ['mirehaven_sanctum', 'mirehaven_sanctum_deep', 'mirehaven_sanctum_heart'],
+    at: { map: 'mirehaven_sanctum_heart', x: 9, y: 2 },
+    near: 'It has not pulled like this since the day it was put in your bag.',
+    after: 'Quiet, and heavier than it was. It is carrying something now.',
+    echo: {
+      title: 'The Mirehaven Sanctum',
+      lines: [
+        'A sea floor from above, with rings laid on it in a circle a mile across.',
+        'Something enormous inside the circle. It is not moving. It has been made not to move.',
+        'The lights on the rings go from blue to white. The sea stands up. Then there is only water.',
+        'Last of all, nine people on a hill, cutting a room out of rock so that somebody would know.',
       ],
     },
   },

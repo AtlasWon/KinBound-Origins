@@ -1,0 +1,66 @@
+{
+  "id": "emberfall_gatehouse",
+  "name": "The Pass Gatehouse",
+  "displayName": "THE PASS GATEHOUSE",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIUIII",
+    "IkkfffffAAfI",
+    "IffffffEEffI",
+    "IfKKKffffffI",
+    "IffffffffkfI",
+    "IfPffffff//I",
+    "IffffrrffffI",
+    "IffffffffPfI",
+    "IIIIIDIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 5,
+      "y": 8,
+      "toMap": "emberfall",
+      "toX": 54,
+      "toY": 7,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "ef_gate_clerk",
+      "sprite": "clerk",
+      "x": 3,
+      "y": 4,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ef_gate_clerk"
+    },
+    {
+      "id": "ef_gate_carter",
+      "sprite": "porter",
+      "x": 8,
+      "y": 6,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "ef_gate_carter"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "The freight ledger, open at this week. Ore in, copper out, charcoal in.",
+        "Four entries are signed with the same mark and no cargo written beside them.",
+        "Somebody has gone back and pencilled a small question mark against each."
+      ]
+    }
+  ]
+}

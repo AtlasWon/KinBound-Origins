@@ -1,0 +1,91 @@
+{
+  "id": "emberfall_market",
+  "name": "The Ash Market",
+  "displayName": "THE ASH MARKET",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIIIIIUIIII",
+    "I;;;FF;;;FF;;;FFI",
+    "IFFFFFFFFFFFFFFFI",
+    "IKKKFFKKKFFKKKFFI",
+    "IFFFFFFFFFFFFFFFI",
+    "IFFFFFFFFFFFFFFFI",
+    "I;;;FF;;;FF;;;FFI",
+    "IFFFFFFFFFFFFFFFI",
+    "IKKKFFKKKFFKKKFPI",
+    "IFFFFFFFFFFFFFFFI",
+    "IPFFFFFFFFFFFFFkI",
+    "IIIIIIIIDIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 8,
+      "y": 11,
+      "toMap": "emberfall",
+      "toX": 53,
+      "toY": 28,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "ef_market_copperwife",
+      "sprite": "merchant",
+      "x": 2,
+      "y": 4,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ef_market_copperwife"
+    },
+    {
+      "id": "ef_market_charcoal",
+      "sprite": "porter",
+      "x": 8,
+      "y": 4,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ef_market_charcoal"
+    },
+    {
+      "id": "ef_market_foreigner",
+      "sprite": "sailor",
+      "x": 12,
+      "y": 9,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "ef_market_foreigner"
+    },
+    {
+      "id": "ef_market_child",
+      "sprite": "kid",
+      "x": 5,
+      "y": 7,
+      "facing": "right",
+      "movement": {
+        "kind": "wander",
+        "radius": 1
+      },
+      "script": "ef_market_child"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 15,
+      "y": 1,
+      "text": [
+        "A roofed market, because ash falls here about twice a month.",
+        "The roof beams are copper-sheathed. Nobody here would build in wood twice."
+      ]
+    }
+  ]
+}

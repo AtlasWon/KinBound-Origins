@@ -1,0 +1,29 @@
+{
+  "speakers": {
+    "ef_house_b_fitter": "RETIRED PIPEFITTER",
+    "ef_house_b_elder": "HIS MOTHER"
+  },
+  "entries": {
+    "ef_house_b_fitter": [
+      {
+        "ifFlags": [
+          "embercoil_temple_seen"
+        ],
+        "lines": [
+          "That old stretch under the market. I have thought about it since you went out to the gate.",
+          "It runs west. It runs straight at your door, and it was laid before anybody here could lay pipe."
+        ]
+      },
+      {
+        "lines": [
+          "Forty years on the mains. I could draw this city blind and get the junctions right.",
+          "There is a stretch under the market I did not lay, and my master did not, and his master did not either."
+        ]
+      }
+    ],
+    "ef_house_b_elder": [
+      "He gets that from me. I drew half of what he is so proud of.",
+      "Do not let him fetch the drawings out unless you have an afternoon spare."
+    ]
+  }
+}

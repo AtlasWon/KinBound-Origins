@@ -1,0 +1,26 @@
+{
+  "speakers": {
+    "ef_market_copperwife": "COPPER FACTOR",
+    "ef_market_charcoal": "CHARCOAL SELLER",
+    "ef_market_foreigner": "SAILOR FROM THE EAST",
+    "ef_market_child": "STALL CHILD"
+  },
+  "entries": {
+    "ef_market_copperwife": [
+      "Sheet, band, collar, wire. If it is copper and it is in Caelora, it likely came off our floor.",
+      "There is a house in Aureline that sells ours at four times the price and calls it northern work."
+    ],
+    "ef_market_charcoal": [
+      "A sack of charcoal costs more here than a sack of copper does in Briarbell.",
+      "Everybody finds that funny exactly once."
+    ],
+    "ef_market_foreigner": [
+      "Three months east of here there are reaches nobody in this market has heard of. Different Kin, different leagues, different everything.",
+      "And the first thing I saw when I got here was a woman walking water downhill.",
+      "Nobody does that at home. Nobody at home has water that needs it."
+    ],
+    "ef_market_child": [
+      "Mum sells collars. I am allowed to shout the prices but not to say them wrong."
+    ]
+  }
+}

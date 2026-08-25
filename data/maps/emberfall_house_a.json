@@ -1,0 +1,56 @@
+{
+  "id": "emberfall_house_a",
+  "name": "Emberfall House",
+  "displayName": "EMBERFALL HOUSE",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIIUIIIUIII",
+    "IbfffffNQJfI",
+    "IefffffKKKfI",
+    "IPfffffffPfI",
+    "I//rAAfffffI",
+    "IrrrEEfffkfI",
+    "IVfffffffffI",
+    "IfffffffffkI",
+    "IIIIIDIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 5,
+      "y": 8,
+      "toMap": "emberfall",
+      "toX": 14,
+      "toY": 38,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "ef_house_a_wife",
+      "sprite": "townsfolk_f",
+      "x": 4,
+      "y": 6,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ef_house_a_wife"
+    },
+    {
+      "id": "ef_house_a_boy",
+      "sprite": "kid",
+      "x": 8,
+      "y": 3,
+      "facing": "left",
+      "movement": {
+        "kind": "wander",
+        "radius": 1
+      },
+      "script": "ef_house_a_boy"
+    }
+  ],
+  "objects": []
+}

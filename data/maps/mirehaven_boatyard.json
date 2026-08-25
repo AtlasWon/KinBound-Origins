@@ -1,0 +1,99 @@
+{
+  "id": "mirehaven_boatyard",
+  "name": "Interior",
+  "displayName": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "_design": "The one building in Mirehaven that is bigger inside than its frontage promises, because the whole economy of the town is punts and somebody has to build four hundred of them.",
+  "rows": [
+    "IIIUIIIIIIIIIUIIIII",
+    "I$$$$fffKKKfff$$$$I",
+    "IfffffffffffffffffI",
+    "IkfffffffffffffffkI",
+    "IffffAAAffffAAAfffI",
+    "IffffEEEffffEEEfffI",
+    "IfffffffffffffffffI",
+    "I;;;fffffffffff;;;I",
+    "IfffffffffffffffffI",
+    "IPffffffffffffffffI",
+    "IffffffffffffffffPI",
+    "IfffffffffffffffffI",
+    "IIIIIIIIIDIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 12,
+      "toMap": "mirehaven",
+      "toX": 8,
+      "toY": 33,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "mhb_master",
+      "sprite": "dockhand",
+      "x": 9,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mhb_master"
+    },
+    {
+      "id": "mhb_prentice",
+      "sprite": "kid",
+      "x": 5,
+      "y": 6,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mhb_prentice"
+    },
+    {
+      "id": "mhb_piler",
+      "sprite": "porter",
+      "x": 14,
+      "y": 9,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mhb_piler"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "A stack of piles: forty of them, sawn, tarred and sorted by length.",
+        "A ledger nailed to the wall records which span each one is going into.",
+        "Eleven entries are crossed out and rewritten as SOLD - SURVEY."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 17,
+      "y": 7,
+      "text": [
+        "A half-built punt on trestles, upside down, the pitch on it still tacky.",
+        "Chalked on the hull: FOR ADDA. LAMPS. NOT FOR HIRE, NOT FOR SALE, NOT FOR YOU."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 16,
+      "y": 11,
+      "item": "escape_line",
+      "quantity": 1,
+      "flag": "item_mhb_gift"
+    }
+  ]
+}

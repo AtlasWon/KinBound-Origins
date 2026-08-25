@@ -1,0 +1,101 @@
+{
+  "id": "emberfall_foundry",
+  "name": "The Copper Foundry",
+  "displayName": "THE COPPER FOUNDRY",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIIIIIIIIUIIII",
+    "I¦ØØ¦¦¦¦¦¦¦¦¦¦¦ØØ¦¦I",
+    "I¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦I",
+    "I$$¦¦¦+++¦¦+++¦¦¦$$I",
+    "I¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦I",
+    "I¦±±±±±±±±±±±±±±¦¦¦I",
+    "I¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦I",
+    "I$$¦¦$$¦¦¦¦¦¦$$¦¦$$I",
+    "I¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦I",
+    "I¦¦¦¦KKKK¦¦¦¦¦¦¦¦¦¦I",
+    "I¦$$¦¦¦¦¦¦¦¦¦¦+++¦¦I",
+    "Ik¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦kI",
+    "I¦¦¦$$¦¦¦¦¦¦¦$$¦¦¦¦I",
+    "IIIIIIIIIDIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 13,
+      "toMap": "emberfall",
+      "toX": 61,
+      "toY": 40,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "ef_foundry_master",
+      "sprite": "harbourmaster",
+      "x": 7,
+      "y": 10,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ef_foundry_master"
+    },
+    {
+      "id": "ef_foundry_pourer",
+      "sprite": "dockhand",
+      "x": 3,
+      "y": 4,
+      "facing": "down",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "ef_foundry_pourer"
+    },
+    {
+      "id": "ef_foundry_tally",
+      "sprite": "clerk",
+      "x": 15,
+      "y": 8,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ef_foundry_tally"
+    },
+    {
+      "id": "ef_foundry_apprentice",
+      "sprite": "kid",
+      "x": 9,
+      "y": 12,
+      "facing": "up",
+      "movement": {
+        "kind": "wander",
+        "radius": 1
+      },
+      "script": "ef_foundry_apprentice"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 2,
+      "text": [
+        "THE POUR IS AT SECOND AND SIXTH BELL. STAND BEHIND THE COPPER LINE.",
+        "The copper line is a strip set into the floor. It is worn smooth at the middle."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 18,
+      "y": 12,
+      "item": "great_potion",
+      "flag": "ef_item_foundry",
+      "quantity": 1
+    }
+  ]
+}

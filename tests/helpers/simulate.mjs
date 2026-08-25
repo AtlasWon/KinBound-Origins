@@ -265,6 +265,22 @@ export const STAGES = [
   // and earn nothing, exactly like r1_wray and r2_shale above.
   { name: 'Tideglass', grass: null, wilds: 0,
     trainers: ['tg_hand_a', 'tg_hand_b', 'tg_hand_c', 'tg_keeper_vane'] },
+  // Stage 3, the past: Embercoil Pass, Emberfall and Hall 4, the Mire Road and
+  // Mirehaven with Hall 5. Appended in the order the road runs, because that
+  // order is the whole point of this table -- a route is only 'too high'
+  // relative to the level a player actually arrives with, and that number comes
+  // from everything in front of it.
+  { name: 'Route 5', grass: 'route_5', wilds: 14,
+    trainers: ['r5_dunnock', 'r5_tem', 'r5_marrow', 'r5_kell', 'r5_shale', 'r5_ravel'] },
+  { name: 'Emberfall', grass: null, wilds: 0,
+    trainers: ['ef_tap_a', 'ef_tap_b', 'ef_bath_crew', 'ef_keeper_cade'] },
+  // The Mire Road forks round the broken span, so a player meets either Ordway
+  // or nobody. Both are listed: this table is the ceiling of what the route
+  // pays, and the wading line is measured against it in the notes on the map.
+  { name: 'Route 6', grass: 'route_6', wilds: 14,
+    trainers: ['r6_hallow', 'r6_wick', 'r6_kess', 'r6_ordway', 'r6_selm'] },
+  { name: 'Mirehaven', grass: null, wilds: 0,
+    trainers: ['mh_hand_a', 'mh_hand_b', 'mh_hand_c', 'mh_hand_d', 'mh_keeper_tallow'] },
 ];
 
 /**

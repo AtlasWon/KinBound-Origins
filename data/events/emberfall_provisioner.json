@@ -1,0 +1,20 @@
+[
+  {
+    "id": "emberfall_shop",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "PROVISIONER",
+        "lines": [
+          "Everything on these shelves came over the pass except the water.",
+          "Price it accordingly and we will get on."
+        ]
+      },
+      {
+        "kind": "openShop",
+        "shop": "emberfall_provisioner"
+      }
+    ]
+  }
+]

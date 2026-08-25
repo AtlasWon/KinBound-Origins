@@ -1,0 +1,666 @@
+[
+  {
+    "id": "msh_meet",
+    "_note": "COMMANDER KELL, planted for Act 5.\n\nShe has one job here and it is not to be a villain: she has to be somebody the player recognises instantly the next time they see her, three acts and thirty hours later, and remembers being frightened of without being able to say why. So she is courteous the whole way through. She does not threaten, she does not posture, she does not raise her voice, and she never once tells the player to stop. She tells them a hard thing about their father kindly, because she believes it, and then she steps off the plinth and invites them to work her machine for her.\n\nThe line about eleven years is the murder, said out loud in front of the victim's child, and it reads as respect until Act 4 turns it over. It must stay exactly as it is: 'I have thought about him every day for eleven years.'\n\nWhy there is no battle in this room: Meridian do not need to take the Tideheart here and Kell knows it. Her whole character is certainty. A commander who has to fight a sixteen-year-old is a commander who is worried, and she is not.",
+    "_note2": "Fires across the whole width of y11, the only line between the stair and the room, so the scene cannot be walked round. It is a step script rather than an `enter` script on purpose: the player arrives here from a script that is still running (msd_shutter's warp), and an `enter` script would restart the runner on top of it.",
+    "trigger": "step",
+    "map": "mirehaven_sanctum_heart",
+    "onceFlag": "msh_met",
+    "at": [
+      { "x": 6, "y": 11 }, { "x": 7, "y": 11 }, { "x": 8, "y": 11 },
+      { "x": 9, "y": 11 }, { "x": 10, "y": 11 }, { "x": 11, "y": 11 }
+    ],
+    "actions": [
+      { "kind": "face", "who": "player", "dir": "up" },
+      { "kind": "wait", "frames": 14 },
+      {
+        "kind": "say",
+        "lines": [
+          "Past the shutter the room is dry.",
+          "Not damp. Dry, and cut, and finished, three thousand years under a marsh."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "There is a Foundation lamp on a folding stand in the middle of it.",
+          "There are four people standing under the lamp."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "...How."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "A drill shaft in the far corner, shored and lit and full of cable.",
+          "They did not open the door. They went round it."
+        ]
+      },
+      { "kind": "wait", "frames": 12 },
+      {
+        "kind": "say",
+        "lines": [
+          "The woman at the plinth puts down what she is holding and turns round."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "We heard that.",
+          "Whatever the two of you did to the shutter, we heard it through forty feet of rock."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "Kell. Commander. There is no reason at all you would have heard of me.",
+          "You are Elias' child."
+        ]
+      },
+      {
+        "kind": "choice",
+        "lines": [
+          "She says it the way you would read a name off a list you already knew."
+        ],
+        "options": [
+          {
+            "label": "You knew my father.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "COMMANDER KELL",
+                "lines": [
+                  "I knew him nine years.",
+                  "I have thought about him every day for eleven."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Who told you we were coming?",
+            "then": [
+              {
+                "kind": "say",
+                "who": "COMMANDER KELL",
+                "lines": [
+                  "Nobody. You have been walking east since Tideglass.",
+                  "There are two things east of Tideglass and this is the second one."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "I am going to tell you something now, so that you do not hear it later",
+          "in a room where somebody is enjoying it."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "Your father worked for the Meridian Foundation for nine years.",
+          "He was on the ship that found the thing in your bag."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "He came off that ship with it inside his coat.",
+          "We call that theft. I have never been able to find a better word for it."
+        ]
+      },
+      {
+        "kind": "choice",
+        "lines": [
+          "She has not moved and she is not going to."
+        ],
+        "options": [
+          {
+            "label": "He was not a thief.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "COMMANDER KELL",
+                "lines": [
+                  "Everyone says that. I have read the manifest.",
+                  "It is one page and it is not an ambiguous page."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Then take it off me.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "COMMANDER KELL",
+                "lines": [
+                  "No.",
+                  "I do not do things because they would feel correct."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      { "kind": "wait", "frames": 12 },
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "Nine days in this room. Not one reading on any instrument the Foundation owns.",
+          "It is not an instrument problem."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "It is a language problem, and you are carrying the dictionary."
+        ]
+      },
+      { "kind": "move", "who": "msh_kell", "steps": ["right", "right", "right"] },
+      { "kind": "face", "who": "msh_kell", "dir": "left" },
+      {
+        "kind": "say",
+        "lines": [
+          "She steps off the disc in the floor and stands away from it,",
+          "hands behind her back, out of your light."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "Go on. It was his. It was never mine."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "{name}. She wants us to.",
+          "I would like that written down somewhere by somebody."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "msh_record",
+    "_note": "THE SECOND TRUTH.\n\nCanon: the Great Deluge was not Neravoss destroying the Aurelians. The Aurelians tried to hold it, their machines hurt and terrified it, and it reacted. The brief is that this must land as a horror rather than as a lore dump, and the reason it can is that the player already knows Meridian's plan. Nobody in this scene explains the parallel. Tarin says four words about rings and cable and the player does the rest themselves, which is the only way it lands at all.\n\nSo the record is pictures and no commentary: rings on a sea floor, a shape that has been made not to move, the lights going from blue to white, and then nothing in the picture but water. The one interpretive line in the whole playback is the last one, and it is about the people who cut the room, not about the thing in the sea.\n\nAnd then it changes nothing. Kell has watched it, she is writing, and her finding is that the circle was too tight. That is the horror the scene is actually for: the player has just understood what happens next, in front of the person who is going to do it, and being right is worth nothing.",
+    "_note3": "Sets tideheart_echo_mirehaven_sanctum, which files the playback into the object itself -- see SITES in src/systems/tideheart.ts, id mirehaven_sanctum. The echo text there and this scene have to keep agreeing with each other.",
+    "trigger": "step",
+    "map": "mirehaven_sanctum_heart",
+    "onceFlag": "msh_record_played",
+    "when": { "kind": "flag", "flag": "msh_met" },
+    "at": [{ "x": 8, "y": 2 }, { "x": 9, "y": 2 }],
+    "actions": [
+      { "kind": "face", "who": "player", "dir": "up" },
+      { "kind": "wait", "frames": 12 },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "any",
+          "of": [
+            { "kind": "hasItem", "item": "tideheart" },
+            { "kind": "flag", "flag": "tideheart_given" }
+          ]
+        },
+        "then": [
+          {
+            "kind": "say",
+            "lines": [
+              "You put it in the hollow in the plinth.",
+              "It fits the way a hand fits a glove that was cut for the hand."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "lines": [
+              "The hollow in the plinth is the size of a palm, and it is empty."
+            ]
+          },
+          { "kind": "end" }
+        ]
+      },
+      { "kind": "sfx", "sound": "fx_charge" },
+      { "kind": "wait", "frames": 20 },
+      { "kind": "sfx", "sound": "fx_light" },
+      { "kind": "shake", "frames": 20, "power": 2 },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "lines": [
+          "The room fills up with people who are not here.",
+          "Some of them are standing where you are standing."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Then the sea floor, from above. Rings laid on it in a circle a mile across.",
+          "Cable between the rings. People along the cable."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Inside the circle, something so large the picture cannot hold all of it at once."
+        ]
+      },
+      { "kind": "wait", "frames": 18 },
+      {
+        "kind": "say",
+        "lines": [
+          "It is not moving.",
+          "It has been made not to move."
+        ]
+      },
+      { "kind": "wait", "frames": 24 },
+      { "kind": "sfx", "sound": "fx_spark" },
+      {
+        "kind": "say",
+        "lines": [
+          "The lights on the rings go from blue to white."
+        ]
+      },
+      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "say",
+        "lines": [
+          "The shape opens its mouth.",
+          "There is no sound in this room at all."
+        ]
+      },
+      { "kind": "sfx", "sound": "fx_quake" },
+      { "kind": "shake", "frames": 46, "power": 4 },
+      { "kind": "wait", "frames": 40 },
+      {
+        "kind": "say",
+        "lines": [
+          "The sea stands up."
+        ]
+      },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "lines": [
+          "After that there is nothing in the picture but water,",
+          "and the water is over the towns."
+        ]
+      },
+      { "kind": "wait", "frames": 34 },
+      {
+        "kind": "say",
+        "lines": [
+          "The last of it is nine people on a hill,",
+          "cutting this room out of the rock with hand tools."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "They are not carving a monster.",
+          "They are carving an apology."
+        ]
+      },
+      { "kind": "sfx", "sound": "fx_light" },
+      { "kind": "wait", "frames": 24 },
+      { "kind": "setFlag", "flag": "tideheart_echo_mirehaven_sanctum" },
+      { "kind": "setFlag", "flag": "ms_second_truth" },
+      {
+        "kind": "say",
+        "lines": [
+          "The light goes out of the floor. The lamp on the stand is the only lamp again."
+        ]
+      },
+      { "kind": "wait", "frames": 18 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "It was not coming for them."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "They held it down and it was frightened and the sea came off the bottom.",
+          "That is the whole of it. That is all that happened."
+        ]
+      },
+      { "kind": "wait", "frames": 14 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "{name}. Rings. Cable. Holding it still.",
+          "That is not like the plan. That is the plan."
+        ]
+      },
+      { "kind": "wait", "frames": 18 },
+      {
+        "kind": "say",
+        "lines": [
+          "The Commander has not moved.",
+          "She is writing."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "Their instruments were crude and their circle was far too tight.",
+          "That is the finding."
+        ]
+      },
+      {
+        "kind": "choice",
+        "lines": [
+          "She turns the page without looking up."
+        ],
+        "options": [
+          {
+            "label": "It was in pain.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "COMMANDER KELL",
+                "lines": [
+                  "Yes. A machine that hurts the thing it holds is a badly built machine.",
+                  "We will build a better one. That is what the last three thousand years were for."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "You watched the same thing I did.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "COMMANDER KELL",
+                "lines": [
+                  "I watched a failed experiment that kept an excellent record of itself.",
+                  "Do you know how rare that is? Nine days for that is nothing."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "Do not mistake a warning for an argument.",
+          "Somebody is going to hold the weather. I would rather it were us than nobody."
+        ]
+      },
+      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "say",
+        "lines": [
+          "She writes for a while longer. Nobody in the room says anything.",
+          "Then she closes the book, and puts the pencil in the spine, and squares it."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "Thank you. Truthfully.",
+          "You have saved the Foundation a very great deal of drilling."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "Go home the way you came. Nobody will stop you at the door.",
+          "And keep hold of it. I would much rather know where it is."
+        ]
+      },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "Commander. Write down what it did with its mouth."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "I write down everything, Lyra. That is the entire job."
+        ]
+      },
+      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "say",
+        "lines": [
+          "They go out through their own shaft, one at a time, unhurried.",
+          "Somebody at the bottom of it is already asking about the tape."
+        ]
+      },
+      { "kind": "removeNpc", "who": "msh_kell" },
+      { "kind": "removeNpc", "who": "msh_aide" },
+      { "kind": "removeNpc", "who": "msh_guard" },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "I have spent a month telling myself that the worst thing in the Foundation is impatience."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "She is not impatient.",
+          "She has read that, and she is not impatient, and she is going to sleep tonight."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "I am going to go and ask the man who signs her orders what he thinks it means.",
+          "I would like very much to be wrong again."
+        ]
+      },
+      { "kind": "setFlag", "flag": "lyra_doubt_deep" },
+      { "kind": "removeNpc", "who": "msh_lyra" },
+      { "kind": "setFlag", "flag": "msh_meridian_gone" },
+      { "kind": "wait", "frames": 26 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "I have wanted to be the strongest Trainer in Caelora since I was nine years old.",
+          "I could tell you the day."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "And I have just watched somebody read a drowned country",
+          "and write down that the circle was too tight."
+        ]
+      },
+      { "kind": "wait", "frames": 14 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Strong is not the point. Strong is only what you need",
+          "so that you can stand in front of people."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "So from here I am standing next to you.",
+          "Argue with it all you like. I have decided not to hear any of it."
+        ]
+      },
+      { "kind": "setFlag", "flag": "tarin_committed" }
+    ]
+  },
+  {
+    "id": "msh_kell",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "msh_record_played" },
+        "then": [
+          {
+            "kind": "say",
+            "who": "COMMANDER KELL",
+            "lines": [
+              "There is a stair behind you and a marsh above it. Use both."
+            ]
+          },
+          { "kind": "end" }
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "The plinth is behind me and I am not standing in front of it.",
+          "Take your time. It has waited three thousand years for somebody with the right pocket."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "msh_lyra",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "I asked to come. She said yes immediately, which I have been turning over ever since."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "Everything she has done in this room has been correct, minuted and countersigned.",
+          "That is what is wrong with it and I cannot get anybody to see the sentence."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "msh_aide",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "FOUNDATION SURVEYOR",
+        "lines": [
+          "Nine days of tape. Every instrument we have, aimed at a stone box.",
+          "Flat. Flat, flat, flat, for nine days."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "FOUNDATION SURVEYOR",
+        "lines": [
+          "It is not that there is nothing in here. It is that we are the wrong shape to hear it.",
+          "I have never had to write that on a form before."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "msh_guard",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "FOUNDATION AGENT",
+        "lines": [
+          "I have my orders and my orders are to stand here and not touch anything.",
+          "It is the easiest fortnight I have ever had and I want it to end."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "msh_tarin",
+    "_note": "The short version of the turn, for the player who wants to hear it again, plus the only signpost out of the dungeon. He does not repeat the speech, because he would be embarrassed by it, which is the correct way for him to have meant it.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "tarin_committed" },
+        "then": [
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "Do not make me say any of that again. I have used it all up."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "Mirehaven, then the road out, and we tell Sorrell every word of it.",
+              "She will want the bit about the nine people on the hill."
+            ]
+          },
+          { "kind": "end" }
+        ]
+      },
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "msh_met" },
+        "then": [
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "She has moved off it and she is watching you not go and stand on it.",
+              "Go and stand on it. I will be right here being unhelpful."
+            ]
+          },
+          { "kind": "end" }
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Four of them, one lamp and a hole in the corner.",
+          "Do not walk in front of me and do not walk behind me. Beside me."
+        ]
+      }
+    ]
+  }
+]

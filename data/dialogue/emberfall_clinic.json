@@ -1,0 +1,16 @@
+{
+  "speakers": {
+    "ef_clinic_burns": "MAN WITH A BANDAGED HAND",
+    "ef_clinic_mother": "MOTHER"
+  },
+  "entries": {
+    "ef_clinic_burns": [
+      "Third finger, left hand. Do not look at it.",
+      "And it was not the fire. It was the pipe. Everybody forgets the pipe is the hot part."
+    ],
+    "ef_clinic_mother": [
+      "He is six, and he thinks a vent in the road is somewhere to stand and be brave.",
+      "The keeper says it will be nothing by spring. I am going to sit here anyway."
+    ]
+  }
+}

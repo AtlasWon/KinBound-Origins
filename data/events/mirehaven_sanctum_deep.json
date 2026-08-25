@@ -1,0 +1,429 @@
+[
+  {
+    "id": "msd_enter",
+    "_note": "Two boxes and then he walks. The point of the arrival is the absence of things: no cable, no lamp, no chalk. Everything Meridian did upstairs stops at the top step, which is the only reason there is anything left down here to find.",
+    "trigger": "enter",
+    "map": "mirehaven_sanctum_deep",
+    "onceFlag": "msd_entered",
+    "actions": [
+      { "kind": "wait", "frames": 12 },
+      {
+        "kind": "say",
+        "lines": [
+          "The stair comes out under the water line.",
+          "Standing water, wall to wall, with a stone causeway running up out of it."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "No lamps. No cable. No chalk on anything.",
+          "They have not been down here, {name}. Nine days and they have not been down here."
+        ]
+      },
+      { "kind": "move", "who": "msd_tarin", "steps": ["up", "up", "up", "up", "up"] },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Wade where I wade and shout if it gets past your knees."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "msd_tarin",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "It is cold and it is up to my shins and I have never been happier about anything."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "msd_cross",
+    "_note": "The only battle in the Sanctum, and it is half a battle on purpose. Two agents, two of you: he calls the left one before the player can be asked, takes it out of sight into the west arm, and comes back having won it. Then he heals the party without being asked and without making a thing of it.\n\nThat is the whole brief for this act in one scene. Tarin is not here to be fought and he is not here to be rescued; he is here to be the reason the player gets through a room they would otherwise have got through alone and slower. The heal is the part players remember, because it is the only free full heal in the dungeon and it comes out of his pocket.",
+    "_note3": "Fires on the whole width of the crossroads (y11, x6-13), so it cannot be skirted -- the causeway from the stair has to cross that line to reach either arm or the flooded court.",
+    "trigger": "step",
+    "map": "mirehaven_sanctum_deep",
+    "onceFlag": "msd_crossed",
+    "at": [
+      { "x": 6, "y": 11 }, { "x": 7, "y": 11 }, { "x": 8, "y": 11 }, { "x": 9, "y": 11 },
+      { "x": 10, "y": 11 }, { "x": 11, "y": 11 }, { "x": 12, "y": 11 }, { "x": 13, "y": 11 }
+    ],
+    "actions": [
+      { "kind": "sfx", "sound": "spotted" },
+      {
+        "kind": "say",
+        "lines": [
+          "Two lamps come round the pillars, one out of each arm.",
+          "Grey coats. They are not surprised to see anybody. They are surprised to see two."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Left one is mine. Do not argue, you always argue."
+        ]
+      },
+      { "kind": "removeNpc", "who": "msd_sweep_west" },
+      { "kind": "move", "who": "msd_tarin", "steps": ["left", "left", "left", "left", "up"], "speed": "run" },
+      { "kind": "removeNpc", "who": "msd_tarin" },
+      { "kind": "battleTrainer", "trainer": "ms_sweeper_orre", "onLoss": "continue" },
+      { "kind": "removeNpc", "who": "msd_sweep_east" },
+      { "kind": "setFlag", "flag": "msd_swept" },
+      { "kind": "wait", "frames": 20 },
+      { "kind": "sfx", "sound": "fx_heavy" },
+      {
+        "kind": "say",
+        "lines": [
+          "Somewhere off in the west arm, something hits a pillar hard enough",
+          "to change the note the water is making."
+        ]
+      },
+      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "msd_tarin",
+          "sprite": "rival",
+          "x": 8,
+          "y": 11,
+          "facing": "right",
+          "movement": { "kind": "static" },
+          "script": "msd_tarin"
+        }
+      },
+      {
+        "kind": "if",
+        "cond": { "kind": "var", "var": "last_battle_won", "op": "==", "value": 1 },
+        "then": [
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "Do not look at me like that. He went in the water on his own.",
+              "I was standing over there when it happened. Ask anybody."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "I saw. I got here as fast as I could and it was not fast enough.",
+              "Do not do the face. I have done the face and it does not help."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "Anyway. Mine is in the water and yours went up the stair,",
+              "so between us that is the room cleared. Loudly, in my opinion."
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Right. Sit down a second."
+        ]
+      },
+      { "kind": "sfx", "sound": "item_heal" },
+      { "kind": "healParty" },
+      {
+        "kind": "say",
+        "lines": [
+          "He goes down the line of your kin with a handful of his own potions",
+          "and does not ask first, which is the only way he knows how to do it."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "I bought nine. My mother thinks I have been eating."
+        ]
+      },
+      { "kind": "wait", "frames": 12 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "There is a door at the top of this room with no handle on it.",
+          "I am going to go up and be unhelpful at it while you look at the pictures."
+        ]
+      },
+      {
+        "kind": "move",
+        "who": "msd_tarin",
+        "steps": ["right", "right", "right", "right", "up", "up", "up"],
+        "speed": "run"
+      },
+      { "kind": "removeNpc", "who": "msd_tarin" },
+      { "kind": "setFlag", "flag": "msd_split" },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "msd_tarin_door",
+          "sprite": "rival",
+          "x": 11,
+          "y": 3,
+          "facing": "down",
+          "movement": { "kind": "static" },
+          "script": "msd_tarin_door"
+        }
+      }
+    ]
+  },
+  {
+    "id": "msd_panels",
+    "_note": "A voice from the top of the gallery, out of sight, with no NPC involved. He is somewhere else in the room and still in the scene, which is what the whole act is trying to prove about him.",
+    "trigger": "step",
+    "map": "mirehaven_sanctum_deep",
+    "onceFlag": "msd_panels_heard",
+    "when": { "kind": "flag", "flag": "msd_split" },
+    "at": [{ "x": 14, "y": 8 }, { "x": 15, "y": 8 }],
+    "actions": [
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Are you at the ones with the rings on?"
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "There are the same ones up here. And up the stair. And round the door.",
+          "Whoever cut them could not stop cutting them."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "msd_plate",
+    "_note": "Fires on whichever tile the player is left standing on when the stone goes home -- 4,4 if they wound it up the plate column, 5,3 if they took it up column five and shoved it left. The plate itself plays the engine's own chime through updatePlates; this is only the sentence that tells the player it was worth doing.",
+    "trigger": "step",
+    "map": "mirehaven_sanctum_deep",
+    "onceFlag": "msd_plate_down",
+    "when": {
+      "kind": "var",
+      "var": "mirehaven_sanctum_deep_plates",
+      "op": ">=",
+      "value": 1
+    },
+    "at": [{ "x": 4, "y": 4 }, { "x": 5, "y": 3 }],
+    "actions": [
+      { "kind": "shake", "frames": 24, "power": 2 },
+      {
+        "kind": "say",
+        "lines": [
+          "The plate goes down under the stone, a finger, and stops.",
+          "Far off at the top of the gallery something enormous takes its weight",
+          "off something else."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "IT MOVED. {name}. IT MOVED. Come and look at it, it has moved!"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "msd_shutter",
+    "_note": "THE DOOR THAT NEEDS TWO PEOPLE, which is the mechanical argument the whole act is making. The plate takes the shutter's weight off it and it comes up a hand's width and stops; Tarin takes the rest on his shoulder. The player cannot do either half alone and the game never says so out loud, because the player has just spent ten minutes shoving a stone up a flooded arm and can work it out.\n\nHe wedges it on the way through, which is why it is still open on the way back: once ms_shutter_open is set the scene is skipped and the tile behaves like an ordinary doorway in both directions.",
+    "trigger": "step",
+    "map": "mirehaven_sanctum_deep",
+    "at": [{ "x": 9, "y": 2 }, { "x": 10, "y": 2 }],
+    "when": {
+      "kind": "any",
+      "of": [
+        { "kind": "var", "var": "mirehaven_sanctum_deep_plates", "op": ">=", "value": 1 },
+        { "kind": "flag", "flag": "ms_shutter_open" }
+      ]
+    },
+    "actions": [
+      { "kind": "face", "who": "player", "dir": "up" },
+      {
+        "kind": "if",
+        "cond": { "kind": "not", "of": { "kind": "flag", "flag": "ms_shutter_open" } },
+        "then": [
+          {
+            "kind": "say",
+            "lines": [
+              "The shutter has come up the width of a hand and stopped.",
+              "Three thousand years of silt has come up with it."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "Right. Well. That is what I am for."
+            ]
+          },
+          { "kind": "sfx", "sound": "push_stone" },
+          { "kind": "shake", "frames": 34, "power": 3 },
+          { "kind": "wait", "frames": 30 },
+          {
+            "kind": "say",
+            "lines": [
+              "He gets his shoulder under the lip, and his boots flat on the stone,",
+              "and stops making any noise at all."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "Go. Go, go, go. I am not a machine."
+            ]
+          },
+          { "kind": "setFlag", "flag": "ms_shutter_open" },
+          { "kind": "removeNpc", "who": "msd_tarin_door" },
+          { "kind": "warp", "map": "mirehaven_sanctum_heart", "x": 9, "y": 12, "facing": "up" },
+          {
+            "kind": "say",
+            "lines": [
+              "You went under it on your hands. Then his hands, then his shoulders.",
+              "He kicked a broken pillar drum into the gap on the way past.",
+              "The shutter came down on it, and held."
+            ]
+          }
+        ],
+        "else": [
+          { "kind": "warp", "map": "mirehaven_sanctum_heart", "x": 9, "y": 12, "facing": "up" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "msd_shutter_shut",
+    "_note": "The same two tiles, read the other way. No onceFlag: the player is meant to be able to come back to it, look at it again, and be told the same thing until they have done something about it.",
+    "trigger": "step",
+    "map": "mirehaven_sanctum_deep",
+    "at": [{ "x": 9, "y": 2 }, { "x": 10, "y": 2 }],
+    "when": {
+      "kind": "all",
+      "of": [
+        { "kind": "not", "of": { "kind": "flag", "flag": "ms_shutter_open" } },
+        {
+          "kind": "var",
+          "var": "mirehaven_sanctum_deep_plates",
+          "op": "<",
+          "value": 1
+        }
+      ]
+    },
+    "actions": [
+      { "kind": "face", "who": "player", "dir": "up" },
+      { "kind": "sfx", "sound": "denied" },
+      {
+        "kind": "say",
+        "lines": [
+          "The shutter fills the arch, floor to lintel, without a seam.",
+          "It is not locked. It is simply extremely heavy and extremely shut."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "msd_tarin_door",
+    "_note": "He is at the door because he said he would be, and he has spent the intervening ten minutes failing to open it, which is exactly what he would do. The plate hint lives here rather than in a sign, so the player who is stuck asks the person standing next to them.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "var",
+          "var": "mirehaven_sanctum_deep_plates",
+          "op": ">=",
+          "value": 1
+        },
+        "then": [
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "It is up a hand's width and it is not going up any further on its own.",
+              "Stand where you can get under it and let me do something stupid."
+            ]
+          },
+          { "kind": "end" }
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "I have pushed it, kicked it, shouted at it and leaned on it.",
+          "It is the politest no I have ever had."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "There is a plate in the floor of that arm with a ring cut round it,",
+          "and there is one loose stone in a room where nothing else is loose.",
+          "I am not clever, {name}, but I am not that not-clever."
+        ]
+      },
+      {
+        "kind": "ask",
+        "lines": [
+          "If you have shoved that stone somewhere stupid I will go and put it back.",
+          "Shall I?"
+        ],
+        "yes": [
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "Right. Do not watch. It is not going to be graceful."
+            ]
+          },
+          { "kind": "sfx", "sound": "push_stone" },
+          {
+            "kind": "warp",
+            "map": "mirehaven_sanctum_deep",
+            "x": 10,
+            "y": 4,
+            "facing": "down"
+          },
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "Back where it started. You owe me a shoulder."
+            ]
+          }
+        ],
+        "no": [
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "Fine. Ask me if it goes wrong. I will pretend to be surprised."
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

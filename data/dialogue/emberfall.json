@@ -1,0 +1,226 @@
+{
+  "speakers": {
+    "ef_gatewarden": "GATE WARDEN",
+    "ef_warden_clerk": "FREIGHT CLERK",
+    "ef_pan_walker": "PAN WALKER",
+    "ef_spring_keeper": "SPRING KEEPER",
+    "ef_bather": "OFF-SHIFT SMITH",
+    "ef_pipefitter": "PIPEFITTER",
+    "ef_pipe_apprentice": "FITTER’S BOY",
+    "ef_lamp_tapper": "LAMP TAPPER",
+    "ef_hall_crier": "HALL CRIER",
+    "ef_challenger": "CHALLENGER",
+    "ef_hall_child": "CHILD",
+    "ef_clinic_queue": "WOMAN IN THE QUEUE",
+    "ef_market_carter": "MARKET CARTER",
+    "ef_ash_sweeper": "ASH SWEEPER",
+    "ef_smith_wife": "SMITH’S WIFE",
+    "ef_street_kid": "STREET CHILD",
+    "ef_tenement_elder": "TENEMENT ELDER",
+    "ef_foundry_foreman": "FOUNDRY FOREMAN",
+    "ef_forge_master": "FORGE MASTER",
+    "ef_charcoal_carter": "CHARCOAL CARTER",
+    "ef_slag_child": "CHILD ON THE SLAG",
+    "ef_temple_watcher": "GATE WATCHER",
+    "ef_causeway_elder": "ROADMAN",
+    "ef_fissure_surveyor": "FOUNDATION SURVEYOR",
+    "ef_meridian_hand": "FOUNDATION HAND",
+    "ef_east_road_hand": "EAST ROAD GUIDE",
+    "ef_inn_barker": "INN BARKER",
+    "ef_offduty_smith": "OFF-SHIFT SMITH"
+  },
+  "entries": {
+    "ef_gatewarden": [
+      {
+        "ifFlags": [
+          "crest_4_taken"
+        ],
+        "lines": [
+          "Word came up from the Hall before you did.",
+          "The road east is easier than the road in was. Everything is."
+        ]
+      },
+      {
+        "ifFlags": [
+          "crest_3_taken"
+        ],
+        "lines": [
+          "Down off the pass, then. Tideglass water still in your boots, by the look.",
+          "Everything you can see is here because the ground is hot. The rest of it came over that mountain on a cart."
+        ]
+      },
+      {
+        "lines": [
+          "Down off the pass. Mind the last stretch — that is cinder, and cinder moves.",
+          "Everything you can see is here because the ground is hot. The rest of it came over that mountain on a cart."
+        ]
+      }
+    ],
+    "ef_warden_clerk": [
+      {
+        "ifFlags": [
+          "lyra_admits_meridian"
+        ],
+        "lines": [
+          "Two hundred and eleven carts this month, and eleven I logged as EQUIPMENT without opening.",
+          "The seal said Foundation. I have started copying those pages out.",
+          "I do not know who for yet. I will know when they ask."
+        ]
+      },
+      {
+        "lines": [
+          "Two hundred and eleven carts this month. Charcoal, ore, charcoal, ore.",
+          "And eleven I logged as EQUIPMENT and did not open, because the seal said Foundation."
+        ]
+      }
+    ],
+    "ef_pan_walker": [
+      "I walk the water down. Four pans, one into the next, and it loses a little heat in each.",
+      "Straight off the rock it would strip the copper out of a main in a season.",
+      "My mother did this. Her mother did this. The pans are older than either of them."
+    ],
+    "ef_spring_keeper": [
+      "The springs do not run because we are lucky. They run because something under us is breathing.",
+      "My grandfather said that, and he said it politely, in case it was listening."
+    ],
+    "ef_bather": [
+      "An hour in the Steepings and my hands stop shaking.",
+      "Ask any smith in Caelora what that is worth. Then ask one who is fifty."
+    ],
+    "ef_pipefitter": [
+      "Every main starts at the pans and runs downhill. No pumps. Never had one, never needed one.",
+      "There is a stretch under the market that is older than the market. Older than the city, if you push me."
+    ],
+    "ef_pipe_apprentice": [
+      "I can tell what is in a pipe by hitting it.",
+      "Water sings. Steam knocks. Nothing at all just hurts your hand."
+    ],
+    "ef_lamp_tapper": [
+      "Nobody in Emberfall has ever bought lamp oil. The lamps are tapped straight off the mains.",
+      "When the pipes go cold the city goes dark. It has happened twice — once for an hour, once for nine days."
+    ],
+    "ef_hall_crier": [
+      {
+        "ifFlags": [
+          "crest_4_taken"
+        ],
+        "lines": [
+          "FLAME HALL SITS FROM SECOND BELL — oh. It is you.",
+          "I have been shouting your name since noon and you walked past me twice."
+        ]
+      },
+      {
+        "lines": [
+          "FLAME HALL SITS FROM SECOND BELL. THE KEEPER TAKES ALL COMERS.",
+          "AND FINISHES MOST OF THEM BEFORE THIRD."
+        ]
+      }
+    ],
+    "ef_challenger": [
+      "Third attempt. First time I brought Tide types, which was clever of me right up until it was not.",
+      "You do not out-think a Flame Hall in a town where the floor is warm."
+    ],
+    "ef_hall_child": [
+      "There is a crack in the square that goes down forever.",
+      "Dad says it goes down about six feet. Dad has not looked."
+    ],
+    "ef_clinic_queue": [
+      "Burns, mostly. Sometimes the kin, sometimes the trainer, usually both.",
+      "The keeper does not charge. She also does not lecture, which is the rarer thing."
+    ],
+    "ef_market_carter": [
+      "Copper out, charcoal in. That is this whole city in four words.",
+      "We send bands and pipe collars as far as Skyreach. There is a Hall up on those cliffs roofed in our sheet."
+    ],
+    "ef_ash_sweeper": [
+      "Twice a month the mountain clears its throat and I have a week of work.",
+      "You get used to the sweeping. You do not get used to the taste."
+    ],
+    "ef_smith_wife": [
+      "He comes home the colour of the road and sleeps like the dead. Forty years of it.",
+      "I would not swap it. There is nowhere in Caelora warm like a forge town in winter."
+    ],
+    "ef_street_kid": [
+      "A boy came through on his own, two days back. Green coat, would not stop talking.",
+      "He asked me who signs for the Foundation carts. I said nobody signs, they just go.",
+      "He wrote that down. Nobody writes down what I say."
+    ],
+    "ef_tenement_elder": [
+      "Four floors, eleven families, one stove between the lot of us, and nobody is cold.",
+      "Try that in Stonewake. Try that anywhere."
+    ],
+    "ef_foundry_foreman": [
+      "The foundry has not gone out in a hundred and forty years. Not once, not for a day.",
+      "If it ever did, the ground would not relight it. We would be carting fire over the pass like everybody else."
+    ],
+    "ef_forge_master": [
+      "Three mouths under one roof and three masters who do not speak to each other. It works.",
+      "You want a vessel band, go to Hesk at the end of the row. He is better than me and I will deny saying it."
+    ],
+    "ef_charcoal_carter": [
+      "Nothing grows in a caldera. Every stick of charcoal in this city climbed a mountain to get here.",
+      "So copper is dear and heat is free. Backwards, is it not."
+    ],
+    "ef_slag_child": [
+      "It is warm the whole way through. You can sit on it in the rain.",
+      "You cannot sit on the shiny bits. I only did that once."
+    ],
+    "ef_temple_watcher": [
+      {
+        "ifFlags": [
+          "embercoil_temple_seen"
+        ],
+        "lines": [
+          "They say the one up in the pass opened. For you.",
+          "Then this one is the same door, and I have been standing in front of the wrong end of it for thirty years."
+        ]
+      },
+      {
+        "lines": [
+          "The old gate. Nobody has had it open in living memory, and people have tried with hammers.",
+          "There is a hollow cut in the middle of it, about the size of your hand.",
+          "There is another door like it somewhere up the pass. Nobody has had that one open either."
+        ]
+      }
+    ],
+    "ef_causeway_elder": [
+      "The road stops at the kerb because the ground past the kerb will not hold one.",
+      "They laid it four times. Now they lay it once and leave the rest to the cracks.",
+      "It only ever went to the gate anyway, and the gate has never gone anywhere."
+    ],
+    "ef_fissure_surveyor": [
+      "Foundation survey. We are mapping the fissures — they creep about a foot a year, north-north-east.",
+      "Towards the old gate, since you ask. Nobody has asked."
+    ],
+    "ef_meridian_hand": [
+      {
+        "ifFlags": [
+          "lyra_admits_meridian"
+        ],
+        "lines": [
+          "Foundation business. You have that look people get in Tideglass.",
+          "Whatever you were told down there, up here we survey rock. That is all I am paid to know."
+        ]
+      },
+      {
+        "lines": [
+          "Foundation business. Geothermal research, if you want the words for it.",
+          "You would be amazed what a city like this leaves lying about, once you have bought the freight schedule."
+        ]
+      }
+    ],
+    "ef_east_road_hand": [
+      "I guide the east road. Or I did, until the shoulder came down on it in the spring.",
+      "Past that fall it goes down, and then it goes wet. Two days to Mirehaven if you keep your boots dry.",
+      "Nobody has ever kept their boots dry."
+    ],
+    "ef_inn_barker": [
+      "The Cinder Rest. Warm floor, hot water, and a singer who will not stop for anything.",
+      "Rooms are short this month. The Foundation took six and I have seen two of them used."
+    ],
+    "ef_offduty_smith": [
+      "Off shift. Do not ask me to look at anything.",
+      "...go on, then. What is it."
+    ]
+  }
+}

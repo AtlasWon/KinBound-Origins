@@ -413,6 +413,24 @@
     "tarin_word_street": [
       {
         "ifFlags": [
+          "tarin_at_sanctum_after"
+        ],
+        "lines": [
+          "That loud lad off the west road came up out of the mire yesterday and did not say a word.",
+          "Walked straight past the Hall. He had a Crest off Tallow only Tuesday and he walked straight past it."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_sanctum"
+        ],
+        "lines": [
+          "Two of them went out along the sanctum causeway this morning, and one was your friend.",
+          "The Foundation have had that place nine days. I would not have gone. He went first."
+        ]
+      },
+      {
+        "ifFlags": [
           "tarin_at_nightafter"
         ],
         "lines": [

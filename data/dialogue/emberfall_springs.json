@@ -1,0 +1,22 @@
+{
+  "speakers": {
+    "ef_springs_attendant": "BATH ATTENDANT",
+    "ef_springs_smith": "OLD SMITH",
+    "ef_springs_traveller": "TRAVELLING MERCHANT"
+  },
+  "entries": {
+    "ef_springs_attendant": [
+      "One coin, or a bucket of charcoal, or an hour walking the pans. Your choice.",
+      "Start in the far pools. They are the cool ones, and the city will hear about it if you do not."
+    ],
+    "ef_springs_smith": [
+      "Forty years at a forge mouth and my hands still open in the morning. That is these pools.",
+      "Every other forge town I have worked, the smiths are old at forty. Not here."
+    ],
+    "ef_springs_traveller": [
+      "I have soaked in Salthollow, in the salt baths at Tideglass, and once in a barrel in Stonewake.",
+      "This is the only water that was hot before anybody touched it.",
+      "It changes how you sit in it. I cannot explain that better than I just did."
+    ]
+  }
+}

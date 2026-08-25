@@ -1,0 +1,34 @@
+{
+  "speakers": {
+    "mhb2_keeper": "WATER KEEPER",
+    "mhb2_daughter": "DAUGHTER"
+  },
+  "entries": {
+    "mhb2_keeper": [
+      {
+        "ifFlags": [
+          "crest_5_taken"
+        ],
+        "lines": [
+          "My father marked it and his mother marked it, and I have marked it since I was nine.",
+          "Sixty-one years of the water coming up. Then three years of it doing nothing at all.",
+          "Somebody from the survey copied the whole chart out and asked me to stop marking it."
+        ]
+      },
+      {
+        "lines": [
+          "One mark a year, on the post, on the first spring tide. That is the whole job.",
+          "It is not a job. Nobody pays me. Somebody has to know what the water is doing."
+        ]
+      }
+    ],
+    "mhb2_daughter": [
+      {
+        "lines": [
+          "When I am older I do the marks. Dad says it is the most boring job in Caelora.",
+          "It is not, though. It is the only one where you find out something nobody else knows."
+        ]
+      }
+    ]
+  }
+}

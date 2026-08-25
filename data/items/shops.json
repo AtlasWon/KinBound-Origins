@@ -262,5 +262,132 @@
         "requiresCrest": 6
       }
     ]
+  },
+  {
+    "id": "emberfall_provisioner",
+    "name": "Emberfall Provisioner",
+    "greeting": [
+      "Everything here came over the pass except the water. Price it accordingly."
+    ],
+    "stock": [
+      {
+        "item": "field_vessel"
+      },
+      {
+        "item": "fine_vessel"
+      },
+      {
+        "item": "potion"
+      },
+      {
+        "item": "strong_potion"
+      },
+      {
+        "item": "clearleaf"
+      },
+      {
+        "item": "steadyroot"
+      },
+      {
+        "item": "coolsalve"
+      },
+      {
+        "item": "thawcloth"
+      },
+      {
+        "item": "wakebell"
+      },
+      {
+        "item": "full_heal"
+      },
+      {
+        "item": "ward_incense"
+      },
+      {
+        "item": "escape_line"
+      },
+      {
+        "item": "great_potion",
+        "requiresCrest": 2
+      },
+      {
+        "item": "deep_vessel",
+        "requiresCrest": 2
+      },
+      {
+        "item": "dusk_vessel",
+        "requiresCrest": 3
+      },
+      {
+        "item": "rouse",
+        "requiresCrest": 3
+      },
+      {
+        "item": "full_restore",
+        "requiresCrest": 6
+      },
+      {
+        "item": "full_rouse",
+        "requiresCrest": 6
+      }
+    ]
+  },
+  {
+    "id": "mirehaven_provisioner",
+    "name": "Mirehaven Provisioner",
+    "$comment": "The only shop in Caelora that sells a consumable at a loss on purpose. Everything else here carries the cost of getting a barrel across forty tiles of marsh, and the stock leans on status cures because the reed beds are Venom and Chitin from one end to the other.",
+    "greeting": [
+      "Oil at cost. Everything else came across the mire on somebody's back, and it shows."
+    ],
+    "stock": [
+      {
+        "item": "field_vessel"
+      },
+      {
+        "item": "fine_vessel"
+      },
+      {
+        "item": "net_vessel"
+      },
+      {
+        "item": "potion"
+      },
+      {
+        "item": "strong_potion"
+      },
+      {
+        "item": "clearleaf"
+      },
+      {
+        "item": "steadyroot"
+      },
+      {
+        "item": "coolsalve"
+      },
+      {
+        "item": "wakebell"
+      },
+      {
+        "item": "full_heal"
+      },
+      {
+        "item": "ward_incense"
+      },
+      {
+        "item": "escape_line"
+      },
+      {
+        "item": "great_potion",
+        "requiresCrest": 4
+      },
+      {
+        "item": "deep_vessel",
+        "requiresCrest": 4
+      },
+      {
+        "item": "dusk_vessel",
+        "requiresCrest": 4
+      }
+    ]
   }
 ]

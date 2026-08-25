@@ -1,0 +1,195 @@
+{
+  "id": "emberfall_hall",
+  "name": "Flame Hall",
+  "displayName": "THE FLAME HALL",
+  "music": "station",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIIIIIIIIIIIIIIIII",
+    "IUUFFFFFFFFFFFFFUUI",
+    "IFFFFFFFFFSFFFFFFFI",
+    "IFFFFFFFFFFFFFFFFFI",
+    "IFkFFFFFFFFFFFFFkFI",
+    "IFFFFFFFFFFFFFFFFFI",
+    "IFKKFKKFFFFFØØFFFFI",
+    "IFFFFFFFFFFFFFFFFFI",
+    "IFEEEFFFFFFFEEEFFFI",
+    "IFEEEFFFFFFFEEEFFFI",
+    "IFFFFFFFFFFFFFFFFFI",
+    "IFAFFFFFFFFFFFFFAFI",
+    "IFFFFFFFFFFFFFFFFFI",
+    "IIIIIIIIIDIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 13,
+      "toMap": "emberfall",
+      "toX": 35,
+      "toY": 28,
+      "facing": "down",
+      "style": "door"
+    },
+    {
+      "x": 9,
+      "y": 2,
+      "toMap": "emberfall_hall_flues",
+      "toX": 10,
+      "toY": 22,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "ef_hall_clerk",
+      "sprite": "clerk",
+      "x": 4,
+      "y": 6,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ef_hall_clerk"
+    },
+    {
+      "id": "ef_hall_glasswright",
+      "sprite": "villager_f",
+      "x": 3,
+      "y": 10,
+      "facing": "right",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "ef_hall_glasswright"
+    },
+    {
+      "id": "ef_hall_bathkeeper",
+      "sprite": "villager_m",
+      "x": 13,
+      "y": 10,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ef_hall_bathkeeper"
+    },
+    {
+      "id": "ef_hall_widow",
+      "sprite": "elder",
+      "x": 16,
+      "y": 3,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ef_hall_widow"
+    },
+    {
+      "id": "ef_hall_kid",
+      "sprite": "kid",
+      "x": 11,
+      "y": 12,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "ef_hall_kid"
+    },
+    {
+      "id": "ef_hall_stairhand",
+      "sprite": "hiker",
+      "x": 11,
+      "y": 3,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ef_hall_stairhand"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 6,
+      "y": 0,
+      "text": [
+        "THE SHARE BOARD. Every flue in Emberfall, in a column, with a peg beside it.",
+        "Peg up, you are drawing. Peg down, you are waiting.",
+        "Rather more of them are down than up, and the board is honest about it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 0,
+      "text": [
+        "Under the board, the only sum that matters here, chalked and never rubbed out:",
+        "ONE FISSURE. FOUR HUNDRED AND ELEVEN FLUES.",
+        "Somebody has written ARGUE ALL YOU LIKE under it, in the Keeper's hand."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 11,
+      "y": 6,
+      "text": [
+        "A forge, lit and roaring, set up in the middle of a public waiting room.",
+        "The card in front of it: THIS IS WHAT A SHARE IS. THIS IS ALSO WHAT IT COSTS SOMEBODY.",
+        "The Keeper has it burning all day. Nobody in the queue can stop looking at it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 0,
+      "y": 7,
+      "text": [
+        "The waiting benches. Worn through to the boards in front, unworn at the back.",
+        "Nobody in Emberfall sits at the back of this room.",
+        "A tin of tea on the sill, free, and a note: YOU MAY BE HERE A WHILE."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18,
+      "y": 7,
+      "text": [
+        "Eight Bond Crests in a case, one for every Hall in Caelora.",
+        "The Ember Crest is fourth and is the only one that is not a badge -",
+        "it is a tally, cut for a flue that does not exist, and it draws anywhere."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 4,
+      "text": [
+        "Ledgers, floor to ceiling, one to a year. Who drew, how long, and what for.",
+        "The oldest is two hundred years old and is mostly potters.",
+        "The newest is open at today, and today has forty names on it already."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 16,
+      "y": 4,
+      "text": [
+        "A pipe comes through this wall from the stack below and goes straight out again.",
+        "It does not stop here. Nothing in this building is heated by it.",
+        "Somebody has hung a coat on it anyway, which is the most Emberfall thing here."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 13,
+      "text": [
+        "Nailed beside the door at the height of a sixteen-year-old:",
+        "DOWN THE STAIR IS THE STACK. THE STACK IS ONE FIRE SHARED FOUR HUNDRED WAYS.",
+        "IF YOU OPEN SOMETHING DOWN THERE, SOMETHING ELSE SHUTS. LEARN WHOSE."
+      ]
+    }
+  ],
+  "_plan": "THE PUBLIC FLOOR IS A QUEUE, NOT AN ARENA. Emberfall does not burn fuel; it taps a fissure, and the fissure is finite, so the whole city is permanently in an argument about whose turn it is. The Flame Hall is the office that settles that argument, and the Keeper is the man who refuses people for a living. That is why a forge city keeps a Hall: his authority over the city's heat has to be answerable, every day, to anyone who can walk in and take it off him.\n\nEVERY OBJECT IN HERE IS ABOUT ALLOCATION AND NOT ABOUT FIRE. A share board with more pegs down than up, two hundred years of ledgers, benches worn through at the front, and - the one that does the work - a forge laid, swept and stone cold in the middle of the room. There is no fire in the Flame Hall. The Keeper's line is that people argue better cold, and the room is built to prove he means it.\n\nTHE COUNTER HAS A HATCH IN IT (6,6 is floor between two runs of counter) because npcInFront only reaches one tile: a clerk parked behind an unbroken counter can be looked at and never spoken to, which is how the Tide Hall's clerk ended up talkable only from behind. The stair at 9,2 is the only way into the stack and the door at 9,13 is the city's.\n\nDOOR COORDINATE, MATCHED. Emberfall's own frontage warp is at 35,27 (the civic door 'g' in the Hall's face) and already lands the player at 9,13 here, so the return warp is emberfall 35,28 -- the paving directly outside. Both halves are now measured against each other rather than agreed in advance; if the Hall moves in the city, this one number moves with it."
+}

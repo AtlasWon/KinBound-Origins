@@ -8,6 +8,63 @@ Add a new `## vX.Y.Z` heading above the others before running `npm run ship`.
 
 ---
 
+## v0.15.0
+
+### Embercoil
+
+The road out of Tideglass climbs into the volcanic interior, and the green does
+not stop at a door — it thins out in patches as you walk, until the turf is
+gone and the gold dirt has turned to black clinker. Three bands of columnar
+basalt cross the pass. At the bottom the road crosses a flow on cooled crust,
+which is the one place in Caelora you walk on something that was liquid last
+year.
+
+The Foundation has stopped moving and started digging. Two fenced compounds,
+numbered trenches, graded spoil, a survey mast pointed straight down, and a
+generator running with fuel to the top of the glass and no marks in the ash but
+yours. Nobody explains any of it. The gates stand open.
+
+One trench is shored, floored, roped off and much deeper than the rest.
+Whatever was at the bottom has been lifted out, and the shape of it is still in
+the ash.
+
+### Emberfall, and the gate with a hollow in it
+
+A city built on the heat under it — black stone, copper, steam pipes, and a
+forge row that is the reason the place exists.
+
+At the western kerb the road stops caring and there is a slab that is not
+basalt and has no seam. A hollow is cut in the middle of it, palm-sized, ringed
+with worn spiral marks. Four generations of chisel scars stop a hand's width
+short of it.
+
+You are carrying the thing that fits.
+
+### The wetlands, and a town on stilts
+
+Raised boardwalks, reeds, fog you cannot see past, and things that glow after
+dark. Mirehaven stands over the water on posts and platforms, and you get about
+some of it by boat.
+
+Two more Bond Crests: one in a forge city, one out over the marsh.
+
+### What your father knew
+
+Two Aurelian sites open in this act, and they do not tell you the same thing.
+
+The first gives you a fragment, and your father's voice. He knew. Cassian wanted
+to wake it. He thought it was a mistake. That is all you get, and you will leave
+that temple knowing more and understanding less.
+
+The second is worse, and Meridian are already inside it when you arrive — for
+the first time in this story you are behind them. Tarin comes in with you and
+stays. And what is recorded in the deep room is not what anyone has been told:
+the Great Deluge was not the thing in the sea destroying a civilisation. It was
+a civilisation putting a living creature in a machine, and the creature being
+frightened.
+
+You already know what Meridian intend to do.
+
 ## v0.14.0
 
 ### The road east, and the sea

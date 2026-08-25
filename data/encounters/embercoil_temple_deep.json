@@ -1,0 +1,18 @@
+{
+  "mapId": "embercoil_temple_deep",
+  "$comment": "The only encounter table in the temple, and it sits on the cinder drifted up the shaft rather than on the building. A sealed hall of cut stone should be empty; whatever is alive down here got in the way the ash did. The engine only rolls on a tile that declares an encounter, so the table is filed under tallGrass and the tile carrying it is the ash drift -- the same arrangement as data/encounters/route_2_cave.json, where a fern under a fallen roof does the identical job. The drift is banked against the outer wall and gone by the third row in, so the lane along the edge of the fire is clean and a player who does not want a fight can see exactly where to walk; the rate is 120 accordingly, because the walkway round the lake is long and its whole outer lane carries the table. MEASURED, not guessed: the first cut of this table ran 21-24 and was heavy on flame and stone, and tests/helpers/simulate.mjs put a lone novice Blazelynx at THIRTY PERCENT and a lone Bramblehusk at 58 -- a volcano is naturally hostile to two of the three starter lines, and left alone that is where the difficulty of the whole act would have gone. It now runs 19-22 with the flame weight cut and terra and chitin put in its place, which measures 50/59/99 percent for Bramblehusk, Blazelynx and Brookmaw at level 22 and 71/79/100 at level 26 -- one kin, novice play, no items, which is the floor and not the fight anybody has. Nothing is above its own evolution level: no wild Volcatrix, no wild Menhir, no early Chalkmar, and Cairnling only at 22, which is the level Pebblet becomes one. Weights total 100.",
+  "methods": {
+    "tallGrass": {
+      "rate": 120,
+      "slots": [
+        { "species": "sootmoth", "minLevel": 19, "maxLevel": 21, "weight": 24 },
+        { "species": "emberbore", "minLevel": 19, "maxLevel": 22, "weight": 20 },
+        { "species": "silthopper", "minLevel": 19, "maxLevel": 21, "weight": 16 },
+        { "species": "chalkid", "minLevel": 19, "maxLevel": 21, "weight": 14 },
+        { "species": "gravelet", "minLevel": 19, "maxLevel": 21, "weight": 12 },
+        { "species": "cairnling", "minLevel": 22, "maxLevel": 22, "weight": 8 },
+        { "species": "blazelynx", "minLevel": 20, "maxLevel": 21, "weight": 6 }
+      ]
+    }
+  }
+}

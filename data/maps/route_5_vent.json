@@ -1,0 +1,115 @@
+{
+  "id": "route_5_vent",
+  "name": "The Cinder Vent",
+  "displayName": "THE CINDER VENT",
+  "music": "town_indoor",
+  "battleBackdrop": "cave",
+  "indoor": true,
+  "dark": false,
+  "encounterTable": "route_5_vent",
+  "_plan": "A lava tube the flow emptied out of and left behind, and the one place on Route 5 that is worth going into rather than past. Two galleries with the live flow still running between them: the near one is free, the far one costs a walk over two stepping stones of crust, and everything good is on the far side. The left-hand branch at the bottom -- the one the sign on the road warns about -- is a scald pool with somebody's boots still beside it.",
+  "rows": [
+    "ÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆ",
+    "ÆÆÆÆîºî¸îîºººîººÆÆÆÆ",
+    "ÆÆÆÆîº¡ºººº¸ºîììîÆÆÆ",
+    "ÆÆÆººººîî¸ºººººî¸ÆÆÆ",
+    "ÆÆÆºîøººîº¸îº¡ìººÆÆÆ",
+    "ÆÆÆî¸ìººìîººººøººÆÆÆ",
+    "ÆÆÆÆºº¸¸ººîºîºº¸ÆÆÆÆ",
+    "ÆÆ×××××××ºº×××º×××ÆÆ",
+    "ÆÆ×××××××ºº×××º×××ÆÆ",
+    "ÆÆ¸ºøºîºººîìºîººîºÆÆ",
+    "ÆÆº¸ºîì¸îîºº¸îîº¡îÆÆ",
+    "ÆÆºøº¡îºîøîºººîºîºÆÆ",
+    "ÆÆ©©øîºîºî¸ºººîºîºÆÆ",
+    "Æ¸©©©ººîîîîºîººø¸ºÆÆ",
+    "ÆÆ©©îîºîºø¸îººººº¸ÆÆ",
+    "ÆÆÆÆÆÆÆÆÆ¸¸ÆÆÆÆÆÆÆÆÆ",
+    "ÆÆÆÆÆÆÆÆÆ¸¸ÆÆÆÆÆÆÆÆÆ",
+    "ÆÆÆÆÆÆÆÆÆÐÐÆÆÆÆÆÆÆÆÆ"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 17,
+      "toMap": "route_5",
+      "toX": 16,
+      "toY": 24,
+      "facing": "down",
+      "style": "cave"
+    },
+    {
+      "x": 10,
+      "y": 17,
+      "toMap": "route_5",
+      "toX": 16,
+      "toY": 24,
+      "facing": "down",
+      "style": "cave"
+    }
+  ],
+  "npcs": [],
+  "objects": [
+    {
+      "kind": "script",
+      "x": 8,
+      "y": 0,
+      "text": [
+        "Names, scratched into the glaze of the wall. Dozens of them, going back a long way.",
+        "ROSE. HALLAM. TEB AND SPARROW. Under all of it, cut much deeper and much older,",
+        "a spiral, and a line of marks that are not letters in any hand anyone here writes."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 1,
+      "y": 12,
+      "text": [
+        "A pair of boots, set neatly side by side at the edge of the water. Nobody in them.",
+        "They have been here long enough to go hard. Somebody came out of the pool barefoot,",
+        "or somebody did not come out."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 2,
+      "y": 8,
+      "text": [
+        "The flow is a hand's width below the lip of its own channel and it has been for years.",
+        "It is not falling. Whatever is feeding it has not once run short."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 16,
+      "y": 3,
+      "item": "deep_vessel",
+      "quantity": 2,
+      "flag": "item_r5v_far"
+    },
+    {
+      "kind": "item",
+      "x": 15,
+      "y": 12,
+      "item": "rouse",
+      "quantity": 1,
+      "flag": "item_r5v_lower"
+    },
+    {
+      "kind": "item",
+      "x": 2,
+      "y": 14,
+      "item": "full_heal",
+      "quantity": 1,
+      "flag": "item_r5v_pool"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 6,
+      "y": 13,
+      "item": "strong_potion",
+      "quantity": 2,
+      "flag": "item_r5v_hidden"
+    }
+  ]
+}

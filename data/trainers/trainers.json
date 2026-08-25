@@ -1814,5 +1814,883 @@
       "Nine of us signed. Six were quarry lads. We none of us ask anything, and the wage comes on time."
     ],
     "$comment": "The other end of the recruiting card on the wall of the Stonewake Meridian office. He is not a villain, he is a man with a job, and he is the reason the Order works: most of the Foundation is Marrin."
+  },
+  {
+    "id": "mh_hand_a",
+    "$comment": "Hall 5, the crew boss on the plank walk, and the only fight in the Venom Hall nobody can decline -- her body shuts the north board past the hatch and her line of sight shuts the south one. She is therefore deliberately the softest thing in the room: a barnacle crab, a beetle and a silt hopper, all off the default learnsets, no ace. Measured, novice play, no items, 400 runs, at the level the road really delivers (solo lead L36, team-raiser L27): lone starter 100/100/100, matched party 100/100/100.",
+    "name": "Bray",
+    "className": "Pile Crew",
+    "sprite": "dockhand",
+    "ai": "trained",
+    "payout": 92,
+    "party": [
+      {
+        "species": "pinchel",
+        "level": 24
+      },
+      {
+        "species": "nettlebug",
+        "level": 25
+      },
+      {
+        "species": "silthopper",
+        "level": 25
+      }
+    ],
+    "intro": [
+      "Boots off the rail and eyes on the deck. You go down here, you go down for good.",
+      "Right. Let us see whether you are worth fishing out."
+    ],
+    "defeat": [
+      "Fine. You are worth fishing out."
+    ],
+    "victory": [
+      "Up you go. The ladder's behind you and it is not an insult to use it."
+    ],
+    "afterward": [
+      "Two ways off this sheet with a rag tied over them. Those are ours; we cut them.",
+      "Anything else you find a hole in, we did not cut. Bear that in mind before you step in it."
+    ]
+  },
+  {
+    "id": "mh_hand_b",
+    "$comment": "Hall 5, the north bank, and OPTIONAL: her pocket is a dead end off gate N and the player only meets her by choosing to go in. Bladderwrack is the row's whole point -- a Verdant/Tide wall in a Venom/Chitin Hall, so the Rilltail player cannot coast the way the type chart says they should. Measured, 400 runs at L36/L27: lone 96/98/95, matched 91/100/100.",
+    "name": "Odile",
+    "className": "Silk Winder",
+    "sprite": "netmender",
+    "ai": "trained",
+    "payout": 92,
+    "party": [
+      {
+        "species": "spinnet",
+        "level": 25
+      },
+      {
+        "species": "sootmoth",
+        "level": 26
+      },
+      {
+        "species": "bladderwrack",
+        "level": 26
+      }
+    ],
+    "intro": [
+      "Mind the bolt. Six weeks of somebody's patience on that reel and you are stood on the end of it.",
+      "Sit down a minute. Sitting down is most of the job."
+    ],
+    "defeat": [
+      "There. That did not take long at all, and I am sorry to see it."
+    ],
+    "victory": [
+      "No harm done. Wind it back and start again; that is also most of the job."
+    ],
+    "afterward": [
+      "The colony does not spin for us. It spins because it lives here, and we cut what it can spare.",
+      "Two hundred years of not being greedy. That is the entire trade secret."
+    ]
+  },
+  {
+    "id": "mh_hand_c",
+    "$comment": "Hall 5, the glue bank, and OPTIONAL for the same reason as Odile. Both hand-written movesets here are nerfs and both were measured. Clatterclaw off its own learnset carries Hullcrack, a Tide move on 104 attack, and the Cinderpaw row read 68 percent with it and 100 without -- Tide hits Flame for double and the Flame player has no answer to a Tide/Chitin wall. Tallowmoth off its learnset leads with Swarmcall, Chitin, double into Verdant, and the Sprigling row read 71; capped to Glimmer, Gustline and Silkbind it reads 89. Measured, 400 runs at L36/L28: lone 91/100/93, matched 98/100/99.",
+    "name": "Hollis",
+    "className": "Glue Boiler",
+    "sprite": "porter",
+    "ai": "trained",
+    "payout": 92,
+    "party": [
+      {
+        "species": "silthopper",
+        "level": 25
+      },
+      {
+        "species": "tallowmoth",
+        "level": 26,
+        "moves": [
+          "glimmer",
+          "gustline",
+          "silkbind"
+        ]
+      },
+      {
+        "species": "clatterclaw",
+        "level": 27,
+        "moves": [
+          "shellstrike",
+          "closing_hold"
+        ]
+      }
+    ],
+    "intro": [
+      "Careful. Everything on this sheet is either hot or sticky and two of them are both.",
+      "You will want to be past me. Everybody does."
+    ],
+    "defeat": [
+      "Go on, then. Do not touch the pot on your way."
+    ],
+    "victory": [
+      "That is what the pot is for. Sit there and stop steaming."
+    ],
+    "afterward": [
+      "Silk, boiled down, is glue, and glue is what holds four thousand people up out of the wet.",
+      "There is a lesson in that and I have never once managed to say it properly."
+    ]
+  },
+  {
+    "id": "mh_hand_d",
+    "$comment": "Hall 5, the toll on the fourth gap, and the second of the three fights nobody can decline: she stands on the south walk looking up through the only tile the true lane is entered by. Allowed to be the hardest hand and to be the Venom one -- Nettlebug and Spinnet both swing Acid Flick off their own learnsets, which is double into the Sprigling line, and that row is the floor of the whole Hall by design. Clatterclaw is capped to Shellstrike alone: with Hullcrack the Cinderpaw row read 59 percent, exactly the failure Hollis's note describes. Measured, 400 runs at L37/L28: lone 97/100/94, matched 88/100/99 -- the 88 is the floor of the whole Hall and it is the Sprigling player, on purpose.",
+    "name": "Varis",
+    "className": "Under-Boss",
+    "sprite": "fisher",
+    "ai": "trained",
+    "payout": 105,
+    "party": [
+      {
+        "species": "nettlebug",
+        "level": 26
+      },
+      {
+        "species": "spinnet",
+        "level": 27
+      },
+      {
+        "species": "clatterclaw",
+        "level": 28,
+        "moves": [
+          "shellstrike"
+        ]
+      }
+    ],
+    "intro": [
+      "Last sheet. Below this there is one hole and it goes where all of them go.",
+      "I stand here so that nobody drops through it by accident. Convince me it is not an accident."
+    ],
+    "defeat": [
+      "All right. It is not an accident. Go on down."
+    ],
+    "victory": [
+      "Then it was an accident, and I have just saved you a very long minute in the dark."
+    ],
+    "afterward": [
+      "When you land, stand still. I am not being mysterious, it is the whole instruction.",
+      "Everybody's first thought down there is to start walking. Nobody's second thought is."
+    ]
+  },
+  {
+    "id": "mh_keeper_tallow",
+    "$comment": "HALL 5, THE SILK CREST, and the Venom/Chitin Hall of Mirehaven. The structural problem is the one Marit Vane solves with the chart turned round: Venom hits Verdant for double AND Chitin hits Verdant for double, so an all-Venom row punishes the Sprigling player twice in every exchange and there is no third side to it. So the offence is spread off type the way Vane's is -- Silthopper swings Beast and Terra, Tallowmoth swings Radiant and Gale, Sootmoth is capped to Gustline and a 25-power multi-hit, and only the ace is a real Chitin attacker. The ace's Venom move is Creeping Dose, which is Toxic and does no direct damage at all: it is the Hall's whole idea stated in one move -- the thing that gets worse the longer you stay in it -- without being the thing that ends the fight. Weaverjaw also carries flat-zero IVs, Vane's lever, which moved the lone-Sprigling row from 61 to 75. No bag item, for the reason Roxen, Mabry and Vane all give: Battle.doItem never consumes a foe-side item, so one Potion in that list is an unlimited heal. LEVELS WERE CUT TWICE AND BOTH CUTS WERE MEASURED. The first pass put the ace at 31 off a model of Act 3 written before Act 3 existed; the second re-ran the arithmetic against the real route 5, the real Emberfall Hall and the real Embercoil Temple tables once the other agents had landed them, which put the team-raiser at L27 and not L31, and put Cade's Hall 4 ace at 23. An ace of 29 is a step of six off Hall 4, which is the same step Briarbell takes to Stonewake. Measured, novice play, no items, 400 runs at the level the road really delivers (solo lead L37, team-raiser L29): lone starter 80/100/100, matched party 100/100/100.",
+    "name": "Annik Tallow",
+    "className": "Keeper",
+    "sprite": "harbourmaster",
+    "ai": "keeper",
+    "payout": 170,
+    "party": [
+      {
+        "species": "silthopper",
+        "level": 26,
+        "moves": [
+          "quickstep",
+          "gravelspray",
+          "nibble"
+        ]
+      },
+      {
+        "species": "tallowmoth",
+        "level": 27,
+        "moves": [
+          "glimmer",
+          "gustline",
+          "silkbind"
+        ]
+      },
+      {
+        "species": "sootmoth",
+        "level": 27,
+        "moves": [
+          "gustline",
+          "swarmcall",
+          "silkbind"
+        ]
+      },
+      {
+        "species": "weaverjaw",
+        "level": 29,
+        "moves": [
+          "shellstrike",
+          "creeping_dose",
+          "silkbind"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      }
+    ],
+    "intro": [
+      "You stood still. Good. That is the only part of this I cannot teach.",
+      "Annik Tallow. I read the piles. Let us see what you are holding."
+    ],
+    "defeat": [
+      "Hm. Sound all the way down."
+    ],
+    "victory": [
+      "Up you go and come back when you are ready. The colony is not going anywhere and neither am I."
+    ],
+    "afterward": [
+      "Mirehaven is not built. Mirehaven is agreed.",
+      "Every hundred years somebody forgets that and we have to go and fetch them out of the peat."
+    ]
+  },
+  {
+    "id": "ms_sweeper_orre",
+    "$comment": "ACT 3, the Drowned Gallery. Two agents come out of the two arms and Tarin takes the other one, so this is HALF a fight by design and it is the only battle in the whole Sanctum. Built on the meridian_agent_kesh precedent: Foundation staff with a licence, two kin, no bag items, and an ace under the Keeper the player has just beaten (mh_keeper_tallow tops out at 30). The scene, not the party, is what this fight is for -- the player wins it and Tarin walks back out of the dark having won his, and heals the party, which is the whole point of him being here. MEASURED with tests/helpers/simulate.mjs, 300 runs, novice play, no bag items, matched party (sprigling / cinderpaw / rilltail): 99/100/92 at L27, 100/100/96 at L28, 100/100/100 from L30. The lone-starter floor is 6/5/0 at L27 and is the usual one-kin-against-two floor, not a target. The first party tried here was Anchorling and Lantric, the same pair as the Act 2 night agents scaled up, and it read 86/33/56 at L28 -- iron/tide at that level is a wall a Flame player simply cannot break. Lantric leads and Voltwick closes; swapping the order costs the Tide column twenty points.",
+    "name": "Orre",
+    "className": "Foundation Agent",
+    "sprite": "meridian",
+    "ai": "trained",
+    "payout": 340,
+    "party": [
+      {
+        "species": "lantric",
+        "level": 26
+      },
+      {
+        "species": "voltwick",
+        "level": 27
+      }
+    ],
+    "intro": [
+      "This level is not catalogued and you are not on the sheet.",
+      "That is two problems and I only have to solve one of them."
+    ],
+    "defeat": [
+      "Right. I am going to go and stand somewhere with a lamp on it."
+    ],
+    "victory": [
+      "Back up the stair. Somebody will walk you out."
+    ],
+    "afterward": [
+      "Nine days down here and we have not found one living thing in the water.",
+      "Not a fish. Not a frog. In a marsh.",
+      "I have put it on the sheet three times and it keeps coming back initialled."
+    ]
+  },
+  {
+    "id": "ms_hydro_wynn",
+    "$comment": "ACT 3, the pumped floor, and entirely optional -- offered by an `ask`, never by sight. She is a real hydrologist doing real work for an organisation she does not understand, which is canon's line about the Foundation, and the cheapest way to make the player believe that is to let them have a friendly battle with one. Soft on purpose: two kin, novice AI, an ace three under the sweeper's. MEASURED, 300 runs, matched party: 100/87/100 at L27, 100/94/100 at L28, 100/99/100 at L30. Cinderpaw is the low column against two Tide kin and it is meant to be the only column that is ever in doubt in this room.",
+    "name": "Wynn",
+    "className": "Foundation Hydrologist",
+    "sprite": "meridian_sci_f",
+    "ai": "novice",
+    "payout": 300,
+    "party": [
+      {
+        "species": "currentail",
+        "level": 23
+      },
+      {
+        "species": "shalefin",
+        "level": 24
+      }
+    ],
+    "intro": [
+      "Oh, wonderful. Yes. Nobody down here will do this with me."
+    ],
+    "defeat": [
+      "That was worth nine days of pumping on its own."
+    ],
+    "victory": [
+      "Sorry! Sorry. I am out of practice at being pleased about that."
+    ],
+    "afterward": [
+      "Nine hundred gallons a day out, and the level does not move a hair.",
+      "That is not a leak. A leak I could find. Something is putting it back."
+    ]
+  },
+  {
+    "id": "ef_tap_a",
+    "$comment": "Hall 4, the west tap, and deliberately the plainest fight in the building: a terra lead and Emberfall's own flame/terra kin behind it. Emberbore is capped at ember_spit (40) rather than the cinderlash it owns by 16, because a Sprigling player takes double from every flame move in this Hall and this is the first of four parties in a row that could carry one. Measured, novice play, no items, matched party at the level the curve delivers (L24): 100/99/100 for Sprigling, Cinderpaw and Rilltail. Lone starter at L32: 100/95/100.",
+    "name": "Wick",
+    "className": "Tap Hand",
+    "sprite": "villager_m",
+    "ai": "trained",
+    "payout": 85,
+    "party": [
+      {
+        "species": "gravelet",
+        "level": 19
+      },
+      {
+        "species": "emberbore",
+        "level": 20,
+        "moves": [
+          "strike",
+          "gravelspray",
+          "ember_spit"
+        ]
+      }
+    ],
+    "intro": [
+      "Mind where you put your feet on my floor. Half of it is not floor.",
+      "Right. Since you are standing there anyway."
+    ],
+    "defeat": [
+      "Fair. Go on down and get your feet wet, or whatever the word is here."
+    ],
+    "victory": [
+      "Up you go. The stair is behind you and it is not going anywhere."
+    ],
+    "afterward": [
+      "Brom will shift that beam for anybody who asks. That is not generosity, that is the job.",
+      "It is the asking he wants. Nobody likes a beam moved behind their back."
+    ]
+  },
+  {
+    "id": "ef_tap_b",
+    "$comment": "Hall 4, the east tap. Three kin and three different answers -- pebblet is stone, silthopper is terra/chitin, blazelynx is flame -- so a player leading with one type finds it is only ever an answer to one of them. Silthopper is capped below shellstrike (chitin 65, double into verdant) and blazelynx below cinderlash for the same reason as Wick above. The first cut of this Hall ran sootmoth here and on two other rows: flame/chitin takes a QUARTER from verdant, bramblehusk carries nothing but verdant moves at this level, and a lone Sprigling at L29 went from 100 percent to 4 against it. Nothing in this Hall is allowed to be four times resistant to a starter. Measured, matched party at L24: 100/100/100. Lone starter at L32: 94/100/100.",
+    "name": "Ferrow",
+    "className": "Tap Hand",
+    "sprite": "sailor",
+    "ai": "trained",
+    "payout": 90,
+    "party": [
+      {
+        "species": "pebblet",
+        "level": 19
+      },
+      {
+        "species": "silthopper",
+        "level": 20,
+        "moves": [
+          "quickstep",
+          "nibble",
+          "gravelspray"
+        ]
+      },
+      {
+        "species": "blazelynx",
+        "level": 21,
+        "moves": [
+          "strike",
+          "quickstep",
+          "ember_spit"
+        ]
+      }
+    ],
+    "intro": [
+      "East tap is mine and today it is a hole, so I have nothing to do but this.",
+      "Do not take that personally. Take it quickly."
+    ],
+    "defeat": [
+      "Hah. Well, my day was already ruined."
+    ],
+    "victory": [
+      "Go up, sit down, come back. The tap will still be a hole."
+    ],
+    "afterward": [
+      "When the beam is in your tap you cannot get down it. That is not the Hall being cruel.",
+      "You try climbing down a chimney with a chimney coming up it."
+    ]
+  },
+  {
+    "id": "ef_bath_crew",
+    "$comment": "Hall 4, the east gallery, and the last fight before the Keeper. She is the person the share hand takes the heat off, and she is standing between the player and that wheel, which is the whole fight. Slatewing swings GALE only: it is stone/gale, and stone is double into flame, so left on its own learnset it was the reason a Cinderpaw player who skipped Embercoil Pass read 53 percent here. Lantric (spark/iron) is the ace rather than another flame kin because spark is double into tide, and a Rilltail player has walked both tap hands unopposed by this point. Measured, novice play, no items, matched party at L25: 100/100/100. Lone starter at L33: 100/99/90. A player who skipped the whole of Embercoil Pass, matched at L22: 93/63/100.",
+    "name": "Dess",
+    "className": "Bath Crew",
+    "sprite": "villager_f",
+    "ai": "trained",
+    "payout": 95,
+    "party": [
+      {
+        "species": "chalkid",
+        "level": 19,
+        "moves": [
+          "strike",
+          "stonefling",
+          "gravelspray"
+        ]
+      },
+      {
+        "species": "slatewing",
+        "level": 20,
+        "moves": [
+          "gustline",
+          "wingbeat"
+        ]
+      },
+      {
+        "species": "lantric",
+        "level": 21,
+        "moves": [
+          "static_nip",
+          "arcjolt"
+        ]
+      }
+    ],
+    "intro": [
+      "You are going to ask her for that wheel. Everyone who gets up here is going to ask her for that wheel.",
+      "Fine. Ask her through me."
+    ],
+    "defeat": [
+      "Go on then. It is only my baths.",
+      "It is always only somebody's baths."
+    ],
+    "victory": [
+      "No. Go and be cold somewhere else for a bit."
+    ],
+    "afterward": [
+      "Do not apologise. I would have done exactly the same and I would have been ruder about it.",
+      "Just remember it was mine. That is the whole of what I want out of today."
+    ]
+  },
+  {
+    "id": "ef_keeper_cade",
+    "$comment": "Hall 4, Flame, and the party exists to solve a type chart that is savage in both directions. Flame is double into verdant; tide, terra and stone are all double into flame, and emberbore is flame/terra so tide is QUADRUPLE into it. Left alone that is a free win for Rilltail and an unwinnable room for Sprigling. So the offence is spread on purpose: emberbore swings terra and beast and carries no flame move at all, lantric swings spark (double into tide, half into verdant) and is the only thing here that frightens a Rilltail player, chalkid is the one target every starter can hurt, and the ace leads with BEAST -- quickstep and batter -- with a single cinderlash behind them, so a verdant player takes one super-effective hit from this whole party rather than eight. Flat-zero IVs on the ace and no bag item, per the note on sw_keeper_roxen: Battle.doItem never consumes a foe-side item, so a Potion in that list is an unlimited heal rather than a Potion. Tuning history: the first build ran the ace at 26 with kilnburst and read 13/3/52 on the matched row. The ace came down to 22 and the party to 19-20, because Embercoil Pass delivers a team-raiser at L24-25 and a Keeper ace belongs two or three levels UNDER that, exactly as Marit Vane sits under Tideglass. Measured, novice play, no items, matched party at L25: 97/100/100 for Sprigling, Cinderpaw and Rilltail. Lone starter at L33: 99/85/96, a shade kinder than Hall 3. A player who skipped every trainer on Embercoil Pass, matched at L22: 77/88/95.",
+    "name": "Orrin Cade",
+    "className": "Keeper",
+    "sprite": "villager_m",
+    "ai": "keeper",
+    "payout": 150,
+    "party": [
+      {
+        "species": "chalkid",
+        "level": 19,
+        "moves": [
+          "strike",
+          "stonefling",
+          "gravelspray"
+        ]
+      },
+      {
+        "species": "emberbore",
+        "level": 20,
+        "moves": [
+          "strike",
+          "gravelspray"
+        ]
+      },
+      {
+        "species": "lantric",
+        "level": 20,
+        "moves": [
+          "static_nip",
+          "arcjolt"
+        ]
+      },
+      {
+        "species": "blazelynx",
+        "level": 22,
+        "moves": [
+          "quickstep",
+          "batter",
+          "cinderlash"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      }
+    ],
+    "intro": [
+      "Four of these a year get up my stack. Two of them are hands who work here.",
+      "So you have my attention, and my attention is the expensive part."
+    ],
+    "defeat": [
+      "Hm.",
+      "You did not take anything off me I was not already going to have to give away."
+    ],
+    "victory": [
+      "No. Go down, get warm, come back up when the beam suits you.",
+      "It is a long walk and it is meant to be."
+    ],
+    "afterward": [
+      "Four hundred and twelve columns on that board now, and one of them is a person.",
+      "I have never had to rule a column for a person before. I am not sure I like it."
+    ]
+  },
+  {
+    "id": "r5_dunnock",
+    "$comment": "Embercoil Pass, and the first fight on it, standing on the last of the grazing. Measured against the arriving party rather than guessed: a player raising a team leaves the Tide Hall at twenty-two and a player running one kin leaves at twenty-nine, so nineteen is two to ten levels under them. Nothing on Route 5 goes above twenty for the same reason -- this is the fourth pass at making the game easier, and a route is only easy relative to where the player actually arrives.",
+    "name": "Dunnock",
+    "className": "Drover",
+    "sprite": "hiker",
+    "ai": "novice",
+    "payout": 70,
+    "party": [
+      {
+        "species": "tuftail",
+        "level": 18
+      },
+      {
+        "species": "burrowen",
+        "level": 19
+      }
+    ],
+    "intro": [
+      "I bring them down this far and no further. Nothing grazes past the shelf.",
+      "You are going the other way. On purpose, by the look of you."
+    ],
+    "defeat": [
+      "On purpose, then. Well. Good luck to you."
+    ],
+    "victory": [
+      "Turn round. That is not advice, that is the road telling you."
+    ],
+    "afterward": [
+      "Water at the terraces is no good to drink. It is very good for a bad knee."
+    ]
+  },
+  {
+    "id": "r5_marrow",
+    "name": "Marrow",
+    "className": "Ash Porter",
+    "sprite": "porter",
+    "ai": "novice",
+    "payout": 74,
+    "party": [
+      {
+        "species": "gravelet",
+        "level": 18
+      },
+      {
+        "species": "chalkid",
+        "level": 19
+      },
+      {
+        "species": "emberbore",
+        "level": 19
+      }
+    ],
+    "intro": [
+      "Fourteen mile up, loaded. Fourteen mile down, loaded differently.",
+      "You get strong or you get another job."
+    ],
+    "defeat": [
+      "Strong is not the same as good. Noted."
+    ],
+    "victory": [
+      "Come back when you have carried something."
+    ],
+    "afterward": [
+      "Everything Emberfall sends out goes on somebody's back. There has never been a road for wheels."
+    ]
+  },
+  {
+    "id": "r5_kell",
+    "name": "Kell",
+    "className": "Foundation Digger",
+    "sprite": "meridian",
+    "ai": "trained",
+    "payout": 78,
+    "party": [
+      {
+        "species": "chalkid",
+        "level": 19
+      },
+      {
+        "species": "gravelet",
+        "level": 19
+      },
+      {
+        "species": "cairnling",
+        "level": 20
+      }
+    ],
+    "intro": [
+      "Site is closed. Everything inside that fence is Foundation.",
+      "No, I cannot tell you what for. I genuinely do not know what for."
+    ],
+    "defeat": [
+      "Then go and look at it. I would quite like somebody to."
+    ],
+    "victory": [
+      "Back out through the gate, please. Mind the guys on the mast."
+    ],
+    "afterward": [
+      "Nine of us cut Trench 2-7 and not one of us saw what came out of the bottom of it."
+    ]
+  },
+  {
+    "id": "r5_tem",
+    "name": "Tem",
+    "className": "Kiln Hand",
+    "sprite": "villager_f",
+    "ai": "novice",
+    "payout": 72,
+    "party": [
+      {
+        "species": "cinderpaw",
+        "level": 18
+      },
+      {
+        "species": "sootmoth",
+        "level": 19
+      }
+    ],
+    "intro": [
+      "Emberfall keeps a fire in six hundred kilns and I mind four of them.",
+      "So no. The mountain does not frighten me."
+    ],
+    "defeat": [
+      "The mountain does not frighten me. You are a different matter."
+    ],
+    "victory": [
+      "Four kilns. Every day. Come back when you have stamina."
+    ],
+    "afterward": [
+      "Ask at the Flame Hall, if you are going that far. Do not ask me about it."
+    ]
+  },
+  {
+    "id": "r5_shale",
+    "name": "Shale",
+    "className": "Hiker",
+    "sprite": "hiker",
+    "ai": "novice",
+    "payout": 76,
+    "party": [
+      {
+        "species": "slatewing",
+        "level": 19
+      },
+      {
+        "species": "silthopper",
+        "level": 19
+      },
+      {
+        "species": "cairnling",
+        "level": 20
+      }
+    ],
+    "intro": [
+      "Two hundred years that flow has been going round in a circle.",
+      "I have watched it for eleven of them. It is not slowing down."
+    ],
+    "defeat": [
+      "Neither am I. Ask me again next year."
+    ],
+    "victory": [
+      "Sit down a while and watch it. It helps. It genuinely does."
+    ],
+    "afterward": [
+      "Everything on this road came out of that. The rock, the ash, the town, the lot."
+    ]
+  },
+  {
+    "id": "r5_ravel",
+    "name": "Ravel",
+    "className": "Foundation Digger",
+    "sprite": "meridian",
+    "ai": "trained",
+    "payout": 80,
+    "party": [
+      {
+        "species": "gravelet",
+        "level": 19
+      },
+      {
+        "species": "silthopper",
+        "level": 19
+      },
+      {
+        "species": "lantric",
+        "level": 20
+      }
+    ],
+    "intro": [
+      "Site 4. Nine trenches, all cut on one bearing, and I am not paid to explain the bearing.",
+      "I am paid to keep people off it."
+    ],
+    "defeat": [
+      "Fine. There is nothing down there anyway. That is the official position."
+    ],
+    "victory": [
+      "Off the site. There is a perfectly good road ten yards that way."
+    ],
+    "afterward": [
+      "They lifted the good one out at Site 2 in the spring. We are only tidying up after it."
+    ]
+  },
+  {
+    "id": "r6_hallow",
+    "$comment": "The first fight on the Mire Road, and it is deliberately a soft one. The player has just come off Hall 4 at 23; this is 22-23 and both of its Kin are Chitin, which is the type the whole route is made of. Losing to it would be a bad joke; the job is to teach a player that this region bites and resists differently from the last one before anything expensive happens.",
+    "name": "Hallow",
+    "className": "Lamp Porter",
+    "sprite": "porter",
+    "ai": "trained",
+    "payout": 84,
+    "party": [
+      {
+        "species": "rillfry",
+        "level": 20
+      },
+      {
+        "species": "nettlebug",
+        "level": 21
+      }
+    ],
+    "intro": [
+      "Two hours out, two hours back, forty lamps in between.",
+      "You want to be over that gap before the light goes. Show me you can hurry."
+    ],
+    "defeat": [
+      "Right. You can hurry."
+    ],
+    "victory": [
+      "Slow down. It is a long walk and nobody is chasing you."
+    ],
+    "afterward": [
+      "Keep to the plank. When you cannot see the plank, keep to the lamps.",
+      "When you cannot see the lamps either, stand still and shout. Somebody comes."
+    ]
+  },
+  {
+    "id": "r6_wick",
+    "$comment": "On the eastern loop of the first reach, so a player who takes the fork meets somebody and a player who does not, does not. Level 23 either way.",
+    "name": "Wick",
+    "className": "Reed Cutter",
+    "sprite": "villager_f",
+    "ai": "trained",
+    "payout": 86,
+    "party": [
+      {
+        "species": "gravelet",
+        "level": 21
+      },
+      {
+        "species": "silthopper",
+        "level": 22
+      }
+    ],
+    "intro": [
+      "Nobody takes the long way. You took the long way.",
+      "That either makes you careful or lost. Which?"
+    ],
+    "defeat": [
+      "Careful, then. Good."
+    ],
+    "victory": [
+      "Lost. Thought so. Bell is that way; walk at the sound."
+    ],
+    "afterward": [
+      "I cut on this side because the beds are older and the stems are longer.",
+      "Also because nobody comes down here and I like that about it."
+    ]
+  },
+  {
+    "id": "r6_kess",
+    "$comment": "Standing at the near lip of the broken span, which is where the route asks its question. Three Kin, all Tide, all 23-24 -- the fight is a rehearsal for what wading the gap actually costs.",
+    "name": "Kess",
+    "className": "Swimmer",
+    "sprite": "netmender",
+    "ai": "trained",
+    "payout": 90,
+    "party": [
+      {
+        "species": "rillfry",
+        "level": 21
+      },
+      {
+        "species": "pinchel",
+        "level": 22
+      },
+      {
+        "species": "bladderwrack",
+        "level": 22
+      }
+    ],
+    "intro": [
+      "Span nine is out. Has been three years. You have two choices and I have opinions."
+    ],
+    "defeat": [
+      "Wade it, then. You will be fine. Probably fine."
+    ],
+    "victory": [
+      "Go round. Go round. It is twenty minutes and it is dry."
+    ],
+    "afterward": [
+      "Everyone who wades it says it was fine afterwards.",
+      "I have pulled four people out of it and all four of them said that too."
+    ]
+  },
+  {
+    "id": "r6_ordway",
+    "$comment": "On the eastern loop round the gap, and the reward for taking the dry road: a third Kin and eight more experience than the wading line offers. The two routes are meant to pay about the same for very different reasons.",
+    "name": "Ordway",
+    "className": "Pile Crew",
+    "sprite": "hiker",
+    "ai": "trained",
+    "payout": 92,
+    "party": [
+      {
+        "species": "gravelet",
+        "level": 22
+      },
+      {
+        "species": "silthopper",
+        "level": 22
+      },
+      {
+        "species": "mossback",
+        "level": 23
+      }
+    ],
+    "intro": [
+      "Twenty-six spans, four crews, and one town that will not pay for the timber.",
+      "Sorry. You caught me on it. Come on, then."
+    ],
+    "defeat": [
+      "Fair. Go on, get in before dark."
+    ],
+    "victory": [
+      "There. Now I am in a better mood and you are not. That is balance."
+    ],
+    "afterward": [
+      "New timber came in last week. Not ours. Stamped with a circle and a line.",
+      "They will lay it, too. They will lay it exactly as far as they need it and stop."
+    ]
+  },
+  {
+    "id": "r6_selm",
+    "$comment": "The last fight before Mirehaven and the hardest thing on the route: three Kin topping at 26, four under Keeper Tallow. A player who has cleared the route arrives at the Hall two or three levels short and has to go and find the rest, which is the intended shape.",
+    "name": "Selm",
+    "className": "Angler",
+    "sprite": "fisher",
+    "ai": "trained",
+    "payout": 96,
+    "party": [
+      {
+        "species": "currentail",
+        "level": 23
+      },
+      {
+        "species": "clatterclaw",
+        "level": 23
+      },
+      {
+        "species": "weaverjaw",
+        "level": 24
+      }
+    ],
+    "intro": [
+      "You are the fourth today and none of the other three were carrying a lamp either."
+    ],
+    "defeat": [
+      "All right. You will do. Straight in, do not stop on the causeway."
+    ],
+    "victory": [
+      "Sit down. Get your breath. The town is not going anywhere; it cannot."
+    ],
+    "afterward": [
+      "Tallow keeps the Venom Hall and she will not go easy on you.",
+      "She has not gone easy on anybody since the survey people arrived. Do not take it personally."
+    ]
   }
 ]

@@ -1,0 +1,17 @@
+[
+  {
+    "id": "mirehaven_shop",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "PROVISIONER",
+        "lines": [
+          "Oil at cost, everything else at what it cost to carry.",
+          "Yes, I know. No, it does not get cheaper if you look at me like that."
+        ]
+      },
+      { "kind": "openShop", "shop": "mirehaven_provisioner" }
+    ]
+  }
+]

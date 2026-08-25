@@ -230,6 +230,30 @@ export const DEFAULT_PALETTES: Record<string, CharPalette> = {
     jacket: '#1f3040', jacketShade: '#131e29', jacketStyle: 'coat',
     trim: '#6f93ab', badge: '#c8a44a', eye: '#8aa0b4', build: 'heavy',
   },
+  /**
+   * Commander Kell. Act 3, and again at the very end.
+   *
+   * She has to be recognised on sight in Act 5 by a player who met her once,
+   * three acts and thirty hours earlier, in one room. So the silhouette does
+   * the remembering, not the colour: she is the only person in the game with
+   * a coat this dark and a head this pale, and the only Meridian body with no
+   * cap on it -- a bun above a near-black greatcoat is a shape the eye keeps.
+   *
+   * Everything else is deliberately NOT Veyl. No gold, no ivory shirt, no open
+   * collar. Grey piping and an issued badge: she is not wealthy and she is not
+   * charming, she is senior, and what makes her frightening is that she is
+   * exactly as ordinary as the rest of the staff and outranks all of them.
+   */
+  meridian_commander: {
+    skin: '#c89878', skinShade: '#9c7050',
+    hair: '#c9c6bc', hairShade: '#8e8b83',
+    top: '#26364a', topShade: '#182432',
+    legs: '#1e242e', legsShade: '#12161d',
+    shoes: '#15181d', outline: '#12141a',
+    jacket: '#161d28', jacketShade: '#0d1219', jacketStyle: 'coat',
+    trim: '#8f9aa6', badge: '#c8a44a', eye: '#6f7f96',
+    hairStyle: 'bun', build: 'broad',
+  },
   /** Researcher. The white coat over the blue shirt is the Foundation's public
    *  face: most of these people really are doing weather science. */
   meridian_sci: {

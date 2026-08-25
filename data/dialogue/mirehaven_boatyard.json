@@ -1,0 +1,43 @@
+{
+  "speakers": {
+    "mhb_master": "BOATWRIGHT",
+    "mhb_prentice": "PRENTICE",
+    "mhb_piler": "PILE CREW"
+  },
+  "entries": {
+    "mhb_master": [
+      {
+        "ifFlags": [
+          "crest_5_taken"
+        ],
+        "lines": [
+          "Sold eleven piles to the survey last month. Good money. Should have said no.",
+          "They are not putting them in a walkway. They are putting them round the Rock.",
+          "You do not ring a thing in piles unless you mean to put something on top of it."
+        ]
+      },
+      {
+        "lines": [
+          "Flat bottom, square ends, and every joint pitched twice. Thirty years, that gets you.",
+          "The sea people laugh at the shape. The sea people have a sea. We have eleven inches."
+        ]
+      }
+    ],
+    "mhb_prentice": [
+      {
+        "lines": [
+          "Four years before he lets me cut a strake. Four. I can pitch, though.",
+          "I am the best pitcher in this yard and I am the only one who will say so."
+        ]
+      }
+    ],
+    "mhb_piler": [
+      {
+        "lines": [
+          "A pile goes in eighteen feet and stands for sixty years if you tar the head.",
+          "If you do not tar the head, twelve. Everything out here is one small job away from ruin."
+        ]
+      }
+    ]
+  }
+}

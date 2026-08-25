@@ -1,0 +1,30 @@
+{
+  "speakers": {
+    "ef_gate_clerk": "FREIGHT CLERK",
+    "ef_gate_carter": "PASS CARTER"
+  },
+  "entries": {
+    "ef_gate_clerk": [
+      {
+        "ifFlags": [
+          "lyra_admits_meridian"
+        ],
+        "lines": [
+          "Everything in or out of this city is written in that book. Everything.",
+          "Except when the seal says Foundation. Then it is EQUIPMENT, and left alone.",
+          "A boy in a green coat asked me the same thing. I told him more than I meant to."
+        ]
+      },
+      {
+        "lines": [
+          "Everything in or out of this city is written in that book. Everything.",
+          "Except when the seal says Foundation. Then it is written EQUIPMENT and left alone."
+        ]
+      }
+    ],
+    "ef_gate_carter": [
+      "Fourteen days up from Tideglass with a full load. Nine coming back light.",
+      "You want to know a city, look at what it sends out. We send out copper, and we send out kettles."
+    ]
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "speakers": {
+    "mha_mother": "MOTHER",
+    "mha_grandad": "GRANDAD"
+  },
+  "entries": {
+    "mha_mother": [
+      {
+        "lines": [
+          "Mind the hatch. It is open. It is always open, whatever I say to the pair of them.",
+          "You get used to the sound of the water under the boards. You miss it if you leave."
+        ]
+      }
+    ],
+    "mha_grandad": [
+      {
+        "lines": [
+          "Six generations in this house, and the house has been three feet higher twice.",
+          "You do not move. You do not argue with the water either. You get the jacks out."
+        ]
+      }
+    ]
+  }
+}

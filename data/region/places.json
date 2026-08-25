@@ -102,6 +102,14 @@
       "kind": "hall"
     },
     {
+      "id": "route_6",
+      "name": "The Mire Road",
+      "x": 29,
+      "y": 18,
+      "kind": "route",
+      "blurb": "Plank over peat, and no ground for a day either way."
+    },
+    {
       "id": "mirehaven",
       "name": "Mirehaven",
       "x": 32,
@@ -114,6 +122,14 @@
       "x": 31,
       "y": 20,
       "kind": "hall"
+    },
+    {
+      "id": "route_5",
+      "name": "Embercoil Pass",
+      "x": 29,
+      "y": 22,
+      "kind": "route",
+      "blurb": "Black rock, hot water, and a flow going round in a circle."
     },
     {
       "id": "emberfall",

@@ -1,0 +1,67 @@
+{
+  "id": "mirehaven_house_a",
+  "name": "Interior",
+  "displayName": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "_design": "A house on the first South Row, with the water eleven inches under the floor and a hatch cut in it, because half this row fishes out of its own kitchen.",
+  "rows": [
+    "IIIUIIIUIII",
+    "IQNfKKfffkI",
+    "IfffffffffI",
+    "IkfAAffbefI",
+    "IffEEffffPI",
+    "IfffffffffI",
+    "IP/rrffffkI",
+    "IffrrfffffI",
+    "IIIIIDIIIII"
+  ],
+  "warps": [
+    {
+      "x": 5,
+      "y": 8,
+      "toMap": "mirehaven",
+      "toX": 19,
+      "toY": 40,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "mha_mother",
+      "sprite": "villager_f",
+      "x": 3,
+      "y": 5,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mha_mother"
+    },
+    {
+      "id": "mha_grandad",
+      "sprite": "elder",
+      "x": 7,
+      "y": 5,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mha_grandad"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 1,
+      "text": [
+        "A hatch in the floorboards, hinged, hooked, with a line coiled beside it.",
+        "Open it and the water is right there, eleven inches down, black and still.",
+        "Half the households on this row eat out of a hole in their own kitchen."
+      ]
+    }
+  ]
+}

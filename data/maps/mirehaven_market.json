@@ -1,0 +1,103 @@
+{
+  "id": "mirehaven_market",
+  "name": "Interior",
+  "displayName": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "_design": "Under one roof, because a town with no ground has no market square. It has a shed on the Landing with everything in it, and the stalls are the walls.",
+  "rows": [
+    "IIIUIIIIIIIIIUIIIII",
+    "I;;;;;;;;;;;;;;;;;I",
+    "IPKKKFKKKFKKKFKKK;I",
+    "IFFFFFFFFFFFFFFFF;I",
+    "I;;FFFF;;FFFF;;FFFI",
+    "IFFFFFFFFFFFFFFFFFI",
+    "IKKFFF;;;FFF;;;FFKI",
+    "IFFFFFFFFFFFFFFFFFI",
+    "I;;;FFFFFF;;;FFFFFI",
+    "IFFFFFFFFFFFFFFFFFI",
+    "IPFFFFFFFFFFFFFFFPI",
+    "IFFFFFFFFFFFFFFFFFI",
+    "IIIIIIIIIDIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 12,
+      "toMap": "mirehaven",
+      "toX": 36,
+      "toY": 12,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "mhm_fishwife",
+      "sprite": "netmender",
+      "x": 4,
+      "y": 3,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mhm_fishwife"
+    },
+    {
+      "id": "mhm_reedman",
+      "sprite": "villager_m",
+      "x": 12,
+      "y": 3,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mhm_reedman"
+    },
+    {
+      "id": "mhm_glasswife",
+      "sprite": "merchant",
+      "x": 15,
+      "y": 7,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mhm_glasswife"
+    },
+    {
+      "id": "mhm_boy",
+      "sprite": "kid",
+      "x": 6,
+      "y": 9,
+      "facing": "up",
+      "movement": {
+        "kind": "wander",
+        "radius": 2
+      },
+      "script": "mhm_boy"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 6,
+      "text": [
+        "A stall of glowcaps in jars, sold by the pair, with the lids left loose.",
+        "They keep about a week and then go out, and there is no bringing one back.",
+        "The card says: A LANTERN IS FOR WALKING. THESE ARE FOR WATCHING."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 17,
+      "y": 6,
+      "text": [
+        "Reed, cut and bundled by length: thatching, screening, and one pile of the long stuff.",
+        "The long stuff goes to the Hall. Keeper Tallow fetches it herself and pays over the odds."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "mapId": "route_5_vent",
+  "$comment": "The route's rare spot. A lava tube has no grass in it, so the encounter tile is loose ash on the floor -- which means a player crossing the cave meets things far more often than one crossing a scrub patch would. The rate is dropped to 105 to pay for that, and the whole cave is deliberately small. Everything here is one to two levels above the surface table because the far gallery is behind two stepping stones of live flow and ought to be worth the crossing, and Cairnling and Blazelynx are the reason to make it: this is the only place on the road either can be caught, and Blazelynx at four weight is the rarest thing between Tideglass and Emberfall.",
+  "methods": {
+    "tallGrass": {
+      "rate": 105,
+      "slots": [
+        { "species": "emberbore", "minLevel": 18, "maxLevel": 20, "weight": 26 },
+        { "species": "sootmoth", "minLevel": 18, "maxLevel": 20, "weight": 22 },
+        { "species": "cinderpaw", "minLevel": 18, "maxLevel": 19, "weight": 18 },
+        { "species": "gravelet", "minLevel": 18, "maxLevel": 20, "weight": 14 },
+        { "species": "silthopper", "minLevel": 18, "maxLevel": 20, "weight": 10 },
+        { "species": "cairnling", "minLevel": 19, "maxLevel": 21, "weight": 6 },
+        { "species": "blazelynx", "minLevel": 20, "maxLevel": 21, "weight": 4 }
+      ]
+    }
+  }
+}

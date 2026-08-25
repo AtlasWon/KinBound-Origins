@@ -1,0 +1,138 @@
+{
+  "id": "embercoil_temple_deep",
+  "name": "Embercoil Temple",
+  "displayName": "THE DESCENDING COIL",
+  "music": "station",
+  "battleBackdrop": "cave",
+  "indoor": true,
+  "encounterTable": "embercoil_temple_deep",
+  "_plan": "The same coil one turn further down, with the floor of it gone into the fire. One walkway round a lake of live rock, an island in the middle, three causeways across -- and the short one, the one straight ahead of the stair the player has just come down, is the one that has fallen in. The player can see exactly where they are going from the first step and has to walk the whole ring to get there: the shape of the map doing the work a locked door would otherwise do. The grooves are lit here and dead upstairs, because the rings upstairs are turning. That is the change the Tideheart made, and it costs one character in the map file.",
+  "rows": [
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΣΣΣΣΣΣΣΣΣΣΣ≈≈ΣΣΣΣΣΣΣΣΣΣΣΩΩ",
+    "ΩΩΣΘΣΣΣΣΣΘΘΣΣ≈≈ΣΣΣΘΣΣΘΣΣΘΣΩΩ",
+    "ΩΩΣΘΘΘΣΘΣΘΘΘΘ≈≈ΣΣΘΘΣΘΘΘΘΣΣΩΩ",
+    "ΩΩΣΘΘΘΨΨΨΨΨΨΨΘΘΨΨΨΨΨΨΨΘΘΘΣΩΩ",
+    "ΩΩΣΘΘΘΨΨΨΨΨΨΨΨΨΨΨΨΨΨΨΨΘΘΘΣΩΩ",
+    "ΩΩΣΘΘΘΨΨΨΨΨΨΨΘΘΨΨΨΨΨΨΨΘΘΣΣΩΩ",
+    "ΩΩΣΣΘΘΨΨΨΨΨ≈≈≈≈≈≈ΨΨΨΨΨΘΘΣΣΩΩ",
+    "ΩΩΣΣΘΘΨΨΨΨΨ≈ΘΘΘΘ≈ΨΨΨΨΨΘΘΣΣΩΩ",
+    "ΩΩΣΣΘΘ≈≈≈≈≈≈ΘθθΘ≈ΨΨΨΨΨΘΣΣΣΩΩ",
+    "ΩΩΣΣΘΘΘΘΘΘΘ≈Θ≈≈Θ≈ΨΨΨΨΨΘΣΣΣΩΩ",
+    "ΩΩΣΣΘΘΨΨΨΨΨ≈Θ≈≈Θ≈ΨΨΨΨΨΘΘΣΣΩΩ",
+    "ΩΩΣΘΘΘΨΨΨΨΨ≈≈≈≈≈≈ΨΨΨΨΨΘΣΘΣΩΩ",
+    "ΩΩΣΣΘΘΨΨΨΨΨΨΨΘΘΨΨΨΨΨΨΨΘΣΣΣΩΩ",
+    "ΩΩΣΘΘΘΨΨΨΨΨΨΨΘΘΨΨΨΨΨΨΨΘΘΘΣΩΩ",
+    "ΩΩΣΣΘΘΨΨΨΨΨΨΨΘΘΨΨΨΨΨΨΨΘΘΘΣΩΩ",
+    "ΩΩΣΣΘΘΘΘΘΘΣΘΘΘΘΘΘΘΣΘΘΘΘΘΣΣΩΩ",
+    "ΩΩΣΣΣΘΣΣΣΘΘΣΣΣΣΣΘΣΘΘΣΣΣΣΣΣΘΩ",
+    "ΩΩΣΣΣΣΣΣΣΣΣΣΣΣΣΣΣΣΣΣΣΣΣΣΣΣΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ"
+  ],
+  "warps": [
+    {
+      "x": 13,
+      "y": 2,
+      "toMap": "embercoil_temple",
+      "toX": 13,
+      "toY": 10,
+      "facing": "left",
+      "style": "stairs"
+    },
+    {
+      "x": 14,
+      "y": 2,
+      "toMap": "embercoil_temple",
+      "toX": 13,
+      "toY": 10,
+      "facing": "left",
+      "style": "stairs"
+    },
+    {
+      "x": 13,
+      "y": 10,
+      "toMap": "embercoil_temple_heart",
+      "toX": 9,
+      "toY": 13,
+      "facing": "up",
+      "style": "stairs"
+    },
+    {
+      "x": 14,
+      "y": 10,
+      "toMap": "embercoil_temple_heart",
+      "toX": 9,
+      "toY": 13,
+      "facing": "up",
+      "style": "stairs"
+    },
+    {
+      "x": 26,
+      "y": 18,
+      "toMap": "embercoil_temple_vault",
+      "toX": 7,
+      "toY": 10,
+      "facing": "up",
+      "style": "door"
+    }
+  ],
+  "npcs": [],
+  "objects": [
+    {
+      "kind": "script",
+      "x": 1,
+      "y": 10,
+      "text": [
+        "The wall is scorched black to",
+        "head height. The plate under",
+        "it is not even cracked."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 12,
+      "y": 1,
+      "text": [
+        "A tally cut beside the stair.",
+        "Somebody counted every descent",
+        "and stopped at four hundred."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 26,
+      "y": 5,
+      "text": [
+        "A door here, once. The frame",
+        "is Aurelian. The stone filling",
+        "it was piled in by hand."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 3,
+      "y": 18,
+      "item": "great_potion",
+      "quantity": 1,
+      "flag": "item_ectd_southwest"
+    },
+    {
+      "kind": "item",
+      "x": 24,
+      "y": 3,
+      "item": "rouse",
+      "quantity": 1,
+      "flag": "item_ectd_northeast"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 2,
+      "y": 2,
+      "item": "dusk_vessel",
+      "quantity": 1,
+      "flag": "item_ectd_ashbank"
+    }
+  ]
+}

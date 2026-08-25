@@ -1,0 +1,25 @@
+{
+  "speakers": {
+    "mhc_faller": "DOCKHAND",
+    "mhc_visitor": "VISITOR"
+  },
+  "entries": {
+    "mhc_faller": [
+      {
+        "lines": [
+          "Went off the second row in the fog. Twelve feet, and the water broke it, so.",
+          "Everybody does it once. The trick is doing it once.",
+          "My Kin came in after me. Nobody asked her to. That is a thing I think about now."
+        ]
+      }
+    ],
+    "mhc_visitor": [
+      {
+        "lines": [
+          "I came in from Emberfall for a week and I have been here eleven days.",
+          "It is the fog. You cannot leave in it and you cannot tell when it has stopped."
+        ]
+      }
+    ]
+  }
+}

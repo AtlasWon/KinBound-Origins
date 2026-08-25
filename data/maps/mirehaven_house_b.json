@@ -1,0 +1,75 @@
+{
+  "id": "mirehaven_house_b",
+  "name": "Interior",
+  "displayName": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "_design": "The second South Row, and a household that has been counting the water for two generations. The chart on the wall is the second truth of this act, drawn by somebody who has no idea what they have drawn.",
+  "rows": [
+    "IIIUIIIUIII",
+    "IQNffKKffkI",
+    "IfffffffffI",
+    "IkfffAAfffI",
+    "IbeffEEffPI",
+    "IfffffffffI",
+    "IPffff/ffkI",
+    "IfffffrrffI",
+    "IIIIIDIIIII"
+  ],
+  "warps": [
+    {
+      "x": 5,
+      "y": 8,
+      "toMap": "mirehaven",
+      "toX": 32,
+      "toY": 43,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "mhb2_keeper",
+      "sprite": "villager_m",
+      "x": 3,
+      "y": 6,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mhb2_keeper"
+    },
+    {
+      "id": "mhb2_daughter",
+      "sprite": "kid",
+      "x": 7,
+      "y": 3,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mhb2_daughter"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 1,
+      "text": [
+        "A chart on the wall, ruled by hand, two generations deep: the water, every spring.",
+        "It climbs for sixty years. Then, three years ago, it stops climbing and stays.",
+        "Nobody in this house knows why. Somebody has drawn a question mark and left it."
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 1,
+      "y": 7,
+      "item": "full_heal",
+      "quantity": 1,
+      "flag": "item_mhb2_hidden"
+    }
+  ]
+}

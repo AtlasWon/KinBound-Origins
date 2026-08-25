@@ -1,0 +1,166 @@
+{
+  "speakers": {
+    "mh_harbourmaster": "HARBOURMASTER",
+    "mh_lampwright": "LAMPWRIGHT",
+    "mh_ferrywoman": "FERRYWOMAN",
+    "mh_elder": "ELDER",
+    "mh_warden": "ROCK WARDEN",
+    "mh_meridian_clerk": "FOUNDATION CLERK",
+    "mh_boatwright": "BOATWRIGHT",
+    "mh_netmender": "NETMENDER",
+    "mh_reedcutter": "REED CUTTER",
+    "mh_child": "MIREHAVEN CHILD",
+    "mh_stiltwright": "PILE CREW",
+    "mh_rower": "ROWER",
+    "mh_gossip": "TOWNSWOMAN"
+  },
+  "entries": {
+    "mh_harbourmaster": [
+      {
+        "lines": [
+          "Mirehaven. Four thousand of us, and not one square foot of ground under any of it.",
+          "Everything you can stand on here, somebody paid for and somebody maintains.",
+          "Walk where the lamps are and do not lean on anything you did not test first."
+        ]
+      }
+    ],
+    "mh_lampwright": [
+      {
+        "lines": [
+          "Three hundred and eleven lamps between the Landing and the third row.",
+          "I light them, my mother lit them, and her mother put half of them up.",
+          "You can see the town from four miles out on a clear night. There are no clear nights."
+        ]
+      }
+    ],
+    "mh_ferrywoman": [
+      {
+        "lines": [
+          "You can walk to the East Stage. It takes forty minutes and it is a beautiful walk.",
+          "Or I can put you across in ninety seconds for nothing, because I am going anyway.",
+          "Most people walk. I have never understood most people."
+        ]
+      }
+    ],
+    "mh_elder": [
+      {
+        "ifFlags": ["crest_5_taken"],
+        "lines": [
+          "There was a Mirehaven before this one, and it was on the ground, and the ground went.",
+          "My grandmother's grandmother watched the water come up over her doorstep and stay.",
+          "So we built up. That is the whole history of this town in one sentence."
+        ]
+      },
+      {
+        "lines": [
+          "You are looking at the Rock. Everybody looks at the Rock.",
+          "It was here before us and it was cut before us, and we built out from it because it is dry.",
+          "Whatever made that cut did not use tools. Do not ask me what I think about that."
+        ]
+      }
+    ],
+    "mh_warden": [
+      {
+        "ifFlags": ["crest_5_taken"],
+        "lines": [
+          "They went down four days ago with lamps and cases and a paper from somewhere.",
+          "I am the warden of this rock and I could not tell them no. That is a new feeling.",
+          "If you go down after them, go down with somebody. I mean that kindly."
+        ]
+      },
+      {
+        "lines": [
+          "The Sanctum is shut, and it has been shut since before anybody in this town was born.",
+          "There is no lock on it. There is no door on it. It is simply shut.",
+          "Something in there decides, and it has been deciding no for three thousand years."
+        ]
+      }
+    ],
+    "mh_meridian_clerk": [
+      {
+        "lines": [
+          "The Foundation is conducting a hydrological survey of the wetland. It is quite routine.",
+          "Sanctum access is restricted for the safety of the public. That is also quite routine.",
+          "You have questions. I have a form. Neither of us is going to enjoy this."
+        ]
+      }
+    ],
+    "mh_boatwright": [
+      {
+        "lines": [
+          "Flat bottom, square ends, pitch inside and out, and you pole it, you do not row it.",
+          "Four hundred of them in this town and I have built or mended near half.",
+          "A punt is a house that goes places. Treat it like a house and it lasts thirty years."
+        ]
+      }
+    ],
+    "mh_netmender": [
+      {
+        "lines": [
+          "Nets rot out here in a season. Everything rots out here in a season.",
+          "Pitch, tar, oil, salt. Half of what this town spends is spent on staying put."
+        ]
+      }
+    ],
+    "mh_reedcutter": [
+      {
+        "lines": [
+          "The stage is where the reed dries. Two months in the wind and it goes on a roof.",
+          "Every roof you can see came out of the beds you walked through to get here.",
+          "You want to know what Mirehaven is made of? It is made of the road you came in on."
+        ]
+      }
+    ],
+    "mh_child": [
+      {
+        "ifFlags": ["crest_5_taken"],
+        "lines": [
+          "Everyone says do not go under the decks. I go under the decks.",
+          "There are stone bits down there. Square ones. With lines cut in them.",
+          "Grandad says they are old. Grandad says lots of things are old and this is different."
+        ]
+      },
+      {
+        "lines": [
+          "At night the water goes green. Not all of it. Just where the Kin are.",
+          "You can see them from up here, moving about under the boards, all lit up.",
+          "Mum says it is only Kin. I know it is only Kin. It is still the best thing here."
+        ]
+      }
+    ],
+    "mh_stiltwright": [
+      {
+        "lines": [
+          "Every pile under this row I have been down to and put my hands on.",
+          "Three years ago we cut every one of them off level and built the deck a foot higher.",
+          "Cost us a fortune. Water has not come over since. Ask me if it was worth it."
+        ]
+      }
+    ],
+    "mh_rower": [
+      {
+        "lines": [
+          "The third row is the poor end, if you are wondering. It is also the quiet end.",
+          "Nobody walks down here on the way to anywhere, because it is not on the way to anywhere.",
+          "That suits us. It has suited us for a hundred and forty years."
+        ]
+      }
+    ],
+    "mh_gossip": [
+      {
+        "ifFlags": ["crest_4_taken"],
+        "lines": [
+          "Your friend came through. Loud one. Beat two of the Hall crew before lunch.",
+          "Then he went and sat on the Rock and looked at that cut in the stone for an hour.",
+          "Did not say a word to anybody. Then he went down to the causeway to wait, he said."
+        ]
+      },
+      {
+        "lines": [
+          "Four thousand people and everybody knows everybody, which is not always a virtue.",
+          "You are already the third thing anyone has talked about today. Congratulations."
+        ]
+      }
+    ]
+  }
+}

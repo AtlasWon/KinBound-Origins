@@ -1,0 +1,16 @@
+{
+  "speakers": {
+    "ef_house_a_wife": "WOMAN AT THE HEARTH",
+    "ef_house_a_boy": "BOY"
+  },
+  "entries": {
+    "ef_house_a_wife": [
+      "Mind the flagstone by the hearth. It is warm enough to sleep on and the cat knows it.",
+      "Every house in this city has one warm stone. You buy the house for it."
+    ],
+    "ef_house_a_boy": [
+      "I want to be a Trainer. Dad says learn a trade first. Mum says learn both, which is worse.",
+      "A boy came past in a green coat and he had not learned a trade."
+    ]
+  }
+}

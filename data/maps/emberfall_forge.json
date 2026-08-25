@@ -1,0 +1,67 @@
+{
+  "id": "emberfall_forge",
+  "name": "Hesk's Forge",
+  "displayName": "HESK'S FORGE",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIIUIII",
+    "I¦ØØ¦¦¦¦¦¦¦¦I",
+    "I¦¦¦¦¦¦¦¦¦¦¦I",
+    "I$$¦¦¦¦¦¦$$¦I",
+    "I¦¦¦¦¦¦¦¦¦¦¦I",
+    "I¦¦¦+++¦¦¦¦¦I",
+    "I¦¦¦¦¦¦¦¦¦¦¦I",
+    "I¦¦KKK¦¦¦¦¦kI",
+    "I¦¦¦¦¦¦¦¦¦¦¦I",
+    "Ik¦¦¦¦¦¦¦¦¦¦I",
+    "IIIIIIDIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 10,
+      "toMap": "emberfall",
+      "toX": 69,
+      "toY": 45,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "ef_hesk",
+      "sprite": "merchant",
+      "x": 3,
+      "y": 8,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ef_hesk"
+    },
+    {
+      "id": "ef_hesk_striker",
+      "sprite": "porter",
+      "x": 9,
+      "y": 4,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "ef_hesk_striker"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 11,
+      "y": 5,
+      "text": [
+        "A wall of finished work: vessel bands, pipe collars, one very old sword.",
+        "The sword has a card under it. NOT FOR SALE. NOT MINE. NOT ASKING AGAIN."
+      ]
+    }
+  ]
+}

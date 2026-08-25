@@ -1,0 +1,44 @@
+{
+  "speakers": {
+    "mhm_fishwife": "FISHWIFE",
+    "mhm_reedman": "REED FACTOR",
+    "mhm_glasswife": "JAR SELLER",
+    "mhm_boy": "MARKET BOY"
+  },
+  "entries": {
+    "mhm_fishwife": [
+      {
+        "lines": [
+          "Everything on this slab came out from under somebody kitchen floor this morning.",
+          "No boats, no nets, no going anywhere. You open the hatch and you wait."
+        ]
+      }
+    ],
+    "mhm_reedman": [
+      {
+        "lines": [
+          "Cut, dried, bundled, graded. Thatching, screening, and the long stuff.",
+          "The long stuff has to be nine feet clear and there are maybe two beds that give it.",
+          "One of them is on the far side of the broken span, which is why it costs what it costs."
+        ]
+      }
+    ],
+    "mhm_glasswife": [
+      {
+        "lines": [
+          "Glowcaps, two to a jar, lids loose so they can breathe.",
+          "They last a week. People buy them anyway, every week, for eighty years.",
+          "It is not a lamp. Nobody has ever bought one thinking it was a lamp."
+        ]
+      }
+    ],
+    "mhm_boy": [
+      {
+        "lines": [
+          "If you drop money through the boards it is gone. Actually gone.",
+          "There is a man who dives for it in the summer. He is not poor."
+        ]
+      }
+    ]
+  }
+}

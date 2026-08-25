@@ -1,0 +1,155 @@
+{
+  "id": "mirehaven_sanctum_heart",
+  "name": "The Sanctum",
+  "displayName": "THE SANCTUM",
+  "music": "station",
+  "battleBackdrop": "cave",
+  "indoor": true,
+  "_plan": "The room the whole act is for. It is small, it is dry, it is symmetrical, and it is the only place in the Sanctum the marsh never got into -- which is the first thing the player should feel, because it means the Aurelians sealed it and meant it to be found intact.\n\nMeridian are already in it. That is the beat: the shutter took two people and three thousand years and they came round it in a week through their own pump shaft, and they are standing about in it with a lamp on a stand like it is a site office. Commander Kell is at the plinth when the player comes up the stair, and she does not stop them. She stands aside. Everything unsettling about her is in that.\n\nThere is no battle in this room and there must never be one. She does not need to fight the player: she needs the player to work her machine for her, because the Tideheart is the only reader for the record and Elias' child is carrying it. The player plays the second truth, understands it in the same breath as Meridian's plan, and watches it change nothing at all in the face of the person who ordered the dig.\n\nThere is no water in here at all. The first pass put two flooded squares in the floor and at 1x they read as a pair of swimming baths in a bathroom; dry is the point anyway, because everything else in the Sanctum is under the marsh and this room is not, which is how the player knows the Aurelians sealed it deliberately before anybody says so. The four discs at 5,5 / 12,5 / 5,8 / 12,8 are the rings motif off the panels downstairs, laid round the plinth in the floor, so the room is about the record before the record plays. Every sign in here sits on the object it describes -- the lamp stand, the instrument, the winch over their shaft -- rather than on a blank wall.",
+  "rows": [
+    "CCCCCCCCCCCCCCCCCC",
+    "CC======CC======CC",
+    "CC======xx======CC",
+    "CC==============CC",
+    "CC==============CC",
+    "CC===x======x===CC",
+    "CC============?=CC",
+    "CC======Y=======CC",
+    "CC===x======x===CC",
+    "CC+=============CC",
+    "CCCCCC======CCCCCC",
+    "CCCCCC======CCCCCC",
+    "CCCCCCC====CCCCCCC",
+    "CCCCCCCCSSCCCCCCCC"
+  ],
+  "warps": [
+    {
+      "x": 8,
+      "y": 13,
+      "toMap": "mirehaven_sanctum_deep",
+      "toX": 9,
+      "toY": 3,
+      "facing": "down",
+      "style": "stairs"
+    },
+    {
+      "x": 9,
+      "y": 13,
+      "toMap": "mirehaven_sanctum_deep",
+      "toX": 10,
+      "toY": 3,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "msh_kell",
+      "sprite": "meridian_commander",
+      "x": 9,
+      "y": 3,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "msh_kell"
+    },
+    {
+      "id": "msh_lyra",
+      "sprite": "lyra",
+      "x": 13,
+      "y": 4,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "msh_lyra",
+      "hiddenIfFlag": "msh_meridian_gone"
+    },
+    {
+      "id": "msh_aide",
+      "sprite": "meridian_sci",
+      "x": 4,
+      "y": 4,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "msh_aide",
+      "hiddenIfFlag": "msh_meridian_gone"
+    },
+    {
+      "id": "msh_guard",
+      "sprite": "meridian",
+      "x": 13,
+      "y": 8,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "msh_guard",
+      "hiddenIfFlag": "msh_meridian_gone"
+    },
+    {
+      "id": "msh_tarin",
+      "sprite": "rival",
+      "x": 10,
+      "y": 12,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "msh_tarin"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 1,
+      "text": [
+        "The plinth is one piece with the floor, and the floor is one piece with the wall.",
+        "There is a hollow in the top of it the size of a palm.",
+        "It has been waiting for something the size of a palm."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 7,
+      "text": [
+        "A Foundation lamp on a folding stand, and a folding stool under it.",
+        "On the stool, a notebook, open, ruled, dated, and full.",
+        "Every page is the same handwriting. Every page is signed at the foot."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 14,
+      "y": 6,
+      "text": [
+        "A cased instrument aimed at the plinth on a tripod, still running.",
+        "Nine days of tape and not one reading on any of it.",
+        "It is the wrong kind of listening and they have not worked that out."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 9,
+      "text": [
+        "They came in through their own shaft, and it is in the corner behind you.",
+        "Nine days of drilling to get round a door.",
+        "You came in through the door. It took two of you and one stone."
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 5,
+      "y": 2,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_msh_niche"
+    }
+  ]
+}

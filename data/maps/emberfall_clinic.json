@@ -1,0 +1,88 @@
+{
+  "id": "emberfall_clinic",
+  "name": "Emberfall Kin Clinic",
+  "displayName": "EMBERFALL KIN CLINIC",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIIIUIII",
+    "I+++++kkF?FFkI",
+    "IPKKFKKKFFFFFI",
+    "IFFFFFFFFFFFFI",
+    "IkFFFFFFFFFFFI",
+    "IF/rr/FFFAAFPI",
+    "IFFrrFFFFEEFFI",
+    "IkFFFFFFFFFFkI",
+    "IFFFFFFFFFFFPI",
+    "IIIIIIDIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 9,
+      "toMap": "emberfall",
+      "toX": 13,
+      "toY": 28,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "ef_clinic_healer",
+      "sprite": "healer",
+      "x": 3,
+      "y": 3,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "clinic_heal"
+    },
+    {
+      "id": "ef_clinic_roost",
+      "sprite": "professor",
+      "x": 9,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "roost_terminal"
+    },
+    {
+      "id": "ef_clinic_burns",
+      "sprite": "dockhand",
+      "x": 11,
+      "y": 6,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "ef_clinic_burns"
+    },
+    {
+      "id": "ef_clinic_mother",
+      "sprite": "townsfolk_f",
+      "x": 2,
+      "y": 8,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ef_clinic_mother"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 1,
+      "text": [
+        "A board of burn dressings, sorted by depth rather than by size.",
+        "The deepest tray is the emptiest, which is either very good news or very bad."
+      ]
+    }
+  ]
+}

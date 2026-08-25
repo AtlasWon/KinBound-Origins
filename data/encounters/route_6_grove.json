@@ -1,0 +1,26 @@
+{
+  "mapId": "route_6_grove",
+  "$comment": "The route's rare-encounter spot, and it pays in availability rather than in levels. Levels stay level with the route outside, 21-24 -- raising them here would turn 'the interesting corner' into 'the corner you come back to later', and the lagoon is already that. What changes is the LIST. The grove is permanently dark, so the two Kin that are their own light source, Tallowmoth and Deeplum, drop their night gate and can be found at noon; Weaverjaw goes from the rarest slot on the route to the second commonest here; and Nettlebug, which is most of what a player fights on the way in, is not on this table at all.\n\nThe Verdant weighting from the route table applies here too and for the same measured reason: Deeplum at eighteen and Bladderwrack on the water are what stop this room being a wall for a Verdant lead, since Weaverjaw at twenty-two is quadruple damage against one. A player who crosses the mire, finds the hole in the roots and walks in has earned a different set of Kin, and getting a different set is the whole reward.",
+  "methods": {
+    "tallGrass": {
+      "rate": 190,
+      "slots": [
+        { "species": "weaverjaw", "minLevel": 22, "maxLevel": 24, "weight": 22 },
+        { "species": "spinnet", "minLevel": 21, "maxLevel": 23, "weight": 20 },
+        { "species": "tallowmoth", "minLevel": 21, "maxLevel": 24, "weight": 20 },
+        { "species": "deeplum", "minLevel": 22, "maxLevel": 24, "weight": 18 },
+        { "species": "sootmoth", "minLevel": 21, "maxLevel": 23, "weight": 12 },
+        { "species": "brinewisp", "minLevel": 23, "maxLevel": 25, "weight": 8 }
+      ]
+    },
+    "water": {
+      "rate": 150,
+      "slots": [
+        { "species": "bladderwrack", "minLevel": 21, "maxLevel": 23, "weight": 34 },
+        { "species": "deeplum", "minLevel": 22, "maxLevel": 24, "weight": 26 },
+        { "species": "clatterclaw", "minLevel": 22, "maxLevel": 24, "weight": 24 },
+        { "species": "brinewisp", "minLevel": 23, "maxLevel": 25, "weight": 16 }
+      ]
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "id": "emberfall_provisioner",
+  "name": "Emberfall Provisioner",
+  "displayName": "EMBERFALL PROVISIONER",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIIIUIII",
+    "I;;;;;;;;;;;;I",
+    "IPKKKFKKKKFF;I",
+    "I;FFFFFFFFFF;I",
+    "I;;;FFFF;;FF;I",
+    "IFFFFFFFFFFFFI",
+    "I;;;FFFFF;;;FI",
+    "IFFFFFFFFFFFFI",
+    "IPFFFFFFFFFFPI",
+    "IIIIIIDIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 9,
+      "toMap": "emberfall",
+      "toX": 21,
+      "toY": 28,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "emberfall_shop",
+      "sprite": "clerk",
+      "x": 5,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "emberfall_shop"
+    },
+    {
+      "id": "ef_shop_regular",
+      "sprite": "hiker",
+      "x": 9,
+      "y": 5,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "ef_shop_regular"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 6,
+      "text": [
+        "PRICES SET AT THE PASS, NOT AT THE COUNTER.",
+        "Everything in the shop except the water came over the mountain on a cart."
+      ]
+    }
+  ]
+}

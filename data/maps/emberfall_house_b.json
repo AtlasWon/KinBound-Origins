@@ -1,0 +1,65 @@
+{
+  "id": "emberfall_house_b",
+  "name": "Emberfall House",
+  "displayName": "EMBERFALL HOUSE",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIIUIIIUIII",
+    "IkkfffffQJfI",
+    "IffffffKKKfI",
+    "IfPffffffffI",
+    "IfAAffff//fI",
+    "IfEEffffrrfI",
+    "IbffffffffPI",
+    "IefffffffkfI",
+    "IIIIIDIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 5,
+      "y": 8,
+      "toMap": "emberfall",
+      "toX": 29,
+      "toY": 44,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "ef_house_b_fitter",
+      "sprite": "porter",
+      "x": 3,
+      "y": 6,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ef_house_b_fitter"
+    },
+    {
+      "id": "ef_house_b_elder",
+      "sprite": "elder",
+      "x": 9,
+      "y": 3,
+      "facing": "down",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "ef_house_b_elder"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "Three shelves of pipe drawings, every one of them of the same city.",
+        "The oldest is dated forty years back and has half the mains missing."
+      ]
+    }
+  ]
+}

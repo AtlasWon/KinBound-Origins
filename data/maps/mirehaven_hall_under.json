@@ -1,0 +1,379 @@
+{
+  "id": "mirehaven_hall_under",
+  "name": "The Underfloor",
+  "displayName": "THE UNDERFLOOR",
+  "music": "station",
+  "battleBackdrop": "cave",
+  "indoor": true,
+  "rows": [
+    "WWWWWWWWWWWWWWWWWWWWWWW",
+    "WСSддддддСддддддддддддW",
+    "WWддддддддддддддСдддддW",
+    "WРРРРРюРРРРРРРюРРРРРддW",
+    "WWWWWГюГWWСWWГюГWWWРддW",
+    "WСWСWСюСWСWСWСюСWСWРддW",
+    "WWWппппWWWWWпппWWWWРддW",
+    "WССппппСWСWСWСWСWСГРддW",
+    "WWWппппWWWWWWWWпппююддW",
+    "WСWСWСWСSппппСWпппГРддW",
+    "WWWWWWWWпСССпWWпппWРддW",
+    "WСWСWСWСпСССпСWСWСWРддW",
+    "WСWСWСWСпппппСWСWСWРддW",
+    "WWWWWWWWпппппWWWWWWРддW",
+    "WWWWСWWWWWWюWWWWWWWРддW",
+    "WСWСWСWСWСWююююСWСWРддW",
+    "WWWWWWСWWWWWWГюГWWWРддW",
+    "WСWСWРРРРРРРРРюРРРРРддW",
+    "WСWСWдддддддддддддддддW",
+    "WWWWWдддддддддддддддддW",
+    "WWWWWWWWWWWWWWWWWWWWWWW"
+  ],
+  "warps": [
+    {
+      "x": 2,
+      "y": 1,
+      "toMap": "mirehaven_hall",
+      "toX": 8,
+      "toY": 2,
+      "facing": "down",
+      "style": "stairs"
+    },
+    {
+      "x": 8,
+      "y": 9,
+      "toMap": "mirehaven_hall",
+      "toX": 8,
+      "toY": 2,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "mh_under_guide",
+      "sprite": "dockhand",
+      "x": 2,
+      "y": 2,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mh_under_guide"
+    },
+    {
+      "id": "mh_hand_a",
+      "sprite": "dockhand",
+      "x": 4,
+      "y": 1,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "mh_hand_a",
+      "sightRange": 2
+    },
+    {
+      "id": "mh_hand_b",
+      "_note": "ACROSS THE BANK, NOT ACROSS ITS MOUTH. She stood at 6,7 looking up the lane first, and that sealed her own pocket: 6,6 is the only tile the north bank is entered by, being spotted at 6,5 walked her onto 6,6 to say her line, and she stayed there afterwards with the player still out in the water. A driver walked into it on the first pass. Watching row 6 from 4,6 keeps her unavoidable -- 6,6 is still the tile she sees -- and lands her on 5,6 instead, which is a tile the bank can spare.",
+      "sprite": "netmender",
+      "x": 4,
+      "y": 6,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "mh_hand_b",
+      "sightRange": 3
+    },
+    {
+      "id": "mh_hand_c",
+      "sprite": "porter",
+      "x": 17,
+      "y": 9,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "mh_hand_c",
+      "sightRange": 2
+    },
+    {
+      "id": "mh_hand_d",
+      "sprite": "fisher",
+      "x": 14,
+      "y": 19,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "mh_hand_d",
+      "sightRange": 2
+    },
+    {
+      "id": "mh_walkwatch",
+      "sprite": "villager_m",
+      "x": 20,
+      "y": 12,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "mh_walkwatch"
+    },
+    {
+      "id": "mh_rotwatch",
+      "sprite": "villager_f",
+      "x": 6,
+      "y": 18,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mh_rotwatch"
+    },
+    {
+      "id": "mh_keeper",
+      "sprite": "harbourmaster",
+      "x": 10,
+      "y": 12,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mh_keeper"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 1,
+      "text": [
+        "PILE 1. The first post the town ever drove, and they built the walk around it.",
+        "A brass tag: SOUND. Below that, a hundred and ninety more tags, all saying SOUND.",
+        "The oldest is nailed so deep in the wrap it is only a shine under the silk."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 16,
+      "y": 2,
+      "text": [
+        "A card wired to the pile at eye height, weather-grey and re-inked many times:",
+        "THE RAIL IS THE RULE. WHERE THERE IS RAIL, THERE IS NO WAY DOWN.",
+        "WHERE THE RAIL STOPS, LOOK FOR THE CAP. IT WILL BE THERE. IT ALWAYS IS."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 3,
+      "text": [
+        "Handrail, mortised, tarred, and mended in eleven visibly different decades.",
+        "Somebody has carved into the top rail, small and neat:",
+        "WE BUILT THE WALK BECAUSE WE ARE NOT WELCOME IN THE WATER. NOT BECAUSE WE ARE."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 5,
+      "y": 4,
+      "text": [
+        "A glowcap the size of a dinner plate, growing sideways out of the pile.",
+        "The crew do not plant them and they do not cut them. They put a card by them.",
+        "This one reads: NORTH QUARTER. PILES 40-58. SHORT LANE. DEAD END. GOOD ITEMS."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 4,
+      "text": [
+        "Under the cap, a second card in a much younger hand:",
+        "IT IS NOT A DEAD END TO THEM. IT IS A ROOM. WE ARE THE DEAD END.",
+        "Somebody senior has read that, and initialled it, and left it up."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 4,
+      "text": [
+        "NORTH-EAST QUARTER. PILES 59-71.",
+        "Three tiles of standing water and then a bank you could lie down on.",
+        "The card ends: THAT IS ALL IT IS. WE HAVE CHECKED TWICE A YEAR SINCE 1808."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 15,
+      "y": 4,
+      "text": [
+        "Scratched into the cap's stem with a nail, no card, no hand anybody claims:",
+        "FOUR GAPS IN THE RAIL. THREE OF THEM ARE ROOMS.",
+        "GO AND STAND IN THE ROOMS FIRST. THE FOURTH ONE IS NOT A ROOM."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 3,
+      "y": 5,
+      "text": [
+        "PILE 44. The tag says WATCHING, which in this ledger is not the same as ROTTEN.",
+        "Watching means the wrap has thinned and the colony has not come back to it.",
+        "The card under it: ASK WHY BEFORE YOU TAR IT. 1849 IS WHY."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 7,
+      "text": [
+        "A crew locker chained to the pile: tar, tags, a lamp, and a folded stretcher.",
+        "Chalked on the lid in a very steady hand: NOBODY HAS NEEDED THIS SINCE 1861.",
+        "Chalked under that in a much less steady one: AND WE STILL CARRY IT."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18,
+      "y": 7,
+      "text": [
+        "EAST QUARTER. PILES 88-104. The card is stained brown to the halfway line.",
+        "GLUE WORK. HOT. STAY OFF THE BANK IF THE POT IS ON.",
+        "Somebody has drawn a small pot with a smiling face on it. It is not reassuring."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18,
+      "y": 9,
+      "text": [
+        "The cap on the south side of the gap, and its card is the shorter one:",
+        "IN AND OUT THE SAME WAY. THE WATER HERE GOES NOWHERE ELSE.",
+        "Which is a promise, when you think about it, and not a warning."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 19,
+      "y": 11,
+      "text": [
+        "A depth stick lashed to the rail, painted in feet, standing in the black.",
+        "Low water: two feet six. High water: eleven.",
+        "The crew work the six hours between, and the ledger has never once run late."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 17,
+      "text": [
+        "The rail runs unbroken from here to the corner, and the card says why:",
+        "NO GAP. NO CAP. NOTHING UNDER HERE BUT ELEVEN FEET OF PEAT SOUP.",
+        "It is the longest run of unbroken rail under the town and it is very reassuring."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 16,
+      "text": [
+        "The fourth cap, and it has no card. It has never had a card.",
+        "It is bigger than the others by half and the light off it is a colder green.",
+        "The rail either side of the gap has been worn smooth by hands. Going in, or holding on."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 15,
+      "y": 16,
+      "text": [
+        "Somebody has wired a tag to this cap, once, a long time ago. It says one word.",
+        "HERS.",
+        "Nobody has taken it down and nobody has added to it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 17,
+      "text": [
+        "Out in the black off this stretch stands PILE 212. No walk, no rail, no way to it.",
+        "It has a tag anyway, and the tag is current, and it says SOUND.",
+        "Somebody swam. The ledger does not say who and the ledger never has."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 10,
+      "text": [
+        "THE GREAT PILE. Four trunks driven as one, in the first year, before the first house.",
+        "The town is measured from it. Every reading in the ledger is a distance from here.",
+        "It has never been tarred. Nothing this old under Mirehaven ever has been."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 11,
+      "y": 10,
+      "text": [
+        "The wrap on the great pile is a foot thick and it is not one layer.",
+        "It is two hundred years of layers, and you can count them like rings on a tree,",
+        "and the innermost one is older than the town by a margin nobody likes to state."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 11,
+      "y": 11,
+      "text": [
+        "Above your head the whole underside of Mirehaven: joists, drains, four thousand people.",
+        "Between them and the peat there is a foot of silk and an arrangement.",
+        "Neither party has ever written the arrangement down. It has held for two centuries."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 3,
+      "y": 8,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_mh_hall_a"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 12,
+      "y": 6,
+      "item": "net_vessel",
+      "quantity": 5,
+      "flag": "item_mh_hall_b"
+    },
+    {
+      "kind": "item",
+      "x": 15,
+      "y": 10,
+      "item": "great_potion",
+      "quantity": 2,
+      "flag": "item_mh_hall_c"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 12,
+      "y": 9,
+      "item": "full_heal",
+      "quantity": 1,
+      "flag": "item_mh_hall_d"
+    },
+    {
+      "kind": "item",
+      "x": 7,
+      "y": 19,
+      "item": "clearleaf",
+      "quantity": 3,
+      "flag": "item_mh_hall_e"
+    }
+  ],
+  "_plan": "THE ROOM IS TWO NETWORKS AND THE PUZZLE IS WHERE THEY TOUCH.\n\nUnder Mirehaven there is a plank walk and there is black water, and they are not the same country. The walk -- the crew's round walk, two boards wide, railed on its inner edge the whole way -- is fast, dry, safe and goes nowhere: it runs from the hatch east, down the east side and back west along the south until the rotted stretch stops it. The water is the only thing that goes inward, and it is broken into lanes by deep peat pools the player cannot enter. Neither network reaches the middle. You cross between them, four times only, at the gaps in the rail.\n\nAND THE GAPS ARE MARKED, WHICH IS THE WHOLE KINDNESS OF THE DESIGN. Every gap has a glowcap growing on the pile beside it -- 'Г', solid, and it seals the lane mouth as well as flagging it -- and the rule is posted twice before the player ever climbs down: over the hatch in the Pile House, and on the card at 16,2. Where there is rail, there is no way down. Where the rail stops, look for the cap. A player who reads either sign never has to hunt; a player who reads neither still finds the caps, because they are the only bright thing in a black room.\n\nFOUR GAPS. THREE ARE ROOMS. Gate N at 6,3 goes to the north bank and Odile; gate NE at 14,3 to a three-tile stub and a hidden Net Vessel; gate E at 19,8 to Hollis and the glue bank. Each of those is a closed pocket -- the deep water seals it -- and each pays, so being wrong costs a walk and never a punishment. Gate S at 14,17 is the fourth, and its cap is the one with no card on it and a tag that says HERS. That lane winds north to the great pile and Annik Tallow, and it is the only tile in the room that connects the outside to the middle.\n\nWADE IS THE FLOOR. Every lane is 'ю', collision 2, and freeWade is deliberately NOT set: the art the Tide Hall gave for beating Marit Vane is what lets you off the boards here, two Halls later, and a marsh is the right place to be reminded that you were given something. Crest 3 gates Crest 4 gates this Hall, so nobody can arrive without it.\n\nNOBODY IS EVER STRANDED, AND NOTHING HERE IS ONE-WAY. Every lane is walked in both directions -- unlike the Tide Hall's race, which was the point there and would be repetition here. The hatch at 2,1 is the way in and out; the second ladder at 8,9 stands on the middle bank behind the Keeper, so the winner does not re-walk forty tiles of plank to leave. There are no wild encounters anywhere in the room.\n\nTHE TRAINERS BLOCK NOTHING AND ARE AVOIDED BY NOBODY THEY ARE MEANT TO STOP. Bray stands ON the walk at 4,1 and looks down at 4,2: her body shuts the north row and her line shuts the south one, so the two boards past the hatch are hers and there is no third board. Varis stands at 14,19 and looks up through 14,18 at the gap itself, so she is the toll on the only gate that goes anywhere. Odile at 6,7 and Hollis at 17,9 each watch the single tile their pocket is entered by -- and both are optional, because both pockets are dead ends, which is why the mandatory fight count in this Hall is three and not five.\n\nWHY THE MIDDLE IS A BANK AND NOT A ROOM. The Keeper of a Hall about patience should be sat at the foot of the oldest thing under the town, on peat, in the dark, with the whole weight of Mirehaven overhead and a foot of silk holding it off her -- and no furniture, no arena, no dais. Everything the room has to say about bond against control is in the fact that four thousand people are standing on an arrangement nobody ever wrote down."
+}

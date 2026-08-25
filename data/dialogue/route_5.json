@@ -1,0 +1,60 @@
+{
+  "speakers": {
+    "r5_carrow": "SALTHOLLOW CARTER",
+    "r5_bellow": "KILN HAND",
+    "r5_pell": "FOUNDATION HAND"
+  },
+  "entries": {
+    "r5_carrow": [
+      {
+        "ifFlags": [
+          "lyra_admits_meridian"
+        ],
+        "lines": [
+          "I used to bring the copper down off this road. Now there is a Foundation cart on it every week.",
+          "Loaded coming down and loaded going up. Whatever is in it going up, it is not copper."
+        ]
+      },
+      {
+        "lines": [
+          "This is as far as a cart goes. Past the shelf the road is loose clinker and it eats wheels.",
+          "Everything out of Emberfall comes down on somebody's back. It always has."
+        ]
+      }
+    ],
+    "r5_bellow": [
+      {
+        "ifFlags": [
+          "lyra_admits_meridian"
+        ],
+        "lines": [
+          "There is a mast at Site 2 that points straight at the ground, and one at Site 4 that points at the mountain.",
+          "I asked a surveyor what they were listening for. She said she had not been told either."
+        ]
+      },
+      {
+        "lines": [
+          "Fourteen mile of that, twice a month. You stop noticing the smell around year three.",
+          "Do not walk the Coil after dark. The light off it will have you going in circles."
+        ]
+      }
+    ],
+    "r5_pell": [
+      {
+        "ifFlags": [
+          "crest_3_taken"
+        ],
+        "lines": [
+          "They lifted something out of Trench 2-7 up on the middle shelf in the spring. Crated it that night.",
+          "It was not a rock. I helped carry it, and I know what a rock weighs."
+        ]
+      },
+      {
+        "lines": [
+          "Nine trenches and I have cut six of them. Good pay, hot work, nobody bothers you.",
+          "What are we looking for? Nobody says. You get a bearing and you dig where they mark it."
+        ]
+      }
+    ]
+  }
+}

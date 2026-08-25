@@ -181,7 +181,8 @@ const ROADS: [string, string][] = [
   // From here the crescent is the journey ahead, in the order canon walks it:
   // the coast, the volcanic interior, the wetlands, the capital, the snow, the
   // cliffs, and the old city below the Summit.
-  ['tideglass', 'emberfall'],
+  ['tideglass', 'route_5'],
+  ['route_5', 'emberfall'],
   ['emberfall', 'mirehaven'],
   ['mirehaven', 'aureline'],
   ['aureline', 'frostmere'],

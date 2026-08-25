@@ -1,0 +1,114 @@
+{
+  "id": "route_6_grove",
+  "name": "The Drowned Grove",
+  "displayName": "THE DROWNED GROVE",
+  "music": "route_coast",
+  "battleBackdrop": "coast",
+  "indoor": false,
+  "dark": true,
+  "fog": 0.34,
+  "encounterTable": "route_6_grove",
+  "_design": "One room, off the route, that answers a question the player has not asked yet: why is Mirehaven on stilts? Because there is a Mirehaven under the water, and half of one roof is still above it. Nothing here says so. There is no sign, no NPC and no cutscene -- there is a thatched gable standing in four feet of marsh with a door in it that does not open, and a player who walks in here and works it out has been told the second truth of this act in miniature before the Sanctum says it out loud.",
+  "_plan": "Dark, and lit entirely by glowcaps. It is the only place in the game that is both -- caves are dark and unlit, towns are lit and not dark -- and the eighteen caps are placed as a ring round the bowl rather than scattered, so the room reads as a lamplit hall the moment the player steps in. The fog is thinned to a third of the route's, because the canopy is shut over it: walking in here is the fog LIFTING, which is the only relief the region gives, and it lands in the one room built out of somebody's drowned house.",
+  "rows": [
+    "ДДДДДДДДДДДДДДДДДДДДДДДДДД",
+    "ДДДДДДДДДДДДДДДДДДДДДДДДДД",
+    "ДДжппжппппппжпппппппппппДД",
+    "ДДпюжюююжююжюююююююююююпДД",
+    "ДДпююююжЭШШШШШЄююСююжююжДД",
+    "ДДпжюжжжюЯЪЯЧЯюююююююююпДД",
+    "ДДпюжГюююЯюЏюЯюСюююжюююпДД",
+    "ДДпжюжюСюююююююююююююжюпДД",
+    "ДДпююжжююжСюГююжСююжГююпДД",
+    "ДДпжжюжжСжюжюСюююжюююююжДД",
+    "ДДпюююГжююжюююююююБююжюпДД",
+    "ДДпГюююжюююГюююжжжжжжююпДД",
+    "ДДпюююююююююююююжГююююжжДД",
+    "ДДппцпцпжГццццжжцццжцГппДД",
+    "ДДпппцпжпжцццжГжжцжццпппДД",
+    "ДДжпГжпцпццпппцжццжпццппДД",
+    "ДДжжцпццццццжццГцццГццппДД",
+    "ДДппжццГцпцжжГцпцжжцццГпДД",
+    "ДДпжццццццжцццжццжпцпжппДД",
+    "ДДппцццжжжГцжжпцГццжццппДД",
+    "ДДппжппжппппппппппппжппжДД",
+    "ДДДДДДДДДДДпппДДДДДДДДДДДД",
+    "ДДДДДДДДДДДДппДДДДДДДДДДДД"
+  ],
+  "warps": [
+    {
+      "x": 12,
+      "y": 22,
+      "toMap": "route_6",
+      "toX": 8,
+      "toY": 37,
+      "facing": "down",
+      "style": "cave"
+    },
+    {
+      "x": 13,
+      "y": 22,
+      "toMap": "route_6",
+      "toX": 8,
+      "toY": 37,
+      "facing": "down",
+      "style": "cave"
+    }
+  ],
+  "npcs": [],
+  "objects": [
+    {
+      "kind": "script",
+      "x": 11,
+      "y": 5,
+      "text": [
+        "A door, in a wall, in the water. The thatch above it is three winters gone",
+        "and still holding. The sill is eleven inches under and the latch still works.",
+        "It opens onto the rest of the house, and the rest of the house is not here."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 18,
+      "y": 10,
+      "text": [
+        "A punt, swamped, tied to a pile with a knot somebody expected to untie.",
+        "Whatever they came back for, they did not come back for the boat."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 15,
+      "y": 6,
+      "text": [
+        "A pile, cut off level with the water and worn round on top.",
+        "There are more of them under the surface. You can feel them through your boots",
+        "for eleven paces in every direction, which is about the size of a street."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 4,
+      "y": 18,
+      "item": "deep_vessel",
+      "quantity": 2,
+      "flag": "item_r6grove_shelf"
+    },
+    {
+      "kind": "item",
+      "x": 20,
+      "y": 18,
+      "item": "rouse",
+      "quantity": 1,
+      "flag": "item_r6grove_east"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 3,
+      "y": 14,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_r6grove_hidden"
+    }
+  ]
+}

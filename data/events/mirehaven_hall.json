@@ -1,0 +1,152 @@
+[
+  {
+    "id": "mh_hall_clerk",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "hasCrest", "crest": 5 },
+        "then": [
+          {
+            "kind": "say",
+            "who": "PILE CLERK",
+            "lines": [
+              "Signed out, and the hours logged against your name like anybody else's.",
+              "You are in the ledger now. Two hundred years of us and one line of you."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "if",
+            "cond": { "kind": "not", "of": { "kind": "hasCrest", "crest": 4 } },
+            "then": [
+              {
+                "kind": "say",
+                "who": "PILE CLERK",
+                "lines": [
+                  "Four Crests before we let anybody under the town. Emberfall's is the fourth.",
+                  "That is not us being grand. It is six hours of low water and no second try."
+                ]
+              }
+            ],
+            "else": [
+              {
+                "kind": "say",
+                "who": "PILE CLERK",
+                "lines": [
+                  "Venom Hall. Officially. Everyone here calls it the Pile House and always has.",
+                  "We read the posts this town stands on. The Hall is how we find out who can."
+                ]
+              },
+              {
+                "kind": "if",
+                "cond": { "kind": "not", "of": { "kind": "flag", "flag": "mh_hall_signed" } },
+                "then": [
+                  { "kind": "setFlag", "flag": "mh_hall_signed" },
+                  {
+                    "kind": "say",
+                    "who": "PILE CLERK",
+                    "lines": [
+                      "Name in the book, and take these. Nobody goes under without them.",
+                      "Not because anything down there will bite you. Because we are not fools."
+                    ]
+                  },
+                  { "kind": "giveItem", "item": "clearleaf", "count": 3 },
+                  { "kind": "say", "lines": ["You received 3 Clearleaves."] }
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "PILE CLERK",
+                "lines": [
+                  "Keeper Tallow is down at the great pile and she will not come up for you.",
+                  "Hatch is behind me. Read the board over it before you go through it."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "mh_hall_dresser",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "ANTIVENIN DRESSER",
+        "lines": [
+          "Eleven bites in two hundred years, and I have the notes on all eleven.",
+          "Every single one was somebody putting a hand where a hand had no business being."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "ANTIVENIN DRESSER",
+        "lines": [
+          "People come here expecting a monster under the floor. There is no monster.",
+          "There is a tenant, and it is a better tenant than we have ever been."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "mh_hall_winder",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "BOLT WINDER",
+        "lines": [
+          "Six weeks on one reel. You cannot hurry it and you cannot take more than there is.",
+          "Two hundred years of not being greedy is the whole trade. I know how that sounds."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "BOLT WINDER",
+        "lines": [
+          "A Foundation man came in the spring and offered to double the yield.",
+          "He had figures. Good ones. Annik walked him round the ledger to 1849 and he went quiet."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "mh_hall_offshift",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "OFF-SHIFT CREW",
+        "lines": [
+          "Six hours under, six hours dry. This is the dry bit and I intend to defend it."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "OFF-SHIFT CREW",
+        "lines": [
+          "There was a lad down there yesterday. Tarin, he said. Loud on the walk, quiet in the water.",
+          "Asked me one question the whole way round and it was the right one. Where does the rail stop."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "mh_hall_child",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "PILE-HOUSE CHILD",
+        "lines": [
+          "My gran says the town is a guest and I am not allowed to say that outside.",
+          "She says the floor is not ours, we just walk on it. Which is what a guest does."
+        ]
+      }
+    ]
+  }
+]

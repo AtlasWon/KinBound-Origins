@@ -1,0 +1,318 @@
+[
+  {
+    "id": "ms_arrive",
+    "_note": "The change in the story's weather, delivered in four boxes and a permit. Every act so far the player has been ahead of Meridian or level with them; this is the first door they arrive at and find open, lit, staffed and legal. The permit is the detail that matters -- they did not break in, they filled in a form -- because it is the difference between a gang and an institution, and an institution is much harder to be in front of.",
+    "_note2": "Tarin's joining is done here rather than by talking to him, so a player who walks straight up the boardwalk cannot get to the stair without him. He walks off up the walkway and is spawned again at the stair head, which is also where the map's own ms_tarin_stair sits behind requiresFlag -- so he is there whether the player arrives now or comes back tomorrow.",
+    "trigger": "enter",
+    "map": "mirehaven_sanctum",
+    "onceFlag": "ms_arrived",
+    "actions": [
+      { "kind": "face", "who": "player", "dir": "up" },
+      { "kind": "wait", "frames": 14 },
+      {
+        "kind": "say",
+        "lines": [
+          "The door of the Sanctum is propped open with a cable drum."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Inside there are lamps on stands, and a walkway bolted over the water.",
+          "Crates, stacked square, on a floor three thousand years old."
+        ]
+      },
+      { "kind": "wait", "frames": 12 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Well. So much for getting here first."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "There is a permit nailed to that door, {name}.",
+          "They asked the town. The town said yes."
+        ]
+      },
+      {
+        "kind": "choice",
+        "lines": [
+          "He has not taken his hand off the drum."
+        ],
+        "options": [
+          {
+            "label": "We are still going in.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "Obviously we are going in. I am complaining. Let me complain."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "How did they know?",
+            "then": [
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "I have been chewing on that since the jetty and I do not like where it goes."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Right. Together, and slowly.",
+          "And if one more person says the word permit at me I am going in the water."
+        ]
+      },
+      { "kind": "setFlag", "flag": "ms_tarin_joined" },
+      { "kind": "move", "who": "ms_tarin_gate", "steps": ["up", "up", "up", "up", "up"] },
+      { "kind": "removeNpc", "who": "ms_tarin_gate" },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "ms_tarin_stair",
+          "sprite": "rival",
+          "x": 10,
+          "y": 2,
+          "facing": "down",
+          "movement": { "kind": "static" },
+          "script": "ms_tarin_stair"
+        }
+      }
+    ]
+  },
+  {
+    "id": "ms_tarin_gate",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "In a minute. I am looking at the permit again in case it says something different."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ms_tarin_stair",
+    "_note": "The one good thing in the building, said by the one person in it who is on the player's side. It is also the dungeon's signpost: no cable past this step means the level below has not been touched, which is why there is any point going down at all.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Look at the step. No cable, no chalk, no boot marks.",
+          "Whatever is down there, they have not got to it."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "That is the only good news in this building.",
+          "After you. I have decided I am the sort of person who says after you."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ms_gate_agent",
+    "_note": "The first turn of the screw. He does not stop the player, and the reason he gives is much worse than being stopped: somebody senior, three floors down, left an order about them by name-shaped description. Kell is established before she is met.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "not", "of": { "kind": "flag", "flag": "ms_gate_talked" } },
+        "then": [
+          {
+            "kind": "say",
+            "who": "FOUNDATION AGENT",
+            "lines": [
+              "You will be the two off the Tideglass road. Go on through."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "FOUNDATION AGENT",
+            "lines": [
+              "Standing order from the Commander. Anyone who comes to this door comes in.",
+              "She was very specific about the word anyone."
+            ]
+          },
+          { "kind": "setFlag", "flag": "ms_gate_talked" },
+          {
+            "kind": "say",
+            "who": "FOUNDATION AGENT",
+            "lines": [
+              "Eleven years I have stood on doors. I have never had that order once."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "who": "FOUNDATION AGENT",
+            "lines": [
+              "Mind the cable. Everything else in here is somebody else's problem."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ms_clerk",
+    "_note": "Six words of the whole game's dread, and none of them is a threat. Under EXPECTED, two lines, both of them the player and Tarin. Meridian did not follow them here; Meridian wrote them down before they set out.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "lines": [
+          "He looks at you. Then at the sheet. Then at you again."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "FOUNDATION CLERK",
+        "lines": [
+          "Right. Yes. You are on it."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "FOUNDATION CLERK",
+        "lines": [
+          "Not by name. Under EXPECTED.",
+          "There are two lines under EXPECTED and you are both of them."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "FOUNDATION CLERK",
+        "lines": [
+          "It has been on the sheet since the ninth. That is the day we opened the door."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ms_porter",
+    "_note": "Canon: most of the Foundation are ordinary people doing ordinary work and have no idea. He is the recruiting card from Stonewake, nine days in, and the only thing wrong with his job is the one question he has decided not to ask.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "PORTER",
+        "lines": [
+          "Board, lodging and a coat, the card said. I have all three. It is honest work."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "PORTER",
+        "lines": [
+          "Nine days I have carried crates up a hole in a marsh.",
+          "I have not asked what is in them, and I would like that written down somewhere."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ms_hydro",
+    "_note": "The other half of the same canon line: she is a real scientist doing real science, she is good at it, and the thing she has measured is the thing nobody upstairs wants to hear. Nine hundred gallons a day out and the level does not move -- and there is nothing alive in the water in a marsh. She has no idea that either fact is about Neravoss. The optional battle is here because letting the player have a friendly fight with a Meridian employee is worth more than a paragraph saying most of them are decent.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "not", "of": { "kind": "flag", "flag": "ms_hydro_talked" } },
+        "then": [
+          {
+            "kind": "say",
+            "who": "HYDROLOGIST WYNN",
+            "lines": [
+              "Nine hundred gallons a day, nine days running.",
+              "The level in this hall has not dropped the width of a hair."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "HYDROLOGIST WYNN",
+            "lines": [
+              "That is not a leak. A leak I could find and stand in.",
+              "Something is putting it back as fast as I take it out."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "HYDROLOGIST WYNN",
+            "lines": [
+              "And there is nothing living in it. Nine days. No fish, no frog, no snail.",
+              "In a marsh. Do you know how hard it is to find water in a marsh with nothing in it?"
+            ]
+          },
+          { "kind": "setFlag", "flag": "ms_hydro_talked" }
+        ]
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "not",
+          "of": { "kind": "defeated", "trainer": "ms_hydro_wynn" }
+        },
+        "then": [
+          {
+            "kind": "ask",
+            "lines": [
+              "You are Trainers, aren't you. Nobody down here will do this with me.",
+              "Six minutes. I have a stool and everything."
+            ],
+            "yes": [
+              { "kind": "battleTrainer", "trainer": "ms_hydro_wynn", "onLoss": "continue" },
+              {
+                "kind": "say",
+                "who": "HYDROLOGIST WYNN",
+                "lines": [
+                  "Thank you. Genuinely. Back to the gallons."
+                ]
+              }
+            ],
+            "no": [
+              {
+                "kind": "say",
+                "who": "HYDROLOGIST WYNN",
+                "lines": [
+                  "No, quite right, you have somewhere to be. Everyone in here has somewhere to be."
+                ]
+              }
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "who": "HYDROLOGIST WYNN",
+            "lines": [
+              "Back to the gallons. They are not going to count themselves and I have asked."
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -39,6 +39,16 @@ export interface AsciiMapFile {
   freePush?: boolean;
   /** Shallow water here is crossable without the Wade art (gym puzzles). */
   freeWade?: boolean;
+  /**
+   * How thickly this map is fogged, 0 to 1. Absent or zero is a clear map.
+   *
+   * A number rather than a flag because the wetlands and the town built in the
+   * middle of them need very different amounts of it: out on the route the fog
+   * is the mechanic and closes to a few tiles, while in Mirehaven it is
+   * atmosphere and must never stop a person finding the clinic. See
+   * src/gfx/fog.ts for what the number actually does.
+   */
+  fog?: number;
 }
 
 /**
@@ -75,6 +85,23 @@ const GRASS_BLADE_TOP = 8;
  */
 const GRASS_STACK_STEP = 6;
 
+/**
+ * Ground tiles a character wades *through* rather than walks on.
+ *
+ * The two passes below repaint the lower half of one of these cells in front
+ * of whoever is standing in it, which is what puts a player waist-deep in a
+ * patch instead of on top of it. That used to be a comparison against one tile
+ * id in four places, which quietly made the effect a property of that tile
+ * rather than of the *idea* -- so the wetlands' reed beds, which are that
+ * region's tall grass in every other respect, had the player standing on top
+ * of the canes.
+ *
+ * Anything added here must be drawn to the same rule as the grass clump: the
+ * plant has to be standing by GRASS_BLADE_TOP, or the band repainted in front
+ * of a character has holes in it exactly where their legs are.
+ */
+const WADE_THROUGH = new Set<number>([T.TALL_GRASS, T.REEDS]);
+
 export class TileMap {
   readonly id: string;
   readonly name: string;
@@ -89,6 +116,7 @@ export class TileMap {
   readonly encounterTable?: string;
   readonly freePush: boolean;
   readonly freeWade: boolean;
+  readonly fog: number;
 
   readonly ground: Uint16Array;
   readonly over: Uint16Array;
@@ -119,6 +147,7 @@ export class TileMap {
     this.encounterTable = file.encounterTable;
     this.freePush = file.freePush ?? false;
     this.freeWade = file.freeWade ?? false;
+    this.fog = file.fog ?? 0;
 
     const n = this.width * this.height;
     this.ground = new Uint16Array(n);
@@ -417,8 +446,9 @@ export class TileMap {
     const top = GRASS_BLADE_TOP * DETAIL;
     const h = TILE_PX - top;
     for (let tx = t0x; tx <= t1x; tx++) {
-      if (this.ground[this.index(tx, ty)] !== T.TALL_GRASS) continue;
-      const s = tileset.srcFor(T.TALL_GRASS, tx, ty);
+      const id = this.ground[this.index(tx, ty)]!;
+      if (!WADE_THROUGH.has(id)) continue;
+      const s = tileset.srcFor(id, tx, ty);
       r.bctx.drawImage(
         tileset.canvas, s.x, s.y + top, TILE_PX, h,
         tx * TILE_PX - r.camPX, ty * TILE_PX + top - r.camPY,
@@ -432,7 +462,7 @@ export class TileMap {
     const t0x = Math.max(0, Math.floor(r.camX / TILE_SIZE));
     const t1x = Math.min(this.width - 1, Math.floor((r.camX + SCREEN_W) / TILE_SIZE));
     for (let tx = t0x; tx <= t1x; tx++) {
-      if (this.ground[this.index(tx, ty)] === T.TALL_GRASS) return true;
+      if (WADE_THROUGH.has(this.ground[this.index(tx, ty)]!)) return true;
     }
     return false;
   }
@@ -471,13 +501,14 @@ export class TileMap {
 
     for (let tx = Math.floor(left / TILE_SIZE); tx <= Math.floor((right - 1) / TILE_SIZE); tx++) {
       if (!this.inBounds(tx, ty)) continue;
-      if (this.ground[this.index(tx, ty)] !== T.TALL_GRASS) continue;
+      const id = this.ground[this.index(tx, ty)]!;
+      if (!WADE_THROUGH.has(id)) continue;
 
       // Clipped to the part of the sprite's width that this tile actually
       // covers, so the blades stay in step with the ones drawn underneath.
       const x0 = Math.max(left, tx * TILE_SIZE);
       const x1 = Math.min(right, (tx + 1) * TILE_SIZE);
-      const src = tileset.srcFor(T.TALL_GRASS, tx, ty);
+      const src = tileset.srcFor(id, tx, ty);
       const sx = src.x + (x0 - tx * TILE_SIZE) * DETAIL;
       const sw = (x1 - x0) * DETAIL;
       const dx = r.worldPX(x0);

@@ -1,0 +1,100 @@
+{
+  "id": "mirehaven_clinic",
+  "name": "Interior",
+  "displayName": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "_design": "Built on the Rock with everything else chartered, and the only room in Mirehaven with a stone floor under it. Two of the four beds are for people who came off a walkway rather than out of a fight, which is the fact about this town that the clinic exists to state.",
+  "rows": [
+    "IIIUIIIIIUIIIII",
+    "IQNFKKKKKFF;;FI",
+    "IFFFFFFFFFFFFFI",
+    "IkFFFFFFFFFFFkI",
+    "IFbeFFFFFFbeFFI",
+    "IFFFFFFFFFFFFFI",
+    "IPFFFF//FFFFFPI",
+    "IFFFFFrrFFFFFFI",
+    "IkFFFFFFFFFFFPI",
+    "IFFFFFFFFFFFFFI",
+    "IIIIIIIDIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 7,
+      "y": 10,
+      "toMap": "mirehaven",
+      "toX": 21,
+      "toY": 28,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "mhc_keeper",
+      "sprite": "healer",
+      "x": 5,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "clinic_heal"
+    },
+    {
+      "id": "mhc_roost",
+      "sprite": "professor",
+      "x": 11,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "roost_terminal"
+    },
+    {
+      "id": "mhc_faller",
+      "sprite": "dockhand",
+      "x": 3,
+      "y": 5,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mhc_faller"
+    },
+    {
+      "id": "mhc_visitor",
+      "sprite": "villager_f",
+      "x": 11,
+      "y": 5,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mhc_visitor"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 1,
+      "text": [
+        "A rack of bulletins. Tide tables, walkway closures, and a list of names.",
+        "The list is headed PEOPLE WHO WENT IN THIS YEAR AND CAME OUT AGAIN.",
+        "It is long, and somebody has written GOOD at the bottom of it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "The stove, the kettle, and over the counter the restorative bank in green.",
+        "A card taped to the glass: WE DO NOT CHARGE FOR WATER OR FOR DRYING OFF."
+      ]
+    }
+  ]
+}

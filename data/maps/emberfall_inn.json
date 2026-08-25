@@ -1,0 +1,90 @@
+{
+  "id": "emberfall_inn",
+  "name": "The Cinder Rest",
+  "displayName": "THE CINDER REST",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIIIIUIIII",
+    "IJNQFFFkkFFFFFfI",
+    "IKKKKFFFFFFFFFfI",
+    "IFFFFFFFFFFFFFfI",
+    "IFAAFFAAFFAAFFfI",
+    "IFEEFFEEFFEEFFfI",
+    "IfFFFFFFFFFFFFfI",
+    "IF/rrrr/FFFAAFPI",
+    "IFFrrrrFFFFEEFfI",
+    "IPfFFFFFFFFFFFfI",
+    "IfFFFFFFFFFFFFfI",
+    "IIIIIIIDIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 7,
+      "y": 11,
+      "toMap": "emberfall",
+      "toX": 7,
+      "toY": 58,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "ef_inn_keeper",
+      "sprite": "townsfolk_f",
+      "x": 2,
+      "y": 3,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ef_inn_keeper"
+    },
+    {
+      "id": "ef_inn_surveyor",
+      "sprite": "meridian_sci",
+      "x": 12,
+      "y": 4,
+      "facing": "down",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "ef_inn_surveyor"
+    },
+    {
+      "id": "ef_inn_drover",
+      "sprite": "hiker",
+      "x": 1,
+      "y": 5,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ef_inn_drover"
+    },
+    {
+      "id": "ef_inn_singer",
+      "sprite": "elder",
+      "x": 13,
+      "y": 8,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "ef_inn_singer"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 14,
+      "y": 10,
+      "text": [
+        "A slate of rooms. Every one is let, and half the names are the same company.",
+        "MERIDIAN FOUNDATION - SURVEY. Six rooms, four weeks, paid forward."
+      ]
+    }
+  ]
+}

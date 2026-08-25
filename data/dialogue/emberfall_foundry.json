@@ -1,0 +1,38 @@
+{
+  "speakers": {
+    "ef_foundry_master": "FOUNDRY MISTRESS",
+    "ef_foundry_pourer": "POURER",
+    "ef_foundry_tally": "TALLY CLERK",
+    "ef_foundry_apprentice": "APPRENTICE"
+  },
+  "entries": {
+    "ef_foundry_master": [
+      {
+        "ifFlags": [
+          "crest_4_taken"
+        ],
+        "lines": [
+          "You beat the Hall standing on our floor. Half the paving in this city is our slag.",
+          "Take that how you like. I meant it kindly."
+        ]
+      },
+      {
+        "lines": [
+          "A hundred and forty years lit. My great-grandmother’s mark is on the first page of the first ledger.",
+          "We do not own the heat. We are only the ones standing closest to it."
+        ]
+      }
+    ],
+    "ef_foundry_pourer": [
+      "Behind the copper line. I will not say it twice, and neither will the metal."
+    ],
+    "ef_foundry_tally": [
+      "Eleven crates out this quarter to a Foundation address, and not one of them was ours.",
+      "We only let them use the yard. They pay very well for the yard."
+    ],
+    "ef_foundry_apprentice": [
+      "Two years sweeping before they let you near a mould. I am nineteen months in.",
+      "I have counted."
+    ]
+  }
+}

@@ -1,0 +1,758 @@
+[
+  {
+    "id": "ef_tap_west",
+    "_note": "THE WEST TAP, on the fissure floor. Every tile of the mouth is listed, not just its lip: a tap the player can walk across is a hole in a floor, and this one is either a lift or nothing at all. ef_low is 0 while the beam is in the west socket, which is how the map starts -- the player rides before anybody explains anything, which is the correct order.",
+    "trigger": "step",
+    "map": "emberfall_hall_flues",
+    "at": [
+      { "x": 4, "y": 18 },
+      { "x": 5, "y": 18 }
+    ],
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "var", "var": "ef_low", "op": "==", "value": 0 },
+        "then": [
+          { "kind": "sfx", "sound": "fx_fire" },
+          { "kind": "shake", "frames": 18, "power": 2 },
+          { "kind": "wait", "frames": 14 },
+          {
+            "kind": "if",
+            "cond": { "kind": "not", "of": { "kind": "flag", "flag": "ef_ride_seen" } },
+            "then": [
+              { "kind": "setFlag", "flag": "ef_ride_seen" },
+              {
+                "kind": "say",
+                "lines": [
+                  "It takes hold of you the way a hand takes a coat off a peg.",
+                  "There is hardly any heat in it. There is simply a great deal of it, and it is going up."
+                ]
+              }
+            ]
+          },
+          { "kind": "warp", "map": "emberfall_hall_flues", "x": 5, "y": 12, "facing": "up" }
+        ],
+        "else": [
+          {
+            "kind": "if",
+            "cond": { "kind": "not", "of": { "kind": "flag", "flag": "ef_cold_seen" } },
+            "then": [
+              { "kind": "setFlag", "flag": "ef_cold_seen" },
+              {
+                "kind": "say",
+                "lines": [
+                  "Cold. A crack in a floor with nothing coming out of it.",
+                  "Whatever the fissure is doing this afternoon, it is not doing it here."
+                ]
+              }
+            ],
+            "else": [
+              { "kind": "say", "lines": [ "Still cold. The beam is in the other socket and the beam decides." ] }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ef_tap_east",
+    "trigger": "step",
+    "map": "emberfall_hall_flues",
+    "at": [
+      { "x": 15, "y": 18 },
+      { "x": 16, "y": 18 }
+    ],
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "var", "var": "ef_low", "op": "==", "value": 1 },
+        "then": [
+          { "kind": "sfx", "sound": "fx_fire" },
+          { "kind": "shake", "frames": 18, "power": 2 },
+          { "kind": "wait", "frames": 14 },
+          {
+            "kind": "if",
+            "cond": { "kind": "not", "of": { "kind": "flag", "flag": "ef_ride_seen" } },
+            "then": [
+              { "kind": "setFlag", "flag": "ef_ride_seen" },
+              {
+                "kind": "say",
+                "lines": [
+                  "It takes hold of you the way a hand takes a coat off a peg.",
+                  "There is hardly any heat in it. There is simply a great deal of it, and it is going up."
+                ]
+              }
+            ]
+          },
+          { "kind": "warp", "map": "emberfall_hall_flues", "x": 16, "y": 12, "facing": "up" }
+        ],
+        "else": [
+          {
+            "kind": "if",
+            "cond": { "kind": "not", "of": { "kind": "flag", "flag": "ef_cold_seen" } },
+            "then": [
+              { "kind": "setFlag", "flag": "ef_cold_seen" },
+              {
+                "kind": "say",
+                "lines": [
+                  "Cold. A crack in a floor with nothing coming out of it.",
+                  "Whatever the fissure is doing this afternoon, it is not doing it here."
+                ]
+              }
+            ],
+            "else": [
+              { "kind": "say", "lines": [ "Still cold. The beam is in the other socket and the beam decides." ] }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ef_shafthead_west",
+    "_note": "THE TOP OF THE WEST SHAFT, in the west gallery. A shaft you rode up cannot be climbed down -- it is full of the thing that lifted you - so while the beam is west this refuses, and the gallery's plated downcast is the way out. The moment the beam moves, the same four tiles become a hole and drop you at the foot of the tap you came up. That single reversal is the whole rule of the room and it is deliberately taught here, where it costs a walk and nothing else.",
+    "trigger": "step",
+    "map": "emberfall_hall_flues",
+    "at": [
+      { "x": 6, "y": 11 },
+      { "x": 7, "y": 11 },
+      { "x": 6, "y": 12 },
+      { "x": 7, "y": 12 }
+    ],
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "var", "var": "ef_low", "op": "==", "value": 0 },
+        "then": [
+          {
+            "kind": "say",
+            "lines": [
+              "The shaft is breathing, and it is breathing upward.",
+              "Nothing is climbing down that. There are plates in the corner for people who want to leave."
+            ]
+          }
+        ],
+        "else": [
+          { "kind": "sfx", "sound": "fx_heavy" },
+          { "kind": "shake", "frames": 20, "power": 2 },
+          { "kind": "wait", "frames": 12 },
+          {
+            "kind": "if",
+            "cond": { "kind": "not", "of": { "kind": "flag", "flag": "ef_fall_seen" } },
+            "then": [
+              { "kind": "setFlag", "flag": "ef_fall_seen" },
+              {
+                "kind": "say",
+                "lines": [
+                  "Nothing is coming up it. So you go down it.",
+                  "That is all a chimney is, on the day the fire is somewhere else."
+                ]
+              }
+            ]
+          },
+          { "kind": "warp", "map": "emberfall_hall_flues", "x": 5, "y": 19, "facing": "down" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ef_shafthead_east",
+    "trigger": "step",
+    "map": "emberfall_hall_flues",
+    "at": [
+      { "x": 17, "y": 11 },
+      { "x": 18, "y": 11 },
+      { "x": 17, "y": 12 },
+      { "x": 18, "y": 12 }
+    ],
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "var", "var": "ef_low", "op": "==", "value": 1 },
+        "then": [
+          {
+            "kind": "say",
+            "lines": [
+              "The shaft is breathing, and it is breathing upward.",
+              "Nothing is climbing down that. There are plates in the corner for people who want to leave."
+            ]
+          }
+        ],
+        "else": [
+          { "kind": "sfx", "sound": "fx_heavy" },
+          { "kind": "shake", "frames": 20, "power": 2 },
+          { "kind": "wait", "frames": 12 },
+          {
+            "kind": "if",
+            "cond": { "kind": "not", "of": { "kind": "flag", "flag": "ef_fall_seen" } },
+            "then": [
+              { "kind": "setFlag", "flag": "ef_fall_seen" },
+              {
+                "kind": "say",
+                "lines": [
+                  "Nothing is coming up it. So you go down it.",
+                  "That is all a chimney is, on the day the fire is somewhere else."
+                ]
+              }
+            ]
+          },
+          { "kind": "warp", "map": "emberfall_hall_flues", "x": 16, "y": 19, "facing": "down" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ef_headstack",
+    "_note": "THE KEEPER'S STACK. It rises out of the WEST gallery and it is opened from the EAST one, which is the argument the whole Hall is built to make. Dark, it does not merely refuse: it drops the player past the gallery, past the tap and out on the floor of the works, because a cold flue is one hole all the way down and pretending otherwise would teach the wrong rule.",
+    "trigger": "step",
+    "map": "emberfall_hall_flues",
+    "at": [
+      { "x": 5, "y": 8 },
+      { "x": 6, "y": 8 },
+      { "x": 5, "y": 9 },
+      { "x": 6, "y": 9 }
+    ],
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "var", "var": "ef_head", "op": ">=", "value": 1 },
+        "then": [
+          { "kind": "sfx", "sound": "fx_fire" },
+          { "kind": "shake", "frames": 24, "power": 3 },
+          { "kind": "wait", "frames": 16 },
+          {
+            "kind": "if",
+            "cond": { "kind": "not", "of": { "kind": "flag", "flag": "ef_headstack_seen" } },
+            "then": [
+              { "kind": "setFlag", "flag": "ef_headstack_seen" },
+              {
+                "kind": "say",
+                "lines": [
+                  "This one goes up hard, and it goes up a very long way.",
+                  "You come out on a floor with a window in it, and the whole city underneath the window."
+                ]
+              }
+            ]
+          },
+          { "kind": "warp", "map": "emberfall_hall_flues", "x": 7, "y": 4, "facing": "right" }
+        ],
+        "else": [
+          { "kind": "sfx", "sound": "fx_heavy" },
+          { "kind": "shake", "frames": 26, "power": 3 },
+          { "kind": "wait", "frames": 16 },
+          {
+            "kind": "if",
+            "cond": { "kind": "not", "of": { "kind": "flag", "flag": "ef_headfall_seen" } },
+            "then": [
+              { "kind": "setFlag", "flag": "ef_headfall_seen" },
+              {
+                "kind": "say",
+                "lines": [
+                  "Dark all the way up, and it does not stop at the gallery on the way down.",
+                  "It runs past the tap and puts you out on the floor of the works, unhurt and told."
+                ]
+              }
+            ],
+            "else": [
+              { "kind": "say", "lines": [ "Still dark. Still a hole. Down you go." ] }
+            ]
+          },
+          { "kind": "warp", "map": "emberfall_hall_flues", "x": 5, "y": 19, "facing": "down" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ef_downcast_west",
+    "_note": "A DOWNCAST IS COLD IRON AND THAT IS WHY IT IS THE PLATE TILE AND NOT A VENT. This room teaches one thing in its first ten seconds -- glowing rock lifts you, cold metal drops you - and the safety net has to obey the rule it is teaching. Both galleries have one, both are in the corner away from the landing, and both put the player down beside the stair so that leaving to heal is always a step away.",
+    "trigger": "step",
+    "map": "emberfall_hall_flues",
+    "at": [
+      { "x": 2, "y": 11 },
+      { "x": 3, "y": 11 },
+      { "x": 2, "y": 12 },
+      { "x": 3, "y": 12 }
+    ],
+    "actions": [
+      { "kind": "sfx", "sound": "fx_heavy" },
+      { "kind": "shake", "frames": 12, "power": 1 },
+      { "kind": "wait", "frames": 12 },
+      {
+        "kind": "if",
+        "cond": { "kind": "not", "of": { "kind": "flag", "flag": "ef_downcast_seen" } },
+        "then": [
+          { "kind": "setFlag", "flag": "ef_downcast_seen" },
+          {
+            "kind": "say",
+            "lines": [
+              "Iron rungs and no draught at all, and it lets you down by the stair.",
+              "Every gallery has one. They are the only cold thing in the building anybody is glad about."
+            ]
+          }
+        ]
+      },
+      { "kind": "warp", "map": "emberfall_hall_flues", "x": 7, "y": 22, "facing": "down" }
+    ]
+  },
+  {
+    "id": "ef_downcast_east",
+    "trigger": "step",
+    "map": "emberfall_hall_flues",
+    "at": [
+      { "x": 13, "y": 11 },
+      { "x": 14, "y": 11 },
+      { "x": 13, "y": 12 },
+      { "x": 14, "y": 12 }
+    ],
+    "actions": [
+      { "kind": "sfx", "sound": "fx_heavy" },
+      { "kind": "shake", "frames": 12, "power": 1 },
+      { "kind": "wait", "frames": 12 },
+      {
+        "kind": "if",
+        "cond": { "kind": "not", "of": { "kind": "flag", "flag": "ef_downcast_seen" } },
+        "then": [
+          { "kind": "setFlag", "flag": "ef_downcast_seen" },
+          {
+            "kind": "say",
+            "lines": [
+              "Iron rungs and no draught at all, and it lets you down by the stair.",
+              "Every gallery has one. They are the only cold thing in the building anybody is glad about."
+            ]
+          }
+        ]
+      },
+      { "kind": "warp", "map": "emberfall_hall_flues", "x": 13, "y": 22, "facing": "down" }
+    ]
+  },
+  {
+    "id": "ef_beamhand",
+    "_note": "THE BEAM HAND. He is not a puzzle piece with a face on it: he is the man who has to name the loser every time the player wants something, and the room's whole argument is carried in his second line each time. He will shift it as often as asked, cheerfully, and the counter ef_shifts is read back to the player by the Keeper at the top of the stack.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "not", "of": { "kind": "flag", "flag": "ef_beamhand_met" } },
+        "then": [
+          { "kind": "setFlag", "flag": "ef_beamhand_met" },
+          {
+            "kind": "say",
+            "who": "BROM SETT",
+            "lines": [
+              "One fissure. Two taps. One beam.",
+              "Whichever socket the beam is in is the tap that breathes. The other one is a hole in a floor."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "BROM SETT",
+            "lines": [
+              "Stand in a breathing one and it will put you up in a gallery. That is not a trick, that is the job.",
+              "Stand in a hole and you will find out what a hole is."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "BROM SETT",
+            "lines": [
+              "The Keeper's own stack, above the west gallery? Not my beam and never was.",
+              "That is set from the east gallery, by a woman who has never had a reason to set it."
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "choice",
+        "lines": [ "Which tap do you want it in?" ],
+        "options": [
+          {
+            "label": "WEST TAP",
+            "then": [
+              {
+                "kind": "if",
+                "cond": { "kind": "var", "var": "ef_low", "op": "==", "value": 0 },
+                "then": [
+                  { "kind": "say", "who": "BROM SETT", "lines": [ "It is in the west. It has been in the west all afternoon. Go and stand in it." ] }
+                ],
+                "else": [
+                  { "kind": "sfx", "sound": "fx_quake" },
+                  { "kind": "shake", "frames": 30, "power": 3 },
+                  { "kind": "setVar", "var": "ef_low", "value": 0 },
+                  { "kind": "addVar", "var": "ef_shifts", "delta": 1 },
+                  {
+                    "kind": "say",
+                    "lines": [
+                      "The beam goes over with a noise like a door shutting under the floor.",
+                      "The east crack dies in about four seconds. The west one starts to make a sound like weather."
+                    ]
+                  },
+                  {
+                    "kind": "say",
+                    "who": "BROM SETT",
+                    "lines": [
+                      "East goes cold, then. Baths, hothouses, laundry.",
+                      "Somebody is standing in three inches of water up there working out that today is not their day."
+                    ]
+                  },
+                  { "kind": "call", "script": "ef_beam_tally" }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "EAST TAP",
+            "then": [
+              {
+                "kind": "if",
+                "cond": { "kind": "var", "var": "ef_low", "op": "==", "value": 1 },
+                "then": [
+                  { "kind": "say", "who": "BROM SETT", "lines": [ "Already east. You are welcome to look at it, but it will not be any more east." ] }
+                ],
+                "else": [
+                  { "kind": "sfx", "sound": "fx_quake" },
+                  { "kind": "shake", "frames": 30, "power": 3 },
+                  { "kind": "setVar", "var": "ef_low", "value": 1 },
+                  { "kind": "addVar", "var": "ef_shifts", "delta": 1 },
+                  {
+                    "kind": "say",
+                    "lines": [
+                      "The beam goes over with a noise like a door shutting under the floor.",
+                      "The west crack dies in about four seconds. The east one starts to make a sound like weather."
+                    ]
+                  },
+                  {
+                    "kind": "say",
+                    "who": "BROM SETT",
+                    "lines": [
+                      "West goes cold, then. Glasshouse, potteries, the long kiln.",
+                      "They were in the middle of a pour. That is nobody's fault and it is still ruined."
+                    ]
+                  },
+                  { "kind": "call", "script": "ef_beam_tally" }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "LEAVE IT",
+            "then": [
+              { "kind": "say", "who": "BROM SETT", "lines": [ "Sensible. Every shift costs somebody an hour and none of them are me." ] }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ef_beam_tally",
+    "_note": "Called after every shift. Two boxes exist because the joke has to sour: the first shift is a shrug, the fourth is a man with a pencil. Written as a called script rather than duplicated inside both choice branches, so the escalation is authored once.",
+    "trigger": "call",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "var", "var": "ef_shifts", "op": ">=", "value": 4 },
+        "then": [
+          {
+            "kind": "say",
+            "who": "BROM SETT",
+            "lines": [
+              "That is four. I write every one of them in a book and the book goes up the stack at six.",
+              "He reads it. He reads all of it. I would have your answer ready."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "if",
+            "cond": { "kind": "var", "var": "ef_shifts", "op": ">=", "value": 3 },
+            "then": [
+              {
+                "kind": "say",
+                "who": "BROM SETT",
+                "lines": [
+                  "Three, now. I am not stopping you and I am not going to pretend I have not counted."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ef_sharehand",
+    "_note": "SHE OPENS A DOOR SHE WILL NEVER WALK THROUGH. The east gallery's own stack was capped generations ago and the player is standing on the cap; the one wheel on this floor opens the Keeper's stack, which rises out of the far gallery. She is not a trainer on purpose -- the Tide Hall already made its winch a fight, and the point of this one is that it is a favour asked and given, not a toll.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "var", "var": "ef_head", "op": ">=", "value": 1 },
+        "then": [
+          {
+            "kind": "say",
+            "who": "CALLA MORN",
+            "lines": [
+              "It is over and it stays over until somebody with more standing than me puts it back.",
+              "Go on. Get in it before anyone up there works out who moved."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "if",
+            "cond": { "kind": "not", "of": { "kind": "flag", "flag": "ef_sharehand_met" } },
+            "then": [
+              { "kind": "setFlag", "flag": "ef_sharehand_met" },
+              {
+                "kind": "say",
+                "who": "CALLA MORN",
+                "lines": [
+                  "This gallery had a stack of its own once. You are standing on the cap of it.",
+                  "That plate is worn brightest in the middle, where people stand and look up at nothing."
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "CALLA MORN",
+            "lines": [
+              "There is one wheel on this floor and it does not open anything above this floor.",
+              "All it opens is the Keeper's stack, over on the west side. Where I have never stood in my life."
+            ]
+          },
+          {
+            "kind": "ask",
+            "lines": [
+              "Forty years I have had that wheel and no reason on this earth to turn it.",
+              "Are you a reason?"
+            ],
+            "yes": [
+              { "kind": "sfx", "sound": "fx_quake" },
+              { "kind": "shake", "frames": 34, "power": 3 },
+              { "kind": "setVar", "var": "ef_head", "value": 1 },
+              {
+                "kind": "say",
+                "lines": [
+                  "Something a long way off takes a breath in, and keeps taking it.",
+                  "The floor plate under your boots goes very slightly colder, which is the part nobody mentions."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "CALLA MORN",
+                "lines": [
+                  "That comes off this gallery, you understand. Off Dess and her baths, whom I believe you have met.",
+                  "Nobody can open their own door. That is not the Hall being clever, that is just how a fire works."
+                ]
+              }
+            ],
+            "no": [
+              {
+                "kind": "say",
+                "who": "CALLA MORN",
+                "lines": [
+                  "Then leave it alone. Most people who ask me for that wheel are lying about why.",
+                  "The wheel will keep. So will I. So, God help us, will he."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ef_keeper",
+    "_note": "ORRIN CADE. The reason a forge city keeps a Hall: he is the man who decides who is cold this week, and the city's answer to that is that anybody who can walk up his own stack is allowed to take it off him. He does not lose gracefully and he does not lose badly; he loses by immediately going back to work, because a share given is a share taken and somebody has to be told. The ef_shifts read-back is the payoff for the whole room -- the player's route through this Hall is a list of people they cooled, and he has the list.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "hasCrest", "crest": 4 },
+        "then": [
+          {
+            "kind": "say",
+            "who": "ORRIN CADE",
+            "lines": [
+              "Still here. The stair behind me only goes up, and up is out.",
+              "Mind the coil road. We have the fire in this city and it has still never got us through that door."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "if",
+            "cond": { "kind": "not", "of": { "kind": "hasCrest", "crest": 3 } },
+            "then": [
+              {
+                "kind": "say",
+                "who": "ORRIN CADE",
+                "lines": [
+                  "Three Crests before mine. That is not me being grand about it.",
+                  "That is me not wanting to explain to your mother why you were in my stack. Go on. Come back."
+                ]
+              }
+            ],
+            "else": [
+              {
+                "kind": "say",
+                "who": "ORRIN CADE",
+                "lines": [
+                  "Orrin Cade. I hold the beam for four hundred and eleven flues and I say no to most of them.",
+                  "A man who can do that ought to be beatable by anyone who can get up his own stack."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "ORRIN CADE",
+                "lines": [
+                  "Nobody in Emberfall is frightened of fire. Children carry it home from school in a tin.",
+                  "What frightens this city is a cold week, and that is an entirely different animal."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "ORRIN CADE",
+                "lines": [
+                  "So do not come up here telling me fire is dangerous. Fire here is expensive.",
+                  "Everything you did on the way up, you did by taking it off somebody, and I know exactly who."
+                ]
+              },
+              { "kind": "battleTrainer", "trainer": "ef_keeper_cade" },
+              {
+                "kind": "if",
+                "cond": { "kind": "var", "var": "last_battle_won", "op": "==", "value": 1 },
+                "then": [
+                  { "kind": "face", "who": "ef_keeper", "dir": "down" },
+                  { "kind": "wait", "frames": 45 },
+                  {
+                    "kind": "say",
+                    "lines": [
+                      "He does not say anything at all for a moment. He looks down the stack instead.",
+                      "Then he takes a wooden peg out of the rack behind him and turns it over in his fingers."
+                    ]
+                  },
+                  { "kind": "face", "who": "ef_keeper", "dir": "left" },
+                  {
+                    "kind": "say",
+                    "who": "ORRIN CADE",
+                    "lines": [
+                      "Right. Then there is a share to find, and it has to come off somebody before six.",
+                      "You have beaten me at four in the afternoon, which is the worst hour you could have chosen."
+                    ]
+                  },
+                  { "kind": "call", "script": "ef_keeper_ledger" },
+                  { "kind": "giveCrest", "crest": 4, "name": "Ember Crest" },
+                  { "kind": "sfx", "sound": "badge" },
+                  {
+                    "kind": "say",
+                    "lines": [
+                      "You received the EMBER CREST.",
+                      "Four of eight."
+                    ]
+                  },
+                  {
+                    "kind": "say",
+                    "who": "ORRIN CADE",
+                    "lines": [
+                      "It is not a badge. It is a tally, cut for a flue that does not exist anywhere in this city.",
+                      "Show it at any stack in Caelora and they will let you draw. That is all it is, and it is a great deal."
+                    ]
+                  },
+                  { "kind": "giveArt", "art": "kindle" },
+                  { "kind": "sfx", "sound": "obtain_art" },
+                  {
+                    "kind": "say",
+                    "lines": [
+                      "You learned the field art KINDLE.",
+                      "A laid fire will take from you now without anybody having to give you leave."
+                    ]
+                  },
+                  { "kind": "giveItem", "item": "full_restore", "count": 1 },
+                  {
+                    "kind": "say",
+                    "lines": [ "Orrin signed a Full Restore out of the Hall's own store, and wrote a name beside it." ]
+                  },
+                  { "kind": "wait", "frames": 20 },
+                  {
+                    "kind": "say",
+                    "who": "ORRIN CADE",
+                    "lines": [
+                      "Thirty years I have been told that if we only had more fire we would stop having to choose.",
+                      "More wells. Deeper taps. A cleverer beam. It is always the same sentence."
+                    ]
+                  },
+                  {
+                    "kind": "say",
+                    "who": "ORRIN CADE",
+                    "lines": [
+                      "It is not true, {name}. There is one fissure. There has only ever been one fissure.",
+                      "Everything after that is who you are willing to leave cold, and getting stronger does not save you from it."
+                    ]
+                  },
+                  {
+                    "kind": "say",
+                    "who": "ORRIN CADE",
+                    "lines": [
+                      "The old road up the coil starts behind the east kilns. Do not go up it for the view.",
+                      "There is a door up there this city has never once got open, and we are the people with the fire."
+                    ]
+                  },
+                  { "kind": "setFlag", "flag": "crest_4_taken" }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ef_keeper_ledger",
+    "_note": "The read-back. Brom's book goes up the stack at six and Orrin has it, so the player's route through the Hall comes back at them as a number of cold workshops. Two shifts is the floor and gets the dry version; a player who thrashed the beam gets told what that looked like from up here. Nothing is punished. He is simply the only person in the game who was counting.",
+    "trigger": "call",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "var", "var": "ef_shifts", "op": ">=", "value": 5 },
+        "then": [
+          {
+            "kind": "say",
+            "who": "ORRIN CADE",
+            "lines": [
+              "Brom's book says you had that beam over five times. Five.",
+              "Half this city went cold twice today for one sixteen-year-old, and not one of them knows why."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "if",
+            "cond": { "kind": "var", "var": "ef_shifts", "op": ">=", "value": 3 },
+            "then": [
+              {
+                "kind": "say",
+                "who": "ORRIN CADE",
+                "lines": [
+                  "Brom's book says three shifts. A glasshouse, a bath-house, and a glasshouse again.",
+                  "You did not know their names. I am not saying that to shame you. I am saying it because it is the job."
+                ]
+              }
+            ],
+            "else": [
+              {
+                "kind": "say",
+                "who": "ORRIN CADE",
+                "lines": [
+                  "Twice. You had the beam over twice and you did not do it once more than you needed to.",
+                  "Nobody notices that. I notice that. Sit down."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,43 @@
+{
+  "mapId": "route_6",
+  "$comment": "Measured with tests/helpers/simulate.mjs, not guessed at, and the first cut was wrong in a way only measuring finds. The wetlands are a Chitin and Venom region, so the honest table is Chitin and Venom -- and a Verdant lead is walled by both at once: Chitin and Venom each hit Verdant for double AND resist it, so a Chitin-Venom Kin like Spinnet deals FOUR times damage to a Bramblehusk and takes a quarter back. At the level a team-raising player actually arrives with, the first cut of this table won 40 wild fights in a hundred for a Verdant starter. That is not a region with an identity, it is a region with a locked door.\n\nTwo changes fixed it without giving up the identity. FIRST the levels came down three, to 20-22 against a player arriving around 25, which is the two-to-four-under rule every table since the third pass has followed. SECOND -- and this is the one that mattered -- the WEIGHTS are now set by how badly each slot beats a Verdant lead rather than by flavour. The quadruple-damage slots (Spinnet, Weaverjaw, Sootmoth) are a quarter of the table between them instead of a third; Silthopper carries the Chitin identity at eighteen because Terra-Chitin comes out exactly neutral both ways; and Gravelet and Bladderwrack are in at fourteen apiece so a Verdant player always has something to hit. Sixty-eight of every hundred Kin out here are still Chitin-typed. Verdant now wins 63 in a hundred rather than 40, which is where Route 5 already sits.\n\nAnything that glows is on the night list only, and that is the whole reason to cross the mire after dark. Tallowmoth and Deeplum are the only Kin in the game that are their own light source, and a player who works out that some of the green smudges in the fog are MOVING has found the best thing on this route without being told it is there.",
+  "methods": {
+    "tallGrass": {
+      "rate": 168,
+      "slots": [
+        { "species": "nettlebug", "minLevel": 20, "maxLevel": 22, "weight": 18 },
+        { "species": "silthopper", "minLevel": 20, "maxLevel": 22, "weight": 18 },
+        { "species": "gravelet", "minLevel": 20, "maxLevel": 22, "weight": 14 },
+        { "species": "bladderwrack", "minLevel": 21, "maxLevel": 23, "weight": 14 },
+        { "species": "spinnet", "minLevel": 20, "maxLevel": 23, "weight": 12 },
+        { "species": "sootmoth", "minLevel": 20, "maxLevel": 22, "weight": 7 },
+        { "species": "weaverjaw", "minLevel": 22, "maxLevel": 24, "weight": 7 },
+        { "species": "tallowmoth", "minLevel": 21, "maxLevel": 23, "weight": 6, "time": ["night"] },
+        { "species": "deeplum", "minLevel": 22, "maxLevel": 24, "weight": 4, "time": ["night"] }
+      ]
+    },
+    "water": {
+      "rate": 132,
+      "slots": [
+        { "species": "rillfry", "minLevel": 19, "maxLevel": 21, "weight": 30 },
+        { "species": "pinchel", "minLevel": 20, "maxLevel": 22, "weight": 24 },
+        { "species": "bladderwrack", "minLevel": 21, "maxLevel": 23, "weight": 20 },
+        { "species": "clatterclaw", "minLevel": 22, "maxLevel": 24, "weight": 12 },
+        { "species": "currentail", "minLevel": 21, "maxLevel": 23, "weight": 12 },
+        { "species": "brinewisp", "minLevel": 24, "maxLevel": 26, "weight": 2, "time": ["night"] }
+      ]
+    },
+    "fishOld": {
+      "slots": [
+        { "species": "shalefin", "minLevel": 15, "maxLevel": 21, "weight": 100 }
+      ]
+    },
+    "fishGood": {
+      "slots": [
+        { "species": "currentail", "minLevel": 22, "maxLevel": 25, "weight": 45 },
+        { "species": "clatterclaw", "minLevel": 23, "maxLevel": 26, "weight": 30 },
+        { "species": "anchorling", "minLevel": 23, "maxLevel": 26, "weight": 25 }
+      ]
+    }
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "id": "mirehaven_inn",
+  "name": "Interior",
+  "displayName": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "_design": "Three sets of bunks in one room, because the people who stay here are surveyors, reed cutters and whoever the fog caught out, and none of them asked for a room to themselves.",
+  "rows": [
+    "IIIUIIIIIIIUIIIII",
+    "IQNfKKKKKfffkkffI",
+    "IfffffffffffffffI",
+    "IkffAAffffAAffffI",
+    "IffEEffffffEEffkI",
+    "IfffffffffffffffI",
+    "IbefffbefffbefffI",
+    "IffffffffffffffPI",
+    "Ik/rrfffffffbeffI",
+    "IffrrfffffffffffI",
+    "IPfffffffffffffPI",
+    "IfffffffffffffffI",
+    "IIIIIIIIDIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 8,
+      "y": 12,
+      "toMap": "mirehaven",
+      "toX": 21,
+      "toY": 12,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "mhi_host",
+      "sprite": "villager_f",
+      "x": 5,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mhi_host"
+    },
+    {
+      "id": "mhi_surveyor",
+      "sprite": "meridian_sci",
+      "x": 4,
+      "y": 5,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mhi_surveyor"
+    },
+    {
+      "id": "mhi_cutter",
+      "sprite": "hiker",
+      "x": 12,
+      "y": 5,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mhi_cutter"
+    },
+    {
+      "id": "mhi_traveller",
+      "sprite": "merchant",
+      "x": 9,
+      "y": 9,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mhi_traveller"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 1,
+      "text": [
+        "The board by the counter. Beds, meals, and the rule of the house:",
+        "IF THE BELL GOES AT NIGHT, EVERY GUEST GOES OUT WITH A LAMP.",
+        "Nobody has ever argued with it. Twice this year it has been a guest."
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 14,
+      "y": 11,
+      "item": "strong_potion",
+      "quantity": 2,
+      "flag": "item_mhi_hidden"
+    }
+  ]
+}

@@ -177,11 +177,138 @@ export enum T {
   GREAT_ROOT_L,
   GREAT_ROOT_C,
   GREAT_ROOT_R,
+  /**
+   * Emberfall.
+   *
+   * A volcanic city needs its own material or it is Briarbell painted grey:
+   * basalt for the ground and the walls, copper for the roofs and the pipework,
+   * fire in the road, and water that arrives hot. Appended at the very end for
+   * the reason given above -- tile ids are atlas indices, and an id inserted in
+   * the middle of the enum moves every varied cell in the world.
+   */
+  BASALT,
+  BASALT_WALL,
+  BASALT_WINDOW,
+  ROOF_COPPER_L,
+  ROOF_COPPER,
+  ROOF_COPPER_R,
+  SPRING,
+  VENT,
+  PIPE_H,
+  PIPE_V,
+  PIPE_RISER,
+  LAMP_EMBER,
+  FORGE,
+  BASALT_DOOR,
+  SEALED_GATE,
+  SIGN_EMBER,
+  /**
+   * The wetlands and Mirehaven.
+   *
+   * Two families that share one material. The route is peat, standing water,
+   * reed and plank; the town is the same plank raised on pilings over the same
+   * water, with thatch on top and tar down the walls. Nothing here reuses a
+   * turf, a path or a sea tile, because the point of the wetlands is that the
+   * ground itself behaves differently -- you walk on a line somebody built, or
+   * you wade.
+   *
+   * Appended at the very end for the reason given above: tile ids are atlas
+   * indices, and an id inserted in the middle of the enum moves every varied
+   * cell in the world.
+   */
+  MIRE_MUD,
+  MIRE_WATER,
+  REEDS,
+  SEDGE,
+  BOARDWALK,
+  BOARD_RAIL,
+  MANGROVE,
+  GLOWCAP,
+  STILT_POST,
+  MOORED_BOAT,
+  LAMP_MIRE,
+  ROOF_THATCH_L,
+  ROOF_THATCH,
+  ROOF_THATCH_R,
+  WALL_TAR,
+  WALL_TAR_WINDOW,
+  WALL_TAR_PLANT,
+  DOOR_TAR,
+  MIRE_POST,
+  MIRE_DEEP,
+  /**
+   * The Aurelians.
+   *
+   * The first proper interior of the civilisation that built the Tideheart, and
+   * the one material family in the game that is not quarried, grown or nailed
+   * together. Two ideas carry all of it. The first is that they cut pale
+   * limestone into machined plates and ran bronze through the joints, so their
+   * rooms read as *made to a tolerance* next to anything else in Caelora. The
+   * second is that their power is visible: it runs in grooves cut through the
+   * floor, and it is the same cold blue-green as the thing in the player's bag,
+   * because it is the same technology. A dead groove and a living one are two
+   * tiles rather than one tile with a flag, which is what lets a map say
+   * "upstairs is off and downstairs is on" with no engine behind it.
+   *
+   * The magma is the other half of the argument: they built here because the
+   * mountain was already loud, and the shaft the whole temple is wound around
+   * drops straight into it.
+   *
+   * Appended at the very end for the reason given above -- tile ids are atlas
+   * indices, and an id inserted in the middle of the enum moves every varied
+   * cell in the world.
+   */
+  AUR_WALL,
+  AUR_FLOOR,
+  AUR_GLYPH,
+  AUR_VEIN,
+  AUR_VEIN_LIT,
+  AUR_RING,
+  AUR_ASH,
+  AUR_SEAT,
+  TEMPLE_MAGMA,
+  /**
+   * Embercoil Pass.
+   *
+   * The open volcanic country between Tideglass and Emberfall. The city's
+   * basalt, copper and ember ramps are already here and are reused wherever
+   * they fit; what a *route* needs on top of that is ground it can be built
+   * out of by the acre -- ash, clinker road, dead scrub, running lava, cooled
+   * crust, black cliff -- plus the Meridian field kit that is now standing on
+   * top of it. Nothing in this family touches the shared Rng: every one of the
+   * painters below draws from position hashes only, so appending them here
+   * cannot move a single varied tile anywhere else in the world.
+   *
+   * Appended at the very end for the reason given further up: tile ids are
+   * atlas indices.
+   */
+  ASH,
+  ASH_DRIFT,
+  CINDER_ROAD,
+  EMBER_SCRUB,
+  LAVA,
+  LAVA_CRUST,
+  FUMAROLE,
+  CHAR_SNAG,
+  BASALT_ROCK,
+  BASALT_CRAG,
+  BASALT_FACE,
+  BASALT_TOP,
+  ASH_LEDGE,
+  SPRING_SHALLOW,
+  SPRING_DEEP,
+  MESH_FENCE_H,
+  MESH_FENCE_V,
+  SURVEY_MAST,
+  GENERATOR,
+  SPOIL_HEAP,
+  CRATE_STACK,
+  VENT_MOUTH,
   COUNT,
 }
 
 /** Which colour ramp a roof is painted from. */
-export type RoofHue = 'tan' | 'red' | 'blue' | 'slate' | 'moss';
+export type RoofHue = 'tan' | 'red' | 'blue' | 'slate' | 'moss' | 'copper';
 
 /**
  * Palette.
@@ -430,6 +557,184 @@ export const PAL = {
   bronzeMid: '#ac7d28',
   bronzeLight: '#d5a94a',
   bronzePale: '#f3d98d',
+
+  // --- Emberfall. -----------------------------------------------------
+  //
+  // A city built on the heat under it: everything above ground is made of what
+  // the ground gave it. Basalt is the only stone within a day of the place, so
+  // the streets, the walls and the sills are all the same black rock, and the
+  // ramp has to work as *ground* -- the house rule is that turf is light so a
+  // sprite's outline can do the separating, and a black street breaks it. So
+  // this is a warm charcoal rather than true black: dark enough that the town
+  // reads as cut from lava, light enough that a character standing on it still
+  // has a silhouette. The warmth is not decoration either -- basalt weathers
+  // rusty where steam touches it, which is everywhere here.
+  basaltDeep: '#241f22',
+  basaltDark: '#3b3237',
+  basaltMid: '#544850',
+  basaltLight: '#6e6069',
+  basaltPale: '#8b7b84',
+  basaltRust: '#7a5240',
+
+  // Copper, twenty years on a roof. The forges here are the region's, so roofs
+  // and pipework are sheet copper rather than clay, and sheet copper goes green.
+  // Against the basalt it is the one cool note in the town and it is what makes
+  // the skyline legible from across the valley.
+  //
+  // Pulled down in chroma from where it started. At full saturation a row of
+  // these roofs was the loudest thing on the map by a distance -- a street of
+  // black rock with a neon green stripe ruled along the top of it -- and the
+  // roof stopped reading as metal and started reading as paint. Weathered
+  // copper is a *grey* with green in it, and it only looks green at all
+  // because of what it is sitting next to.
+  copperDeep: '#123c37',
+  copperDark: '#1e5c51',
+  copperMid: '#2f7a6a',
+  copperLight: '#4a9a86',
+  copperPale: '#78bda9',
+  copperBright: '#c98a3e',
+
+  // Fire, in every register it appears in here: down a fissure, in a forge
+  // mouth, behind a lamp glass. One ramp, so a vent in the road and the lamp
+  // above it are lit by the same thing -- which is the point of the town.
+  emberDeep: '#5d1503',
+  emberDark: '#a52f06',
+  emberMid: '#e2600f',
+  emberLight: '#ff8f28',
+  emberPale: '#ffc264',
+  emberWhite: '#fff0c2',
+
+  // The springs. Mineral water, hot: pale, chalky and green-blue, with a
+  // sinter rim where it has been depositing for centuries.
+  springDeep: '#2f7d7a',
+  springDark: '#46a29a',
+  springMid: '#6ec2b7',
+  springLight: '#9fdcd1',
+  springPale: '#dcf3ec',
+  sinter: '#cbbfa6',
+
+  // The wetlands.
+  //
+  // Everything east of Emberfall is lit through leaf and standing water, and
+  // the palette has to say so before a single reed is drawn. Peat is the base
+  // material: a brown with green in it, because it is half rotted plant, and
+  // dark enough that the boardwalk laid across it reads as a bright line. The
+  // one rule the ramp obeys is that its lit end never climbs as high as the
+  // turf ramp's -- a mire with a highlight as bright as a field in Briarbell
+  // is a muddy field, not a mire, and the whole route depends on the ground
+  // being the darkest thing on the screen so the lanterns can be the brightest.
+  peatDeep: '#241d13',
+  peatDark: '#3b3120',
+  peatMid: '#54452c',
+  peatLight: '#6d5b3b',
+  peatPale: '#7c6947',
+
+  // Standing water stained by tannin. Not blue: a mire pool is the colour of
+  // strong tea over black, and the only blue in it is the scrap of sky it
+  // catches, which is why the highlight is a step of near-white rather than a
+  // ramp. Two body tones sit close together so a pool reads as flat and dead
+  // still, which is the whole difference between marsh water and the sea.
+  mireDeep: '#0c1510',
+  mireDark: '#152214',
+  mireMid: '#20321b',
+  mireLight: '#2e4626',
+  mireSky: '#68847f',
+  mireGlint: '#a9c2ba',
+
+  // Reeds and sedge. Olive rather than green, and greyer as they rise, so a
+  // reed bed reads as last year's growth standing in this year's water. The
+  // seed heads are the only warm thing out here in daylight.
+  reedDeep: '#2c3a18',
+  reedDark: '#425219',
+  reedMid: '#5d6f24',
+  reedLight: '#748234',
+  reedPale: '#8d9750',
+  reedHead: '#b09a63',
+
+  // Bioluminescence. The one saturated colour in the wetlands, and the reason
+  // the fog can be as thick as it is: a glowcap is a light source the player
+  // can navigate by. Cold green-cyan so it cannot be mistaken for a lantern,
+  // which is warm, and the two together are what make Mirehaven legible at
+  // night -- people's light is orange, the mire's light is green.
+  glowDeep: '#0d3a34',
+  glowDark: '#12786a',
+  glowMid: '#25c3a2',
+  glowLight: '#71f0cb',
+  glowPale: '#c8ffee',
+
+  // Tarred plank. Mirehaven builds out of pine dipped in pitch, because
+  // anything else standing in this water is gone in five years, so its houses
+  // are near-black with a warm grey bloom where the sun has burned the tar.
+  // Against the thatch above it the contrast is the town's whole silhouette.
+  tarDeep: '#14120f',
+  tarDark: '#231f1a',
+  tarMid: '#332e26',
+  tarLight: '#4a4235',
+  tarPale: '#6d6250',
+
+  // Weathered pine, for the boardwalk and everything built out of it. The
+  // harbour decking at Tideglass is a cool blue-grey and would have done for
+  // free, and it was wrong twice over: it is a *sea* material, and against
+  // peat it read as pale brick. This is the same timber gone silver in the
+  // wet, warm enough to stay wood and light enough that the walk is the
+  // brightest line on a mire screen -- which is the whole job of the tile.
+  plankDeep: '#33261a',
+  plankDark: '#57432c',
+  plankMid: '#7d6446',
+  plankLight: '#a28461',
+  plankPale: '#c6a985',
+
+  // Reed thatch. Cut from the same beds the route walks through, so it is the
+  // reed ramp gone grey and dry -- and it is the only bright mass in the town,
+  // which is what stops a settlement built out of pitch reading as a ruin.
+  thatchDeep: '#4a3c1e',
+  thatchDark: '#6d5a2c',
+  thatchMid: '#947c3f',
+  thatchLight: '#b89b56',
+  thatchPale: '#d8bd7d',
+
+  // Embercoil Pass.
+  //
+  // The road between the coast and Emberfall, and the one place in the game
+  // where the *ground* is the event. Three ramps, and each is here because the
+  // basalt/copper/ember set the city is built from cannot carry open country.
+  //
+  // Ash first. It is the surface the player walks on for two thirds of the
+  // route, so the house rule applies to it exactly as it applies to turf: it
+  // has to be light enough that a sprite's outline separates from it. So this
+  // is a pale warm grey with a lilac cast rather than the charcoal a fresh fall
+  // actually is -- old ash, rained on, walked over, blown into drifts. It is
+  // also deliberately *desaturated to nothing*, because it is the field the
+  // lava has to read against, and every scrap of chroma in this route is
+  // reserved for the fire.
+  ashDeep: '#5b5158',
+  ashDark: '#7d7279',
+  ashMid: '#9d9299',
+  ashLight: '#bdb2b7',
+  ashPale: '#dcd3d6',
+
+  // The road. Crushed clinker rather than gold dirt: the same warm brown-red
+  // the basalt weathers to, one clear step darker than the ash it runs through,
+  // so a road here is a dark line on a pale ground -- the exact opposite of
+  // every other route in the game, and the quickest way to say "you are not in
+  // the green country any more" without a word of text.
+  cinderDeep: '#2d1a14',
+  cinderDark: '#4a2c1f',
+  cinderMid: '#68402c',
+  cinderLight: '#87593c',
+  cinderPale: '#a9764f',
+
+  // What still grows here. Not green: heat-cured scrub is olive going to straw,
+  // with black stems, and the seed heads are the only warm note. It sits below
+  // the ash in value so a patch reads as something standing in the ash rather
+  // than a stain on it, which is what makes it legible as the tile you get
+  // jumped in.
+  scrubDeep: '#2b2617',
+  scrubDark: '#463d21',
+  scrubMid: '#63552d',
+  scrubLight: '#877340',
+  scrubHead: '#c09a4c',
+  scrubTip: '#e6c072',
 } as const;
 
 /**
@@ -522,6 +827,67 @@ const VARIED: Partial<Record<number, number>> = {
   [T.GREAT_LEAF_C]: 3,
   [T.GREAT_LEAF_N]: 3,
   [T.GREAT_LEAF_S]: 3,
+  // Emberfall's ground. Appended last, as the note above requires. Basalt is
+  // laid as broken setts rather than sawn slabs -- there is no straight edge in
+  // the material -- so a street of one cut reads as a chequerboard faster than
+  // paving does.
+  [T.BASALT]: 3,
+  [T.BASALT_WALL]: 2,
+  // The wetlands. Appended last, as the note above requires. Peat and reed are
+  // the two the player sees most of by a wide margin -- a mire route is almost
+  // entirely these two tiles -- so they get the widest sets in the game after
+  // turf, or the fog reveals a lattice every time it thins.
+  [T.MIRE_MUD]: 4,
+  [T.REEDS]: 3,
+  [T.SEDGE]: 3,
+  [T.MIRE_WATER]: 2,
+  [T.BOARDWALK]: 3,
+  [T.MANGROVE]: 2,
+  [T.ROOF_THATCH]: 3,
+  [T.WALL_TAR]: 2,
+  // Four marker posts. The mark painted on the board differs between them,
+  // because a route signed with the same number eleven times over is worse
+  // than a route signed nowhere at all.
+  [T.MIRE_POST]: 4,
+  [T.MIRE_DEEP]: 2,
+  // The Aurelians. Appended last, as the note above requires. Their floor is
+  // the one that most needs alternates and the one that can least afford to
+  // look noisy: it is machined plate, so the variation has to be in which plate
+  // was cut from which block, not in the texture of any one of them. The ash
+  // drifted over it varies for the ordinary reason -- it is the only loose
+  // material in the building.
+  [T.AUR_FLOOR]: 3,
+  [T.AUR_WALL]: 2,
+  [T.AUR_ASH]: 3,
+  // The lake in the descending coil is a hundred and fifty cells of one tile.
+  // Wrapping noise means every one of them meets its neighbours, and also that
+  // every one of them is the SAME -- from across the room the field prints a
+  // grid of identical motifs, which is the one thing a sheet of live rock must
+  // not do.
+  [T.TEMPLE_MAGMA]: 3,
+  // Embercoil Pass. Appended last, as the note above requires, and safe to
+  // append for a second reason as well: every painter in this family draws from
+  // position hashes and never touches the shared Rng, so no alternate anywhere
+  // else in the world moves.
+  //
+  // Ash gets the widest set in the family because there is more of it than
+  // anything else on the route by a factor of four, and a plain field of one
+  // grey cut is where a repeat shows soonest -- there are no trees or buildings
+  // out here to break the eye's lock on the grid.
+  [T.ASH]: 4,
+  [T.ASH_DRIFT]: 3,
+  [T.CINDER_ROAD]: 3,
+  [T.EMBER_SCRUB]: 3,
+  [T.LAVA_CRUST]: 3,
+  [T.BASALT_FACE]: 3,
+  [T.BASALT_ROCK]: 2,
+  // The flow gets alternates too, and for a reason the other tiles do not have.
+  // Its cracks are drawn by banding on a noise contour, and that contour wraps
+  // at the cell -- so without alternates every tile of a lava field carries the
+  // identical seam in the identical place, and a river reads as one cell
+  // stamped out forty times. The variant seed folds into the noise, so three
+  // cuts is three different sets of plates.
+  [T.LAVA]: 3,
 };
 
 /**
@@ -545,6 +911,40 @@ const ANIMATED: Partial<Record<number, number>> = {
   // the way a real one does. Safe to append: frames are allocated and painted
   // last of all, after every base cell and every alternate.
   [T.GREAT_BELL]: 4,
+  // Emberfall breathes. A vent in the road, a forge mouth and a spring are all
+  // the same fire seen through different amounts of rock and water, so they
+  // share a clock: the whole town pulses together, which is what sells the idea
+  // that one thing underneath is doing it. Safe to append -- frames are
+  // allocated and painted last of all, after every base cell and alternate.
+  [T.VENT]: 4,
+  [T.FORGE]: 4,
+  [T.SPRING]: 4,
+  // The wetlands breathe on a slower clock than the sea does, and that is the
+  // point of animating them at all: marsh water barely moves, so four frames of
+  // a single drifting scum ring is the difference between "stagnant" and
+  // "painted". The glowcaps pulse on the same clock, which is what ties the
+  // light in the fog to the water it is standing in.
+  [T.MIRE_WATER]: 4,
+  [T.MIRE_DEEP]: 4,
+  [T.GLOWCAP]: 4,
+  // The Aurelians. A living conduit is a current, so it has to be seen moving
+  // or the whole idea of the place -- power running through the floor from the
+  // rings to the shaft -- is a caption rather than a picture. Four frames of a
+  // pulse travelling one tile length, which loops seamlessly because the pulse
+  // that leaves the right edge is the one entering the left. The magma shares
+  // the clock, so the shaft and the grooves round it breathe together.
+  [T.AUR_VEIN_LIT]: 4,
+  [T.TEMPLE_MAGMA]: 4,
+  // Embercoil Pass. Lava is the only thing on the route that must move -- a
+  // still lava flow is an orange carpet and reads as decoration, and the whole
+  // argument of the map is that the ground is dangerous. The crust it cools
+  // into breathes on the same clock through its cracks, and so do the vents and
+  // the springs, so the entire route pulses as one system: it is all the same
+  // fire, seen through different amounts of rock and water.
+  [T.LAVA]: 4,
+  [T.FUMAROLE]: 4,
+  [T.SPRING_SHALLOW]: 4,
+  [T.SPRING_DEEP]: 4,
 };
 
 /** How long one frame of an animated tile is held, in milliseconds. */
@@ -864,6 +1264,80 @@ export class Tileset {
       case T.GREAT_ROOT_L: this.greatRoot(px, -1); break;
       case T.GREAT_ROOT_C: this.greatRoot(px, 0); break;
       case T.GREAT_ROOT_R: this.greatRoot(px, 1); break;
+      case T.BASALT: this.basalt(px, fill, rng, 'ground'); break;
+      case T.BASALT_WALL: this.basalt(px, fill, rng, 'wall'); break;
+      case T.BASALT_WINDOW: this.basalt(px, fill, rng, 'window'); break;
+      case T.ROOF_COPPER_L: this.shingleRoof(px, fill, 'left', 'copper'); break;
+      case T.ROOF_COPPER: this.shingleRoof(px, fill, 'mid', 'copper'); break;
+      case T.ROOF_COPPER_R: this.shingleRoof(px, fill, 'right', 'copper'); break;
+      case T.SPRING: this.spring(px, fill); break;
+      // A vent and a forge mouth are both ground tiles, so both lay their own
+      // rock down first. They could have been overlays -- they are transparent
+      // outside the opening -- but an overlay on the row a character is standing
+      // on is drawn *after* them, and a crack in the road that paints over your
+      // boots reads as a crack you are standing behind.
+      case T.VENT: this.basalt(px, fill, rng, 'ground'); this.vent(px); break;
+      case T.FORGE: this.basalt(px, fill, rng, 'wall'); this.forge(px); break;
+      case T.PIPE_H: this.pipe(px, 'h'); break;
+      case T.PIPE_V: this.pipe(px, 'v'); break;
+      case T.PIPE_RISER: this.pipe(px, 'riser'); break;
+      case T.LAMP_EMBER: this.emberLamp(px); break;
+      case T.BASALT_DOOR: this.basalt(px, fill, rng, 'wall'); this.basaltDoor(px); break;
+      case T.SEALED_GATE: this.sealedGate(px, fill); break;
+      case T.SIGN_EMBER: this.emberSign(px); break;
+      case T.MIRE_MUD: this.peat(px, fill, rng); break;
+      case T.MIRE_WATER: this.mireWater(px, fill, rng, false); break;
+      case T.MIRE_DEEP: this.mireWater(px, fill, rng, true); break;
+      case T.REEDS: this.reeds(px, fill, rng); break;
+      case T.SEDGE: this.sedge(px, fill, rng); break;
+      case T.BOARDWALK: this.boardwalk(px, fill, rng); break;
+      case T.BOARD_RAIL: this.boardRail(px); break;
+      case T.MANGROVE: this.mangrove(px, fill, rng); break;
+      case T.GLOWCAP: this.glowcap(px, fill, rng); break;
+      case T.STILT_POST: this.stiltPost(px, fill, rng); break;
+      case T.MOORED_BOAT: this.mooredBoat(px, fill, rng); break;
+      case T.LAMP_MIRE: this.mireLantern(px); break;
+      case T.ROOF_THATCH_L: this.thatchRoof(px, fill, 'left'); break;
+      case T.ROOF_THATCH: this.thatchRoof(px, fill, 'mid'); break;
+      case T.ROOF_THATCH_R: this.thatchRoof(px, fill, 'right'); break;
+      case T.WALL_TAR: this.tarWall(px, fill, 'plain'); break;
+      case T.WALL_TAR_WINDOW: this.tarWall(px, fill, 'window'); break;
+      case T.WALL_TAR_PLANT: this.tarWall(px, fill, 'plant'); break;
+      case T.DOOR_TAR: this.tarWall(px, fill, 'door'); break;
+      case T.MIRE_POST: this.mirePost(px); break;
+      case T.AUR_WALL: this.aurWall(px, fill); break;
+      case T.AUR_FLOOR: this.aurFloor(px, fill, false); break;
+      case T.AUR_GLYPH: this.aurFloor(px, fill, true); break;
+      case T.AUR_VEIN: this.aurVein(px, fill, false); break;
+      case T.AUR_VEIN_LIT: this.aurVein(px, fill, true); break;
+      case T.AUR_RING: this.aurRing(px); break;
+      case T.AUR_ASH: this.aurAsh(px, fill, rng); break;
+      case T.AUR_SEAT: this.aurSeat(px); break;
+      case T.TEMPLE_MAGMA: this.magma(px, fill); break;
+      // --- Embercoil Pass. None of these is passed `rng`, on purpose: see the
+      // note on the enum entries. They draw from position hashes only.
+      case T.ASH: this.ash(px, fill, 0); break;
+      case T.ASH_DRIFT: this.ash(px, fill, 1); break;
+      case T.CINDER_ROAD: this.cinderRoad(px, fill); break;
+      case T.EMBER_SCRUB: this.emberScrub(px, fill); break;
+      case T.LAVA: this.lava(px, fill); break;
+      case T.LAVA_CRUST: this.lavaCrust(px, fill); break;
+      case T.FUMAROLE: this.fumarole(px, fill); break;
+      case T.CHAR_SNAG: this.charSnag(px, fill); break;
+      case T.BASALT_ROCK: this.basaltRock(px, fill, false); break;
+      case T.BASALT_CRAG: this.basaltRock(px, fill, true); break;
+      case T.BASALT_FACE: this.basaltCliff(px, fill, false); break;
+      case T.BASALT_TOP: this.basaltCliff(px, fill, true); break;
+      case T.ASH_LEDGE: this.ashLedge(px, fill); break;
+      case T.SPRING_SHALLOW: this.mineralPool(px, fill, false); break;
+      case T.SPRING_DEEP: this.mineralPool(px, fill, true); break;
+      case T.MESH_FENCE_H: this.meshFence(px, fill, true); break;
+      case T.MESH_FENCE_V: this.meshFence(px, fill, false); break;
+      case T.SURVEY_MAST: this.surveyMast(px); break;
+      case T.GENERATOR: this.generator(px); break;
+      case T.SPOIL_HEAP: this.spoilHeap(px); break;
+      case T.CRATE_STACK: this.crateStack(px); break;
+      case T.VENT_MOUTH: this.ventMouth(px, fill); break;
       default: fill('#ff00ff'); break; // loud, so a missing tile is obvious
     }
   }
@@ -2810,6 +3284,13 @@ export class Tileset {
     // beside the new turf read as more slate rather than as the third material
     // it is there to be.
     if (hue === 'moss') return ['#1c4740', '#2b6a5d', '#3d8f7d', '#59b39c', '#87d6bd'];
+    // Emberfall's roofs are sheet copper, and old sheet copper is darker and
+    // bluer than the moss ramp above -- which is a *shutter* green, chosen to
+    // sit beside foliage. This one has to sit on black rock under an orange
+    // sky, so it is pushed deeper and cooler: the town's only cold colour.
+    if (hue === 'copper') {
+      return [PAL.copperDeep, PAL.copperDark, PAL.copperMid, PAL.copperLight, PAL.copperPale];
+    }
     return [PAL.roofDeep, PAL.roofDark, PAL.roofMid, PAL.roofLight, PAL.roofPale];
   }
 
@@ -4724,4 +5205,2615 @@ export class Tileset {
       px(19, 19, '#8a6c30'); px(18, 19, '#8a6c30'); px(19, 18, '#8a6c30');
     }
   }
+
+  /* ----------------------------------------------------------- Emberfall */
+
+  /**
+   * Basalt: the street, the wall and the window of one city.
+   *
+   * Three cuts of the same rock rather than three tiles, because that is
+   * literally true of the place -- Emberfall is built out of the flow it stands
+   * on, and the mason who paved the street faced the house behind it out of the
+   * same quarry the same week.
+   *
+   * The one thing that had to be got right is that basalt is *columnar*: it
+   * cools into five- and six-sided prisms, so the joints run at angles and
+   * never line up into courses. Laying it like the stone floor tile -- offset
+   * brick courses -- is what made the first version read as a grey pavement
+   * somebody had turned the brightness down on. Here the setts come from
+   * hashing a coarse lattice with a per-row skew, so no two joints agree, and
+   * that irregularity is doing all the work of saying "this is not cut stone,
+   * it is broken rock".
+   */
+  private basalt(
+    px: Px, fill: (c: string) => void, rng: Rng,
+    kind: 'ground' | 'wall' | 'window',
+  ): void {
+    fill(PAL.basaltMid);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    for (let y = 0; y < S; y++) {
+      // The skew is what breaks the courses. It has to wrap over the cell or
+      // every tile shows the same diagonal and the street reads as corduroy.
+      const skew = Math.round(Math.sin((y / S) * Math.PI * 2) * 2);
+      for (let x = 0; x < S; x++) {
+        const cx = Math.floor((x + skew) / 5);
+        const cy = Math.floor(y / 4);
+        const n = hash2(cx, cy, 617);
+        let c: string = n > 0.72 ? PAL.basaltLight : n < 0.3 ? PAL.basaltDark : PAL.basaltMid;
+        // Vesicles: basalt cools full of gas bubbles, and a fine speckle of
+        // them is the difference between rock and a flat swatch.
+        if ((x * 7 + y * 5) % 13 === 3) c = PAL.basaltDeep;
+        else if ((x * 3 + y * 11) % 17 === 5) c = PAL.basaltPale;
+        // Joints, drawn one step down rather than in the deepest tone: a black
+        // grid over a black street leaves nothing for a sprite to stand out
+        // against.
+        if ((x + skew) % 5 === 0 || y % 4 === 3) c = PAL.basaltDark;
+        P(x, y, c);
+      }
+    }
+
+    if (kind === 'ground') {
+      // Rust where the steam gets at it, and it gets at everything here. Two
+      // small stains rather than an even wash, so a street has weather in it.
+      for (let i = 0; i < 3; i++) {
+        const sx = rng.below(S - 2), sy = rng.below(S - 2);
+        P(sx, sy, PAL.basaltRust);
+        P(sx + 1, sy, PAL.basaltRust);
+        P(sx, sy + 1, mixDown(PAL.basaltRust));
+      }
+      return;
+    }
+
+    // A wall is the same rock, but *coursed* -- squared off and laid by a mason
+    // rather than a road gang -- with a copper drip course along the head. The
+    // copper is what ties a building to its roof and is the only reason a black
+    // wall under a green roof does not look like two unrelated objects.
+    for (let x = 0; x < S; x++) {
+      P(x, 0, PAL.copperDark);
+      P(x, 1, x % 3 === 0 ? PAL.copperLight : PAL.copperMid);
+      P(x, 2, PAL.copperDeep);
+      P(x, 15, PAL.basaltDeep);
+    }
+
+    if (kind === 'window') {
+      // Lit from inside. Emberfall's windows are small and deep because the
+      // walls are thick, and every one of them is orange after dark -- the town
+      // has no other light source and never has had.
+      //
+      // Small, and deliberately so. A window that fills two thirds of its cell
+      // turns a terrace into a ribbon of lit boxes with no wall left between
+      // them, which is what the first Emberfall street came out as: the eye
+      // reads the orange as the building and the black as the gap. Four units
+      // of rock on each side is what puts the wall back.
+      for (let y = 5; y <= 11; y++) {
+        for (let x = 4; x <= 11; x++) {
+          const edge = x === 4 || x === 11 || y === 5 || y === 11;
+          P(x, y, edge ? PAL.basaltDeep : y <= 7 ? PAL.emberLight : PAL.emberMid);
+        }
+      }
+      // Reveal: the sill catches the light and the head throws a shadow, which
+      // is what makes the opening read as cut through something thick.
+      for (let x = 4; x <= 11; x++) { P(x, 12, PAL.basaltPale); P(x, 6, PAL.emberPale); }
+      for (let y = 6; y <= 11; y++) P(7, y, PAL.basaltDeep);   // glazing bar
+      for (let x = 5; x <= 10; x++) P(x, 9, PAL.basaltDeep);
+    }
+  }
+
+  /**
+   * A hot spring, seen from above.
+   *
+   * The whole city is here because of these, so they cannot read as ordinary
+   * water with a filter on it. Three things separate them: the colour is
+   * mineral rather than marine -- chalky green-blue, opaque, nothing visible
+   * under the surface; the rim is *sinter*, the pale crust the water lays down
+   * as it cools, which no other water in the game has; and the movement is a
+   * slow convective roll from the middle outwards instead of wind chop, so it
+   * looks like something rising rather than something blowing across.
+   */
+  private spring(px: Px, fill: (c: string) => void): void {
+    fill(PAL.springMid);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    const nf = ANIMATED[T.SPRING] ?? 1;
+    const TAU = Math.PI * 2;
+    const phase = (animFrame / nf) * TAU;
+
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        /*
+         * Two wrapping octaves for the body and a wrapping swell over them.
+         *
+         * The swell used to be radial -- distance from the middle of the cell,
+         * which is a lovely convection roll for exactly one tile and stamps a
+         * horseshoe into every cell of a pool eight across. Anything measured
+         * from the centre of a tile becomes the tile's signature the moment it
+         * is repeated. This wave has whole periods inside the cell in both
+         * axes, so it meets itself at every seam and the pool moves as one
+         * surface.
+         */
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 16, 41) * 0.62
+          + wrapNoise(x * DETAIL, y * DETAIL, 8, 97) * 0.38;
+        const swell = Math.sin((x / S) * TAU * 2 - (y / S) * TAU - phase) * 0.5 + 0.5;
+        const v = n * 0.82 + swell * 0.18;
+        P(x, y, v > 0.7 ? PAL.springPale
+          : v > 0.56 ? PAL.springLight
+            : v < 0.34 ? PAL.springDeep : PAL.springMid);
+      }
+    }
+
+    // Steam. Translucent and thin, drifting up and left with the frame -- a
+    // solid plume at this size is a cloud sitting in a puddle.
+    const drift = Math.round((animFrame / nf) * S);
+    for (let i = 0; i < 5; i++) {
+      const bx = Math.floor(hash2(i, 3, 401) * S);
+      const by = Math.floor(hash2(i, 4, 409) * S);
+      for (let j = 0; j < 4; j++) {
+        const x = (bx + j + drift) % S;
+        const y = (by - j + S) % S;
+        P(x, y, j < 2 ? 'rgba(240,252,248,0.42)' : 'rgba(240,252,248,0.20)');
+      }
+    }
+
+    /*
+     * No rim.
+     *
+     * The first cut of this drew a sinter crust round all four edges of the
+     * tile, which is right for one pool and catastrophic for a pool eight
+     * cells across: every cell then has its own frame, and a spring terrace
+     * comes out as a wall of bathroom tiles. It is the same trap the tall
+     * grass and the great tree both had to be got out of -- anything a tile
+     * draws at its own border becomes a grid the moment two of them touch.
+     *
+     * So the water is seamless, and the crust is a ring of paving stamped
+     * round the pool by the map, which knows where the pool actually ends.
+     */
+  }
+
+  /**
+   * A fissure in the street with fire a long way down it.
+   *
+   * Walkable on purpose. Emberfall does not fence these off -- there are too
+   * many and they move -- so the town paves round them and steps over them, and
+   * being able to stand on one is the single strongest thing the map can say
+   * about what living here is like. Transparent everywhere but the crack, so it
+   * cuts through whatever paving the map put underneath.
+   */
+  private vent(px: Px): void {
+    const P = this.unit(px);
+    const nf = ANIMATED[T.VENT] ?? 1;
+    // A slow breath rather than a flicker: the heat below is not a candle.
+    const beat = Math.sin((animFrame / nf) * Math.PI * 2) * 0.5 + 0.5;
+
+    // The crack, as a run of cells of varying width down the middle of the
+    // tile. Widths come from a hash so no two vents in a street are the same
+    // shape, and the profile closes at both ends so a single tile reads as one
+    // fissure rather than as a channel running off the edges.
+    for (let y = 2; y <= 13; y++) {
+      const t = (y - 2) / 11;
+      const swell = Math.sin(t * Math.PI);
+      const half = Math.max(0, Math.round(swell * 2.6 + hash2(y, 0, 733) * 1.2 - 0.4));
+      if (half <= 0) continue;
+      const cx = 8 + Math.round(Math.sin(t * Math.PI * 1.6) * 2);
+      for (let x = cx - half; x <= cx + half; x++) {
+        const d = Math.abs(x - cx) / (half + 0.01);
+        // Cool crust at the lips, then the ramp down into it. The brightest
+        // pixel is a single one at the core, because that is what makes a hole
+        // look deep rather than like a painted stripe.
+        P(x, y, d > 0.8 ? PAL.basaltDeep
+          : d > 0.5 ? PAL.emberDark
+            : d > 0.2 ? PAL.emberMid
+              : beat > 0.5 ? PAL.emberWhite : PAL.emberPale);
+      }
+    }
+
+    // The light it throws on the paving around it, which is most of what sells
+    // it: a glow that appears only inside the crack reads as a twig somebody
+    // dropped in the road. It has to reach the whole cell and it has to be
+    // strong enough to see at 1x, or the fissures in a street of black rock
+    // simply do not register as light coming out of the ground.
+    for (let y = 0; y < TILE_SIZE; y++) {
+      for (let x = 0; x < TILE_SIZE; x++) {
+        const d = Math.abs(x - 8) + Math.abs(y - 8) * 0.7;
+        if (d < 3 || d > 13) continue;
+        P(x, y, d > 9 ? `rgba(255,140,40,${(0.08 + beat * 0.04).toFixed(2)})`
+          : d > 6 ? `rgba(255,150,50,${(0.16 + beat * 0.06).toFixed(2)})`
+            : `rgba(255,165,60,${(0.26 + beat * 0.08).toFixed(2)})`);
+      }
+    }
+  }
+
+  /**
+   * Emberfall's front door.
+   *
+   * Every other town in Caelora uses the porch door, and it is the right tile
+   * for a plastered cottage with a garden in front of it. Dropped into a
+   * street cut out of black rock it is a square of cream with a blue panel in
+   * it, and the eye reads it as damage.
+   *
+   * So this is the same *job* done in the city's own materials: the opening is
+   * cut straight through the wall with a copper lintel over it, the door
+   * itself is planked and studded, and the threshold is lit from inside.
+   * It still has to be findable from across a district -- twelve doors in a
+   * city this size is not many -- and the warm spill on the step is what does
+   * that, without the frontage having to stop being basalt.
+   */
+  private basaltDoor(px: Px): void {
+    const P = this.unit(px);
+
+    // Copper lintel and the shadow it throws down the head of the opening.
+    for (let x = 3; x <= 12; x++) { P(x, 3, PAL.copperDark); P(x, 4, PAL.copperMid); }
+    for (let x = 4; x <= 11; x++) P(x, 4, PAL.copperLight);
+    P(3, 4, PAL.outline); P(12, 4, PAL.outline);
+
+    // The reveal: two units of rock on each side, lit on the left and shaded
+    // on the right, so the opening reads as cut through something thick.
+    for (let y = 5; y <= 15; y++) {
+      P(3, y, PAL.basaltPale); P(4, y, PAL.basaltLight);
+      P(11, y, PAL.basaltDark); P(12, y, PAL.basaltDeep);
+    }
+
+    // The door. Planks running down, a copper strap across, and a ring handle.
+    for (let y = 5; y <= 15; y++) {
+      for (let x = 5; x <= 10; x++) {
+        const plank = (x - 5) % 3 === 0;
+        P(x, y, plank ? PAL.trunkDeep : (x - 5) % 3 === 1 ? PAL.trunkMid : PAL.trunkDark);
+      }
+    }
+    for (let x = 5; x <= 10; x++) { P(x, 8, PAL.copperBright); P(x, 9, PAL.copperDeep); }
+    for (let x = 5; x <= 10; x++) P(x, 5, PAL.outline);
+    P(9, 12, PAL.copperBright); P(9, 11, PAL.copperBright);
+
+    // Light under the door and on the step. This is the findable part.
+    for (let x = 4; x <= 11; x++) P(x, 15, 'rgba(255,170,70,0.34)');
+    for (let x = 5; x <= 10; x++) P(x, 14, 'rgba(255,190,100,0.20)');
+  }
+
+  /**
+   * Emberfall's notice board.
+   *
+   * A sign object in this engine only carries text; the *post* is a terrain
+   * tile, and if the map does not draw one the writing is invisible and the
+   * player has to press the button at a random piece of empty street to find
+   * it. Eight pieces of the city's own storytelling were sitting on bare
+   * paving before this existed.
+   *
+   * The stock signpost cannot be used here for the same reason the stock rock
+   * cannot: it is a post standing on turf, and it puts a bright green square
+   * in the middle of a black road. This is the same object in the city's
+   * materials -- a copper plate bolted to a basalt post -- and it is an
+   * overlay with a transparent ground, so it stands on street, slag and
+   * causeway alike.
+   */
+  private emberSign(px: Px): void {
+    const P = this.unit(px);
+
+    // The post: basalt, squared off, with the light on its left face.
+    for (let y = 8; y <= 14; y++) {
+      P(6, y, PAL.outline); P(7, y, PAL.basaltPale);
+      P(8, y, PAL.basaltDark); P(9, y, PAL.outline);
+    }
+
+    // The plate. Copper, weathered green over most of it and rubbed back to
+    // bright metal along the bottom edge where people lean on it.
+    for (let y = 2; y <= 9; y++) {
+      for (let x = 2; x <= 13; x++) {
+        const edge = x === 2 || x === 13 || y === 2 || y === 9;
+        P(x, y, edge ? PAL.outline
+          : y <= 3 ? PAL.copperPale
+            : y >= 8 ? PAL.copperDeep : PAL.copperMid);
+      }
+    }
+    for (let x = 3; x <= 12; x++) P(x, 8, PAL.copperBright);
+    // Lines of writing, as marks rather than letters: at this size a legible
+    // glyph is impossible and a suggestion of text is what the era used.
+    for (const [y, x0, x1] of [[4, 4, 11], [5, 4, 9], [6, 4, 12], [7, 4, 8]]) {
+      for (let x = x0; x <= x1; x++) if ((x + y) % 2 === 0) P(x, y, PAL.copperDeep);
+    }
+    // Two bolts, so the plate is fixed to something.
+    P(4, 3, PAL.copperPale); P(11, 3, PAL.copperPale);
+
+    for (let x = 5; x <= 10; x++) { P(x, 15, PAL.basaltDeep); }
+    this.footShadow(P, 5, 10, 15);
+  }
+
+  /**
+   * The sealed gate at the end of the causeway.
+   *
+   * The one thing in Emberfall that Emberfall did not build. A single slab of
+   * pale stone set into the caldera wall, with no seam, no hinge and nothing
+   * that could be a lock -- and a palm-sized hollow cut dead centre, ringed
+   * with the spiral marks that turn up on every Aurelian thing in Caelora.
+   *
+   * The whole district is arranged around not being able to open it, so the
+   * tile has two jobs and only two: be obviously *older and other* than
+   * everything round it, and put that hollow where a player will see it and
+   * think about what is in their bag.
+   */
+  private sealedGate(px: Px, fill: (c: string) => void): void {
+    fill(PAL.stoneDark);
+    const P = this.unit(px);
+
+    // The slab. Faintly warm-white and almost featureless: the point of the
+    // material is that nobody here has anything like it.
+    for (let y = 0; y < TILE_SIZE; y++) {
+      for (let x = 0; x < TILE_SIZE; x++) {
+        const edge = x <= 1 || x >= 14 || y <= 1;
+        P(x, y, edge ? PAL.basaltDeep
+          : hash2(x >> 1, y >> 1, 909) > 0.72 ? PAL.trimPale : PAL.trimMid);
+      }
+    }
+    // Chisel scars, stopping short of the middle. Four generations of them.
+    for (const [sx, sy] of [[3, 4], [12, 6], [4, 12], [13, 11], [3, 8]]) {
+      P(sx, sy, PAL.trimShade); P(sx + 1, sy, PAL.stoneDark);
+    }
+
+    // The spiral ring, then the hollow inside it. The hollow is drawn as a
+    // shadowed dish rather than a hole: there is nothing behind it.
+    for (let y = 3; y <= 12; y++) {
+      for (let x = 3; x <= 12; x++) {
+        const d = Math.hypot(x - 7.5, y - 7.5);
+        if (d > 4.6 || d < 3.4) continue;
+        // Broken into arcs, so it reads as carving rather than as a drawn
+        // circle: an unbroken ring at this size is a washer.
+        if ((x + y) % 3 === 0) continue;
+        P(x, y, PAL.stoneDeep);
+      }
+    }
+    for (let y = 4; y <= 11; y++) {
+      for (let x = 4; x <= 11; x++) {
+        const d = Math.hypot(x - 7.5, y - 7.5);
+        if (d > 2.8) continue;
+        P(x, y, d > 2.2 ? PAL.stoneDark : x + y < 15 ? PAL.stoneDeep : PAL.stoneMid);
+      }
+    }
+    // A single lit pixel on the lower right of the dish, so it has depth and
+    // is not a grey blot.
+    P(9, 9, PAL.stoneLight); P(6, 6, '#1a1820');
+
+    // The rock it is set into, closing the tile so it belongs to the cliff.
+    for (let x = 0; x < TILE_SIZE; x++) { P(x, 0, PAL.outline); P(x, 15, PAL.basaltDeep); }
+    for (let y = 0; y < TILE_SIZE; y++) { P(0, y, PAL.outline); P(15, y, PAL.outline); }
+  }
+
+  /**
+   * Steam main.
+   *
+   * The pipes are the reason the city works and they are above ground because
+   * nobody digs a trench in basalt twice: they run along the house fronts on
+   * short piers, and where they have to cross a street they climb. Copper,
+   * lagged in places, weeping at every joint.
+   *
+   * Overlay and solid: a main is chest-high, so it blocks the street it runs
+   * along, and the map uses that -- it is what turns an open square into a
+   * route with sides to it.
+   */
+  private pipe(px: Px, part: 'h' | 'v' | 'riser'): void {
+    const P = this.unit(px);
+
+    /** One length of pipe, drawn as a lit cylinder across a span. */
+    const barrel = (a0: number, a1: number, c0: number, c1: number, horizontal: boolean) => {
+      for (let a = a0; a <= a1; a++) {
+        for (let c = c0; c <= c1; c++) {
+          const t = (c - c0) / Math.max(1, c1 - c0);
+          // Light from the upper left, so the highlight is a third of the way
+          // across and the underside carries the outline.
+          const col = t < 0.12 ? PAL.outline
+            : t < 0.3 ? PAL.copperPale
+              : t < 0.5 ? PAL.copperLight
+                : t < 0.74 ? PAL.copperMid
+                  : t < 0.9 ? PAL.copperDark : PAL.outline;
+          if (horizontal) P(a, c, col); else P(c, a, col);
+        }
+      }
+    };
+
+    if (part !== 'v') {
+      barrel(0, TILE_SIZE - 1, 5, 12, true);
+      // Flange every tile, so a long run has joints in it rather than being an
+      // extruded tube from one side of town to the other.
+      for (let c = 4; c <= 13; c++) {
+        P(3, c, c === 4 || c === 13 ? PAL.outline : PAL.copperBright);
+        P(4, c, c === 4 || c === 13 ? PAL.outline : PAL.copperDark);
+      }
+      // Weep: every joint in this town drips, and the stain under it is warm.
+      P(3, 14, 'rgba(255,180,90,0.30)'); P(4, 14, 'rgba(255,180,90,0.18)');
+    }
+    if (part !== 'h') {
+      barrel(0, TILE_SIZE - 1, 5, 12, false);
+      for (let c = 4; c <= 13; c++) {
+        P(c, 3, c === 4 || c === 13 ? PAL.outline : PAL.copperBright);
+        P(c, 4, c === 4 || c === 13 ? PAL.outline : PAL.copperDark);
+      }
+    }
+
+    if (part === 'riser') {
+      // Valve wheel and a bleed of steam off the gland. The wheel is the only
+      // circle in the whole material and it is what makes the stack read as
+      // plant rather than as a post.
+      for (let y = 4; y <= 10; y++) {
+        for (let x = 1; x <= 7; x++) {
+          const d = Math.hypot(x - 4, y - 7);
+          if (d > 3.4) continue;
+          P(x, y, d > 2.6 ? PAL.outline : d > 1.6 ? PAL.copperBright : 'rgba(0,0,0,0)');
+        }
+      }
+      for (let x = 2; x <= 6; x++) P(x, 7, PAL.copperBright);
+      for (let y = 5; y <= 9; y++) P(4, y, PAL.copperBright);
+      P(3, 6, PAL.emberPale);
+      for (let i = 0; i < 4; i++) {
+        P(12 + (i % 2), 4 - i, i < 2 ? 'rgba(240,252,248,0.40)' : 'rgba(240,252,248,0.20)');
+      }
+    }
+  }
+
+  /**
+   * Emberfall's street lamp.
+   *
+   * Not the civic lamp with a different bulb in it. Nothing here burns oil --
+   * the lamps are tapped straight off the steam mains, so the standard is a
+   * copper pipe with a valve at the foot, and the head is a plain glass
+   * cylinder with a gas flame in it. Cheaper than the lamps in Tideglass and
+   * about four times as bright, which is exactly the impression the town wants
+   * to give: heat is the one thing it has never had to pay for.
+   */
+  private emberLamp(px: Px): void {
+    const P = this.unit(px);
+
+    for (let y = 0; y <= 11; y++) {
+      for (let x = 0; x < TILE_SIZE; x++) {
+        const d = Math.abs(x - 7.5) + Math.abs(y - 4) * 0.9;
+        if (d > 9) continue;
+        P(x, y, d > 6 ? 'rgba(255,146,44,0.12)' : 'rgba(255,170,70,0.26)');
+      }
+    }
+
+    // The glass: a cylinder, brightest in its lower half where the flame is.
+    for (let y = 1; y <= 8; y++) {
+      for (let x = 5; x <= 10; x++) {
+        const frame = x === 5 || x === 10;
+        P(x, y, frame ? PAL.outline
+          : y <= 2 ? PAL.copperDark
+            : y >= 4 && x >= 6 && x <= 9 ? (y >= 6 ? PAL.emberWhite : PAL.emberPale)
+              : PAL.emberLight);
+      }
+    }
+    // The flame itself, a two-pixel tongue with white at the root.
+    P(7, 6, PAL.emberWhite); P(8, 6, PAL.emberWhite);
+    P(7, 5, PAL.emberPale); P(8, 5, PAL.emberLight);
+    P(7, 4, PAL.emberMid);
+    // Copper cowl over the top, so rain does not get in and the light is
+    // thrown down onto the street rather than up at nothing.
+    for (let x = 3; x <= 12; x++) P(x, 0, PAL.copperMid);
+    for (let x = 4; x <= 11; x++) P(x, 1, PAL.copperPale);
+    P(3, 1, PAL.outline); P(12, 1, PAL.outline);
+
+    // Standard: a copper pipe rather than a fluted column, with the tap on it.
+    for (let y = 9; y <= 13; y++) {
+      P(6, y, PAL.outline); P(7, y, PAL.copperPale);
+      P(8, y, PAL.copperDark); P(9, y, PAL.outline);
+    }
+    P(5, 11, PAL.copperBright); P(10, 11, PAL.copperBright);   // the tap handle
+    for (let x = 5; x <= 10; x++) { P(x, 14, PAL.basaltDark); P(x, 15, PAL.outline); }
+    P(4, 15, PAL.outline); P(11, 15, PAL.outline);
+    this.footShadow(P, 4, 11, 15);
+  }
+
+  /**
+   * A forge mouth, open onto the street.
+   *
+   * The forge district is the economy, not the scenery, so the workshops are
+   * open-fronted the way a real smithy is -- you want the heat out of the room
+   * and you want passers-by to see the work. What the tile has to carry is the
+   * *interior* being brighter than the outdoors, which is the one lighting
+   * relationship that instantly says furnace.
+   *
+   * Overlay and solid: it is a wall opening, and it sits in a run of basalt.
+   */
+  private forge(px: Px): void {
+    const P = this.unit(px);
+    const nf = ANIMATED[T.FORGE] ?? 1;
+    const beat = Math.sin((animFrame / nf) * Math.PI * 2) * 0.5 + 0.5;
+
+    // The arch. Cut square with a splayed head, because basalt does not carry
+    // a voussoir arch and a mason here would corbel it instead.
+    for (let y = 2; y <= 15; y++) {
+      const inset = y <= 3 ? 5 : y <= 4 ? 4 : 3;
+      for (let x = inset; x <= 15 - inset; x++) {
+        const t = (y - 2) / 13;
+        // Deepest at the back of the opening, hottest at the hearth line about
+        // two thirds down, then the lit floor of the shop in front of it.
+        const heat = Math.max(0, 1 - Math.abs(t - 0.62) * 2.6);
+        const v = heat * (0.72 + beat * 0.28);
+        P(x, y, v > 0.82 ? PAL.emberWhite
+          : v > 0.6 ? PAL.emberPale
+            : v > 0.38 ? PAL.emberLight
+              : v > 0.18 ? PAL.emberMid
+                : v > 0.06 ? PAL.emberDark : PAL.emberDeep);
+      }
+    }
+    // The anvil, in silhouette against it. One black shape in the middle of the
+    // glow is worth more than any amount of detail in the fire behind it.
+    for (let x = 6; x <= 10; x++) P(x, 11, PAL.basaltDeep);
+    for (let x = 7; x <= 9; x++) P(x, 12, PAL.basaltDeep);
+    P(8, 13, PAL.basaltDeep); P(7, 14, PAL.basaltDeep);
+    P(8, 14, PAL.basaltDeep); P(9, 14, PAL.basaltDeep);
+    P(11, 10, PAL.basaltDeep); P(11, 11, PAL.basaltDeep);      // the hardy tools
+
+    // Jambs and lintel, in the wall's own rock so the opening belongs to it.
+    for (let y = 2; y <= 15; y++) {
+      const inset = y <= 3 ? 5 : y <= 4 ? 4 : 3;
+      P(inset - 1, y, PAL.basaltDeep);
+      P(inset - 2, y, PAL.basaltDark);
+      P(16 - inset, y, PAL.basaltDeep);
+      P(17 - inset, y, PAL.basaltDark);
+    }
+    for (let x = 2; x <= 13; x++) { P(x, 1, PAL.basaltDeep); P(x, 0, PAL.copperDark); }
+    for (let x = 3; x <= 12; x++) P(x, 0, PAL.copperMid);
+    // The light thrown out onto the street in front of the opening.
+    for (let x = 2; x <= 13; x++) P(x, 15, `rgba(255,150,50,${(0.22 + beat * 0.10).toFixed(2)})`);
+  }
+
+  /* ----------------------------------------------------------- Aurelian */
+
+  /**
+   * Aurelian floor, and the same floor with a spiral cut into it.
+   *
+   * The one idea the whole material family hangs off: this civilisation cut
+   * stone to a tolerance. Every other floor in the game is laid -- boards
+   * nailed down, setts rammed into sand, slabs dressed by eye -- and reads as
+   * laid, because the joints wander and the pieces are different sizes. These
+   * are machined plates on an eight-unit pitch with a bronze pin at the centre
+   * of each, so a room of them is flat, regular and slightly inhuman, and the
+   * player knows they are somewhere else before anybody says a word about it.
+   *
+   * The variation is in the *block* each plate was cut from rather than in the
+   * texture of any one plate, which is why the tone is keyed off the plate
+   * index and the mottle inside it is kept to a whisper. Noise across the face
+   * of a machined plate would undo the entire point of it.
+   */
+  private aurFloor(px: Px, fill: (c: string) => void, glyph: boolean): void {
+    fill(AUR.mid);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const n = hash2(Math.floor(x / 8), Math.floor(y / 8), 41);
+        let c: string = n > 0.60 ? AUR.light : n < 0.35 ? AUR.dark : AUR.mid;
+        if ((x * 5 + y * 3) % 23 === 6) c = AUR.pale;
+        // ONE unit of joint, ONE step down, and nothing else. The first cut of
+        // this tile had a lit lip on two sides of every plate and a bronze pin
+        // in four colours at the middle of each, which at sixteen pixels is not
+        // a floor, it is a wall of gold lockers -- and the room stood on it
+        // could not be seen past it. A machined floor is supposed to be the
+        // quietest surface in the game.
+        if (x % 8 === 0 || y % 8 === 0) c = AUR.deep;
+        P(x, y, c);
+      }
+    }
+    // The pins. One to a plate, one unit, and dim.
+    for (const [cx, cy] of [[4, 4], [12, 4], [4, 12], [12, 12]] as const) P(cx, cy, AUR.goldDim);
+    if (!glyph) return;
+
+    // The spiral. Canon puts circles and spirals on the Tideheart's own frame,
+    // so the mark cut into the floor where one of their mechanisms stands is
+    // the same mark -- drawn as one continuous line of bronze rather than as a
+    // ring, because a ring is a decoration and a spiral is a diagram.
+    for (let i = 0; i <= 120; i++) {
+      const t = i / 120;
+      const a = t * Math.PI * 3.6;
+      const r = 1.4 + t * 5.4;
+      const gx = Math.round(7.5 + Math.cos(a) * r);
+      const gy = Math.round(7.5 + Math.sin(a) * r);
+      // Bronze laid INTO pale stone reads dark, not bright. Drawing the line
+      // in the lit end of the ramp put a spiral of highlight on a highlight.
+      P(gx, gy, AUR.gold);
+      P(gx, gy + 1, AUR.goldDim);
+    }
+  }
+
+  /**
+   * Aurelian wall.
+   *
+   * Basalt, cut with the same machine as the floor and half its brightness, so
+   * a room reads as a pale plate laid inside a dark box -- which is the whole
+   * silhouette of the temple seen from above.
+   *
+   * Coursed ashlar: eight-by-four blocks, courses offset by half a block, one
+   * unit of joint. The first cut of this tile was fluted on a four-unit rhythm
+   * instead, and a dark rectangle with a bright vertical bar every four pixels
+   * and a bronze line across the top of every tile is not a wall, it is a bank
+   * of lockers -- which is exactly what a gallery of it looked like. Coursing
+   * is what says masonry at this size, and it says it without a single bright
+   * pixel: the blocks differ from each other by one step of the ramp and the
+   * joint by two, and the eye assembles a wall out of that on its own.
+   */
+  private aurWall(px: Px, fill: (c: string) => void): void {
+    fill(AUR.wallMid);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    for (let y = 0; y < S; y++) {
+      const course = Math.floor(y / 4);
+      const offset = (course & 1) * 4;
+      for (let x = 0; x < S; x++) {
+        const bx = (x + offset) % 8;
+        const by = y % 4;
+        const n = hash2(Math.floor((x + offset) / 8), course, 63);
+        let c: string = n > 0.66 ? AUR.wallLight : n < 0.33 ? AUR.wallDark : AUR.wallMid;
+        if (hash2(x, y, 64) > 0.88) c = AUR.wallDeep;
+        // The lit head of the block, then the two joints. Light comes from the
+        // upper left everywhere in this game, so the head is lit and the bed
+        // and the left-hand joint are in shadow.
+        if (by === 0) c = n > 0.5 ? AUR.wallPale : AUR.wallLight;
+        else if (by === 3) c = AUR.wallDeep;
+        if (bx === 0) c = AUR.wallDeep;
+        P(x, y, c);
+      }
+    }
+  }
+
+  /**
+   * A seat, cut from one block.
+   *
+   * Furniture rather than architecture, and the distinction matters: a single
+   * cell of wall tile standing on its own in the middle of a floor reads as a
+   * hole in the floor, not as a thing in the room. This is an overlay with no
+   * ground of its own and a contact shadow under it, like every chair in every
+   * house in Caelora, so it sits on the plates instead of being cut out of
+   * them -- and it is drawn with its own row, so a player standing behind one
+   * is behind it.
+   *
+   * Eight of them ring the listening room, all facing in. They are the whole
+   * argument of the civilisation that built the place, made out of furniture.
+   */
+  private aurSeat(px: Px): void {
+    const P = this.unit(px);
+    // A TOP FACE and a FRONT FACE, and the outline only around the outside of
+    // both. The first cut of this was one square with a hard border all the
+    // way round it, which at this size is not a block, it is a hole in the
+    // floor -- and eight of them ringing the room read as eight open pits.
+    // Two faces at different values is the whole trick: the eye takes the
+    // brighter one as a surface it is looking down at.
+    for (let y = 3; y <= 8; y++) {
+      for (let x = 2; x <= 13; x++) {
+        const rim = y === 3 || x === 2 || x === 13;
+        P(x, y, rim ? AUR.outline : y <= 4 ? AUR.pale : AUR.light);
+      }
+    }
+    // The dish worn into the top, which is what says people sat here.
+    for (let x = 5; x <= 10; x++) { P(x, 6, AUR.mid); P(x, 7, AUR.dark); }
+    // The front, in real shadow. The value gap between the two faces is what
+    // does all the work: mixed from the light end of the ramp, as it was at
+    // first, the front came out the same value as the floor and the whole seat
+    // read as a pale square lying flat on it.
+    for (let y = 9; y <= 13; y++) {
+      for (let x = 2; x <= 13; x++) {
+        const rim = x === 2 || x === 13 || y === 13;
+        P(x, y, rim ? AUR.outline : y === 9 ? AUR.dark : AUR.deep);
+      }
+    }
+    for (let x = 3; x <= 12; x++) P(x, 12, AUR.cut);
+    // Two feet, so it is standing on the plates rather than sunk into them.
+    P(3, 13, AUR.outline); P(12, 13, AUR.outline);
+    for (let x = 5; x <= 10; x++) P(x, 13, AUR.cut);
+    this.footShadow(P, 2, 13, 14);
+  }
+
+  /**
+   * A conduit cut through the floor, dead or alive.
+   *
+   * Drawn as a cross with a boss at the middle rather than as a straight run,
+   * and that is the only reason the temple's circuit can be authored as ASCII
+   * art at all: every arm reaches the edge of the cell, so any two of these
+   * side by side join, a corner joins, a T joins, and a map author never has
+   * to think about which of nine tiles a bend needs. A straight run comes out
+   * beaded at each cell, which is what inlay of this kind actually looks like.
+   *
+   * The dead one is an empty stone channel. The living one is the same channel
+   * with the Tideheart's own blue-green in it, breathing on the shared clock,
+   * spilling a little light onto the plates either side. Two tiles rather than
+   * one tile with a state, because that is what lets the temple say "the coil
+   * above is off and the coil below is on" with nothing behind it but the map.
+   */
+  private aurVein(px: Px, fill: (c: string) => void, lit: boolean): void {
+    this.aurFloor(px, fill, false);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    const beat = lit ? 0.5 + 0.5 * Math.sin((animFrame / 4) * Math.PI * 2) : 0;
+    // Three steps down the channel, outside in. Dead, they run pale cut stone
+    // to shadow; alive, the same three carry the current and the middle one
+    // breathes on the shared clock.
+    const bed = lit ? AUR.glowDim : AUR.slotDark;
+    const body = lit ? (beat > 0.4 ? AUR.glowHi : AUR.glowMid) : AUR.slotDeep;
+    const core = lit ? (beat > 0.5 ? AUR.glowCore : AUR.glowHi) : AUR.slotDeep;
+
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const ax = Math.abs(x - 7.5);
+        const ay = Math.abs(y - 7.5);
+        // Arms two units either side of the centreline, and a boss at the
+        // crossing a little wider than they are. The first cut had the arms as
+        // wide as the boss, which turns a straight run into a row of plus
+        // signs; narrow arms and a round boss read as a channel with a bead in
+        // it, which is what inlay of this kind actually looks like.
+        const hx = ax <= 1.5, hy = ay <= 1.5;
+        const r = Math.hypot(x - 7.5, y - 7.5);
+        const boss = r <= 3.6;
+        if (!hx && !hy && !boss) {
+          // Light does not stop at the lip of the groove. The spill runs to the
+          // corners of the cell so a run of these reads as one lit channel
+          // rather than as a string of separate lamps -- and it is the only
+          // thing making the plates either side of the current look lit at all.
+          if (lit) {
+            const t = Math.min(ax, ay);
+            P(x, y, t < 3 ? AUR.spill : t < 5 ? AUR.spillFar : AUR.spillEdge);
+          }
+          continue;
+        }
+        // Depth into the channel. At a crossing the shallower of the two axes
+        // wins, which is what keeps the junction open instead of pinching.
+        const d = boss && !hx && !hy ? r * 0.55 : hx && hy ? Math.min(ax, ay) : hx ? ax : ay;
+        const c = d > 2.2 ? AUR.cut : d > 1.2 ? bed : d > 0.6 ? body : core;
+        P(x, y, c);
+      }
+    }
+  }
+
+  /**
+   * A resonance ring.
+   *
+   * The mechanism the Tideheart answers: a bronze hoop standing upright in a
+   * cut socket, tall enough to walk through and deliberately not machinery --
+   * no plating, no housing, no dials. The Aurelians built instruments that
+   * work by shape, and the player should be able to see that there is nothing
+   * inside it to break.
+   *
+   * An overlay with no floor of its own, so it stands on whatever the map put
+   * under it, and it is drawn with the row it is on: walk behind one and it
+   * covers you, which is what proves it is a thing in the room rather than a
+   * pattern on the ground.
+   */
+  private aurRing(px: Px): void {
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    const cx = 7.5, cy = 6.5;
+
+    // TALLER THAN IT IS WIDE, and that is the whole point of the shape. The
+    // first cut of this tile drew a near-circle lying flat, which at sixteen
+    // pixels is indistinguishable from the spiral cut into the floor
+    // underneath it -- so the mechanism and its markings read as the same
+    // thing and neither read as an object. Squashing the horizontal axis puts
+    // the hoop up on its edge, which is the only way a ring seen from this
+    // camera angle says "standing" rather than "painted on".
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const dx = (x - cx) * 1.35, dy = y - cy;
+        const r = Math.hypot(dx, dy);
+        if (r > 6.6 || r < 3.4) continue;
+        let c: string;
+        if (r > 5.9 || r < 4.1) c = AUR.outline;
+        else {
+          const l = (dx + dy) / (r || 1);
+          c = l < -0.45 ? AUR.goldLit : l > 0.55 ? AUR.goldDim : AUR.gold;
+        }
+        P(x, y, c);
+      }
+    }
+    // The socket it is stepped into. Wider than the hoop, so the thing has a
+    // footing rather than balancing on a line.
+    for (let x = 3; x <= 12; x++) {
+      P(x, 12, AUR.outline);
+      P(x, 13, x <= 6 ? AUR.pale : x >= 11 ? AUR.deep : AUR.light);
+      P(x, 14, AUR.dark);
+      P(x, 15, AUR.outline);
+    }
+    // The dead bead at the crown, which is where the current will come out.
+    P(7, 1, AUR.glowDeep); P(8, 1, AUR.glowDim);
+    this.footShadow(P, 3, 12, 15);
+  }
+
+  /**
+   * Cinder drifted over the plates.
+   *
+   * The only loose material in the building, blown up the shaft and banked
+   * against the walls of the lower gallery -- and, because the engine only
+   * rolls a wild encounter on a tile that says it carries one, the only place
+   * in the temple where anything living is found. That is not a workaround: a
+   * sealed hall of cut stone should be empty, and the drift is where the
+   * mountain gets in.
+   */
+  private aurAsh(px: Px, fill: (c: string) => void, rng: Rng): void {
+    this.aurFloor(px, fill, false);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        // Two octaves, the finer one leading. One octave at eight pixels is a
+        // blob field, and a floor covered in it reads as lichen or as fog on
+        // the ground rather than as something loose that blew in.
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 4, 91) * 0.6
+          + wrapNoise(x * DETAIL, y * DETAIL, 8, 137) * 0.4;
+        if (n < 0.46) continue;
+        // The edge of a drift is a stipple, not a coastline: dithering the
+        // first two steps is what makes it thin out over the plates instead of
+        // stopping dead along a contour.
+        if (n < 0.53 && !dither(x, y, (n - 0.46) * 12)) continue;
+        P(x, y, n > 0.68 ? AUR.ashLight : n > 0.57 ? AUR.ashMid : AUR.ashDark);
+      }
+    }
+    for (let i = 0; i < 3; i++) P(rng.below(S), rng.below(S), AUR.ember);
+  }
+
+  /**
+   * The shaft.
+   *
+   * Crusted magma seen from directly above: dark plates of set rock with the
+   * live rock showing in the cracks between them. The cracks are the animated
+   * part and the crust is not, because that is what the material does -- the
+   * skin holds still and the seams breathe -- and it means the shaft can be a
+   * wall of the map without flickering like water.
+   */
+  private magma(px: Px, fill: (c: string) => void): void {
+    fill(AUR.crust);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    const drift = 0.05 * Math.sin((animFrame / 4) * Math.PI * 2);
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 8, 55);
+        let c: string = n > 0.58 ? AUR.crustLight : n > 0.4 ? AUR.crust : AUR.crustDeep;
+        const t = Math.abs(n - (0.47 + drift));
+        if (t < 0.03) c = AUR.lavaHot;
+        else if (t < 0.06) c = AUR.lavaMid;
+        else if (t < 0.095) c = AUR.lavaDark;
+        P(x, y, c);
+      }
+    }
+  }
+
+  /* ------------------------------------------------- the wetlands ------ */
+
+  /**
+   * Peat.
+   *
+   * The ground of the whole route, and the tile everything else out here is
+   * drawn on top of. It is not a path and it is not a field: it is saturated
+   * rotted plant matter with water standing in the low parts of it, so the
+   * texture is *patchy* rather than woven -- soft dark islands with a wet
+   * sheen between them, which is what stops a mire reading as brown carpet.
+   *
+   * The sheen is the whole tile. Peat with no water in it is a dirt path in a
+   * different colour; the scraps of caught sky are what say the ground is
+   * holding water and what make the boardwalk above it worth building.
+   */
+  private peat(px: Px, fill: (c: string) => void, rng: Rng): void {
+    fill(PAL.peatMid);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        // Two octaves. The coarse one makes the islands, the fine one makes
+        // the crumb; either alone reads as camouflage or as static.
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 12, 401) * 0.62
+          + wrapNoise(x * DETAIL, y * DETAIL, 4, 409) * 0.38;
+        let c: string = n > 0.62 ? PAL.peatLight : n < 0.36 ? PAL.peatDark : PAL.peatMid;
+        if (n > 0.78) c = PAL.peatPale;
+        else if (n < 0.24) c = PAL.peatDeep;
+        P(x, y, c);
+      }
+    }
+
+    // Standing water in the hollows: the darkest tone with one unit of sky on
+    // its upper lip, which is the only mark that reads as a surface at this
+    // size. Taken from the low points of the coarse octave rather than hashed,
+    // so the wet is in the dips instead of scattered over the whole cell.
+    for (let y = 1; y < S - 1; y++) {
+      for (let x = 0; x < S; x++) {
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 12, 401);
+        if (n > 0.22) continue;
+        P(x, y, PAL.mireDeep);
+        if (wrapNoise(x * DETAIL, (y - 1) * DETAIL, 12, 401) > 0.22) P(x, y, PAL.mireSky);
+      }
+    }
+
+    // Roots and dead stalks. A mire floor with nothing lying on it is a
+    // texture; one with last year's stems in it is a place things have been
+    // growing and rotting for a long time.
+    const stems = 2 + rng.below(3);
+    for (let i = 0; i < stems; i++) {
+      const sx = rng.below(S - 3), sy = 2 + rng.below(S - 4);
+      const len = 2 + rng.below(3);
+      const lean = rng.below(2) === 0 ? 1 : -1;
+      for (let j = 0; j < len; j++) {
+        P(sx + j * lean, sy - Math.floor(j / 2), PAL.peatDeep);
+        P(sx + j * lean, sy - Math.floor(j / 2) - 1, PAL.reedDark);
+      }
+    }
+  }
+
+  /**
+   * Standing marsh water.
+   *
+   * The opposite of the sea tile in every way that matters. Sea is bright,
+   * blue and always moving; this is dark, tannin-green and very nearly dead
+   * still, and the difference has to be readable in one glance because one of
+   * them is a wall and the other is the route. What movement there is comes
+   * from a single ring of scum turning slowly round the cell over four frames
+   * -- barely anything, which is exactly the reading.
+   *
+   * Wadeable, so the player crosses it with the art the Tide Hall gave them.
+   * The deep pools beside it use the ordinary deep-water tile and stay shut
+   * until much later.
+   */
+  private mireWater(px: Px, fill: (c: string) => void, rng: Rng, deep: boolean): void {
+    fill(deep ? PAL.mireDeep : PAL.mireDark);
+    const N = TILE_PX;
+    const S = TILE_SIZE;
+    const P = this.unit(px);
+    const nf = ANIMATED[T.MIRE_WATER] ?? 1;
+
+    for (let y = 0; y < N; y++) {
+      for (let x = 0; x < N; x++) {
+        const n = wrapNoise(x, y, 16, 431) * 0.6 + wrapNoise(x, y, 8, 433) * 0.4;
+        // The body sits in a narrow band. Water this still has no swell in it,
+        // and a wide ramp here made a pool read as spilt oil.
+        //
+        // The deep cut drops the whole thing a step and closes the band right
+        // up. This is the lagoon Mirehaven is built over and the pool at the
+        // bottom of the route, and both of them have to be the darkest thing on
+        // their screen: it is what makes a plank walk read as bright, and the
+        // ordinary sea tile -- which is a real, saturated blue, correctly, for
+        // the sea -- turned every gap between two platforms into a stripe of
+        // open ocean running through the middle of a marsh.
+        px(x, y, deep
+          ? (n > 0.7 ? PAL.mireDark : n < 0.34 ? '#070e0a' : PAL.mireDeep)
+          : (n > 0.68 ? PAL.mireMid : n < 0.32 ? PAL.mireDeep : PAL.mireDark));
+      }
+    }
+
+    // Sky caught on the surface: a few short flat marks, because a still
+    // surface reflects in *lines* rather than glinting in points. Deep water
+    // catches less of it -- there is nothing under it throwing anything back.
+    for (let i = 0; i < (deep ? 2 : 3); i++) {
+      const ry = 2 + Math.floor(hash2(i, 3, 601) * (S - 5));
+      const rx = Math.floor(hash2(i, 4, 607) * S);
+      const len = 2 + Math.floor(hash2(i, 5, 613) * 3);
+      for (let j = 0; j < len; j++) {
+        P((rx + j) % S, ry, j === 0 ? (deep ? PAL.mireMid : PAL.mireLight) : PAL.mireSky);
+      }
+    }
+
+    // The scum ring: duckweed and pollen gathered into a slow eddy. One shape,
+    // turned a quarter round per frame, so the whole marsh moves together and
+    // the loop closes exactly on itself.
+    const step = (animFrame / nf) * Math.PI * 2;
+    for (let a = 0; a < 10; a++) {
+      const th = (a / 10) * Math.PI * 2 + step;
+      const r = 4.4 + Math.sin(th * 3) * 1.1;
+      const x = Math.round(7.5 + Math.cos(th) * r);
+      const y = Math.round(7.5 + Math.sin(th) * r * 0.7);
+      P(x, y, a % 3 === 0 ? PAL.reedDark : PAL.mireMid);
+    }
+
+    // Two or three reed stubs standing through the surface, with the smear of
+    // their own reflection under them. Without these a pool is a hole in the
+    // map; with them it is water with a bottom somewhere under it.
+    //
+    // Nothing stands through the deep cut, and that is the reading: reed grows
+    // where a person could wade, so the tile with no reed in it is the tile
+    // that is over your head.
+    const stubs = deep ? 0 : 2 + rng.below(2);
+    for (let i = 0; i < stubs; i++) {
+      const sx = 2 + rng.below(S - 4), sy = 4 + rng.below(S - 8);
+      P(sx, sy, PAL.reedMid);
+      P(sx, sy - 1, PAL.reedLight);
+      P(sx, sy - 2, PAL.reedDark);
+      P(sx, sy + 1, PAL.mireDeep);
+      P(sx, sy + 2, PAL.mireDeep);
+    }
+  }
+
+  /**
+   * Reeds: the wetlands' tall grass, and where its encounters live.
+   *
+   * Built to the same rule as the grass clump it stands in for -- a discrete
+   * stand with water showing on every side, standing by the wading line at row
+   * 8 so the band repainted in front of a character has no holes in it where
+   * their legs are (see TileMap.renderGrassFrontRow). What is different is the
+   * *shape*: grass arches and reed does not. These are near-vertical canes
+   * with a heavy seed head at the top and no taper, growing out of water
+   * rather than turf, and that stiffness is the whole visual difference
+   * between wading a meadow and wading a reed bed.
+   */
+  private reeds(px: Px, fill: (c: string) => void, rng: Rng): void {
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    // The bed stands in water, not on soil, so the ground under it is the
+    // marsh surface darkened -- which also keeps the repainted band dark, and
+    // that band lands across the player's chest.
+    fill(PAL.mireDark);
+    for (let y = 0; y < TILE_PX; y++) {
+      for (let x = 0; x < TILE_PX; x++) {
+        const n = wrapNoise(x, y, 12, 439);
+        px(x, y, n > 0.66 ? PAL.mireMid : n < 0.3 ? PAL.mireDeep : PAL.mireDark);
+      }
+    }
+    for (let x = 2; x <= 13; x++) P(x, 8, hash2(x, 1, 443) > 0.5 ? PAL.mireSky : PAL.mireDark);
+
+    const nudge = Math.floor(hash2(0, 0, 447) * 3) - 1;
+    const L = 2 + nudge, R = 13 + nudge;
+
+    // Understory: the dark tangle the canes come out of. It has to reach the
+    // foot of the cell or the stand appears to float on the water.
+    for (let y = 11; y < S; y++) {
+      for (let x = L; x <= R; x++) {
+        P(x, y, hash2(x, y, 449) > 0.55 ? PAL.reedDeep : PAL.mireDeep);
+      }
+    }
+
+    /** One cane, drawn root upward: stem, then a head if it stands tall. */
+    const cane = (bx: number, top: number, front: boolean) => {
+      const stem = front ? PAL.reedLight : PAL.reedDark;
+      const lit = front ? PAL.reedPale : PAL.reedMid;
+      for (let y = 13; y >= top; y--) {
+        P(bx, y, y % 3 === 0 ? lit : stem);
+        P(bx + 1, y, PAL.reedDeep);              // the cane's own shadow side
+      }
+      // Seed head: a fat dark plume two units wide, the mark that says reed.
+      if (top <= 5) {
+        for (let y = top; y <= top + 2; y++) {
+          P(bx, y, y === top ? PAL.reedHead : PAL.reedDark);
+          P(bx + 1, y, y === top ? PAL.reedDark : PAL.reedDeep);
+        }
+        P(bx, top - 1, PAL.reedHead);
+      }
+    };
+
+    // Back rank first, then front, so the pale canes overlap the dull ones.
+    for (let x = L; x <= R; x += 3) {
+      cane(x, 3 + Math.floor(hash2(x, 2, 457) * 5), false);
+    }
+    for (let x = L + 1; x <= R; x += 3) {
+      cane(x, 2 + Math.floor(hash2(x, 3, 461) * 4), true);
+    }
+
+    // A leaf or two thrown out sideways, which is what stops the stand reading
+    // as a bar chart.
+    for (let i = 0; i < 3; i++) {
+      const lx = L + rng.below(Math.max(1, R - L)), ly = 5 + rng.below(6);
+      const dir = rng.below(2) === 0 ? 1 : -1;
+      for (let j = 1; j <= 3; j++) P(lx + j * dir, ly + Math.floor(j / 2), PAL.reedMid);
+    }
+  }
+
+  /**
+   * Sedge: the walkable marsh floor between the reed beds.
+   *
+   * The wetlands' answer to turf, and it has to be legibly *not* the reed tile
+   * from across the screen, because one of them starts fights and the other
+   * does not. So the tussocks here are low, round and separated, sitting in
+   * visible standing water, and nothing in the cell rises above the halfway
+   * line -- whereas a reed stand fills its cell to the top edge.
+   */
+  private sedge(px: Px, fill: (c: string) => void, rng: Rng): void {
+    this.peat(px, fill, rng);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    const clumps = 3 + rng.below(2);
+    for (let i = 0; i < clumps; i++) {
+      const cx = 2 + rng.below(S - 4), cy = 6 + rng.below(S - 8);
+      // A tussock is a dome of short blades: dark at the base, olive over it,
+      // one pale unit at the crown. Four units across is enough to read.
+      for (let x = cx - 2; x <= cx + 2; x++) {
+        const d = Math.abs(x - cx);
+        for (let y = cy - (2 - d); y <= cy + 1; y++) {
+          P(x, y, y >= cy + 1 ? PAL.reedDeep
+            : y <= cy - 1 ? (hash2(x, y, 463) > 0.5 ? PAL.reedLight : PAL.reedMid)
+            : PAL.reedDark);
+        }
+      }
+      P(cx, cy - 2, PAL.reedPale);
+      P(cx - 1, cy + 2, PAL.peatDeep);
+      P(cx + 1, cy + 2, PAL.peatDeep);
+    }
+  }
+
+  /**
+   * Boardwalk.
+   *
+   * The road of everything east of Emberfall, and the reason the wetlands read
+   * as somewhere people live rather than as an obstacle. Cross boards on two
+   * stringers, pale against the peat, and deliberately with no rail on it --
+   * the rail is a separate tile, so a walk can be railed on the side where the
+   * drop is and open on the side where it is not, and so this one tile serves
+   * a walk running north-south and one running east-west alike.
+   *
+   * The gaps between the boards show the dark underneath, which is what makes
+   * a plank walk read as *raised* without anything standing up off it.
+   */
+  private boardwalk(px: Px, fill: (c: string) => void, rng: Rng): void {
+    fill(PAL.plankMid);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    // Four boards to the cell rather than five, and a real gap between them.
+    // The first cut of this had thin boards and bright fixings and came out as
+    // pale brickwork -- at sixteen units a plank needs three clear rows of its
+    // own face before the dark line under it can read as a joint at all.
+    for (let y = 0; y < S; y++) {
+      const board = Math.floor(y / 4);
+      const b = y % 4;
+      // Every board a different piece of timber, or a walk is one plank
+      // photocopied the length of the route.
+      const tone = hash2(board, 0, 467);
+      for (let x = 0; x < S; x++) {
+        let c: string = tone > 0.66 ? PAL.plankLight
+          : tone < 0.33 ? PAL.plankDark : PAL.plankMid;
+        if (b === 0) c = tone > 0.5 ? PAL.plankPale : PAL.plankLight;  // lit head
+        else if (b === 2) c = tone > 0.5 ? PAL.plankMid : PAL.plankDark;
+        else if (b === 3) c = PAL.plankDeep;                            // the joint
+        // Grain along the board, never across it.
+        if (b !== 3 && (x * 5 + board * 7) % 13 === 3) c = PAL.plankPale;
+        // Weed and wet in the joints. A dry walk in a marsh is a lie.
+        if (b === 3 && hash2(x, board, 479) > 0.72) c = PAL.mireDeep;
+        else if (b === 2 && hash2(x, board, 481) > 0.93) c = PAL.reedDark;
+        P(x, y, c);
+      }
+    }
+
+    // Fixings: two per board, in fixed columns, so a run of the tile lines up
+    // into a rail of nail heads down the walk rather than a scatter of dots.
+    // Dark, not bright -- iron in wet timber is a stain, and picking it out in
+    // stone-white was most of what made the first cut read as masonry.
+    for (let y = 0; y < S; y += 4) {
+      P(3, y + 1, PAL.plankDeep);
+      P(12, y + 1, PAL.plankDeep);
+    }
+    void rng;
+  }
+
+  /**
+   * Boardwalk handrail.
+   *
+   * An overlay with nothing behind it, so the same rail stands on plank, on
+   * stone platform and on a jetty without dragging a square of the wrong
+   * material along with it. Two rails and an upright, drawn symmetrically
+   * about the middle of the cell so a run reads as a railing whichever way the
+   * walk turns.
+   *
+   * Solid, and that is the point of it: it is what decides which edge of a
+   * boardwalk is a way down into the water and which is not.
+   */
+  private boardRail(px: Px): void {
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    // Two rails, each two units deep: a lit head and the shadow under it, and
+    // nothing else. Three units apiece was a ladder lying on the deck.
+    for (const ry of [3, 9]) {
+      for (let x = 0; x < S; x++) {
+        P(x, ry, hash2(x, ry, 491) > 0.7 ? PAL.plankPale : PAL.plankLight);
+        P(x, ry + 1, PAL.plankDeep);
+      }
+    }
+    // Upright, in front of the rails, with the pitch on it that everything in
+    // this region is dipped in. It has to be the darkest thing in the cell or
+    // the two rails read as rungs with nothing holding them up.
+    for (let y = 1; y <= 13; y++) { P(7, y, PAL.tarLight); P(8, y, PAL.tarDeep); }
+    P(7, 1, PAL.outline); P(8, 1, PAL.outline);
+    P(7, 2, PAL.tarPale);
+    this.footShadow(P, 6, 9, 14);
+  }
+
+  /**
+   * Mangrove.
+   *
+   * The wetlands' border and its treeline, and it has to be a different
+   * *silhouette* from the woodland tree rather than a green one recoloured --
+   * the promise of the whole region is that even the trees stand differently
+   * here. So the mass is carried low: a dark crown with almost no daylight
+   * under it, and a fan of stilt roots leaving the trunk above the waterline
+   * and going down into the mud, which is the one shape nobody mistakes for an
+   * oak.
+   */
+  private mangrove(px: Px, fill: (c: string) => void, rng: Rng): void {
+    this.peat(px, fill, rng);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    // Crown: heavy, flat-bottomed, and wrapping at the cell edge so a stand of
+    // them is one canopy rather than a row of lollipops.
+    //
+    // Much darker than a woodland crown, and the darkness is doing a job. This
+    // tile is the map border for the whole region, which means the player sees
+    // more of it than of anything else out here; a treeline mixed from the
+    // ordinary leaf ramp came out as a hedge of bright green blobs that
+    // competed with the reed beds the route is supposed to read by. A border
+    // has to be *mass* and nothing else, so the ramp is squashed into its
+    // bottom three steps and the light is rationed to a handful of units.
+    for (let y = 0; y <= 9; y++) {
+      for (let x = 0; x < S; x++) {
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 8, 499) * 0.6
+          + wrapNoise(x * DETAIL, y * DETAIL, 4, 503) * 0.4;
+        // The underside breaks up rather than ending on a ruled line: the last
+        // two rows only fill where the noise is strong.
+        if (y >= 8 && n < 0.52) continue;
+        P(x, y, n > 0.80 ? '#175a1e'
+          : n > 0.6 ? '#0f4416'
+          : n > 0.36 ? '#0a3512'
+          : '#06240d');
+      }
+    }
+    // Light only ever reaches the top-left shoulder of a crown this dense.
+    for (let i = 0; i < 5; i++) {
+      const lx = 1 + rng.below(6), ly = rng.below(3);
+      P(lx, ly, PAL.leafDark);
+      P(lx + 1, ly, '#175a1e');
+    }
+
+    // Trunk, off-centre and different per alternate, so a thicket is not a
+    // colonnade.
+    const tx = 6 + (Math.floor(hash2(0, 0, 509) * 3) - 1);
+    for (let y = 8; y <= 12; y++) {
+      P(tx, y, PAL.trunkDark); P(tx + 1, y, PAL.trunkDeep);
+      P(tx - 1, y, PAL.trunkDeep);
+    }
+
+    // Stilt roots: an arch each side of the bole, landing in the mud. This is
+    // the tile, and it is the one shape nobody mistakes for an oak -- but it
+    // is drawn one unit thick and in the trunk's shadow tones, because a root
+    // picked out in a lit brown reads as something crawling.
+    for (const dir of [-1, 1]) {
+      for (let j = 0; j < 5; j++) {
+        const x = tx + (dir < 0 ? 0 : 1) + dir * (j + 1);
+        const y = 10 + Math.round(Math.sqrt(j) * 2.2);
+        if (x < 0 || x >= S || y >= S) continue;
+        P(x, y, PAL.trunkDeep);
+        if (j < 3) P(x, y - 1, PAL.trunkDark);
+      }
+    }
+    for (let x = 0; x < S; x++) if (hash2(x, 9, 521) > 0.82) P(x, 15, PAL.trunkDeep);
+  }
+
+  /**
+   * Glowcap.
+   *
+   * A rotted stump with luminous fungus on it, and the only thing out here
+   * that makes its own light. It exists for the fog: the route is laid out so
+   * a player who cannot see the boardwalk can still see the next green smudge,
+   * and walking glowcap to glowcap is how the middle of the mire gets crossed.
+   * Cold green, so it never reads as a lantern -- people's light out here is
+   * orange and the mire's light is not, and keeping those two apart is what
+   * makes the whole region legible in the dark.
+   *
+   * Pulses over four frames, on the same clock as the water it stands in.
+   */
+  private glowcap(px: Px, fill: (c: string) => void, rng: Rng): void {
+    this.peat(px, fill, rng);
+    const P = this.unit(px);
+    const nf = ANIMATED[T.GLOWCAP] ?? 1;
+    // A slow breath rather than a blink: a sine, so the loop has no seam.
+    const beat = 0.5 + Math.sin((animFrame / nf) * Math.PI * 2) * 0.5;
+
+    // The light on the air, laid down first so everything solid draws over it.
+    // Translucent for the same reason the street lamp's halo is: this stands
+    // on peat, on sedge and on plank.
+    for (let y = 1; y <= 14; y++) {
+      for (let x = 0; x < TILE_SIZE; x++) {
+        const d = Math.abs(x - 7.5) * 0.9 + Math.abs(y - 9) * 1.15;
+        if (d > 8) continue;
+        const a = (d > 5.5 ? 0.10 : d > 3 ? 0.20 : 0.32) * (0.75 + beat * 0.45);
+        P(x, y, `rgba(60,220,180,${a.toFixed(2)})`);
+      }
+    }
+
+    // The stump: a broken bole, dark, so the caps have something to be bright
+    // against.
+    for (let y = 8; y <= 14; y++) {
+      for (let x = 5; x <= 10; x++) {
+        P(x, y, x <= 6 ? PAL.trunkDeep : hash2(x, y, 523) > 0.6 ? PAL.trunkDark : PAL.peatDeep);
+      }
+    }
+    for (let x = 5; x <= 10; x++) P(x, 8, PAL.trunkMid);
+
+    // Caps: three of them up the stump, each a dome with a pale rim and a
+    // stalk under it.
+    const caps: [number, number, number][] = [[4, 10, 2], [8, 7, 3], [11, 11, 2]];
+    for (const [cx, cy, r] of caps) {
+      const face = beat > 0.55 ? PAL.glowPale : PAL.glowLight;
+      for (let x = cx - r; x <= cx + r; x++) {
+        const d = Math.abs(x - cx);
+        P(x, cy, d === r ? PAL.glowDark : d === 0 ? face : PAL.glowMid);
+        if (d < r) P(x, cy - 1, d === 0 ? PAL.glowPale : face);
+      }
+      P(cx, cy + 1, PAL.glowDark);
+      P(cx, cy + 2, PAL.glowDeep);
+    }
+
+    // Spores off the top cap, moving with the pulse, which is what stops the
+    // whole thing reading as a decal.
+    const drift = Math.round(beat * 3);
+    P(9, 4 - drift, PAL.glowLight);
+    P(6, 3 - Math.round(beat * 2), PAL.glowMid);
+  }
+
+  /**
+   * A piling standing in open water.
+   *
+   * Ground rather than overlay, and painted with its own water under it. A
+   * post out in the channel has no walkable neighbour to borrow a floor from,
+   * so an overlay one would land on whatever the map compiler could find --
+   * which, in the middle of a lagoon, is turf. This way a stilt is always in
+   * the water it was driven into.
+   *
+   * These are what Mirehaven stands on, and there are meant to be forests of
+   * them under the town: the gaps between the platforms are the view down onto
+   * the piling field, and that view is what the settlement is built around.
+   */
+  private stiltPost(px: Px, fill: (c: string) => void, rng: Rng): void {
+    this.mireWater(px, fill, rng, false);
+    const P = this.unit(px);
+
+    // The reflection first, smeared down the still water under the post.
+    for (let y = 12; y <= 15; y++) {
+      P(6, y, PAL.mireDeep); P(7, y, PAL.mireDeep); P(8, y, PAL.mireDeep);
+    }
+    P(7, 13, PAL.mireDark); P(6, 15, PAL.mireDark);
+
+    // The pile: pitched pine, lit down one side, dark down the other, and gone
+    // green at the waterline because everything here is.
+    for (let y = 0; y <= 12; y++) {
+      P(5, y, PAL.outline);
+      P(6, y, PAL.tarLight);
+      P(7, y, PAL.tarMid);
+      P(8, y, PAL.tarDark);
+      P(9, y, PAL.outline);
+      if (y % 4 === 1) { P(6, y, PAL.tarPale); P(7, y, PAL.tarLight); }
+    }
+    for (let y = 10; y <= 12; y++) {
+      P(6, y, PAL.reedDark); P(7, y, PAL.reedDeep); P(8, y, PAL.mireDeep);
+    }
+    // Cap, and the iron band under it.
+    for (let x = 4; x <= 10; x++) P(x, 0, PAL.outline);
+    for (let x = 5; x <= 9; x++) P(x, 1, PAL.tarPale);
+    for (let x = 5; x <= 9; x++) P(x, 3, PAL.steelMid);
+    P(5, 3, PAL.steelDark); P(9, 3, PAL.steelDark);
+
+    // A cross-brace running away to the next pile, so a field of them reads as
+    // a structure rather than as a row of sticks.
+    for (let x = 0; x <= 4; x++) P(x, 5 + Math.floor(x / 2), PAL.tarDark);
+    for (let x = 10; x < TILE_SIZE; x++) P(x, 7 - Math.floor((x - 10) / 2), PAL.tarDark);
+  }
+
+  /**
+   * A punt, tied up.
+   *
+   * Mirehaven has more boats than it has streets, so a moored one is dressing
+   * here the way a parked cart is elsewhere: it goes anywhere there is water
+   * beside a deck. Flat-bottomed and square-ended, because that is what people
+   * pole about a marsh in, and because it is a shape that reads at sixteen
+   * units where a pointed hull does not.
+   */
+  private mooredBoat(px: Px, fill: (c: string) => void, rng: Rng): void {
+    this.mireWater(px, fill, rng, false);
+    const P = this.unit(px);
+
+    // Hull from above, lying along the cell rather than across it: narrow,
+    // long, and tapered at the bow. The first cut of this was a wide box with
+    // two full-width thwarts in it and read as a bench -- a punt is *thin*,
+    // and the taper at one end is the only thing that says which way it points.
+    // Half-beam at each row: one at the bow, widening over four rows, square
+    // at the stern. Four rows of taper is the least that reads as a point at
+    // this size, and the point is the only thing that says which end is which.
+    const beam = (y: number): number =>
+      y <= 1 ? 1 : y === 2 ? 2 : y >= 13 ? 3 : 3;
+
+    // Inside of the hull: dark, so the thwarts across it have something to be
+    // light against. The first cut filled this with lit timber and came out as
+    // a crate.
+    for (let y = 1; y <= 14; y++) {
+      const b = beam(y);
+      for (let x = 7 - b; x <= 8 + b; x++) P(x, y, PAL.trunkDeep);
+    }
+    // Gunwale: lit down the left, in shadow down the right, capped at the ends.
+    for (let y = 1; y <= 14; y++) {
+      const b = beam(y);
+      P(7 - b, y, PAL.trunkLight);
+      P(8 + b, y, PAL.trunkDark);
+    }
+    for (let x = 6; x <= 9; x++) P(x, 14, PAL.trunkDark);
+    P(7, 0, PAL.trunkLight); P(8, 0, PAL.trunkDark);
+    for (let x = 4; x <= 11; x++) P(x, 15, PAL.mireDeep);   // its shadow in the water
+
+    // Two thwarts, and they sit *in* the hull rather than on top of it: at
+    // three rungs in a lit brown the whole thing read as a ladder floating in
+    // the water, and the fix is that the gunwale must be the lightest thing in
+    // the cell by a clear step.
+    for (const ty of [6, 11]) {
+      for (let x = 5; x <= 10; x++) { P(x, ty, PAL.trunkDark); P(x, ty + 1, PAL.trunkDeep); }
+    }
+    P(6, 8, PAL.steelDark); P(7, 8, PAL.steelMid); P(6, 9, PAL.steelDark);
+
+    // The pole laid the length of the boat, and the painter tying it to
+    // whatever is off the bow.
+    for (let y = 3; y <= 13; y++) P(9, y, PAL.reedDark);
+    P(9, 3, PAL.reedMid);
+    for (let x = 10; x < TILE_SIZE; x++) P(x, 2 - Math.floor((x - 10) / 3), PAL.trunkLight);
+  }
+
+  /**
+   * Mirehaven's lantern.
+   *
+   * Hung, not planted. There is no ground here to sink a lamp standard into,
+   * so the town's light comes off brackets and chain over the walkways, and
+   * the silhouette says so at a glance: a bracket, three links, and a fat oil
+   * lantern under a smoke cowl. Warm, and the only warm light in the region --
+   * the mire's own light is green.
+   */
+  private mireLantern(px: Px): void {
+    const P = this.unit(px);
+
+    // Halo. Wider and lower than the street lamp's, because this hangs over a
+    // walkway rather than standing above a road.
+    for (let y = 2; y <= 15; y++) {
+      for (let x = 0; x < TILE_SIZE; x++) {
+        const d = Math.abs(x - 7.5) * 1.0 + Math.abs(y - 8) * 0.95;
+        if (d > 9) continue;
+        P(x, y, d > 6 ? 'rgba(255,190,110,0.10)'
+          : d > 3.5 ? 'rgba(255,200,120,0.20)' : 'rgba(255,214,140,0.30)');
+      }
+    }
+
+    // Bracket and chain: iron out from the top corner, then links down.
+    for (let x = 1; x <= 6; x++) P(x, 1, PAL.tarDark);
+    P(6, 1, PAL.steelMid);
+    for (let y = 2; y <= 4; y++) P(7, y, y % 2 === 0 ? PAL.steelLight : PAL.steelDark);
+
+    // Cowl, to keep rain off a flame somewhere it always rains.
+    for (let x = 4; x <= 11; x++) P(x, 5, PAL.steelDark);
+    for (let x = 5; x <= 10; x++) P(x, 4, PAL.steelMid);
+    P(5, 5, PAL.steelLight); P(6, 5, PAL.steelLight);
+
+    // The glass: four panes, brightest where the wick is, in an iron cage.
+    for (let y = 6; y <= 12; y++) {
+      for (let x = 5; x <= 10; x++) {
+        const frame = x === 5 || x === 10 || y === 12;
+        P(x, y, frame ? PAL.outline
+          : x + y < 13 ? '#fff4cc' : x + y < 17 ? '#ffca6e' : '#d9832c');
+      }
+    }
+    for (let y = 7; y <= 11; y++) P(7, y, '#b96f22');
+    for (let x = 6; x <= 9; x++) P(x, 9, '#b96f22');
+    // The flame: one unit of white, which is what stops the box reading as a
+    // yellow brick.
+    P(8, 8, '#fffdf2'); P(8, 7, '#fff0bd');
+    // Ring at the foot, and a drip of oil-black under it.
+    for (let x = 6; x <= 9; x++) P(x, 13, PAL.steelDark);
+    P(7, 14, PAL.tarDeep); P(8, 14, PAL.tarDeep);
+  }
+
+  /**
+   * Reed thatch.
+   *
+   * Cut from the beds the route walks through, so Mirehaven wears its own
+   * marsh on its roofs -- and it is the one bright mass in a town built out of
+   * pitch, which is what stops the place reading as a burnt-out one. Combed
+   * courses running down the slope, a bound ridge along the top, and a thick
+   * ragged butt at the eave, because thatch has no straight edge anywhere on
+   * it and that raggedness is the whole difference from slate.
+   */
+  private thatchRoof(px: Px, fill: (c: string) => void, part: 'mid' | 'left' | 'right'): void {
+    fill(PAL.thatchMid);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        // Combed reed runs *down* the slope, so the grain is vertical and the
+        // variation is per column. Horizontal banding here is what makes bad
+        // thatch look like corduroy laid the wrong way.
+        // One tone per *column* for the whole depth of the roof, so the grain
+        // is unbroken from ridge to eave. Banding it by row -- which the first
+        // cut did -- turns thatch into corduroy laid the wrong way, and that
+        // was the single thing making this read as planking.
+        const stalk = hash2(x, 0, 541);
+        let c: string = stalk > 0.68 ? PAL.thatchLight
+          : stalk < 0.3 ? PAL.thatchDark : PAL.thatchMid;
+        if (stalk > 0.9) c = PAL.thatchPale;
+        else if (stalk < 0.1) c = PAL.thatchDeep;
+        // Individual stems standing proud of the comb, sparse and never in a
+        // run: a reed roof's texture is a few vertical flecks, and any more
+        // than that turns the slope into static.
+        if (hash2(x, y, 547) > 0.95) c = PAL.thatchPale;
+        else if (hash2(x, y, 557) > 0.96) c = PAL.thatchDeep;
+        P(x, y, c);
+      }
+    }
+
+    // Ridge: a roll of reed held down by split hazel spars, pegged in a zigzag.
+    for (let x = 0; x < S; x++) {
+      P(x, 0, PAL.outline);
+      P(x, 1, PAL.thatchPale);
+      P(x, 2, PAL.thatchLight);
+      P(x, 3, x % 4 === 1 ? PAL.trunkDark : PAL.thatchMid);
+      P(x, 4, x % 4 === 3 ? PAL.trunkDark : PAL.thatchDark);
+    }
+
+    // The eave: ragged by a unit, and darkest at the cut, so the roof ends in
+    // a shadow the wall below can sit under.
+    for (let x = 0; x < S; x++) {
+      const jut = hash2(x, 11, 563) > 0.55 ? 1 : 0;
+      P(x, 13 + jut, PAL.thatchDeep);
+      P(x, 14, PAL.thatchDeep);
+      P(x, 15, PAL.outline);
+      if (jut === 0) P(x, 13, PAL.thatchDark);
+    }
+
+    // The ends are bound and netted against the wind off the water, and that
+    // netting is the only thing separating the two of them.
+    if (part === 'left') {
+      for (let y = 0; y < S; y++) {
+        P(0, y, PAL.outline);
+        P(1, y, PAL.thatchDeep);
+        P(2, y, y % 3 === 0 ? PAL.trunkDark : PAL.thatchLight);
+      }
+    }
+    if (part === 'right') {
+      for (let y = 0; y < S; y++) {
+        P(15, y, PAL.outline);
+        P(14, y, PAL.thatchDeep);
+        P(13, y, y % 3 === 0 ? PAL.trunkDark : PAL.thatchDark);
+      }
+    }
+  }
+
+  /**
+   * Tarred plank, in four cuts: blank, window, hanging plant and door.
+   *
+   * Mirehaven builds out of pine dipped in pitch, because anything that is not
+   * is eaten by this water in five years. That gives the town the darkest
+   * walls in the game and everything else about it follows: the thatch above
+   * reads bright, the lanterns read hot, and the hanging baskets are the only
+   * green on the frontage.
+   *
+   * There is no stone plinth on these, unlike every other wall in the region.
+   * A Mirehaven house does not meet the ground; it meets a deck, and the last
+   * row is the shadow it throws on the planks it is standing on.
+   */
+  private tarWall(
+    px: Px, fill: (c: string) => void,
+    cut: 'plain' | 'window' | 'plant' | 'door',
+  ): void {
+    fill(PAL.tarMid);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    for (let y = 0; y < S; y++) {
+      const board = Math.floor(y / 4);
+      const b = y % 4;
+      const tone = hash2(board, 0, 569);
+      for (let x = 0; x < S; x++) {
+        let c: string = b === 0 ? PAL.tarLight : b === 3 ? PAL.tarDeep : PAL.tarMid;
+        if (b === 1 && tone > 0.6) c = PAL.tarLight;
+        else if (b === 2 && tone < 0.4) c = PAL.tarDark;
+        // Where the sun has burned the pitch grey. This is the only relief the
+        // material gets, and without it the wall is a black rectangle.
+        if ((x * 5 + y * 3) % 19 === 4) c = b === 3 ? PAL.tarDark : PAL.tarPale;
+        else if (hash2(x, board, 571) > 0.9 && b !== 3) c = PAL.tarDeep;
+        P(x, y, c);
+      }
+      if (b === 1) { P(3, y, PAL.steelDark); P(12, y, PAL.steelDark); }
+    }
+    this.wallHead(P, PAL.tarDeep, PAL.outline);
+    // No plinth: the shadow the wall throws onto the decking it stands on.
+    for (let x = 0; x < S; x++) { P(x, 14, PAL.tarDeep); P(x, 15, PAL.outline); }
+
+    if (cut === 'window') {
+      // Small, because a marsh house does not give the weather a big one, and
+      // hooded, because it rains here more or less always.
+      for (let y = 3; y <= 9; y++) {
+        for (let x = 5; x <= 10; x++) {
+          const frame = y === 3 || y === 9 || x === 5 || x === 10;
+          if (frame) { P(x, y, y === 9 ? PAL.trunkDark : PAL.trunkLight); continue; }
+          P(x, y, x + y < 12 ? PAL.glassHi : x + y < 15 ? PAL.glassLight : PAL.glass);
+        }
+      }
+      for (let y = 4; y <= 8; y++) P(7, y, PAL.trunkMid);
+      for (let x = 6; x <= 9; x++) P(x, 6, PAL.trunkMid);
+      for (let x = 4; x <= 11; x++) P(x, 2, PAL.thatchDark);
+      for (let x = 4; x <= 11; x++) P(x, 1, PAL.thatchLight);
+    }
+
+    if (cut === 'plant') {
+      // A basket on an iron hook, trailing. The one green thing on the wall,
+      // and the reason a street of pitch does not read as a warehouse row.
+      P(4, 2, PAL.steelDark); P(5, 2, PAL.steelMid);
+      for (let y = 2; y <= 4; y++) P(6, y, PAL.steelLight);
+      for (let y = 5; y <= 7; y++) {
+        for (let x = 3; x <= 10; x++) {
+          const edge = x === 3 || x === 10;
+          P(x, y, edge ? PAL.trunkDark : y === 5 ? PAL.trunkLight : PAL.trunkMid);
+        }
+      }
+      // Foliage over the rim and down the wall, lit at the top left.
+      for (let x = 2; x <= 11; x++) {
+        const h = 2 + Math.floor(hash2(x, 1, 577) * 5);
+        for (let y = 4; y >= 4 - Math.floor(h / 2); y--) {
+          P(x, y, hash2(x, y, 587) > 0.55 ? PAL.leafLight : PAL.leafMid);
+        }
+        for (let y = 8; y <= 8 + h; y++) {
+          P(x, y, hash2(x, y, 593) > 0.6 ? PAL.leafMid : PAL.leafDeep);
+        }
+      }
+      for (let i = 0; i < 3; i++) {
+        const fx = 3 + Math.floor(hash2(i, 2, 599) * 8);
+        P(fx, 9 + Math.floor(hash2(i, 3, 601) * 3), '#f0a4c8');
+      }
+    }
+
+    if (cut === 'door') {
+      // A plank door with a rain hood and a raised sill, because the water
+      // comes over the deck two or three times a winter and everyone knows it.
+      for (let y = 4; y <= 14; y++) {
+        for (let x = 4; x <= 11; x++) {
+          const frame = x === 4 || x === 11;
+          P(x, y, frame ? PAL.trunkDark
+            : y === 4 ? PAL.trunkLight
+            : (x - 4) % 3 === 0 ? PAL.trunkDeep : PAL.trunkMid);
+        }
+      }
+      for (const by of [7, 11]) for (let x = 5; x <= 10; x++) P(x, by, PAL.steelDark);
+      P(9, 9, PAL.steelLight); P(10, 9, PAL.steelMid);
+      for (let x = 3; x <= 12; x++) { P(x, 2, PAL.thatchLight); P(x, 3, PAL.thatchDeep); }
+      for (let x = 4; x <= 11; x++) { P(x, 14, PAL.stoneLight); P(x, 15, PAL.outline); }
+    }
+  }
+
+  /**
+   * A marker post.
+   *
+   * Every sign in the game until now has stood on grass, because the sign tile
+   * carries turf with it -- which is fine everywhere there is turf and absurd
+   * on a plank walk over open water. So the mire has its own, and it is the
+   * better object anyway: a pitched post with a numbered board nailed to it,
+   * the thing Mirehaven counts the boardwalk in and the thing a lost player
+   * finds first when the fog closes.
+   *
+   * An overlay with no floor of its own, so it stands on plank, peat and sedge
+   * without dragging a square of the wrong ground along with it. The mark on
+   * the board changes per alternate: a route signed with the same digit eleven
+   * times over is worse than a route signed nowhere.
+   */
+  private mirePost(px: Px): void {
+    const P = this.unit(px);
+
+    // Post: pitched, and leaning a unit per alternate, because nothing driven
+    // into peat has stayed upright for long.
+    const lean = Math.floor(hash2(0, 0, 617) * 3) - 1;
+    for (let y = 1; y <= 15; y++) {
+      const x = 7 + Math.round((lean * (15 - y)) / 12);
+      P(x, y, PAL.tarLight);
+      P(x + 1, y, PAL.tarDeep);
+      if (y % 5 === 2) P(x, y, PAL.tarPale);
+    }
+
+    // Board: pale, so it is the one thing on the post that carries through
+    // fog, with the grain of the plank showing under the paint.
+    for (let y = 2; y <= 8; y++) {
+      for (let x = 3; x <= 12; x++) {
+        const edge = y === 2 || y === 8 || x === 3 || x === 12;
+        P(x, y, edge ? PAL.trunkDark
+          : hash2(x, y, 619) > 0.86 ? PAL.plankLight : PAL.plankPale);
+      }
+    }
+    for (let x = 3; x <= 12; x++) P(x, 9, PAL.trunkDeep);   // its own shadow
+
+    // The number, drawn as a stroke pattern rather than as type: at five units
+    // tall a real glyph is mush, and what has to read is "there is a mark on
+    // this board" -- which four different marks do perfectly well.
+    const mark = Math.floor(hash2(1, 0, 623) * 4);
+    const strokes: number[][][] = [
+      [[6, 4], [6, 5], [6, 6], [5, 4], [8, 4], [8, 5], [8, 6]],
+      [[5, 4], [6, 4], [7, 4], [8, 5], [7, 5], [5, 6], [6, 6], [7, 6]],
+      [[5, 4], [5, 5], [5, 6], [6, 6], [7, 6], [8, 5], [8, 4]],
+      [[5, 4], [8, 4], [5, 5], [6, 5], [7, 5], [8, 6], [5, 6]],
+    ];
+    for (const s of strokes[mark]!) P(s[0]!, s[1]!, PAL.tarDeep);
+    // A second, smaller mark under it: the year the span was last relaid.
+    for (let x = 5; x <= 10; x += 2) P(x, 7, PAL.tarDark);
+  }
+
+  /* ------------------------------------------------- Embercoil Pass ---- */
+
+  /**
+   * Ash.
+   *
+   * The ground of the whole route, and the tile the rest of the family is
+   * measured against, so it obeys the house rule the turf obeys: light, low
+   * contrast, and doing nothing that competes with a sprite standing on it. The
+   * two things that make it read as ash rather than as grey sand are the drift
+   * lines and the grit. Wind-blown ash lies in long shallow ridges with a lit
+   * windward face and a shadow behind, which is the only structure in the tile;
+   * the grit is the coarse fraction the wind could not lift, so it is black
+   * basalt rather than another value of grey, and it is what stops the surface
+   * reading as fog lying on a floor.
+   *
+   * `coarse` is the drift variant: the same ground with far more clinker in it,
+   * for where the map wants the ash to look walked over, spoiled, or banked
+   * against something. It is a separate tile rather than an alternate because
+   * an author needs to be able to *place* it -- along a road, round a camp --
+   * and an alternate is chosen by position hash and cannot be placed at all.
+   *
+   * Everything here is hashed from position. Nothing in this family touches the
+   * shared Rng, which is what makes appending the whole family safe.
+   */
+  private ash(px: Px, fill: (c: string) => void, coarse: number): void {
+    fill(PAL.ashMid);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 8, 611) * 0.6
+          + wrapNoise(x * DETAIL, y * DETAIL, 4, 617) * 0.4;
+        if (n > 0.68) P(x, y, PAL.ashPale);
+        else if (n > 0.56) P(x, y, PAL.ashLight);
+        else if (n < 0.36) P(x, y, PAL.ashDark);
+      }
+    }
+
+    /**
+     * One drift ridge: crest, body, shadow.
+     *
+     * Three tones, for the same reason the beach ripples use three -- a pale
+     * line over a dark line is a drawn stroke, and only a crest that falls away
+     * through the mid tone into shadow reads as a surface with relief in it.
+     * The wave has a whole period across the cell, so a field of ash of any
+     * size has no step at any seam.
+     */
+    const drift = (ry: number, phase: number, amp: number, gap: number) => {
+      for (let x = 0; x < S; x++) {
+        if ((x + gap) % 7 === 0) continue;
+        const y = ry + Math.round(Math.sin((x / S) * Math.PI * 2 + phase) * amp);
+        P(x, y, PAL.ashPale);
+        P(x, y + 1, PAL.ashLight);
+        P(x, y + 2, PAL.ashDark);
+      }
+    };
+    for (let i = 0; i < 3; i++) {
+      drift(1 + Math.floor(hash2(i, 3, 623) * (S - 3)),
+        hash2(i, 4, 629) * 6.28, 1.7, i * 2);
+    }
+
+    // Clinker. A chip is three units -- a lit crown, the stone, its own shadow
+    // -- because a single black dot at this size is dirt on the screen rather
+    // than a stone lying on the ground.
+    const chips = coarse ? 22 : 7;
+    for (let i = 0; i < chips; i++) {
+      const cx = Math.floor(hash2(i, 11, 631) * S);
+      const cy = Math.floor(hash2(i, 12, 641) * S);
+      P(cx, cy, PAL.basaltLight);
+      P(cx + 1, cy, PAL.basaltDark);
+      P(cx, cy + 1, PAL.basaltDeep);
+      if (coarse && hash2(i, 13, 643) > 0.6) {
+        P(cx + 1, cy + 1, PAL.basaltDark);
+        P(cx + 2, cy, PAL.basaltMid);
+      }
+    }
+    // The chips that have been steamed. Three per cell at most: it is the one
+    // warm thing in the ash, and it is what ties the ground to the rock.
+    if (coarse) {
+      for (let i = 0; i < 3; i++) {
+        P(Math.floor(hash2(i, 21, 647) * S), Math.floor(hash2(i, 22, 653) * S), PAL.basaltRust);
+      }
+    }
+  }
+
+  /**
+   * The road.
+   *
+   * Crushed clinker, and the point of it is that it is *darker* than the ground
+   * it runs through. Every other road in Caelora is a gold stripe on a green
+   * field; this one is a dark stripe on a pale one, and that reversal is the
+   * single loudest thing the route says about where the player has arrived.
+   *
+   * The structure is two wheel ruts with the crown between them, which is what
+   * a hauled road looks like from above and what keeps a long straight run from
+   * reading as a painted band.
+   */
+  private cinderRoad(px: Px, fill: (c: string) => void): void {
+    fill(PAL.cinderMid);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 8, 661) * 0.62
+          + wrapNoise(x * DETAIL, y * DETAIL, 4, 673) * 0.38;
+        let c: string = n > 0.66 ? PAL.cinderLight : n < 0.36 ? PAL.cinderDark : PAL.cinderMid;
+        // Grit: the individual lumps the road is made of. Sparse, and from both
+        // ends of the ramp, so the surface reads as loose material.
+        if (hash2(x, y, 677) > 0.93) c = PAL.cinderPale;
+        else if (hash2(x, y, 683) > 0.94) c = PAL.cinderDeep;
+        P(x, y, c);
+      }
+    }
+    // Two ruts, wandering. A compacted lane rather than a ruled line, so they
+    // survive being seen at 1x.
+    for (let y = 0; y < S; y++) {
+      const w = Math.sin((y / S) * Math.PI * 2) * 1.2;
+      for (const base of [4, 11]) {
+        const x = Math.round(base + w);
+        P(x, y, PAL.cinderDark);
+        if ((y * 3) % 5 !== 0) P(x + 1, y, PAL.cinderDeep);
+      }
+    }
+  }
+
+  /**
+   * What still grows out here.
+   *
+   * Cured scrub standing in ash: black stems, olive going to straw, and a seed
+   * head on about a third of them. It is the encounter tile, so its job is to
+   * be recognised instantly at 1x from anywhere on the screen -- which on a
+   * pale grey ground means being the darkest mass in view, and that is why the
+   * ramp bottoms out nearly at the basalt.
+   *
+   * Deliberately drawn short, and drawn *under* the player. The waist-deep wade
+   * tall grass gets belongs to a crop you push through; this is knee-high
+   * brittle brush on open ground, and a character striding over it is the
+   * honest picture.
+   */
+  private emberScrub(px: Px, fill: (c: string) => void): void {
+    this.ash(px, fill, 0);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    const W = (x: number, y: number, c: string) => P(((x % S) + S) % S, y, c);
+
+    /** One bush: a splay of stems from a root, tips carrying the seed. */
+    const bush = (bx: number, by: number, r: number, seed: number) => {
+      for (let i = 0; i < 7; i++) {
+        const lean = (hash2(i, seed, 701) - 0.5) * 2.2 * r;
+        const h = r + Math.floor(hash2(i, seed, 709) * r);
+        for (let k = 0; k <= h; k++) {
+          const t = k / Math.max(1, h);
+          const x = Math.round(bx + lean * t);
+          const y = by - k;
+          if (y < 0) continue;
+          const c = k === h ? (hash2(i, seed, 719) > 0.62 ? PAL.scrubTip : PAL.scrubHead)
+            : t > 0.62 ? PAL.scrubLight
+            : t > 0.3 ? PAL.scrubMid
+            : PAL.scrubDark;
+          W(x, y, c);
+          // A stem one unit wide vanishes at 1x; the shaded side gives it body
+          // without doubling the mass.
+          if (t < 0.6) W(x + 1, y, PAL.scrubDeep);
+        }
+      }
+      // Contact: ash banked against the foot of the bush.
+      for (let x = bx - r; x <= bx + r; x++) W(x, by, PAL.scrubDeep);
+    };
+
+    bush(4, 13, 5, 1);
+    bush(12, 15, 6, 2);
+    bush(9, 8, 4, 3);
+  }
+
+  /**
+   * Running lava.
+   *
+   * A wall the player must never mistake for a floor, so it is built the way
+   * deep water is built: it takes its danger from value and chroma rather than
+   * from an outline it cannot have when it is laid by the acre. The body is the
+   * deepest ember in the ramp with set rock riding on it, and the only bright
+   * marks are the seams -- so a flow reads as black rock split open, not as an
+   * orange carpet.
+   *
+   * The seams travel. Four frames, one whole period, so a flow moves in one
+   * direction forever and never stutters at the loop; and it shares its clock
+   * with the vents and the springs, so the route breathes as one system.
+   */
+  private lava(px: Px, fill: (c: string) => void): void {
+    fill(PAL.emberDeep);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    const nf = ANIMATED[T.LAVA] ?? 1;
+    const drift = animFrame / nf;
+
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 8, 733) * 0.65
+          + wrapNoise((x + 3) * DETAIL, y * DETAIL, 4, 739) * 0.35;
+        // Molten first, crust second.
+        //
+        // The first cut of this tile had it the other way round -- mostly dark
+        // plate with a few orange seams -- on the theory that a flow should get
+        // its danger from value the way deep water does. At 1x it read as
+        // burnt brick: a dark red-brown band the eye walks straight over. Water
+        // can afford to be dark because water is not the hazard; this is, and
+        // the one thing every player already knows on sight is that orange
+        // means do not. So two thirds of the cell is fire and the set rock is
+        // reduced to scum floating on it, which is also what a real flow looks
+        // like from above.
+        let c: string = n > 0.70 ? PAL.emberPale
+          : n > 0.55 ? PAL.emberLight
+          : n > 0.40 ? PAL.emberMid
+          : PAL.emberDark;
+        // Plates of set rock riding on the surface, in the low band only, so
+        // they read as islands on the fire rather than as the ground it is in.
+        if (n < 0.26) c = PAL.basaltDark;
+        else if (n < 0.33) c = PAL.basaltDeep;
+        // The seams, travelling down the flow. Banding on distance from a
+        // moving threshold rather than on a drawn line keeps the cracks
+        // organic and keeps them wrapping at every edge.
+        const t = Math.abs(((n + drift) % 1) - 0.5);
+        if (t < 0.014) c = PAL.emberWhite;
+        else if (t < 0.042) c = PAL.emberPale;
+        P(x, y, c);
+      }
+    }
+  }
+
+  /**
+   * Cooled crust: the road's only way across a flow.
+   *
+   * The same material as the lava with the argument reversed -- here the rock
+   * has won and the fire is only what shows through the cracks. It has to be
+   * obviously walkable at a glance beside a tile that is obviously not, so the
+   * body sits a long way up the basalt ramp, the glow is confined to two thin
+   * seams, and there is no bright field anywhere in it.
+   */
+  private lavaCrust(px: Px, fill: (c: string) => void): void {
+    fill(PAL.basaltMid);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 8, 751) * 0.6
+          + wrapNoise(x * DETAIL, y * DETAIL, 4, 757) * 0.4;
+        let c: string = n > 0.66 ? PAL.basaltLight : n > 0.44 ? PAL.basaltMid : PAL.basaltDark;
+        if (hash2(x, y, 761) > 0.94) c = PAL.basaltPale;
+        // Ropy texture: the fold lines cooled lava sets into.
+        if ((x * 3 + Math.round(Math.sin((y / S) * Math.PI * 2) * 3)) % 7 === 0) {
+          c = n > 0.5 ? PAL.basaltPale : PAL.basaltLight;
+        }
+        // The fissures, still warm -- but only in one cut of three.
+        //
+        // Banding on a noise contour puts a crack through every cell that uses
+        // the tile, and a floor with a glowing seam in every single square is
+        // a floor that looks as dangerous as the flow beside it. Confining the
+        // cracks to one alternate leaves two thirds of the crust cold, so the
+        // warm stretches read as the exception they are meant to be -- and the
+        // player can still tell at a glance which side of the bank is walkable.
+        if (variantSeed % 3 === 0) {
+          const t = Math.abs(n - 0.5);
+          if (t < 0.010) c = PAL.emberDark;
+          else if (t < 0.026) c = PAL.emberDeep;
+        }
+        P(x, y, c);
+      }
+    }
+  }
+
+  /**
+   * A fumarole.
+   *
+   * A sinter cone with steam standing over it. Solid, because a vent is a thing
+   * on the map and not a floor pattern, and because the plume needs a footprint
+   * the player walks around -- steam rising out of a tile you can stand on
+   * reads as a bug.
+   *
+   * The plume never reaches the top of the cell. A plume cut off flat by the
+   * tile edge is what makes a vent look like wallpaper, and stopping it short
+   * means two vents side by side read as two vents.
+   */
+  private fumarole(px: Px, fill: (c: string) => void): void {
+    this.ash(px, fill, 1);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    const nf = ANIMATED[T.FUMAROLE] ?? 1;
+    const phase = animFrame / nf;
+
+    // The cone: sinter, pale and chalky, built up round the hole.
+    for (let y = 9; y < S; y++) {
+      const half = Math.round((y - 8) * 1.05) + 1;
+      for (let x = 8 - half; x <= 7 + half; x++) {
+        if (x < 0 || x >= S) continue;
+        const lit = (8 - x) / 8 + (y - 12) / 10;
+        P(x, y, lit > 0.35 ? PAL.sinter : lit > -0.1 ? PAL.basaltPale : PAL.basaltMid);
+      }
+    }
+    // The mouth, and the light coming out of it.
+    for (let x = 6; x <= 9; x++) {
+      P(x, 10, PAL.basaltDeep);
+      P(x, 11, x === 7 || x === 8 ? PAL.emberDark : PAL.basaltDeep);
+    }
+    // Rust where the steam has been condensing for a hundred years.
+    for (let i = 0; i < 5; i++) {
+      P(3 + Math.floor(hash2(i, 1, 769) * 10),
+        12 + Math.floor(hash2(i, 2, 773) * 4), PAL.basaltRust);
+    }
+
+    // The plume: blobs on a slow rise, thinning as they go.
+    for (let i = 0; i < 5; i++) {
+      const rise = (i / 5 + phase) % 1;
+      const cy = Math.round(10 - rise * 8);
+      if (cy < 1) continue;
+      const cx = 7 + Math.round(Math.sin(rise * 4 + i) * 2.2);
+      const r = 1 + Math.round(rise * 2);
+      const shade = rise > 0.72 ? PAL.ashLight : rise > 0.4 ? PAL.ashPale : '#f4eef0';
+      for (let y = -r; y <= r; y++) {
+        for (let x = -r; x <= r; x++) {
+          if (x * x + y * y > r * r + 1) continue;
+          if (hash2(cx + x, cy + y, 787 + i) < rise * 0.55) continue;
+          P(cx + x, cy + y, shade);
+        }
+      }
+    }
+  }
+
+  /**
+   * A dead tree.
+   *
+   * The last thing standing from before the flow came through, and the only
+   * silhouette on an otherwise flat horizon -- which is exactly what it is for.
+   * Charred black at the foot and bleached bone-pale at the top, because that
+   * is what a snag does after a decade, and because a wholly black tree on a
+   * pale ground is a hole punched in the map.
+   */
+  private charSnag(px: Px, fill: (c: string) => void): void {
+    void fill;
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    /** One limb, from (x,y) outward, tapering and paling as it goes. */
+    const limb = (x0: number, y0: number, dx: number, dy: number, len: number, seed: number) => {
+      let x = x0, y = y0;
+      for (let k = 0; k < len; k++) {
+        const t = k / len;
+        const c = t > 0.7 ? PAL.ashPale : t > 0.4 ? PAL.ashDark : PAL.basaltDark;
+        P(Math.round(x), Math.round(y), c);
+        if (t < 0.5) P(Math.round(x) + 1, Math.round(y), PAL.basaltDeep);
+        x += dx + (hash2(k, seed, 797) - 0.5) * 0.7;
+        y += dy;
+      }
+    };
+
+    // Trunk. Wider at the foot, and it stops short of the top of the cell.
+    for (let y = 2; y < S; y++) {
+      const w = y > 12 ? 2 : y > 7 ? 1 : 0;
+      for (let x = 7 - w; x <= 8 + w; x++) {
+        const lit = (7 - x) / 4 + (y < 6 ? 0.5 : 0);
+        P(x, y, lit > 0.4 ? PAL.ashDark : lit > -0.2 ? PAL.basaltDark : PAL.basaltDeep);
+      }
+    }
+    limb(7, 7, -0.9, -0.6, 6, 1);
+    limb(8, 5, 1.0, -0.5, 5, 2);
+    limb(8, 10, 1.1, -0.3, 4, 3);
+    limb(7, 12, -1.1, -0.2, 3, 4);
+    this.footShadow(P, 4, 11, 15);
+  }
+
+  /**
+   * Black rock, loose on the ash.
+   *
+   * The same silhouette job the grey field rock does, in a material that cannot
+   * borrow its ramp: a stone wearing Route 1's lichen, sitting in ash, reads as
+   * a boulder imported from another game. This one is a fractured block rather
+   * than a rounded one -- basalt breaks on planes -- and the only colour on it
+   * is the rust the steam leaves on the weather side.
+   */
+  private basaltRock(px: Px, fill: (c: string) => void, big: boolean): void {
+    this.ash(px, fill, big ? 1 : 0);
+    const P = this.unit(px);
+    const r = big ? 7 : 4;
+    const cy = big ? 9 : 11;
+
+    for (let y = -r - 1; y <= r; y++) {
+      for (let x = -r; x <= r; x++) {
+        // Angular: a radius stepped by facets rather than wobbled smoothly.
+        const ang = Math.atan2(y, x);
+        const facet = 1 + Math.sin(ang * 2.6 + 0.7) * 0.13 + Math.sin(ang * 4.1) * 0.08;
+        if (x * x + y * y * 1.4 > (r * facet) ** 2) continue;
+        const lit = (-x - y * 1.2) / (r * 1.5);
+        let c: string = lit > 0.45 ? PAL.basaltPale
+          : lit > 0.14 ? PAL.basaltLight
+          : lit > -0.18 ? PAL.basaltMid
+          : lit > -0.5 ? PAL.basaltDark : PAL.basaltDeep;
+        if (lit > 0.0 && hash2(x >> 1, y >> 1, 809) > 0.9) c = PAL.basaltRust;
+        P(8 + x, cy + y, c);
+      }
+    }
+    // The fracture planes. Straight, because that is how this rock breaks.
+    for (let i = 0; i < (big ? 3 : 2); i++) {
+      const y0 = cy - r + 1 + Math.floor(hash2(i, 1, 811) * (r * 1.4));
+      const slope = hash2(i, 2, 821) > 0.5 ? 0.4 : -0.4;
+      for (let k = -r + 1; k < r - 1; k++) {
+        if ((k * 3) % 7 === 0) continue;
+        const x = 8 + k;
+        const y = Math.round(y0 + k * slope);
+        P(x, y, PAL.basaltDeep);
+        P(x, y - 1, PAL.basaltLight);
+      }
+    }
+    // Outline, so a crag at the edge of the map is a hard shape against sky.
+    for (let x = -r - 1; x <= r + 1; x++) {
+      const yy = Math.floor(Math.sqrt(Math.max(0, r * r - x * x) / 1.4));
+      if (yy <= 0) continue;
+      P(8 + x, cy + yy, PAL.outline);
+      P(8 + x, cy - yy, PAL.outline);
+    }
+    this.footShadow(P, 8 - r, 8 + r, cy + Math.floor(r * 0.85));
+  }
+
+  /**
+   * The wall of the pass.
+   *
+   * The grey cliff already in the tileset is the right drawing and entirely the
+   * wrong material here: a pass cut through a lava field is walled with the
+   * flow it was cut through, and limestone strata beside an orange flow pulls
+   * the whole picture back towards Stonewake.
+   *
+   * So this is columnar basalt, which is the one rock formation drawn with
+   * *vertical* joints rather than horizontal ones -- a palisade of six-sided
+   * columns. That single change of direction says "volcanic" more forcefully
+   * than any amount of colour would, and it means the walls of this pass cannot
+   * be mistaken for the walls of the quarry two acts back even in a thumbnail.
+   */
+  private basaltCliff(px: Px, fill: (c: string) => void, top: boolean): void {
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    fill(PAL.basaltMid);
+
+    if (top) {
+      // Seen from above: the broken ends of the columns, a pavement of
+      // polygons with ash blown into the joints.
+      for (let y = 0; y < S; y++) {
+        const stagger = (Math.floor(y / 5) % 2) * 2;
+        for (let x = 0; x < S; x++) {
+          const cellX = Math.floor((x + stagger) / 5);
+          const cellY = Math.floor(y / 5);
+          const n = hash2(cellX, cellY, 823);
+          let c: string = n > 0.66 ? PAL.basaltLight : n > 0.33 ? PAL.basaltMid : PAL.basaltDark;
+          if (wrapNoise(x * DETAIL, y * DETAIL, 8, 827) > 0.66) c = PAL.basaltPale;
+          const inX = (x + stagger) % 5;
+          if (inX === 0 || y % 5 === 0) c = PAL.basaltDeep;
+          else if (inX === 1) c = n > 0.5 ? PAL.basaltPale : PAL.basaltLight;
+          if (hash2(x, y, 829) > 0.94) c = PAL.ashLight;
+          P(x, y, c);
+        }
+      }
+      return;
+    }
+
+    /**
+     * The face: columns running the full height of the cell, so a wall of any
+     * height is continuous.
+     *
+     * Widths come from a fixed set that sums to the cell and the rotation is
+     * hashed per variant, so the three alternates are three different palisades
+     * that still meet each other without a step.
+     */
+    const RUNS = [[3, 4, 3, 3, 3], [4, 3, 5, 4], [3, 3, 4, 3, 3], [5, 3, 4, 4], [4, 4, 3, 5]];
+    const run = RUNS[Math.floor(hash2(0, 1, 839) * RUNS.length) % RUNS.length]!;
+    const rot = Math.floor(hash2(0, 2, 853) * S);
+    const edge = new Set<number>();
+    const colOf = new Array<number>(S).fill(0);
+    let acc = rot, id = 0;
+    for (const w of run) { edge.add(((acc % S) + S) % S); acc += w; }
+    for (let k = 0; k < S; k++) {
+      const x = ((rot + k) % S + S) % S;
+      if (k > 0 && edge.has(x)) id++;
+      colOf[x] = id;
+    }
+
+    for (let x = 0; x < S; x++) {
+      const c = colOf[x]!;
+      const tint = hash2(c, 3, 857);
+      const isJoint = edge.has(x);
+      const isLit = edge.has(((x - 1) % S + S) % S);
+      for (let y = 0; y < S; y++) {
+        // A slow vertical wash, so a tall wall is not one value top to base.
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 16, 859);
+        let col: string = tint > 0.55
+          ? (n > 0.5 ? PAL.basaltMid : PAL.basaltDark)
+          : (n > 0.5 ? PAL.basaltDark : PAL.basaltDeep);
+        if (isJoint) col = PAL.basaltDeep;
+        else if (isLit) col = tint > 0.5 ? PAL.basaltLight : PAL.basaltMid;
+        // Cross-fractures: every column is broken into lengths. Without them a
+        // face is a barcode.
+        else if ((y + c * 5) % 11 === 0) col = PAL.basaltDeep;
+        else if ((y + c * 5) % 11 === 1) col = PAL.basaltLight;
+        else if (hash2(x, y, 863) > 0.965) col = PAL.basaltRust;
+        P(x, y, col);
+      }
+    }
+  }
+
+  /**
+   * A bank you can drop off but not climb.
+   *
+   * The turf ledge already in the set is a grass lip over a soil face, and out
+   * here that is two materials the route does not contain. This is the same
+   * idea in ash and clinker -- a wind-cut bank with the coarse fraction
+   * slumping out of the bottom of it -- and the one thing it inherits exactly
+   * is the *shape*, because a ledge is read at a glance and the player has been
+   * reading that silhouette since Route 1.
+   */
+  private ashLedge(px: Px, fill: (c: string) => void): void {
+    this.ash(px, fill, 1);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    for (let x = 0; x < S; x++) {
+      const lip = 4 + Math.round(Math.sin((x / S) * Math.PI * 2) * 1.2);
+      P(x, lip, PAL.ashPale);
+      P(x, lip + 1, PAL.ashLight);
+      // The cut face under it, in shadow, clinker showing through.
+      for (let y = lip + 2; y < lip + 7 && y < S; y++) {
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 8, 877);
+        P(x, y, n > 0.62 ? PAL.ashDark : n > 0.36 ? PAL.ashDeep : PAL.basaltDark);
+      }
+      // Spoil at the foot of the face.
+      if ((x * 5) % 7 < 3) P(x, lip + 7, PAL.basaltDark);
+    }
+    for (let i = 0; i < 6; i++) {
+      const cx = Math.floor(hash2(i, 5, 881) * S);
+      const cy = 6 + Math.floor(hash2(i, 6, 883) * 5);
+      P(cx, cy, PAL.basaltDeep);
+      P(cx, cy - 1, PAL.ashLight);
+    }
+  }
+
+  /**
+   * A hot pool.
+   *
+   * The one place on this route the palette is allowed to be beautiful.
+   * Mineral water over white sinter is milky green-blue and *pale* -- brighter
+   * than the ash round it -- which is what makes a terrace of pools the thing
+   * the eye goes to from anywhere on the screen.
+   *
+   * Two depths, and they have to be told apart from across the map, because one
+   * is a wade and the other is a wall until the player can swim. So they are
+   * separated the way the sea's two depths are: the deep one takes its darkness
+   * from chroma, and its brightest mark still sits below the shallow one's body
+   * colour. Nothing on the deep pool is ever allowed to say "you may walk here"
+   * -- which is why the sinter floor showing through only exists in the
+   * shallows.
+   */
+  private mineralPool(px: Px, fill: (c: string) => void, deep: boolean): void {
+    fill(deep ? PAL.springDeep : PAL.springMid);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    const nf = ANIMATED[deep ? T.SPRING_DEEP : T.SPRING_SHALLOW] ?? 1;
+    const phase = (animFrame / nf) * Math.PI * 2;
+
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 8, 887) * 0.6
+          + wrapNoise(x * DETAIL, (y + animFrame * 2) * DETAIL, 4, 907) * 0.4;
+        let c: string;
+        if (deep) {
+          c = n > 0.62 ? PAL.springDark : n > 0.4 ? PAL.springDeep : '#1e5a58';
+        } else {
+          c = n > 0.66 ? PAL.springLight : n > 0.42 ? PAL.springMid : PAL.springDark;
+          if (n > 0.80) c = PAL.sinter;
+        }
+        P(x, y, c);
+      }
+    }
+    // Steam scud on the surface, drifting. Held to the pale end of the ramp on
+    // the shallows and one step down on the deep, so the two never meet in
+    // brightness.
+    const scud = deep ? PAL.springMid : PAL.springPale;
+    for (let i = 0; i < 4; i++) {
+      const y = 2 + Math.floor(hash2(i, 1, 911) * (S - 4));
+      const off = Math.round(Math.sin(phase + i) * 3);
+      for (let x = 0; x < S; x++) {
+        if ((x + off + i * 3) % 6 > 2) continue;
+        P(x, y, scud);
+        if (!deep) P(x, y + 1, PAL.springLight);
+      }
+    }
+  }
+
+  /**
+   * The Foundation's fencing.
+   *
+   * Galvanised mesh on driven posts, which is the tone of the Meridian camps in
+   * one object: nothing sinister and nothing ceremonial, just the cheapest
+   * possible way of saying "this is ours now", put up in a hurry across
+   * somebody else's country. It borrows the laboratory's steel ramp and the
+   * Institute's teal on purpose -- it is the same organisation, and the player
+   * should feel that before anybody says it.
+   */
+  private meshFence(px: Px, fill: (c: string) => void, horizontal: boolean): void {
+    void fill;
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    /** One unit in (along the run, across it). */
+    const A = (t: number, d: number, c: string) =>
+      (horizontal ? P(t, d, c) : P(d, t, c));
+
+    // The mesh: a diamond lattice, drawn on the authoring grid so it reads as a
+    // lattice and not as a grey haze.
+    for (let t = 0; t < S; t++) {
+      for (let d = 3; d < 13; d++) {
+        if ((t + d) % 4 !== 0 && (t - d + 64) % 4 !== 0) continue;
+        A(t, d, d < 6 ? PAL.steelLight : PAL.steelMid);
+      }
+    }
+    // Top and bottom rails.
+    for (let t = 0; t < S; t++) {
+      A(t, 3, PAL.steelPale);
+      A(t, 4, PAL.steelDark);
+      A(t, 12, PAL.steelDark);
+    }
+    // Posts at the cell ends, so a run has uprights at a believable spacing.
+    for (const t of [0, 1]) {
+      for (let d = 1; d <= 14; d++) A(t, d, t === 0 ? PAL.steelMid : PAL.steelDeep);
+      A(t, 0, PAL.steelPale);
+    }
+    if (horizontal) this.footShadow(P, 0, 15, 13);
+  }
+
+  /**
+   * A survey mast.
+   *
+   * A guyed lattice tower with an instrument head. It is the tallest thing on
+   * the route and it is deliberately drawn to the very top of the cell, so a
+   * camp is visible over a rise before the player can see what else is in it --
+   * which is most of the reason for putting these here at all.
+   */
+  private surveyMast(px: Px): void {
+    const P = this.unit(px);
+
+    // Guys first, so the lattice is drawn over them.
+    for (let k = 0; k < 8; k++) {
+      P(8 - k, 7 + k, PAL.steelDark);
+      P(7 + k, 7 + k, PAL.steelDark);
+    }
+    // Two legs and the bracing between them.
+    for (let y = 3; y < 16; y++) {
+      P(6, y, PAL.steelMid);
+      P(9, y, PAL.steelDeep);
+      if (y % 3 === 0) { P(7, y, PAL.steelLight); P(8, y, PAL.steelDark); }
+      else if (y % 3 === 1) P(7, y, PAL.steelDark);
+    }
+    // The head: a drum and a crossarm, in the Foundation's teal.
+    for (let x = 4; x <= 11; x++) P(x, 2, PAL.steelLight);
+    for (let x = 6; x <= 9; x++) { P(x, 0, PAL.labAccent); P(x, 1, PAL.labAccentDark); }
+    P(4, 1, PAL.steelPale);
+    P(11, 1, PAL.steelPale);
+    this.footShadow(P, 4, 11, 15);
+  }
+
+  /**
+   * A generator.
+   *
+   * Running, with nobody near it. A skid-mounted set with a radiator, an
+   * exhaust and a fuel drum lashed to the frame -- about the least dramatic
+   * object it is possible to draw, which is exactly why it belongs here. What
+   * is frightening about these camps is that they are ordinary.
+   */
+  private generator(px: Px): void {
+    const P = this.unit(px);
+
+    // Skid.
+    for (let x = 1; x <= 14; x++) { P(x, 14, PAL.steelDeep); P(x, 13, PAL.steelDark); }
+    // Body.
+    for (let y = 6; y <= 12; y++) {
+      for (let x = 2; x <= 13; x++) {
+        const lit = (4 - y) / 6 + (6 - x) / 10;
+        P(x, y, lit > 0.15 ? PAL.steelMid : lit > -0.35 ? PAL.steelDark : PAL.steelDeep);
+      }
+    }
+    // Radiator louvres on the near end.
+    for (let y = 7; y <= 11; y += 2) for (let x = 3; x <= 6; x++) P(x, y, PAL.panelInk);
+    // The paint band, and one indicator that is lit.
+    for (let x = 2; x <= 13; x++) P(x, 6, PAL.labAccent);
+    P(11, 8, PAL.panelInk);
+    P(12, 8, PAL.emberLight);
+    // Exhaust, and the shimmer over it.
+    for (let y = 2; y <= 5; y++) P(10, y, PAL.steelDark);
+    P(10, 1, PAL.steelLight);
+    for (let i = 0; i < 3; i++) {
+      const rise = (i / 3 + animFrame / 4) % 1;
+      P(10 + Math.round(Math.sin(rise * 6) * 1.6), Math.max(0, Math.round(1 - rise)), PAL.ashPale);
+    }
+    // Fuel drum.
+    for (let y = 8; y <= 13; y++) {
+      P(14, y, PAL.cinderLight);
+      P(15, y, PAL.cinderDark);
+    }
+    P(14, 8, PAL.dirtLight);
+    this.footShadow(P, 1, 15, 15);
+  }
+
+  /**
+   * Spoil.
+   *
+   * What comes out of a trench and has to go somewhere. A graded heap, layered
+   * in the order the ground was cut -- ash on top, clinker and broken basalt
+   * beneath -- with a plank walked up its flank. The layering is the
+   * storytelling: this ground has been opened and turned over, and the heap
+   * says so without a sign standing next to it.
+   */
+  private spoilHeap(px: Px): void {
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    for (let y = 4; y < S; y++) {
+      const half = Math.round((y - 3) * 0.95);
+      for (let x = 8 - half; x <= 7 + half; x++) {
+        if (x < 0 || x >= S) continue;
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 8, 919);
+        const lit = (8 - x) / 9 + (y - 12) / 12;
+        let c: string;
+        if (y < 8) c = lit > 0.1 ? PAL.ashPale : PAL.ashLight;
+        else if (y < 11) c = n > 0.5 ? PAL.ashMid : PAL.ashDark;
+        else c = n > 0.6 ? PAL.basaltMid : n > 0.3 ? PAL.basaltDark : PAL.basaltDeep;
+        if (hash2(x, y, 929) > 0.93) c = PAL.basaltRust;
+        P(x, y, c);
+      }
+    }
+    // The plank up the flank.
+    for (let k = 0; k < 7; k++) {
+      P(11 + Math.floor(k * 0.6), 14 - k, PAL.woodMid);
+      P(12 + Math.floor(k * 0.6), 14 - k, PAL.woodDark);
+    }
+    this.footShadow(P, 3, 13, 15);
+  }
+
+  /**
+   * Foundation crates.
+   *
+   * Two lidded cases and a coil of cable. Stencilled, because a numbered crate
+   * is a document: somebody catalogued whatever came out of the ground here,
+   * and the number is the only trace of it the player will ever see.
+   */
+  private crateStack(px: Px): void {
+    const P = this.unit(px);
+
+    /** One case: lid, body, a banding strap, a shadowed base. */
+    const crate = (x0: number, y0: number, w: number, h: number, band: string) => {
+      for (let y = y0; y < y0 + h; y++) {
+        for (let x = x0; x < x0 + w; x++) {
+          const lit = (x0 + 1 - x) / w + (y0 + 1 - y) / h;
+          P(x, y, lit > -0.2 ? PAL.steelMid : lit > -0.9 ? PAL.steelDark : PAL.steelDeep);
+        }
+      }
+      for (let x = x0; x < x0 + w; x++) { P(x, y0, PAL.steelLight); P(x, y0 + h - 1, PAL.panelInk); }
+      for (let y = y0; y < y0 + h; y++) P(x0 + Math.floor(w / 2), y, band);
+      // The stencil: unreadable at this size, legible as writing.
+      P(x0 + 1, y0 + 2, PAL.trimPale);
+      P(x0 + 2, y0 + 2, PAL.trimPale);
+      P(x0 + w - 2, y0 + 2, PAL.trimPale);
+    };
+
+    crate(1, 6, 8, 9, PAL.labAccent);
+    crate(9, 3, 7, 12, PAL.labAccentDark);
+    // Cable, coiled on the ground in front of them.
+    for (let i = 0; i < 14; i++) {
+      const a = (i / 14) * Math.PI * 2;
+      P(4 + Math.round(Math.cos(a) * 3), 14 + Math.round(Math.sin(a) * 1.2), PAL.panelInk);
+    }
+    this.footShadow(P, 1, 15, 15);
+  }
+
+  /**
+   * The mouth of a lava tube.
+   *
+   * A doorway cut in columnar basalt. The plaster doorcase the rest of the game
+   * uses for a cave would be a white frame nailed to a black cliff out here, so
+   * this is the cliff's own material broken open instead: the columns carry on
+   * round the arch, the opening is the darkest thing on the map, and there is
+   * one dull ember low in it, because the tube is still warm and that is the
+   * only invitation the tile is allowed to give.
+   */
+  private ventMouth(px: Px, fill: (c: string) => void): void {
+    this.basaltCliff(px, fill, false);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    for (let y = 3; y < S; y++) {
+      // A pointed arch: wide at the floor, closing to a keystone.
+      const half = y < 6 ? Math.round((y - 2) * 1.6) : 5;
+      for (let x = 8 - half; x <= 7 + half; x++) {
+        if (x < 0 || x >= S) continue;
+        const rim = x === 8 - half || x === 7 + half || y === 3;
+        P(x, y, rim ? PAL.basaltPale : PAL.outline);
+      }
+    }
+    // Spoil and rubble across the sill, so the opening has a floor to it.
+    for (let x = 3; x <= 12; x++) {
+      if ((x * 3) % 5 === 0) continue;
+      P(x, 15, PAL.basaltDark);
+      P(x, 14, hash2(x, 1, 941) > 0.55 ? PAL.basaltMid : PAL.basaltDeep);
+    }
+    // The ember, low and dull.
+    P(7, 13, PAL.emberDark);
+    P(8, 13, PAL.emberDeep);
+    P(7, 12, PAL.emberDeep);
+  }
 }
+
+/**
+ * The Aurelian ramps.
+ *
+ * Kept out of PAL on purpose. Every other material in the file belongs to
+ * Caelora as it is now and gets mixed against its neighbours; this one belongs
+ * to a civilisation that has been gone for three thousand years and is only
+ * ever seen on its own, in rooms nothing else is allowed into. Filing it apart
+ * is also what stops somebody reaching for "that nice pale stone" when they
+ * are building a house.
+ *
+ * The current is deliberately the Tideheart's own blue-green rather than a
+ * colour of its own. It is the same technology, and the player should be able
+ * to see that before anybody explains it.
+ */
+const AUR = {
+  // Machined limestone. Warm and pale -- brighter than anything else
+  // underground, so a lit Aurelian room reads as lit from inside itself.
+  //
+  // The range across the whole ramp is deliberately narrow. This is the surface
+  // the player spends the entire dungeon standing on and every other thing in
+  // the temple is seen against it, so it has to be a value rather than a
+  // texture: the first cut ran from #4a3f2c to #efe4c6, a five-stop ramp with
+  // real contrast in it, and the floor ate the room.
+  deep: '#8d8168',
+  dark: '#a89b80',
+  mid: '#bcb094',
+  light: '#cdc2a7',
+  pale: '#ddd3ba',
+  // Basalt, cut to the same tolerance and half the brightness.
+  wallDeep: '#191a24',
+  wallDark: '#2b2d3c',
+  wallMid: '#3d4053',
+  wallLight: '#565a72',
+  wallPale: '#767b96',
+  // Bronze inlay: pins, courses and the spirals cut into the floor.
+  goldDim: '#7a6224',
+  gold: '#bd9438',
+  goldLit: '#f0d183',
+  // The current.
+  glowDeep: '#05262f',
+  glowDim: '#0e5f6c',
+  glowMid: '#2bbfb9',
+  glowHi: '#8bf1e3',
+  glowCore: '#eafffb',
+  spill: 'rgba(70,225,210,0.22)',
+  spillFar: 'rgba(70,225,210,0.13)',
+  spillEdge: 'rgba(70,225,210,0.07)',
+  // The lip of anything cut into the floor: a groove, a socket, a joint that
+  // has to be seen from across the room rather than felt underfoot.
+  cut: '#5f5644',
+  // A groove with nothing in it. Cut stone in shadow -- dark enough to read as
+  // a channel at a glance, light enough not to read as a hole in the floor.
+  slotDark: '#7b7159',
+  slotDeep: '#453e2f',
+  // Cinder blown up the shaft.
+  ashDark: '#4e463c',
+  ashMid: '#6d6357',
+  ashLight: '#8d8375',
+  ember: '#d85c1c',
+  // The shaft itself.
+  //
+  // The crust is deliberately NOT black. Set rock at this scale wants to be a
+  // dark warm grey with fire showing between the plates; mixed from near-black
+  // it stops reading as rock at all and the lake comes out as a grid of holes
+  // with orange in the gaps, which is what the first cut of it did.
+  crustDeep: '#3b2b22',
+  crust: '#553c2e',
+  crustLight: '#6e4d38',
+  lavaDark: '#a5330f',
+  lavaMid: '#e9691a',
+  lavaHot: '#ffd15c',
+  outline: '#181a22',
+} as const;

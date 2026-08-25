@@ -1,0 +1,456 @@
+[
+  {
+    "id": "ect_arrival",
+    "_note": "ACT 3, the first Aurelian site proper. Two boxes and no speaker, fired the first time the player comes up the stair out of Emberfall. The world cue in src/systems/tideheart.ts has already sounded by now -- the site row `embercoil_temple` lists every map of the temple plus emberfall itself, so the object has been pulling since the player walked into the city. This is only the line that says what the room is.",
+    "trigger": "enter",
+    "map": "embercoil_temple",
+    "onceFlag": "ect_arrived",
+    "actions": [
+      {
+        "kind": "say",
+        "lines": [
+          "The floor is cut stone, and every joint in it is the same width as every other joint."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Nobody in Caelora builds like this. Nobody in Caelora has ever built like this."
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "ect_sorrell",
+    "_note": "She found the three sites in Elias' notes and she got exactly as far as the outer gallery, which is the point of her: the Tideheart is not a key she could borrow. Three branches, all short. The last one is the handoff to the wetlands, and it is the only place in the act that names Mirehaven as the second site -- see the note to the Sanctum's author in the handover.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "tideheart_echo_embercoil_temple" },
+        "then": [
+          {
+            "kind": "say",
+            "who": "PROFESSOR SORRELL",
+            "lines": ["You have been a long time down there."]
+          },
+          { "kind": "wait", "frames": 20 },
+          {
+            "kind": "say",
+            "who": "PROFESSOR SORRELL",
+            "lines": [
+              "I am not going to ask. Whatever it was, it was his, and he left it for you."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "PROFESSOR SORRELL",
+            "lines": [
+              "The second name in the notebook is in the wetlands. Mirehaven. I will write ahead of you."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "if",
+            "cond": { "kind": "var", "var": "embercoil_rings", "op": ">=", "value": 1 },
+            "then": [
+              {
+                "kind": "say",
+                "who": "PROFESSOR SORRELL",
+                "lines": ["I felt that through the floor. What did you do?"]
+              },
+              {
+                "kind": "say",
+                "who": "PROFESSOR SORRELL",
+                "lines": [
+                  "Three rings. I counted them eleven times going round. Go and finish it."
+                ]
+              }
+            ],
+            "else": [
+              {
+                "kind": "say",
+                "who": "PROFESSOR SORRELL",
+                "lines": [
+                  "Your father wrote three place names in the back of a field notebook. This is the first."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "PROFESSOR SORRELL",
+                "lines": [
+                  "I have walked that gallery for two days. Three rings of bronze, and no way down."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "PROFESSOR SORRELL",
+                "lines": [
+                  "You have the thing he sent home. I think this building has been waiting for it."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "ect_ring_west",
+    "_note": "One of three, and the three are deliberately order-independent: each adds one to embercoil_rings and then calls ect_rings_turning, which is where the third one opens the floor. Fired by STEPPING on the spiral rather than by pressing A at the ring, because the whole design of the object is that it answers on its own -- see the header of src/systems/tideheart.ts.",
+    "trigger": "step",
+    "map": "embercoil_temple",
+    "at": [{ "x": 3, "y": 18 }],
+    "when": { "kind": "not", "of": { "kind": "flag", "flag": "ect_ring_west" } },
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "hasItem", "item": "tideheart" },
+        "then": [
+          { "kind": "face", "who": "player", "dir": "up" },
+          { "kind": "wait", "frames": 14 },
+          {
+            "kind": "say",
+            "lines": [
+              "The thing your father sent home is hot in your bag before you have decided to take it out."
+            ]
+          },
+          { "kind": "sfx", "sound": "fx_charge" },
+          { "kind": "wait", "frames": 18 },
+          { "kind": "sfx", "sound": "fx_light" },
+          { "kind": "shake", "frames": 22, "power": 2 },
+          { "kind": "wait", "frames": 22 },
+          {
+            "kind": "say",
+            "lines": [
+              "The hoop turns a quarter and stops. Under the floor, something takes up the note."
+            ]
+          },
+          { "kind": "setFlag", "flag": "ect_ring_west" },
+          { "kind": "addVar", "var": "embercoil_rings", "delta": 1 },
+          { "kind": "call", "script": "ect_rings_turning" }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "lines": [
+              "A spiral cut into the floor, and a hoop of bronze standing in it. Nothing happens."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "ect_ring_east",
+    "trigger": "step",
+    "map": "embercoil_temple",
+    "at": [{ "x": 26, "y": 9 }],
+    "when": { "kind": "not", "of": { "kind": "flag", "flag": "ect_ring_east" } },
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "hasItem", "item": "tideheart" },
+        "then": [
+          { "kind": "face", "who": "player", "dir": "up" },
+          { "kind": "wait", "frames": 14 },
+          {
+            "kind": "say",
+            "lines": ["This hoop is already turning before you reach it."]
+          },
+          { "kind": "sfx", "sound": "fx_charge" },
+          { "kind": "wait", "frames": 16 },
+          { "kind": "sfx", "sound": "fx_light" },
+          { "kind": "shake", "frames": 22, "power": 2 },
+          { "kind": "wait", "frames": 22 },
+          {
+            "kind": "say",
+            "lines": [
+              "Two notes now, and they do not agree. The floor buzzes through your boots."
+            ]
+          },
+          { "kind": "setFlag", "flag": "ect_ring_east" },
+          { "kind": "addVar", "var": "embercoil_rings", "delta": 1 },
+          { "kind": "call", "script": "ect_rings_turning" }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "lines": [
+              "A spiral cut into the floor, and a hoop of bronze standing in it. Nothing happens."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "ect_ring_inner",
+    "trigger": "step",
+    "map": "embercoil_temple",
+    "at": [{ "x": 7, "y": 13 }],
+    "when": { "kind": "not", "of": { "kind": "flag", "flag": "ect_ring_inner" } },
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "hasItem", "item": "tideheart" },
+        "then": [
+          { "kind": "face", "who": "player", "dir": "up" },
+          { "kind": "wait", "frames": 14 },
+          {
+            "kind": "say",
+            "lines": [
+              "This one takes longer. Whatever has been holding it has been holding it a long time."
+            ]
+          },
+          { "kind": "sfx", "sound": "fx_charge" },
+          { "kind": "wait", "frames": 26 },
+          { "kind": "sfx", "sound": "fx_light" },
+          { "kind": "shake", "frames": 26, "power": 3 },
+          { "kind": "wait", "frames": 26 },
+          {
+            "kind": "say",
+            "lines": [
+              "Then it gives, and all of them agree, and the sound goes out of the room into the mountain."
+            ]
+          },
+          { "kind": "setFlag", "flag": "ect_ring_inner" },
+          { "kind": "addVar", "var": "embercoil_rings", "delta": 1 },
+          { "kind": "call", "script": "ect_rings_turning" }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "lines": [
+              "A spiral cut into the floor, and a hoop of bronze standing in it. Nothing happens."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "ect_rings_turning",
+    "_note": "The shared tail of all three rings, so the order the player walks the coil in does not matter and the third one -- whichever it is -- is the one that opens the floor. Sets ect_stair_open, which is the only thing ect_stair reads.",
+    "trigger": "call",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "var", "var": "embercoil_rings", "op": ">=", "value": 3 },
+        "then": [
+          { "kind": "wait", "frames": 20 },
+          { "kind": "sfx", "sound": "fx_quake" },
+          { "kind": "shake", "frames": 46, "power": 4 },
+          { "kind": "wait", "frames": 46 },
+          {
+            "kind": "say",
+            "lines": [
+              "Something enormous under the hall gives way, slowly, and keeps giving way."
+            ]
+          },
+          { "kind": "setFlag", "flag": "ect_stair_open" },
+          {
+            "kind": "say",
+            "lines": [
+              "At the shaft in the middle of the hall, the two spirals in the floor have started to sink."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "ect_stair",
+    "_note": "The gate, and it is a step script rather than a warp on purpose: a warp tile cannot be conditional, and the whole act of this dungeon is that the way down is shut until the object in the player's bag has answered three times. Once ect_stair_open is set this behaves exactly like an ordinary stair. The player returns from below onto 13,10, which is one tile west of both trigger tiles and therefore cannot loop.",
+    "trigger": "step",
+    "map": "embercoil_temple",
+    "at": [{ "x": 14, "y": 10 }, { "x": 15, "y": 10 }],
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "ect_stair_open" },
+        "then": [
+          { "kind": "sfx", "sound": "stairs" },
+          {
+            "kind": "warp",
+            "map": "embercoil_temple_deep",
+            "x": 13,
+            "y": 3,
+            "facing": "down",
+            "style": "stairs"
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "lines": [
+              "Two spirals cut into the floor at the lip of the shaft. The stone under them does not move."
+            ]
+          },
+          {
+            "kind": "if",
+            "cond": { "kind": "var", "var": "embercoil_rings", "op": "==", "value": 0 },
+            "then": [
+              {
+                "kind": "say",
+                "lines": ["Three rings of bronze stand in these galleries. Not one of them is turning."]
+              }
+            ],
+            "else": [
+              {
+                "kind": "if",
+                "cond": { "kind": "var", "var": "embercoil_rings", "op": "==", "value": 1 },
+                "then": [
+                  {
+                    "kind": "say",
+                    "lines": ["One of the three rings is turning. The other two are not."]
+                  }
+                ],
+                "else": [
+                  {
+                    "kind": "say",
+                    "lines": ["Two of the three rings are turning. The floor is very nearly ready to move."]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "ect_shaft_look",
+    "_note": "Two boxes at the rail, on the clean lane down either side of the lake, so a player going round to the west causeway gets them and a player going round the long way east gets them too. It is the only line in the temple that says out loud why these people built here, and it fires by walking rather than by pressing anything.",
+    "trigger": "step",
+    "map": "embercoil_temple_deep",
+    "at": [{ "x": 5, "y": 7 }, { "x": 22, "y": 14 }],
+    "when": { "kind": "not", "of": { "kind": "flag", "flag": "ect_shaft_look" } },
+    "onceFlag": "ect_shaft_look",
+    "actions": [
+      {
+        "kind": "say",
+        "lines": [
+          "The shaft goes down past the light. The heat off it moves the hair on your arms."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "They did not build here in spite of this. The grooves in the floor all come from it."
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "ect_recording",
+    "_note": "THE BEAT. Canon Act 3, site one: the player learns that Neravoss existed, that ancient people tried to control it, and hears the first fragment of Elias' recording -- he knew, Cassian wanted to wake it, he thought it was a mistake. It must not explain the Great Deluge, which belongs to the Mirehaven Sanctum, and it must not explain how he died, which belongs to Act 4. Deliberately short: eleven boxes for the whole of it, five of them his, and the room does the rest. The ancient half comes first and is not translated on purpose -- the player understands the shape of it and nothing else, which is what makes the modern voice land.",
+    "trigger": "step",
+    "map": "embercoil_temple_heart",
+    "at": [
+      { "x": 8, "y": 8 }, { "x": 9, "y": 8 }, { "x": 10, "y": 8 },
+      { "x": 8, "y": 7 }, { "x": 9, "y": 7 }, { "x": 10, "y": 7 },
+      { "x": 8, "y": 6 }, { "x": 9, "y": 6 }, { "x": 10, "y": 6 }
+    ],
+    "when": { "kind": "not", "of": { "kind": "flag", "flag": "heard_elias_first" } },
+    "actions": [
+      { "kind": "face", "who": "player", "dir": "up" },
+      { "kind": "wait", "frames": 24 },
+      { "kind": "sfx", "sound": "fx_charge" },
+      { "kind": "wait", "frames": 24 },
+      { "kind": "sfx", "sound": "fx_light" },
+      { "kind": "shake", "frames": 20, "power": 2 },
+      {
+        "kind": "say",
+        "lines": ["All four grooves go bright at once and meet under your feet."]
+      },
+      {
+        "kind": "say",
+        "lines": ["Voices. A great many of them, in this room, all at the same time."]
+      },
+      {
+        "kind": "say",
+        "lines": ["Not words you know. Then one voice on its own, asking something."]
+      },
+      { "kind": "wait", "frames": 30 },
+      {
+        "kind": "say",
+        "lines": ["And a long way under the mountain, something answers it."]
+      },
+      { "kind": "wait", "frames": 30 },
+      { "kind": "sfx", "sound": "fx_charge" },
+      {
+        "kind": "say",
+        "lines": ["The record jumps. The same room, later, and the voices are not asking any more."]
+      },
+      { "kind": "shake", "frames": 24, "power": 2 },
+      {
+        "kind": "say",
+        "lines": ["Underneath, the thing that answered them makes a sound you feel in your teeth."]
+      },
+      { "kind": "wait", "frames": 30 },
+      { "kind": "sfx", "sound": "fx_spark" },
+      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "say",
+        "lines": ["A man's voice. Close, and tired, and not ancient at all."]
+      },
+      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "say",
+        "who": "ELIAS",
+        "lines": ["This is Elias. I do not know who finds this, or when."]
+      },
+      {
+        "kind": "say",
+        "who": "ELIAS",
+        "lines": ["There is something asleep under the sea off this coast. They called it Neravoss."]
+      },
+      {
+        "kind": "say",
+        "who": "ELIAS",
+        "lines": ["Cassian wants to wake it. He believes he can hold it once it is awake."]
+      },
+      {
+        "kind": "say",
+        "who": "ELIAS",
+        "lines": ["I think he is wrong. I think this room is full of people who thought the same."]
+      },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "who": "ELIAS",
+        "lines": ["If I am right, then somebody is going to have to--"]
+      },
+      { "kind": "sfx", "sound": "fx_dark" },
+      { "kind": "wait", "frames": 40 },
+      { "kind": "setFlag", "flag": "heard_elias_first" },
+      { "kind": "setFlag", "flag": "knows_neravoss" },
+      { "kind": "call", "script": "tideheart_wake_embercoil_temple" },
+      { "kind": "setFlag", "flag": "tideheart_echo_embercoil_temple" },
+      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "say",
+        "lines": ["You were five years old. You should not remember the voice."]
+      },
+      {
+        "kind": "say",
+        "lines": ["You do."]
+      },
+      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "say",
+        "lines": ["Nothing in the room has moved. You have no idea what to do with any of it."]
+      }
+    ]
+  }
+]

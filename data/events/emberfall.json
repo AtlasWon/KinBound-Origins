@@ -1,0 +1,55 @@
+[
+  {
+    "id": "embercoil_gate",
+    "_note": "ACT 3. The join between two agents' work: Emberfall drew the sealed gate at (3,45) and its sign, and the temple was built behind it, but nothing opened the door. The sign already describes a palm-sized hollow ringed with spiral marks, so the object the player is carrying is the key and the scene should not have to say so. Setting embercoil_gate_open also clears the tile permanently through the 'cuttable' object on the map, so on every later visit the gate is simply open and the warp at (3,45) walks the player in.",
+    "map": "emberfall",
+    "trigger": "interact",
+    "at": { "x": 3, "y": 45 },
+    "when": {
+      "kind": "not",
+      "of": { "kind": "flag", "flag": "embercoil_gate_open" }
+    },
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "hasItem", "item": "tideheart" },
+        "then": [
+          {
+            "kind": "say",
+            "lines": [
+              "The hollow in the slab is the size of your palm.",
+              "You did not decide to lift your hand. It is already up."
+            ]
+          },
+          { "kind": "wait", "frames": 30 },
+          {
+            "kind": "say",
+            "lines": [
+              "The keepsake goes into the stone as though the stone were cut for it.",
+              "Something very large and very old lets go on the other side."
+            ]
+          },
+          { "kind": "setFlag", "flag": "embercoil_gate_open" },
+          { "kind": "wait", "frames": 24 },
+          {
+            "kind": "warp",
+            "map": "embercoil_temple",
+            "x": 12,
+            "y": 24,
+            "facing": "up",
+            "style": "cave"
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "lines": [
+              "One slab, no seam, and a hollow cut in the middle of it.",
+              "Four generations of chisel marks stop short of that hollow."
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

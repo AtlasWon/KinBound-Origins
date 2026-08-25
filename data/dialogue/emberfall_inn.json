@@ -1,0 +1,26 @@
+{
+  "speakers": {
+    "ef_inn_keeper": "INNKEEPER",
+    "ef_inn_surveyor": "FOUNDATION SURVEYOR",
+    "ef_inn_drover": "CHARCOAL DROVER",
+    "ef_inn_singer": "MA DUNNERY"
+  },
+  "entries": {
+    "ef_inn_keeper": [
+      "Warm floor, hot water, and Ma Dunnery will sing at you until you decide you like it.",
+      "Rooms are short. Six went to the Foundation a month back and I have seen two of them slept in."
+    ],
+    "ef_inn_surveyor": [
+      "Geothermal survey. Heat flow, fissure creep, that sort of thing. It is genuinely interesting work.",
+      "No, I do not know what is in the crates. I asked once and got a very pleasant answer that was not one."
+    ],
+    "ef_inn_drover": [
+      "I bring charcoal up the pass eleven months of the year.",
+      "The twelfth the pass is shut, and this city burns its furniture. I have watched it happen."
+    ],
+    "ef_inn_singer": [
+      "Every song here is about the same three things. Fire, water, and somebody who did not come home.",
+      "We are not a cheerful people. We are a warm one. They are not the same thing."
+    ]
+  }
+}

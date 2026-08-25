@@ -1,0 +1,89 @@
+{
+  "id": "emberfall_springs",
+  "name": "The Steepings",
+  "displayName": "THE STEEPINGS",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIIUIIIII",
+    "IFFFFFFFFFFFFFI",
+    "IF°°°FF~~~~~~FI",
+    "IF°°°FF~~~~~~FI",
+    "IFFFFFF~~~~~~FI",
+    "I±±±±FFFFFFFFFI",
+    "IFFFFFFFFFFFFFI",
+    "IF~~~~~FF~~~~FI",
+    "IF~~~~~FF~~~~FI",
+    "IPFFKKKFFFFFFPI",
+    "IkFFFFFFFFFFFkI",
+    "IIIIIIIDIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 7,
+      "y": 11,
+      "toMap": "emberfall",
+      "toX": 42,
+      "toY": 10,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "ef_springs_attendant",
+      "sprite": "townsfolk_f",
+      "x": 3,
+      "y": 9,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ef_springs_attendant"
+    },
+    {
+      "id": "ef_springs_smith",
+      "sprite": "dockhand",
+      "x": 9,
+      "y": 3,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "ef_springs_smith"
+    },
+    {
+      "id": "ef_springs_traveller",
+      "sprite": "merchant",
+      "x": 3,
+      "y": 8,
+      "facing": "right",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "ef_springs_traveller"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "THE SOURCE POOL IS NOT FOR BATHING. IT IS FOR LOOKING AT.",
+        "Underneath, in a much older hand: ASK ANYONE WHO TRIED."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 10,
+      "text": [
+        "Rates: one coin, or a bucket of charcoal, or an hour on the pans.",
+        "Most of the pegs hold a leather apron. A few hold nothing at all."
+      ]
+    }
+  ],
+  "freeWade": true
+}

@@ -198,6 +198,222 @@ export const TERRAIN: Record<string, TerrainDef> = {
   '`': { over: T.GREAT_BELL, collision: 0, tag: 'grass', step: 'grass' },
   '{': { over: T.GREAT_TRUNK_C, collision: 1, tag: 'grass' },
   '}': { over: T.GREAT_ROOT_C, collision: 1, tag: 'grass' },
+
+  // --- Emberfall: the volcanic city. ----------------------------------
+  //
+  // Non-ASCII characters, and not for fun: every printable ASCII character
+  // except one was already spoken for by the time this material was needed, so
+  // a thirteen-tile family had nowhere to live. Latin-1 keeps one character to
+  // one tile, which is the whole contract the map format rests on.
+  //
+  // The set is mnemonic where it can be. '¦' is a broken bar for broken rock;
+  // '«' '¬' '»' are the copper roof read as '[ ^ ]'; '±' and '÷' are the pipe
+  // runs seen end-on and side-on; '°' is a pool and '·' a vent in the road.
+  '¦': { ground: T.BASALT, collision: 0, tag: 'floor', step: 'stone' },
+  '§': { ground: T.BASALT_WALL, collision: 1, tag: 'floor' },
+  '¤': { ground: T.BASALT_WINDOW, collision: 1, tag: 'floor' },
+  '«': { ground: T.ROOF_COPPER_L, collision: 1, tag: 'floor' },
+  '¬': { ground: T.ROOF_COPPER, collision: 1, tag: 'floor' },
+  '»': { ground: T.ROOF_COPPER_R, collision: 1, tag: 'floor' },
+  // A spring is scalding. The town walks round them, so they are solid --
+  // "look, do not paddle" is the correct reading and the only safe one.
+  '°': { ground: T.SPRING, collision: 1, tag: 'water' },
+  // A vent, on the other hand, is walkable, and that is the point of it: the
+  // city paves over its fissures and steps across them all day long.
+  '·': { ground: T.VENT, collision: 0, tag: 'ash', step: 'stone' },
+  '±': { over: T.PIPE_H, collision: 1, tag: 'floor' },
+  '÷': { over: T.PIPE_V, collision: 1, tag: 'floor' },
+  '¶': { over: T.PIPE_RISER, collision: 1, tag: 'floor' },
+  'µ': { over: T.LAMP_EMBER, collision: 1, tag: 'floor' },
+  'Ø': { ground: T.FORGE, collision: 1, tag: 'floor' },
+  // The city's own front door. Every other town uses the porch door, which is
+  // right for a plastered cottage and reads as damage when it is dropped into
+  // a wall of black rock -- see Tileset.basaltDoor.
+  'Ä': { ground: T.BASALT_DOOR, collision: 0, tag: 'floor', step: 'stone' },
+  // The sealed gate at the end of the causeway. Solid, and the whole district
+  // is built around the fact that it is.
+  'Å': { ground: T.SEALED_GATE, collision: 1, tag: 'cave' },
+  // The city's notice board. A `sign` object only carries text -- the post is
+  // terrain -- and the stock signpost stands on turf, so using it here would
+  // put a bright green square in the middle of a black road. Without a post of
+  // some kind the writing is invisible and the player never finds it.
+  'Ç': { over: T.SIGN_EMBER, collision: 1, tag: 'floor' },
+
+  // --- The Aurelians: the Embercoil Temple and every site after it. -----
+  //
+  // Non-ASCII for the same reason as the block above -- ASCII ran out -- but a
+  // different block on purpose, so the two families cannot collide as later
+  // stages add to either. GREEK is the Aurelian set; anything cut, machined or
+  // powered by these people is spelled with a Greek letter, and the two maths
+  // symbols are the conduit, which is the one thing here that is not stone.
+  //
+  // Mnemonic where it can be: 'Ω' is a closed arch, so it is the wall. 'Θ' is a
+  // plate with a mark on it and 'θ' the same plate with the spiral cut into it.
+  // 'Φ' is a ring standing on a stem, which is exactly what a resonance ring
+  // is. 'Ψ' is fire, so it is the shaft. '≡' is a dead groove and '≈' the same
+  // groove with the current running in it. 'Σ' is drifted cinder.
+  //
+  // A site in a later stage adds no characters: it is these eight, arranged
+  // differently. That is deliberate -- the Aurelians built to one pattern
+  // everywhere, and the player should recognise the second site as theirs from
+  // the first screen of it.
+  'Ω': { ground: T.AUR_WALL, collision: 1, tag: 'floor' },
+  'Θ': { ground: T.AUR_FLOOR, collision: 0, tag: 'floor', step: 'stone' },
+  'θ': { ground: T.AUR_GLYPH, collision: 0, tag: 'floor', step: 'stone' },
+  '≡': { ground: T.AUR_VEIN, collision: 0, tag: 'floor', step: 'stone' },
+  '≈': { ground: T.AUR_VEIN_LIT, collision: 0, tag: 'floor', step: 'stone' },
+  // The ring is an overlay with no floor of its own, so it stands on whatever
+  // the map put under it and the overlay pass draws it with its own row.
+  'Φ': { over: T.AUR_RING, collision: 1, tag: 'floor' },
+  // The shaft. Solid, and it has to stay solid: the temple is wound round a
+  // hole in the mountain and the hole is the reason the temple is here.
+  'Ψ': { ground: T.TEMPLE_MAGMA, collision: 1, tag: 'ash' },
+  // The only tile in the building that carries a wild encounter. See the note
+  // on aurAsh in src/gfx/tileset.ts: the engine rolls encounters on tiles that
+  // declare one, so a sealed hall of cut stone is empty unless the mountain has
+  // got into it, and the drift is where the mountain gets in.
+  'Σ': {
+    ground: T.AUR_ASH, collision: 0, tag: 'ash', encounter: true, step: 'sand',
+  },
+  // A seat. Furniture, not architecture: an overlay with no floor of its own,
+  // because a lone cell of wall tile standing in the middle of a room reads as
+  // a hole in the floor rather than as a thing somebody could sit on. 'Ξ' is
+  // three bars, which is roughly what a cut stone stool looks like side-on.
+  'Ξ': { over: T.AUR_SEAT, collision: 1, tag: 'floor' },
+
+  // --- The wetlands and Mirehaven. ------------------------------------
+  //
+  // A third block, in a third script, for the reason the Emberfall note above
+  // gives: ASCII ran out long ago, and two families that may both grow need to
+  // be unable to collide as later stages add to either. CYRILLIC is the mire
+  // set. Lower case is ground you stand on or wade through; upper case is
+  // everything solid, built or lit.
+  //
+  // Mnemonic wherever it could be. 'д' is a deck, 'Р' a rail, 'Д' a trunk on
+  // splayed roots, 'Г' a glowcap, 'С' a stilt, 'Б' a boat, 'Л' a lamp hanging
+  // off a bracket, 'Ш' a comb and therefore combed thatch. The five ground
+  // characters were chosen to be unmistakable from each other at a glance --
+  // 'п ю ж ц д' -- because three of them make up almost the whole of the route
+  // and a map you cannot read as text is a map nobody can edit.
+
+  // Peat. The floor of the wetlands: wet, walkable, and slow to look at.
+  'п': { ground: T.MIRE_MUD, collision: 0, tag: 'marsh', step: 'dirt' },
+  // Standing marsh water. Wadeable, so it opens with the art the Tide Hall
+  // gave the player -- which is what makes the wetlands the first region where
+  // going straight across is a real option and not just a wish. The deep pools
+  // beside it are ordinary deep water and stay shut until much later.
+  'ю': { ground: T.MIRE_WATER, collision: 2, tag: 'water', step: 'water' },
+  // Reeds are this region's tall grass and carry its encounters.
+  'ж': { ground: T.REEDS, collision: 6, tag: 'tallGrass', encounter: true, step: 'water' },
+  // Sedge: the walkable floor between the beds. Deliberately quiet.
+  'ц': { ground: T.SEDGE, collision: 0, tag: 'marsh', step: 'grass' },
+  // The boardwalk. The road of the whole region, and the only dry line in it.
+  'д': { ground: T.BOARDWALK, collision: 0, tag: 'floor', step: 'wood' },
+  // Its handrail: an overlay with no floor, so one tile rails a plank walk, a
+  // stone platform and a jetty alike. Solid, and that is the point -- it is
+  // what says which edge of a walkway is a way down into the water.
+  'Р': { over: T.BOARD_RAIL, collision: 1, tag: 'floor' },
+  // Mangrove: the wetlands' treeline and its map border.
+  'Д': { ground: T.MIRE_MUD, over: T.MANGROVE, collision: 1, tag: 'marsh' },
+  // Glowcap. The route is laid out so that a player who cannot see the
+  // boardwalk through the fog can still see the next one of these.
+  'Г': { ground: T.MIRE_MUD, over: T.GLOWCAP, collision: 1, tag: 'marsh' },
+  // A piling, and a punt tied up beside one. Both carry their own water: out
+  // in a lagoon there is no walkable neighbour to borrow a floor from, and an
+  // overlay with nothing under it would land on turf.
+  'С': { ground: T.STILT_POST, collision: 1, tag: 'water' },
+  'Б': { ground: T.MOORED_BOAT, collision: 1, tag: 'water' },
+  // Mirehaven's lantern, hung from a bracket. Floorless, so it hangs over
+  // plank, stone and jetty without carrying a square of the wrong material.
+  'Л': { over: T.LAMP_MIRE, collision: 1, tag: 'floor' },
+  // Reed thatch, drawn like '[ ^ ]' -- 'Э' and 'Є' are the two bound ends and
+  // face each other, which is the whole reason they are separate tiles.
+  'Э': { ground: T.ROOF_THATCH_L, collision: 1, tag: 'floor' },
+  'Ш': { ground: T.ROOF_THATCH, collision: 1, tag: 'floor' },
+  'Є': { ground: T.ROOF_THATCH_R, collision: 1, tag: 'floor' },
+  // Tarred plank: blank, window, hanging basket, and door.
+  'Я': { ground: T.WALL_TAR, collision: 1, tag: 'floor' },
+  'Ъ': { ground: T.WALL_TAR_WINDOW, collision: 1, tag: 'floor' },
+  'Ч': { ground: T.WALL_TAR_PLANT, collision: 1, tag: 'floor' },
+  'Џ': { ground: T.DOOR_TAR, collision: 0, tag: 'floor', step: 'wood' },
+  // A marker post: the mire's signpost, and the one thing a player who has
+  // walked off the boardwalk in the fog is likely to find. Floorless, so it
+  // stands on plank and on peat alike -- which the turf-carrying ASCII sign
+  // tile cannot do.
+  'Ђ': { over: T.MIRE_POST, collision: 1, tag: 'floor' },
+  // The deep cut. The lagoon Mirehaven stands over and the pool at the bottom
+  // of the route, and it is a Swim gate exactly as the sea is -- but it is the
+  // sea's colour that made it a separate tile. A saturated blue is right for
+  // the Caeloran Sea and wrong for a marsh: it turned every gap between two
+  // platforms into a stripe of open ocean running through the middle of a town
+  // built on peat.
+  'щ': { ground: T.MIRE_DEEP, collision: 8, tag: 'deepWater', encounter: true, step: 'water' },
+
+  // --- Embercoil Pass: the road into the volcanic interior. -----------
+  //
+  // Latin-1 again, and for the same reason the Emberfall block above gives:
+  // printable ASCII ran out long before this material was needed. The city
+  // block took the symbols; this one takes the accents and the two Icelandic
+  // letters, so the two families never collide even though they are next door
+  // to each other on the map.
+  //
+  // Mnemonic where it can be. '¨' is ash falling and '¸' is ash banked up
+  // against something; 'ß' is the one bold glyph in the set because the road is
+  // the line an author traces first; '×' is the flow you do not cross and 'º'
+  // the crust you do; '¡' is a plume standing over a cone; 'Æ'/'æ' are the
+  // columnar cliff seen face-on and from above, 'Þ'/'ø' the same rock loose on
+  // the ground; '©' and '®' are the two depths of a hot pool. The Foundation's
+  // own kit is the numeric run -- '¯' and '¹' are its fence seen along and
+  // across, '²' the survey mast, '³' the generator, 'ª' a spoil heap and '¾' a
+  // stack of crates.
+  '¨': { ground: T.ASH, collision: 0, tag: 'ash', step: 'sand' },
+  '¸': { ground: T.ASH_DRIFT, collision: 0, tag: 'ash', step: 'sand' },
+  // The same drift, with something living in it.
+  //
+  // Underground there is no scrub to hide in, and the encounter flag is what
+  // makes a floor a hunting ground -- so a lava tube whose floor is all '¸' is
+  // a corridor with nothing in it however good the tile is. This is that tile
+  // with the flag on, so a cave author can say which stretches of loose ash a
+  // player stirs up and which are bare rock, and can do it a tile at a time.
+  // No new art: it is the identical cell.
+  'ì': { ground: T.ASH_DRIFT, collision: 0, tag: 'ash', encounter: true, step: 'sand' },
+  'ß': { ground: T.CINDER_ROAD, collision: 0, tag: 'ash', step: 'dirt' },
+  // The route's tall grass. Knee-high and brittle rather than waist-deep, so it
+  // is drawn under the player rather than round them -- see the note on the
+  // painter -- but it rustles and it hides things exactly like the real thing.
+  '¥': { ground: T.EMBER_SCRUB, collision: 6, tag: 'tallGrass', encounter: true, step: 'grass' },
+  // A live flow is a wall. Nothing about it is ever negotiable, and it is the
+  // one tile in the game that says so with colour alone.
+  '×': { ground: T.LAVA, collision: 1, tag: 'ash' },
+  'º': { ground: T.LAVA_CRUST, collision: 0, tag: 'ash', step: 'stone' },
+  // Crust with something living on it. Same cell, encounter flag on -- the
+  // floor of a lava tube is set rock, not ash, and a cave whose only hunting
+  // ground is a pale grey drift reads as an outdoor field with a roof on it.
+  'î': { ground: T.LAVA_CRUST, collision: 0, tag: 'ash', encounter: true, step: 'stone' },
+  '¡': { ground: T.FUMAROLE, collision: 1, tag: 'ash' },
+  // Overlays with no ground of their own, so whatever the map laid down --
+  // ash, drift, road, crust -- shows through and round them.
+  'þ': { over: T.CHAR_SNAG, collision: 1, tag: 'ash' },
+  'ø': { ground: T.BASALT_ROCK, collision: 1, tag: 'ash' },
+  'Þ': { ground: T.BASALT_CRAG, collision: 1, tag: 'ash' },
+  'Æ': { ground: T.BASALT_FACE, collision: 1, tag: 'cave' },
+  'æ': { ground: T.BASALT_TOP, collision: 1, tag: 'cave' },
+  '¿': { ground: T.ASH_LEDGE, collision: 3, tag: 'ash', ledge: 'down' },
+  '©': { ground: T.SPRING_SHALLOW, collision: 2, tag: 'water', step: 'water' },
+  '®': { ground: T.SPRING_DEEP, collision: 8, tag: 'deepWater', step: 'water' },
+  '¯': { over: T.MESH_FENCE_H, collision: 1, tag: 'ash' },
+  '¹': { over: T.MESH_FENCE_V, collision: 1, tag: 'ash' },
+  '²': { over: T.SURVEY_MAST, collision: 1, tag: 'ash' },
+  '³': { over: T.GENERATOR, collision: 1, tag: 'ash' },
+  'ª': { over: T.SPOIL_HEAP, collision: 1, tag: 'ash' },
+  '¾': { over: T.CRATE_STACK, collision: 1, tag: 'ash' },
+  // The mouth of a lava tube, cut in the pass wall. Walkable, because the warp
+  // that leads into it stands on this tile.
+  'Ð': { ground: T.VENT_MOUTH, collision: 0, tag: 'cave', step: 'stone' },
+  // A signpost that is not standing in a square of imported lawn: the same
+  // board and posts the whole region uses, with no ground of its own, so it
+  // takes the ash, the road or the crust the map put under it.
+  '´': { over: T.SIGN, collision: 1, tag: 'ash' },
 };
 
 /**
@@ -208,7 +424,7 @@ export const TERRAIN: Record<string, TerrainDef> = {
  * standing beside one.
  */
 const DOORWAY = new Set<number>([
-  T.DOOR, T.DOOR_PORCH, T.CIVIC_DOOR, T.LAB_DOOR_L, T.LAB_DOOR_R,
+  T.DOOR, T.DOOR_PORCH, T.CIVIC_DOOR, T.LAB_DOOR_L, T.LAB_DOOR_R, T.BASALT_DOOR, T.DOOR_TAR,
 ]);
 
 /** Whether a cell's ground may be borrowed by floorless terrain next to it. */

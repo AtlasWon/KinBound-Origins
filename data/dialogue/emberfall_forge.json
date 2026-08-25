@@ -1,0 +1,29 @@
+{
+  "speakers": {
+    "ef_hesk": "HESK",
+    "ef_hesk_striker": "STRIKER"
+  },
+  "entries": {
+    "ef_hesk": [
+      {
+        "ifFlags": [
+          "crest_4_taken"
+        ],
+        "lines": [
+          "Flame Crest. Right. Sit down and I will look over your vessel bands for nothing.",
+          "Still do not touch the sword."
+        ]
+      },
+      {
+        "lines": [
+          "Hesk. I make vessel bands and pipe collars, and I do not repair anything I did not make.",
+          "Do not touch the sword."
+        ]
+      }
+    ],
+    "ef_hesk_striker": [
+      "I hit what he points at. Twelve years now.",
+      "You would be amazed how much skill that turns out to need."
+    ]
+  }
+}

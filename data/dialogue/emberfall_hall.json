@@ -1,0 +1,86 @@
+{
+  "speakers": {
+    "ef_hall_clerk": "SHARE CLERK",
+    "ef_hall_glasswright": "GLASSWRIGHT",
+    "ef_hall_bathkeeper": "BATH KEEPER",
+    "ef_hall_widow": "OLD WOMAN",
+    "ef_hall_kid": "BOY",
+    "ef_hall_stairhand": "STAIR HAND"
+  },
+  "entries": {
+    "ef_hall_clerk": [
+      {
+        "unlessFlags": [ "crest_4_taken" ],
+        "lines": [
+          "Number, please. No number, no share, and I am afraid a face is not a number.",
+          "Oh - the stack. That is different. That is not a share, that is a challenge.",
+          "Down the stair, then, and do try to come back up it the proper way."
+        ]
+      },
+      {
+        "lines": [
+          "You have a tally now, which means you are on my board, which means you are my problem.",
+          "Column four hundred and twelve. I have had to rule a new one."
+        ]
+      }
+    ],
+    "ef_hall_glasswright": [
+      {
+        "unlessFlags": [ "crest_4_taken" ],
+        "lines": [
+          "Fourth week waiting. My furnace has been cold so long the lining has cracked.",
+          "I do not think he is wrong, mind. I have read the board. There is not enough of it.",
+          "I just want him to be wrong. It would be so much easier if he were wrong."
+        ]
+      },
+      {
+        "lines": [
+          "He came down himself to tell me. Half an hour on the west tap tonight.",
+          "He would not say where he got it. He never does. Somebody is dark for me tonight."
+        ]
+      }
+    ],
+    "ef_hall_bathkeeper": [
+      {
+        "lines": [
+          "Drawing since Tuesday, and I sit in here anyway, where everyone can see me sitting.",
+          "You do not stop coming to this room just because you are warm.",
+          "That is how you end up the person everyone in the queue is thinking about."
+        ]
+      }
+    ],
+    "ef_hall_widow": [
+      {
+        "lines": [
+          "My grandmother said the fissure was free once. Anybody could sink a flue and take what they liked.",
+          "Then the whole east quarter went out in one night, all at once, because everybody took at once.",
+          "So they built this room. It is an ugly room and I would not be without it."
+        ]
+      }
+    ],
+    "ef_hall_kid": [
+      {
+        "lines": [
+          "The Keeper's up the stack and you cannot get up the stack because the stack is off.",
+          "I have tried it eleven times. You do not fall far. You just land somewhere embarrassing."
+        ]
+      }
+    ],
+    "ef_hall_stairhand": [
+      {
+        "unlessFlags": [ "crest_4_taken" ],
+        "lines": [
+          "Down there it is one fire and four hundred arguments and only one beam.",
+          "If you get stuck, look at what you are standing on. Rock that glows is going up.",
+          "Iron that does not is going down. There is nothing else to it and it takes people a while."
+        ]
+      },
+      {
+        "lines": [
+          "You got up his stack. He has not had one of those in two years.",
+          "He will have been perfectly civil about it and then gone straight back to the board. He always does."
+        ]
+      }
+    ]
+  }
+}

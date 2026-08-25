@@ -1,0 +1,671 @@
+{
+  "id": "emberfall",
+  "name": "Emberfall",
+  "displayName": "EMBERFALL",
+  "music": "station",
+  "battleBackdrop": "quarry",
+  "indoor": false,
+  "regionPos": {
+    "x": 25,
+    "y": 25
+  },
+  "rows": [
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC¦¦¦¦CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC¦¦¦¦CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CC¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦«¬»¦¦¦¦¦¦«¬¬¬»¦«¬¬¬¬¬»¦¦¦¦¦¦¦¦«¬¬¬»¦¦¦¦¦¦¦¦¦CC",
+    "CC¦¦¦¦«¬¬¬»¦¦¦¦¦¦¦¦¦¦¦¦¦«¬¬¬¬¬»¦§¤§¦¦¦¦¦¦§¤§¤§·§¤§¤§¤§¦¦¦¦¦¦¦¦§¤§¤§¦¦¦¦¦¦¦¦¦CC",
+    "CC¦¦·¦§¤§¤§¦¦¦¦¦·¦¦¦¦¦¦¦§¤§¤§¤§¦§¤§¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦«¬¬¬¬»¦¦«¬¬¬»¦«¬¬¬»¦«¬»¦CC",
+    "CC¦¦¦==================¦¦¦=======¦¦¦¦Ç¦¦¦¦¦¦¦¦¦¦¦¦¦¦§¤¤¤¤§¦¦§¤§¤§¦§¤§¤§¦§¤§¦CC",
+    "CC¦¦¦=°°°°°°°°==°°°°°°=¦¦¦=°°°°°=¦¦¦¦¦¦¦«¬¬¬¬¬¬¬»¦¦¦§¤Ä¤¤§¦¦§¤§¤§¦§¤§¤§¦§¤§¦CC",
+    "CC¦¦¦=°°°°°°°°==°°°°°°=¦¦¦=°°°°°=¦¦¦¦¦¦¦§¤¤§§¤¤¤§¦¦¦¦µ¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦CC",
+    "CC¦¦¦=°°°°°°°°==°°°°°°=¦¦¦=°°°°°=¦¦¦¦¦¦¦§¤¤§§¤¤¤§¦¶¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦·¦CC",
+    "CC¦¦¦=°°°°°°°°=========¦¦¦=°°°°°=¦¦¦¦¦¦¦§¤Ä§§¤§¤§¦÷¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦CC",
+    "CC¦¦¦============================¦¦¦¦¦¦¦¦µ¦¦¦¦¦¦¦¦÷¦¦¦«¬¬¬¬¬»¦«¬¬¬¬¬»¦«¬¬¬»¦CC",
+    "CC¦¦¦=========¦=°°°°°°°°°=¦¦¦¦¦=÷¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦÷¦¦¦§¤§¤§¤§¦§¤§¤§¤§¦§¤§¤§¦CC",
+    "CC¦¦·=°°°°°°°=¦=°°°°°°°°°=======÷¦¦¦¦¦¦¦«¬¬¬¬¬¬»¦¦÷¦¦¦§¤§¤§¤§¦§¤§¤§¤§¦§¤§¤§¦CC",
+    "CC¦¦¦=°°°°°°°=¦=°°°°°°°°°==°°°°=÷¦¦¦¦¦¦¦§¤¤§¤¤¤§¦¦÷¦¦¦§¤§¤§¤§¦§¤§¤§¤§¦§¤§¤§¦CC",
+    "CC¦¦¦=°°°°°°°=¦=°°°°°°°°°==°°°°=÷¦¦¦¦¦¦¦§¤¤§¤¤¤§¦¦÷¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦CC",
+    "CC¦¦¦=========¦============°°°°=÷¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦÷¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦CC",
+    "CC¦¦¦¦¦¦=¦¦¦¦=¦¦¦¦¦¦¦¦¦¦=¦======÷¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦÷¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦CC",
+    "CC¦¦¦¶±±±±±±±±±±±±±±±±±±±±±±±±±±¶¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦«¬»¦¦¦«¬»¦¦¦«¬»¦CC",
+    "CC¦¦«¬¬¬»¦¦«¬¬¬¬¬»¦«¬¬¬»¦¦¦¦¦=¦¦¦¦¦«¬¬¬¬¬»¦¦¦¦¦¦¦¦¦¦¦«¬¬¬»¦¦§¤§¦¦¦§¤§¦¦¦§¤§¦CC",
+    "CC¦Ç§¤§¤§¦¦§¤§¤§¤§¦§¤§¤§¦¦¦¦¦¦¦¦¦¦¦§¤§¤§¤§·¦¦¦¦¦¦¦¦¦¦§¤§¤§¦¦§¤§¦¦¦§¤§¦¦¦§¤§¦CC",
+    "CC¦¦±±±±±±±¶¦¶±±±±±±±±±±±¶¦¶±±±±±±±±¶¦¶±±±±±±±±¶¦¶±±±±±±±±±¶¦¶±±±±±±±¶¦¶±±¦¦CC",
+    "CC¦·¦¦¦¦¦¦µ¦¦¦¦¦¦¦¦¦¦¦¦¦µ¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦µ¦¦¦¦¶¦¦¦¦¦µ¦¦¦¦¦¦¦¦¦¦µ¦¦¦¦¦¦¦µ¦¦¦¦¦CC",
+    "CC¦¦«¬¬¬¬¬»¦«¬¬¬»¦«¬¬¬¬¬»¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦÷¦¦¦¦¦¦¦¦¦¦¦«¬¬¬»¦«¬¬¬¬¬»¦«¬»¦¦CC",
+    "CC¦¦§¤§¤§¤§¦§¤§¤§¦§¤§¤§¤§¦¦¦¦¦·¦¦¦¦¦¦¦¦¦¦¦¦¦¦÷¦¦¦¦¦¦¦¦¦·¦§¤§¤§¦§¤§¤§¤§¦§¤§¦¦CC",
+    "CC¦¦§¤§¤§¤§¦§¤§¤§¦§¤§¤§¤§¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦÷¦¦¦¦¦¦¦¦¦¦¦§¤§¤§¦§¤§¤§¤§¦§¤§¦¦CC",
+    "CC¦¦«¬»¦¦¦144443¦¦699998¦¦¦¦¦¦«¬¬¬¬¬¬¬¬¬»¦¦¦¦÷¦¦«¬¬¬¬¬¬¬¬¬¬»¦¦«¬¬¬¬¬»¦«¬¬¬»¦CC",
+    "CC¦¦§¤§¦¦¦122523¦¦677778¦¦¦¦¦¦GGGGGGGGGGG¦¦¦¦÷¦¦§¤¤¤¤¤¤¤¤¤¤§¦¦§¤§¤§¤§¦§¤§¤§¦CC",
+    "CC¦¦§¤§¦¦¦GGhgGG¦¦GGmgGG¦¦¦¦µ¦GGGGGgGGGGG¦µ¦Ç÷¦¦§¤§¤§Ä§¤§¤§§¦¦§¤§¤§¤§¦§¤§¤§·CC",
+    "CC¦¦¦¦¦¦¦¦¦¦µ¦¦¦¦¦¦¦µ¦¦¦¦¦¦¦¦¦¦¦¦¦µ¦¦¦¦¦¦¦¦¦¦÷¦¦¦¦¦¦µ¦¦¦¦¦¦¦¦¦§¤§¤§¤§¦§¤§¤§¦CC",
+    "CC¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦÷¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦CC",
+    "CC¦¦«¬¬¬»«¬¬¬¬¬»¦«¬¬¬»¦«¬¬¬¬¬»¦¦¦·¦¦¦¦·¦¦¦¦¦¦÷¦¦¦¦¦¦¦¦¦¦«¬¬¬¬¬»¦«¬¬¬»¦«¬»¦¦¦CC",
+    "CC¦¦§¤§¤§§¤§¤§¤§¦§¤§¤§¦§¤§¤§¤§¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦÷¦¦¦¦¦¦¦¦¦¦§¤§¤§¤§¦§¤§¤§¦§¤§¦¦¦CC",
+    "CC¦¦§¤§¤§§¤§¤§¤§¦§¤§¤§¦§¤§¤§¤§¦¦¦¦¦·¦¦¦¦¦¦¦¦¦÷¦¦¦¦¦¦¦¦¦¦§¤§¤§¤§¦§¤§¤§¦§¤§¦¦¦CC",
+    "CC¦¦¦¦¦¦¦¦¦¦¦a¦µ¦¦¦¦¦¦¦¦µ¦¦¦a¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦÷µa¦¦¦¦¦¦¦¦¦¦¦µ¦a¦¦¦¦¦¦¦¦¦¦¦¦¦¦CC",
+    "CC¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¶¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦CC",
+    "CC¦¦¦¦«¬¬¬»¦«¬¬¬»¦«¬¬¬»¦«¬¬¬»¦«¬¬¬»¦«¬¬¬»¦¦¦¦¦«¬¬¬»¦¦¦¦«¬¬¬¬¬¬¬¬¬¬¬¬»¦«¬¬»¦¦CC",
+    "CC¦¦¦¦§¤§¤§¦§¤§¤§¦§¤§¤§¦§¤§¤§¦§¤§¤§¦§¤§¤§¦¦¦¦¦§¤¤¤§¦¦¦¦§§§§§§§§§§§§§§¦§¤¤§¦¦CC",
+    "CC¦¦¦¦§¤§¤§¦§¤Ä¤§¦§¤§¤§¦§¤§¤§¦§¤§¤§¦§¤§¤§¦¦¦¦¦§¤Ø¤§¦¦¦¦§¤§§¤§¤§¤§§¤§§¦§¤¤§¦¦CC",
+    "CC¦¦¦¦¦¦¦¦¦¦¦µ¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦§¤§§¤§¤§¤§§¤§§¦¦¦¦¦¦¦CC",
+    "CC¦¦¦¦¦·¦¦¦µ¦¦¦¦¦·¦¦¦¦¦µ¦¦¦¦¦·¦¦¦¦¦µ¦¦¦¦¦·¦¦¦¦«¬¬¬»¦¦¦¦§ØØ§¤§Ä§¤§§ØØ§¦¦¦¦¦¦¦CC",
+    "CC¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦§¤¤¤§¦¦¦¦¦¦¦¦¦µ¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦CC",
+    "CC¦·¦¦¦¦¦«¬¬¬»¦«¬¬¬»¦«¬¬¬»¦«¬¬¬»¦«¬¬¬»¦«¬¬¬»¦¦§¤Ø¤§¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦CC",
+    "CC¦¦¦¦¦¦¦§¤§¤§¦§¤§¤§¦§¤§¤§¦§¤§¤§¦§¤§¤§¦§¤§¤§«¬¬¬¬¬¬¬¬»¦¦«¬¬¬¬¬¬¬¬»¦¦«¬¬¬»¦¦¦CC",
+    "CCCCCCC¦¦§¤§¤§¦§¤§¤§¦§¤§¤§Ç§¤Ä¤§¦§¤§¤§¦§¤§¤§§¤§¤§¤§¤§§¦¦§¤§¤§¤§¤§§¦¦§¤§¤§¦¦¦CC",
+    "CCCC=====================¦¦¦µ¦¦¦¦¦¦¦¦¦¦¦¦¦¦Ç§Ø§¤§Ø§¤§§¦¦§Ø§¤§Ø§¤§§¦¦§ÄØ¤§¦·¦CC",
+    "CCCÅ=====================¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦«¬¬¬¬¬»¦¦¦«¬¬¬¬¬»¦¦¦¦µ¦¦¦¦¦«»CC",
+    "CCCC=====================¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦§§¤§§§§¦¦¦§§¤§§§§¦¦¦¦¦¦¦¦¦¦§¤CC",
+    "CCCCCCC=Ç================¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦«¬¬¬»¦¦«¬¬¬»¦¦«¬¬¬»¦¦«¬¬¬»¦¦¦¦CC",
+    "CC¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦§¤§¤§¦¦§¤§¤§¦¦§¤§¤§¦¦§¤§¤§¦¦¦¦CC",
+    "CC¦¦¦¦¦«¬¬¬¬¬»¦«¬¬¬¬¬»¦«¬¬¬¬¬»¦«¬¬¬¬¬»¦«¬¬¬»¦¦§¤Ø¤§¦¦§¤Ø¤§¦¦§¤Ø¤§¦¦§¤Ø¤§¦¦¦¦CC",
+    "CC¦¦¦¦¦§¤§¤§¤§¦§¤§¤§¤§¦§¤§¤§¤§¦§¤§¤§¤§¦§¤§¤§¦¦µ¦¦¦¦¦¦¦¦¦¦¦µ¦¦¦¦¦¦¦¦¦¦¦µ¦¦¦¦¦CC",
+    "CC¦¦¦¦¦§¤§¤§¤§¦§¤§¤§¤§¦§¤§¤§¤§¦§¤§¤§¤§¦§¤§¤§¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦Ç¦¦CC",
+    "CC¦¦¦¦¦§¤§¤§¤§¦§¤§Ä§¤§¦§¤§¤§¤§¦§¤§¤§¤§¦§¤§¤§¦¦¦··=¦¦¦==¦¦¦··=¦¦¦==¦¦¦··=¦¦¦·¦¦",
+    "CC¦¦¶¦¦¦¦¦¦¦¦¦¦¦¦µ¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦=¦¦¦==¦¦¦··=¦¦¦==¦¦¦··=¦¦¦==¦¦¦¦¦¦",
+    "CC¦¦÷«¬¬¬¬¬¬»¦¦¦«¬¬¬»¦«¬¬¬»¦«¬¬¬»¦«¬¬¬»¦¦¦¦¦=¦¦¦··=¦¦¦==¦¦¦··=¦¦¦==¦¦¦··=¦¦¦¦¦",
+    "CC¦¦÷§¤¤§¤¤¤§¦¦¦§¤§¤§¦§¤§¤§¦§¤§¤§¦§¤§¤§¦¦¦¦¦·=¦¦¦==¦¦¦··=¦¦¦==¦¦¦··=¦¦¦==¦¦·¦¦",
+    "CC¦¦÷§¤¤§¤¤¤§¦¦¦§¤§¤§¦§¤§¤§¦§¤§¤§¦§¤§¤§¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦CC",
+    "CC¦¦÷§¤Ä§¤§¤§¦¦¦«¬¬¬¬¬»¦¦«¬¬¬»¦¦«¬¬¬¬¬»¦¦¦¦¦¦¦«¬¬¬»¦¦«¬¬¬¬¬»¦¦¦«¬¬¬»¦«¬¬¬¬¬»CC",
+    "CC¦¦¦¦µ¦¦¦¦¦¦¦µ¦§¤§¤§¤§¦¦§¤§¤§¦¦§¤§¤§¤§¦¦¦¦¦¦¦§¤§¤§¦¦§¤§¤§¤§¦¦¦§¤§¤§¦§¤§¤§¤§CC",
+    "CC¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦CC",
+    "CC¦¦¦¦«¬¬¬»¦«¬¬¬»¦«¬¬¬»¦«¬¬¬»¦«¬¬¬»¦«¬¬¬¬¬»¦¦¦¦¦«¬¬¬¬¬»¦¦«¬¬¬¬¬»¦¦«¬¬¬¬¬»¦¦¦CC",
+    "CC¦¦¦¦§¤§¤§¦§¤§¤§¦§¤§¤§¦§¤§¤§¦§¤§¤§¦§¤§¤§¤§¦¦¦¦¦§§¤§§§§¦¦§§¤§§§§¦¦§§¤§§§§¦¦¦CC",
+    "CC¦¦¦¦§¤§¤§¦§¤§¤§¦§¤§¤§¦§¤§¤§¦§¤§¤§¦§¤§¤§¤§¦¦¦¦¦§§¤§§§§¦¦§§¤§§§§¦¦§§¤§§§§·¦¦CC",
+    "CC¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦CC",
+    "CC¦¦¦¦¦¦¦¦¦·¦¦¦¦¦·¦¦¦¦¦¦·¦·¦¦¦¦¦¦¦¦·¦¦¦¦¦¦¦¦¦¦¦¦«¬¬¬¬¬»¦¦¦«¬¬¬»¦¦¦«¬¬¬¬¬»¦¦¦CC",
+    "CC¦¦¦¦¦¦¦·¦¦¦¦¦¦¦¦¦¦·¦¦¦¦¦¦¦¦¦¦·¦¦¦¦¦¦·¦¦¦·¦·¦¦¦§¤§¤§¤§¦¦¦§¤§¤§¦¦¦§¤§¤§¤§¦¦¦CC",
+    "CC¦¦¦¦¦¦¦¦¦¦¦·¦·¦¦¦¦¦¦·¦¦¦¦¦¦·¦¦¦·¦¦¦¦¦¦·¦¦¦¦¦¦¦§¤§¤§¤§¦¦¦§¤§¤§¦¦¦§¤§¤§¤§¦¦¦CC",
+    "CC¦¦¦¦¦¦·¦¦¦¦¦¦¦¦¦¦·¦¦¦¦¦¦¦¦¦¦¦¦¦¦·¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦·¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦CC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"
+  ],
+  "warps": [
+    {
+      "x": 36,
+      "y": 0,
+      "toMap": "route_5",
+      "toX": 20,
+      "toY": 46,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 37,
+      "y": 0,
+      "toMap": "route_5",
+      "toX": 21,
+      "toY": 46,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 77,
+      "y": 53,
+      "toMap": "route_6",
+      "toX": 1,
+      "toY": 6,
+      "facing": "right",
+      "style": "edge"
+    },
+    {
+      "x": 77,
+      "y": 54,
+      "toMap": "route_6",
+      "toX": 1,
+      "toY": 7,
+      "facing": "right",
+      "style": "edge"
+    },
+    {
+      "x": 35,
+      "y": 27,
+      "toMap": "emberfall_hall",
+      "toX": 9,
+      "toY": 13,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 13,
+      "y": 27,
+      "toMap": "emberfall_clinic",
+      "toX": 6,
+      "toY": 9,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 21,
+      "y": 27,
+      "toMap": "emberfall_provisioner",
+      "toX": 6,
+      "toY": 9,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 42,
+      "y": 9,
+      "toMap": "emberfall_springs",
+      "toX": 7,
+      "toY": 11,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 54,
+      "y": 6,
+      "toMap": "emberfall_gatehouse",
+      "toX": 5,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 53,
+      "y": 27,
+      "toMap": "emberfall_market",
+      "toX": 8,
+      "toY": 11,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 61,
+      "y": 39,
+      "toMap": "emberfall_foundry",
+      "toX": 9,
+      "toY": 13,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 69,
+      "y": 44,
+      "toMap": "emberfall_forge",
+      "toX": 6,
+      "toY": 10,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 7,
+      "y": 57,
+      "toMap": "emberfall_inn",
+      "toX": 7,
+      "toY": 11,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 14,
+      "y": 37,
+      "toMap": "emberfall_house_a",
+      "toX": 5,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 29,
+      "y": 43,
+      "toMap": "emberfall_house_b",
+      "toX": 5,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 18,
+      "y": 52,
+      "toMap": "emberfall_house_c",
+      "toX": 5,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 3,
+      "y": 45,
+      "toMap": "embercoil_temple",
+      "toX": 12,
+      "toY": 24,
+      "facing": "up",
+      "style": "cave"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "ef_gatewarden",
+      "sprite": "townsfolk_m",
+      "x": 37,
+      "y": 6,
+      "facing": "down",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "ef_gatewarden"
+    },
+    {
+      "id": "ef_warden_clerk",
+      "sprite": "clerk",
+      "x": 51,
+      "y": 6,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ef_warden_clerk"
+    },
+    {
+      "id": "ef_pan_walker",
+      "sprite": "townsfolk_f",
+      "x": 15,
+      "y": 9,
+      "facing": "down",
+      "movement": {
+        "kind": "pace",
+        "axis": "x",
+        "distance": 2
+      },
+      "script": "ef_pan_walker"
+    },
+    {
+      "id": "ef_spring_keeper",
+      "sprite": "elder",
+      "x": 25,
+      "y": 16,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ef_spring_keeper"
+    },
+    {
+      "id": "ef_bather",
+      "sprite": "townsfolk_m",
+      "x": 43,
+      "y": 10,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "ef_bather"
+    },
+    {
+      "id": "ef_pipefitter",
+      "sprite": "porter",
+      "x": 27,
+      "y": 21,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ef_pipefitter"
+    },
+    {
+      "id": "ef_pipe_apprentice",
+      "sprite": "kid",
+      "x": 13,
+      "y": 21,
+      "facing": "left",
+      "movement": {
+        "kind": "wander",
+        "radius": 1
+      },
+      "script": "ef_pipe_apprentice"
+    },
+    {
+      "id": "ef_lamp_tapper",
+      "sprite": "townsfolk_f",
+      "x": 56,
+      "y": 22,
+      "facing": "down",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "ef_lamp_tapper"
+    },
+    {
+      "id": "ef_hall_crier",
+      "sprite": "townsfolk_f",
+      "x": 35,
+      "y": 29,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "ef_hall_crier"
+    },
+    {
+      "id": "ef_challenger",
+      "sprite": "hiker",
+      "x": 31,
+      "y": 30,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ef_challenger"
+    },
+    {
+      "id": "ef_hall_child",
+      "sprite": "kid",
+      "x": 40,
+      "y": 30,
+      "facing": "left",
+      "movement": {
+        "kind": "wander",
+        "radius": 1
+      },
+      "script": "ef_hall_child"
+    },
+    {
+      "id": "ef_clinic_queue",
+      "sprite": "townsfolk_f",
+      "x": 9,
+      "y": 28,
+      "facing": "right",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "ef_clinic_queue"
+    },
+    {
+      "id": "ef_market_carter",
+      "sprite": "porter",
+      "x": 46,
+      "y": 29,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ef_market_carter"
+    },
+    {
+      "id": "ef_ash_sweeper",
+      "sprite": "elder",
+      "x": 54,
+      "y": 32,
+      "facing": "down",
+      "movement": {
+        "kind": "pace",
+        "axis": "x",
+        "distance": 2
+      },
+      "script": "ef_ash_sweeper"
+    },
+    {
+      "id": "ef_smith_wife",
+      "sprite": "townsfolk_f",
+      "x": 20,
+      "y": 39,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ef_smith_wife"
+    },
+    {
+      "id": "ef_street_kid",
+      "sprite": "kid",
+      "x": 33,
+      "y": 44,
+      "facing": "up",
+      "movement": {
+        "kind": "wander",
+        "radius": 2
+      },
+      "script": "ef_street_kid"
+    },
+    {
+      "id": "ef_tenement_elder",
+      "sprite": "elder",
+      "x": 21,
+      "y": 54,
+      "facing": "down",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "ef_tenement_elder"
+    },
+    {
+      "id": "ef_foundry_foreman",
+      "sprite": "dockhand",
+      "x": 62,
+      "y": 40,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ef_foundry_foreman"
+    },
+    {
+      "id": "ef_forge_master",
+      "sprite": "merchant",
+      "x": 55,
+      "y": 44,
+      "facing": "down",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "ef_forge_master"
+    },
+    {
+      "id": "ef_charcoal_carter",
+      "sprite": "porter",
+      "x": 66,
+      "y": 51,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ef_charcoal_carter"
+    },
+    {
+      "id": "ef_slag_child",
+      "sprite": "kid",
+      "x": 55,
+      "y": 54,
+      "facing": "up",
+      "movement": {
+        "kind": "wander",
+        "radius": 2
+      },
+      "script": "ef_slag_child"
+    },
+    {
+      "id": "ef_temple_watcher",
+      "sprite": "townsfolk_m",
+      "x": 15,
+      "y": 46,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "ef_temple_watcher"
+    },
+    {
+      "id": "ef_causeway_elder",
+      "sprite": "elder",
+      "x": 25,
+      "y": 46,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ef_causeway_elder"
+    },
+    {
+      "id": "ef_fissure_surveyor",
+      "sprite": "meridian_sci_f",
+      "x": 30,
+      "y": 63,
+      "facing": "down",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "ef_fissure_surveyor"
+    },
+    {
+      "id": "ef_meridian_hand",
+      "sprite": "meridian",
+      "x": 47,
+      "y": 21,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ef_meridian_hand"
+    },
+    {
+      "id": "ef_east_road_hand",
+      "sprite": "hiker",
+      "x": 73,
+      "y": 56,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "ef_east_road_hand"
+    },
+    {
+      "id": "ef_inn_barker",
+      "sprite": "merchant",
+      "x": 8,
+      "y": 58,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ef_inn_barker"
+    },
+    {
+      "id": "ef_offduty_smith",
+      "sprite": "dockhand",
+      "x": 44,
+      "y": 46,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "ef_offduty_smith"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 37,
+      "y": 5,
+      "text": [
+        "EMBERFALL. TWELVE THOUSAND SOULS AND ONE FIRE.",
+        "Beneath, cut later and less neatly: KEEP TO THE PAVED WAYS."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 3,
+      "y": 19,
+      "text": [
+        "THE PANS. WATER LEAVES THE ROCK AT BOILING.",
+        "It is walked down four pans before it is fit to pipe.",
+        "Somebody has scratched under it: IT IS NEVER FIT TO DRINK."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 44,
+      "y": 27,
+      "text": [
+        "FLAME HALL. HALLKEEPER SITS FROM SECOND BELL.",
+        "A slate below lists challengers. Most of the names are crossed through."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 43,
+      "y": 44,
+      "text": [
+        "THE FORGE ROW. NO OPEN CARRYING OF HOT WORK PAST THIS POST.",
+        "The post itself is scorched from the foot to about chest height."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 26,
+      "y": 43,
+      "text": [
+        "TO THE OLD GATE. ROAD MAINTAINED TO THE KERB AND NO FURTHER.",
+        "The city stops caring exactly where the paving does."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 3,
+      "y": 45,
+      "text": [
+        "The gate is one slab of something that is not basalt, and it has no seam.",
+        "A hollow is cut in the middle of it, palm-sized, ringed with worn spiral marks.",
+        "Four generations of chisel scars stop a hand’s width short of it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 47,
+      "text": [
+        "Scratched into the kerb by somebody with a long evening:",
+        "IT IS NOT LOCKED. THERE IS NOTHING IN IT THAT COULD LOCK."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 73,
+      "y": 51,
+      "text": [
+        "THE MIRE ROAD. DOWN AND EAST. TWO DAYS IF THE GROUND IS HAVING A GOOD WEEK.",
+        "Under it, in chalk: THE GROUND IS NEVER HAVING A GOOD WEEK."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 61,
+      "y": 21,
+      "item": "strong_potion",
+      "flag": "ef_item_pipestreet",
+      "quantity": 1
+    },
+    {
+      "kind": "item",
+      "x": 5,
+      "y": 66,
+      "item": "coolsalve",
+      "flag": "ef_item_fissure",
+      "quantity": 1
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 73,
+      "y": 55,
+      "item": "fine_vessel",
+      "flag": "ef_item_slag",
+      "quantity": 1
+    },
+    {
+      "kind": "item",
+      "x": 33,
+      "y": 13,
+      "item": "clearleaf",
+      "flag": "ef_item_pans",
+      "quantity": 1
+    },
+    {
+      "kind": "cuttable",
+      "x": 3,
+      "y": 45,
+      "flag": "embercoil_gate_open"
+    }
+  ]
+}

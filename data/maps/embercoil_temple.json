@@ -1,0 +1,166 @@
+{
+  "id": "embercoil_temple",
+  "name": "Embercoil Temple",
+  "displayName": "THE OUTER COIL",
+  "music": "station",
+  "battleBackdrop": "cave",
+  "indoor": true,
+  "_plan": "The shape of the place is the name of the place: two galleries wound round a shaft of live rock, with the gap in each wall put on the far side from the gap before it, so the way to the middle is two whole turns and the fire is on your hand the entire way. Nothing here is a maze -- the player can see the middle from the door and simply cannot reach it, which is a better lock than a door. Three resonance rings stand in the galleries; the Tideheart wakes them and the third opens the stair. Everything else on this map is a wall the player may choose to read.",
+  "rows": [
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΩΩ",
+    "ΩΩΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΩΩ",
+    "ΩΩΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΩΩ",
+    "ΩΩΘΘΘΩΩΩΩΩΩΩΩΩΘΘΩΩΩΩΩΩΩΩΩΘΘΘΩΩ",
+    "ΩΩΘΘΘΩΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΩΘΘΘΩΩ",
+    "ΩΩΘΘΘΩΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΩΘΘΘΩΩ",
+    "ΩΩΘΘΘΩΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΩΘΦΘΩΩ",
+    "ΩΩΘΘΘΩΘΘΘΩΩΩΩΩΩΩΩΩΩΩΩΘΘΘΩ≡θΘΩΩ",
+    "ΩΩΘΘΘΩΘΘΘΩΘ≡≡≡θθ≡≡≡ΘΩΘΘΘΩΘΘΘΩΩ",
+    "ΩΩΘΘΘΩΘΘΘΩΘ≡ΨΨΨΨΨΨ≡ΘΩΘΘΘΩΘΘΘΩΩ",
+    "ΩΩΘΘΘΩΘΦΘΩΘ≡ΨΨΨΨΨΨ≡ΘΩΘΘΘΩΘΘΘΩΩ",
+    "ΩΩΘΘΘΩΘθ≡ΩΘ≡ΨΨΨΨΨΨ≡ΘΩΘΘΘΩΘΘΘΩΩ",
+    "ΩΩΘΘΘΩΘΘΘΩΘ≡ΨΨΨΨΨΨ≡ΘΩΘΘΘΩΘΘΘΩΩ",
+    "ΩΩΘΘΘΩΘΘΘΩΘ≡≡≡≡≡≡≡≡ΘΩΘΘΘΩΘΘΘΩΩ",
+    "ΩΩΘΘΘΩΘΘΘΩΩΩΩΩΘΘΩΩΩΩΩΘΘΘΩΘΘΘΩΩ",
+    "ΩΩΘΦΘΩΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΩΘΘΘΩΩ",
+    "ΩΩΘθ≡ΩΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΩΘΘΘΩΩ",
+    "ΩΩΘΘΘΩΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΩΘΘΘΩΩ",
+    "ΩΩΘΘΘΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΘΘΘΩΩ",
+    "ΩΩΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΩΩ",
+    "ΩΩΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΩΩ",
+    "ΩΩΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΘΘΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΘΘΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ"
+  ],
+  "warps": [
+    {
+      "x": 12,
+      "y": 25,
+      "toMap": "emberfall",
+      "toX": 4,
+      "toY": 45,
+      "facing": "right",
+      "style": "cave"
+    },
+    {
+      "x": 13,
+      "y": 25,
+      "toMap": "emberfall",
+      "toX": 4,
+      "toY": 45,
+      "facing": "right",
+      "style": "cave"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "ect_sorrell",
+      "sprite": "professor",
+      "x": 14,
+      "y": 23,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ect_sorrell"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "script",
+      "x": 11,
+      "y": 20,
+      "text": [
+        "Cut people, a hand high, all",
+        "facing one way. Every one of",
+        "them has a Kin beside it."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 5,
+      "y": 11,
+      "text": [
+        "A slice through this mountain,",
+        "and the temple drawn inside it",
+        "as a coil round the fire."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 18,
+      "y": 5,
+      "text": [
+        "Lines run from the coil, out",
+        "under the sea, to a shape too",
+        "big for the panel to hold."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 28,
+      "y": 14,
+      "text": [
+        "A room of seated people. Not",
+        "one of them has their mouth",
+        "open. They are listening."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 13,
+      "y": 9,
+      "text": [
+        "Three rings, and a note under",
+        "them in a hand that expected",
+        "to be understood."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 20,
+      "y": 12,
+      "text": [
+        "A hand held flat on the stone.",
+        "Beside it a hand closed into a",
+        "fist, and struck out."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 28,
+      "y": 22,
+      "text": [
+        "This panel has been cut across",
+        "by a chisel. Hard, and again,",
+        "and by somebody in a hurry."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 2,
+      "y": 2,
+      "item": "great_potion",
+      "quantity": 1,
+      "flag": "item_ect_northwest"
+    },
+    {
+      "kind": "item",
+      "x": 23,
+      "y": 17,
+      "item": "escape_line",
+      "quantity": 1,
+      "flag": "item_ect_inner"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 6,
+      "y": 19,
+      "item": "full_heal",
+      "quantity": 2,
+      "flag": "item_ect_ashcorner"
+    }
+  ]
+}

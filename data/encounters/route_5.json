@@ -1,0 +1,20 @@
+{
+  "mapId": "route_5",
+  "$comment": "The first route of Act 3. A player arriving off the Tide Hall is around twenty, and Keeper Vane's team topped out at nineteen, so the wild table is pinned at 17-19 -- one to four levels UNDER the arriving party, which is the same relationship Route 4 held to Route 3 and the fourth pass at making this game easier rather than longer. The type balance follows canon: mostly Flame and Terra, and the two together are 68 of the 100 weight. That is also the mercy in it -- a player who came up the coast on a Tide team walks into a route their starter's whole line is strong against, and a player on Verdant finally gets a route that is not four things that resist them. Blazelynx is the only fully-evolved thing on the table, at three weight and two levels over the rest, so meeting one is an event rather than a wall.",
+  "methods": {
+    "tallGrass": {
+      "rate": 155,
+      "slots": [
+        { "species": "gravelet", "minLevel": 17, "maxLevel": 19, "weight": 20 },
+        { "species": "emberbore", "minLevel": 17, "maxLevel": 19, "weight": 18 },
+        { "species": "silthopper", "minLevel": 17, "maxLevel": 19, "weight": 14 },
+        { "species": "sootmoth", "minLevel": 17, "maxLevel": 19, "weight": 13 },
+        { "species": "cinderpaw", "minLevel": 17, "maxLevel": 18, "weight": 11 },
+        { "species": "chalkid", "minLevel": 17, "maxLevel": 19, "weight": 9 },
+        { "species": "burrowen", "minLevel": 17, "maxLevel": 18, "weight": 7 },
+        { "species": "slatewing", "minLevel": 17, "maxLevel": 19, "weight": 5 },
+        { "species": "blazelynx", "minLevel": 19, "maxLevel": 20, "weight": 3 }
+      ]
+    }
+  }
+}

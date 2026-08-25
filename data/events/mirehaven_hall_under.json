@@ -1,0 +1,307 @@
+[
+  {
+    "id": "mh_under_guide",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "not", "of": { "kind": "flag", "flag": "mh_rules" } },
+        "then": [
+          { "kind": "setFlag", "flag": "mh_rules" },
+          {
+            "kind": "say",
+            "who": "WALK HAND",
+            "lines": [
+              "Three things, and then I will go back to not talking.",
+              "The black will not have you. Stop looking at it as though it might."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "WALK HAND",
+            "lines": [
+              "The walk is railed the whole way round, and the rail is not decoration.",
+              "Where there is rail there is no way down. That is the rail's entire job."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "WALK HAND",
+            "lines": [
+              "Third: where the rail stops, there is a cap growing. Always. Never once not.",
+              "Four gaps under this town. Find them, and then find out which one is not a room."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "who": "WALK HAND",
+            "lines": [
+              "Rail, gap, cap. Walk it round and count them.",
+              "You are not looking for a way in. You are looking for the one that keeps going."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "mh_walkwatch",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "PILE READER",
+        "lines": [
+          "Ninety-one. Sound. Ninety-two. Sound. Ninety-three, and I am going to have to look twice at ninety-three."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "PILE READER",
+        "lines": [
+          "You listen to a post with the flat of your hand. Dead wood answers back short.",
+          "Ten thousand of them, twice a year. It is the most boring job in Caelora and I would fight for it."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "mh_rotwatch",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "WALK MENDER",
+        "lines": [
+          "Walk stops here. Rotted through in my grandmother's time and never rebuilt.",
+          "We asked. The colony had already spun across the gap and we did not want to argue."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "WALK MENDER",
+        "lines": [
+          "Forty feet of missing plank, and it has cost us nothing but a longer walk.",
+          "Most of what this town gets right is a longer walk we agreed to take."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "mh_gate",
+    "_note": "THE RULE, DELIVERED THE FIRST TIME THE PLAYER STEPS INTO ANY OF THE FOUR GAPS. One script, four tiles, one onceFlag: the room teaches itself once and then shuts up, because a line that fires at every gate turns the Hall's only mechanism into an interruption. The tiles are the gap tiles themselves and not the deck in front of them -- stepping off the boards is the moment worth marking.",
+    "trigger": "step",
+    "map": "mirehaven_hall_under",
+    "onceFlag": "mh_gate_seen",
+    "at": [
+      { "x": 6, "y": 3 },
+      { "x": 14, "y": 3 },
+      { "x": 19, "y": 8 },
+      { "x": 14, "y": 17 }
+    ],
+    "actions": [
+      { "kind": "sfx", "sound": "fx_water" },
+      {
+        "kind": "say",
+        "lines": [
+          "The rail stops, the cap glows, and the peat takes your boots to the ankle and no further.",
+          "Two feet six at low water, exactly as the stick says. The town is very good at this."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "mh_lane_1",
+    "trigger": "step",
+    "map": "mirehaven_hall_under",
+    "onceFlag": "mh_lane_1_seen",
+    "at": [{ "x": 14, "y": 16 }],
+    "actions": [
+      {
+        "kind": "say",
+        "lines": [
+          "This lane does not stop. You can see it going, past the light, in under the piles.",
+          "Behind you the rail is a bright line and it is already a long way off."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "mh_lane_2",
+    "trigger": "step",
+    "map": "mirehaven_hall_under",
+    "onceFlag": "mh_lane_2_seen",
+    "at": [{ "x": 12, "y": 15 }],
+    "actions": [
+      { "kind": "sfx", "sound": "fx_water" },
+      {
+        "kind": "say",
+        "lines": [
+          "The posts crowd in and the silk between them stops being a thing you notice.",
+          "It is the walls now. It is over you and under the water and it is holding the town up."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "mh_lane_3",
+    "trigger": "step",
+    "map": "mirehaven_hall_under",
+    "onceFlag": "mh_lane_3_seen",
+    "at": [{ "x": 11, "y": 14 }],
+    "actions": [
+      { "kind": "shake", "frames": 20, "power": 1 },
+      {
+        "kind": "say",
+        "lines": [
+          "Something enormous shifts its weight somewhere above and to the left, and settles.",
+          "Nothing comes. Nothing was ever going to. That is somehow the worst part of it."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "mh_keeper",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "hasCrest", "crest": 5 },
+        "then": [
+          {
+            "kind": "say",
+            "who": "ANNIK TALLOW",
+            "lines": [
+              "Ladder is behind me and it only goes up. Nobody comes down it.",
+              "Mind the reeds east of town on your way. There are boots out there that are not ours."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "if",
+            "cond": { "kind": "not", "of": { "kind": "hasCrest", "crest": 4 } },
+            "then": [
+              {
+                "kind": "say",
+                "who": "ANNIK TALLOW",
+                "lines": [
+                  "Four Crests before this one, and you have not got them.",
+                  "I am not sending anybody back up that lane short. Go and get them. I will be here."
+                ]
+              }
+            ],
+            "else": [
+              {
+                "kind": "say",
+                "who": "ANNIK TALLOW",
+                "lines": [
+                  "You came the long way round and then you came the only way in.",
+                  "Everybody does. There is no other route and there never has been."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "ANNIK TALLOW",
+                "lines": [
+                  "Annik Tallow. I read the piles. Ten thousand posts, twice a year, six hours a tide.",
+                  "This is the oldest of them and I sit at the foot of it because it is the quietest place I know."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "ANNIK TALLOW",
+                "lines": [
+                  "People ask why a town this size keeps a Hall. It is not for the sport.",
+                  "It is so that when I need somebody to go under four thousand people, I already know who."
+                ]
+              },
+              { "kind": "battleTrainer", "trainer": "mh_keeper_tallow" },
+              {
+                "kind": "if",
+                "cond": { "kind": "var", "var": "last_battle_won", "op": "==", "value": 1 },
+                "then": [
+                  {
+                    "kind": "say",
+                    "who": "ANNIK TALLOW",
+                    "lines": ["Stand there a moment. I want to do something and it will look odd."]
+                  },
+                  { "kind": "face", "who": "mh_keeper", "dir": "up" },
+                  { "kind": "wait", "frames": 60 },
+                  {
+                    "kind": "say",
+                    "lines": [
+                      "She lays the flat of her hand on the great pile and leaves it there, not moving, for a long time.",
+                      "Then she knocks on it twice, the way you knock on a door you have been let through before."
+                    ]
+                  },
+                  { "kind": "face", "who": "mh_keeper", "dir": "down" },
+                  {
+                    "kind": "say",
+                    "who": "ANNIK TALLOW",
+                    "lines": [
+                      "Sound. Straight through, all four trunks, no answer back.",
+                      "That is not me being sentimental. That is the reading, and I take it after every fight."
+                    ]
+                  },
+                  { "kind": "giveCrest", "crest": 5, "name": "Silk Crest" },
+                  { "kind": "sfx", "sound": "badge" },
+                  {
+                    "kind": "say",
+                    "lines": ["You received the SILK CREST.", "Five of eight."]
+                  },
+                  {
+                    "kind": "say",
+                    "who": "ANNIK TALLOW",
+                    "lines": [
+                      "It is not metal. It is a disc of set silk and it is a hundred and sixty years old.",
+                      "We did not make it. We were given it, and we have never worked out how to say thank you."
+                    ]
+                  },
+                  { "kind": "giveItem", "item": "full_restore", "count": 1 },
+                  { "kind": "say", "lines": ["Annik handed over a Full Restore."] },
+                  { "kind": "wait", "frames": 20 },
+                  {
+                    "kind": "say",
+                    "who": "ANNIK TALLOW",
+                    "lines": [
+                      "You walked past four gaps in that rail and three of them were rooms.",
+                      "Nothing down here was hidden from you. It was just older than you and it did not explain itself."
+                    ]
+                  },
+                  {
+                    "kind": "say",
+                    "who": "ANNIK TALLOW",
+                    "lines": [
+                      "Mirehaven is not built, {name}. Mirehaven is agreed.",
+                      "Every hundred years or so somebody decides they can improve on the arrangement."
+                    ]
+                  },
+                  {
+                    "kind": "say",
+                    "who": "ANNIK TALLOW",
+                    "lines": [
+                      "1849 is in the ledger upstairs. We tarred what the colony had wrapped, to do it properly.",
+                      "Thirty-four posts gone in eight years and two streets on props. We were trying to help."
+                    ]
+                  },
+                  {
+                    "kind": "say",
+                    "who": "ANNIK TALLOW",
+                    "lines": [
+                      "So. There are people in the reeds east of town in very good boots, asking about the old stone place.",
+                      "They have figures, and the figures are better than mine. Go and be there when they open it."
+                    ]
+                  },
+                  { "kind": "setFlag", "flag": "crest_5_taken" }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

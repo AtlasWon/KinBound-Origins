@@ -1,0 +1,382 @@
+{
+  "id": "route_6",
+  "name": "The Mire Road",
+  "displayName": "ROUTE 6 - THE MIRE ROAD",
+  "music": "route_coast",
+  "battleBackdrop": "coast",
+  "indoor": false,
+  "weather": "fog",
+  "fog": 0.86,
+  "regionPos": {
+    "x": 29,
+    "y": 18
+  },
+  "encounterTable": "route_6",
+  "_design": "The first route in the game where the ground is not the road. Everywhere else in Caelora the player walks on whatever happens to be under them and the path is a suggestion; here the peat is walkable but dead slow to read, the marsh has to be waded, the lagoon is shut, and the only continuous dry line from one end to the other is a plank walk that somebody built and somebody has to maintain. That inversion is the design, and every beat on the route is about the state of that infrastructure.",
+  "_plan": "Three decisions, in order. FIRST the fog: it closes sight to about four tiles, which means a player cannot read the shape of this map from one screen and never will -- so the map is not laid out to be read, it is laid out to be FOLLOWED. Lantern to lantern on the plank, glowcap to glowcap off it. Both are ordinary tiles and the fog reads them straight off the map with nothing scripted, so a player who works out that orange is people and green is mire has been taught the whole region in one screen. SECOND the broken span: the direct line south is out from row 31 to row 35, and there are two honest answers -- wade five tiles of open marsh with every encounter in it, or walk twenty-six tiles of dry plank round the east. Neither is correct. THIRD the lagoon: eleven rows of deep water in plain sight, an islet in the middle of it, and something on the islet. It is on the way to nothing, the sign says so, and it stays shut until the player can swim. That is the reason to come back, said once and not laboured.",
+  "rows": [
+    "ДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДД",
+    "ДДцццццццццццццццццццпппппппппппппппппппппДД",
+    "ДДцццццццццццццццццццпппццццццццццццццццццДД",
+    "ДДццццццццццццццццццжжжжжжпжжжжжццццццццццДД",
+    "ДДпппппцццццццццццццжжжжжжпжжюжжццццццццццДД",
+    "ДДппппЛЂццццццццццццжпжжюжжюжжжжццццццццццДД",
+    "пппппдддддддддддддццжжжжжжжжжжжжццццццццццДД",
+    "пппппдддддддддддддццжжюжжжжжжжююццццццццццДД",
+    "ДДпппппццццццццццдццжжжжюжжжжжжжцццГццццццДД",
+    "ДДпппппццццццццццдццжжжжжжжжжюжжццццццццццДД",
+    "ДДццццццццццццццЛдЂцДпппццццЛцццццццццццццДД",
+    "ДДпппппппппппппппддддддддддддцццццццццццццДД",
+    "ДДпжжжюжжжжжжжжжпдДДДДДРццццдЂццццццццццццДД",
+    "ДДпжюпжжжжпжжюююпдпДДДппппппдпппппппппппппДД",
+    "ДДпжжжжюююпжжжжжпдппДпжжжжпжджжпжжжпппппппДД",
+    "ДДпюжжжжжжжжжжжжпдппппжжжжюжджюжжжжпппппппДД",
+    "ДДпжжжжжжжжжжжюжпдппппюпжюжюдюжжжжппппГпппДД",
+    "ДДпжжжжжжжжжжжжжпдпппддддддддпжюжжжпппппппДД",
+    "ДДпжжюжюжжжжЂжжжРдРРРджюжжжжжюжДжюжпппппппДД",
+    "ДДпжжжюжжжжжЛдддддддЛджжжжжпжжДДжжжпппппппДД",
+    "ДДпжюююпжжжжддЭШШШЄддджжжжжюжДжДДДжпппппппДД",
+    "ДДппппппппппддЯЪЧЪЯддджжГжюжжюДДДжжпппппппДД",
+    "ДДпГппюппДпБддЯЯЏЯЯддСюжжюжжжжжДжюжпппппппДД",
+    "ДДпюппппДДДпдддддддддююжюжжжжжпжжююпппппппДД",
+    "ДДппппппДДДДЛдддддддЛюжюжжюжжГжжюжжпппппппДД",
+    "ДДппппппДДДппююююдюююююпюжюжжюжжююппппппппДД",
+    "ДДццццццюДцццжжюжджююююпжююююююжюжпюппппппДД",
+    "ДДцццццццццццююююджГююжпюююжююжжжюГпппппппДД",
+    "ДДцццццццццццююжюдСююююпжюжююжюжююппДпппппДД",
+    "ДДцюцццццццццГюжюдЂСжжюпжюжСжюЛюжюпДДДппппДД",
+    "ДДццГццццццццюждддддддддддддддддппДДДДппппДД",
+    "ДДцццццццццццюжююююююБюжпжжююжждРпппДДппппДД",
+    "ДДцццццццццццюГСююжюжжжжжжжююжждРпппДпппппДД",
+    "ДДцццжюжюжюжжжпюжюююппГжжжжжжжждРпппппппппДД",
+    "ДДцццжююГпжжжжжююжюСГппжжюжжжжждРщщщщщщщщщДД",
+    "ДДцццюжДГДжжжжГюСюююпппжжжжжжжждРщщщщщщщщщДД",
+    "ДДцццжжГпГжжжжжжждппЛпппСюГюжжСдРщщщщщщщщщДД",
+    "ДДцццжпДпДюжпжююждппддддддддддддЂщщщщщщщщщДД",
+    "ДДцццжюжпжжГжюжжюдппдппюжжжжжжжппщщщщщщщщщДД",
+    "ДДцццюжжюжжжжжжжждппдппппппппппщщщщщщщщщщщДД",
+    "ДДцццюГжжжжжжжжжпддддппппппппппщщщщщщщщщщщДД",
+    "ДДцццжжжюжпжююжююдпппппГпппГюппющщщщщщщщщщДД",
+    "ДДцццжжжпжГююжжжждпппппюппДппппюющщщщщщщщщДД",
+    "ДДцццццццццюцююпЛдпюпппппДДДпюпщщщщщпппщщщДД",
+    "ДДццююююююююююююдддЛРРРЛДДДЛДРРЛщщщщпцпщщщДД",
+    "ДДппюююююююююДюЂддддддддддддддддщБщщпппщщщДД",
+    "ДДппююююююююДДДБддддддддддддддддЂщщщщщщщщщДД",
+    "ДДпююююююююДДюДДдддРРРРРРРРРРРддРщщщщщщщщщДД",
+    "ДДппююююююююДДююююююююпппппппЛддРщщщщщщщщщДД",
+    "ДДппюююююююююДююююююююпппппппРддРщщщщщщщщщДД",
+    "ДДпппппппппппппппппппппппппппРддЛщщщщщщщщщДД",
+    "ДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДддДДДДДДДДДДДД"
+  ],
+  "warps": [
+    {
+      "x": 0,
+      "y": 6,
+      "toMap": "emberfall",
+      "toX": 76,
+      "toY": 53,
+      "facing": "left",
+      "style": "edge"
+    },
+    {
+      "x": 0,
+      "y": 7,
+      "toMap": "emberfall",
+      "toX": 76,
+      "toY": 54,
+      "facing": "left",
+      "style": "edge"
+    },
+    {
+      "x": 30,
+      "y": 51,
+      "toMap": "mirehaven",
+      "toX": 30,
+      "toY": 2,
+      "facing": "down",
+      "style": "edge"
+    },
+    {
+      "x": 31,
+      "y": 51,
+      "toMap": "mirehaven",
+      "toX": 31,
+      "toY": 2,
+      "facing": "down",
+      "style": "edge"
+    },
+    {
+      "x": 16,
+      "y": 22,
+      "toMap": "route_6_waystation",
+      "toX": 8,
+      "toY": 12,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 8,
+      "y": 36,
+      "toMap": "route_6_grove",
+      "toX": 12,
+      "toY": 21,
+      "facing": "up",
+      "style": "cave"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "r6_hallow",
+      "sprite": "porter",
+      "x": 12,
+      "y": 7,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r6_hallow",
+      "sightRange": 3
+    },
+    {
+      "id": "r6_wick",
+      "sprite": "villager_f",
+      "x": 24,
+      "y": 10,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r6_wick",
+      "sightRange": 3
+    },
+    {
+      "id": "r6_kess",
+      "sprite": "netmender",
+      "x": 16,
+      "y": 26,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r6_kess",
+      "sightRange": 3
+    },
+    {
+      "id": "r6_ordway",
+      "sprite": "hiker",
+      "x": 30,
+      "y": 33,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r6_ordway",
+      "sightRange": 3
+    },
+    {
+      "id": "r6_selm",
+      "sprite": "fisher",
+      "x": 23,
+      "y": 45,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r6_selm",
+      "sightRange": 3
+    },
+    {
+      "id": "r6_planker",
+      "sprite": "villager_m",
+      "x": 18,
+      "y": 24,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r6_planker"
+    },
+    {
+      "id": "r6_bellringer",
+      "sprite": "villager_f",
+      "x": 14,
+      "y": 19,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r6_bellringer"
+    },
+    {
+      "id": "r6_ferryman",
+      "sprite": "fisher",
+      "x": 12,
+      "y": 22,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r6_ferryman"
+    },
+    {
+      "id": "r6_surveyor",
+      "sprite": "villager_m",
+      "x": 31,
+      "y": 38,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r6_surveyor"
+    },
+    {
+      "id": "r6_lampman",
+      "sprite": "porter",
+      "x": 27,
+      "y": 46,
+      "facing": "up",
+      "movement": {
+        "kind": "pace",
+        "axis": "x",
+        "distance": 3
+      },
+      "script": "r6_lampman"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "script",
+      "x": 7,
+      "y": 5,
+      "text": [
+        "A notice bolted to the first post, in Mirehaven paint on Emberfall iron.",
+        "THE WALK IS THE ROAD. THE ROAD IS NOT THE GROUND.",
+        "Under it, later and smaller: SPAN 9 IS STILL OUT. IT HAS BEEN THREE YEARS."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 18,
+      "y": 10,
+      "text": [
+        "POST 4. The board is new. The post it is nailed to is not.",
+        "Somebody has cut a tally of forty-one marks down the side of it.",
+        "The last eleven are in a different hand and they are further apart."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 29,
+      "y": 12,
+      "text": [
+        "POST 5, at the far corner of the loop, and a bench nobody maintains.",
+        "From here you can hear the fog bell and not see the Waystation at all.",
+        "That is the arrangement. You walk at the sound."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 12,
+      "y": 18,
+      "text": [
+        "POST 6, and the fog bell hung off it: cast in Emberfall, carried out here",
+        "on two poles by four people who all still mention it.",
+        "Rung at dusk, and again whenever anybody is late."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 18,
+      "y": 29,
+      "text": [
+        "POST 9. Below the number, painted over twice and legible through both:",
+        "SPAN OUT. WADE OR GO ROUND. THE ROUND WAY IS LONGER AND YOU WILL LIVE.",
+        "Somebody has added in charcoal: THE WADE IS FINE. And under that: IT IS NOT."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 32,
+      "y": 37,
+      "text": [
+        "POST 12, and a stack of sawn piles beside it under a tarpaulin.",
+        "This is not Mirehaven timber. Every end is stamped with a circle and a line,",
+        "and the delivery note is made out to a survey, not to a town."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 32,
+      "y": 46,
+      "text": [
+        "POST 14. From here the lanterns run the whole way in, four apart,",
+        "and somebody walks out every evening and lights every one of them.",
+        "That is the entire reason anyone arrives at Mirehaven alive."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 26,
+      "y": 6,
+      "item": "great_potion",
+      "quantity": 1,
+      "flag": "item_r6_northbed"
+    },
+    {
+      "kind": "item",
+      "x": 6,
+      "y": 17,
+      "item": "full_heal",
+      "quantity": 2,
+      "flag": "item_r6_westbed"
+    },
+    {
+      "kind": "item",
+      "x": 28,
+      "y": 22,
+      "item": "net_vessel",
+      "quantity": 5,
+      "flag": "item_r6_eastbed"
+    },
+    {
+      "kind": "item",
+      "x": 21,
+      "y": 33,
+      "item": "ward_incense",
+      "quantity": 2,
+      "flag": "item_r6_gap"
+    },
+    {
+      "kind": "item",
+      "x": 10,
+      "y": 41,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_r6_deepmire"
+    },
+    {
+      "kind": "item",
+      "x": 37,
+      "y": 44,
+      "item": "rouse",
+      "quantity": 1,
+      "flag": "item_r6_islet"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 4,
+      "y": 21,
+      "item": "dusk_vessel",
+      "quantity": 1,
+      "flag": "item_r6_hidden"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 35,
+      "y": 10,
+      "item": "escape_line",
+      "quantity": 1,
+      "flag": "item_r6_hidden2"
+    }
+  ]
+}

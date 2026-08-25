@@ -1,0 +1,92 @@
+{
+  "id": "route_6_waystation",
+  "name": "Interior",
+  "displayName": "THE MIRE WAYSTATION",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "_design": "The name survives from the old build and only here: a Waystation is the roadside kind of clinic, and this is the only genuinely roadside one in Caelora -- an hour of plank from Emberfall, an hour and a half from Mirehaven, on its own piles, in the middle of a marsh. It exists because the route is long, foggy and honestly a bit dangerous, and a route that is honestly a bit dangerous needs one room in the middle of it that is not.",
+  "_plan": "Everything in the room is about the fog and the lamps. A third of the floor is the oil store -- barrels, funnels, trimmed wicks, and a chalked roster of who lit which span and when -- because that roster is the entire reason the causeway is passable after dark, and it says so better than anybody could. The rest is three sets of bunks, a stove that has never gone out, and a bell rope that goes up through the ceiling to the fog bell on post 6 outside, which is the tile the player walked past on the way in.",
+  "rows": [
+    "IIIUIIIIIIIUIIIII",
+    "IQNfKKKKKffkkfffI",
+    "IfffffffffffffffI",
+    "IkffAAffffAAffffI",
+    "IffEEffffffEEffkI",
+    "IfffffffffffffffI",
+    "IbefffbefffbefffI",
+    "IffffffffffffffPI",
+    "Ik/rrfffffff;;ffI",
+    "IffrrfffffffffffI",
+    "IPffffffff;;fffPI",
+    "IfffffffffffffffI",
+    "IIIIIIIIDIIIIIIII"
+  ],
+  "warps": [
+    { "x": 8, "y": 12, "toMap": "route_6", "toX": 16, "toY": 23, "facing": "down", "style": "door" }
+  ],
+  "npcs": [
+    {
+      "id": "ws_keeper", "sprite": "healer", "x": 3, "y": 1, "facing": "down",
+      "movement": { "kind": "static" }, "script": "clinic_heal"
+    },
+    {
+      "id": "ws_roost", "sprite": "professor", "x": 13, "y": 1, "facing": "down",
+      "movement": { "kind": "static" }, "script": "roost_terminal"
+    },
+    {
+      "id": "ws_lampwright", "sprite": "villager_m", "x": 14, "y": 8, "facing": "left",
+      "movement": { "kind": "static" }, "script": "ws_lampwright"
+    },
+    {
+      "id": "ws_rester", "sprite": "hiker", "x": 2, "y": 7, "facing": "up",
+      "movement": { "kind": "static" }, "script": "ws_rester"
+    },
+    {
+      "id": "ws_courier", "sprite": "porter", "x": 8, "y": 4, "facing": "up",
+      "movement": { "kind": "static" }, "script": "ws_courier"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign", "x": 12, "y": 1,
+      "text": [
+        "A brass terminal, and a bucket under it catching what comes off the ceiling.",
+        "THE ROOST, stencilled on the side. Kin you cannot carry wait here."
+      ]
+    },
+    {
+      "kind": "sign", "x": 13, "y": 8,
+      "text": [
+        "The oil store. Fourteen barrels, a funnel, and a rack of trimmed wicks.",
+        "Chalked on the boards above it: SPANS 1-6 SORREL. 7-11 NOBODY. 12-14 ADDA.",
+        "Somebody has written NOBODY four times and rubbed it out three."
+      ]
+    },
+    {
+      "kind": "sign", "x": 1, "y": 1,
+      "text": [
+        "The stove, and a kettle that has not been cold since the place was built.",
+        "Over the counter, the restorative bank, lamps in green.",
+        "The Waystation keeps the road's hours, and on this road that is all of them."
+      ]
+    },
+    {
+      "kind": "sign", "x": 12, "y": 0,
+      "text": [
+        "A rope comes down through the ceiling and ends in a loop at chest height.",
+        "It goes up to the fog bell on post 6. Rung at dusk, and for anybody late.",
+        "A card beside it: TWO FOR THE HOUR. FIVE IF YOU ARE LOST. DO NOT BE CLEVER."
+      ]
+    },
+    {
+      "kind": "sign", "x": 11, "y": 10,
+      "text": [
+        "A crate of survey stakes, opened and mostly empty, addressed to nobody here.",
+        "The stamp on the lid is a circle with a line through it.",
+        "Under the crate, a note for two hundred more, and a date next week."
+      ]
+    },
+    { "kind": "hiddenItem", "x": 2, "y": 11, "item": "full_heal", "quantity": 1, "flag": "item_r6ws_hidden" }
+  ]
+}

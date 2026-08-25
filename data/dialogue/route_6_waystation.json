@@ -1,0 +1,44 @@
+{
+  "speakers": {
+    "ws_lampwright": "LAMPWRIGHT",
+    "ws_rester": "SOAKED HIKER",
+    "ws_courier": "COURIER"
+  },
+  "entries": {
+    "ws_lampwright": [
+      {
+        "lines": [
+          "Fourteen barrels in the store and every one of them goes out through those posts.",
+          "Mirehaven sells me the oil at what it costs them. They have always done that.",
+          "A town that does that is a town worth the walk, whatever else you hear about it."
+        ]
+      }
+    ],
+    "ws_rester": [
+      {
+        "lines": [
+          "I waded it. Everyone says wade it. I am telling you: go round.",
+          "It is not the water. It is that you cannot see the far side while you are in it.",
+          "Twenty minutes of dry plank against six minutes of not knowing. Take the twenty."
+        ]
+      }
+    ],
+    "ws_courier": [
+      {
+        "ifFlags": ["crest_4_taken"],
+        "lines": [
+          "Emberfall to Mirehaven, three times a week, and half my bag is for one address now.",
+          "Not the Hall. Not the town office. A survey camp that was not here last spring.",
+          "They have their own seal. A circle with a line through it. You see it everywhere."
+        ]
+      },
+      {
+        "lines": [
+          "Emberfall to Mirehaven and back. Two days if the span were up. Three as it is.",
+          "Say what you like about the fog. Nobody has ever robbed me on this road.",
+          "You would have to be able to see me first."
+        ]
+      }
+    ]
+  }
+}
