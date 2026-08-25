@@ -1,0 +1,17 @@
+{
+  "speakers": {
+    "tg_bookseller": "BOOKSELLER",
+    "tg_book_reader": "READER"
+  },
+  "entries": {
+    "tg_bookseller": [
+      "The wall under this harbour is not two hundred years old. It is not two thousand.",
+      "We built our city on somebody else's quay and called it founding a city.",
+      "Nobody wants that book. Everybody buys that book. Make of that what you like."
+    ],
+    "tg_book_reader": [
+      "I came in for a chart and I have been here an hour reading about drowned walls.",
+      "He does this to people. It is not a shop, it is a trap with a till in it."
+    ]
+  }
+}

@@ -251,12 +251,20 @@ export const STAGES = [
     trainers: ['r2_dell', 'r2_juna', 'r2_pike', 'r2_wren'] },
   { name: 'Stonewake', grass: null, wilds: 0,
     trainers: ['tarin_town', 'sw_hall_delve_a', 'sw_hall_delve_b', 'sw_hall_delve_c', 'sw_keeper_roxen'] },
+  // Route 3 is Eastwind Ridge and runs west to east across five shelves, so the
+  // order below is the order the player meets them on the road: Bram on the ash
+  // ramp, Sill above the dray, Wenna in the Foundation yard, Kessel on the crest,
+  // Ivo out on the wind-station spur, and Holt down in the basin, who is optional.
   { name: 'Route 3', grass: 'route_3', wilds: 14,
-    trainers: ['r3_bram', 'r3_sill', 'r3_holt', 'concord_surveyor_2'] },
+    trainers: ['r3_bram', 'r3_sill', 'r3_wenna', 'r3_kessel', 'concord_surveyor_2', 'r3_holt'] },
   { name: 'Route 4', grass: 'route_4', wilds: 14,
-    trainers: ['r4_teal', 'r4_gorse', 'r4_nesh', 'r4_bay'] },
-  { name: 'Brackwater', grass: null, wilds: 0,
-    trainers: ['hall2_guard_a', 'hall2_guard_b', 'hall2_guard_c', 'hall2_mabry'] },
+    trainers: ['r4_teal', 'r4_gorse', 'r4_marrin', 'r4_nesh', 'r4_bay'] },
+  // Stage 2 renamed Brackwater to Tideglass and rebuilt its Tide Hall as the
+  // race (data/maps/tideglass_hall_works.json). The old hall2_* rows are still
+  // in trainers.json but no longer stand on any map, so they are off the road
+  // and earn nothing, exactly like r1_wray and r2_shale above.
+  { name: 'Tideglass', grass: null, wilds: 0,
+    trainers: ['tg_hand_a', 'tg_hand_b', 'tg_hand_c', 'tg_keeper_vane'] },
 ];
 
 /**

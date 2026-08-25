@@ -1,0 +1,18 @@
+{
+  "speakers": {
+    "tg_bath_attendant": "ATTENDANT",
+    "tg_bath_soaker": "DOCK HAND"
+  },
+  "entries": {
+    "tg_bath_attendant": [
+      "Pumps run off the harbour, so I know the water before the pilots do.",
+      "It has come in warm all month. Warm and very still.",
+      "My mother worked these pools forty years. She never once saw warm in spring."
+    ],
+    "tg_bath_soaker": [
+      "Eleven hours on the east mole and every hour of it lifting for one charter.",
+      "Crates that do not rattle. That is the thing. Nothing in them moves.",
+      "You get a feel for what a crate has in it. Those ones have machine in them."
+    ]
+  }
+}

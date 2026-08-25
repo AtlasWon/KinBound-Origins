@@ -8,6 +8,62 @@ Add a new `## vX.Y.Z` heading above the others before running `npm run ship`.
 
 ---
 
+## v0.14.0
+
+### The road east, and the sea
+
+**Eastwind Ridge** climbs away from the quarry in five shelves, and the only way
+up each one is a pass, and the passes are never above each other — so the road
+crosses the whole map twice to find them. Ledges take you back down, and only
+down.
+
+You will not be told that the Foundation is everywhere. You will just keep
+walking past it: forty stencilled crates behind a dray with a broken axle, a
+twelve-ton crane in six numbered lengths at the foot of the incline, a poured
+loading yard laid straight across the only pass, and a brass survey plate
+screwed over the old boundary letters.
+
+**Salthollow** sits in the dip where the salt wind drops — four hundred people, a
+tanyard, and a change paddock where drovers swap a tired team before the climb.
+The shore road has been shut by a rockfall for thirty-one years, which is why
+everything heavy has to come over the ridge instead of along the beach. On the
+green there is one long elm table where anyone off the road eats free, provided
+they tell the table what they saw.
+
+Then the coast road drops four shelves to the sea. You will see it long before
+you can reach it.
+
+### Tideglass
+
+Thirty thousand people, an 86 x 64 harbour city, and it is meant to be the
+moment the region stops being villages. Seven districts, each built from
+different materials so you know where you are without reading a sign: brick and
+slate tenements, white stone under blue pantile along the Parade, timber and
+moss in the Old Harbour, plaster sheds in the Dockyards, glazed flat-roofed
+blocks in the Ocean Research District, and the lighthouse out on the west mole.
+Two canals cut through it.
+
+A hundred and nineteen buildings. Twenty-seven of them open. That gap is the
+point.
+
+### The Tide Hall
+
+The Hallkeeper does not keep the Hall in a nice room. Under the sea wall there
+is a stone tank called the Race, and everything in it is water: dark water
+refuses you, pale water carries you, and the sluices decide which is which.
+
+### The man from the Foundation
+
+He is already speaking when you arrive. Two hundred and six boats went out last
+spring and two hundred and six came back, because a woman on a hill read an
+instrument at four in the morning and the Foundation had paid for the
+instrument.
+
+He knew your father. He will say so before you do.
+
+And later, somewhere dark and quiet, people with the Foundation's coat on will
+try to take what your father sent home.
+
 ## v0.13.0
 
 ### Hearthmere, and the thing your father sent home

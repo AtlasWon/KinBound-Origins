@@ -1,0 +1,173 @@
+{
+  "id": "tideglass_hall",
+  "name": "Tide Hall",
+  "displayName": "THE TIDE HALL",
+  "music": "station",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIIIIIIIIIIIIIIIII",
+    "IUUFFFFFFFFFFFFFUUI",
+    "IFFFFFFFFSFFFFFFFFI",
+    "IFFFFFFFFFFFFFFFFFI",
+    "IFF+FFFFFFFFFFF+FFI",
+    "IFFFFFFFFFFFFFFFFFI",
+    "IFKKKKKFFFFFFAAFFFI",
+    "IFFFFFFFFFFFFFFFFFI",
+    "IFEFFFFFFFFFFFFFEFI",
+    "IFEFFFFFFFFFFFFFEFI",
+    "IFFFFFFFFFFFFFFFFFI",
+    "IPFFFFFFFFFFFFFFFPI",
+    "IFFFFFFFFFFFFFFFFFI",
+    "IIIIIIIIIDIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 13,
+      "toMap": "tideglass",
+      "toX": 24,
+      "toY": 16,
+      "facing": "down",
+      "style": "door"
+    },
+    {
+      "x": 9,
+      "y": 2,
+      "toMap": "tideglass_hall_works",
+      "toX": 2,
+      "toY": 20,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tg_hall_clerk",
+      "sprite": "clerk",
+      "x": 4,
+      "y": 5,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_hall_clerk"
+    },
+    {
+      "id": "tg_hall_gaugeman",
+      "sprite": "villager_m",
+      "x": 16,
+      "y": 5,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_hall_gaugeman"
+    },
+    {
+      "id": "tg_hall_soaked",
+      "sprite": "kid",
+      "x": 2,
+      "y": 10,
+      "facing": "right",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "tg_hall_soaked"
+    },
+    {
+      "id": "tg_hall_stairhand",
+      "sprite": "sailor",
+      "x": 11,
+      "y": 3,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_hall_stairhand"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 3,
+      "y": 4,
+      "text": [
+        "THE STANDING BOARD. A brass drum, a paper roll and a float in a well,",
+        "drawing the height of the harbour as one long shivering line.",
+        "It has never once drawn a straight one. That is the point of it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 15,
+      "y": 4,
+      "text": [
+        "THE GATE INDICATOR. Three shutters: SEA GATE, RACE, NORTH SLUICE.",
+        "Two of them read OPEN. The North Sluice reads SHUT, in red.",
+        "A card under it: SHUT SINCE THE SPRING TIDES. TURN IT AND SEE."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 6,
+      "text": [
+        "A cutaway model of the sea wall, sixteen feet of it in painted tin.",
+        "The Hall is the small flooded box in the middle, under the road.",
+        "Everything above the flooded box is the city, and the city is drawn very light."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 14,
+      "y": 6,
+      "text": [
+        "Beside the model, at knee height, a line of small brass studs in the wall.",
+        "Each one has a year on it. The highest is above the model's roof.",
+        "It is dated the year the Hall was built, which is not a coincidence."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 6,
+      "text": [
+        "The Hall roll. Two columns: WENT DOWN, and CAME UP DRY.",
+        "The second column is empty from top to bottom.",
+        "Somebody has ruled it anyway, every year, for forty years."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18,
+      "y": 8,
+      "text": [
+        "Eight Bond Crests in a case, one for every Hall in Caelora.",
+        "The Tide Crest is third and is the only one with a tide line on it -",
+        "a green stain across the lower third, from being kept somewhere honest."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 0,
+      "y": 8,
+      "text": [
+        "A row of pegs, and on the pegs, thirty coats.",
+        "Every one of them is wet. It has not rained in nine days.",
+        "The floor under them has a drain cut into it, and the drain is working hard."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 13,
+      "text": [
+        "A notice, hand-lettered, nailed at the height of a sixteen-year-old:",
+        "THE WATER IN HERE IS RUN ON PURPOSE. NOTHING IN HERE IS AN ACCIDENT.",
+        "IF IT TAKES YOU, IT MEANT TO. GO WHERE IT PUTS YOU AND LOOK AROUND."
+      ]
+    }
+  ],
+  "_plan": "The gatehouse: the dry room on top of the works, and the Hall's public face in a harbour city of thirty thousand. Everything here is instrumentation -- a tide board, a gate indicator, a cutaway of the sea wall -- because the Tide Hall is not a sports venue with a job attached, it is a flood-defence works that keeps a Hall so somebody walks the gates every day. The stair at 9,2 is the only way down and the only way in; the door at 9,13 is the city's. The gate indicator reading SHUT is the puzzle's brief, posted where the player reads it before they are wet."
+}

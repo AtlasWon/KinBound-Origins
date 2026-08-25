@@ -1,0 +1,100 @@
+{
+  "id": "route_3_whistle",
+  "name": "The Whistle",
+  "displayName": "THE WHISTLE",
+  "music": "station",
+  "battleBackdrop": "highland",
+  "indoor": false,
+  "encounterTable": "route_3_whistle",
+  "_plan": "A slot in the north wall of the ridge, roofless, bending twice so the mouth cannot see the far end. Wind pours through it and the grass in it grows in the one place the wind cannot reach, which is why the birds are here and why they are bigger than the ones on the open route. The floor is stone and blown seed rather than cave, because a lightless cave would want a lamp and the player has no lamp until much later. The stone across the west pocket does not move for anyone who has not been down Stonewake's deep working.",
+  "rows": [
+    "CCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCC",
+    "CCCCsosssss\"\"\"ssCCCC",
+    "CCCCssssss\"\"\"\"\"sCCCC",
+    "CCCCsssssss\"\"\"\"ssCCC",
+    "CCCCs\"sCCCCCC\"\"\"sCCC",
+    "CCCC\"\"\"CCCCCC\"\"\"sCCC",
+    "CCCC\"\"\"CCCCCC\"\"~~CCC",
+    "CCCC\"\"\"CCCCCCs\"s~CCC",
+    "CCCCs\"\"ssssssCCCCCCC",
+    "CCCC\"\"\"\"\"ssssCCCCCCC",
+    "CCCCssossssssss\"sCCC",
+    "CCCCCCCCCsssCs\"\"\"CCC",
+    "CCCCCCCCCsssCCCCCCCC",
+    "CCCCCCCCCDDCCCCCCCCC"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 15,
+      "toMap": "route_3",
+      "toX": 33,
+      "toY": 13,
+      "facing": "down",
+      "style": "cave"
+    },
+    {
+      "x": 10,
+      "y": 15,
+      "toMap": "route_3",
+      "toX": 33,
+      "toY": 13,
+      "facing": "down",
+      "style": "cave"
+    }
+  ],
+  "npcs": [],
+  "objects": [
+    {
+      "kind": "script",
+      "x": 4,
+      "y": 2,
+      "text": [
+        "The wall of the cleft, scored with level lines and dates, going back sixty years.",
+        "Somebody stood in here every spring and measured how hard the wind blew.",
+        "The last four lines are crowded together, and all four of them are this year."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 17,
+      "y": 7,
+      "text": [
+        "A steel case bolted into the rock, new this season, with a brass plate on it.",
+        "MERIDIAN FOUNDATION - STATION E7. DO NOT OBSTRUCT.",
+        "It is warm, and it is humming, and there is no wire going into it."
+      ]
+    },
+    {
+      "kind": "pushable",
+      "x": 12,
+      "y": 12
+    },
+    {
+      "kind": "item",
+      "x": 15,
+      "y": 13,
+      "item": "dusk_vessel",
+      "quantity": 1,
+      "flag": "item_r3w_pocket"
+    },
+    {
+      "kind": "item",
+      "x": 14,
+      "y": 3,
+      "item": "strong_potion",
+      "quantity": 1,
+      "flag": "item_r3w_ledge"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 5,
+      "y": 7,
+      "item": "tonic_berry",
+      "quantity": 2,
+      "flag": "item_r3w_hidden"
+    }
+  ]
+}

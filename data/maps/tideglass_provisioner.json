@@ -1,5 +1,5 @@
 {
-  "id": "brackwater_provisioner",
+  "id": "tideglass_provisioner",
   "name": "Interior",
   "music": "town_indoor",
   "battleBackdrop": "indoor",
@@ -20,16 +20,16 @@
     {
       "x": 6,
       "y": 9,
-      "toMap": "brackwater",
-      "toX": 21,
-      "toY": 8,
+      "toMap": "tideglass",
+      "toX": 19,
+      "toY": 26,
       "facing": "down",
       "style": "door"
     }
   ],
   "npcs": [
     {
-      "id": "bw_shopkeeper",
+      "id": "tg_shopkeeper",
       "sprite": "clerk",
       "x": 5,
       "y": 2,
@@ -37,7 +37,18 @@
       "movement": {
         "kind": "static"
       },
-      "script": "brackwater_shop"
+      "script": "tideglass_shop"
+    },
+    {
+      "id": "tg_shop_boy",
+      "sprite": "kid",
+      "x": 10,
+      "y": 5,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "tg_shop_boy"
     }
   ],
   "objects": [
@@ -46,9 +57,9 @@
       "x": 3,
       "y": 4,
       "text": [
-        "Ship's stores, sold to landsmen at landsman prices.",
-        "Twine, hooks, tar, and a barrel of ship's biscuit",
-        "that has outlasted two owners of this shop."
+        "Ship stores sold to landsmen at landsman prices.",
+        "Twine, hooks, tar, and a barrel of biscuit that has outlasted",
+        "two owners of this shop and shows no sign of stopping."
       ]
     },
     {
@@ -56,8 +67,8 @@
       "x": 8,
       "y": 4,
       "text": [
-        "Vessels stacked in a rope cradle so they do not roll.",
-        "The wall behind them is still salt-stained from the",
+        "Vessels stacked in rope cradles so they cannot roll.",
+        "The wall behind them is salt-stained to knee height from the",
         "spring the harbour came up over the sill."
       ]
     },
@@ -66,9 +77,9 @@
       "x": 2,
       "y": 6,
       "text": [
-        "Lamp oil, in every size of can.",
-        "Brackwater burns a great deal of lamp oil.",
-        "The fog does not care what hour it is."
+        "Lamp oil, in every size of can there is.",
+        "Tideglass burns a great deal of lamp oil. The fog does not",
+        "care what hour it is, and neither does the light on the mole."
       ]
     },
     {
@@ -76,7 +87,7 @@
       "x": 8,
       "y": 2,
       "text": [
-        "The display case, glass gone soft and wavy with age.",
+        "The display case, its glass gone soft and wavy with age.",
         "Tonics inside, arranged by colour rather than by use,",
         "which the clerk insists is a system."
       ]

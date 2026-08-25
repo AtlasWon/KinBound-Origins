@@ -1,0 +1,73 @@
+{
+  "id": "route_4_hollow",
+  "name": "Gullhollow",
+  "displayName": "GULLHOLLOW",
+  "music": "station",
+  "battleBackdrop": "coast",
+  "indoor": false,
+  "encounterTable": "route_4_hollow",
+  "_plan": "A wind-scoured pocket in the cliff under the salt fields, floored with blown sand and the coarse grass that grows in it, and full of birds. The gulls have been here so long the back wall is white -- and under the white there is a row of cut niches, which nobody in Salthollow can explain and which the player will understand in Act 3.",
+  "rows": [
+    "CCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCC",
+    "CCCsossssss\"sssCCC",
+    "CCCs\"\"\"\"\"\"\"\"\"osCCC",
+    "CCC\"\"\"\"\"\"\"\"\"\"\"sCCC",
+    "CCC\"\"\"\"\"\"\"\"\"\"\"sCCC",
+    "CCC\"\"\"\"\"\"\"s\"sssCCC",
+    "CCCs\"\"\"\"\"ssss~sCCC",
+    "CCCsssssssss~~sCCC",
+    "CCCssssssssssssCCC",
+    "CCCCCCCCCssCCCCCCC",
+    "CCCCCCCCCDDCCCCCCC"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 11,
+      "toMap": "route_4",
+      "toX": 30,
+      "toY": 18,
+      "facing": "down",
+      "style": "cave"
+    },
+    {
+      "x": 10,
+      "y": 11,
+      "toMap": "route_4",
+      "toX": 30,
+      "toY": 18,
+      "facing": "down",
+      "style": "cave"
+    }
+  ],
+  "npcs": [],
+  "objects": [
+    {
+      "kind": "script",
+      "x": 2,
+      "y": 5,
+      "text": [
+        "The back wall of the hollow, white with four hundred years of gulls.",
+        "And under the guano, cut into the rock, a row of small square niches.",
+        "Somebody kept something in this hollow long before the birds did."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 4,
+      "y": 8,
+      "item": "strong_potion",
+      "quantity": 2,
+      "flag": "item_r4h_pocket"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 11,
+      "y": 3,
+      "item": "net_vessel",
+      "quantity": 2,
+      "flag": "item_r4h_hidden"
+    }
+  ]
+}

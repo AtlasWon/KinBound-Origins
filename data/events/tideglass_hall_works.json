@@ -1,0 +1,874 @@
+[
+  {
+    "id": "tg_lane_south",
+    "_note": "THE SOUTH LANE. Apron to west staithe. Every tile of the lane is listed, not just its mouth, because a lane the player can wade up is not a current -- it is a corridor with a splash sound. The lane is two tiles wide: see the map's _plan for why a one-tile mouth was physically unenterable.",
+    "trigger": "step",
+    "map": "tideglass_hall_works",
+    "at": [
+      {
+        "x": 6,
+        "y": 16
+      },
+      {
+        "x": 6,
+        "y": 17
+      },
+      {
+        "x": 7,
+        "y": 16
+      },
+      {
+        "x": 7,
+        "y": 17
+      },
+      {
+        "x": 8,
+        "y": 16
+      },
+      {
+        "x": 8,
+        "y": 17
+      },
+      {
+        "x": 9,
+        "y": 16
+      },
+      {
+        "x": 9,
+        "y": 17
+      },
+      {
+        "x": 10,
+        "y": 16
+      },
+      {
+        "x": 10,
+        "y": 17
+      },
+      {
+        "x": 7,
+        "y": 18
+      },
+      {
+        "x": 8,
+        "y": 18
+      },
+      {
+        "x": 9,
+        "y": 18
+      },
+      {
+        "x": 10,
+        "y": 18
+      }
+    ],
+    "actions": [
+      {
+        "kind": "sfx",
+        "sound": "fx_water"
+      },
+      {
+        "kind": "shake",
+        "frames": 16,
+        "power": 2
+      },
+      {
+        "kind": "wait",
+        "frames": 14
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "not",
+          "of": {
+            "kind": "flag",
+            "flag": "tg_ride_first"
+          }
+        },
+        "then": [
+          {
+            "kind": "setFlag",
+            "flag": "tg_ride_first"
+          },
+          {
+            "kind": "say",
+            "lines": [
+              "Two steps in and the floor stops being a floor.",
+              "The race takes you the way a hand takes a sleeve. Without hurry, and without asking."
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "warp",
+        "map": "tideglass_hall_works",
+        "x": 4,
+        "y": 16,
+        "facing": "left"
+      }
+    ]
+  },
+  {
+    "id": "tg_race",
+    "_note": "THE RACE. One lane, two destinations, and which one you get is the whole Hall. Var tg_gate is 0 while the north sluice is shut, in which case the fork throws the player east onto the dead end and lands them at 19,9; the gate-hand there sets it to 1, and the same tiles then carry them north to the keeper's sill at 10,5. Rows 6 (10,6 and 11,6) are deliberately NOT in this list: they are the tile of gate mouth a player can stand in, so arriving at the sill and stepping back down does not immediately re-fire. Landing tiles are never adjacent to a lane, for the same reason.",
+    "trigger": "step",
+    "map": "tideglass_hall_works",
+    "at": [
+      {
+        "x": 10,
+        "y": 7
+      },
+      {
+        "x": 11,
+        "y": 7
+      },
+      {
+        "x": 10,
+        "y": 8
+      },
+      {
+        "x": 11,
+        "y": 8
+      },
+      {
+        "x": 15,
+        "y": 8
+      },
+      {
+        "x": 16,
+        "y": 8
+      },
+      {
+        "x": 10,
+        "y": 9
+      },
+      {
+        "x": 11,
+        "y": 9
+      },
+      {
+        "x": 12,
+        "y": 9
+      },
+      {
+        "x": 13,
+        "y": 9
+      },
+      {
+        "x": 14,
+        "y": 9
+      },
+      {
+        "x": 15,
+        "y": 9
+      },
+      {
+        "x": 16,
+        "y": 9
+      },
+      {
+        "x": 10,
+        "y": 10
+      },
+      {
+        "x": 11,
+        "y": 10
+      },
+      {
+        "x": 12,
+        "y": 10
+      },
+      {
+        "x": 13,
+        "y": 10
+      },
+      {
+        "x": 14,
+        "y": 10
+      },
+      {
+        "x": 15,
+        "y": 10
+      },
+      {
+        "x": 16,
+        "y": 10
+      },
+      {
+        "x": 10,
+        "y": 11
+      },
+      {
+        "x": 11,
+        "y": 11
+      },
+      {
+        "x": 15,
+        "y": 11
+      },
+      {
+        "x": 16,
+        "y": 11
+      },
+      {
+        "x": 6,
+        "y": 12
+      },
+      {
+        "x": 7,
+        "y": 12
+      },
+      {
+        "x": 10,
+        "y": 12
+      },
+      {
+        "x": 11,
+        "y": 12
+      },
+      {
+        "x": 6,
+        "y": 13
+      },
+      {
+        "x": 7,
+        "y": 13
+      },
+      {
+        "x": 8,
+        "y": 13
+      },
+      {
+        "x": 9,
+        "y": 13
+      },
+      {
+        "x": 10,
+        "y": 13
+      },
+      {
+        "x": 11,
+        "y": 13
+      },
+      {
+        "x": 6,
+        "y": 14
+      },
+      {
+        "x": 7,
+        "y": 14
+      },
+      {
+        "x": 8,
+        "y": 14
+      },
+      {
+        "x": 9,
+        "y": 14
+      },
+      {
+        "x": 10,
+        "y": 14
+      },
+      {
+        "x": 11,
+        "y": 14
+      }
+    ],
+    "actions": [
+      {
+        "kind": "sfx",
+        "sound": "fx_water"
+      },
+      {
+        "kind": "shake",
+        "frames": 18,
+        "power": 2
+      },
+      {
+        "kind": "wait",
+        "frames": 14
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "var",
+          "var": "tg_gate",
+          "op": ">=",
+          "value": 1
+        },
+        "then": [
+          {
+            "kind": "if",
+            "cond": {
+              "kind": "not",
+              "of": {
+                "kind": "flag",
+                "flag": "tg_race_north_seen"
+              }
+            },
+            "then": [
+              {
+                "kind": "setFlag",
+                "flag": "tg_race_north_seen"
+              },
+              {
+                "kind": "say",
+                "lines": [
+                  "The race leans north and goes through the gate with you inside it.",
+                  "There is a moment of being properly under, and no say in it at all."
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "warp",
+            "map": "tideglass_hall_works",
+            "x": 10,
+            "y": 5,
+            "facing": "up"
+          }
+        ],
+        "else": [
+          {
+            "kind": "if",
+            "cond": {
+              "kind": "not",
+              "of": {
+                "kind": "flag",
+                "flag": "tg_race_east_seen"
+              }
+            },
+            "then": [
+              {
+                "kind": "setFlag",
+                "flag": "tg_race_east_seen"
+              },
+              {
+                "kind": "say",
+                "lines": [
+                  "The race runs the length of the tank, meets the shut sluice, and turns hard east.",
+                  "It puts you out on a stone dead end and goes back to slapping at the wall."
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "warp",
+            "map": "tideglass_hall_works",
+            "x": 19,
+            "y": 9,
+            "facing": "right"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tg_drain_west",
+    "trigger": "step",
+    "map": "tideglass_hall_works",
+    "at": [
+      {
+        "x": 1,
+        "y": 17
+      },
+      {
+        "x": 2,
+        "y": 17
+      }
+    ],
+    "actions": [
+      {
+        "kind": "sfx",
+        "sound": "fx_water"
+      },
+      {
+        "kind": "shake",
+        "frames": 12,
+        "power": 1
+      },
+      {
+        "kind": "wait",
+        "frames": 12
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "not",
+          "of": {
+            "kind": "flag",
+            "flag": "tg_drain_seen"
+          }
+        },
+        "then": [
+          {
+            "kind": "setFlag",
+            "flag": "tg_drain_seen"
+          },
+          {
+            "kind": "say",
+            "lines": [
+              "The drain takes you without any drama at all and puts you down by the steps.",
+              "Every staithe has one. They are the only kind thing in the room."
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "warp",
+        "map": "tideglass_hall_works",
+        "x": 2,
+        "y": 20,
+        "facing": "down"
+      }
+    ],
+    "_note": "A DRAIN IS PALE WATER TOO. It was a puddle tile first, and a sand-coloured puddle in a grey stone tank read as a mistake rather than as a hole -- and worse, it broke the one rule this room teaches, which is that pale water is the stuff that takes you. Two tiles wide in the low corner of each staithe, for the same body-alignment reason the lanes are two wide."
+  },
+  {
+    "id": "tg_drain_east",
+    "trigger": "step",
+    "map": "tideglass_hall_works",
+    "at": [
+      {
+        "x": 17,
+        "y": 12
+      },
+      {
+        "x": 18,
+        "y": 12
+      }
+    ],
+    "actions": [
+      {
+        "kind": "sfx",
+        "sound": "fx_water"
+      },
+      {
+        "kind": "shake",
+        "frames": 12,
+        "power": 1
+      },
+      {
+        "kind": "wait",
+        "frames": 12
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "not",
+          "of": {
+            "kind": "flag",
+            "flag": "tg_drain_seen"
+          }
+        },
+        "then": [
+          {
+            "kind": "setFlag",
+            "flag": "tg_drain_seen"
+          },
+          {
+            "kind": "say",
+            "lines": [
+              "The drain takes you without any drama at all and puts you down by the steps.",
+              "Every staithe has one. They are the only kind thing in the room."
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "warp",
+        "map": "tideglass_hall_works",
+        "x": 18,
+        "y": 20,
+        "facing": "down"
+      }
+    ],
+    "_note": "A DRAIN IS PALE WATER TOO. It was a puddle tile first, and a sand-coloured puddle in a grey stone tank read as a mistake rather than as a hole -- and worse, it broke the one rule this room teaches, which is that pale water is the stuff that takes you. Two tiles wide in the low corner of each staithe, for the same body-alignment reason the lanes are two wide."
+  },
+  {
+    "id": "tg_works_guide",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "not",
+          "of": {
+            "kind": "flag",
+            "flag": "tg_works_hint"
+          }
+        },
+        "then": [
+          {
+            "kind": "setFlag",
+            "flag": "tg_works_hint"
+          },
+          {
+            "kind": "say",
+            "who": "TANK HAND",
+            "lines": [
+              "Three rules and then I'll leave you alone.",
+              "Dark water will not have you. Do not stand there arguing with it."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "TANK HAND",
+            "lines": [
+              "Pale water is the race, and the race is already going somewhere.",
+              "Step in and you are going too. There is no swimming against it and no shame in that."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "TANK HAND",
+            "lines": [
+              "Third: wherever it puts you, it meant to.",
+              "So do not stand there feeling stupid. Stand there and look around."
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "var",
+          "var": "tg_gate",
+          "op": ">=",
+          "value": 1
+        },
+        "then": [
+          {
+            "kind": "say",
+            "who": "TANK HAND",
+            "lines": [
+              "Hear that? North sluice is up. Whole tank's pulling for the gate.",
+              "The race goes straight through to the sill now. Same water. Different mind."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "who": "TANK HAND",
+            "lines": [
+              "Race is running east this month, into the dead end. It has to go somewhere.",
+              "It will run east until somebody down there puts the beam over."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tg_winch",
+    "_note": "The gate-hand IS the winch. Her NPC carries both `trainer` and `script`: the first interaction is her battle, and once she is beaten the interact falls through to this script -- which is why trainer tg_hand_c deliberately has no `afterward` line, because an afterward would answer the interact and this would never run.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "var",
+          "var": "tg_gate",
+          "op": ">=",
+          "value": 1
+        },
+        "then": [
+          {
+            "kind": "say",
+            "who": "GATE HAND",
+            "lines": [
+              "Beam's over. It stays over until the tide turns, and the tide does not turn for me.",
+              "Go and get in the water. It is not the same water it was."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "who": "GATE HAND",
+            "lines": [
+              "Right. You want the north sluice up.",
+              "You could not have wanted it before now, because you could not have got here to ask."
+            ]
+          },
+          {
+            "kind": "ask",
+            "lines": [
+              "There is one beam and three sockets. North goes up, east comes down.",
+              "That is not a design fault, that is what a sluice is. Shall I put it over?"
+            ],
+            "yes": [
+              {
+                "kind": "sfx",
+                "sound": "fx_heavy"
+              },
+              {
+                "kind": "shake",
+                "frames": 30,
+                "power": 3
+              },
+              {
+                "kind": "setVar",
+                "var": "tg_gate",
+                "value": 1
+              },
+              {
+                "kind": "say",
+                "lines": [
+                  "The beam goes over with a noise like a door shutting underneath the floor.",
+                  "The east end of the race dies in about four seconds. The tank leans north instead."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "GATE HAND",
+                "lines": [
+                  "That's you shut in here with me, by the way. Only way out of this staithe is the drain,",
+                  "or the race - and the race is going somewhere new. Your choice which."
+                ]
+              }
+            ],
+            "no": [
+              {
+                "kind": "say",
+                "who": "GATE HAND",
+                "lines": [
+                  "Suit yourself. I am here all week and so is the water.",
+                  "Drain's in the corner if you want the steps."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tg_keeper",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "hasCrest",
+          "crest": 3
+        },
+        "then": [
+          {
+            "kind": "say",
+            "who": "MARIT VANE",
+            "lines": [
+              "Still dripping on my sill. Good. The stair is behind me and it only goes up.",
+              "Watch the water in this city on your way out. It has been far too well behaved."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "if",
+            "cond": {
+              "kind": "not",
+              "of": {
+                "kind": "hasCrest",
+                "crest": 2
+              }
+            },
+            "then": [
+              {
+                "kind": "say",
+                "who": "MARIT VANE",
+                "lines": [
+                  "Two Crests before this one. That is not me being grand.",
+                  "That is me not wanting to fish anybody out of my own tank. Go on. Come back wet."
+                ]
+              }
+            ],
+            "else": [
+              {
+                "kind": "say",
+                "who": "MARIT VANE",
+                "lines": [
+                  "You came up the race. Everybody does.",
+                  "There is no other way onto this sill, and that was built on purpose."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "MARIT VANE",
+                "lines": [
+                  "Marit Vane. I keep the gates that keep thirty thousand people dry.",
+                  "The Hall is how I find out, every single day, whether the gates still answer."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "MARIT VANE",
+                "lines": [
+                  "This city likes to talk about beating the sea. Thirty years, and I have never beaten it once.",
+                  "I have been early. That is the whole trick, and there is not a second one."
+                ]
+              },
+              {
+                "kind": "battleTrainer",
+                "trainer": "tg_keeper_vane"
+              },
+              {
+                "kind": "if",
+                "cond": {
+                  "kind": "var",
+                  "var": "last_battle_won",
+                  "op": "==",
+                  "value": 1
+                },
+                "then": [
+                  {
+                    "kind": "say",
+                    "who": "MARIT VANE",
+                    "lines": [
+                      "Hold on."
+                    ]
+                  },
+                  {
+                    "kind": "move",
+                    "who": "tg_keeper",
+                    "steps": [
+                      "left",
+                      "left",
+                      "left"
+                    ]
+                  },
+                  {
+                    "kind": "face",
+                    "who": "tg_keeper",
+                    "dir": "up"
+                  },
+                  {
+                    "kind": "wait",
+                    "frames": 45
+                  },
+                  {
+                    "kind": "say",
+                    "lines": [
+                      "She reads the gauge for a long moment, from about eight inches away.",
+                      "Then she taps the glass once, the way you tap a glass you do not really doubt."
+                    ]
+                  },
+                  {
+                    "kind": "move",
+                    "who": "tg_keeper",
+                    "steps": [
+                      "right",
+                      "right",
+                      "right"
+                    ]
+                  },
+                  {
+                    "kind": "face",
+                    "who": "tg_keeper",
+                    "dir": "down"
+                  },
+                  {
+                    "kind": "say",
+                    "who": "MARIT VANE",
+                    "lines": [
+                      "No. Needle is where I left it. So that was me and not the tank.",
+                      "Thirty years and it has been the tank twice. I like to know which."
+                    ]
+                  },
+                  {
+                    "kind": "giveCrest",
+                    "crest": 3,
+                    "name": "Tide Crest"
+                  },
+                  {
+                    "kind": "sfx",
+                    "sound": "badge"
+                  },
+                  {
+                    "kind": "say",
+                    "lines": [
+                      "You received the TIDE CREST.",
+                      "Three of eight."
+                    ]
+                  },
+                  {
+                    "kind": "giveArt",
+                    "art": "wade"
+                  },
+                  {
+                    "kind": "say",
+                    "lines": [
+                      "You learned the field art WADE.",
+                      "Shallow water out in the world can be crossed now."
+                    ]
+                  },
+                  {
+                    "kind": "say",
+                    "who": "MARIT VANE",
+                    "lines": [
+                      "Everything you did downstairs, you did by choosing which water to get into.",
+                      "You never once pushed any of it. You cannot. Nobody can."
+                    ]
+                  },
+                  {
+                    "kind": "say",
+                    "who": "MARIT VANE",
+                    "lines": [
+                      "That is my job and it is going to be a good deal of yours.",
+                      "You do not move water. You decide where you are standing when it arrives."
+                    ]
+                  },
+                  {
+                    "kind": "giveItem",
+                    "item": "full_restore",
+                    "count": 1
+                  },
+                  {
+                    "kind": "say",
+                    "lines": [
+                      "Marit handed over a Full Restore."
+                    ]
+                  },
+                  {
+                    "kind": "wait",
+                    "frames": 20
+                  },
+                  {
+                    "kind": "say",
+                    "who": "MARIT VANE",
+                    "lines": [
+                      "One more thing, {name}, and I would rather you heard it from a sour old woman first.",
+                      "There is a man in this city this week telling us he can stop storms."
+                    ]
+                  },
+                  {
+                    "kind": "say",
+                    "who": "MARIT VANE",
+                    "lines": [
+                      "He is polite, he is clever, and his numbers are better than mine. I have checked.",
+                      "I would very much like him to be right."
+                    ]
+                  },
+                  {
+                    "kind": "say",
+                    "who": "MARIT VANE",
+                    "lines": [
+                      "So go and listen to him. Properly, not the way you listen to somebody you have decided about.",
+                      "Then ask him what he intends to do the first time the sea says no."
+                    ]
+                  },
+                  {
+                    "kind": "setFlag",
+                    "flag": "crest_3_taken"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

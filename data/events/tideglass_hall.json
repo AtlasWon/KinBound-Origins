@@ -1,0 +1,130 @@
+[
+  {
+    "id": "tg_hall_clerk",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "hasCrest", "crest": 3 },
+        "then": [
+          {
+            "kind": "say",
+            "who": "HALL CLERK",
+            "lines": [
+              "Signed and entered. WENT DOWN, and then the other column, which I have ruled for eleven years.",
+              "You are the fourth this year to make me use a second pen."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "if",
+            "cond": { "kind": "not", "of": { "kind": "hasCrest", "crest": 2 } },
+            "then": [
+              {
+                "kind": "say",
+                "who": "HALL CLERK",
+                "lines": [
+                  "Two Crests before the water. Briarbell's hedge, then Quill's hole under Stonewake.",
+                  "That is not us being grand. The tank does not care how brave anybody is."
+                ]
+              }
+            ],
+            "else": [
+              {
+                "kind": "say",
+                "who": "HALL CLERK",
+                "lines": [
+                  "Tide Hall. We keep the gates that keep this city dry.",
+                  "The Hall is how we find out every day whether the gates still answer."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "HALL CLERK",
+                "lines": [
+                  "Keeper Vane is down on the sill, and you do not walk to her.",
+                  "Nobody walks anywhere down there. Stair's behind me."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tg_hall_gaugeman",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "HALL GAUGEMAN",
+        "lines": [
+          "Nine days. Same reading, morning and night, nine days running.",
+          "In a harbour. On a coast. With a moon in the sky like everybody else's."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "HALL GAUGEMAN",
+        "lines": [
+          "I wrote to the Foundation about it. Twice.",
+          "They sent me a very polite chart with my own numbers on it and a different conclusion."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "HALL GAUGEMAN",
+        "lines": [
+          "Go and see the old boy at the gauge house on the harbour, he's got two hundred years of drums.",
+          "He'll show you the same flat line and he'll be politer about it than I am."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tg_hall_soaked",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "SOAKED CHALLENGER",
+        "lines": [
+          "I got carried into the east staithe, and it just brings you back to itself, over and over.",
+          "I sat down on the stone and had a really good cry about it."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "SOAKED CHALLENGER",
+        "lines": [
+          "Then the woman down there moved something, and the whole race went a different way.",
+          "Same water. Same lane. Different direction. I'm going back tomorrow."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tg_hall_stairhand",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "STAIR HAND",
+        "lines": [
+          "Down you go. And once you're down, stop trying to walk places.",
+          "That is the only thing anybody has ever needed telling in this Hall."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "STAIR HAND",
+        "lines": [
+          "If you want out of anywhere down there, find the drain. Every staithe has one.",
+          "They all come out at the bottom of these steps. That is not luck, it is drainage."
+        ]
+      }
+    ]
+  }
+]

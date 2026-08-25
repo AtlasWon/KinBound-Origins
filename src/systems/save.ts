@@ -16,7 +16,7 @@ const PREFIX = 'kinbound.save.';
 const LEGACY_PREFIX = 'tideward.save.';
 const AUTOSAVE_SLOT = 0;
 export const MANUAL_SLOTS = [1, 2, 3];
-export const SAVE_VERSION = 4;
+export const SAVE_VERSION = 5;
 
 export interface SaveFile {
   version: number;
@@ -328,11 +328,85 @@ function toV4(file: SaveFile): SaveFile {
   return file;
 }
 
+/* --------------------------------------------------------- migration v4→v5 */
+
+/**
+ * Brackwater became Tideglass.
+ *
+ * The largest of these so far, and the one most likely to have a live player
+ * standing in it: Brackwater was a tidal village of a few hundred with a Kin
+ * Hall on the end of a pier, and Tideglass is the harbour city of thirty-one
+ * thousand that Act 2 is set in. The old maps are gone from disk, so a version
+ * 4 save that names one is the black screen the whole migration chain exists to
+ * prevent -- and this time so is the *position*, because Brackwater was 30x22
+ * and a player standing at 23,11 in it is standing inside a tenement in
+ * Tideglass.
+ *
+ * So this table does what none of the earlier ones had to: after renaming, it
+ * moves anyone who was in the old town to the north gate, and anyone who
+ * respawned in it to the clinic door. Ordered, and specific before general --
+ * `brackwater_clinic_up` has to be read before `brackwater_clinic`, and both
+ * before the bare `brackwater`.
+ */
+const V5_RENAMES: [RegExp, string][] = [
+  [/^brackwater_clinic_up$/, 'tideglass_clinic_up'],
+  [/^brackwater_clinic$/, 'tideglass_clinic'],
+  [/^brackwater_hall$/, 'tideglass_hall'],
+  [/^brackwater_house$/, 'tideglass_house_a'],
+  [/^brackwater_provisioner$/, 'tideglass_provisioner'],
+  [/^brackwater$/, 'tideglass'],
+  // The village's own prefix. `item_bw_` first, or `bw_` eats the middle of it.
+  [/^item_bw_/, 'item_tg_'],
+  [/^bw_/, 'tg_'],
+  // The old pier Hall numbered itself second; the Tide Hall is the third.
+  [/^hall2_/, 'tg_hall_'],
+];
+
+function renameV5(id: string): string {
+  for (const [pat, rep] of V5_RENAMES) {
+    if (pat.test(id)) return id.replace(pat, rep);
+  }
+  return id;
+}
+
+/** Where a v4 save gets put down, now that the town under it is ten times bigger. */
+const V5_LANDINGS: Record<string, [number, number]> = {
+  tideglass: [14, 2],            // just inside the north gate, on Gate Avenue
+  tideglass_clinic: [6, 8],      // in front of the clinic door
+  tideglass_clinic_up: [6, 6],
+  tideglass_provisioner: [6, 8],
+  tideglass_house_a: [6, 7],
+  tideglass_hall: [9, 12],
+};
+
+function toV5(file: SaveFile): SaveFile {
+  sweepIds(file, renameV5, renameV5);
+
+  const s = file.state as Record<string, any>;
+  const land = (map: string, xKey: string, yKey: string) => {
+    const spot = V5_LANDINGS[map];
+    if (!spot) return;
+    s[xKey] = spot[0];
+    s[yKey] = spot[1];
+  };
+  if (typeof s.currentMap === 'string') land(s.currentMap, 'currentX', 'currentY');
+  if (typeof s.respawnMap === 'string') land(s.respawnMap, 'respawnX', 'respawnY');
+
+  const h = file.header as unknown as Record<string, any>;
+  if (h && typeof h.mapName === 'string') {
+    h.mapName = h.mapName.replace(/\bBrackwater\b/g, 'Tideglass');
+  }
+
+  file.version = 5;
+  return file;
+}
+
 /** Forward-migrations for older save versions, applied in order. */
 function migrate(file: SaveFile): SaveFile {
   if (file.version < 2) toV2(file);
   if (file.version < 3) toV3(file);
   if (file.version < 4) toV4(file);
+  if (file.version < 5) toV5(file);
   return file;
 }
 

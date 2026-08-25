@@ -66,7 +66,14 @@ export type TarinWhen =
   | { visited: string }
   /** A Bond Crest the player holds. */
   | { crest: number }
-  | { all: TarinWhen[] };
+  | { all: TarinWhen[] }
+  /**
+   * Any one of these. Added for Stage 2, where a settlement is more than one
+   * map: a player can reach Tideglass and go straight down the Hall steps, and
+   * a beat keyed to the street alone would not have opened. It is also the
+   * cheap way to survive a map id changing under a beat -- list both.
+   */
+  | { any: TarinWhen[] };
 
 export interface TarinBeat {
   /** Stable id. Publishes as the flag `tarin_at_<id>`; never rename one. */
@@ -141,6 +148,53 @@ export const TARIN_LEDGER: TarinBeat[] = [
     where: 'Stonewake',
     doing: 'Took the second Crest on the third attempt. Furious that it took three.',
   },
+
+  /*
+   * Stage 2. Act 2, the coast.
+   *
+   * He is EVEN with the player for the whole act and that is deliberate. Act 1
+   * alternated ahead and behind to establish that he is running his own race;
+   * doing it again here would be the same joke twice. What changes in Act 2 is
+   * not the score, it is him: he arrives on the ridge counting Foundation
+   * drays for fun, and he leaves Tideglass having worked out that the thing he
+   * has been poking at since Stonewake puts people in the road at night. The
+   * Crest column staying flat is what makes that visible.
+   *
+   * Two beats open on a map rather than a flag, so he turns up whether or not
+   * the player did the story in the order it was written, and each lists the
+   * settlement AND the part of it a player can arrive in first -- see
+   * TarinWhen's `any`. Somebody who walks off the ridge and straight down the
+   * Hall steps has still reached Tideglass, and the world should be talking
+   * about him by the time they come back up.
+   */
+  {
+    id: 'ridge',
+    opens: { any: [{ visited: 'route_3' }, { visited: 'route_3_whistle' }] },
+    crests: 2,
+    where: 'Eastwind Ridge',
+    doing: 'Sat on the milestone counting Foundation drays. Has got to fourteen.',
+  },
+  {
+    id: 'tideglass',
+    opens: { any: [{ visited: 'tideglass' }, { visited: 'tideglass_hall' }] },
+    crests: 2,
+    where: 'Tideglass',
+    doing: 'Went to hear Veyl speak and came out liking him, which is bothering him.',
+  },
+  {
+    id: 'harbour',
+    opens: { flag: 'crest_3_taken' },
+    crests: 3,
+    where: 'Tideglass',
+    doing: 'Took the Channel Crest off Mabry. Went in the deep lane on purpose.',
+  },
+  {
+    id: 'nightafter',
+    opens: { flag: 'lyra_doubt' },
+    crests: 3,
+    where: 'Tideglass',
+    doing: 'Heard what happened on the north road. Has not made a joke since.',
+  },
 ];
 
 /* ------------------------------------------------------------------ derived */
@@ -164,6 +218,7 @@ function opened(when: TarinWhen, p: TarinProbe): boolean {
   if ('flag' in when) return p.hasFlag(when.flag);
   if ('visited' in when) return p.hasVisited(when.visited);
   if ('crest' in when) return p.hasCrest(when.crest);
+  if ('any' in when) return when.any.some((w) => opened(w, p));
   return when.all.every((w) => opened(w, p));
 }
 

@@ -1,0 +1,455 @@
+{
+  "speakers": {
+    "tg_gatewarden": "GATE WARDEN",
+    "tg_washer": "WASHERWOMAN",
+    "tg_kid_a": "CITY CHILD",
+    "tg_tenant": "TENANT",
+    "tg_oldhand": "OLD HAND",
+    "tg_lamplighter": "LAMPLIGHTER",
+    "tg_hall_crier": "HALL CRIER",
+    "tg_challenger": "CHALLENGER",
+    "tg_hall_kid": "CHILD",
+    "tg_clinic_queue": "WOMAN IN THE QUEUE",
+    "tg_glassblower": "GLASSBLOWER",
+    "tg_crier": "STREET CRIER",
+    "tg_merchant": "PARADE MERCHANT",
+    "tg_harbourmaster": "HARBOURMASTER OTT",
+    "tg_netter": "NETTER SAEL",
+    "tg_fishwife": "FISHWIFE",
+    "tg_child": "WICK",
+    "tg_porter": "PORTER",
+    "tg_dockhand": "DOCK HAND",
+    "tg_shipwright": "SHIPWRIGHT",
+    "tg_carter": "CARTER",
+    "tg_institute_hand": "INSTITUTE HAND",
+    "tg_gaugeman": "GAUGE HAND",
+    "tg_surveyor": "FOUNDATION SURVEYOR",
+    "tg_meridian_greeter": "FOUNDATION GREETER",
+    "tg_lyra": "LYRA",
+    "tg_lampkeeper": "LAMP KEEPER",
+    "tg_watchman": "SIGNAL WATCH",
+    "tg_listener_a": "WOMAN ON THE WHARF",
+    "tg_listener_b": "SAILOR",
+    "tg_listener_c": "DOCK HAND"
+  },
+  "entries": {
+    "tg_gatewarden": [
+      {
+        "ifFlags": [
+          "crest_3_taken"
+        ],
+        "lines": [
+          "Word came up from the works. You went in the deep lane, then.",
+          "Half the city did not think Vane would even let you try.",
+          "The other half has never met Vane."
+        ]
+      },
+      {
+        "lines": [
+          "First time? You will get lost. Everybody gets lost. It is not a grid, it is a habit.",
+          "Straight on for the Tide Hall. Downhill for the water. The canal splits everything else.",
+          "If you can smell fish you have gone west. If you can hear hammers you have gone east."
+        ]
+      }
+    ],
+    "tg_washer": [
+      "Four hundred rooms on this row and I do the sheets for a hundred and twelve of them.",
+      "None of them were let to travellers this spring. All of them were let.",
+      "Whoever they are, they change their own beds and they do not want me in the room."
+    ],
+    "tg_kid_a": [
+      "There is a light at the end of the west mole and I am not allowed to walk to it.",
+      "So I have counted it instead. Nine hundred and six paces, from the map.",
+      "I am going to walk it the day I am twelve and nobody can stop me."
+    ],
+    "tg_tenant": [
+      "Rent went up in the spring and half the stair took Foundation work to cover it.",
+      "Nobody is angry. That is the strange part. Everyone is grateful.",
+      "It is hard to be suspicious of the people who pay for your dinner."
+    ],
+    "tg_oldhand": [
+      "I have lived in this city seventy-one years and it has never had this many strangers in it.",
+      "Not a bad kind. A busy kind. Everyone with somewhere to be and a case in their hand.",
+      "Busy is what a city looks like just before something happens to it."
+    ],
+    "tg_lamplighter": [
+      "Three hundred and forty lamps, from the north wall to the light on the mole.",
+      "I light them in an hour and ten. It was an hour and forty before the new oil.",
+      "Foundation gave us the oil. Free. They gave us everything, and it all works."
+    ],
+    "tg_hall_crier": [
+      {
+        "ifFlags": [
+          "tarin_at_nightafter"
+        ],
+        "lines": [
+          "Word came down off the north road this morning. The Hall is not saying anything.",
+          "We have doubled the lamps on the sea gate, mind. Nobody asked us to."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_harbour"
+        ],
+        "lines": [
+          "Three Crests, and he took the deep lane to get the third.",
+          "Mabry has not decided whether she is furious. She keeps saying \"the deep lane\" to herself."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_tideglass"
+        ],
+        "lines": [
+          "The loud one was in the gallery for the speech. Front row. Did not heckle once.",
+          "I had money on him heckling."
+        ]
+      },
+      {
+        "ifFlags": [
+          "crest_3_taken"
+        ],
+        "lines": [
+          "The Tide Crest. In the works, in the water, off Marit Vane herself.",
+          "I have cried this square for six years and I have said that sentence nine times.",
+          "Go and get dry. Nobody wants a soaked hero dripping on the Basin."
+        ]
+      },
+      {
+        "lines": [
+          "THE TIDE HALL IS OPEN. KEEPER MARIT VANE SITS TODAY.",
+          "Challengers go DOWN, into the works. It is water down there and it is cold.",
+          "And do not swim in the Basin. It is a monument. It is not a bath."
+        ]
+      }
+    ],
+    "tg_challenger": [
+      "Fourth attempt. She has put me in the water four times and I have thanked her four times.",
+      "That is not sarcasm. She stops the moment it stops being a fight.",
+      "You will lose to Vane and you will not be frightened while you do it."
+    ],
+    "tg_hall_kid": [
+      "Mum says the Basin is the sea in a box so the Hall can look at it.",
+      "I say it is a puddle they charged everyone for.",
+      "We have agreed not to talk about it any more."
+    ],
+    "tg_clinic_queue": [
+      {
+        "ifFlags": [
+          "tarin_at_nightafter"
+        ],
+        "lines": [
+          "The loud one came in and asked whether we treat people. Not kin. People.",
+          "I said yes. He said good, and went out again. I did not care for that at all."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_harbour"
+        ],
+        "lines": [
+          "Three Crests in him now and he still turns up soaked to the collar.",
+          "I have started keeping a towel back with his name on it."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_tideglass"
+        ],
+        "lines": [
+          "He sat in my waiting room for an hour after his kin were done. Just sat.",
+          "Then thanked me twice and left."
+        ]
+      },
+      {
+        "lines": [
+          "Not for me. For my brother. He works the east mole and something went over his foot."
+        ]
+      },
+      {
+        "lines": [
+          "Third one this month off that berth. They will not say what they are moving."
+        ]
+      },
+      {
+        "lines": [
+          "Everyone is very sorry and nobody will say what they are moving."
+        ]
+      }
+    ],
+    "tg_glassblower": [
+      "Tideglass. Not for the harbour, whatever the harbour board tell you. For us.",
+      "Sand off the bar and ash off the kelp and a furnace that has not gone out in ninety years.",
+      "Come in and watch. Everybody watches. It is why we put the window in."
+    ],
+    "tg_crier": [
+      {
+        "ifFlags": [
+          "tarin_at_nightafter"
+        ],
+        "lines": [
+          "Everyone on this wharf has heard about the north road by now.",
+          "Your friend has not made one joke all morning. That is how I know it was bad."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_harbour"
+        ],
+        "lines": [
+          "Your friend took the Channel Crest off Mabry, and he went down the deep lane to do it.",
+          "Nobody goes down the deep lane on purpose. He came up laughing."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_tideglass"
+        ],
+        "lines": [
+          "That loud friend of yours went to hear Dr. Veyl on the wharf and came away very quiet.",
+          "Said the man seemed decent and it was bothering him. Strange thing to complain about."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_ridge"
+        ],
+        "lines": [
+          "There's a lad been sat on the milestone since dawn with a slate, counting carts.",
+          "I asked him why. He said somebody had to, and offered me his tea."
+        ]
+      },
+      {
+        "ifFlags": [
+          "lyra_doubt"
+        ],
+        "lines": [
+          "TWO MEN TAKEN ON THE NORTH ROAD. HARBOUR WATCH ASK FOR WITNESSES.",
+          "That is all I have been given and I have been asked to leave it there.",
+          "I have cried this street eleven years. I have never been asked to leave it there."
+        ]
+      },
+      {
+        "ifFlags": [
+          "cassian_public_done"
+        ],
+        "lines": [
+          "DR. VEYL SPEAKS ON THE WHARF - THAT HAS BEEN AND GONE, YOU WERE THERE.",
+          "Everyone came away with the same face on. I have seen that face at weddings.",
+          "TIDE HALL OPEN. FISH AUCTION AT FOUR. NOBODY BUY THE SMALL CRAB."
+        ]
+      },
+      {
+        "lines": [
+          "DR. CASSIAN VEYL SPEAKS ON THE WHARF THIS AFTERNOON. ALL WELCOME.",
+          "STORM RESEARCH AND COASTAL SAFETY. FREE. NO COLLECTION.",
+          "That last part is why the whole city is going."
+        ]
+      }
+    ],
+    "tg_merchant": [
+      {
+        "ifFlags": [
+          "tarin_at_nightafter"
+        ],
+        "lines": [
+          "He bought every Dusk Vessel on the shelf and asked what else works after dark.",
+          "Sixteen years old, asking me that. In my shop."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_harbour"
+        ],
+        "lines": [
+          "Boy with three Crests came in dripping on my floor and bought rope.",
+          "Rope. In a Kin shop."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_tideglass"
+        ],
+        "lines": [
+          "The green-jacket lad bought six storm cards and would not take them for nothing.",
+          "Said if they were free then somebody else was paying."
+        ]
+      },
+      {
+        "lines": [
+          "Best spring the Parade has had in twenty years, and not one copper of it is fish."
+        ]
+      },
+      {
+        "lines": [
+          "It is wages. Foundation wages, spent in my shop, on a Tuesday."
+        ]
+      },
+      {
+        "lines": [
+          "I would be a fool to ask where the money comes from and I have been a fool before."
+        ]
+      }
+    ],
+    "tg_harbourmaster": [
+      {
+        "ifFlags": [
+          "crest_3_taken"
+        ],
+        "lines": [
+          "Vane gave you the Crest. Then I will tell you what I told her, and she went quiet too.",
+          "Berths eleven to twenty took soundings off my harbour for six weeks. Always after dark.",
+          "A survey is a survey. But an honest one does not need the dark."
+        ]
+      },
+      {
+        "lines": [
+          "Tideglass. Four hundred boats, and a hundred and nine of them working.",
+          "Not for want of crew. For want of a channel worth putting a boat down.",
+          "Vane is in the works. She has been in the works since Tuesday."
+        ]
+      }
+    ],
+    "tg_netter": [
+      "The flats are heaving. Everything that lives deep has come up onto the mud.",
+      "My mother would have called that a gift year. It is not. It is a run.",
+      "Things run from something. Nobody down here finishes that sentence."
+    ],
+    "tg_fishwife": [
+      "Ninety slabs under that roof and eleven of them working.",
+      "I have stood at mine since I was nine and I will stand at it empty.",
+      "Somebody has to be here when it comes back. That is a job too."
+    ],
+    "tg_child": [
+      "Dad says the sea is holding its breath.",
+      "So I asked what happens when it lets go. He did not answer.",
+      "So I asked louder. He still did not answer."
+    ],
+    "tg_porter": [
+      "Fish out of the market, crates onto the mole, and it is the same shoulder either way.",
+      "Crates pay four times what fish pays now. Four.",
+      "I am not complaining. I am telling you a number, because the number is the strange part."
+    ],
+    "tg_dockhand": [
+      "Berths eleven to twenty are one charter and they run their own hands.",
+      "We are not allowed past the rope. In my own yard, that I have worked eleven years.",
+      "They are polite about it. Everyone is very polite about all of this."
+    ],
+    "tg_shipwright": [
+      "Eleven boats built this year and not one of them can carry a fish.",
+      "Shallow draught, heavy fittings, big deck winch. That is a boat for lowering things.",
+      "Whatever they are lowering, they have been lowering it since the frost."
+    ],
+    "tg_carter": [
+      {
+        "ifFlags": [
+          "cassian_public_done"
+        ],
+        "lines": [
+          "Heard him, did you. Everybody heard him. He is very hard to argue with.",
+          "I have carried his gear down the ridge road twenty-two times this month.",
+          "I still could not tell you what any of it does, and I have started wanting to know."
+        ]
+      },
+      {
+        "lines": [
+          "Down the ridge road, four a day, and every one of them under a tarpaulin.",
+          "Off the dray, onto the mole, onto the water, gone before dark.",
+          "Twenty-two loads and not one of them stayed in Tideglass. Think about that."
+        ]
+      }
+    ],
+    "tg_institute_hand": [
+      "The Institute measures and the Foundation pays for the instruments. That is the arrangement.",
+      "It has been the arrangement for eleven years and it has been a good one.",
+      "This spring is the first time anybody upstairs has asked us to hold a result back."
+    ],
+    "tg_gaugeman": [
+      "Come and look at the drum. Two hundred years of the same handsome wave.",
+      "Then look at the last four. Flat. Not low. Flat.",
+      "The sea does not go flat. The sea is the one thing that is never flat."
+    ],
+    "tg_surveyor": [
+      {
+        "ifFlags": [
+          "met_lyra"
+        ],
+        "lines": [
+          "You have met the Director's daughter, I hear. Then I do not have to perform.",
+          "Here is the part we leave out because it does not persuade anybody.",
+          "We do not know what happens to everything that migrates once the current stops.",
+          "We have models. They disagree with each other. Loudly."
+        ]
+      },
+      {
+        "lines": [
+          "Depth soundings. Standard work. Very dull.",
+          "No, I cannot give you the numbers. No, that is not sinister, it is a form.",
+          "...I would like it to be dull. I would like that a great deal."
+        ]
+      }
+    ],
+    "tg_meridian_greeter": [
+      {
+        "ifFlags": [
+          "lyra_doubt"
+        ],
+        "lines": [
+          "You are welcome inside. You are always welcome inside. Please believe that.",
+          "I heard what happened on the north road and I have not slept since.",
+          "Nobody in this building would do that. I need that to be true, so I am saying it."
+        ]
+      },
+      {
+        "lines": [
+          "The Coastal Station is open to anyone. Gallery, gauges, the storm glass wall.",
+          "We put out the warning that brought nine crews home in the spring.",
+          "You will hear things about us. Come in first, then hear them."
+        ]
+      }
+    ],
+    "tg_lyra": [
+      {
+        "ifFlags": [
+          "crest_3_taken"
+        ],
+        "lines": [
+          "The Tide Crest. Good. Keep going, and keep going away from here.",
+          "I have asked four questions this week and had four true answers.",
+          "That is what frightens me. Nobody is lying to me. They simply do not think it is wrong."
+        ]
+      },
+      {
+        "lines": [
+          "I have not gone home. I have written the letter four times and not sent it.",
+          "They were Foundation. Not hired, not strangers. Ours.",
+          "I am going to find out who sent them, and then I am going to be very difficult about it."
+        ]
+      }
+    ],
+    "tg_lampkeeper": [
+      "Nine hundred and six paces out and the same back, every night of my life.",
+      "The light does not care whether anyone is watching. That is the good of it.",
+      "Since spring there have been hulls past the head running dark. Write that down somewhere."
+    ],
+    "tg_watchman": [
+      "Height of water on the hour, all day, all night, and I signal the pilots.",
+      "Ninety-six hours of the same number on my slate. That is not a tide.",
+      "I sent word to the Institute and to the Foundation. The Foundation came first."
+    ],
+    "tg_listener_a": [
+      "I lost a brother off the bar eleven years ago and nobody offered me anything but sorry.",
+      "That man is offering something else. I am going to stand here and listen to it."
+    ],
+    "tg_listener_b": [
+      "He is not asking for money and he is not asking for a vote.",
+      "In my experience that means he already has whatever he came for.",
+      "...I am still here, though. Look at me. Still here."
+    ],
+    "tg_listener_c": [
+      "Two hundred and six boats. He says that number every time and it is a true number.",
+      "You can check it. People have checked it. That is the trouble with him."
+    ]
+  },
+  "_note": "LYRA: her standing lines said \"I have asked my father four questions this week\", which tells the player in Act 2 whose daughter she is. CANON puts that in Act 4 and the Stage 2 brief forbids it here, so the same lines are kept with the relationship taken out -- the four true answers are the good part and they still land. Her one scripted scene is tg_lyra in data/events/common.json and it runs once, after which these take over. TARIN: the ledger in src/systems/tarin.ts publishes tarin_at_<beat> as a flag, and these variants are how the town talks about him between the times he is on screen. They are copies of the shared voices in data/dialogue/common.json (tarin_word_street, _hall, _clinic, _shop) because nothing on any map points an NPC at those ids yet -- if you would rather have the shared ones, set an NPC script to tarin_word_street and delete the copy here. First match wins, so they sit at the top and the ungated line still ends every list."
+}

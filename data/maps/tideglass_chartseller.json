@@ -1,0 +1,73 @@
+{
+  "id": "tideglass_chartseller",
+  "name": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIUIII",
+    "IkkkkFFkkkkI",
+    "IFKKKFFFFFkI",
+    "IFFFFFFFFFFI",
+    "IkFAAFFFAAkI",
+    "IFFEEFFFFEEI",
+    "IkFFFFFFFFkI",
+    "IFFFFFFFFFPI",
+    "IIIIIIDIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 8,
+      "toMap": "tideglass",
+      "toX": 27,
+      "toY": 27,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tg_chartseller",
+      "sprite": "merchant",
+      "x": 5,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_chartseller"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "Charts of the whole Caeloran coast, and past it.",
+        "Half a shelf is given to places this game will never take you:",
+        "the far islands, the drowned shelf, a strait named for a woman."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 1,
+      "text": [
+        "A folio marked AVERRA - GENERAL. It is enormous.",
+        "Caelora is one corner of one sheet of it, and not the biggest corner."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 4,
+      "text": [
+        "A working chart of the harbour, pinned flat with lead weights.",
+        "The soundings along the east mole have been struck out and",
+        "redone in a fresh hand, twice, in the last two months."
+      ]
+    }
+  ]
+}

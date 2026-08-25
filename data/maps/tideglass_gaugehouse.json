@@ -1,0 +1,64 @@
+{
+  "id": "tideglass_gaugehouse",
+  "name": "The Gauge House",
+  "displayName": "THE GAUGE HOUSE",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIUIII",
+    "I++++FF????I",
+    "IFFFFFFFFFFI",
+    "I$$FFFFFFF$I",
+    "IFFFFFFFFFFI",
+    "IkFFAAFFFFkI",
+    "IFFFEEFFFFPI",
+    "IFFFFFFFFFFI",
+    "IPFFFFFFFFFI",
+    "IIIIIIDIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 9,
+      "toMap": "tideglass",
+      "toX": 58,
+      "toY": 15,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tg_gauge_keeper",
+      "sprite": "villager_m",
+      "x": 3,
+      "y": 4,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_gauge_keeper"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 1,
+      "text": [
+        "The tide gauge itself: a float in a well cut down to the harbour,",
+        "writing a line on a slowly turning drum. It has run since the founding."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "Drums stored back to the founding, one a month, all of them",
+        "the same handsome wave. The last four are almost flat."
+      ]
+    }
+  ]
+}

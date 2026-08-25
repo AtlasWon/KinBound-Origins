@@ -1,7 +1,7 @@
 {
   "id": "route_3",
-  "name": "Route 3",
-  "displayName": "ROUTE 3",
+  "name": "Eastwind Ridge",
+  "displayName": "EASTWIND RIDGE",
   "music": "route_west",
   "battleBackdrop": "highland",
   "indoor": false,
@@ -10,35 +10,43 @@
     "y": 15
   },
   "encounterTable": "route_3",
+  "_design": "Five shelves stacked north up the ridge, each closed by a two-row rock band with exactly one pass through it, and the passes deliberately not above one another -- so the road crosses the whole width of the map to find them: east along the Ash Ramp, west along the Works, east along the Crest. Ledges are the way back down and only work that way. The branches hang off the road rather than lying along it: the Whistle (a cleft in the north wall of the ramp), the Gorse Basin two banks below it, and the Low Fold below that. THE WORKS IS NOT A BRANCH -- the incline at x10 is the only way up off shelf 3, so the road runs straight through the Foundation yard, and the player is waved through it. That is the point of putting it there.",
+  "_plan": "The route where the Foundation stops being a local office and starts being an organisation. Nothing on this map explains itself: a dray with a broken axle and forty numbered crates, a twelve-ton crane in six chained lengths at the foot of an incline, a yard poured across the only pass, a boundary stone with a new brass disc screwed over the old letters, and a track cut this spring wide enough for something the size of a house, running east into the trees and out of the world. All of it going the same way. The two things that are NOT Meridian are the argument: the Concord's wind station on the east spur, three posts and a ledger box nobody has collected since spring, and the drowned drove road in the basin, paved straight and running into a beck that is younger than it is. The ridge has been used before, by people who were not this thorough.",
   "rows": [
-    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
-    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
-    "TT.t.,\"\"\"\"*...t..s~~~s..,.........TT",
-    "TT...*\"\"\"\",.o....s~~~~st...CCCCC..TT",
-    "TT*.....\"......,s~~~~s....CCCCCCt.TT",
-    "TT.-----------..s~~~~s...CCCCCCCC.TT",
-    "TT.-----------...s~~~~s.occccccco.TT",
-    "TT.--t.....o--...s~~~~s..\".......,TT",
-    "TT.--___.___--....s~~~~s,\"\"\"\"o....TT",
-    "TT.--|,,,*,|--....s~~~~s\"\"\"\"....*.TT",
-    "TT.--|,pp,,|--...s~~~~s.,\"\",..,...TT",
-    "TT.--|,,,,,|--..s~~~~~so.\".....tTTTT",
-    "TT!--_,___*_--..!~~~~~s....!...TTTTT",
-    "-----.......-----BBBBB----....------",
-    "-----.......-----BBBBB----!...------",
-    "TT............LLLL~~~s..--t.TT--..TT",
-    "TT.o.......,..!.s~~~~s.,--T..T--..TT",
-    "TT..o..\".....,\"*.s~~~~s.--T.,T--.tTT",
-    "TT...,\"\"\"\",..\"\"\",s~~~~~s--T..T--..TT",
-    "TT..,\"\"\"\"\"\"..,\"\"\"\"s~~~~s--T..T--,.TT",
-    "TT,.\"\"\"\"\"\",.....\".s~~~o.--TTTt--\".TT",
-    "TT.,\"\"\"\"\",,.t....s~~~~s.--------\"*TT",
-    "TT,\"\"\"\"..........s~~~~s.--------*\"TT",
-    "TT\"\"\"\"\".tTTTT,..s~~~~s...LLL.....\"TT",
-    "TT,\"\"\",.TTTTT..*s~~~~s.t..........TT",
-    "TT.\"....TTTTt...s~~~~s....*....,..TT",
-    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
-    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT"
+    "cccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "TT.o.\"\"\".....oo<%%%>=oOo=o..\"\".,.,\"\"\"\"\"\"\"\"\"*....*.TT",
+    "TT.\"\"\"\"\"\"\"...=!MZMZM=oOo==...-----------------------",
+    "TTt..\"\"\"..------------------------------------------",
+    "TT.....,..---------------------...!........\"\"\"\"\"\"\"TT",
+    "TTcccccccc--cccccccccccccccccc..ccccccccccccccccccTT",
+    "TTCCCCCCCC--CCCCCCCCCCCCCCCCCCLLCCCCCCCCCCCCCCCCCCTT",
+    "TT..|KK==K==K=KKK|=..\"\"\"\"\"\"\"..\"\"\"\"\"\"\"\"\",.,....o.o.TT",
+    "TT..-=============----------------------------....TT",
+    "TT..|=Y=pp===Y=p=K|-------------------------.!|_..TT",
+    "TTcccccccccccccccccc..cccccccccccccccccccc--ccccccTT",
+    "TTCCCCCCCCCCCCCCCCCCLLCCCCCCCCCCCDCCCCCCCC--CCCCCCTT",
+    "---------.o.\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"o!-.......---*o.,o.TT",
+    "-----p---...t.\"\"\"\"\".o*\"\"\"\"\"\"\"--------p----p-o...t.TT",
+    "TTo!...----p---------o..*....-p-----------.,o\"\"\".,TT",
+    "TT.t.,,-----------p--...o.o..--...\"\"\"\"\"\"\"..\"\"\"\"\"\"\"TT",
+    "TT.,.\"\"\"\"..OKK.K...------------\"\"\"\"\"\"\"\"\"\"\"\"\".\"\"\".tTT",
+    "TT,.,..\"\"...KK.p..\"-----p-----.,..\"\"\"\"\"\"\"....!...,TT",
+    "TTccccccccccccc..ccccccc--ccccccccc..cccccccccccccTT",
+    "TTCCCCCCCCCCCCCLLCCCCCCC--CCCCCCCCCLLCCCCCCCCCCCCCTT",
+    "TT,.....\"\"\"\"\".,.,.,....t--..s~~s..t..,\"\"\"\"\"\"\",...,TT",
+    "TT....\"\"\"\"\"\"\"\"\"t*.,..t..--,.s~~st...\".!.\"\"\"\"\"\"\"...TT",
+    "TT....,.\"\"\"\"\".*,*,,o....--.BBBBB......\"\"\"\"\"\"\"..*..TT",
+    "TT.*...!t..,,...,.*,.,..--s~~~~~~~s.,.,..,,..,....TT",
+    "TT*,.===,==.====,==.=,==--~~~~~~~~~=,=.===,==.=.t*TT",
+    "TT..,o.t.......\"\"\"\"\"\"\"\"\"--s~~~~s~~s..o..,o........TT",
+    "TTcccccc--cccccccccccccccccccccccccccc..ccccccccccTT",
+    "TTCCCCCC--CCCCCCCCCCCCCCCCCCCCCCCCCCCCLLCCCCCCCCCCTT",
+    "TT...,..--.,.*,.,..O..,....o\"\"\"\"\"\"\"\"\".......,..o,.TT",
+    "TT..*...------p-------------p--------------p------TT",
+    "TT......--------------p------------p--------------TT",
+    "TT,.*...*.\"\"\"\"\"\"\"\"\"........t.....,.,o.....\"\"\".!.\".TT",
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT"
   ],
   "warps": [
     {
@@ -60,30 +68,52 @@
       "style": "edge"
     },
     {
-      "x": 35,
-      "y": 13,
+      "x": 51,
+      "y": 3,
       "toMap": "tanners_rest",
       "toX": 2,
-      "toY": 12,
+      "toY": 15,
       "facing": "right",
       "style": "edge"
     },
     {
-      "x": 35,
-      "y": 14,
+      "x": 51,
+      "y": 4,
       "toMap": "tanners_rest",
       "toX": 2,
-      "toY": 13,
+      "toY": 16,
       "facing": "right",
       "style": "edge"
+    },
+    {
+      "x": 33,
+      "y": 12,
+      "toMap": "route_3_whistle",
+      "toX": 9,
+      "toY": 14,
+      "facing": "up",
+      "style": "cave"
     }
   ],
   "npcs": [
     {
+      "id": "town_tarin",
+      "sprite": "rival",
+      "x": 33,
+      "y": 5,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r3_tarin",
+      "hiddenIfFlag": "tarin_ridge_done",
+      "_note": "On the crest, above the works, where every dray he has counted this week went past him. The scene is a step script on the road beside him -- see data/events/route_3.json -- so he cannot be walked past."
+    },
+    {
       "id": "r3_bram",
       "sprite": "hiker",
-      "x": 8,
-      "y": 4,
+      "x": 10,
+      "y": 14,
       "facing": "down",
       "movement": {
         "kind": "static"
@@ -92,11 +122,22 @@
       "sightRange": 3
     },
     {
+      "id": "r3_carter",
+      "sprite": "villager_m",
+      "x": 16,
+      "y": 17,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r3_carter"
+    },
+    {
       "id": "r3_sill",
       "sprite": "villager_f",
-      "x": 14,
-      "y": 10,
-      "facing": "left",
+      "x": 23,
+      "y": 16,
+      "facing": "down",
       "movement": {
         "kind": "static"
       },
@@ -104,23 +145,47 @@
       "sightRange": 3
     },
     {
-      "id": "r3_holt",
-      "sprite": "villager_m",
-      "x": 23,
-      "y": 17,
+      "id": "r3_porter",
+      "sprite": "porter",
+      "x": 36,
+      "y": 13,
+      "facing": "down",
+      "movement": {
+        "kind": "pace",
+        "axis": "x",
+        "distance": 2
+      },
+      "script": "r3_porter"
+    },
+    {
+      "id": "r3_wenna",
+      "sprite": "meridian",
+      "x": 13,
+      "y": 8,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r3_wenna",
+      "sightRange": 3
+    },
+    {
+      "id": "r3_hand",
+      "sprite": "porter",
+      "x": 8,
+      "y": 10,
       "facing": "right",
       "movement": {
         "kind": "static"
       },
-      "trainer": "r3_holt",
-      "sightRange": 3
+      "script": "r3_hand"
     },
     {
       "id": "r3_ivo",
       "sprite": "concord",
-      "x": 29,
-      "y": 23,
-      "facing": "up",
+      "x": 47,
+      "y": 9,
+      "facing": "left",
       "movement": {
         "kind": "static"
       },
@@ -128,114 +193,253 @@
       "sightRange": 3
     },
     {
-      "id": "r3_drover",
-      "sprite": "villager_m",
-      "x": 6,
-      "y": 13,
-      "facing": "right",
+      "id": "r3_kessel",
+      "sprite": "hiker",
+      "x": 40,
+      "y": 5,
+      "facing": "up",
       "movement": {
-        "kind": "pace",
-        "axis": "y",
-        "distance": 2
+        "kind": "static"
       },
-      "script": "r3_drover"
+      "trainer": "r3_kessel",
+      "sightRange": 3
+    },
+    {
+      "id": "r3_reader",
+      "sprite": "meridian_sci_f",
+      "x": 26,
+      "y": 3,
+      "facing": "down",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "r3_reader"
+    },
+    {
+      "id": "r3_holt",
+      "sprite": "villager_m",
+      "x": 26,
+      "y": 22,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r3_holt",
+      "sightRange": 3
+    },
+    {
+      "id": "r3_shepherd",
+      "sprite": "villager_f",
+      "x": 20,
+      "y": 24,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "r3_shepherd"
     }
   ],
   "objects": [
     {
       "kind": "sign",
-      "x": 2,
-      "y": 12,
+      "x": 3,
+      "y": 15,
       "text": [
-        "ROUTE 3",
-        "Stonewake west. Tanners Rest east.",
-        "Bridge is sound. The stream under it is not where it was last year."
+        "EASTWIND RIDGE. STONEWAKE 4. SALTHOLLOW 11.",
+        "A milestone, and a tally chalked up the side of it in a hand that is not a carter's.",
+        "Fourteen strokes. The last four are from today."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 12,
+      "y": 17,
+      "text": [
+        "A dray with a broken axle, hauled off the road and left.",
+        "The load is crated, stencilled, and roped down as though it will be moved tonight.",
+        "MERIDIAN FOUNDATION - DEEP SURVEY - TIDEGLASS. Crate 9 of 40."
       ]
     },
     {
       "kind": "sign",
-      "x": 16,
-      "y": 12,
+      "x": 32,
+      "y": 13,
       "text": [
-        "The only crossing for a day in either direction.",
-        "Under the boards someone has carved a waterline and a date.",
-        "The water is four hands above it."
+        "THE WHISTLE - keep out in an east wind.",
+        "Under that, older and deeper: THEY DO NOT ALL COME FROM THE WEATHER."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 45,
+      "y": 18,
+      "text": [
+        "The bank drops away here. Down there is grazing and a beck.",
+        "Somebody has scratched: GOOD WATER. BAD CLIMB BACK."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 6,
+      "y": 8,
+      "text": [
+        "Crates, stacked two high and numbered to forty.",
+        "The stencils are all the same and the destinations are all the same.",
+        "Nothing here says what is in them, and nobody in the yard has asked."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 17,
+      "y": 8,
+      "text": [
+        "Six lengths of lattice steel, numbered 1 to 6, chained on their sides.",
+        "A brass plate on the end of each: SHEERLEG CRANE, 12 TON. MERIDIAN FOUNDATION.",
+        "It took eleven of them to get it this far, and this is not where it is going."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 45,
+      "y": 10,
+      "text": [
+        "STILLWATER CONCORD - WIND STATION 7",
+        "A rain gauge, a vane and a locked ledger box, all still working.",
+        "The collection slip on the box is dated for the first of the spring."
       ]
     },
     {
       "kind": "sign",
       "x": 14,
-      "y": 16,
+      "y": 3,
       "text": [
-        "DROVE ROAD - stock have right of way",
-        "Below the ledge is pasture. Below that is more pasture."
+        "THE EASTWIND BEACON. Lit at dusk, every night, for two hundred years.",
+        "Ships off this coast steer by it. Salthollow keeps it, and always has.",
+        "The basket is full of good dry wood. Somebody was up here this morning."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 22,
+      "y": 3,
+      "text": [
+        "From the top of the beacon stack the whole east falls away.",
+        "Hills, then a fold of low ground, then a long grey line that is not hills.",
+        "You can smell it from here before you can be sure of it."
       ]
     },
     {
       "kind": "sign",
-      "x": 26,
-      "y": 14,
+      "x": 34,
+      "y": 5,
       "text": [
-        "A gatepost with no gate, and a stone in the gap where a gate went.",
-        "It did not roll here. There is no slope."
+        "SALTHOLLOW 7. TIDEGLASS 19.",
+        "A second tally, freshly chalked, and this one has got to fourteen too."
       ]
     },
     {
       "kind": "sign",
-      "x": 27,
-      "y": 12,
+      "x": 7,
+      "y": 24,
       "text": [
-        "THE SHOULDER - loose above, loose below.",
-        "Stonewake took its stone out of this hill for two hundred years",
-        "and then stopped, and nobody who stopped will say why."
+        "THE OLD DROVE ROAD. Paved, straight, and going east into the water.",
+        "It comes out on the far bank and keeps going. Nobody paved a road to a beck.",
+        "The beck is younger than the road. That is the only way to read it."
       ]
     },
     {
-      "kind": "pushable",
-      "x": 27,
-      "y": 16
+      "kind": "sign",
+      "x": 38,
+      "y": 22,
+      "text": [
+        "A flood mark cut into the bank, with a year under it.",
+        "The water has not been within four feet of it since the spring.",
+        "Two people have scratched WHY under the year. Different hands."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 19,
+      "y": 29,
+      "text": [
+        "THE ASHGATE STONE. A boundary mark older than the quarry: past this, no cutting.",
+        "A brass disc has been screwed into the face of it this season, over the old letters.",
+        "M.F. SURVEY. 211. It has been put on straight, and carefully, and without asking."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 46,
+      "y": 32,
+      "text": [
+        "A track cut this spring, running east into the trees.",
+        "Two ruts, forty feet apart, and everything between them driven flat.",
+        "Whatever went down it went down it once, and it has not come back."
+      ]
     },
     {
       "kind": "item",
-      "x": 28,
-      "y": 19,
+      "x": 8,
+      "y": 18,
       "item": "strong_potion",
       "quantity": 2,
-      "flag": "item_r3_stone"
+      "flag": "item_r3_ramp"
     },
     {
       "kind": "item",
-      "x": 9,
-      "y": 10,
+      "x": 47,
+      "y": 8,
       "item": "fine_vessel",
       "quantity": 3,
-      "flag": "item_r3_grass"
+      "flag": "item_r3_station"
     },
     {
       "kind": "item",
-      "x": 26,
-      "y": 9,
+      "x": 44,
+      "y": 2,
+      "item": "great_potion",
+      "quantity": 1,
+      "flag": "item_r3_crest"
+    },
+    {
+      "kind": "item",
+      "x": 45,
+      "y": 25,
       "item": "coolsalve",
       "quantity": 2,
-      "flag": "item_r3_stream"
+      "flag": "item_r3_droveroad"
+    },
+    {
+      "kind": "item",
+      "x": 31,
+      "y": 26,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_r3_pool"
+    },
+    {
+      "kind": "item",
+      "x": 12,
+      "y": 32,
+      "item": "escape_line",
+      "quantity": 1,
+      "flag": "item_r3_fold"
     },
     {
       "kind": "hiddenItem",
       "x": 6,
-      "y": 20,
-      "item": "great_potion",
+      "y": 22,
+      "item": "rouse",
       "quantity": 1,
       "flag": "item_r3_hidden"
     },
     {
       "kind": "hiddenItem",
-      "x": 29,
-      "y": 25,
-      "item": "escape_line",
+      "x": 40,
+      "y": 32,
+      "item": "ward_incense",
       "quantity": 1,
       "flag": "item_r3_hidden2"
     }
-  ],
-  "_design": "One stream the full height of the map and one bridge, so the route has a middle. The road reaches it the long way: up the west half, down to cross, down the east half, up to leave -- an S with the bridge at its waist. A fenced pasture is boxed in by the road on all four sides.",
-  "_plan": "The drove road. It runs west to east between two towns that both live off moving stock, and the river is the only thing on it that cannot be walked round -- hence the bridge, and hence the sign that says so. The stockyard ring west of the crossing is a rectangle on purpose: it is a pen. Everything else that could have been one is not."
+  ]
 }

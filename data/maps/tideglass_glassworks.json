@@ -1,0 +1,77 @@
+{
+  "id": "tideglass_glassworks",
+  "name": "The Glasshouse",
+  "displayName": "THE GLASSHOUSE",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIIIUIII",
+    "I++++FF$$$$$FI",
+    "IFFFFFFFFFFFFI",
+    "I@@FFFFFFFF$$I",
+    "IFFFFFFFFFFFFI",
+    "I$$FFFFFFFF@@I",
+    "IFFFFFFFFFFFFI",
+    "IPFFKKKKFFFFPI",
+    "IFFFFFFFFFFFFI",
+    "IkFFFFFFFFFFkI",
+    "IIIIIIIDIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 7,
+      "y": 10,
+      "toMap": "tideglass",
+      "toX": 20,
+      "toY": 32,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tg_glassmaster",
+      "sprite": "merchant",
+      "x": 3,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_glassmaster"
+    },
+    {
+      "id": "tg_glass_prentice",
+      "sprite": "kid",
+      "x": 10,
+      "y": 6,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "tg_glass_prentice"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "Three furnaces, two of them lit. The heat off them has warped",
+        "the floorboards into a shallow bowl over about ninety years."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 3,
+      "text": [
+        "Finished work on a rack: lamp glass, chart weights, float bulbs,",
+        "and one blue-green thing the size of a fist that is not for sale",
+        "and has no label and nobody will explain."
+      ]
+    }
+  ]
+}

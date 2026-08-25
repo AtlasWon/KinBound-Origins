@@ -1,7 +1,7 @@
 {
   "id": "tanners_rest",
-  "name": "Tanners Rest",
-  "displayName": "TANNERS REST",
+  "name": "Salthollow",
+  "displayName": "SALTHOLLOW",
   "music": "town_hearth",
   "battleBackdrop": "highland",
   "indoor": false,
@@ -9,33 +9,82 @@
     "x": 8,
     "y": 13
   },
+  "_identity": "SALTHOLLOW. Pop. ~400, no Kin Hall, and no ambition to have one. Salt wind off Tideglass comes up the coast, hits Eastwind Ridge and drops here; salt air and still air together is what cures a hide, so there has been a tanyard on this shoulder for four hundred years and a village round it for three hundred and eighty. It lives off the tanyard, the change paddock where drovers swap a tired team before the climb, and a provisioner with more stock than a village this size can explain -- because everything on this coast comes past the door.",
+  "_plan": "Two streets and a green. The ridge road comes in west and the coast road leaves south, and they cross on the green rather than at a junction, so the middle of the village is a place rather than a corner. THE EAST ROAD IS SHUT and has been for thirty-one years: that rockfall is the load-bearing fact of the whole act, because it is why forty crates of Foundation equipment and a twelve-ton crane in six pieces have to go over a ridge instead of along a beach. THE LONG TABLE is what the player is meant to remember: one elm table on the green where anybody off the road eats free in exchange for telling the table what they saw, which is how a village that cannot see round the corner buys its warnings. This season every single person sitting at it has seen a dray, and somebody has pinned a printed Foundation haulage notice down the middle of the carving.",
   "rows": [
-    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
-    "TT.,t..,.____________,..t.,.TT",
-    "TT..,.t..|,.*.--.,*,|..,.t.,TT",
-    "TT,..,..,|..,.-po,..|,..,...TT",
-    "TT.,..,.._____--_____.,..,.tTT",
-    "TT.t.,..144443--.,..,.t.,..,TT",
-    "TT,...,.122523--699998.,..,.TT",
-    "TT.a.,..GGhgGG--677078..,.t.TT",
-    "TT,..,..!=====--GGmgGG!,...,TT",
-    "TT.t..,...,...--..a=a.,.t.,.TT",
-    "TT,..t.,..!=========..,..,.tTT",
-    "TT.!...a..Y=~~=====Y.a..,!.,TT",
-    "----------==========------OOTT",
-    "----------==========------OOTT",
-    "TT.,..,...aY======Ya.,.to.,.TT",
-    "TT..,...,...,.--.,...,..to,.TT",
-    "TT.,<%%>..,...--..,(&&).,.t.TT",
-    "TT.!GGgG.,...,--...MdiM.a..,TT",
-    "TT,.a.----p-------p---.a.,..TT",
-    "TT.,..,..t.,.!--..,.t.,..o..TT",
-    "TTTTTTTTTTTTTT--TTTTTTTTTTTTTT"
+    "cccccccccccccccccccccccccccccccccccccccccccc",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "TT.._____________.*,....a..,...,*t.,..*...TT",
+    "TT..|pppp..ppppK|..*...,..,...a..,..ttttt.TT",
+    "TT.!|pppp..KK.KK|*..,...*,....,....tttttttTT",
+    "TT.._____..______..--t.t....,..,....ttttt.TT",
+    "TT.*....,..,......*--..t<%%%>.............TT",
+    "TT...144443.t.,.t.*--...HZdZH........,....TT",
+    "TT..*122523.......Y--Y....699998..<%%>....TT",
+    "TTt..GGhgGG.t...,..--.....677078.!GZZGo.*.TT",
+    "TT,*!===-==---------------GGmgGG..====.*,.TT",
+    "TT.........-Ya============aY=-==!*,.....,.TT",
+    "TT.,..,..,.!==EEEEEEEEEEEE==.Y===.,...ccccTT",
+    "TT..,a..a...==AAAAAAAAAAAA==.=~~=..,..CCCCTT",
+    "TT.*........Y=EEEEEEEEEEEE=Y.===Y..o,.CCCCTT",
+    "------------------------------------OOCCCCTT",
+    "-----------------------------------!OOCCCCTT",
+    "TT,*(&&&)..,.......--....,....,..,*o..CCCCTT",
+    "TT..HZdZH..*...,..t--.....t.,.....,.*.CCCCTT",
+    "TT...,..*..........--........,..*.*.......TT",
+    "TT.........(&&)....--.*..*.(&&)....<%%>...TT",
+    "TT..<%%%%>.MZdM.,*.--......MdiM....MZZM...TT",
+    "TT.!GGGgGG...ttt...--.....===-==....*at..,TT",
+    "TT..===-==..ttttttt--........-,*,...t.t...TT",
+    "TT*,.....*.....t..*------------------.*.*.TT",
+    "TT......._________.--,Y,........<%%>...tt.TT",
+    "TT....,..|.pp.KK.|*--....t.....*HZdH.tttttTT",
+    "TT...,..!|.......|,--.,Yaa,..,,======tttttTT",
+    "TTttt....|.......|.--...aa.,..,.,,.,,tttttTT",
+    "TTtttt...____..___.--.!...a..,,..t,....t..TT",
+    "TTttt.....,...,...Y--Y.*..,..ttttttttt..,.TT",
+    "TTTTTTTTTTTTTTTTTTT--TTTTTTTTTTTTTTTTTTTTTTT"
   ],
   "warps": [
     {
-      "x": 11,
-      "y": 7,
+      "x": 0,
+      "y": 15,
+      "toMap": "route_3",
+      "toX": 50,
+      "toY": 3,
+      "facing": "left",
+      "style": "edge"
+    },
+    {
+      "x": 0,
+      "y": 16,
+      "toMap": "route_3",
+      "toX": 50,
+      "toY": 4,
+      "facing": "left",
+      "style": "edge"
+    },
+    {
+      "x": 19,
+      "y": 31,
+      "toMap": "route_4",
+      "toX": 19,
+      "toY": 1,
+      "facing": "down",
+      "style": "edge"
+    },
+    {
+      "x": 20,
+      "y": 31,
+      "toMap": "route_4",
+      "toX": 20,
+      "toY": 1,
+      "facing": "down",
+      "style": "edge"
+    },
+    {
+      "x": 8,
+      "y": 9,
       "toMap": "tanners_clinic",
       "toX": 6,
       "toY": 8,
@@ -43,8 +92,8 @@
       "style": "door"
     },
     {
-      "x": 19,
-      "y": 8,
+      "x": 29,
+      "y": 10,
       "toMap": "tanners_provisioner",
       "toX": 6,
       "toY": 8,
@@ -52,8 +101,8 @@
       "style": "door"
     },
     {
-      "x": 6,
-      "y": 17,
+      "x": 7,
+      "y": 22,
       "toMap": "tanners_concord",
       "toX": 6,
       "toY": 8,
@@ -61,69 +110,33 @@
       "style": "door"
     },
     {
-      "x": 21,
-      "y": 17,
+      "x": 29,
+      "y": 21,
       "toMap": "tanners_house",
       "toX": 6,
       "toY": 6,
       "facing": "up",
       "style": "door"
-    },
-    {
-      "x": 2,
-      "y": 12,
-      "toMap": "route_3",
-      "toX": 34,
-      "toY": 13,
-      "facing": "left",
-      "style": "edge"
-    },
-    {
-      "x": 2,
-      "y": 13,
-      "toMap": "route_3",
-      "toX": 34,
-      "toY": 14,
-      "facing": "left",
-      "style": "edge"
-    },
-    {
-      "x": 14,
-      "y": 20,
-      "toMap": "route_4",
-      "toX": 14,
-      "toY": 1,
-      "facing": "down",
-      "style": "edge"
-    },
-    {
-      "x": 15,
-      "y": 20,
-      "toMap": "route_4",
-      "toX": 15,
-      "toY": 1,
-      "facing": "down",
-      "style": "edge"
     }
   ],
   "npcs": [
     {
-      "id": "tr_crier",
-      "sprite": "villager_f",
-      "x": 15,
+      "id": "tr_tablekeeper",
+      "sprite": "elder",
+      "x": 14,
       "y": 11,
       "facing": "down",
       "movement": {
         "kind": "lookAround"
       },
-      "script": "tr_crier"
+      "script": "tr_tablekeeper"
     },
     {
       "id": "tr_drover",
       "sprite": "hiker",
-      "x": 12,
-      "y": 3,
-      "facing": "right",
+      "x": 13,
+      "y": 27,
+      "facing": "up",
       "movement": {
         "kind": "pace",
         "axis": "x",
@@ -132,11 +145,33 @@
       "script": "tr_drover"
     },
     {
+      "id": "tr_tanner",
+      "sprite": "villager_m",
+      "x": 10,
+      "y": 3,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tr_tanner"
+    },
+    {
+      "id": "tr_beaconwatch",
+      "sprite": "villager_f",
+      "x": 36,
+      "y": 10,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tr_beaconwatch"
+    },
+    {
       "id": "tr_clerk",
       "sprite": "concord",
       "x": 9,
-      "y": 17,
-      "facing": "left",
+      "y": 23,
+      "facing": "right",
       "movement": {
         "kind": "static"
       },
@@ -145,8 +180,8 @@
     {
       "id": "tr_child",
       "sprite": "kid",
-      "x": 17,
-      "y": 13,
+      "x": 22,
+      "y": 19,
       "facing": "left",
       "movement": {
         "kind": "wander",
@@ -157,94 +192,177 @@
     {
       "id": "tr_sorrell_runner",
       "sprite": "villager_f",
-      "x": 12,
-      "y": 8,
-      "facing": "down",
+      "x": 28,
+      "y": 12,
+      "facing": "left",
       "movement": {
         "kind": "static"
       },
       "script": "tr_runner"
+    },
+    {
+      "id": "tr_porter",
+      "sprite": "porter",
+      "x": 18,
+      "y": 11,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tr_porter"
+    },
+    {
+      "id": "tr_carter_wife",
+      "sprite": "villager_f",
+      "x": 24,
+      "y": 17,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "tr_carter_wife"
+    },
+    {
+      "id": "tr_bellman",
+      "sprite": "villager_m",
+      "x": 22,
+      "y": 26,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tr_bellman"
     }
   ],
   "objects": [
     {
       "kind": "sign",
-      "x": 10,
+      "x": 3,
+      "y": 4,
+      "text": [
+        "SALTHOLLOW TANYARD. Four hundred years, and the wind has never once turned.",
+        "Hides from the drove road, cured in salt air that has come up off Tideglass.",
+        "Nowhere else on this coast is both salt enough and still enough. Hence a village."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 4,
       "y": 10,
       "text": [
-        "TANNERS REST",
-        "Four roads meet here and none of them agree about anything."
+        "KIN CLINIC - open all night, every night, because the road is.",
+        "Beds for drovers on one side and the other kind of bed on the other."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 32,
+      "y": 11,
+      "text": [
+        "PROVISIONER - the largest stock between Stonewake and the water,",
+        "and every bit of it has come over the ridge on somebody's back."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 33,
+      "y": 9,
+      "text": [
+        "THE BEACON WATCH. Wood store, ladder, oil, and the rota on the door.",
+        "Salthollow has kept the light on Eastwind Ridge since before there was a Salthollow.",
+        "Nine names on the rota. Every one of them has done it in the dark, alone, in a gale."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 11,
+      "y": 12,
+      "text": [
+        "THE LONG TABLE. Sit down. Eat. Nobody will ask you for anything but the news.",
+        "That is the arrangement, and it is four hundred years old, and it is not a charity:",
+        "a village on a road that cannot see round the corner buys its warnings a plate at a time."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 20,
+      "y": 12,
+      "text": [
+        "The table itself, one piece of elm, and every inch of it carved with names.",
+        "Somebody has pinned a printed notice down the middle of it, over the carving.",
+        "FOUNDATION HAULAGE - RIDGE ROAD - PRIORITY OF PASSAGE. It is signed. It is polite."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 35,
+      "y": 16,
+      "text": [
+        "EAST ROAD CLOSED. The stone came down in one night thirty-one years ago.",
+        "The flat road. The shore road. The one that goes to Tideglass without a hill on it.",
+        "Everything that moves on this coast has gone over the ridge ever since."
       ]
     },
     {
       "kind": "sign",
       "x": 3,
-      "y": 11,
+      "y": 22,
       "text": [
-        "Route 3 west, and uphill the whole way to Stonewake.",
-        "Water your stock here. There is none on the shelf roads."
-      ]
-    },
-    {
-      "kind": "sign",
-      "x": 25,
-      "y": 11,
-      "text": [
-        "EAST ROAD CLOSED",
-        "The stone came down in one night and nobody has moved it since."
-      ]
-    },
-    {
-      "kind": "sign",
-      "x": 13,
-      "y": 19,
-      "text": [
-        "Route 4 south to the coast.",
-        "Brackwater by dusk if you leave at dawn and do not stop."
+        "STILLWATER CONCORD - COAST SURVEY OFFICE",
+        "Open. Understaffed. A hand-written card in the window: WE STILL TAKE REPORTS."
       ]
     },
     {
       "kind": "sign",
       "x": 8,
-      "y": 8,
+      "y": 27,
       "text": [
-        "KIN CLINIC",
-        "Beds for drovers, and the other kind of bed for what they drive."
+        "THE CHANGE PADDOCK. Rest your stock. Water is free and the hay is not.",
+        "A team that goes up the ridge tired does not come down it at all."
       ]
     },
     {
       "kind": "sign",
       "x": 22,
-      "y": 8,
+      "y": 29,
       "text": [
-        "PROVISIONER - largest stock this side of Aureline."
+        "ROUTE 4 SOUTH - TIDEGLASS. Down off the shoulder, and then it is flat and it is sand.",
+        "You will see the water a long time before you get to it. Everyone says that. It is true."
       ]
     },
     {
-      "kind": "sign",
-      "x": 3,
-      "y": 17,
+      "kind": "script",
+      "x": 22,
+      "y": 25,
       "text": [
-        "STILLWATER CONCORD - REGIONAL SURVEY OFFICE"
+        "The road bell, on its post, with a rope worn shiny.",
+        "Rung for a fire, for a wreck, and for the beacon needing wood.",
+        "It has been rung four times this year and three of them were for the beacon."
       ]
     },
     {
       "kind": "item",
-      "x": 10,
-      "y": 2,
+      "x": 13,
+      "y": 4,
       "item": "rouse",
       "quantity": 1,
       "flag": "item_tr_rouse"
     },
     {
       "kind": "hiddenItem",
-      "x": 4,
-      "y": 19,
+      "x": 26,
+      "y": 28,
       "item": "deep_vessel",
       "quantity": 1,
       "flag": "item_tr_hidden"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 11,
+      "y": 28,
+      "item": "full_heal",
+      "quantity": 1,
+      "flag": "item_tr_hidden2"
     }
-  ],
-  "_legend": "Kin Clinic and Provisioner face each other across the drovers lane, one set a row lower than the other so the street is not a mirror. The Concord survey office and a house sit on the back lane south. The east road is closed by fallen stone.",
-  "_plan": "Four roads meet here and the sign says so: Route 3 west, Route 4 south, the drovers lane north to the holding pens, and the east road, shut by a rockfall since before anyone here was born. They meet on the paved yard, which is why the town exists -- a halt where stock is watered at the trough before the last push to the coast. Every lane ends at a door, a gate or a junction; the only ones that reach the map edge are the two that are actually exits."
+  ]
 }

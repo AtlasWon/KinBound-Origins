@@ -1,12 +1,87 @@
 {
+  "_note": "EASTWIND RIDGE. The voices on the road, and one of Act 2's three jobs: CANON asks that the player repeatedly sees Meridian equipment moving toward the coast, and two scripted convoys (act2_ridge_convoy_body in data/events/common.json) are not 'repeatedly' on their own. These are. Nobody here is sinister and nobody here is lying -- most of the Meridian Foundation is doing genuinely good work and has no idea what is inside it, which is the whole reason Act 2's last scene hurts. The keys match the NPCs on data/maps/route_3.json; if that map moves people around, the ids are the contract.",
   "speakers": {
-    "r3_drover": "DROVER"
+    "r3_carter": "CARTER",
+    "r3_porter": "PORTER",
+    "r3_hand": "YARD HAND",
+    "r3_reader": "FIELD READER",
+    "r3_shepherd": "SHEPHERD"
   },
   "entries": {
-    "r3_drover": [
-      "Herd won't cross that bridge this month. Not one of them.",
-      "They walk up to the rail, look at the water, and turn round.",
-      "Forty years my family has driven this road. Never seen it. Nor did my father."
+    "r3_carter": [
+      {
+        "ifFlags": ["ridge_convoy_seen_2"],
+        "lines": [
+          "Eleven runs this week. Same crates, same hour, and the last four were heavier.",
+          "They don't tell us what's in them, and I stopped asking.",
+          "The money is good and I am not a brave man. Those are both true at once."
+        ]
+      },
+      {
+        "lines": [
+          "Axle went on the incline and they had a spare cart up here inside the hour.",
+          "Inside the hour. On this road.",
+          "Whoever is paying for this is not paying for it out of a tin."
+        ]
+      }
+    ],
+    "r3_porter": [
+      {
+        "lines": [
+          "Twelve ton, in six chained lengths, up an incline a goat would refuse.",
+          "Four days it took us. Four.",
+          "And it's a crane, so somewhere down that road there is something worth craning."
+        ]
+      }
+    ],
+    "r3_hand": [
+      {
+        "ifFlags": ["crest_2_taken"],
+        "lines": [
+          "Yard was a sheep pass in March. We poured it in nine days.",
+          "Foundation pays weekly and in coin, which nobody up here has ever had before.",
+          "Half the ridge is working for them now. Ask anybody. Ask them if they mind."
+        ]
+      },
+      {
+        "lines": [
+          "Mind the ropes. Everything on this side of the line is going east and none of it stops."
+        ]
+      }
+    ],
+    "r3_reader": [
+      {
+        "ifFlags": ["cassian_public_done"],
+        "lines": [
+          "You heard him speak, then. He came up here first, you know. Before the city.",
+          "Stood in the wet for two hours asking me about barometric drift.",
+          "I have worked for people who did not know my name. He knows my mother's."
+        ]
+      },
+      {
+        "lines": [
+          "Wind, pressure, sea temperature, three times a day, and it all goes east on the carts.",
+          "Last spring this station is why two hundred and six boats came home.",
+          "I will take being cold on a hill for that. Cheerfully."
+        ]
+      }
+    ],
+    "r3_shepherd": [
+      {
+        "ifFlags": ["crest_2_taken"],
+        "lines": [
+          "Herd won't cross the bridge, and now I can't either. Carts all day, every day.",
+          "Grey sheets over the loads and a hand walking beside every one of them.",
+          "Forty years on this road and I have never once had to give way on it."
+        ]
+      },
+      {
+        "lines": [
+          "Herd won't cross that bridge this month. Not one of them.",
+          "They walk up to the rail, look at the water, and turn round.",
+          "Forty years my family has driven this road. Never seen it. Nor did my father."
+        ]
+      }
     ]
   }
 }

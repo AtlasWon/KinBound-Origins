@@ -1,0 +1,65 @@
+{
+  "id": "tideglass_house_e",
+  "name": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIUIII",
+    "IbfffkkfffI",
+    "IefffffffPI",
+    "IPffffffffI",
+    "IfrrAAffffI",
+    "I//rEEfffkI",
+    "IfffffffffI",
+    "IkffffffffI",
+    "IIIIIDIIIII"
+  ],
+  "warps": [
+    {
+      "x": 5,
+      "y": 8,
+      "toMap": "tideglass",
+      "toX": 10,
+      "toY": 15,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tg_house_e_teacher",
+      "sprite": "townsfolk_f",
+      "x": 6,
+      "y": 4,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_house_e_teacher"
+    },
+    {
+      "id": "tg_house_e_kid",
+      "sprite": "kid",
+      "x": 8,
+      "y": 6,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "tg_house_e_kid"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 5,
+      "y": 1,
+      "text": [
+        "Schoolbooks in a stack, the corners chewed soft by handling.",
+        "The top one is a primer of Caeloran history for nine-year-olds.",
+        "It gets from the Deluge to the founding of Tideglass in one sentence."
+      ]
+    }
+  ]
+}

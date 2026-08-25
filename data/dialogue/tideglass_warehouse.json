@@ -1,0 +1,18 @@
+{
+  "speakers": {
+    "tg_bond_clerk": "BOND CLERK",
+    "tg_bond_porter": "PORTER"
+  },
+  "entries": {
+    "tg_bond_clerk": [
+      "Bonded means sealed. Sealed means I do not look and nor does anybody else.",
+      "It is a good system. It has worked for two hundred years.",
+      "It has never once been tested by somebody who did not want to be looked at."
+    ],
+    "tg_bond_porter": [
+      "I have shifted four thousand of those crates and I could not tell you what one holds.",
+      "Heavy for the size. Cold to the hand, some of them. Never rattle.",
+      "You stop wondering after the first thousand. That is what they are paying for."
+    ]
+  }
+}

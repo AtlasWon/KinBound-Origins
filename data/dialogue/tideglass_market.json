@@ -1,0 +1,28 @@
+{
+  "speakers": {
+    "tg_auctioneer": "AUCTIONEER",
+    "tg_market_fisher": "FISHER",
+    "tg_market_widow": "FISHWIFE",
+    "tg_market_kid": "MARKET CHILD"
+  },
+  "entries": {
+    "tg_auctioneer": [
+      "Four in the afternoon, every day, and it used to take me two hours.",
+      "Yesterday it took eleven minutes. I have never wanted a slow day so badly."
+    ],
+    "tg_market_fisher": [
+      "Deep boats come back empty. Shore boats come back heaving.",
+      "Everything that lives out there has moved in and up, all of it, all at once.",
+      "Things move like that for one reason and nobody on this floor will say it out loud."
+    ],
+    "tg_market_widow": [
+      "I have stood at this slab since I was nine years old.",
+      "You want to know what is wrong? Nothing smells right. Nothing.",
+      "The sea has a smell when it is working. It has stopped having it."
+    ],
+    "tg_market_kid": [
+      "I get a copper for every crab I catch off the steps.",
+      "I got forty-one yesterday. Mum did not look happy about it."
+    ]
+  }
+}

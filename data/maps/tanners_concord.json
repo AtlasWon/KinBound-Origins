@@ -21,8 +21,8 @@
       "x": 6,
       "y": 9,
       "toMap": "tanners_rest",
-      "toX": 6,
-      "toY": 18,
+      "toX": 7,
+      "toY": 23,
       "facing": "down",
       "style": "door"
     }
@@ -69,9 +69,9 @@
       "x": 8,
       "y": 2,
       "text": [
-        "A wall of soundings. Depth, bearing, date.",
-        "Every reading from the last four months is circled in red.",
-        "The circles are not near the coast. They are all under the land."
+        "A wall of soundings. Depth, bearing, date, forty stations, sixty years.",
+        "Everything from the last four months is circled in red, and none of the circles are at sea.",
+        "They are all under the land."
       ]
     },
     {
@@ -99,10 +99,12 @@
       "x": 12,
       "y": 7,
       "text": [
-        "A rack of coats on pegs, all Concord grey, all wet.",
-        "Whoever wore them came in off the road tonight",
-        "and has not been given leave to go home."
+        "A rack of pegs with four coats on it and eleven empty pegs.",
+        "A card pinned over the empty ones, in the same hand as everything else in this office:",
+        "GONE TO THE FOUNDATION. NO ILL FEELING. THEY PAY BETTER AND WE SAID SO IN WRITING."
       ]
     }
-  ]
+  ],
+  "displayName": "COAST SURVEY OFFICE",
+  "_plan": "The Concord is the small, old, underfunded regional body that has been measuring this coast for sixty years, and this is the room where it loses. Nothing in here is sinister and nobody in here is wrong; there is simply an organisation outside with better boxes, warmer coats and a wage that arrives on Friday. That contrast is the whole point of the office surviving into Act 2."
 }

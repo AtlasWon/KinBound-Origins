@@ -1,0 +1,86 @@
+{
+  "id": "tideglass_harbouroffice",
+  "name": "Harbour Office",
+  "displayName": "THE HARBOUR OFFICE",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIIUIII",
+    "IkkkFF$$$FFkI",
+    "IFFFFFFFFFFFI",
+    "IFKKKFFFFFFPI",
+    "IFFFFFFFFFFFI",
+    "IFAAFFFFAAFFI",
+    "IFEEFFFFEEFFI",
+    "IkFFFFFFFFFkI",
+    "IFFFFFFFFFFPI",
+    "IIIIIIDIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 9,
+      "toMap": "tideglass",
+      "toX": 30,
+      "toY": 37,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tg_harbourclerk",
+      "sprite": "clerk",
+      "x": 5,
+      "y": 3,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_harbourclerk"
+    },
+    {
+      "id": "tg_pilotmaster",
+      "sprite": "harbourmaster",
+      "x": 9,
+      "y": 4,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_pilotmaster"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 6,
+      "y": 1,
+      "text": [
+        "The berth book, open, chained to the desk.",
+        "Berths eleven to twenty, one charter, paid a year forward in one payment.",
+        "The name of the charterer is a company nobody in this room has heard of."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "Ledgers back to the founding. The oldest are in a hand",
+        "nobody writes in any more, and record the harbour as GLASS QUAY."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 11,
+      "y": 8,
+      "text": [
+        "A framed sounding chart of the bay, forty years old.",
+        "Somebody has laid a new tracing over it. The deep channel has moved",
+        "about a boat length east. Nobody can tell you how a channel does that."
+      ]
+    }
+  ]
+}

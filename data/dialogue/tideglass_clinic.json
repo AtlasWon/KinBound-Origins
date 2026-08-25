@@ -1,0 +1,18 @@
+{
+  "speakers": {
+    "tg_clinic_sailor": "OLD SAILOR",
+    "tg_clinic_pilot": "HARBOUR PILOT"
+  },
+  "entries": {
+    "tg_clinic_sailor": [
+      "Sixty years I read this channel. Currents, colour, how the birds sit on it.",
+      "Now it is flat as a table, and I have never had to read a table before.",
+      "A flat sea is not a calm sea. A flat sea is a held one, and something is holding it."
+    ],
+    "tg_clinic_pilot": [
+      "Thirty-one thousand people and I can name the four who worry me.",
+      "Not one of them is a Foundation man. That is the part I keep chewing.",
+      "They are the ones who stopped asking questions, and they all stopped in the same month."
+    ]
+  }
+}

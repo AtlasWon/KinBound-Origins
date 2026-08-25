@@ -1,6 +1,6 @@
 [
   {
-    "id": "brackwater_shop",
+    "id": "tideglass_shop",
     "trigger": "interact",
     "actions": [
       {
@@ -12,7 +12,7 @@
       },
       {
         "kind": "openShop",
-        "shop": "brackwater_provisioner"
+        "shop": "tideglass_provisioner"
       }
     ]
   }

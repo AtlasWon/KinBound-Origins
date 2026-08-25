@@ -1,5 +1,5 @@
 {
-  "$comment": "Caelora on a 40x30 logical grid. The region wraps the Caeloran Sea, so every settlement sits on the ring of land around it; see src/scenes/regionmap.ts, which fits the coastline to these coordinates. Places whose map does not exist yet still appear, and that is the point: until the player has stood in one it draws as an uncharted mark with no name, so the chart looks bigger than the part that has been walked. Names here are the canon ones from docs/CANON.md. Tanners Rest and Brackwater are the working-name settlements still standing from before Stage 1 and keep the names their own signposts use.",
+  "$comment": "Caelora on a 40x30 logical grid. The region wraps the Caeloran Sea, so every settlement sits on the ring of land around it; see src/scenes/regionmap.ts, which fits the coastline to these coordinates. Places whose map does not exist yet still appear, and that is the point: until the player has stood in one it draws as an uncharted mark with no name, so the chart looks bigger than the part that has been walked. Names here are the canon ones from docs/CANON.md. Salthollow keeps the map id tanners_rest, because that id is named in src/scenes/regionmap.ts and in several capture drivers; everything player-facing says Salthollow.",
   "seaName": "THE CAELORAN SEA",
   "places": [
     {
@@ -43,18 +43,28 @@
       "blurb": "Quarry city, cut into the mountain. The Stone Hall."
     },
     {
-      "id": "tanners_rest",
-      "name": "Tanners Rest",
-      "x": 8,
-      "y": 13,
-      "kind": "town"
+      "id": "route_3",
+      "name": "Eastwind Ridge",
+      "x": 11,
+      "y": 19,
+      "kind": "route",
+      "blurb": "Five shelves, hard wind, and the only road there is."
     },
     {
-      "id": "brackwater",
-      "name": "Brackwater",
-      "x": 12,
-      "y": 7,
-      "kind": "hall"
+      "id": "tanners_rest",
+      "name": "Salthollow",
+      "x": 16,
+      "y": 21,
+      "kind": "town",
+      "blurb": "Tanyard, change paddock, and one long table."
+    },
+    {
+      "id": "route_4",
+      "name": "The Coast Road",
+      "x": 23,
+      "y": 21,
+      "kind": "route",
+      "blurb": "Down off the shoulder. The sea long before the sea."
     },
     {
       "id": "frostmere",

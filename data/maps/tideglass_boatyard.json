@@ -1,0 +1,79 @@
+{
+  "id": "tideglass_boatyard",
+  "name": "The Boatyard",
+  "displayName": "THE BOATYARD",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIIIIIUIII",
+    "I$$$$FFFFFF$$$$I",
+    "IFFFFFFFFFFFFFFI",
+    "IFFKKKKFFKKKKFFI",
+    "IFFFFFFFFFFFFFFI",
+    "I$$FFFFFFFFFF$$I",
+    "IFFFFFFFFFFFFFFI",
+    "IPFFFAAFFAAFFFPI",
+    "IFFFFEEFFEEFFFFI",
+    "IkFFFFFFFFFFFFkI",
+    "IFFFFFFFFFFFFFFI",
+    "IIIIIIIIDIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 8,
+      "y": 11,
+      "toMap": "tideglass",
+      "toX": 71,
+      "toY": 42,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tg_shipwright_in",
+      "sprite": "villager_m",
+      "x": 4,
+      "y": 4,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_shipwright_in"
+    },
+    {
+      "id": "tg_yard_prentice",
+      "sprite": "dockhand",
+      "x": 11,
+      "y": 6,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "tg_yard_prentice"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "Frames, ribs and a half-built hull on the stocks.",
+        "The order book beside it is full and every entry is the same shape:",
+        "shallow draught, heavy fittings, no fishing gear at all."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 14,
+      "y": 9,
+      "text": [
+        "A repair slate. Nine boats in, and seven of them are dented",
+        "in the same place, low on the starboard bow.",
+        "The yard has stopped writing down what they hit."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "speakers": {
+    "tg_netmaster": "NET MASTER",
+    "tg_net_prentice": "APPRENTICE"
+  },
+  "entries": {
+    "tg_netmaster": [
+      "Sixty nets in this loft. Two came off a boat this week.",
+      "A net loft with nothing to mend is a city in trouble, and slowly.",
+      "The Foundation offered to buy the building. Politely. Twice."
+    ],
+    "tg_net_prentice": [
+      "I was taught mending because there would always be mending.",
+      "Now they have me stripping good nets for the twine.",
+      "Nobody says it is over. Everybody is behaving like it is over."
+    ]
+  }
+}

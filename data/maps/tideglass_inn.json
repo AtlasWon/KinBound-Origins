@@ -1,0 +1,88 @@
+{
+  "id": "tideglass_inn",
+  "name": "The Glass Lantern",
+  "displayName": "THE GLASS LANTERN",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIIIIIUIII",
+    "IJNQFFFkkFFFFFfI",
+    "IKKKKFFFFFFFFFfI",
+    "IFFFFFFFFFFFFFfI",
+    "IFAAFFAAFFAAFFfI",
+    "IFEEFFEEFFEEFFfI",
+    "IfFFFFFFFFFFFFfI",
+    "IF/rrrr/FFFAAFPI",
+    "IFFrrrrFFFFEEFfI",
+    "IPfFFFFFFFFFFFfI",
+    "IfFFFFFFFFFFFFfI",
+    "IIIIIIIIDIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 8,
+      "y": 11,
+      "toMap": "tideglass",
+      "toX": 11,
+      "toY": 32,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tg_innkeeper",
+      "sprite": "townsfolk_f",
+      "x": 2,
+      "y": 3,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_innkeeper"
+    },
+    {
+      "id": "tg_inn_drover",
+      "sprite": "hiker",
+      "x": 6,
+      "y": 3,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_inn_drover"
+    },
+    {
+      "id": "tg_inn_ridgehand",
+      "sprite": "porter",
+      "x": 11,
+      "y": 6,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "tg_inn_ridgehand"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 1,
+      "text": [
+        "A shelf of lanterns, every one of them glass, every one different.",
+        "Guests leave them. The house has never bought a single one."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 14,
+      "y": 7,
+      "text": [
+        "The long settle by the fire. Four people could sleep on it",
+        "and on a bad night in the season, four people do."
+      ]
+    }
+  ]
+}

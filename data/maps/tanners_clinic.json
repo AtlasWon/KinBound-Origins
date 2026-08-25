@@ -21,8 +21,8 @@
       "x": 6,
       "y": 9,
       "toMap": "tanners_rest",
-      "toX": 11,
-      "toY": 8,
+      "toX": 8,
+      "toY": 10,
       "facing": "down",
       "style": "door"
     }
@@ -77,9 +77,9 @@
       "x": 12,
       "y": 2,
       "text": [
-        "A rack of Concord bulletins, three deep.",
-        "Half of them are survey requests. The other half",
-        "are the same survey request, reissued and underlined."
+        "A rack of bulletins three deep. Concord survey notices on the left, going yellow.",
+        "On the right, new and printed on better paper: FOUNDATION HAULAGE - RIDGE ROAD.",
+        "Somebody has moved the Concord ones to the left to make room."
       ]
     },
     {
@@ -87,10 +87,12 @@
       "x": 2,
       "y": 2,
       "text": [
-        "Over the counter, the restorative bank, lamps in green.",
-        "This one runs day and night. Tanner's Rest is where",
-        "everyone stops before they try the road east."
+        "Over the counter, the restorative bank, lamps in green, and it never goes out.",
+        "Salthollow sits at the foot of the only road there is, so the clinic keeps the road's hours,",
+        "which is all of them."
       ]
     }
-  ]
+  ],
+  "displayName": "KIN CLINIC",
+  "_plan": "The busiest room in the village, because everything that goes over the ridge stops here first, and half of what comes down it arrives hurt."
 }

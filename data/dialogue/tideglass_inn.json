@@ -1,0 +1,24 @@
+{
+  "speakers": {
+    "tg_innkeeper": "THE LANDLADY",
+    "tg_inn_drover": "DROVER",
+    "tg_inn_ridgehand": "YARD HAND"
+  },
+  "entries": {
+    "tg_innkeeper": [
+      "Rooms are three silver and you will not get one. We have been full since the spring.",
+      "Not sailors either. Surveyors, hands, men with cases they carry themselves.",
+      "They pay on time and they do not talk. I have never liked a quiet guest."
+    ],
+    "tg_inn_drover": [
+      "Twenty-two loads I have brought down the ridge road this month.",
+      "Same shipper, same seals, same instruction: do not open, do not ask.",
+      "The money is very good. That is usually the bit that costs you later."
+    ],
+    "tg_inn_ridgehand": [
+      "They pay us to carry it off the dray and not to carry it into the yard.",
+      "It goes straight onto the water at the east mole. Straight out.",
+      "Whatever it is, it is not for Tideglass. We are just the doorstep."
+    ]
+  }
+}

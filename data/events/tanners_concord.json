@@ -1,132 +1,123 @@
 [
   {
     "id": "tr_kerrow_first",
+    "_note": "ISOLDE KERROW, who directs the Stillwater Concord: the small, old, regional survey body that has measured this coast for sixty years and is currently losing eleven of its fifteen staff to the Meridian Foundation.\n\nWHY THE SCENE IS HERE. The player meets Cassian Veyl in the next town, and CANON is explicit that he must not read as a villain -- his argument is genuinely reasonable and the player should half want to trust him. That lands about four times harder if somebody has already made the same argument, honestly, out of real grief, one map earlier, with no money and no power and nothing to gain by it. Kerrow is that person. She is not Meridian, she is not against them, and she is not a plant; she is a woman who lost a brother to a storm and cannot afford the thing she watches them doing.\n\nShe does NOT tell the player what to think. She tells them what she wants and admits she cannot have it.",
     "trigger": "interact",
     "when": {
       "kind": "not",
-      "of": {
-        "kind": "flag",
-        "flag": "met_kerrow"
-      }
+      "of": { "kind": "flag", "flag": "met_kerrow" }
     },
     "actions": [
       {
         "kind": "say",
         "who": "???",
         "lines": [
-          "{name}. You're the one filling in a Vellum for Halcyon Sorrell."
+          "{name}. You are the one filling in a Vellum for Halcyon Sorrell."
         ]
       },
-      {
-        "kind": "wait",
-        "frames": 24
-      },
-      {
-        "kind": "face",
-        "who": "tr_concord_kerrow",
-        "dir": "down"
-      },
+      { "kind": "wait", "frames": 24 },
+      { "kind": "face", "who": "tr_concord_kerrow", "dir": "down" },
       {
         "kind": "say",
         "who": "ISOLDE KERROW",
         "lines": [
-          "Isolde Kerrow. I direct the Stillwater Concord, which mostly means I sign things.",
-          "He writes to this office every week. Careful letters. Good numbers in them.",
-          "I read all of them. I have answered none."
+          "Isolde Kerrow. I direct the Stillwater Concord, which this year mostly means signing leaving papers.",
+          "Eleven of fifteen. All to the Foundation. I signed every one and I meant every good word in them."
         ]
       },
       {
         "kind": "say",
         "who": "ISOLDE KERROW",
         "lines": [
-          "I'd rather tell you why to your face than let you work it out from the filing.",
-          "Seventy years ago the Caeloran Sea turned over and took a town called Old Tidefall.",
-          "One night. Two hundred and forty people. My brother was one. I was six."
+          "Seventy years ago the sea came over this coast in one night and took a town called Old Tidefall.",
+          "Two hundred and forty people. My brother was one of them. I was six."
+        ]
+      },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "who": "ISOLDE KERROW",
+        "lines": [
+          "So you can guess what I want. I want it never to happen again.",
+          "Not survived. Not recorded. Stopped."
         ]
       },
       {
         "kind": "say",
         "who": "ISOLDE KERROW",
         "lines": [
-          "Professor Sorrell would like us to observe the Turning. Record it. Understand it.",
-          "He's right that it is the greater science. He is usually right."
+          "And out there on that ridge is an organisation with the money to try.",
+          "New instruments beside four of my stations. Better than mine. Warmer coats than mine.",
+          "You want me to tell you they are wrong. I have been sitting in this chair failing to."
         ]
       },
       {
-        "kind": "wait",
-        "frames": 20
+        "kind": "choice",
+        "lines": [
+          "She has not looked away from you once."
+        ],
+        "options": [
+          {
+            "label": "What are they moving?",
+            "then": [
+              {
+                "kind": "say",
+                "who": "ISOLDE KERROW",
+                "lines": [
+                  "I do not know. That is the honest answer and I hate the sound of it.",
+                  "Two hundred and eleven core samples out from under Stonewake. Forty crates over the ridge.",
+                  "None of it near the water, and every bit of it going to the water."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Why haven't you asked them?",
+            "then": [
+              {
+                "kind": "say",
+                "who": "ISOLDE KERROW",
+                "lines": [
+                  "I have. Twice, in writing. Both times I got a courteous answer inside a week.",
+                  "Courteous, complete, and about something slightly to the left of what I asked.",
+                  "You cannot put that in a report. I have tried to draft it four times."
+                ]
+              }
+            ]
+          }
+        ]
       },
+      { "kind": "wait", "frames": 20 },
       {
         "kind": "say",
         "who": "ISOLDE KERROW",
         "lines": [
-          "I would like to stop it.",
-          "Not delay it. Not survive it. Stop it, and never have that conversation again."
+          "Go on down to Tideglass. Take your Crest, they are a fine thing to have.",
+          "Dr Veyl speaks in the square there this season, and you should go and hear him.",
+          "You will like him. Everybody does. Do not let that be the end of your thinking about it."
         ]
       },
-      {
-        "kind": "say",
-        "who": "ISOLDE KERROW",
-        "lines": [
-          "You've walked the west arm. Streams dropping, herds refusing the bridge.",
-          "Everyone tells you that is frightening. It isn't. That is the sea being held.",
-          "That is us. That is the work going right."
-        ]
-      },
-      {
-        "kind": "wait",
-        "frames": 20
-      },
-      {
-        "kind": "say",
-        "who": "ISOLDE KERROW",
-        "lines": [
-          "Go on to Brackwater. Take your Crests, they're a fine thing to have.",
-          "And the next time Sorrell writes to you about the Turning, ask him one question.",
-          "Ask him what he intends to say to the next Old Tidefall."
-        ]
-      },
-      {
-        "kind": "setFlag",
-        "flag": "met_kerrow"
-      },
-      {
-        "kind": "setVar",
-        "var": "act",
-        "value": 2
-      },
+      { "kind": "setFlag", "flag": "met_kerrow" },
       {
         "kind": "move",
         "who": "tr_concord_kerrow",
-        "steps": [
-          "down",
-          "down",
-          "down",
-          "down",
-          "down",
-          "down"
-        ],
+        "steps": ["down", "down", "down", "down", "down", "down"],
         "speed": "walk"
       },
-      {
-        "kind": "removeNpc",
-        "who": "tr_concord_kerrow"
-      }
+      { "kind": "removeNpc", "who": "tr_concord_kerrow" }
     ]
   },
   {
     "id": "tr_kerrow_after",
     "trigger": "interact",
-    "when": {
-      "kind": "flag",
-      "flag": "met_kerrow"
-    },
+    "when": { "kind": "flag", "flag": "met_kerrow" },
     "actions": [
       {
         "kind": "say",
         "lines": [
-          "The Director's chair is empty.",
-          "The soundings pinned above it are not. Somebody has ringed the west face twice."
+          "The Director's chair is empty. The soundings pinned above it are not.",
+          "Somebody has ringed the same stretch of the ridge road twice, and written one word beside it.",
+          "The word is WHY, and it has been gone over so many times it has torn the paper."
         ]
       }
     ]

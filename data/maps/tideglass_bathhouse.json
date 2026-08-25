@@ -1,0 +1,77 @@
+{
+  "id": "tideglass_bathhouse",
+  "name": "The Salt Baths",
+  "displayName": "THE SALT BATHS",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "freeWade": true,
+  "rows": [
+    "IIIUIIIIIUIII",
+    "IFFFFFFFFFFFI",
+    "IF~~~~F~~~~FI",
+    "IF~~~~F~~~~FI",
+    "IF~~~~F~~~~FI",
+    "IFFFFFFFFFFFI",
+    "IPFFKKKFFFFPI",
+    "IFFFFFFFFFFFI",
+    "IkFFFFFFFFFkI",
+    "IIIIIIDIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 9,
+      "toMap": "tideglass",
+      "toX": 27,
+      "toY": 32,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tg_bath_attendant",
+      "sprite": "townsfolk_f",
+      "x": 3,
+      "y": 6,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_bath_attendant"
+    },
+    {
+      "id": "tg_bath_soaker",
+      "sprite": "dockhand",
+      "x": 9,
+      "y": 7,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "tg_bath_soaker"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "Two pools, pumped straight off the harbour and warmed.",
+        "A notice: THE WATER IS THE SEA. IT IS AS CLEAN AS THE SEA IS.",
+        "Under that, in another hand: THAT IS NOT THE BOAST YOU THINK."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 11,
+      "y": 8,
+      "text": [
+        "A row of pegs, most of them holding a dockyard coat.",
+        "The yards finish at six and the baths are full at five past."
+      ]
+    }
+  ]
+}

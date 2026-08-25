@@ -1,0 +1,18 @@
+{
+  "speakers": {
+    "tg_house_e_teacher": "SCHOOLTEACHER",
+    "tg_house_e_kid": "CHILD"
+  },
+  "entries": {
+    "tg_house_e_teacher": [
+      "I teach four hundred children that the Great Deluge was weather.",
+      "It is in the primer. Weather, a long time ago, and then we rebuilt.",
+      "A woman from the Institute told me last month that the primer is wrong.",
+      "She would not say what the right answer was. She said she did not have one yet."
+    ],
+    "tg_house_e_kid": [
+      "We had to draw the sea for school. I drew it with something under it.",
+      "Miss said that was imagination. Then she kept the drawing."
+    ]
+  }
+}

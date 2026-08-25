@@ -1,0 +1,60 @@
+{
+  "id": "tideglass_house_c_up",
+  "name": "Upstairs",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIUIII",
+    "IbffffkkfffI",
+    "IefffffffffI",
+    "IPfffffffffI",
+    "IfffffffffSI",
+    "I/rrfffAAffI",
+    "IrrrfffEEfkI",
+    "IIIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 10,
+      "y": 4,
+      "toMap": "tideglass_house_c",
+      "toX": 10,
+      "toY": 3,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tg_house_c_gran",
+      "sprite": "elder",
+      "x": 3,
+      "y": 5,
+      "facing": "right",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "tg_house_c_gran"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 1,
+      "text": [
+        "A window over Gate Avenue. From up here the city is roofs",
+        "to the water and then nothing, all the way out, in every direction."
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 10,
+      "y": 6,
+      "item": "tonic_berry",
+      "quantity": 1,
+      "flag": "item_tg_house_c_berry"
+    }
+  ]
+}

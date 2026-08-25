@@ -1,33 +1,108 @@
 {
   "mapId": "route_3",
-  "$comment": "Same third-pass fix as Route 2. A player raising a team arrives here at THIRTEEN, not the seventeen a solo lead reaches, and -- this is the part two earlier passes never measured -- their starter has NOT EVOLVED YET, because all three starters evolve at 16. The whole middle of the game was being fought with a first-stage kin against a band built for a second-stage one, which read 70/50/85 percent on an average roll. Every slot is now 10-12, one to three levels under the arriving player. The experience that capping a band would ordinarily cost is bought back by pinning the two heaviest payers LOW rather than high: Mossback (148 base experience, 412 points) and Emberbore (96) sit at 10-11 with their weight raised. That is the whole trick of this pass -- a fat kin at a low level is free experience, a fat kin at your level is a wall. Mean roll 12.8 -> 10.8, top 15 -> 12, experience per fight 114 -> 104.",
+  "$comment": "EASTWIND RIDGE, and the route that introduces the stronger Gale kin -- Pipwing at 18, Slatewing at 9, Kestrelle at 5 and Gullswift at 4, so something with a wing on it comes out of the grass better than one time in three. GULLSWIFT IS THE POINT OF THE TABLE: it is a sea bird, the player is eleven miles inland and four hundred feet up, and Kessel the Ridge Warden says out loud that he has never had to write that down in nineteen years. Nobody explains it for three more acts.\n\nDIFFICULTY, MEASURED RATHER THAN GUESSED (tests/helpers/simulate.mjs 300). A player raising a team arrives here at FIFTEEN with a starter that has only just evolved. Every slot is 10-12, three to five levels under them, and the two heavy payers -- Mossback at 148 base experience and Kestrelle at 128 -- are pinned at the BOTTOM of their bands, which is the whole trick: a fat kin at a low level is free experience and a fat kin at your level is a wall. The first draft of this pass put Slatewing at 13 and Kestrelle and Gullswift at 12-13, and the two extra Stone slots quietly took a Flame team-raiser from 79 percent in the grass to 71 and a Verdant one to 68 at the top of the band -- the worst grass in the game, on a route that is meant to be a walk with a story on it. Final: Verdant 87/76, Flame 84/79, Tide 99/98, which sits alongside Route 2 (91/89, 90/84) rather than under it.",
   "methods": {
     "tallGrass": {
       "rate": 175,
       "slots": [
-        { "species": "tuftail", "minLevel": 10, "maxLevel": 12, "weight": 26 },
-        { "species": "nibbet", "minLevel": 10, "maxLevel": 12, "weight": 13 },
-        { "species": "gravelet", "minLevel": 10, "maxLevel": 12, "weight": 9 },
-        { "species": "chalkid", "minLevel": 10, "maxLevel": 12, "weight": 7 },
-        { "species": "slatewing", "minLevel": 10, "maxLevel": 12, "weight": 7 },
-        { "species": "spinnet", "minLevel": 10, "maxLevel": 12, "weight": 9 },
-        { "species": "emberbore", "minLevel": 10, "maxLevel": 11, "weight": 6 },
-        { "species": "mossback", "minLevel": 10, "maxLevel": 11, "weight": 9 },
-        { "species": "pipwing", "minLevel": 10, "maxLevel": 12, "weight": 9 },
-        { "species": "frostnip", "minLevel": 10, "maxLevel": 12, "weight": 5, "time": ["morning", "evening", "night"] }
+        {
+          "species": "tuftail",
+          "minLevel": 10,
+          "maxLevel": 12,
+          "weight": 20
+        },
+        {
+          "species": "pipwing",
+          "minLevel": 10,
+          "maxLevel": 12,
+          "weight": 18
+        },
+        {
+          "species": "nibbet",
+          "minLevel": 10,
+          "maxLevel": 12,
+          "weight": 15
+        },
+        {
+          "species": "slatewing",
+          "minLevel": 10,
+          "maxLevel": 12,
+          "weight": 9
+        },
+        {
+          "species": "gravelet",
+          "minLevel": 10,
+          "maxLevel": 12,
+          "weight": 9
+        },
+        {
+          "species": "mossback",
+          "minLevel": 10,
+          "maxLevel": 11,
+          "weight": 8
+        },
+        {
+          "species": "chalkid",
+          "minLevel": 10,
+          "maxLevel": 12,
+          "weight": 7
+        },
+        {
+          "species": "kestrelle",
+          "minLevel": 10,
+          "maxLevel": 11,
+          "weight": 5
+        },
+        {
+          "species": "frostnip",
+          "minLevel": 10,
+          "maxLevel": 12,
+          "weight": 5,
+          "time": [
+            "morning",
+            "evening",
+            "night"
+          ]
+        },
+        {
+          "species": "gullswift",
+          "minLevel": 10,
+          "maxLevel": 11,
+          "weight": 4
+        }
       ]
     },
     "water": {
       "rate": 130,
       "slots": [
-        { "species": "rillfry", "minLevel": 9, "maxLevel": 11, "weight": 55 },
-        { "species": "rilltail", "minLevel": 10, "maxLevel": 12, "weight": 35 },
-        { "species": "currentail", "minLevel": 11, "maxLevel": 12, "weight": 10 }
+        {
+          "species": "rillfry",
+          "minLevel": 9,
+          "maxLevel": 11,
+          "weight": 55
+        },
+        {
+          "species": "rilltail",
+          "minLevel": 10,
+          "maxLevel": 12,
+          "weight": 35
+        },
+        {
+          "species": "currentail",
+          "minLevel": 11,
+          "maxLevel": 12,
+          "weight": 10
+        }
       ]
     },
     "fishOld": {
       "slots": [
-        { "species": "rillfry", "minLevel": 8, "maxLevel": 11, "weight": 100 }
+        {
+          "species": "rillfry",
+          "minLevel": 8,
+          "maxLevel": 11,
+          "weight": 100
+        }
       ]
     }
   }

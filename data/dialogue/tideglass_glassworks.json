@@ -1,0 +1,18 @@
+{
+  "speakers": {
+    "tg_glassmaster": "GLASSMASTER",
+    "tg_glass_prentice": "APPRENTICE"
+  },
+  "entries": {
+    "tg_glassmaster": [
+      "The city is named for us, whatever the harbour board tell you.",
+      "Sand off the bar, ash off the kelp, and a furnace lit since my grandmother.",
+      "Everything here is made of the coast. That is the only trick there is."
+    ],
+    "tg_glass_prentice": [
+      "I get the blue-green wrong every time. Master says it is not a colour, it is a depth.",
+      "She says the old people down the coast could do it and we cannot.",
+      "Then she goes quiet and puts more ash in, which is what she does instead of answering."
+    ]
+  }
+}

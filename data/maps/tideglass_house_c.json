@@ -1,0 +1,71 @@
+{
+  "id": "tideglass_house_c",
+  "name": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIIUIIIUIII",
+    "IJNQfffkkffI",
+    "IKKKfffffffI",
+    "IfffffffffSI",
+    "I//rAAffffPI",
+    "IrrrEEfffffI",
+    "IVffffffffkI",
+    "IPfffffffffI",
+    "IIIIIIDIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 8,
+      "toMap": "tideglass",
+      "toX": 4,
+      "toY": 5,
+      "facing": "down",
+      "style": "door"
+    },
+    {
+      "x": 10,
+      "y": 3,
+      "toMap": "tideglass_house_c_up",
+      "toX": 10,
+      "toY": 4,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tg_house_c_tenant",
+      "sprite": "townsfolk_m",
+      "x": 6,
+      "y": 4,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_house_c_tenant"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "A range with four rings, three of them dead. City rent, city fittings.",
+        "The landlord lives in the Commercial District and has never been up the stairs."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 6,
+      "text": [
+        "A rent book. Paid, paid, paid, and a note at the back:",
+        "RAISED SPRING. Everyone in the block has the same note."
+      ]
+    }
+  ]
+}

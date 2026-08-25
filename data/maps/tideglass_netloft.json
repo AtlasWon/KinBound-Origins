@@ -1,0 +1,75 @@
+{
+  "id": "tideglass_netloft",
+  "name": "The Net Loft",
+  "displayName": "THE NET LOFT",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIIUIII",
+    "I$$$FF;;;FF$I",
+    "IFFFFFFFFFFFI",
+    "I;;;FFFFFF;;I",
+    "IFFFFFFFFFFFI",
+    "IPFFAAFFFFFPI",
+    "IFFFEEFFFFFFI",
+    "IkFFFFFFFFFkI",
+    "IFFFFFFFFFFFI",
+    "IIIIIIDIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 9,
+      "toMap": "tideglass",
+      "toX": 19,
+      "toY": 42,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tg_netmaster",
+      "sprite": "netmender",
+      "x": 3,
+      "y": 5,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_netmaster"
+    },
+    {
+      "id": "tg_net_prentice",
+      "sprite": "townsfolk_f",
+      "x": 9,
+      "y": 3,
+      "facing": "down",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "tg_net_prentice"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "Nets on frames the length of the room, half of them being mended,",
+        "half of them being taken apart for the twine because nobody is fishing."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 11,
+      "y": 7,
+      "text": [
+        "A board of knots, every one named, all of them taught here.",
+        "Four names on it are in an older spelling. Nobody remembers who added them."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "id": "tideglass_ropewalk",
+  "name": "The Ropewalk",
+  "displayName": "THE ROPEWALK",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIIIIIIIIIIIUIII",
+    "I$$$$$$$$$$$$$$$$$$$$I",
+    "IFFFFFFFFFFFFFFFFFFFFI",
+    "IFFFFFFFFFFFFFFFFFFFFI",
+    "I;;;;FFFFFFFFFFFF;;;;I",
+    "IFFFFFFFFFFFFFFFFFFFFI",
+    "IPFFFAAFFFFFFFFAAFFFPI",
+    "IFFFFEEFFFFFFFFEEFFFFI",
+    "IIIIIIIIIIDIIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 10,
+      "y": 8,
+      "toMap": "tideglass",
+      "toX": 71,
+      "toY": 36,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tg_ropemaster",
+      "sprite": "villager_m",
+      "x": 5,
+      "y": 3,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_ropemaster"
+    },
+    {
+      "id": "tg_rope_spinner",
+      "sprite": "townsfolk_f",
+      "x": 16,
+      "y": 5,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "tg_rope_spinner"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "Two hundred and forty feet under one roof, which is the length",
+        "of the longest rope Tideglass has ever needed to make in one piece."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 20,
+      "y": 6,
+      "text": [
+        "An order pinned to the post: eleven hundred feet of cable,",
+        "to be delivered to the east mole, in lengths of exactly one hundred.",
+        "Nobody moors a boat with a hundred feet. That is a sounding length."
+      ]
+    }
+  ]
+}

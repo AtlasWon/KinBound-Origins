@@ -1,0 +1,18 @@
+{
+  "speakers": {
+    "tg_house_b_wife": "SAEL",
+    "tg_house_b_kid": "WICK"
+  },
+  "entries": {
+    "tg_house_b_wife": [
+      "Three of us mended nets. Now two of us carry crates on the east mole.",
+      "It pays better. I want that on the record before anybody feels sorry for me.",
+      "I still do not know what is in them, and I have stopped putting my hand up to ask."
+    ],
+    "tg_house_b_kid": [
+      "Dad says the sea is holding its breath.",
+      "So I asked what happens when it lets go. He did not answer.",
+      "So I asked louder. He still did not answer."
+    ]
+  }
+}

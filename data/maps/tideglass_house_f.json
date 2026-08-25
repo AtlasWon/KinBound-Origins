@@ -1,0 +1,62 @@
+{
+  "id": "tideglass_house_f",
+  "name": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIUIII",
+    "IbfffkkfffI",
+    "IeffffffkPI",
+    "IPffffffffI",
+    "IfrrAAffffI",
+    "I//rEEfffkI",
+    "IfffffffffI",
+    "IkffffffffI",
+    "IIIIIDIIIII"
+  ],
+  "warps": [
+    {
+      "x": 5,
+      "y": 8,
+      "toMap": "tideglass",
+      "toX": 37,
+      "toY": 15,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tg_house_f_hallhand",
+      "sprite": "townsfolk_m",
+      "x": 6,
+      "y": 4,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_house_f_hallhand"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 5,
+      "y": 1,
+      "text": [
+        "Twenty years of Hall records in a private house, which is not allowed.",
+        "Whoever lives here has clearly been getting away with it for twenty years."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 2,
+      "text": [
+        "A challenge ledger. Names, dates, and how long each fight lasted.",
+        "The shortest entry this year is eleven seconds and the name beside it is VANE."
+      ]
+    }
+  ]
+}

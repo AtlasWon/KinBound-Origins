@@ -1,0 +1,22 @@
+{
+  "mapId": "route_4_hollow",
+  "$comment": "GULLHOLLOW, the coast road's rare-encounter spot: the pocket in the cliff under the salt pans where the birds nest. Gullswift is the point of the place and takes a third of the table, against eight percent on the open road. BRINEWISP at six is the prize -- tide/spirit, catch rate 60, no evolution, and the only one in the region until the wetlands in Act 3 -- and it is evening and night only, so a player who wants it has to come back at the right time rather than stand here. Levels sit at 14-16, one to two under a solo lead and level with a team-raiser leaving Route 4, and the two heavy payers (Gullswift 128, Brinewisp 168) are pinned at the bottom of their bands for the same reason they are on the ridge.",
+  "methods": {
+    "tallGrass": {
+      "rate": 170,
+      "slots": [
+        { "species": "gullswift", "minLevel": 14, "maxLevel": 15, "weight": 32 },
+        { "species": "pipwing", "minLevel": 14, "maxLevel": 16, "weight": 20 },
+        { "species": "silthopper", "minLevel": 14, "maxLevel": 16, "weight": 16 },
+        { "species": "pinchel", "minLevel": 14, "maxLevel": 16, "weight": 14 },
+        { "species": "kestrelle", "minLevel": 14, "maxLevel": 15, "weight": 12 },
+        { "species": "brinewisp", "minLevel": 15, "maxLevel": 16, "weight": 6, "time": ["evening", "night"] }
+      ]
+    },
+    "fishOld": {
+      "slots": [
+        { "species": "shalefin", "minLevel": 12, "maxLevel": 15, "weight": 100 }
+      ]
+    }
+  }
+}

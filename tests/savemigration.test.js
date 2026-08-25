@@ -17,7 +17,7 @@
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readdirSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
@@ -138,4 +138,90 @@ test('migrating never rewrites the stored save', async () => {
   const { store } = await loadLegacy();
   const raw = JSON.parse(store.get('kinbound.save.1'));
   assert.equal(raw.version, 1, 'the migration wrote itself back over the original');
+});
+
+/*
+ * Version 4 to 5: Brackwater became Tideglass.
+ *
+ * The one migration so far where renaming the map is not enough. Brackwater was
+ * 30x22; Tideglass is 86x64, and 23,11 -- a perfectly ordinary spot to be
+ * standing in the old village -- is the inside of a tenement in the new city.
+ * So this checks the position moved too, which no earlier rename had to do.
+ */
+function coastSave() {
+  return {
+    version: 4,
+    header: {
+      slot: 2, name: 'AVEN', playTime: 4000, crests: 2,
+      vellumCaught: 22, savedAt: 1, mapName: 'Brackwater',
+    },
+    state: {
+      version: 1,
+      playerName: 'AVEN',
+      money: 6000,
+      currentMap: 'brackwater', currentX: 23, currentY: 11, currentFacing: 'up',
+      respawnMap: 'brackwater_clinic', respawnX: 6, respawnY: 8,
+      flags: ['got_starter', 'crest_1_taken', 'crest_2_taken',
+        'item_bw_pier', 'item_bw_clinic_up_rouse', 'bw_greeter_met'],
+      vars: [['act', 2]],
+      visited: ['hearthmere', 'briarbell', 'stonewake', 'route_4',
+        'brackwater', 'brackwater_clinic', 'brackwater_provisioner',
+        'brackwater_house', 'brackwater_hall'],
+      defeatedTrainers: ['hall1_roxen'],
+      crests: [1, 2],
+      inventory: [{ item: 'potion', count: 3 }],
+      party: [{ species: 'rilltail', level: 24, metAt: 'brackwater', metLevel: 12 }],
+      boxes: [[]],
+      seen: ['rilltail'],
+      caught: ['rilltail'],
+      playTime: 4000,
+    },
+  };
+}
+
+async function loadCoast() {
+  const store = installStorage();
+  store.set('kinbound.save.2', JSON.stringify(coastSave()));
+  const save = await import('../build/js/systems/save.js');
+  return { save, store, loaded: save.load(2) };
+}
+
+test('a Brackwater save lands in Tideglass, on a tile that exists', async () => {
+  const { loaded } = await loadCoast();
+  assert.ok(loaded, 'the save was refused rather than migrated');
+  const s = loaded.state;
+
+  assert.equal(s.currentMap, 'tideglass');
+  assert.equal(s.respawnMap, 'tideglass_clinic');
+
+  const onDisk = new Set(
+    readdirSync(resolve(ROOT, 'data/maps')).map((f) => f.slice(0, -5)),
+  );
+  const named = [s.currentMap, s.respawnMap, ...s.toJSON().visited,
+    ...s.party.map((k) => k.metAt)];
+  const missing = named.filter((m) => m && !onDisk.has(m));
+  assert.deepEqual(missing, [], `the save names maps that do not exist: ${missing.join(', ')}`);
+});
+
+test('a Brackwater save is put down somewhere walkable in the bigger city', async () => {
+  const { loaded } = await loadCoast();
+  const s = loaded.state;
+  const town = JSON.parse(
+    readdirSync(resolve(ROOT, 'data/maps')).includes('tideglass.json')
+      ? readFileSync(resolve(ROOT, 'data/maps/tideglass.json'), 'utf8') : '{"rows":[]}');
+  const ch = town.rows[s.currentY]?.[s.currentX];
+  assert.ok(ch !== undefined, `landed at ${s.currentX},${s.currentY}, outside the map`);
+  assert.ok(!'TtoO#wR[]^|_!CcIK1234567890Ghmbek<%>()&jHMZdlnzvy'.includes(ch),
+    `landed on solid tile "${ch}" at ${s.currentX},${s.currentY}`);
+});
+
+test('the coast prefix and the old pier Hall come across', async () => {
+  const { save, loaded } = await loadCoast();
+  const flags = loaded.state.toJSON().flags;
+  assert.ok(flags.includes('item_tg_pier'), 'item_bw_ did not become item_tg_');
+  assert.ok(flags.includes('item_tg_clinic_up_rouse'));
+  assert.ok(flags.includes('tg_greeter_met'), 'bw_ did not become tg_');
+  assert.ok(!flags.some((f) => /(^|_)bw_/.test(f)), `an old flag survived: ${flags.join(', ')}`);
+
+  assert.equal(save.readHeader(2).mapName, 'Tideglass');
 });

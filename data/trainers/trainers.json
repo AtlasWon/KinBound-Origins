@@ -707,17 +707,18 @@
       }
     ],
     "intro": [
-      "Forty head at that bridge this morning. I pushed the lead one.",
-      "She lay down. In the road."
+      "Forty head over that crest this morning and I lost an hour of it standing still.",
+      "Waiting on a dray. Then another dray. Then a thing on six wheels with a tarpaulin over it."
     ],
     "defeat": [
-      "Nothing to be done for it. Long way round. Four days, same as last month."
+      "Priority of passage, the notice says. Nobody asked me what my priority was."
     ],
     "victory": [
-      "Go and stand on that bridge yourself. Then come back and tell me what they can see."
+      "Stand at the milestone a while. Count them. See if you get to the same number I do."
     ],
     "afterward": [
-      "Mossback keeps them calm. Do not ask me how. It sits there and they stop shaking."
+      "Mossback keeps the herd calm on the incline. Do not ask me how. It sits there and they stop shaking.",
+      "Nothing keeps me calm on the incline. I have looked into it."
     ]
   },
   {
@@ -742,17 +743,17 @@
       }
     ],
     "intro": [
-      "Professor Sorrell has me counting stream depth. Twice a day, same spot.",
-      "It is down eleven centimetres since spring."
+      "Professor Sorrell has me counting traffic on this road. Twice a day, same spot, same notebook.",
+      "He asked for a season of it. I have four weeks and I have run out of pages."
     ],
     "defeat": [
-      "Eleven centimetres. It should not be moving at all."
+      "Two hundred and six loads. Up. All of them up. None of them have come back down."
     ],
     "victory": [
       "Then you have not been reading the numbers either. Nobody reads the numbers."
     ],
     "afterward": [
-      "Every stream on this side of the region is dropping. Every single one."
+      "It is not the count that bothers me. It is that every one of them is going to the same place."
     ]
   },
   {
@@ -773,8 +774,8 @@
       }
     ],
     "intro": [
-      "Forty years on this road. Watched three Turnings come and go.",
-      "This is not one of them. This is something else."
+      "Forty years on this ridge. I have seen the road busy. Busy is a fair season and a full market.",
+      "This is not busy. Busy goes both ways."
     ],
     "defeat": [
       "Good. I would rather it was somebody young out here this time."
@@ -783,8 +784,8 @@
       "No. Go away and get older. It is the only training that ever worked on me."
     ],
     "afterward": [
-      "The last Turning took Old Tidefall. Whole town, one night.",
-      "People forget that when they talk about the Concord like they are villains."
+      "They are polite. That is what I cannot get past. Every one of them has been polite to me.",
+      "Nobody is that polite about stone and rope."
     ],
     "$comment": "The ONLY trainer in the game left on the veteran tier, which is the tier that switches out of a bad matchup. That is deliberate: his class is literally Veteran and his opening line is forty years on this road. Everywhere else the third pass moved tiers down to describe the PERSON rather than the position on the map -- hikers, students, anglers, drovers, performers and swimmers all press the biggest number on the screen now, and Rangers, Surveyors, Hall Hands and the rival read the type chart without switching. A novice trainer that switches optimally does not feel novice, it feels like the game cheating."
   },
@@ -806,7 +807,7 @@
       },
       {
         "species": "voltwick",
-        "level": 14
+        "level": 13
       }
     ],
     "items": [
@@ -818,15 +819,17 @@
     ],
     "defeat": [
       "Fine. Fine.",
-      "Go to the office at Tanners Rest and ask them yourself. They will tell you more than I can.",
-      "Ask about the west face. Ask what is under it."
+      "Go down to the office at Salthollow and ask them yourself. They will tell you more than I can.",
+      "Ask why a body with forty stations has stopped collecting from any of them."
     ],
     "victory": [
       "Good. Now go around."
     ],
     "afterward": [
-      "I have surveyed nine sites this season. Not one of them was near water."
-    ]
+      "Seven of my stations are on this ridge. The Foundation has put a new box beside four of them.",
+      "Better boxes than mine. Warmer, too. Nobody asked me and nobody had to."
+    ],
+    "$comment": "The last Concord trainer in the game, standing at his own obsolete wind station on Eastwind Ridge while the Foundation runs a yard below him. Voltwick was pinned to 14 for three passes and read TWENTY-SEVEN PERCENT against a lone Tide starter, because Spark answers Tide and a 452-BST spark at your own level is not a fight, it is a wall. Down to 13, which is where the rest of the ridge tops out."
   },
   {
     "id": "r4_teal",
@@ -853,7 +856,7 @@
       "Downhill for me too, then."
     ],
     "victory": [
-      "Rest at the Rest. Everyone says that. Everyone hates it."
+      "Rest at Salthollow. Everyone says that. Everyone hates it and everyone does it."
     ],
     "afterward": [
       "You can smell the flats from the second ledge. Try it."
@@ -1350,5 +1353,466 @@
       "Kerb Street east when you are ready. Tideglass is a long way and worth it.",
       "And take a look at the water when you get there. Just look at it."
     ]
+  },
+  {
+    "id": "meridian_agent_kesh",
+    "$comment": "ACT 2, the night on the coast road. The first half of the only fight in the game the player did not choose, so it is deliberately not a wall: two kin, no bag items, and an ace four levels UNDER the Keeper the player has just beaten. That is not a mistake -- these are staff with a licence, not Trainers, and the weight of the scene is meant to come from being jumped on a road rather than from a difficulty spike with no clinic in between. Anchorling leads and Lantric closes rather than the other way round: measured with anchorling as the ace the same pair drops a two-kin party to 0-82 percent, because iron/tide at that level is bulky enough that a party which has just fought a Keeper cannot break it. Measured with tests/helpers/simulate.mjs at L19, novice play, no items, matched party: 100 / 96 / 100 percent (sprigling / cinderpaw / rilltail). The lone-starter floor is 47 / 40 / 0 and is the usual one-kin-against-two floor, not a target.",
+    "name": "Kesh",
+    "className": "Foundation Agent",
+    "sprite": "meridian_lead",
+    "ai": "trained",
+    "payout": 210,
+    "party": [
+      {
+        "species": "anchorling",
+        "level": 15
+      },
+      {
+        "species": "lantric",
+        "level": 16
+      }
+    ],
+    "intro": [
+      "Nobody is going to be unpleasant about this if nobody makes it necessary."
+    ],
+    "defeat": [
+      "Fine. Fine. That is one of us."
+    ],
+    "victory": [
+      "Sit down. Somebody will come and find you in the morning."
+    ],
+    "afterward": [
+      "I have a licence and a number and neither of them is going to help me now."
+    ]
+  },
+  {
+    "id": "meridian_agent_ordell",
+    "$comment": "The second half, fought back to back with Kesh and no clinic in between, which the simulator cannot model -- so the single-fight numbers are read as a ceiling and the levels are set under them. The pair totals four kin, the same weight as the Keeper, rather than six. The types are chosen so the two agents punish DIFFERENT branches and cancel out: Kesh carries tide against the flame starter, Ordell carries gale against the verdant one and spark against the tide one, and nobody is singled out. Measured at L19, novice play, no items, matched party: 99 / 100 / 100 percent. If this ever measures under ninety, drop Ordell first -- he is the one being fought on a half-dead party.",
+    "name": "Ordell",
+    "className": "Foundation Agent",
+    "sprite": "meridian",
+    "ai": "trained",
+    "payout": 240,
+    "party": [
+      {
+        "species": "kestrelle",
+        "level": 16
+      },
+      {
+        "species": "voltwick",
+        "level": 17
+      }
+    ],
+    "intro": [
+      "Kesh asked. I am not going to."
+    ],
+    "defeat": [
+      "That is not - no. No, that is not what I was told to expect."
+    ],
+    "victory": [
+      "Nothing personal in it. There never is, and that is the trouble with us."
+    ],
+    "afterward": [
+      "She had no business being out here either. Ask her about that sometime."
+    ]
+  },
+  {
+    "id": "tarin_tideglass_sprigling",
+    "$comment": "ACT 2, in Tideglass after the night on the road. OPTIONAL -- he asks and the player may say no, which is the cheapest difficulty valve there is, and onLoss is \"continue\" so losing to him is a scene rather than a whiteout and he offers again. Keyed by the species HE leads with, per docs/TARIN.md, never by the player s. The bench is the two beast kin he has carried since Route 1: neutral to all three starters, which is what keeps the three branches level, and the point of the scene besides -- he has not swapped his team out, he has just worked out what it is for. Measured at L19, novice play, no items, matched party: 95 / 91 / 100 percent (sprigling / cinderpaw / rilltail).",
+    "name": "Tarin",
+    "className": "Rival",
+    "sprite": "rival",
+    "ai": "trained",
+    "payout": 200,
+    "party": [
+      {
+        "species": "tuftail",
+        "level": 17
+      },
+      {
+        "species": "nibbet",
+        "level": 18
+      },
+      {
+        "species": "bramblehusk",
+        "level": 20
+      }
+    ],
+    "intro": [
+      "No talking through it. No jokes. Just come at me."
+    ],
+    "defeat": [
+      "Right.",
+      "Right, good. That is what I needed to see."
+    ],
+    "victory": [
+      "Ha! - no. No, I do not want it like that. Heal up and do it again."
+    ],
+    "afterward": [
+      "Fifteen carts, by the way. I never did get past fifteen."
+    ]
+  },
+  {
+    "id": "tarin_tideglass_cinderpaw",
+    "$comment": "ACT 2, in Tideglass after the night on the road. OPTIONAL -- he asks and the player may say no, which is the cheapest difficulty valve there is, and onLoss is \"continue\" so losing to him is a scene rather than a whiteout and he offers again. Keyed by the species HE leads with, per docs/TARIN.md, never by the player s. The bench is the two beast kin he has carried since Route 1: neutral to all three starters, which is what keeps the three branches level, and the point of the scene besides -- he has not swapped his team out, he has just worked out what it is for. Measured at L19, novice play, no items, matched party: 95 / 91 / 100 percent (sprigling / cinderpaw / rilltail).",
+    "name": "Tarin",
+    "className": "Rival",
+    "sprite": "rival",
+    "ai": "trained",
+    "payout": 200,
+    "party": [
+      {
+        "species": "tuftail",
+        "level": 17
+      },
+      {
+        "species": "nibbet",
+        "level": 18
+      },
+      {
+        "species": "blazelynx",
+        "level": 20
+      }
+    ],
+    "intro": [
+      "No talking through it. No jokes. Just come at me."
+    ],
+    "defeat": [
+      "Right.",
+      "Right, good. That is what I needed to see."
+    ],
+    "victory": [
+      "Ha! - no. No, I do not want it like that. Heal up and do it again."
+    ],
+    "afterward": [
+      "Fifteen carts, by the way. I never did get past fifteen."
+    ]
+  },
+  {
+    "id": "tarin_tideglass_rilltail",
+    "$comment": "ACT 2, in Tideglass after the night on the road. OPTIONAL -- he asks and the player may say no, which is the cheapest difficulty valve there is, and onLoss is \"continue\" so losing to him is a scene rather than a whiteout and he offers again. Keyed by the species HE leads with, per docs/TARIN.md, never by the player s. The bench is the two beast kin he has carried since Route 1: neutral to all three starters, which is what keeps the three branches level, and the point of the scene besides -- he has not swapped his team out, he has just worked out what it is for. Measured at L19, novice play, no items, matched party: 95 / 91 / 100 percent (sprigling / cinderpaw / rilltail).",
+    "name": "Tarin",
+    "className": "Rival",
+    "sprite": "rival",
+    "ai": "trained",
+    "payout": 200,
+    "party": [
+      {
+        "species": "tuftail",
+        "level": 17
+      },
+      {
+        "species": "nibbet",
+        "level": 18
+      },
+      {
+        "species": "brookmaw",
+        "level": 20
+      }
+    ],
+    "intro": [
+      "No talking through it. No jokes. Just come at me."
+    ],
+    "defeat": [
+      "Right.",
+      "Right, good. That is what I needed to see."
+    ],
+    "victory": [
+      "Ha! - no. No, I do not want it like that. Heal up and do it again."
+    ],
+    "afterward": [
+      "Fifteen carts, by the way. I never did get past fifteen."
+    ]
+  },
+  {
+    "id": "tg_hand_a",
+    "$comment": "Hall 3, the apron: two small kin off the steps, the fight that exists to be won while the player is still dry. She stands at 13,19 watching row 19 across x9-12, and 9,19 and 10,19 are the only apron tiles that touch the south lane mouth, so she is unavoidable without standing in anybody's way. Measured, novice play, no items, 400 runs: lone starter at the solo-lead level 100/100/100, matched party at the team-raiser level 100/100/100.",
+    "name": "Ollen",
+    "className": "Sluice Hand",
+    "sprite": "sailor",
+    "ai": "trained",
+    "payout": 60,
+    "party": [
+      {
+        "species": "pinchel",
+        "level": 15
+      },
+      {
+        "species": "shalefin",
+        "level": 16
+      }
+    ],
+    "intro": [
+      "You came down the steps walking. Everyone gets that bit right.",
+      "Let us see how you manage the part with no steps in it."
+    ],
+    "defeat": [
+      "Fair enough. Go on and get in the water."
+    ],
+    "victory": [
+      "Steps are behind you. Nothing down here is in any hurry."
+    ],
+    "afterward": [
+      "Only one lane leaves this apron and it is not a choice. That is deliberate."
+    ]
+  },
+  {
+    "id": "tg_hand_b",
+    "$comment": "Hall 3, the west staithe -- what the lane washes in. THE SILTHOPPER IS THE REASON THIS ROW IS FAIR, and it is not decoration. A Tide Hall hits a Flame starter for double and takes half back from it, so every all-Tide lineup measured in the teens for Cinderpaw; Silthopper is terra/chitin, the one thing on this coast that BOTH Flame and Tide hit for double, and its moves are cut back to Quickstep and Nibble so it does not turn round and hit Verdant for double with Chitin. The first build of this row (Gullswift, Silthopper, Currentail) read 23 percent for Cinderpaw on the lone-starter column; a second with Anchorling in it read 21, because def 104 against a novice pressing one move is a wall rather than a fight. Measured, 400 runs: lone 100/97/100, matched 100/100/100.",
+    "name": "Brae",
+    "className": "Sluice Hand",
+    "sprite": "villager_m",
+    "ai": "trained",
+    "payout": 65,
+    "party": [
+      {
+        "species": "silthopper",
+        "level": 16,
+        "moves": [
+          "quickstep",
+          "nibble"
+        ]
+      },
+      {
+        "species": "pinchel",
+        "level": 17
+      },
+      {
+        "species": "shalefin",
+        "level": 18
+      }
+    ],
+    "intro": [
+      "Nobody arrives at this staithe on purpose. The lane arrives here.",
+      "You are just what was in it."
+    ],
+    "defeat": [
+      "Right. Race is off the east side. Have a look at where it is pointed."
+    ],
+    "victory": [
+      "Drain is in the corner. It is not a punishment, it is a door."
+    ],
+    "afterward": [
+      "Race leaves off the far side, one tile of it. You will know it when it has you."
+    ]
+  },
+  {
+    "id": "tg_hand_c",
+    "$comment": "Hall 3, the gate-hand, and the hardest of the three. NO \"afterward\" LINE, DELIBERATELY: her NPC carries both a trainer and the tg_winch script, and overworld interact answers with the trainer's afterward and returns before it ever reaches the script -- an afterward here would make the north sluice unturnable and the Hall unfinishable. Clatterclaw is capped to Closing Hold: with Shellstrike (chitin 65 off atk 104) the same row read 24 percent for Sprigling and 32 for Rilltail, because Chitin hits Verdant for double and both Tide starters bounce off a tide/chitin wall. Measured, 400 runs: lone 96/99/98, matched 100/100/100.",
+    "name": "Nell",
+    "className": "Gate Hand",
+    "sprite": "villager_f",
+    "ai": "trained",
+    "payout": 75,
+    "party": [
+      {
+        "species": "pinchel",
+        "level": 17
+      },
+      {
+        "species": "silthopper",
+        "level": 18,
+        "moves": [
+          "quickstep",
+          "nibble",
+          "gravelspray"
+        ]
+      },
+      {
+        "species": "clatterclaw",
+        "level": 19,
+        "moves": [
+          "closing_hold"
+        ]
+      }
+    ],
+    "intro": [
+      "Dead end, this staithe. I work the beam, so I am the only one meant to be standing on it.",
+      "You are going to want something off me shortly. Earn it first."
+    ],
+    "defeat": [
+      "Hah. All right. Ask me about the sluice."
+    ],
+    "victory": [
+      "Take the drain and come back when the water has stopped surprising you."
+    ]
+  },
+  {
+    "id": "tg_keeper_vane",
+    "$comment": "HALL 3, THE TIDE CREST, and the Tide Hall of Tideglass. Her party is the tank's own population -- a barnacle crab, a silt hopper, a gull and the race itself -- which is the flavour and the tuning at once, because it is deliberately not four Tide kin. The problem this row solves is the one Roxen solves with the type chart reversed: Tide hits Flame for double and Flame hits Tide for half, so a Cinderpaw player faces a Hall that punishes them on both sides of every exchange, and every all-Tide build measured between 0 and 13 percent for Cinderpaw. So the offence is spread: Pinchel swings Spray and Nibble, Silthopper swings Beast and Chitin, Gullswift is capped at 40-60 power, and only the ace is a real Tide attacker -- with flat-zero IVs and its two weakest moves. No bag item: Battle.doItem never consumes a foe-side item, so one Potion in that list is an unlimited heal rather than a Potion (see Roxen and Mabry). DO NOT RAISE THE LEVELS. Sixteen-to-nineteen was tried as eighteen-to-twenty-one and it bought two points on the matched row while dropping Cinderpaw from 81 to 35 on the lone row -- Currentail at 21 crosses a one-shot threshold against Blazelynx and the fight stops existing. Measured, novice play, no items, 400 runs: lone starter at the solo-lead level 96/81/100, matched party at the team-raiser level 100/100/100. The 81 is a lone Blazelynx walking a four-kin Keeper with no healing, which is the harness floor rather than a fight anybody has; the Hall 3 keeper this replaces read 0 percent there.",
+    "name": "Marit Vane",
+    "className": "Keeper",
+    "sprite": "elder",
+    "ai": "keeper",
+    "payout": 130,
+    "party": [
+      {
+        "species": "pinchel",
+        "level": 17,
+        "moves": [
+          "spray",
+          "nibble",
+          "brace"
+        ]
+      },
+      {
+        "species": "silthopper",
+        "level": 18,
+        "moves": [
+          "quickstep",
+          "nibble",
+          "gravelspray"
+        ]
+      },
+      {
+        "species": "gullswift",
+        "level": 19,
+        "moves": [
+          "spray",
+          "gustline",
+          "wingbeat"
+        ]
+      },
+      {
+        "species": "currentail",
+        "level": 19,
+        "moves": [
+          "spray",
+          "undertow"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      }
+    ],
+    "intro": [
+      "Right then. Water first and questions afterwards."
+    ],
+    "defeat": [
+      "Huh."
+    ],
+    "victory": [
+      "Out you go and get dry, and then come back and do it again.",
+      "Nobody in this city has ever got it right first time. Including me."
+    ],
+    "afterward": [
+      "Go and listen to him. Then ask him what he does the first time the sea says no."
+    ]
+  },
+  {
+    "id": "r3_wenna",
+    "name": "Wenna",
+    "className": "Foundation Agent",
+    "sprite": "meridian",
+    "ai": "trained",
+    "payout": 58,
+    "party": [
+      {
+        "species": "chalkid",
+        "level": 12
+      },
+      {
+        "species": "fizzlet",
+        "level": 12
+      },
+      {
+        "species": "kestrelle",
+        "level": 13
+      }
+    ],
+    "items": [
+      "strong_potion"
+    ],
+    "intro": [
+      "Morning. Mind the ropes and stay off the pad while the winch is running.",
+      "You are welcome to walk through. Everyone is. It is a public road and we did not forget that."
+    ],
+    "defeat": [
+      "Well fought. Genuinely.",
+      "Take the incline slowly, it is steeper than it looks with a load on."
+    ],
+    "victory": [
+      "No harm done. Sit down a minute, there is tea in the hut."
+    ],
+    "afterward": [
+      "Forty crates and a crane, over a ridge, because a rock came down thirty-one years ago.",
+      "If you want to know what the Foundation actually does, it is mostly this. Moving things badly."
+    ],
+    "$comment": "The first Meridian person the player fights, and she has to be LIKEABLE. She apologises for the road being full, she does not tell them to go around, and she offers them tea afterwards. Act 4 comes back to her: she genuinely does not know."
+  },
+  {
+    "id": "r3_kessel",
+    "name": "Kessel",
+    "className": "Ridge Warden",
+    "sprite": "hiker",
+    "ai": "novice",
+    "payout": 58,
+    "party": [
+      {
+        "species": "pipwing",
+        "level": 11
+      },
+      {
+        "species": "slatewing",
+        "level": 12
+      },
+      {
+        "species": "kestrelle",
+        "level": 13
+      }
+    ],
+    "intro": [
+      "Careful up here. Wind takes people off this crest about once a decade.",
+      "Wind, and the fact that they were looking at the birds instead of their feet."
+    ],
+    "defeat": [
+      "Fair. They fly better than they fight, and I have never minded that."
+    ],
+    "victory": [
+      "Watch the wing on your left. Always the left, in an east wind."
+    ],
+    "afterward": [
+      "Gullswift on the crest, three days running. Sea birds. Eleven miles inland and four hundred feet up.",
+      "I have wardened this ridge nineteen years and I have never had to write that down before."
+    ],
+    "$comment": "The route's Gale trainer, and the one who tells the player what the encounter table is doing: a sea bird inland is the first quiet sign that something is wrong with the water, three maps before anybody says so."
+  },
+  {
+    "id": "r4_marrin",
+    "name": "Marrin",
+    "className": "Foundation Porter",
+    "sprite": "porter",
+    "ai": "novice",
+    "payout": 62,
+    "party": [
+      {
+        "species": "burrowen",
+        "level": 14
+      },
+      {
+        "species": "gravelet",
+        "level": 15
+      }
+    ],
+    "intro": [
+      "Down and back, down and back. Sixteen days now.",
+      "Best wage I have ever earned and I have not once been told what is in the boxes."
+    ],
+    "defeat": [
+      "Ha! Right. I needed that. Sixteen days of walking and no arguing at all."
+    ],
+    "victory": [
+      "Board, lodging, a coat and a wage. You would take it too."
+    ],
+    "afterward": [
+      "The card in Stonewake said no experience required. It meant it, and all.",
+      "Nine of us signed. Six were quarry lads. We none of us ask anything, and the wage comes on time."
+    ],
+    "$comment": "The other end of the recruiting card on the wall of the Stonewake Meridian office. He is not a villain, he is a man with a job, and he is the reason the Order works: most of the Foundation is Marrin."
   }
 ]

@@ -174,16 +174,20 @@ const ROADS: [string, string][] = [
   ['route_1', 'briarbell'],
   ['briarbell', 'route_2'],
   ['route_2', 'stonewake'],
-  ['stonewake', 'tanners_rest'],
-  ['tanners_rest', 'brackwater'],
-  ['brackwater', 'frostmere'],
-  ['frostmere', 'aureline'],
-  ['aureline', 'the_ascent'],
+  ['stonewake', 'route_3'],
+  ['route_3', 'tanners_rest'],
+  ['tanners_rest', 'route_4'],
+  ['route_4', 'tideglass'],
+  // From here the crescent is the journey ahead, in the order canon walks it:
+  // the coast, the volcanic interior, the wetlands, the capital, the snow, the
+  // cliffs, and the old city below the Summit.
+  ['tideglass', 'emberfall'],
+  ['emberfall', 'mirehaven'],
+  ['mirehaven', 'aureline'],
+  ['aureline', 'frostmere'],
   ['aureline', 'skyreach'],
   ['skyreach', 'crownspire'],
-  ['crownspire', 'mirehaven'],
-  ['mirehaven', 'tideglass'],
-  ['tideglass', 'emberfall'],
+  ['crownspire', 'the_ascent'],
 ];
 
 // No lane out to the Temple of the Deep on purpose. It is a long way off the

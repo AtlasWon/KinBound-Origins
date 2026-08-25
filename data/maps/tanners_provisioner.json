@@ -21,8 +21,8 @@
       "x": 6,
       "y": 9,
       "toMap": "tanners_rest",
-      "toX": 19,
-      "toY": 9,
+      "toX": 29,
+      "toY": 11,
       "facing": "down",
       "style": "door"
     }
@@ -57,9 +57,9 @@
       "x": 3,
       "y": 4,
       "text": [
-        "The biggest stock in Caelora, and the shop knows it.",
-        "Vessels four grades deep, in a rack with the prices",
-        "chalked on and re-chalked twice this month."
+        "Vessels four grades deep in a rack, with the prices chalked on and re-chalked twice this month.",
+        "The largest stock between Stonewake and the water, in a village of four hundred people.",
+        "Every bit of it came over the ridge on somebody's back."
       ]
     },
     {
@@ -77,9 +77,8 @@
       "x": 2,
       "y": 6,
       "text": [
-        "Leatherwork, because of course it is. Packs, straps,",
-        "harness, and boot soles stacked like plates.",
-        "The smell gets into your clothes and travels with you."
+        "Leatherwork, because of course it is. Packs, straps, harness, and boot soles stacked like plates.",
+        "It is cured a mile up the lane and it gets into your clothes and travels with you."
       ]
     },
     {
@@ -87,10 +86,11 @@
       "x": 8,
       "y": 2,
       "text": [
-        "The display case runs the whole length of the counter.",
-        "Behind the glass, one shelf is empty and roped off,",
-        "with a card that reads WHEN THE CONCORD SAYS SO."
+        "The display case runs the whole length of the counter, and one shelf of it is roped off and empty.",
+        "The card behind the rope says: RESERVED. FOUNDATION ACCOUNT.",
+        "Under it, in the shopkeeper's hand and not meant to be read: THEY PAY ON TIME."
       ]
     }
-  ]
+  ],
+  "displayName": "PROVISIONER"
 }

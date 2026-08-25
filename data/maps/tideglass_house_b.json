@@ -1,0 +1,74 @@
+{
+  "id": "tideglass_house_b",
+  "name": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIUIII",
+    "IbfffNQJffI",
+    "IefffKKKffI",
+    "IfffffffffI",
+    "IPffAAffkfI",
+    "IfrrEEfffPI",
+    "I//rfffffkI",
+    "IfffffffffI",
+    "IIIIIDIIIII"
+  ],
+  "warps": [
+    {
+      "x": 5,
+      "y": 8,
+      "toMap": "tideglass",
+      "toX": 8,
+      "toY": 42,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tg_house_b_wife",
+      "sprite": "townsfolk_f",
+      "x": 3,
+      "y": 5,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_house_b_wife"
+    },
+    {
+      "id": "tg_house_b_kid",
+      "sprite": "kid",
+      "x": 8,
+      "y": 3,
+      "facing": "left",
+      "movement": {
+        "kind": "wander",
+        "radius": 1
+      },
+      "script": "tg_house_b_kid"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "A cot at the foot of the bed, and a second one folded against the wall.",
+        "Old Harbour houses are one room and the family goes up, not out."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 6,
+      "text": [
+        "A shelf of glass floats, the cheap green kind, twelve of them.",
+        "One is blue-green and much older and is kept at the back."
+      ]
+    }
+  ]
+}

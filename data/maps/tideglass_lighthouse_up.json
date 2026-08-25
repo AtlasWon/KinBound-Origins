@@ -1,0 +1,69 @@
+{
+  "id": "tideglass_lighthouse_up",
+  "name": "The Lamp Room",
+  "displayName": "THE LAMP ROOM",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIUIII",
+    "IF+++++++FI",
+    "IF+++++++FI",
+    "IFFFFFFFFFI",
+    "IkFFFFFFFSI",
+    "IFFFFFFFFFI",
+    "IPFFAAFFFFI",
+    "IFFFEEFFFkI",
+    "IIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 4,
+      "toMap": "tideglass_lighthouse",
+      "toX": 9,
+      "toY": 3,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 4,
+      "y": 1,
+      "text": [
+        "The lamp. Glass in rings, ground here in the city, turning slowly",
+        "on a bath of mercury so that nothing in it ever needs to touch anything else."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 4,
+      "text": [
+        "From up here the whole bay: the moles, the basin, the deep lane,",
+        "and out past all of it a flat grey sea with no weather on it at all.",
+        "It has looked exactly like this for three weeks."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 7,
+      "text": [
+        "Scratched into the sill, small, by somebody bored on a long watch:",
+        "IF YOU ARE READING THIS THE LIGHT IS STILL LIT. THAT IS THE WHOLE JOB."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 1,
+      "y": 7,
+      "item": "great_potion",
+      "quantity": 1,
+      "flag": "item_tg_lamproom"
+    }
+  ]
+}

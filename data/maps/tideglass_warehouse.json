@@ -1,0 +1,87 @@
+{
+  "id": "tideglass_warehouse",
+  "name": "Bonded Warehouse",
+  "displayName": "BONDED WAREHOUSE",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIIIIIIIUIII",
+    "IFFFFFFFFFFFFFFFFI",
+    "IKKKKFFFFFFFFKKKKI",
+    "IKKKKFFFFFFFFKKKKI",
+    "IFFFFFFFFFFFFFFFFI",
+    "IFFFFKKKKKKFFFFFFI",
+    "IFFFFKKKKKKFFFFFFI",
+    "IFFFFFFFFFFFFFFFFI",
+    "IKKKKFFFFFFFFKKKKI",
+    "IKKKKFFFFFFFFKKKKI",
+    "IPFFFFFFFFFFFFFFPI",
+    "IFFFFFFFFFFFFFFFFI",
+    "IIIIIIIIIDIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 12,
+      "toMap": "tideglass",
+      "toX": 49,
+      "toY": 36,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tg_bond_clerk",
+      "sprite": "clerk",
+      "x": 6,
+      "y": 4,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_bond_clerk"
+    },
+    {
+      "id": "tg_bond_porter",
+      "sprite": "porter",
+      "x": 12,
+      "y": 7,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_bond_porter"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "Bonded goods: nothing leaves without a stamp and nothing is opened.",
+        "Three quarters of the floor is one consignee."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 16,
+      "y": 10,
+      "text": [
+        "A stack under a tarpaulin, in the corner, roped down.",
+        "The crates are stencilled with a compass rose inside a ring",
+        "and a lot number that starts at four thousand and something."
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 2,
+      "y": 11,
+      "item": "escape_line",
+      "quantity": 1,
+      "flag": "item_tg_warehouse_line"
+    }
+  ]
+}

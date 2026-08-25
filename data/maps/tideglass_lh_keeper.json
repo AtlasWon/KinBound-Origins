@@ -1,0 +1,63 @@
+{
+  "id": "tideglass_lh_keeper",
+  "name": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIUIII",
+    "IbfffNQJffI",
+    "IefffKKKffI",
+    "IkffffffffI",
+    "IPffAAffffI",
+    "IfrrEEfffkI",
+    "I//rffffffI",
+    "IfffffffffI",
+    "IIIIIDIIIII"
+  ],
+  "warps": [
+    {
+      "x": 5,
+      "y": 8,
+      "toMap": "tideglass",
+      "toX": 8,
+      "toY": 50,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tg_keeper_wife",
+      "sprite": "townsfolk_f",
+      "x": 3,
+      "y": 5,
+      "facing": "right",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "tg_keeper_wife"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 3,
+      "text": [
+        "A house at the root of the mole, so the walk to the light",
+        "is nine hundred paces in whatever the weather is doing."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 5,
+      "text": [
+        "A weather board by the door, filled in every morning.",
+        "CALM. CALM. CALM. CALM. Twenty-two days of it in a keeper's hand",
+        "that gets angrier at the word every time it writes it."
+      ]
+    }
+  ]
+}

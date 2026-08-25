@@ -1,0 +1,121 @@
+{
+  "id": "tideglass_meridian",
+  "name": "Meridian Coastal Station",
+  "displayName": "MERIDIAN FOUNDATION",
+  "music": "station",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIIIIIIIUIII",
+    "I+++:::@@@@:::+++I",
+    "I::::::::::::::::I",
+    "I?::::::::::::::?I",
+    "I::::::::::::::::I",
+    "I$$:::kkkkkk:::$$I",
+    "I::::::::::::::::I",
+    "I@@::::::::::::@@I",
+    "I::::::::::::::::I",
+    "IP::AA::::::AA::PI",
+    "I:::EE::::::EE:::I",
+    "Ik::::::::::::::kI",
+    "I::::::::::::::::I",
+    "IIIIIIIIIDDIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 13,
+      "toMap": "tideglass",
+      "toX": 71,
+      "toY": 13,
+      "facing": "down",
+      "style": "door"
+    },
+    {
+      "x": 10,
+      "y": 13,
+      "toMap": "tideglass",
+      "toX": 72,
+      "toY": 13,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tg_station_lead",
+      "sprite": "meridian_lead",
+      "x": 8,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_station_lead"
+    },
+    {
+      "id": "tg_station_sci",
+      "sprite": "meridian_sci",
+      "x": 3,
+      "y": 6,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_station_sci"
+    },
+    {
+      "id": "tg_station_sci_f",
+      "sprite": "meridian_sci_f",
+      "x": 12,
+      "y": 8,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "tg_station_sci_f"
+    },
+    {
+      "id": "tg_station_hand",
+      "sprite": "meridian",
+      "x": 6,
+      "y": 11,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_station_hand"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 5,
+      "text": [
+        "A wall of the Foundation's work on this coast, in order:",
+        "storm warning, ocean survey, Kin conservation, disaster relief.",
+        "Every line of it is true and every line of it is paid for by them."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "Gauges, tide clocks and a bank of storm glasses.",
+        "One glass has been sealed and dated and set apart from the others.",
+        "The date is the morning the fish left."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 16,
+      "y": 3,
+      "text": [
+        "A door marked SURVEY - STAFF. Locked, and not the kind of lock",
+        "a laboratory buys. The frame has been reinforced from the inside."
+      ]
+    }
+  ]
+}

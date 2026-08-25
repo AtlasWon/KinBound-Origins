@@ -1,6 +1,5 @@
 {
   "speakers": {
-    "tr_crier": "TOWN CRIER",
     "tr_drover": "DROVER MASK",
     "tr_clerk": "CONCORD CLERK",
     "tr_child": "PIP",
@@ -9,7 +8,13 @@
     "tr_shop_hand": "SHOP HAND",
     "tr_concord_clerk": "CLERK OSWIN",
     "tr_concord_hand": "SURVEY HAND",
-    "tanners_house_resident": "GRAN ELLOWAY"
+    "tanners_house_resident": "GRAN ELLOWAY",
+    "tr_tablekeeper": "MOTH ELLOWAY",
+    "tr_tanner": "TANNER",
+    "tr_beaconwatch": "BEACON WATCH",
+    "tr_porter": "FOUNDATION PORTER",
+    "tr_carter_wife": "CARTER'S WIFE",
+    "tr_bellman": "BELLMAN"
   },
   "entries": {
     "tr_crier": [
@@ -32,9 +37,22 @@
       }
     ],
     "tr_drover": [
-      "Can't get the herd over the Route 3 bridge. Not one animal.",
-      "Walked them the long way round instead. Four days, and they went happily.",
-      "They know something. Animals always know first and they never say what."
+      {
+        "ifFlags": [
+          "tarin_at_ridge"
+        ],
+        "lines": [
+          "There is a lad been sat on the ridge milestone since dawn with a slate, counting carts.",
+          "I asked him why. He said somebody had to, and offered me his tea."
+        ]
+      },
+      {
+        "lines": [
+          "Change your team here or do not go up at all. That is not advice, that is the paddock rule.",
+          "A team that goes up the ridge tired does not come down it.",
+          "And it is worse than it was, because you cannot get up it now without stopping for somebody."
+        ]
+      }
     ],
     "tr_clerk": [
       {
@@ -56,9 +74,13 @@
       }
     ],
     "tr_child": [
-      "I'm going to be a surveyor.",
-      "They get a coat and a brass thing and everyone stops talking when they walk in.",
-      "Mum says that isn't a reason. It's a bit of a reason."
+      {
+        "lines": [
+          "I am going to work for the Foundation.",
+          "They get a coat and a brass thing and everyone stops talking when they walk in.",
+          "Mum says that is not a reason. It is a bit of a reason."
+        ]
+      }
     ],
     "tr_runner": [
       {
@@ -80,9 +102,13 @@
       }
     ],
     "tr_rester": [
-      "Walked up from Brackwater. Two days on the coast road and not one gull.",
-      "I've made that walk since I was nine. There are always gulls.",
-      "You don't notice a sound until you've spent two days listening for it."
+      {
+        "lines": [
+          "Walked up from Tideglass. Two days on the coast road and not one gull the whole way.",
+          "I have made that walk since I was nine. There are always gulls.",
+          "You do not notice a sound until you have spent two days listening for it."
+        ]
+      }
     ],
     "tr_shop_hand": [
       "Net Vessels are new in. Good on anything that swims.",
@@ -131,6 +157,79 @@
           "But nobody who was there thinks it should be allowed to happen twice."
         ]
       }
+    ],
+    "tr_tablekeeper": [
+      {
+        "ifFlags": [
+          "tarin_at_ridge"
+        ],
+        "lines": [
+          "Loud lad sat here yesterday and gave me a count off a slate. Fourteen carts.",
+          "That is the best news anyone has brought this table in a month, and he would not take a plate for it.",
+          "I have put his fourteen in the book anyway. He will be back."
+        ]
+      },
+      {
+        "lines": [
+          "Sit. Eat. The only rent on that bench is telling me what you saw on the road.",
+          "Four hundred years we have done it that way. A village that cannot see round the corner",
+          "buys its warnings a plate at a time, and it has never once been a bad bargain."
+        ]
+      }
+    ],
+    "tr_tanner": [
+      {
+        "lines": [
+          "Salt on the wind and no wind in the hollow. That is the whole trick and you cannot fake it.",
+          "Tideglass has the salt and no shelter. The ridge has the shelter and no salt.",
+          "Here has both. Four hundred years of hides, and the smell is the rent."
+        ]
+      }
+    ],
+    "tr_beaconwatch": [
+      {
+        "lines": [
+          "Up the ridge at dusk, light it, down again in the dark. Nine of us on the rota.",
+          "Salthollow has kept that light since before Salthollow had a name.",
+          "Somebody came last month and offered to do it for us. With a machine. We said no."
+        ]
+      }
+    ],
+    "tr_porter": [
+      {
+        "ifFlags": [
+          "crest_2_taken"
+        ],
+        "lines": [
+          "Sixteen days. Down and back, down and back, and the wage comes every Friday in coin.",
+          "They never say what is in them. I have stopped hearing myself not ask.",
+          "Do not tell me. If you find out, do not tell me. I have three at home."
+        ]
+      },
+      {
+        "lines": [
+          "Best-paid work on this coast and all you do is walk. I would take it again tomorrow."
+        ]
+      }
+    ],
+    "tr_carter_wife": [
+      {
+        "lines": [
+          "My husband has been up on that ridge since yesterday with a broken axle.",
+          "The Foundation came out, counted his load, wrote it in a book and went away.",
+          "Nobody counted him."
+        ]
+      }
+    ],
+    "tr_bellman": [
+      {
+        "lines": [
+          "Fire, wreck, or the beacon wanting wood. Three reasons and no others, ever.",
+          "Four rings this year. Three of them were the beacon.",
+          "The fourth was a fortnight ago. Nobody has told me yet what that one was for."
+        ]
+      }
     ]
-  }
+  },
+  "_note": " TARIN: the ledger in src/systems/tarin.ts publishes tarin_at_<beat> as a flag, and these variants are how the town talks about him between the times he is on screen. They are copies of the shared voices in data/dialogue/common.json (tarin_word_street, _hall, _clinic, _shop) because nothing on any map points an NPC at those ids yet -- if you would rather have the shared ones, set an NPC script to tarin_word_street and delete the copy here. First match wins, so they sit at the top and the ungated line still ends every list. The tr_crier speaker name was left behind when the village map dropped that NPC, which fails tests/content.test.js; the name is gone and the entry is kept, so re-placing an NPC with that id is one line."
 }

@@ -1,0 +1,84 @@
+{
+  "id": "tideglass_bookseller",
+  "name": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIUIII",
+    "IkkkkkFkkkkI",
+    "IFFFFFFFFFFI",
+    "IkkFFKKKFFkI",
+    "IFFFFFFFFFFI",
+    "IkkFFAAFFkkI",
+    "IFFFFEEFFFPI",
+    "IkFFFFFFFFkI",
+    "IIIIIIDIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 8,
+      "toMap": "tideglass",
+      "toX": 47,
+      "toY": 26,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tg_bookseller",
+      "sprite": "elder",
+      "x": 5,
+      "y": 4,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_bookseller"
+    },
+    {
+      "id": "tg_book_reader",
+      "sprite": "townsfolk_f",
+      "x": 7,
+      "y": 5,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "tg_book_reader"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "Local history, three shelves, most of it the same four books.",
+        "All four agree that Tideglass is two hundred years old.",
+        "All four also mention that the harbour wall is a great deal older than that."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 1,
+      "text": [
+        "A thin volume: ON THE GLASS QUAY, AND WHY IT IS NOT OURS.",
+        "Privately printed. The author is not named. It has been reprinted eleven times,",
+        "which for a book nobody will put their name to is remarkable."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 7,
+      "text": [
+        "A box of unsold pamphlets about the Great Deluge.",
+        "Every one of them calls it weather. The bookseller has not opened the box in years."
+      ]
+    }
+  ]
+}

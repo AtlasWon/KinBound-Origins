@@ -120,9 +120,9 @@
   },
   {
     "id": "tanners_provisioner",
-    "name": "Tanners Rest Provisioner",
+    "name": "Salthollow Provisioner",
     "greeting": [
-      "Four roads meet outside that door. Everything on those roads ends up on these shelves."
+      "Biggest stock on the coast, in a village of four hundred, and every crate of it came over that ridge on somebody's back."
     ],
     "stock": [
       {
@@ -192,8 +192,8 @@
     ]
   },
   {
-    "id": "brackwater_provisioner",
-    "name": "Brackwater Provisioner",
+    "id": "tideglass_provisioner",
+    "name": "Tideglass Provisioner",
     "greeting": [
       "Salt gets into everything here. Including the prices, apparently."
     ],

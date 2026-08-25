@@ -1,0 +1,17 @@
+{
+  "speakers": {
+    "tg_shipwright_in": "SHIPWRIGHT",
+    "tg_yard_prentice": "YARD APPRENTICE"
+  },
+  "entries": {
+    "tg_shipwright_in": [
+      "They want shallow boats with heavy fittings and no room for fish.",
+      "That is a boat for carrying gear out and putting it down on the bottom.",
+      "I have built eleven of them. I would build eleven more. Look at my yard."
+    ],
+    "tg_yard_prentice": [
+      "Seven boats came back dinged in the same spot, low on the bow.",
+      "Nothing charted out there to hit. Master says stop counting. I have not stopped counting."
+    ]
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "id": "tideglass_tidewatch",
+  "name": "The Tidewatch",
+  "displayName": "THE TIDEWATCH",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIUIII",
+    "I????FF++++I",
+    "IFFFFFFFFFFI",
+    "I$$FFFFFFF$I",
+    "IFFFFFFFFFFI",
+    "IkFFAAFFFFkI",
+    "IFFFEEFFFFPI",
+    "IFFFFFFFFFFI",
+    "IPFFFFFFFFFI",
+    "IIIIIIDIIIII"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 9,
+      "toMap": "tideglass",
+      "toX": 15,
+      "toY": 50,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tg_watch_signaller",
+      "sprite": "sailor",
+      "x": 3,
+      "y": 4,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_watch_signaller"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "The signal board: flags, lamps and a codebook two inches thick.",
+        "Every pilot in the harbour can read this window from a mile out."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 1,
+      "text": [
+        "The hour slate. Height of water, on the hour, all day, all night.",
+        "The last four days are the same number ninety-six times over.",
+        "Somebody has ruled a line under it and written nothing."
+      ]
+    }
+  ]
+}

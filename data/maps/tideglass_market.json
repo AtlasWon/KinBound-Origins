@@ -1,0 +1,110 @@
+{
+  "id": "tideglass_market",
+  "name": "The Fish Market",
+  "displayName": "THE FISH MARKET",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIIIIIIIUIII",
+    "IFFFFFFFFFFFFFFFFI",
+    "IFKKKKKFFFFKKKKKFI",
+    "IFFFFFFFFFFFFFFFFI",
+    "IFKKKKKFFFFKKKKKFI",
+    "IFFFFFFFFFFFFFFFFI",
+    "IFKKKKKFFFFKKKKKFI",
+    "IFFFFFFFFFFFFFFFFI",
+    "IF;;;;;FFFF;;;;;FI",
+    "IFFFFFFFFFFFFFFFFI",
+    "IPFFFFFFFFFFFFFFPI",
+    "IFFFFFFFFFFFFFFFFI",
+    "IIIIIIIIIDIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 12,
+      "toMap": "tideglass",
+      "toX": 16,
+      "toY": 38,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tg_auctioneer",
+      "sprite": "merchant",
+      "x": 8,
+      "y": 3,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_auctioneer"
+    },
+    {
+      "id": "tg_market_fisher",
+      "sprite": "fisher",
+      "x": 4,
+      "y": 5,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_market_fisher"
+    },
+    {
+      "id": "tg_market_widow",
+      "sprite": "elder",
+      "x": 13,
+      "y": 7,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "tg_market_widow"
+    },
+    {
+      "id": "tg_market_kid",
+      "sprite": "kid",
+      "x": 9,
+      "y": 9,
+      "facing": "down",
+      "movement": {
+        "kind": "wander",
+        "radius": 2
+      },
+      "script": "tg_market_kid"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "Ninety slabs under one roof. Eleven of them have fish on them.",
+        "The rest are scrubbed, dry, and kept scrubbed, which is its own",
+        "kind of statement about what everyone expects to happen next."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 16,
+      "y": 10,
+      "text": [
+        "The auction board. Prices for the week, chalked and rechalked.",
+        "Everything is up. Everything has been up for two months."
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 2,
+      "y": 11,
+      "item": "clearleaf",
+      "quantity": 1,
+      "flag": "item_tg_market_leaf"
+    }
+  ]
+}

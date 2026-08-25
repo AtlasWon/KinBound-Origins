@@ -1,7 +1,7 @@
 {
   "id": "route_4",
-  "name": "Route 4",
-  "displayName": "ROUTE 4",
+  "name": "The Coast Road",
+  "displayName": "ROUTE 4 - THE COAST ROAD",
   "music": "route_coast",
   "battleBackdrop": "coast",
   "indoor": false,
@@ -10,56 +10,67 @@
     "y": 10
   },
   "encounterTable": "route_4",
+  "_design": "Four shelves down rather than up, so this is the route where the LEDGES are the point: every bank on it is a shortcut back the way you came and a wall in the direction you are going, and the three passes are a long way apart on purpose. The ground changes on every shelf and never changes back -- moor, then thin turf with the stone coming through, then salt grass and the pans, then sand -- so the descent is legible without one line of text.",
+  "_plan": "The sea has to be SEEN before it can be REACHED, and the map is built round that one requirement. There is no water at all on Gorsehead. The headland on the Wind Stair is a dead-end spur that exists solely so the player walks out to the end of it, sees the whole Caeloran Sea eleven rows below, and cannot get down: the sign says so, and the sea-mark stone standing there says the same thing in the other direction, because vessels line it up with the beacon the player lit their way past on the ridge. Then two more cliff bands and the sea arrives, in pieces -- a bite of deep water beside the pans, then the channels on the strand. The far pocket of the cove is behind a channel and stays shut until the Tide Hall.",
   "rows": [
-    "TTTTTTTTTTTTTT--TTTTTTTTTTTTTT",
-    "TT.\"...\"......--...\"...\"....TT",
-    "TT*,\"\"\"\"...t..--!.\"\"\"\"\"\",...TT",
-    "TT.,\"\"\"\"\"\",...--.,.,\"\"\"\"\"\",.TT",
-    "TT..\"...\"-------...,*\"\"\",...TT",
-    "TT.......-------.......\"....TT",
-    "TT.......--TTt....o.....TTTTTT",
-    "TT.......--TTT.....o.,..TTTTTT",
-    "TTTLLLLLL--tTT.........stTTTTT",
-    "TT*......--.........!.s~WWWWTT",
-    "TT.CCCCCC-----------.s~WWWWWTT",
-    "TTCCCCCCC-----------s~WWWWWWTT",
-    "TTCCCCCc...t......--sssWWWWWTT",
-    "TTccccc...o.......--sssWWWWWTT",
-    "TT,...\"...........--sssWWWWWTT",
-    "TT..,\"\"\"\",........--WWsWWWWWTT",
-    "TT..*\"\"\"\",.,.....!--WWWWWWWWTT",
-    "TTTTTLLLLLLTTT------~WWWWWWWTT",
-    "TT....\".......------~WWWWWWWTT",
-    "TT.,\"\"\",....o!--sssss~~~~~ssTT",
-    "TT.\"\"\"\"\",.....--ssssssssss~sTT",
-    "TT.,\"\"\"\",...ss--sssss~~~~~ssTT",
-    "TT....\"....t~s--~~ssssssssssTT",
-    "TT..,.......s~--ss~~~~ssssssTT",
-    "TTTTTTTTTTTTTT--TTTTTTTTTTTTTT"
+    "TTTTTTTTTTTTTTTTTTT--TTTTTTTTTTTTTTTTTTT",
+    "TT...,,t......,....--..\"\"\"\"\"\"\".tt....,TT",
+    "TT.*.\"\"\"\"\"\"\".ot.oo.--\"\"\"\"\"\"\"\"\"\"\"......TT",
+    "TT,\"\"\"\"\"\"\"\"\"\"\".o...--!o\"\"\"\"\"\"\".*..,...TT",
+    "TT..o\"\"\"\"------------.,..*....*.*o,...TT",
+    "TT.,.....-----------.,,.*,..\"\"\"\"\"...t,TT",
+    "TT....,o.--\"\"\"\"\"\"\"\"\".....,\"\"\"\"\"\"\"\"\".,.TT",
+    "TT..t,..,--.o\"\"\"\"\"t...ot...o\"\"\"\"\".t*.,TT",
+    "TTcccccc--cccccccccccccc..ccccccccccccTT",
+    "TTCCCCCC--CCCCCCCCCCCCCCLLCCCCCCCCCCCCTT",
+    "TT...,.,--..,\"\"\"\"\"\"\"..,,...s.*.*......TT",
+    "TT..\"\"\"\"--,\"\"\"\"\"\"\"\"\"\"\".,osssss...o....TT",
+    "TT\"\"\"\"\"\"----------------..ts.o,*,,....TT",
+    "TT.o\"\"\"\"----------------\"\"\"\"\"\"..!.....TT",
+    "TT,.....,o.,s.o......\"------------Oos.TT",
+    "TT...,..,ssss.ss.....o------------sss.TT",
+    "TTcccccccccc..cccccccc--ccccccccccccccTT",
+    "TTCCCCCCCCCCLLCCCCCCCC--CCCCCCDCCCCCCCTT",
+    "TT...\"\"\"\"\"*,..........-=========.s~WWWTT",
+    "TT.\"\"\"\"\"\"\"\"\"..**,.....-=~~=~~=~~Ks~WWWTT",
+    "TT*..\"\"\"\"\",...,--------=~~=~~=~~.s~WWWTT",
+    "TTo..sss,...,..--------=~~=~~=~~.s~WWWTT",
+    "TT.sssssss.,o\"\"--\"\"\"\"\"\"=~~=~~=~~!s~WWWTT",
+    "TT,.,sss..,...---\"\"\"\"\"*=..======os~WWWTT",
+    "TTcccccccccccc--cccccccccc..cccccWWWWWTT",
+    "TTCCCCCCCCCCCC--CCCCCCCCCCLLCCCCCWWWWWTT",
+    "TTssssssssssss--\"\"\"\"\"\"\"ossss~~~~~~~~WWTT",
+    "TTososssssssss--ss,\"~~~~~~~~~~~~~W~~WWTT",
+    "TTssssssssssos--ssssossssoss~~~WWWWWWWTT",
+    "TT~~~~ss~~~~~~--ssssssssssss~~WWWWWWWWTT",
+    "TTsssssss~~~ss--sssss\"~~~~~~~WWWWWWWWWTT",
+    "TTsssssss~s~ss--os\"\"\"\"\"\"\"sss~~WWWWWWWWTT",
+    "TTsssssso~~~ss--sosss\"ssss~~~~~WWWWWWWTT",
+    "TTTTTTTTTTTTTT--TTTTTTTTTTTTTTTTTTTTTTTT"
   ],
   "warps": [
     {
-      "x": 14,
+      "x": 19,
       "y": 0,
       "toMap": "tanners_rest",
-      "toX": 14,
-      "toY": 19,
+      "toX": 19,
+      "toY": 30,
       "facing": "up",
       "style": "edge"
     },
     {
-      "x": 15,
+      "x": 20,
       "y": 0,
       "toMap": "tanners_rest",
-      "toX": 15,
-      "toY": 19,
+      "toX": 20,
+      "toY": 30,
       "facing": "up",
       "style": "edge"
     },
     {
       "x": 14,
-      "y": 24,
-      "toMap": "brackwater",
+      "y": 33,
+      "toMap": "tideglass",
       "toX": 14,
       "toY": 1,
       "facing": "down",
@@ -67,21 +78,30 @@
     },
     {
       "x": 15,
-      "y": 24,
-      "toMap": "brackwater",
+      "y": 33,
+      "toMap": "tideglass",
       "toX": 15,
       "toY": 1,
       "facing": "down",
       "style": "edge"
+    },
+    {
+      "x": 30,
+      "y": 17,
+      "toMap": "route_4_hollow",
+      "toX": 9,
+      "toY": 10,
+      "facing": "up",
+      "style": "cave"
     }
   ],
   "npcs": [
     {
       "id": "r4_teal",
       "sprite": "villager_f",
-      "x": 16,
-      "y": 3,
-      "facing": "left",
+      "x": 12,
+      "y": 4,
+      "facing": "down",
       "movement": {
         "kind": "static"
       },
@@ -91,8 +111,8 @@
     {
       "id": "r4_gorse",
       "sprite": "hiker",
-      "x": 17,
-      "y": 9,
+      "x": 18,
+      "y": 13,
       "facing": "down",
       "movement": {
         "kind": "static"
@@ -101,11 +121,34 @@
       "sightRange": 3
     },
     {
+      "id": "r4_marrin",
+      "sprite": "porter",
+      "x": 26,
+      "y": 13,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r4_marrin",
+      "sightRange": 3
+    },
+    {
+      "id": "r4_saltwright",
+      "sprite": "villager_m",
+      "x": 23,
+      "y": 22,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r4_saltwright"
+    },
+    {
       "id": "r4_nesh",
       "sprite": "villager_m",
-      "x": 20,
-      "y": 14,
-      "facing": "left",
+      "x": 17,
+      "y": 21,
+      "facing": "right",
       "movement": {
         "kind": "static"
       },
@@ -114,9 +157,9 @@
     },
     {
       "id": "r4_bay",
-      "sprite": "villager_f",
-      "x": 13,
-      "y": 20,
+      "sprite": "netmender",
+      "x": 17,
+      "y": 28,
       "facing": "right",
       "movement": {
         "kind": "static"
@@ -126,53 +169,87 @@
     },
     {
       "id": "r4_watcher",
-      "sprite": "hiker",
-      "x": 19,
-      "y": 21,
-      "facing": "right",
+      "sprite": "fisher",
+      "x": 22,
+      "y": 29,
+      "facing": "down",
       "movement": {
         "kind": "static"
       },
       "script": "r4_watcher"
+    },
+    {
+      "id": "r4_carter",
+      "sprite": "villager_f",
+      "x": 21,
+      "y": 12,
+      "facing": "up",
+      "movement": {
+        "kind": "pace",
+        "axis": "x",
+        "distance": 2
+      },
+      "script": "r4_carter"
     }
   ],
   "objects": [
     {
       "kind": "sign",
-      "x": 16,
-      "y": 2,
+      "x": 21,
+      "y": 3,
       "text": [
-        "ROUTE 4",
-        "Tanners Rest north. Brackwater south, at the water.",
-        "Below the ledges the ground turns to sand and stays that way."
+        "ROUTE 4. SALTHOLLOW BEHIND. TIDEGLASS 12, ALL OF IT DOWNHILL.",
+        "Four shelves and three passes. Take the passes. The banks only go one way."
       ]
     },
     {
       "kind": "sign",
-      "x": 20,
-      "y": 9,
+      "x": 32,
+      "y": 13,
       "text": [
-        "The shelf. Sand over stone, and stone over nothing much.",
-        "The path down is west of here. It is not down from here."
+        "THE HEADLAND. Stop here. Everyone does.",
+        "That is the Caeloran Sea, and it is a very long way down, and you cannot get",
+        "to it from here or from the next shelf or from the one after that."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 34,
+      "y": 14,
+      "text": [
+        "A sea-mark: one stone, set upright, leaning where four hundred years of wind",
+        "has pushed it. Vessels coming up the coast line it up with the beacon on the ridge.",
+        "Somebody has been at the base of it recently with a theodolite and left the pegs in."
       ]
     },
     {
       "kind": "sign",
-      "x": 17,
-      "y": 16,
+      "x": 32,
+      "y": 22,
       "text": [
-        "DEEP WATER. NO WADING.",
-        "Under it someone has scratched: NOT THAT YOU COULD."
+        "SALTHOLLOW PANS. Eleven. Filled on the spring tide, walled, and let go.",
+        "Six weeks of sun and wind and what is left is what cures the hides on the shoulder",
+        "and salts the fish in Tideglass. One coast, three trades, one puddle of water."
       ]
     },
     {
-      "kind": "sign",
-      "x": 13,
+      "kind": "script",
+      "x": 32,
       "y": 19,
       "text": [
-        "THE TIDELINE",
-        "Channels fill from the east on the turn.",
-        "What is a path in the morning is a channel by noon."
+        "Salt, barrelled and stacked, waiting for a cart that is late.",
+        "The tally chalked on the end barrel has been rubbed out and rewritten twice.",
+        "Under it, smaller: RIDGE ROAD FULL AGAIN. THIRD WEEK."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 28,
+      "text": [
+        "THE TIDELINE. Channels fill from the east on the turn, fast, and without a sound.",
+        "What is a path at dawn is a channel by noon and a path again by dark.",
+        "Under that, scratched: NINETY-FOUR DAYS. ASK THE WATCHER."
       ]
     },
     {
@@ -181,12 +258,28 @@
       "y": 3,
       "item": "great_potion",
       "quantity": 1,
-      "flag": "item_r4_grass"
+      "flag": "item_r4_moor"
     },
     {
       "kind": "item",
-      "x": 25,
-      "y": 20,
+      "x": 35,
+      "y": 15,
+      "item": "ward_incense",
+      "quantity": 1,
+      "flag": "item_r4_headland"
+    },
+    {
+      "kind": "item",
+      "x": 6,
+      "y": 19,
+      "item": "full_heal",
+      "quantity": 1,
+      "flag": "item_r4_saltgrass"
+    },
+    {
+      "kind": "item",
+      "x": 24,
+      "y": 31,
       "item": "net_vessel",
       "quantity": 3,
       "flag": "item_r4_sand"
@@ -194,36 +287,34 @@
     {
       "kind": "item",
       "x": 4,
-      "y": 20,
-      "item": "full_heal",
+      "y": 31,
+      "item": "dusk_vessel",
       "quantity": 1,
-      "flag": "item_r4_rocks"
+      "flag": "item_r4_cove"
     },
     {
       "kind": "item",
-      "x": 21,
-      "y": 13,
-      "item": "dusk_vessel",
+      "x": 10,
+      "y": 31,
+      "item": "full_restore",
       "quantity": 1,
-      "flag": "item_r4_shelf"
+      "flag": "item_r4_farcove"
     },
     {
       "kind": "hiddenItem",
-      "x": 6,
-      "y": 16,
-      "item": "deep_vessel",
+      "x": 3,
+      "y": 12,
+      "item": "rouse",
       "quantity": 1,
       "flag": "item_r4_hidden"
     },
     {
       "kind": "hiddenItem",
-      "x": 24,
-      "y": 22,
-      "item": "rouse",
+      "x": 26,
+      "y": 29,
+      "item": "deep_vessel",
       "quantity": 1,
       "flag": "item_r4_hidden2"
     }
-  ],
-  "_design": "The land runs out. Grass, then a rock shoulder, then sand, then a beach cut into pockets by tide channels nobody can wade yet. The spit at y20 is the only way to what sits on the end of it, and it is in plain sight from the road for half the walk down.",
-  "_plan": "The last road, down off the shelf and out onto the coast. The sea takes the whole east side and the beach widens as the ground falls, so the map ends in water rather than in trees."
+  ]
 }

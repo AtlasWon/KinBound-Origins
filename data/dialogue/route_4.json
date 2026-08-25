@@ -1,6 +1,8 @@
 {
   "speakers": {
-    "r4_watcher": "TIDE WATCHER"
+    "r4_watcher": "TIDE WATCHER",
+    "r4_saltwright": "SALTWRIGHT",
+    "r4_carter": "CARTER"
   },
   "entries": {
     "r4_watcher": [
@@ -20,6 +22,34 @@
           "The mark hasn't moved since the first week of spring.",
           "Not higher. Not lower. The same line, ninety-odd days.",
           "The sea does not do that on its own."
+        ]
+      }
+    ],
+    "r4_saltwright": [
+      {
+        "ifFlags": [
+          "crest_2_taken"
+        ],
+        "lines": [
+          "Eleven pans, filled on the spring tide and left to the sun. Six weeks and you have salt.",
+          "Salthollow cures its hides with it, Tideglass salts its fish with it, and the barrels go up the ridge.",
+          "Or they did. There has been no cart for mine in three weeks. The road is full of somebody else."
+        ]
+      },
+      {
+        "lines": [
+          "Eleven pans, filled on the spring tide and left to the sun. Six weeks and you have salt.",
+          "One puddle of seawater, three trades and a village. Nobody ever believes me.",
+          "Mind the walls. They are a hand wide and they are four hundred years old."
+        ]
+      }
+    ],
+    "r4_carter": [
+      {
+        "lines": [
+          "Empty going down, loaded coming back. Wrong way round, that, and it has been all season.",
+          "Everything on this coast used to come out of Tideglass and go inland.",
+          "Now it comes down off the ridge and goes into Tideglass, and none of it comes out again."
         ]
       }
     ]

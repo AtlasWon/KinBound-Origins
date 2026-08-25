@@ -1,0 +1,18 @@
+{
+  "speakers": {
+    "tg_harbourclerk": "HARBOUR CLERK",
+    "tg_pilotmaster": "PILOT MASTER"
+  },
+  "entries": {
+    "tg_harbourclerk": [
+      "I book berths. I do not judge them. That is the whole job and it is a good job.",
+      "Eleven to twenty went in one transaction, in spring, for a year.",
+      "I have never once written a receipt that large and I have never once slept worse."
+    ],
+    "tg_pilotmaster": [
+      "Every boat over forty feet takes a pilot in. That is law and it is my law.",
+      "The charter berths take their own. They brought their own from somewhere.",
+      "They know my channel better than my pilots do. Work out how, and tell me."
+    ]
+  }
+}

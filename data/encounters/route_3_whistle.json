@@ -1,0 +1,17 @@
+{
+  "mapId": "route_3_whistle",
+  "$comment": "THE WHISTLE, the ridge's rare-encounter spot. The engine only rolls encounters on tall grass, which is why the cleft has grass in it at all -- and why the grass is only in the lee of each bend, where the wind cannot get at it. The table is the open route's table with the commons taken out: three wings in the top three slots, KESTRELLE at twenty percent instead of six, and TALLOWMOTH at six, which is the only chitin/radiant in the region and does not appear anywhere else this side of Act 3. Levels run one to two over the open ridge because a player who has found this place has walked most of the route to get to it, and the top of the band, fifteen, is still level with a team-raiser rather than over them.",
+  "methods": {
+    "tallGrass": {
+      "rate": 165,
+      "slots": [
+        { "species": "pipwing", "minLevel": 12, "maxLevel": 14, "weight": 28 },
+        { "species": "slatewing", "minLevel": 12, "maxLevel": 14, "weight": 24 },
+        { "species": "kestrelle", "minLevel": 13, "maxLevel": 15, "weight": 20 },
+        { "species": "chalkid", "minLevel": 12, "maxLevel": 14, "weight": 12 },
+        { "species": "gullswift", "minLevel": 13, "maxLevel": 15, "weight": 10 },
+        { "species": "tallowmoth", "minLevel": 13, "maxLevel": 14, "weight": 6 }
+      ]
+    }
+  }
+}

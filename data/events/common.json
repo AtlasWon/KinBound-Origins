@@ -350,6 +350,313 @@
         "kind": "if",
         "cond": {
           "kind": "flag",
+          "flag": "tarin_at_ridge"
+        },
+        "then": [
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "Fourteen.",
+              "Fourteen carts since six this morning, all going the same way, and it is not market day anywhere in Caelora."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "You remember the grey office at Stonewake. The one that carried me out into the road twice.",
+              "There are grey coats on every mile of this ridge. They have a tent at the top with a stove in it."
+            ]
+          },
+          {
+            "kind": "choice",
+            "lines": [
+              "He has a flask and a piece of slate with tally marks on it."
+            ],
+            "options": [
+              {
+                "label": "It might just be work.",
+                "then": [
+                  {
+                    "kind": "say",
+                    "who": "TARIN",
+                    "lines": [
+                      "That is what I have been telling myself since ten o'clock, and it keeps not helping."
+                    ]
+                  }
+                ]
+              },
+              {
+                "label": "You've been out here all day?",
+                "then": [
+                  {
+                    "kind": "say",
+                    "who": "TARIN",
+                    "lines": [
+                      "Since six. I brought a flask. I am not proud of a single part of this."
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "wait",
+            "frames": 12
+          },
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "A month ago nobody I know had heard of the Meridian Foundation.",
+              "Now they are the road."
+            ]
+          },
+          {
+            "kind": "giveItem",
+            "item": "great_potion",
+            "count": 1
+          },
+          {
+            "kind": "say",
+            "lines": [
+              "Tarin handed over a Great Potion."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "Go on. Tideglass is down there and it is enormous and I want to be watching your face when you see it.",
+              "I will catch you up. I am on fifteen."
+            ]
+          },
+          {
+            "kind": "setFlag",
+            "flag": "tarin_ridge_done"
+          },
+          {
+            "kind": "removeNpc",
+            "who": "town_tarin"
+          },
+          {
+            "kind": "end"
+          }
+        ]
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
+          "flag": "tarin_at_nightafter"
+        },
+        "then": [
+          {
+            "kind": "if",
+            "cond": {
+              "kind": "not",
+              "of": {
+                "kind": "flag",
+                "flag": "tarin_tideglass_talked"
+              }
+            },
+            "then": [
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "I heard it off a netter before I heard it off you.",
+                  "I am going to be annoyed about that later. Not now."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "Two of them. On the road. In the dark."
+                ]
+              },
+              {
+                "kind": "choice",
+                "lines": [
+                  "He is not doing the voice. He has not done the voice all morning."
+                ],
+                "options": [
+                  {
+                    "label": "I won.",
+                    "then": [
+                      {
+                        "kind": "say",
+                        "who": "TARIN",
+                        "lines": [
+                          "I know you did. That is not the part I keep thinking about."
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Lyra stopped them.",
+                    "then": [
+                      {
+                        "kind": "say",
+                        "who": "TARIN",
+                        "lines": [
+                          "Then I owe her, and I do not enjoy owing people I have not met."
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "wait",
+                "frames": 12
+              },
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "I have spent a month treating them like a puzzle. Grey coats. Silly hats. Something to poke at."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "They put you in a road at night, {name}.",
+                  "That is not a puzzle. I have been getting that wrong out loud since Stonewake."
+                ]
+              },
+              {
+                "kind": "setFlag",
+                "flag": "tarin_tideglass_talked"
+              }
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "Right. I need something, and it is going to sound stupid."
+            ]
+          },
+          {
+            "kind": "ask",
+            "lines": [
+              "Fight me. Properly, nothing held back.",
+              "I want to know what the two of us are actually worth."
+            ],
+            "yes": [
+              {
+                "kind": "if",
+                "cond": {
+                  "kind": "flag",
+                  "flag": "starter_sprigling"
+                },
+                "then": [
+                  {
+                    "kind": "battleTrainer",
+                    "trainer": "tarin_tideglass_rilltail",
+                    "onLoss": "continue"
+                  }
+                ],
+                "else": [
+                  {
+                    "kind": "if",
+                    "cond": {
+                      "kind": "flag",
+                      "flag": "starter_cinderpaw"
+                    },
+                    "then": [
+                      {
+                        "kind": "battleTrainer",
+                        "trainer": "tarin_tideglass_sprigling",
+                        "onLoss": "continue"
+                      }
+                    ],
+                    "else": [
+                      {
+                        "kind": "battleTrainer",
+                        "trainer": "tarin_tideglass_cinderpaw",
+                        "onLoss": "continue"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "if",
+                "cond": {
+                  "kind": "var",
+                  "var": "last_battle_won",
+                  "op": "==",
+                  "value": 1
+                },
+                "then": [
+                  {
+                    "kind": "say",
+                    "who": "TARIN",
+                    "lines": [
+                      "Good. Good, that is the answer I wanted and I hate it a bit."
+                    ]
+                  },
+                  {
+                    "kind": "say",
+                    "who": "TARIN",
+                    "lines": [
+                      "Next time somebody stands in a road in front of you, I would like to be stood next to you.",
+                      "That is all. That is the whole speech. Do not make me do it again."
+                    ]
+                  },
+                  {
+                    "kind": "setFlag",
+                    "flag": "tarin_tideglass_done"
+                  },
+                  {
+                    "kind": "removeNpc",
+                    "who": "town_tarin"
+                  }
+                ],
+                "else": [
+                  {
+                    "kind": "say",
+                    "who": "TARIN",
+                    "lines": [
+                      "...Right. So I am not there yet either."
+                    ]
+                  },
+                  {
+                    "kind": "say",
+                    "who": "TARIN",
+                    "lines": [
+                      "Neither of us goes near that harbour road alone again. Agreed?",
+                      "Go and get your kin seen to. Then we are doing that again."
+                    ]
+                  }
+                ]
+              }
+            ],
+            "no": [
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "Fine. Fine.",
+                  "Ask me when you want it. I am not going anywhere useful."
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "end"
+          }
+        ]
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
           "flag": "tarin_at_briarbell"
         },
         "then": [
@@ -807,5 +1114,1747 @@
         ]
       }
     ]
+  },
+  {
+    "id": "tideheart_wake_glass_quay",
+    "_note": "ACT 2. The stock presentation for the Glass Quay, so a map author can call it rather than write one. Unlike the Sunken Arch there is nothing to hold it up to: the mechanism is the sea-wall the road is standing on, which is why the site row in src/systems/tideheart.ts has no `at` tile. In the shipped Act 2 this is called from act2_night_attempt, at the moment somebody puts a hand in the bag.",
+    "trigger": "call",
+    "when": {
+      "kind": "hasItem",
+      "item": "tideheart"
+    },
+    "actions": [
+      {
+        "kind": "sfx",
+        "sound": "warp"
+      },
+      {
+        "kind": "shake",
+        "frames": 34,
+        "power": 3
+      },
+      {
+        "kind": "wait",
+        "frames": 18
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Light comes up through the road. Not on it. Through it."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The old wall under the road stones runs a mile out into the bay,",
+          "and every foot of it is lit from the inside."
+        ]
+      },
+      {
+        "kind": "setFlag",
+        "flag": "tideheart_echo_glass_quay"
+      },
+      {
+        "kind": "wait",
+        "frames": 12
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "It goes out slowly, the way something goes back to sleep."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "act2_ridge_convoy_body",
+    "_note": "ACT 2 sighting 1 of 3 -- see CANON: on Eastwind Ridge the player repeatedly sees Meridian equipment moving toward the coast. Deliberately actorless and coordinate-free: it is a thing seen from the road at a distance, so it survives the ridge being laid out any way at all.",
+    "trigger": "call",
+    "actions": [
+      {
+        "kind": "sfx",
+        "sound": "bump"
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The road drops away east and you can see a long way down it."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "There is a line of drays on the switchback below, and the line is not short.",
+          "Grey tarpaulins. Crates roped onto cradles, the way you rope something that would mind being dropped."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "All of it going the same way. Down, and east, towards the sea."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "A woman in a Foundation coat waves you off the road, apologises, and waves you back on.",
+          "She does it eleven more times before the last cart is past."
+        ]
+      },
+      {
+        "kind": "setFlag",
+        "flag": "ridge_convoy_seen"
+      }
+    ]
+  },
+  {
+    "id": "act2_ridge_convoy2_body",
+    "_note": "ACT 2 sighting 3 of 3. Opens after the ridge meeting with Tarin, so it lands on a return crossing rather than twice in one walk. The ring under the tarpaulin is the first Aurelian control device the player ever sees; nobody names it for four acts.",
+    "trigger": "call",
+    "actions": [
+      {
+        "kind": "say",
+        "lines": [
+          "Another convoy on the switchback. Heavier than the last one, and slower."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "One crate has worked its tarpaulin loose. Under it is a ring of pale metal the size of a cartwheel.",
+          "It is not new. Somebody has cleaned it very carefully."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 14
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The hand who covers it up again does not apologise this time."
+        ]
+      },
+      {
+        "kind": "setFlag",
+        "flag": "ridge_convoy_seen_2"
+      }
+    ]
+  },
+  {
+    "id": "act2_ridge_convoy_r3",
+    "trigger": "enter",
+    "map": "route_3",
+    "when": {
+      "kind": "all",
+      "of": [
+        {
+          "kind": "flag",
+          "flag": "crest_2_taken"
+        },
+        {
+          "kind": "not",
+          "of": {
+            "kind": "flag",
+            "flag": "ridge_convoy_seen"
+          }
+        }
+      ]
+    },
+    "onceFlag": "act2_ridge_convoy_done",
+    "actions": [
+      {
+        "kind": "call",
+        "script": "act2_ridge_convoy_body"
+      }
+    ]
+  },
+  {
+    "id": "act2_ridge_convoy2_r3",
+    "trigger": "enter",
+    "map": "route_3",
+    "when": {
+      "kind": "all",
+      "of": [
+        {
+          "kind": "flag",
+          "flag": "tarin_ridge_done"
+        },
+        {
+          "kind": "not",
+          "of": {
+            "kind": "flag",
+            "flag": "ridge_convoy_seen_2"
+          }
+        }
+      ]
+    },
+    "onceFlag": "act2_ridge_convoy2_done",
+    "actions": [
+      {
+        "kind": "call",
+        "script": "act2_ridge_convoy2_body"
+      }
+    ]
+  },
+  {
+    "id": "act2_tideglass_arrive_body",
+    "_note": "ACT 2. Walking into Tideglass. Two jobs: let the object react to the Glass Quay under the harbour (the world cue in src/systems/tideheart.ts has already fired silently by now -- this is the line that tells the player what they just heard), and put Cassian on the wharf. The spawnNpc is a SAFETY NET in the tarin_route1 sense: addNpcRuntime is a no-op when an actor with that id is already on the map, so if the city places tg_cassian itself this does nothing at all. See the handover for the anchor tile.",
+    "trigger": "call",
+    "actions": [
+      {
+        "kind": "say",
+        "lines": [
+          "Tideglass arrives all at once: a bay, a mole running a mile out into it,",
+          "and more roofs than you have counted in your life."
+        ]
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "hasItem",
+          "item": "tideheart"
+        },
+        "then": [
+          {
+            "kind": "wait",
+            "frames": 10
+          },
+          {
+            "kind": "sfx",
+            "sound": "warp"
+          },
+          {
+            "kind": "shake",
+            "frames": 22,
+            "power": 2
+          },
+          {
+            "kind": "say",
+            "lines": [
+              "Your father's keepsake turns over in the bag, and this time it does not stop."
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 10
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "There is a crowd on the wharf under a Foundation banner.",
+          "Somebody has put a table out for a man to stand on, and he has not needed to raise his voice."
+        ]
+      },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "tg_cassian",
+          "sprite": "veyl",
+          "x": 26,
+          "y": 46,
+          "facing": "left",
+          "movement": {
+            "kind": "static"
+          },
+          "script": "cassian_public",
+          "hiddenIfFlag": "cassian_public_done"
+        }
+      },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "tg_aide",
+          "sprite": "meridian_sci_f",
+          "x": 26,
+          "y": 47,
+          "facing": "left",
+          "movement": {
+            "kind": "static"
+          },
+          "script": "tg_aide",
+          "hiddenIfFlag": "cassian_public_done"
+        }
+      },
+      {
+        "kind": "setFlag",
+        "flag": "tideglass_arrived"
+      }
+    ]
+  },
+  {
+    "id": "act2_tideglass_arrive_tg",
+    "trigger": "enter",
+    "map": "tideglass",
+    "when": {
+      "kind": "all",
+      "of": [
+        {
+          "kind": "not",
+          "of": {
+            "kind": "flag",
+            "flag": "tideglass_arrived"
+          }
+        },
+        {
+          "kind": "not",
+          "of": {
+            "kind": "flag",
+            "flag": "cassian_public_done"
+          }
+        }
+      ]
+    },
+    "onceFlag": "act2_tideglass_arrive_done",
+    "actions": [
+      {
+        "kind": "call",
+        "script": "act2_tideglass_arrive_body"
+      }
+    ]
+  },
+  {
+    "id": "cassian_public",
+    "_note": "ACT 2, THE SCENE OF THE STAGE. Dr. Cassian Veyl, in public, and the brief on him is one line long: HE MUST NOT READ AS A VILLAIN. A player who walks out of this thinking \"he might be alright, actually\" is the correct outcome, and one who clocks him as the villain means it has failed.\n\nThree things do that work, and none of them is him being nice.\n  1. HIS ARGUMENT IS TRUE. He opens on a number that can be checked and a woman on a hill who gets the credit, and his case -- that people only accept disasters because nobody ever handed them an alternative -- is the case CANON says is genuinely reasonable. It is not written to be seen through.\n  2. HE ASKS FOR NOTHING. He is the one person in the act who could plausibly claim the Tideheart, he knows it, and he says out loud that he is not going to, before anyone accuses him. That is what makes the night attempt land three scenes later, and it is why he must not be seen ordering it.\n  3. HE TREATS THE PLAYER AS ELIAS' CHILD. First person in the game to do it. It should read as warmth and sit slightly wrong, because a stranger knowing your father's hands is both.\n\nHe also names the object -- see TH_FLAGS.named -- so this is the scene that lets every interface in the game start saying \"Tideheart\".",
+    "trigger": "interact",
+    "when": {
+      "kind": "not",
+      "of": {
+        "kind": "flag",
+        "flag": "cassian_public_done"
+      }
+    },
+    "actions": [
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "Two hundred and six boats went out of this harbour last spring.",
+          "Two hundred and six of them came back."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "Not because the sea was kind.",
+          "Because a woman on a hill above Stonewake read an instrument at four in the morning and sent a runner.",
+          "We bought the instrument. She did the rest."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 12
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "Every town on this coast has a stone with names cut into it.",
+          "People stand in front of those and say the sea is the sea."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "I have never once been able to say it.",
+          "I do not believe losing forty people a year is a law of nature.",
+          "I think it is a bill we keep paying because nobody ever offered us anything else."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The wharf makes a low sound. Not a cheer. Agreement."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 14
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Somebody near the front asks him why he started."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "I was nine. My sister was five. The house came down on the wrong side of her and not on me.",
+          "That is the whole reason. It is not a complicated one and I have stopped dressing it up."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "hasItem",
+          "item": "tideheart"
+        },
+        "then": [
+          {
+            "kind": "sfx",
+            "sound": "warp"
+          },
+          {
+            "kind": "shake",
+            "frames": 20,
+            "power": 2
+          },
+          {
+            "kind": "wait",
+            "frames": 10
+          },
+          {
+            "kind": "say",
+            "lines": [
+              "He stops in the middle of a sentence and looks at your bag."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "DR. VEYL",
+            "lines": [
+              "...Forgive me.",
+              "That is not a thing I mistake."
+            ]
+          },
+          {
+            "kind": "face",
+            "who": "tg_cassian",
+            "dir": "left"
+          },
+          {
+            "kind": "wait",
+            "frames": 12
+          },
+          {
+            "kind": "say",
+            "who": "DR. VEYL",
+            "lines": [
+              "You have his hands. And you are carrying it loose in a satchel, which is exactly what he did.",
+              "Cassian Veyl. I knew your father a great deal better than I have ever been able to say in public."
+            ]
+          },
+          {
+            "kind": "choice",
+            "lines": [
+              "He steps down off the table. He is not in a hurry."
+            ],
+            "options": [
+              {
+                "label": "You knew my father?",
+                "then": [
+                  {
+                    "kind": "say",
+                    "who": "DR. VEYL",
+                    "lines": [
+                      "For nine years.",
+                      "He was the only man I ever met who could be right and insufferable at once, and make you glad of both."
+                    ]
+                  }
+                ]
+              },
+              {
+                "label": "(Say nothing)",
+                "then": [
+                  {
+                    "kind": "say",
+                    "who": "DR. VEYL",
+                    "lines": [
+                      "No, you are right to do that. Strangers who know your family are a thing to be careful of.",
+                      "I am going to keep talking anyway, because I have wanted to for eleven years."
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "DR. VEYL",
+            "lines": [
+              "Elias and I pulled that out of a flooded gallery six hundred miles from here.",
+              "He held the lamp. I did the digging, and he never once let me forget which of those is the difficult part."
+            ]
+          },
+          {
+            "kind": "wait",
+            "frames": 12
+          },
+          {
+            "kind": "say",
+            "who": "DR. VEYL",
+            "lines": [
+              "Tideheart. That was his word for it, in a notebook, in pencil.",
+              "I have looked for eleven years and I have never found a better one."
+            ]
+          },
+          {
+            "kind": "call",
+            "script": "tideheart_learn_name"
+          },
+          {
+            "kind": "choice",
+            "lines": [
+              "What is it?"
+            ],
+            "options": [
+              {
+                "label": "What does it do?",
+                "then": [
+                  {
+                    "kind": "say",
+                    "who": "DR. VEYL",
+                    "lines": [
+                      "Honestly? It talks.",
+                      "We spent four years failing to work out who to."
+                    ]
+                  }
+                ]
+              },
+              {
+                "label": "Why did he send it home?",
+                "then": [
+                  {
+                    "kind": "say",
+                    "who": "DR. VEYL",
+                    "lines": [
+                      "I have wondered that every week since the coast.",
+                      "He posted it to a house in a village of three hundred people and told nobody. I would very much like to know why."
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "wait",
+            "frames": 14
+          },
+          {
+            "kind": "say",
+            "who": "DR. VEYL",
+            "lines": [
+              "And I am not going to ask you for it.",
+              "I want to say that out loud, in front of witnesses, because people will assume that I did."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "DR. VEYL",
+            "lines": [
+              "It was his. Then it was yours. I have no claim on it worth having the argument about."
+            ]
+          },
+          {
+            "kind": "giveItem",
+            "item": "great_potion",
+            "count": 2
+          },
+          {
+            "kind": "say",
+            "lines": [
+              "Dr. Veyl handed over 2 Great Potions."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "DR. VEYL",
+            "lines": [
+              "Take those. The Hall floor here is under three feet of water and Mabry will not warn you about it."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "DR. VEYL",
+            "lines": [
+              "And if you ever want to know what your father was like at twenty-three, come and find me.",
+              "There are stories he would hate very much."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "wait",
+            "frames": 12
+          },
+          {
+            "kind": "say",
+            "who": "DR. VEYL",
+            "lines": [
+              "Cassian Veyl. I run the Foundation, which mostly means I am the one they put on the table.",
+              "Ask the coats anything you like. They are better at this than I am and they are paid worse."
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "setFlag",
+        "flag": "met_cassian"
+      },
+      {
+        "kind": "setFlag",
+        "flag": "cassian_public_done"
+      },
+      {
+        "kind": "removeNpc",
+        "who": "tg_cassian"
+      },
+      {
+        "kind": "removeNpc",
+        "who": "tg_aide"
+      },
+      {
+        "kind": "wait",
+        "frames": 12
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "He goes back to the table. Somebody hands him a clipboard,",
+          "and he apologises to them by name for keeping them waiting."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tg_aide",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
+          "flag": "cassian_public_done"
+        },
+        "then": [
+          {
+            "kind": "say",
+            "who": "FOUNDATION AIDE",
+            "lines": [
+              "He does that. Talks to one person for twenty minutes with four hundred waiting.",
+              "I have stopped scheduling him. It is better for my health."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "who": "FOUNDATION AIDE",
+            "lines": [
+              "Free storm cards in the crate. Take as many as you want, they cost us nothing.",
+              "And yes, that is really him. He always comes himself. It's a nuisance."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "act2_night_attempt",
+    "_note": "ACT 2, THE TURN. Meridian agents try to take the Tideheart somewhere isolated after dark, the player beats them, and Lyra arrives appalled. Up to here Meridian have been scenery.\n\nWHY IT IS HERE AND NOT IN THE CITY. It fires on the coast road out of Tideglass, which is the only way out of the city, which means every player crosses it and no part of the beat depends on a tile inside a town that is being rebuilt this week. THE TRIGGER IS A BAND, three full rows across the whole southern end of route_4, for the reason tarin_route1 gives: solid tiles in a band are simply never stepped on, so a generous band costs nothing and survives the road being reshaped around it.\n\nIT DOES NOT USE onceFlag. onceFlag is set the instant a script STARTS, and there are two losable battles in here -- a player who goes down would have burned the whole beat and never seen it. The done-flag is set at the end, after the win, so a whiteout simply means walking back out of town and trying again.\n\nAFTER DARK is written rather than clocked. Time of day comes off the real clock (src/core/game.ts), so gating this on night would leave an afternoon player unable to advance the story; the fade, the weather and the prose carry it instead.\n\nTHE ONLY COORDINATES IN THE WHOLE ACT ARE HERE, and they are a contract with whoever owns the coast road: the band is route_4's last three walkable rows and the three actors stand on the road column four and five rows above the seam. If the road is made taller or shorter these have to move with it -- the map name and the tile bounds are checked by tests/content.test.js, so a map that shrinks fails the suite loudly rather than leaving a scene that never fires.",
+    "trigger": "step",
+    "map": "route_4",
+    "at": [
+      {
+        "x": 0,
+        "y": 30
+      },
+      {
+        "x": 1,
+        "y": 30
+      },
+      {
+        "x": 2,
+        "y": 30
+      },
+      {
+        "x": 3,
+        "y": 30
+      },
+      {
+        "x": 4,
+        "y": 30
+      },
+      {
+        "x": 5,
+        "y": 30
+      },
+      {
+        "x": 6,
+        "y": 30
+      },
+      {
+        "x": 7,
+        "y": 30
+      },
+      {
+        "x": 8,
+        "y": 30
+      },
+      {
+        "x": 9,
+        "y": 30
+      },
+      {
+        "x": 10,
+        "y": 30
+      },
+      {
+        "x": 11,
+        "y": 30
+      },
+      {
+        "x": 12,
+        "y": 30
+      },
+      {
+        "x": 13,
+        "y": 30
+      },
+      {
+        "x": 14,
+        "y": 30
+      },
+      {
+        "x": 15,
+        "y": 30
+      },
+      {
+        "x": 16,
+        "y": 30
+      },
+      {
+        "x": 17,
+        "y": 30
+      },
+      {
+        "x": 18,
+        "y": 30
+      },
+      {
+        "x": 19,
+        "y": 30
+      },
+      {
+        "x": 20,
+        "y": 30
+      },
+      {
+        "x": 21,
+        "y": 30
+      },
+      {
+        "x": 22,
+        "y": 30
+      },
+      {
+        "x": 23,
+        "y": 30
+      },
+      {
+        "x": 24,
+        "y": 30
+      },
+      {
+        "x": 25,
+        "y": 30
+      },
+      {
+        "x": 26,
+        "y": 30
+      },
+      {
+        "x": 27,
+        "y": 30
+      },
+      {
+        "x": 28,
+        "y": 30
+      },
+      {
+        "x": 29,
+        "y": 30
+      },
+      {
+        "x": 30,
+        "y": 30
+      },
+      {
+        "x": 31,
+        "y": 30
+      },
+      {
+        "x": 32,
+        "y": 30
+      },
+      {
+        "x": 33,
+        "y": 30
+      },
+      {
+        "x": 34,
+        "y": 30
+      },
+      {
+        "x": 35,
+        "y": 30
+      },
+      {
+        "x": 36,
+        "y": 30
+      },
+      {
+        "x": 37,
+        "y": 30
+      },
+      {
+        "x": 38,
+        "y": 30
+      },
+      {
+        "x": 39,
+        "y": 30
+      },
+      {
+        "x": 0,
+        "y": 31
+      },
+      {
+        "x": 1,
+        "y": 31
+      },
+      {
+        "x": 2,
+        "y": 31
+      },
+      {
+        "x": 3,
+        "y": 31
+      },
+      {
+        "x": 4,
+        "y": 31
+      },
+      {
+        "x": 5,
+        "y": 31
+      },
+      {
+        "x": 6,
+        "y": 31
+      },
+      {
+        "x": 7,
+        "y": 31
+      },
+      {
+        "x": 8,
+        "y": 31
+      },
+      {
+        "x": 9,
+        "y": 31
+      },
+      {
+        "x": 10,
+        "y": 31
+      },
+      {
+        "x": 11,
+        "y": 31
+      },
+      {
+        "x": 12,
+        "y": 31
+      },
+      {
+        "x": 13,
+        "y": 31
+      },
+      {
+        "x": 14,
+        "y": 31
+      },
+      {
+        "x": 15,
+        "y": 31
+      },
+      {
+        "x": 16,
+        "y": 31
+      },
+      {
+        "x": 17,
+        "y": 31
+      },
+      {
+        "x": 18,
+        "y": 31
+      },
+      {
+        "x": 19,
+        "y": 31
+      },
+      {
+        "x": 20,
+        "y": 31
+      },
+      {
+        "x": 21,
+        "y": 31
+      },
+      {
+        "x": 22,
+        "y": 31
+      },
+      {
+        "x": 23,
+        "y": 31
+      },
+      {
+        "x": 24,
+        "y": 31
+      },
+      {
+        "x": 25,
+        "y": 31
+      },
+      {
+        "x": 26,
+        "y": 31
+      },
+      {
+        "x": 27,
+        "y": 31
+      },
+      {
+        "x": 28,
+        "y": 31
+      },
+      {
+        "x": 29,
+        "y": 31
+      },
+      {
+        "x": 30,
+        "y": 31
+      },
+      {
+        "x": 31,
+        "y": 31
+      },
+      {
+        "x": 32,
+        "y": 31
+      },
+      {
+        "x": 33,
+        "y": 31
+      },
+      {
+        "x": 34,
+        "y": 31
+      },
+      {
+        "x": 35,
+        "y": 31
+      },
+      {
+        "x": 36,
+        "y": 31
+      },
+      {
+        "x": 37,
+        "y": 31
+      },
+      {
+        "x": 38,
+        "y": 31
+      },
+      {
+        "x": 39,
+        "y": 31
+      },
+      {
+        "x": 0,
+        "y": 32
+      },
+      {
+        "x": 1,
+        "y": 32
+      },
+      {
+        "x": 2,
+        "y": 32
+      },
+      {
+        "x": 3,
+        "y": 32
+      },
+      {
+        "x": 4,
+        "y": 32
+      },
+      {
+        "x": 5,
+        "y": 32
+      },
+      {
+        "x": 6,
+        "y": 32
+      },
+      {
+        "x": 7,
+        "y": 32
+      },
+      {
+        "x": 8,
+        "y": 32
+      },
+      {
+        "x": 9,
+        "y": 32
+      },
+      {
+        "x": 10,
+        "y": 32
+      },
+      {
+        "x": 11,
+        "y": 32
+      },
+      {
+        "x": 12,
+        "y": 32
+      },
+      {
+        "x": 13,
+        "y": 32
+      },
+      {
+        "x": 14,
+        "y": 32
+      },
+      {
+        "x": 15,
+        "y": 32
+      },
+      {
+        "x": 16,
+        "y": 32
+      },
+      {
+        "x": 17,
+        "y": 32
+      },
+      {
+        "x": 18,
+        "y": 32
+      },
+      {
+        "x": 19,
+        "y": 32
+      },
+      {
+        "x": 20,
+        "y": 32
+      },
+      {
+        "x": 21,
+        "y": 32
+      },
+      {
+        "x": 22,
+        "y": 32
+      },
+      {
+        "x": 23,
+        "y": 32
+      },
+      {
+        "x": 24,
+        "y": 32
+      },
+      {
+        "x": 25,
+        "y": 32
+      },
+      {
+        "x": 26,
+        "y": 32
+      },
+      {
+        "x": 27,
+        "y": 32
+      },
+      {
+        "x": 28,
+        "y": 32
+      },
+      {
+        "x": 29,
+        "y": 32
+      },
+      {
+        "x": 30,
+        "y": 32
+      },
+      {
+        "x": 31,
+        "y": 32
+      },
+      {
+        "x": 32,
+        "y": 32
+      },
+      {
+        "x": 33,
+        "y": 32
+      },
+      {
+        "x": 34,
+        "y": 32
+      },
+      {
+        "x": 35,
+        "y": 32
+      },
+      {
+        "x": 36,
+        "y": 32
+      },
+      {
+        "x": 37,
+        "y": 32
+      },
+      {
+        "x": 38,
+        "y": 32
+      },
+      {
+        "x": 39,
+        "y": 32
+      }
+    ],
+    "when": {
+      "kind": "all",
+      "of": [
+        {
+          "kind": "flag",
+          "flag": "crest_3_taken"
+        },
+        {
+          "kind": "flag",
+          "flag": "cassian_public_done"
+        },
+        {
+          "kind": "hasItem",
+          "item": "tideheart"
+        },
+        {
+          "kind": "not",
+          "of": {
+            "kind": "flag",
+            "flag": "night_attempt_done"
+          }
+        }
+      ]
+    },
+    "actions": [
+      {
+        "kind": "face",
+        "who": "player",
+        "dir": "up"
+      },
+      {
+        "kind": "music",
+        "track": "stop"
+      },
+      {
+        "kind": "fade",
+        "to": "black",
+        "frames": 26
+      },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The lamps stop at the last house. The road goes on without them."
+        ]
+      },
+      {
+        "kind": "weather",
+        "weather": "rain"
+      },
+      {
+        "kind": "fade",
+        "to": "clear",
+        "frames": 26
+      },
+      {
+        "kind": "wait",
+        "frames": 10
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "It is full dark by the time you are up on the old sea-wall,",
+          "and the rain has started doing the thing rain does out here, which is sideways."
+        ]
+      },
+      {
+        "kind": "music",
+        "track": "station"
+      },
+      {
+        "kind": "wait",
+        "frames": 12
+      },
+      {
+        "kind": "sfx",
+        "sound": "spotted"
+      },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "mer_kesh",
+          "sprite": "meridian_lead",
+          "x": 14,
+          "y": 28,
+          "facing": "down",
+          "movement": {
+            "kind": "static"
+          }
+        }
+      },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "mer_ordell",
+          "sprite": "meridian",
+          "x": 15,
+          "y": 28,
+          "facing": "down",
+          "movement": {
+            "kind": "static"
+          }
+        }
+      },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
+      {
+        "kind": "say",
+        "who": "AGENT KESH",
+        "lines": [
+          "Evening. You are a long way out for the hour."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "AGENT KESH",
+        "lines": [
+          "Foundation business. We are going to need the piece you are carrying.",
+          "There is a form for it. It will be posted to your mother."
+        ]
+      },
+      {
+        "kind": "choice",
+        "lines": [
+          "Neither of them has moved off the road."
+        ],
+        "options": [
+          {
+            "label": "Who sent you?",
+            "then": [
+              {
+                "kind": "say",
+                "who": "AGENT KESH",
+                "lines": [
+                  "Somebody who signs things."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "No.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "AGENT KESH",
+                "lines": [
+                  "That was not really a question, I am afraid."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 12
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The tall one does not move.",
+          "The other one takes his coat off and folds it on the wall, which is somehow worse."
+        ]
+      },
+      {
+        "kind": "battleTrainer",
+        "trainer": "meridian_agent_kesh",
+        "onLoss": "whiteout"
+      },
+      {
+        "kind": "wait",
+        "frames": 10
+      },
+      {
+        "kind": "say",
+        "who": "AGENT ORDELL",
+        "lines": [
+          "Kesh. Sit down.",
+          "Right. My turn, and I am not going to be as polite about it."
+        ]
+      },
+      {
+        "kind": "battleTrainer",
+        "trainer": "meridian_agent_ordell",
+        "onLoss": "whiteout"
+      },
+      {
+        "kind": "wait",
+        "frames": 12
+      },
+      {
+        "kind": "say",
+        "who": "AGENT ORDELL",
+        "lines": [
+          "Enough of this. Take it off him."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "A hand goes into your bag."
+        ]
+      },
+      {
+        "kind": "call",
+        "script": "tideheart_wake_glass_quay"
+      },
+      {
+        "kind": "wait",
+        "frames": 10
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Both of them let go at once."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 14
+      },
+      {
+        "kind": "sfx",
+        "sound": "denied"
+      },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "r4_lyra",
+          "sprite": "lyra",
+          "x": 14,
+          "y": 29,
+          "facing": "up",
+          "movement": {
+            "kind": "static"
+          }
+        },
+        "_note": "ON THE ROAD, IN FRONT OF THE PLAYER, and the tile is the point. The trigger band is two rows at the southern end of route_4, so the player is at y=21 or y=22 when this runs and the dialogue box covers everything below them -- Lyra first stood at 14,23 and delivered the whole scene from behind the text, which is the same as not being in it. Spawning her at 14,20 puts her between the player and the two agents, in the top half of the frame, which is also what the scene says she does."
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "STOP."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 14
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "Kesh. Look at me. Look at what you have got backed up against a wall in the dark."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "AGENT KESH",
+        "lines": [
+          "This is not your department."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "No. It is not. Go and stand somewhere I cannot see you."
+        ]
+      },
+      {
+        "kind": "removeNpc",
+        "who": "mer_kesh"
+      },
+      {
+        "kind": "removeNpc",
+        "who": "mer_ordell"
+      },
+      {
+        "kind": "face",
+        "who": "r4_lyra",
+        "dir": "down"
+      },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "Are you hurt? Do not answer that quickly, everyone answers that quickly."
+        ]
+      },
+      {
+        "kind": "choice",
+        "lines": [
+          "She is soaked through and she has not noticed."
+        ],
+        "options": [
+          {
+            "label": "I'm fine.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "LYRA",
+                "lines": [
+                  "You are not, but I will take it for now."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "That was Meridian.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "LYRA",
+                "lines": [
+                  "...Yes. That was Meridian."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 12
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "I am not going to stand in the rain and tell you they made a mistake.",
+          "Nobody comes out this far at this hour by accident. They came here to do that."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "We want it. The Foundation wants the thing in your bag.",
+          "I have known that for a fortnight and I have been calling it archaeology."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 14
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "The man who runs it is a good man. I have sat in rooms with him. I have watched him work."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "I would know."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
+      {
+        "kind": "giveItem",
+        "item": "dusk_vessel",
+        "count": 2
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Lyra handed over 2 Dusk Vessels."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "Take those and stop walking coast roads after dark like somebody in a story.",
+          "If it happens again, do not be brave at them. Be somewhere else."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "I am going to go and find out whose name is on the order.",
+          "Do not follow me."
+        ]
+      },
+      {
+        "kind": "setFlag",
+        "flag": "lyra_doubt"
+      },
+      {
+        "kind": "setFlag",
+        "flag": "lyra_admits_meridian"
+      },
+      {
+        "kind": "setFlag",
+        "flag": "night_attempt_done"
+      },
+      {
+        "kind": "fade",
+        "to": "black",
+        "frames": 24
+      },
+      {
+        "kind": "removeNpc",
+        "who": "r4_lyra"
+      },
+      {
+        "kind": "weather",
+        "weather": "clear"
+      },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
+      {
+        "kind": "fade",
+        "to": "clear",
+        "frames": 24
+      },
+      {
+        "kind": "music",
+        "track": "resume"
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "She walks back towards the lights.",
+          "She is not walking fast, which is somehow the worst part of it."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "act2_tideglass_aftermath_body",
+    "_note": "ACT 2. Puts Tarin back in Tideglass after the night on the road. Same safety-net spawn as the arrival: if the city places town_tarin itself with requiresFlag \"lyra_doubt\" and hiddenIfFlag \"tarin_tideglass_done\", addNpcRuntime is a no-op and this is only the line of prose.",
+    "trigger": "call",
+    "actions": [
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "town_tarin",
+          "sprite": "rival",
+          "x": 29,
+          "y": 47,
+          "facing": "down",
+          "movement": {
+            "kind": "static"
+          },
+          "script": "tarin_town",
+          "hiddenIfFlag": "tarin_tideglass_done"
+        }
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Somebody is sat on the harbour rail with their back to the water,",
+          "which is a thing exactly one person you know would do."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "act2_tideglass_aftermath_tg",
+    "trigger": "enter",
+    "map": "tideglass",
+    "when": {
+      "kind": "all",
+      "of": [
+        {
+          "kind": "flag",
+          "flag": "lyra_doubt"
+        },
+        {
+          "kind": "not",
+          "of": {
+            "kind": "flag",
+            "flag": "tarin_tideglass_done"
+          }
+        }
+      ]
+    },
+    "onceFlag": "act2_tideglass_aftermath_done",
+    "actions": [
+      {
+        "kind": "call",
+        "script": "act2_tideglass_aftermath_body"
+      }
+    ]
+  },
+  {
+    "id": "r3_tarin",
+    "_note": "TARIN on Eastwind Ridge. A wrapper, not a scene -- the scene is the tarin_at_ridge branch of tarin_town, which is where every Tarin scene lives so that none of them can be lost when somebody rewrites a town. data/maps/route_3.json points its town_tarin NPC at this id rather than at tarin_town directly; this exists so that keeps working. If the ridge wants the meeting to be unmissable, make a step script on the road beside him that calls tarin_town too -- do NOT write a second Tarin scene, see docs/TARIN.md.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "call",
+        "script": "tarin_town"
+      }
+    ]
+  },
+  {
+    "id": "tg_lyra",
+    "_note": "ACT 2, after the north road. Runs ONCE -- `when` gates it on lyra_thread, so after this the NPC falls through to the flag-aware dialogue table in data/dialogue/tideglass.json, which is where her standing lines live. An event script that always starts silently eats the dialogue entry behind it (see overworld.interact: the script gets first refusal), and the city had written good lines there. Lyra, still working for Meridian, which is the point. CANON is explicit that her arc is doubt ACCUMULATING -- she does not switch sides here, and she is not Cassian's daughter here either, because the player does not learn that for two more acts. What she does is refuse to stop asking, out loud, while defending the half of the Foundation that is genuinely the best thing on this coast. Both of those have to be true at once or the character is just a plot device with a conscience.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "You are up. Good.",
+          "I have been in an office since six being handed the same three pieces of paper."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "There is no order. Nobody signed anything.",
+          "Kesh and Ordell were acting on their own initiative, it says."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "Which is a sentence that somebody wrote down.",
+          "Sentences like that do not write themselves."
+        ]
+      },
+      {
+        "kind": "choice",
+        "lines": [
+          "She has not sat down since you came in."
+        ],
+        "options": [
+          {
+            "label": "So who did?",
+            "then": [
+              {
+                "kind": "say",
+                "who": "LYRA",
+                "lines": [
+                  "That is the question I have been asked, very politely, to stop asking."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Do you believe it?",
+            "then": [
+              {
+                "kind": "say",
+                "who": "LYRA",
+                "lines": [
+                  "I believe the paperwork is honest.",
+                  "I have stopped believing the paperwork is all of it."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 12
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "I am not leaving. I would rather say that plainly than have you wonder.",
+          "Half of what we do is the only good thing on this coast. I am not throwing that out over two men in the rain."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "But I am going to keep pulling at it.",
+          "Somebody should, and it had better be somebody who badly wants to be wrong."
+        ]
+      },
+      {
+        "kind": "setFlag",
+        "flag": "lyra_thread"
+      }
+    ],
+    "when": {
+      "kind": "not",
+      "of": {
+        "kind": "flag",
+        "flag": "lyra_thread"
+      }
+    }
   }
 ]

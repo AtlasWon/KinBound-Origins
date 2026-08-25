@@ -19,8 +19,8 @@
       "x": 6,
       "y": 7,
       "toMap": "tanners_rest",
-      "toX": 21,
-      "toY": 18,
+      "toX": 29,
+      "toY": 22,
       "facing": "down",
       "style": "door"
     },
@@ -53,9 +53,8 @@
       "x": 2,
       "y": 2,
       "text": [
-        "The kitchen bench. Everything on it is scrubbed",
-        "raw, because of what the rest of the house smells of.",
-        "The tannery is only two doors down."
+        "The kitchen bench, scrubbed raw, because of what the rest of the village smells of.",
+        "The tanyard is up the lane and it has been up the lane for four hundred years."
       ]
     },
     {
@@ -74,7 +73,7 @@
       "y": 5,
       "text": [
         "A crate of hides waiting to go back to the yard.",
-        "A note on top, in a child's hand: NOT FURNITURE.",
+        "A note on top in a child's hand: NOT FURNITURE.",
         "Underneath, in an adult's hand: IT IS NOW."
       ]
     }

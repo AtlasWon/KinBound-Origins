@@ -34,7 +34,11 @@ export type CharDir = (typeof DIRS)[number];
  *  away. */
 export type HairStyle = 'short' | 'swept' | 'spiky' | 'bob' | 'long' | 'ponytail' | 'bun' | 'curls';
 export type HatStyle = 'cap' | 'beanie' | 'bandana' | 'sunhat' | 'band';
-export type JacketStyle = 'open' | 'hoodie' | 'vest';
+/** `coat` is the only one that changes the silhouette below the waist: it is
+ *  fastened at the front and falls past the hip. On a 16-wide character that
+ *  outline is the whole vocabulary available for "expensive" and for "uniform",
+ *  which is why it exists at all. */
+export type JacketStyle = 'open' | 'hoodie' | 'vest' | 'coat';
 export type GlassesStyle = 'round' | 'square' | 'shades';
 
 export interface CharPalette {
@@ -63,8 +67,17 @@ export interface CharPalette {
   jacket?: string;
   jacketShade?: string;
   jacketStyle?: JacketStyle;
-  /** Shoulder width and waist. */
-  build?: 'broad' | 'slim';
+  /** Piping down the front of a coat. Defaults to a lit edge of the coat
+   *  colour, so a coat is never a flat slab; set it to say something -- gold on
+   *  a rich man, pale blue on an issued uniform, brass on a harbourmaster. */
+  trim?: string;
+  /** Organisation insignia: two authoring pixels on the chest, one on the back.
+   *  Small, but it is the only thing that separates "people in the same coat"
+   *  from "a staff". */
+  badge?: string;
+  /** Shoulder width and waist. `heavy` is NPC-only -- the creator offers the
+   *  other two -- and exists so a dock crowd is not a village crowd repainted. */
+  build?: 'broad' | 'slim' | 'heavy';
   /** Eyewear, drawn over the face. */
   glasses?: GlassesStyle;
 }
@@ -179,6 +192,206 @@ export const DEFAULT_PALETTES: Record<string, CharPalette> = {
     legs: '#2f3f52', legsShade: '#1f2b38',
     shoes: '#20242c', outline: '#12141a',
     hat: '#d8dde4', hatShade: '#a8b0ba',
+  },
+
+  /* ------------------------------------------------------- the Meridian look
+   *
+   * One family, four jobs. Slate-blue over navy, a pale cap, a brass badge and
+   * a harder outline than the rest of the cast (#12141a, inherited from the
+   * office staff above) -- so that when three of them come out of the dark at
+   * the harbour the player recognises the coat before anyone says a word. That
+   * recognition is the entire point of the night attempt; if agents were a new
+   * look it would land as a random mugging.
+   */
+
+  /** Field agent. The default Meridian body. */
+  meridian: {
+    skin: '#e0b48c', skinShade: '#b88a64',
+    hair: '#2a2a34', hairShade: '#1a1a22',
+    top: '#3a5a7a', topShade: '#284058',
+    legs: '#2f3f52', legsShade: '#1f2b38',
+    shoes: '#20242c', outline: '#12141a',
+    // Steel blue rather than the office's near-white: at 1x a pale cap on a
+    // pale face is read as grey hair, and an agent who looks sixty is not the
+    // person you want walking out of the dark at the end of the act.
+    hat: '#7d97ad', hatShade: '#4c6478', hatStyle: 'cap',
+    jacket: '#2f4a66', jacketShade: '#1e3245', jacketStyle: 'coat',
+    trim: '#8fb4cc', badge: '#d8c47a', eye: '#6f7f96',
+  },
+  /** The one who does the talking, and the one at the front on the night. Same
+   *  cut, darker cloth, a cap that does not catch a lamp. */
+  meridian_lead: {
+    skin: '#d8a078', skinShade: '#b07850',
+    hair: '#3a3644', hairShade: '#221f2a',
+    top: '#2c4258', topShade: '#1d2c3b',
+    legs: '#262f3c', legsShade: '#181e27',
+    shoes: '#1b1e24', outline: '#12141a',
+    hat: '#3a4a5c', hatShade: '#26313d', hatStyle: 'cap',
+    jacket: '#1f3040', jacketShade: '#131e29', jacketStyle: 'coat',
+    trim: '#6f93ab', badge: '#c8a44a', eye: '#8aa0b4', build: 'heavy',
+  },
+  /** Researcher. The white coat over the blue shirt is the Foundation's public
+   *  face: most of these people really are doing weather science. */
+  meridian_sci: {
+    skin: '#f0c9a4', skinShade: '#c99a72',
+    hair: '#5a3a24', hairShade: '#3d2614',
+    top: '#3a5a7a', topShade: '#284058',
+    legs: '#2f3f52', legsShade: '#1f2b38',
+    shoes: '#2a2a30', outline: '#12141a',
+    jacket: '#e6e9f0', jacketShade: '#b6bac6', jacketStyle: 'coat',
+    trim: '#7fa6c0', badge: '#d8c47a', eye: '#6a4428', glasses: 'square',
+  },
+  meridian_sci_f: {
+    skin: '#c08658', skinShade: '#94603a',
+    hair: '#26222c', hairShade: '#141119',
+    top: '#3a5a7a', topShade: '#284058',
+    legs: '#2f3f52', legsShade: '#1f2b38',
+    shoes: '#2a2a30', outline: '#12141a',
+    jacket: '#e6e9f0', jacketShade: '#b6bac6', jacketStyle: 'coat',
+    trim: '#7fa6c0', badge: '#d8c47a',
+    hairStyle: 'bun', eye: '#5aa85e', build: 'slim',
+  },
+  /** Hired hand hauling crates up the ridge. Work clothes, a Meridian jacket
+   *  and no badge: the recruiting card in Stonewake promised board, lodging and
+   *  a coat, and six of the nine names on it were quarry names. This is what
+   *  that sign looks like from the road. */
+  porter: {
+    skin: '#c08658', skinShade: '#94603a',
+    hair: '#5a3a24', hairShade: '#3d2614',
+    top: '#9a8a5e', topShade: '#6f6342',
+    legs: '#6a5040', legsShade: '#48362a',
+    shoes: '#4d3627', outline: '#12141a',
+    hat: '#9a3a34', hatShade: '#6d2925', hatStyle: 'bandana',
+    jacket: '#2f4a66', jacketShade: '#1e3245', jacketStyle: 'open',
+    pack: '#8a4a30', eye: '#a07a3c',
+  },
+
+  /* ------------------------------------------------------------- Tideglass */
+
+  /** Dockhand. The only heavy build in the game, and the reason it exists: a
+   *  harbour crowd has to be built differently from a village crowd or the
+   *  city is just Briarbell with more roofs. */
+  dockhand: {
+    skin: '#9a6440', skinShade: '#71462a',
+    hair: '#26222c', hairShade: '#141119',
+    top: '#b8563c', topShade: '#83382a',
+    legs: '#4a4a58', legsShade: '#33333f',
+    shoes: '#4d3627', outline: '#1a1a22',
+    hat: '#8a7f62', hatShade: '#5f5744', hatStyle: 'cap',
+    pack: '#8a7a58', eye: '#6a4428', build: 'heavy',
+  },
+  /** Net-mender on the quay. Oilskin over sand, and a scarf against the wind
+   *  off the water. */
+  netmender: {
+    skin: '#d8a274', skinShade: '#a97a50',
+    hair: '#3d2a1c', hairShade: '#241710',
+    top: '#e0cf9c', topShade: '#b0a074',
+    legs: '#6a5040', legsShade: '#48362a',
+    shoes: '#4d3627', outline: '#1a1a22',
+    hat: '#3f8a90', hatShade: '#2a6066', hatStyle: 'bandana',
+    jacket: '#2f5a62', jacketShade: '#1f3e44', jacketStyle: 'vest',
+    hairStyle: 'bun', eye: '#5aa85e', build: 'slim',
+  },
+  /** Harbourmaster. Brass and navy: the coat says authority without saying
+   *  Meridian, which matters in a city where both are on the same quay. */
+  harbourmaster: {
+    skin: '#e0c0a0', skinShade: '#b89578',
+    hair: '#e6e2d6', hairShade: '#b4b0a4',
+    top: '#eceef4', topShade: '#b9bcc8',
+    // Duck trousers under the navy: the first version was navy coat over navy
+    // legs over black shoes and at 1x it was a navy blob with a face.
+    legs: '#d3ccb8', legsShade: '#a29c8c',
+    shoes: '#3a2f28', outline: '#1a1a22',
+    hat: '#22304a', hatShade: '#151f30', hatStyle: 'cap',
+    jacket: '#22304a', jacketShade: '#151f30', jacketStyle: 'coat',
+    trim: '#d8b05a', eye: '#6f7f96',
+  },
+
+  /* Two more bodies for the crowd, using the two hair silhouettes no NPC has
+   * ever used -- curls and long -- because in a city of thirty thousand the
+   * thing that betrays a small cast is not colour, it is everybody having the
+   * same outline. Deeper skin tones than the shipped roster, for the same
+   * reason. */
+  townsfolk_m: {
+    // Deep skin under black curls was one dark mass with eyes in it; the curl
+    // silhouette is bulky and needs the hair to be the lighter of the two.
+    skin: '#9a6440', skinShade: '#71462a',
+    hair: '#8e8e9c', hairShade: '#65656f',
+    top: '#7ab0dc', topShade: '#5482a8',
+    legs: '#9a8a5e', legsShade: '#6f6342',
+    shoes: '#4d3627', outline: '#1a1a22',
+    hairStyle: 'curls', eye: '#6a4428',
+  },
+  townsfolk_f: {
+    skin: '#f6d9c0', skinShade: '#d0a888',
+    hair: '#c8a04a', hairShade: '#9a7830',
+    top: '#e08060', topShade: '#a85840',
+    legs: '#4a4a58', legsShade: '#33333f',
+    shoes: '#3a3038', outline: '#1a1a22',
+    hairStyle: 'long', eye: '#5aa85e', build: 'slim',
+  },
+  /** Harbour trade. The only gold-rimmed glasses in the game, and an apron
+   *  vest: comfortable, but nowhere near Veyl. */
+  merchant: {
+    skin: '#d8a274', skinShade: '#a97a50',
+    hair: '#7a3a26', hairShade: '#542517',
+    top: '#e8e8ee', topShade: '#b4b4c0',
+    legs: '#48362a', legsShade: '#31241c',
+    shoes: '#4d3627', outline: '#1a1a22',
+    jacket: '#d8a03c', jacketShade: '#a3742a', jacketStyle: 'vest',
+    glasses: 'round', eye: '#a07a3c',
+  },
+
+  /* ------------------------------------------------------------ the Veyls */
+
+  /**
+   * Dr. Cassian Veyl.
+   *
+   * The brief is a constraint before it is a design: the player must not be
+   * able to tell he is the villain by looking at him. So nothing here is a
+   * villain cue. No black, no shades, no cap shadowing the face, no hard
+   * outline -- he takes the soft #1a1a22 the villagers wear, not the Meridian
+   * #12141a, and his face is left completely unobstructed.
+   *
+   * He is also deliberately NOT in Meridian blue. The first pass put him in a
+   * deep navy greatcoat and at 1x he was an agent who had lost his cap, which
+   * gives the whole game away in the wrong direction: the player is supposed
+   * to meet a public figure, not spot the boss. Wine and gold instead -- warm,
+   * unique in the cast, and expensive without being sinister. He is the only
+   * person in the region in a fastened greatcoat with gold piping over an
+   * ivory shirt, and the collar is open at the throat.
+   */
+  veyl: {
+    skin: '#e8b48c', skinShade: '#c08a63',
+    hair: '#6e6a76', hairShade: '#474450',
+    top: '#efe7d4', topShade: '#c0b8a2',
+    legs: '#48414a', legsShade: '#312c33',
+    shoes: '#4d3627', outline: '#1a1a22',
+    jacket: '#5e3742', jacketShade: '#3b2028', jacketStyle: 'coat',
+    trim: '#d8b768', hairStyle: 'swept', eye: '#6f7f96',
+  },
+  /**
+   * Lyra Veyl.
+   *
+   * Deliberately not an agent: no cap, no badge, no coat, the soft outline.
+   * The first pass gave her a teal field jacket and at 1x she was a small
+   * agent, which is the one thing she must never be -- the night attempt only
+   * works if the player never suspected her.
+   *
+   * So she is the pale one. An oat jacket over a teal blouse reads light and
+   * warm at a tile's distance where every Meridian body reads dark, the
+   * ponytail and slim build keep her silhouette her own, and the satchel is a
+   * student's rather than a Foundation case. The one thing she shares with her
+   * father is the slate eye colour, for the player who works it out early.
+   */
+  lyra: {
+    skin: '#f0c9a4', skinShade: '#c99a72',
+    hair: '#3a3644', hairShade: '#221f2a',
+    top: '#3f8a90', topShade: '#2a6066',
+    legs: '#3f5478', legsShade: '#2b3c58',
+    shoes: '#4d3627', outline: '#1a1a22',
+    jacket: '#cbb388', jacketShade: '#9a8560', jacketStyle: 'open',
+    pack: '#6a5a3a', hairStyle: 'ponytail', eye: '#6f7f96', build: 'slim',
   },
 };
 
@@ -303,6 +516,7 @@ export class CharSheet {
 
     const profile = dir === 'left' || dir === 'right';
     const slim = p.build === 'slim';
+    const heavy = p.build === 'heavy';
     const style: HairStyle = p.hairStyle ?? 'short';
     const eye = p.eye ?? '#5f9fd8';
     const jacket = p.jacket;
@@ -318,8 +532,11 @@ export class CharSheet {
     const bob = frame === 0 ? 0 : -1;
 
     const HEAD_L = 4, HEAD_R = 11;
-    const bodyL = slim ? 5 : 4;
-    const bodyR = slim ? 10 : 11;
+    // The legs stay where they are for every build; only the shoulders move.
+    // A dockhand is a wide chest on ordinary legs, which is what bulk looks
+    // like at this size -- widening the legs too just makes a rectangle.
+    const bodyL = slim ? 5 : heavy ? 3 : 4;
+    const bodyR = slim ? 10 : heavy ? 12 : 11;
     const TORSO_Y = 11 + bob;
     const HIP_Y = 16 + bob;
 
@@ -376,6 +593,7 @@ export class CharSheet {
     /* ----------------------------------------------------------- jacket */
     if (jacket) {
       const js = jacketShade!;
+      const coat = jacketStyle === 'coat';
       if (dir === 'up') {
         box(bodyL, TORSO_Y, bodyR, HIP_Y, jacket);
         box(bodyR - 1, TORSO_Y, bodyR, HIP_Y, js);
@@ -387,6 +605,22 @@ export class CharSheet {
         box(bodyL, TORSO_Y, bodyL, HIP_Y, lighten(jacket, 0.16));
         box(bodyR - 1, TORSO_Y, bodyR - 1, HIP_Y, js);
         wipe(bodyL, TORSO_Y, bodyL, TORSO_Y);
+      } else if (coat) {
+        // Fastened, with lapels and a closure down the middle. A closed front
+        // is most of the difference between a coat somebody owns and a coat
+        // somebody was issued.
+        box(bodyL, TORSO_Y, bodyR, HIP_Y, jacket);
+        box(bodyL, TORSO_Y + 1, bodyL, HIP_Y, lighten(jacket, 0.16));
+        box(bodyR, TORSO_Y + 1, bodyR, HIP_Y, js);
+        box(bodyL + 2, TORSO_Y, bodyL + 2, TORSO_Y + 2, js);
+        box(bodyR - 2, TORSO_Y, bodyR - 2, TORSO_Y + 2, js);
+        box(7, TORSO_Y + 1, 7, HIP_Y, darken(js, 0.3));
+        wipe(bodyL, TORSO_Y, bodyL, TORSO_Y);
+        wipe(bodyR, TORSO_Y, bodyR, TORSO_Y);
+        // The shirt still shows at the throat -- an open collar is what keeps
+        // a dark coat from reading as a closed man.
+        box(7, TORSO_Y, 8, TORSO_Y, lighten(p.top, 0.3));
+        set(8, TORSO_Y + 1, p.top);
       } else {
         // Open at the front, with the shirt showing between the panels.
         box(bodyL, TORSO_Y, bodyL + 1, HIP_Y, jacket);
@@ -402,14 +636,65 @@ export class CharSheet {
         box(bodyL + 1, TORSO_Y - 1, bodyR - 1, TORSO_Y - 1, js);
         if (dir === 'up') box(bodyL + 1, TORSO_Y, bodyR - 1, TORSO_Y + 1, js);
       }
+
+      /* ------------------------------------------------------------ skirt */
+      // Two rows below the hip, flaring on the last one. It lifts with the
+      // walk bob, which reads as the coat swinging, and it stops short of the
+      // shins so the legs still visibly scissor -- a coat to the ankle would
+      // have cost the whole walk cycle.
+      if (coat) {
+        const hem0 = HIP_Y + 1;
+        const hem1 = HIP_Y + 2;
+        const tr = p.trim ?? lighten(jacket, 0.24);
+        if (profile) {
+          box(bodyL - 1, hem0, bodyR, hem1, jacket);
+          box(bodyL - 1, hem0, bodyL - 1, hem1, lighten(jacket, 0.14));
+          box(bodyR - 1, hem0, bodyR, hem1, js);
+          box(bodyL - 1, hem1, bodyR, hem1, js);
+          box(bodyL - 1, TORSO_Y + 1, bodyL - 1, HIP_Y - 1, tr);
+        } else {
+          box(bodyL, hem0, bodyR, hem0, jacket);
+          box(bodyL - 1, hem1, bodyR + 1, hem1, dir === 'up' ? js : jacket);
+          box(bodyL, hem0, bodyL, hem0, lighten(jacket, 0.14));
+          box(bodyL - 1, hem1, bodyL - 1, hem1, lighten(jacket, 0.14));
+          box(bodyR, hem0, bodyR, hem0, js);
+          box(bodyR, hem1, bodyR + 1, hem1, js);
+          box(7, hem0, 7, hem1, darken(js, 0.35));      // the vent
+          if (dir === 'down') {
+            box(8, TORSO_Y + 1, 8, HIP_Y, tr);
+            set(bodyL + 2, TORSO_Y, tr);
+            set(bodyR - 2, TORSO_Y, tr);
+          } else {
+            box(bodyL + 1, TORSO_Y + 1, bodyR - 1, TORSO_Y + 1, tr);
+          }
+        }
+      }
+    }
+
+    /* ------------------------------------------------------------- badge */
+    if (p.badge) {
+      const pin = darken(p.badge, 0.45);
+      const by = TORSO_Y + 1;
+      if (dir === 'down') {
+        box(bodyR - 2, by, bodyR - 1, by, p.badge);
+        set(bodyR - 1, by + 1, pin);
+      } else if (profile) {
+        box(bodyL + 1, by, bodyL + 2, by, p.badge);
+        set(bodyL + 2, by + 1, pin);
+      } else {
+        box(bodyL + 1, TORSO_Y, bodyL + 2, TORSO_Y, p.badge);
+      }
     }
 
     /* ------------------------------------------------------------- arms */
     const swing = -stepDir;
     if (profile) {
       const ay = TORSO_Y + 1 + Math.max(0, swing);
-      box(3, ay, 4, ay + 3, sleeveShade);
-      box(3, ay + 4, 4, ay + 4, p.skin);
+      // Sits just outside the torso, so a heavy build does not swallow its own
+      // arm. For the two shipped builds this is the 3 it always was.
+      const ax = Math.min(3, bodyL - 1);
+      box(ax, ay, ax + 1, ay + 3, sleeveShade);
+      box(ax, ay + 4, ax + 1, ay + 4, p.skin);
     } else {
       const lY = TORSO_Y + 1 - Math.max(0, swing);
       const rY = TORSO_Y + 1 + Math.max(0, -swing);
@@ -782,6 +1067,8 @@ export const JACKET_STYLES: { name: string; style: JacketStyle | null }[] = [
   { name: 'Jacket', style: 'open' },
   { name: 'Hoodie', style: 'hoodie' },
   { name: 'Vest', style: 'vest' },
+  // Appended, never inserted: these indices are written into every save.
+  { name: 'Coat', style: 'coat' },
 ];
 
 export const GLASSES_STYLES: { name: string; style: GlassesStyle | null }[] = [

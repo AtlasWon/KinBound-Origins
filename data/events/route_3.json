@@ -1,0 +1,21 @@
+[
+  {
+    "id": "r3_tarin_band",
+    "_note": "TARIN on Eastwind Ridge, made unmissable. The scene itself is NOT here: it is the tarin_at_ridge branch of tarin_town in data/events/common.json, which is where every Tarin scene in the game lives, and this only calls it -- see docs/TARIN.md and the note on r3_tarin. The NPC town_tarin sits at 33,5 on the crest with hiddenIfFlag tarin_ridge_done, so he appears and disappears without any script touching him.\n\nTHE TRIGGER IS A BAND, four rows deep across the neck of the crest at x=28..32, not a tile on the road. Anything crossing the summit in either direction passes through it: the road is two tiles wide and steps from y4/y5 up to y3/y4 exactly here, and a player who walks the turf beside it still has to get past x=32. Tiles in the band that are solid are simply never stepped on, so a generous band costs nothing.\n\nNo onceFlag. onceFlag is set the moment a script starts; this one is gated on tarin_ridge_done instead, which tarin_town sets at the END of the scene, so a player who somehow breaks out of it gets the meeting again rather than losing it.",
+    "trigger": "step",
+    "map": "route_3",
+    "when": {
+      "kind": "not",
+      "of": { "kind": "flag", "flag": "tarin_ridge_done" }
+    },
+    "at": [
+      { "x": 28, "y": 2 }, { "x": 29, "y": 2 }, { "x": 30, "y": 2 }, { "x": 31, "y": 2 }, { "x": 32, "y": 2 },
+      { "x": 28, "y": 3 }, { "x": 29, "y": 3 }, { "x": 30, "y": 3 }, { "x": 31, "y": 3 }, { "x": 32, "y": 3 },
+      { "x": 28, "y": 4 }, { "x": 29, "y": 4 }, { "x": 30, "y": 4 }, { "x": 31, "y": 4 }, { "x": 32, "y": 4 },
+      { "x": 28, "y": 5 }, { "x": 29, "y": 5 }, { "x": 30, "y": 5 }, { "x": 31, "y": 5 }, { "x": 32, "y": 5 }
+    ],
+    "actions": [
+      { "kind": "call", "script": "tarin_town" }
+    ]
+  }
+]

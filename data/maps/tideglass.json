@@ -1,0 +1,984 @@
+{
+  "id": "tideglass",
+  "name": "Tideglass",
+  "displayName": "TIDEGLASS",
+  "music": "route_coast",
+  "battleBackdrop": "coast",
+  "indoor": false,
+  "regionPos": {
+    "x": 31,
+    "y": 20
+  },
+  "rows": [
+    "TTTTTTTTTTTTTT--TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+    "TT<%%%>-<%%%>====<%%>-<%%%>-<%%>-==<%%%>=~~==vvvvvv==vvvvvvvvvvv==[^^^]=[^^]===[^^^]TT",
+    "TTMZdZM-MZdZM===!MZdM-MZdZM-MZdM-==MZdZM=~~==vyvvyv==vyvvvvvvvyv==#www#=#ww#===#www#TT",
+    "TTMdZdM-MdZdM====MdZM-MdZdM-MdZM-==MdZdM=~~==lnnnnl==lnnnnnnnnnl====================TT",
+    "TTMZiZM-MZdZM====MZdM-MZdZM-MZdM-==MZdZM=~~==lnnnnl==lnnnqunnnnl==69998=6998===69998TT",
+    "TT-----------====----------------==-----=~~==[^^^^]==========[^^]=67778=6778===67778TT",
+    "TT<%%%>-<%%%>====<%%>-<%%%>-<%%>-==<%%%>=~~==#wwww#=====!====#ww#=GGGGG=GGGG===GGGGGTT",
+    "TTMZdZM-MZdZM====MZdM-MZdZM-MZdM-==MZdZM=~~=============Y===========================TT",
+    "TTMdZdM-MdZdM====MdZM-MdZdM-MdZMY==MdidM=~~==Y========================Y============YTT",
+    "TT==========!=Y========================Y=BB==[^^^^]==69998=69998==vvvvvvvvvvv==[^^^]TT",
+    "TT=Y=====================================BB==#wwww#==67778=67778==vyvvvvvvvyv==#www#TT",
+    "TT<%%%>-<%%%>====<%%%%%%%%%%%%%%>==<%%%>=~~==========GGGGG=GGGGG==lnnnnnnnnnl=======TT",
+    "TTMZdZM-MZdZM====6999999999999998==MZdZM=~~==[^^^^]==69999999998Y=lnnnnqunnnl==[^^^]TT",
+    "TTMdZdM-MdZdM====6777777777777778==MdZdM=~~==#wwww#==67777777778===============#www#TT",
+    "TTMZdZM-MZiZM====GGGGGGGGGGGGGGGG==MZiZM=~~==========GGGGGgGGGGG======!=============TT",
+    "TT-----------====GGGGGGGgGGGGGGGG========~~=========================================TT",
+    "TT<%%%>-<%%%>====Y=!============Y==<%%%>=~~=========================================TT",
+    "TTMZdZM-MZdZM======================MZdZM=~~==..*...699998=699998==[^^^]=[^^^]==[^^^]TT",
+    "TT-----------========~~~~~~~~============~~==.t.*t.677778=677778==#www#=#www#==#www#TT",
+    "TT(&&&)-(&&&)========~~~~~~~~======(&&&)=~~==..a...GGGGGG=GGGGGG==<%%%>=<%%%>==<%%%>TT",
+    "TTHZdZH-HZdZH======a==a====a==a====HZdZH!~~==.t.*t.===============MZdZM=MZdZMY=MZdZMTT",
+    "TT=======a==Y====Y=Y==a=========Y======Y=BB==a=================Y===a=============a==TT",
+    "TT=====Y=========a==========!==Y====a====BB==aY=========a===a========a======Y=======TT",
+    "TT[^]===144443==6999998==6999998====698==~~==699998==69998=6998===<%%%>=<%%%>==(&&&)TT",
+    "TT[^]===122523==6770778==6777778====678==~~==677778==67778=6778===MZdZM=MZiZM==HZdZHTT",
+    "TT#w#===GGhgGG==GGmgGGG==GGGGGGG====GGG==~~==GGgGGG==GGGGG=GGGG=====================TT",
+    "TT========!=======!======GGgGGGG=========~~=========================================TT",
+    "TT======================a================BB==699998==69998=6998===<%%%>=<%%%>==(&&&)TT",
+    "TT===================================a===BB==677778==67778=6778===MZdZM=MZdZM==HZdZHTT",
+    "TT[^]===69999998==69998==[^^^^^]====698==~~==GGGGGG==GGGGG=GGGG==Y==================TT",
+    "TT[^]===67777778==67778==[^^^^^]====678==~~========Y================================TT",
+    "TT#w#===GGGgGGGG==GGgGG==#wiwww#====GGG==~~=========================================TT",
+    "TT=======!===============================~~=========================================TT",
+    "TT~~~BB~~~BB~~~~~~~~~~~BB~~~~~~~~BB~~~~~~~~==[^^^^^^^]-[^^^^^^]-==[^^^^^^^^]-==[^^^]TT",
+    "TT~~~BB~~~BB~~~~~~~~~~~BB~~~~~~~~BB~~~~~~~~==[^^^^^^^]-[^^^^^^]-==[^^^^^^^^]-==#www#TT",
+    "TT(&)==(&)==[^^^^^^^^]===(&&)[^^]==(&&&)=~~==#wwwiwww#-#wwwwww#-==#wwwwiwww#-==-----TT",
+    "TTHiH==HZH--[^^^^^^^^]---HZdH#iw#==HZdZH=~~==[^^]-[^^]-[^^]--[^]==-----------==[^^^]TT",
+    "TT---==-----#wwwiwwww#-----------==-----=~~==#ww#-#ww#-#ww#--#w#==-----------==#www#TT",
+    "TT--K-------K---------!---K------K------=~~==--K-----------K---K----------K---------TT",
+    "TT------K------------K-------------K----=~~==-------K-------------!-K-------------K-TT",
+    "TT(&)==(&)--[^^^]-[^^]---(&&)[^^]==(&&&)=~~==[^^^^^^^]--====-[^]==[^^^^^^^^]-==[^^^]TT",
+    "TTHZH==HiH--#www#-#iw#---HZdH#ww#==HZdZH=~~==#wwwwwww#--~~~~-#w#==#wwwwiwww#-==#www#TT",
+    "TT---==--------------------------==-----=~~==-----------~~~~----==-----------==-----TT",
+    "TT(&)==(&)--(&&&)-(&&)---(&&)(&&)==(&&&)=~~==[^^^^^^^]--~~~~-[^]==[^^^^^^^^]-==[^^^]TT",
+    "TTHZH==HZH--HZdZH-HZdH---HZdHHZdH==HZdZH=~~==#wwwwwww#--~~~~-#w#==#wwwwwwww#-==#www#TT",
+    "TT==========Y======K=====K=========!===Y=BB====K======K=~~~~Y======K====K==========YTT",
+    "TT==Y=============!===========Y=====K====BB=====Y===K===~~~~==K===========YK=====K==TT",
+    "TT=======================================~~=============~~~~========================TT",
+    "WW~~~~(&&)Y=K[^^]=~~BB~~BB~~~~~BB~~~~BB~~WW~~~BB~~BB~~~~WWWW~BB~~~=K=Y=K===KY=K=~~~~WW",
+    "WWWWW~HZiH===#wi#=~~BB~~BB~WWW~BB~WW~BB~WWWWW~BB~~BB~WWWWWWW~BB~W~[^^^]===[^^^]=~WWWWW",
+    "WWWWW~===Y==!===Y=~~BB~~BB~WWW~BB~WW~BB~WWWWW~BB~~BB~WWWWWWW~BB~W~#www#===#www#=~WWWWW",
+    "WWWWW~====1443====~~BB~~BB~WWW~BB~WW~BB~WWWWW~BB~~BB~WWWWWWW~BB~W~==============~WWWWW",
+    "WWWWW~====1223==!=~~BB~~BB~WWW~BB~WW~BB~WWWWW~BB~~BB~WWWWWWW~BB~W~[^^^]===[^^^]=~WWWWW",
+    "WWWWW~====#ww#====~~BB~~BB~WWW~BB~WW~BB~WWWWW~BB~~BB~WWWWWWW~BB~W~#www#===#www#=~WWWWW",
+    "WWWWW~====#ww#====~~BB~~BB~WWW~BB~WW~BB~WWWWW~BB~~BB~WWWWWWW~BB~W~==============~WWWWW",
+    "WWWWW~=K==#ww#==K=~W~~WW~~W~~~~BB~~~~~~~~~~~~~BB~~BB~WWWWWWW~BB~W~[^^^]===[^^^]=~WWWWW",
+    "WWWWW~====#ww#====~WWWWWWW~BBBBBBBBBBBBBBBBBB~BB~~BB~WWWWWWW~BB~W~#www#===#www#=~WWWWW",
+    "WWWWW~===GG##GG===~WWWWWWW~BBBBBBBBBBBBBBBBBB~~~WW~~WWWWWWWWW~~WW~==============~WWWWW",
+    "WWWWW~=K=GGGgGG=K=~WWWWWWWW~~~~~~~~~~~~~~~~~~WWWWWWWWWWWWWWWWWWWW~==============~WWWWW",
+    "WWWWW~============~WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW~~~~~BB~~~~~~~WWWWWW",
+    "WWWWW~[^^]===[^^]=~WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW~BB~WWWWWWWWWWWW",
+    "WWWWW~#ww#===#ww#=~WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW~BB~WWWWWWWWWWWW",
+    "WWWWWW~~~~~BB~~~~~WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW~~WWWWWWWWWWWWW",
+    "WWWWWWWWWW~BB~WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+  ],
+  "warps": [
+    {
+      "x": 14,
+      "y": 0,
+      "toMap": "route_4",
+      "toX": 14,
+      "toY": 32,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 15,
+      "y": 0,
+      "toMap": "route_4",
+      "toX": 15,
+      "toY": 32,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 24,
+      "y": 15,
+      "toMap": "tideglass_hall",
+      "toX": 9,
+      "toY": 13,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 11,
+      "y": 25,
+      "toMap": "tideglass_clinic",
+      "toX": 6,
+      "toY": 9,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 19,
+      "y": 25,
+      "toMap": "tideglass_provisioner",
+      "toX": 6,
+      "toY": 9,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 27,
+      "y": 26,
+      "toMap": "tideglass_chartseller",
+      "toX": 6,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 11,
+      "y": 31,
+      "toMap": "tideglass_inn",
+      "toX": 8,
+      "toY": 11,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 20,
+      "y": 31,
+      "toMap": "tideglass_glassworks",
+      "toX": 7,
+      "toY": 10,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 27,
+      "y": 31,
+      "toMap": "tideglass_bathhouse",
+      "toX": 6,
+      "toY": 9,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 16,
+      "y": 37,
+      "toMap": "tideglass_market",
+      "toX": 9,
+      "toY": 12,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 3,
+      "y": 36,
+      "toMap": "tideglass_house_a",
+      "toX": 6,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 30,
+      "y": 36,
+      "toMap": "tideglass_harbouroffice",
+      "toX": 6,
+      "toY": 9,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 8,
+      "y": 41,
+      "toMap": "tideglass_house_b",
+      "toX": 5,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 19,
+      "y": 41,
+      "toMap": "tideglass_netloft",
+      "toX": 6,
+      "toY": 9,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 4,
+      "y": 4,
+      "toMap": "tideglass_house_c",
+      "toX": 6,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 37,
+      "y": 8,
+      "toMap": "tideglass_house_d",
+      "toX": 5,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 10,
+      "y": 14,
+      "toMap": "tideglass_house_e",
+      "toX": 5,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 37,
+      "y": 14,
+      "toMap": "tideglass_house_f",
+      "toX": 5,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 57,
+      "y": 4,
+      "toMap": "tideglass_institute",
+      "toX": 10,
+      "toY": 13,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 58,
+      "y": 4,
+      "toMap": "tideglass_institute",
+      "toX": 11,
+      "toY": 13,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 71,
+      "y": 12,
+      "toMap": "tideglass_meridian",
+      "toX": 9,
+      "toY": 13,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 72,
+      "y": 12,
+      "toMap": "tideglass_meridian",
+      "toX": 10,
+      "toY": 13,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 58,
+      "y": 14,
+      "toMap": "tideglass_gaugehouse",
+      "toX": 6,
+      "toY": 9,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 47,
+      "y": 25,
+      "toMap": "tideglass_bookseller",
+      "toX": 6,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 74,
+      "y": 24,
+      "toMap": "tideglass_house_g",
+      "toX": 5,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 49,
+      "y": 35,
+      "toMap": "tideglass_warehouse",
+      "toX": 9,
+      "toY": 12,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 71,
+      "y": 35,
+      "toMap": "tideglass_ropewalk",
+      "toX": 10,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 71,
+      "y": 41,
+      "toMap": "tideglass_boatyard",
+      "toX": 8,
+      "toY": 11,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 12,
+      "y": 58,
+      "toMap": "tideglass_lighthouse",
+      "toX": 5,
+      "toY": 9,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 8,
+      "y": 49,
+      "toMap": "tideglass_lh_keeper",
+      "toX": 5,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 15,
+      "y": 49,
+      "toMap": "tideglass_tidewatch",
+      "toX": 6,
+      "toY": 9,
+      "facing": "up",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tg_gatewarden",
+      "sprite": "townsfolk_m",
+      "x": 16,
+      "y": 3,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_gatewarden"
+    },
+    {
+      "id": "tg_washer",
+      "sprite": "townsfolk_f",
+      "x": 7,
+      "y": 6,
+      "facing": "right",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "tg_washer"
+    },
+    {
+      "id": "tg_kid_a",
+      "sprite": "kid",
+      "x": 13,
+      "y": 7,
+      "facing": "right",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "tg_kid_a"
+    },
+    {
+      "id": "tg_tenant",
+      "sprite": "townsfolk_f",
+      "x": 13,
+      "y": 4,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_tenant"
+    },
+    {
+      "id": "tg_oldhand",
+      "sprite": "elder",
+      "x": 27,
+      "y": 7,
+      "facing": "right",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "tg_oldhand"
+    },
+    {
+      "id": "tg_lamplighter",
+      "sprite": "townsfolk_m",
+      "x": 32,
+      "y": 5,
+      "facing": "down",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "tg_lamplighter"
+    },
+    {
+      "id": "tg_hall_crier",
+      "sprite": "townsfolk_f",
+      "x": 24,
+      "y": 17,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "tg_hall_crier"
+    },
+    {
+      "id": "tg_challenger",
+      "sprite": "hiker",
+      "x": 19,
+      "y": 17,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_challenger"
+    },
+    {
+      "id": "tg_hall_kid",
+      "sprite": "kid",
+      "x": 30,
+      "y": 17,
+      "facing": "left",
+      "movement": {
+        "kind": "wander",
+        "radius": 1
+      },
+      "script": "tg_hall_kid"
+    },
+    {
+      "id": "tg_clinic_queue",
+      "sprite": "townsfolk_f",
+      "x": 12,
+      "y": 26,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "tg_clinic_queue"
+    },
+    {
+      "id": "tg_glassblower",
+      "sprite": "merchant",
+      "x": 21,
+      "y": 32,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_glassblower"
+    },
+    {
+      "id": "tg_crier",
+      "sprite": "townsfolk_m",
+      "x": 15,
+      "y": 22,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_crier"
+    },
+    {
+      "id": "tg_merchant",
+      "sprite": "merchant",
+      "x": 32,
+      "y": 26,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_merchant"
+    },
+    {
+      "id": "tg_harbourmaster",
+      "sprite": "harbourmaster",
+      "x": 32,
+      "y": 37,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_harbourmaster"
+    },
+    {
+      "id": "tg_netter",
+      "sprite": "netmender",
+      "x": 18,
+      "y": 42,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_netter"
+    },
+    {
+      "id": "tg_fishwife",
+      "sprite": "fisher",
+      "x": 14,
+      "y": 38,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_fishwife"
+    },
+    {
+      "id": "tg_child",
+      "sprite": "kid",
+      "x": 21,
+      "y": 38,
+      "facing": "left",
+      "movement": {
+        "kind": "wander",
+        "radius": 2
+      },
+      "script": "tg_child"
+    },
+    {
+      "id": "tg_porter",
+      "sprite": "porter",
+      "x": 31,
+      "y": 45,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_porter"
+    },
+    {
+      "id": "tg_dockhand",
+      "sprite": "dockhand",
+      "x": 53,
+      "y": 45,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_dockhand"
+    },
+    {
+      "id": "tg_shipwright",
+      "sprite": "villager_m",
+      "x": 70,
+      "y": 42,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "tg_shipwright"
+    },
+    {
+      "id": "tg_carter",
+      "sprite": "hiker",
+      "x": 64,
+      "y": 36,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_carter"
+    },
+    {
+      "id": "tg_institute_hand",
+      "sprite": "professor",
+      "x": 57,
+      "y": 6,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_institute_hand"
+    },
+    {
+      "id": "tg_gaugeman",
+      "sprite": "villager_m",
+      "x": 58,
+      "y": 16,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "tg_gaugeman"
+    },
+    {
+      "id": "tg_surveyor",
+      "sprite": "meridian_sci",
+      "x": 64,
+      "y": 10,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_surveyor"
+    },
+    {
+      "id": "tg_meridian_greeter",
+      "sprite": "meridian",
+      "x": 71,
+      "y": 14,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_meridian_greeter"
+    },
+    {
+      "id": "tg_lyra",
+      "sprite": "lyra",
+      "x": 66,
+      "y": 16,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_lyra",
+      "requiresFlag": "lyra_doubt"
+    },
+    {
+      "id": "tg_lampkeeper",
+      "sprite": "elder",
+      "x": 12,
+      "y": 60,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_lampkeeper"
+    },
+    {
+      "id": "tg_watchman",
+      "sprite": "sailor",
+      "x": 15,
+      "y": 51,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "tg_watchman"
+    },
+    {
+      "id": "tg_cassian",
+      "sprite": "veyl",
+      "x": 26,
+      "y": 46,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cassian_public",
+      "hiddenIfFlag": "cassian_public_done"
+    },
+    {
+      "id": "tg_aide",
+      "sprite": "meridian_sci_f",
+      "x": 27,
+      "y": 46,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_aide",
+      "hiddenIfFlag": "cassian_public_done"
+    },
+    {
+      "id": "tg_listener_a",
+      "sprite": "townsfolk_f",
+      "x": 23,
+      "y": 46,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_listener_a",
+      "hiddenIfFlag": "cassian_public_done"
+    },
+    {
+      "id": "tg_listener_b",
+      "sprite": "sailor",
+      "x": 24,
+      "y": 45,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_listener_b",
+      "hiddenIfFlag": "cassian_public_done"
+    },
+    {
+      "id": "tg_listener_c",
+      "sprite": "dockhand",
+      "x": 21,
+      "y": 45,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_listener_c",
+      "hiddenIfFlag": "cassian_public_done"
+    },
+    {
+      "id": "town_tarin",
+      "sprite": "rival",
+      "x": 29,
+      "y": 47,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tarin_town",
+      "requiresFlag": "lyra_doubt",
+      "hiddenIfFlag": "tarin_tideglass_done"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 16,
+      "y": 2,
+      "text": [
+        "TIDEGLASS. Thirty-one thousand, and a hundred and four of them harbour pilots.",
+        "Gate Avenue south to the Tide Hall. The Parade crosses it. Everything else runs downhill.",
+        "Somebody has scratched under it: EVENTUALLY EVERYTHING RUNS DOWNHILL"
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 9,
+      "text": [
+        "NETMAKERS ROW. Lodgings, four hundred and twelve rooms, none of them free.",
+        "The board underneath lists work going on the boats. Half the cards are two seasons old."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 19,
+      "y": 16,
+      "text": [
+        "THE TIDE HALL. Keeper Marit Vane.",
+        "The challenge is fought down in the works, in water, and you go in wet or not at all."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 28,
+      "y": 22,
+      "text": [
+        "THE PARADE. Stores both sides, from the west wall to the Foundation gate.",
+        "Carts keep left. Barrows keep left. Everyone keeps left.",
+        "Nobody keeps left."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 26,
+      "text": [
+        "KIN CLINIC. Open, always. The bunks upstairs are free this season.",
+        "A card in the window: NO, WE STILL DO NOT KNOW WHY THE FISH LEFT."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18,
+      "y": 26,
+      "text": [
+        "TIDEGLASS PROVISIONER. Oilskin, line, tonic, vessels.",
+        "Prices rose in the spring and the sign explaining why has been taken down twice."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 32,
+      "text": [
+        "THE CUT. Dug by hand in the year of the long frost so the market could load off the water.",
+        "Deep enough for a punt. Shallow enough to walk, if you know how."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 22,
+      "y": 38,
+      "text": [
+        "OLD HARBOUR. The oldest stone in Tideglass and the least of the money.",
+        "Fish market under the long roof. Auction at four. Do not be late; do not be early either."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18,
+      "y": 46,
+      "text": [
+        "HARBOUR FRONT. West mole and the light that way. Dockyards and the yards east.",
+        "Slack water is at seven. It has been at seven for three weeks, which is not how tides work."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 40,
+      "y": 20,
+      "text": [
+        "THE GLASSRUN. Cut from the north wall to the harbour, and the reason the city is here.",
+        "Barges have right of way. So does the water."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 56,
+      "y": 6,
+      "text": [
+        "THE CAELORAN OCEAN INSTITUTE.",
+        "Currents, soundings, migration. Public gallery on the ground floor."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 70,
+      "y": 14,
+      "text": [
+        "THE MERIDIAN FOUNDATION - Tideglass Coastal Station.",
+        "Storm warning. Ocean survey. Kin conservation. Disaster relief.",
+        "Under the list, newer paint: AND WE ARE HIRING"
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 66,
+      "y": 39,
+      "text": [
+        "THE DOCKYARDS. Hard hats past this board. Children out of the yards entirely.",
+        "Berths eleven to twenty are taken by one charter. It has been the same charter since spring."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 50,
+      "text": [
+        "THE WEST MOLE. Nine hundred paces of stone and one light at the end of it.",
+        "In weather, do not. There is no argument to be had with the sea about it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 16,
+      "y": 52,
+      "text": [
+        "THE TIDEWATCH. Signals to the pilots, sunrise to sunrise.",
+        "A slate by the door records the height at every hour. The last four days are all the same number."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 35,
+      "y": 45,
+      "text": [
+        "QUAY ROAD. Straight from the Hall to the water, laid the year the canal opened.",
+        "The stones nearest the harbour are worn into a groove by barrow wheels."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 10,
+      "y": 61,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_tg_molehead"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 8,
+      "y": 59,
+      "item": "deep_vessel",
+      "quantity": 1,
+      "flag": "item_tg_moleroot"
+    },
+    {
+      "kind": "item",
+      "x": 83,
+      "y": 3,
+      "item": "great_potion",
+      "quantity": 1,
+      "flag": "item_tg_researchyard"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 44,
+      "y": 2,
+      "item": "net_vessel",
+      "quantity": 1,
+      "flag": "item_tg_canalwalk"
+    },
+    {
+      "kind": "item",
+      "x": 3,
+      "y": 47,
+      "item": "strong_potion",
+      "quantity": 1,
+      "flag": "item_tg_saltgate"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 23,
+      "y": 44,
+      "item": "coolsalve",
+      "quantity": 1,
+      "flag": "item_tg_fishgate"
+    },
+    {
+      "kind": "item",
+      "x": 78,
+      "y": 57,
+      "item": "full_rouse",
+      "quantity": 1,
+      "flag": "item_tg_eastmole"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 65,
+      "y": 44,
+      "item": "escape_line",
+      "quantity": 1,
+      "flag": "item_tg_yardlane"
+    },
+    {
+      "kind": "item",
+      "x": 41,
+      "y": 18,
+      "item": "warden_vessel",
+      "quantity": 1,
+      "flag": "item_tg_glassrun"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 42,
+      "y": 36,
+      "item": "fine_vessel",
+      "quantity": 2,
+      "flag": "item_tg_cut"
+    },
+    {
+      "kind": "item",
+      "x": 58,
+      "y": 44,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_tg_wetdock"
+    }
+  ],
+  "_legend": "Tideglass is a harbour city of thirty-one thousand, white stone under blue pantile, laid on a grid that gave up when it reached the water. Gate Avenue comes in from the north road and runs down to the Tide Hall, which stands across the whole head of its own square with the Basin -- a hand's depth of harbour water laid in stone -- in front of it. The Glassrun, a canal cut from the north wall to the harbour, splits the city in two and is crossed at four bridges; the Cut branches west through the old town and is crossed at three more. West of the Glassrun, north to south: the Residential District of brick tenements, the Kin Hall District, the Commercial District along the Parade, and the Old Harbour on the water. East of it: the Ocean Research District with the Meridian Foundation Coastal Station in it, more stores along the Parade, and the Dockyards. Two moles reach out into the bay -- the west one carries the Lighthouse District, the east one the deep-water slips.",
+  "_plan": "A hundred and nineteen roofs and twenty-seven doors, and the ratio is the point. Stonewake proved that scale is carried by buildings that never open, and a city three times its size has to look three times denser without becoming three times as many rooms to furnish. Each district is built from a different frontage kit -- tenement brick and slate up north, white stone and blue pantile on the civic and commercial streets, timber and mossed hip in the old town, plaster and terracotta sheds in the yards, glazed flat-roofed blocks in the research quarter -- so a player always knows which part of the city they are standing in without reading a sign. Two rules were learned the hard way and hold everywhere here: a crossing over water is never one tile wide, because the feet box is eleven pixels on a sixteen pixel tile and anyone who steps onto a single-tile bridge off-centre stops dead in the canal; and nothing solid, ornament or townsperson, stands where it would pinch a through route, which is checked by flooding the map with every one of them standing at once. The canals are the map's second job: impassable until the Tide Hall teaches Wade, so the Glassrun, the Cut, the Basin and the wet dock are all reasons to come back, and three of the eleven pickups sit in them."
+}

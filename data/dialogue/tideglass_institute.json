@@ -1,0 +1,30 @@
+{
+  "speakers": {
+    "tg_director": "DIRECTOR HALVE",
+    "tg_migration_woman": "MIGRATION STUDY",
+    "tg_current_man": "CURRENT STUDY",
+    "tg_intern": "STUDENT"
+  },
+  "entries": {
+    "tg_director": [
+      "We measure. We do not decide what it means until we have measured enough.",
+      "That has been the rule of this building for a hundred and four years.",
+      "It is a very good rule and it is currently making me want to put my fist through a wall."
+    ],
+    "tg_migration_woman": [
+      "Everything deep has come up onto the shelf. Every species, same eight weeks.",
+      "That is not food and it is not temperature. I checked both. Twice.",
+      "Animals move like that away from something. I have nothing to put in the box marked what."
+    ],
+    "tg_current_man": [
+      "The Caeloran drift has run the same way since anyone wrote it down.",
+      "It has slowed nine per cent since the frost. Nine.",
+      "The Foundation funds this desk. They have asked me twice not to publish yet."
+    ],
+    "tg_intern": [
+      "I get to label things. I have labelled four hundred jars this month.",
+      "The best jar is a tooth from the deep shelf that nobody can match to anything.",
+      "Director says an unmatched tooth is the most exciting object in science. She was not joking."
+    ]
+  }
+}

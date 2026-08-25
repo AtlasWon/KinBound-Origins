@@ -1,0 +1,63 @@
+{
+  "id": "tideglass_house_d",
+  "name": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIUIII",
+    "IJNQfffbffI",
+    "IKKKfffeffI",
+    "IffffffffPI",
+    "IkffAAffffI",
+    "IfrrEEfffkI",
+    "I//rffffffI",
+    "IPffffffffI",
+    "IIIIIDIIIII"
+  ],
+  "warps": [
+    {
+      "x": 5,
+      "y": 8,
+      "toMap": "tideglass",
+      "toX": 37,
+      "toY": 9,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tg_house_d_pilot",
+      "sprite": "sailor",
+      "x": 6,
+      "y": 4,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_house_d_pilot"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 1,
+      "text": [
+        "A pilot certificate, framed, with the harbour seal on it.",
+        "Beside it, unframed, a second certificate in a different livery.",
+        "The livery is a compass rose inside a ring."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 4,
+      "text": [
+        "A sea chest with the lid up, half packed.",
+        "It has been half packed for a while; the dust is even across everything in it."
+      ]
+    }
+  ]
+}

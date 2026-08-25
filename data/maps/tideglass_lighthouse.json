@@ -1,0 +1,73 @@
+{
+  "id": "tideglass_lighthouse",
+  "name": "The Light",
+  "displayName": "THE TIDEGLASS LIGHT",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIUIII",
+    "IkkFFFFFF$I",
+    "IFFFFFFFFFI",
+    "I$FFFFFFFSI",
+    "IFFFFFFFFFI",
+    "IPFFAAFFFFI",
+    "IFFFEEFFFPI",
+    "IkFFFFFFFFI",
+    "IFFFFFFFFkI",
+    "IIIIIDIIIII"
+  ],
+  "warps": [
+    {
+      "x": 5,
+      "y": 9,
+      "toMap": "tideglass",
+      "toX": 12,
+      "toY": 59,
+      "facing": "down",
+      "style": "door"
+    },
+    {
+      "x": 9,
+      "y": 3,
+      "toMap": "tideglass_lighthouse_up",
+      "toX": 9,
+      "toY": 4,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tg_light_keeper",
+      "sprite": "elder",
+      "x": 6,
+      "y": 6,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_light_keeper"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "The log, in one hand for nineteen years, then another for eleven.",
+        "Weather, visibility, and every vessel that passed the head, every night."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 1,
+      "text": [
+        "Oil cans, wick, and a spare mantle in a padded box.",
+        "The mantle has never been used. It has been ready for thirty years."
+      ]
+    }
+  ]
+}

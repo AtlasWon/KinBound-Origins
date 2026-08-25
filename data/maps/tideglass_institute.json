@@ -1,0 +1,131 @@
+{
+  "id": "tideglass_institute",
+  "name": "The Ocean Institute",
+  "displayName": "THE OCEAN INSTITUTE",
+  "music": "station",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIIIIIIIIIUIII",
+    "I++++::::@@@@::++++I",
+    "I::::::::::::::::::I",
+    "I?::::::::::::::::?I",
+    "I::::::::::::::::::I",
+    "I$$::::kkkk::::::$$I",
+    "I::::::::::::::::::I",
+    "I@@::::::::::::::@@I",
+    "I::::::::::::::::::I",
+    "IP::AA::::::::AA::PI",
+    "I:::EE::::::::EE:::I",
+    "Ik::::::::::::::::kI",
+    "I::::::::::::::::::I",
+    "IIIIIIIIIIDDIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 10,
+      "y": 13,
+      "toMap": "tideglass",
+      "toX": 57,
+      "toY": 5,
+      "facing": "down",
+      "style": "door"
+    },
+    {
+      "x": 11,
+      "y": 13,
+      "toMap": "tideglass",
+      "toX": 58,
+      "toY": 5,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tg_director",
+      "sprite": "professor",
+      "x": 9,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_director"
+    },
+    {
+      "id": "tg_migration_woman",
+      "sprite": "townsfolk_f",
+      "x": 4,
+      "y": 6,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_migration_woman"
+    },
+    {
+      "id": "tg_current_man",
+      "sprite": "villager_m",
+      "x": 14,
+      "y": 8,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "tg_current_man"
+    },
+    {
+      "id": "tg_intern",
+      "sprite": "kid",
+      "x": 15,
+      "y": 11,
+      "facing": "up",
+      "movement": {
+        "kind": "wander",
+        "radius": 2
+      },
+      "script": "tg_intern"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 5,
+      "text": [
+        "The public gallery. Bones, casts, and a wall of soundings.",
+        "The big cast in the middle is labelled UNIDENTIFIED - DEEP SHELF",
+        "and is about the size of a cart, and is one vertebra."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "A tank wall of live shore Kin, all of them from the shallows.",
+        "A card explains that the deep-water tanks have been empty since spring",
+        "because nothing has been caught to put in them."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18,
+      "y": 3,
+      "text": [
+        "A current chart, redrawn every week for eleven years.",
+        "The last nine weeks are all the same drawing. A current that does not",
+        "change is not a current. Somebody has written that on it, hard."
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 17,
+      "y": 12,
+      "item": "clearleaf",
+      "quantity": 1,
+      "flag": "item_tg_institute_leaf"
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "id": "brackwater_house",
+  "id": "tideglass_house_a",
   "name": "Interior",
   "music": "town_indoor",
   "battleBackdrop": "indoor",
@@ -12,30 +12,31 @@
     "I//rAAfffffI",
     "IrrrEEfffkfI",
     "IVfffffffffI",
+    "IfffffffffkI",
     "IIIIIIDIIIII"
   ],
   "warps": [
     {
       "x": 6,
-      "y": 7,
-      "toMap": "brackwater",
-      "toX": 23,
-      "toY": 11,
+      "y": 8,
+      "toMap": "tideglass",
+      "toX": 3,
+      "toY": 37,
       "facing": "down",
       "style": "door"
     }
   ],
   "npcs": [
     {
-      "id": "brackwater_house_resident",
-      "sprite": "villager_f",
+      "id": "tg_house_a",
+      "sprite": "elder",
       "x": 3,
       "y": 4,
       "facing": "right",
       "movement": {
         "kind": "lookAround"
       },
-      "script": "bw_house"
+      "script": "tg_house_a"
     }
   ],
   "objects": [
@@ -44,9 +45,8 @@
       "x": 1,
       "y": 1,
       "text": [
-        "A bed pushed hard against the wall, in the same",
-        "room as the stove. One room is all this house has,",
-        "and it has held four generations of it."
+        "A bed against the wall in the same room as the stove.",
+        "One room is all this house has, and it has held four generations of it."
       ]
     },
     {
@@ -54,9 +54,8 @@
       "x": 8,
       "y": 2,
       "text": [
-        "The counter. A gutting knife, a whetstone,",
-        "and a line of hooks with nothing hanging on them.",
-        "The nothing is the part that worries them."
+        "The counter. A gutting knife, a whetstone, and a line of",
+        "hooks with nothing hanging on them. The nothing is the worrying part."
       ]
     },
     {
@@ -64,9 +63,9 @@
       "x": 9,
       "y": 5,
       "text": [
-        "A shelf of tide tables going back nineteen years.",
-        "The last four months have been written in by hand,",
-        "because the printed ones stopped being right."
+        "Tide tables going back nineteen years.",
+        "The last four months are written in by hand, because the printed",
+        "ones stopped being right and nobody has printed new ones."
       ]
     }
   ]

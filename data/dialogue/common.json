@@ -413,6 +413,42 @@
     "tarin_word_street": [
       {
         "ifFlags": [
+          "tarin_at_nightafter"
+        ],
+        "lines": [
+          "Everyone on this wharf has heard about the north road by now.",
+          "Your friend has not made one joke all morning. That is how I know it was bad."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_harbour"
+        ],
+        "lines": [
+          "Your friend took the Channel Crest off Mabry, and he went down the deep lane to do it.",
+          "Nobody goes down the deep lane on purpose. He came up laughing."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_tideglass"
+        ],
+        "lines": [
+          "That loud friend of yours went to hear Dr. Veyl on the wharf and came away very quiet.",
+          "Said the man seemed decent and it was bothering him. Strange thing to complain about."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_ridge"
+        ],
+        "lines": [
+          "There's a lad been sat on the milestone since dawn with a slate, counting carts.",
+          "I asked him why. He said somebody had to, and offered me his tea."
+        ]
+      },
+      {
+        "ifFlags": [
           "tarin_at_quarry"
         ],
         "lines": [
@@ -482,6 +518,42 @@
     "tarin_word_hall": [
       {
         "ifFlags": [
+          "tarin_at_nightafter"
+        ],
+        "lines": [
+          "Word came down off the north road this morning. The Hall is not saying anything.",
+          "We have doubled the lamps on the sea gate, mind. Nobody asked us to."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_harbour"
+        ],
+        "lines": [
+          "Three Crests, and he took the deep lane to get the third.",
+          "Mabry has not decided whether she is furious. She keeps saying \"the deep lane\" to herself."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_tideglass"
+        ],
+        "lines": [
+          "The loud one was in the gallery for the speech. Front row. Did not heckle once.",
+          "I had money on him heckling."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_ridge"
+        ],
+        "lines": [
+          "Two Crests, and he is spending his week on a hillside watching carts go past.",
+          "I have seen worse instincts in Trainers holding eight."
+        ]
+      },
+      {
+        "ifFlags": [
           "tarin_at_quarry"
         ],
         "lines": [
@@ -524,6 +596,42 @@
     "tarin_word_clinic": [
       {
         "ifFlags": [
+          "tarin_at_nightafter"
+        ],
+        "lines": [
+          "The loud one came in and asked whether we treat people. Not kin. People.",
+          "I said yes. He said good, and went out again. I did not care for that at all."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_harbour"
+        ],
+        "lines": [
+          "Three Crests in him now and he still turns up soaked to the collar.",
+          "I have started keeping a towel back with his name on it."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_tideglass"
+        ],
+        "lines": [
+          "He sat in my waiting room for an hour after his kin were done. Just sat.",
+          "Then thanked me twice and left."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_ridge"
+        ],
+        "lines": [
+          "Young man came down off the ridge with a kin that had been up all night, and no coat.",
+          "Ate two bowls of anything I put in front of him. Would not sit down."
+        ]
+      },
+      {
+        "ifFlags": [
           "tarin_at_stonewake"
         ],
         "lines": [
@@ -547,6 +655,42 @@
       }
     ],
     "tarin_word_shop": [
+      {
+        "ifFlags": [
+          "tarin_at_nightafter"
+        ],
+        "lines": [
+          "He bought every Dusk Vessel on the shelf and asked what else works after dark.",
+          "Sixteen years old, asking me that. In my shop."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_harbour"
+        ],
+        "lines": [
+          "Boy with three Crests came in dripping on my floor and bought rope.",
+          "Rope. In a Kin shop."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_tideglass"
+        ],
+        "lines": [
+          "The green-jacket lad bought six storm cards and would not take them for nothing.",
+          "Said if they were free then somebody else was paying."
+        ]
+      },
+      {
+        "ifFlags": [
+          "tarin_at_ridge"
+        ],
+        "lines": [
+          "The boy with the tally slate bought a flask, a lamp and nothing whatever to eat.",
+          "I have had that customer before. He was sixteen as well."
+        ]
+      },
       {
         "ifFlags": [
           "tarin_at_quarry"
@@ -575,6 +719,75 @@
       {
         "lines": [
           "Take your time. Nothing on that shelf is going anywhere."
+        ]
+      }
+    ],
+    "foundation_word_hauler": [
+      {
+        "ifFlags": [
+          "ridge_convoy_seen_2"
+        ],
+        "lines": [
+          "Eleven runs this week, same crates, same hour, and the last four were heavier.",
+          "They don't tell us what's in them. I stopped asking, because the money is good and I am not brave."
+        ]
+      },
+      {
+        "lines": [
+          "Contract work. Coast road, dawn till it is done, and they pay the same if it rains.",
+          "Best winter my family has had. I am not going to pretend otherwise to be interesting."
+        ]
+      }
+    ],
+    "foundation_word_liaison": [
+      {
+        "ifFlags": [
+          "lyra_doubt"
+        ],
+        "lines": [
+          "Somebody from the office has been down here all morning asking to see the movement orders.",
+          "She is very polite about it and she is not going away. I have never seen that before."
+        ]
+      },
+      {
+        "ifFlags": [
+          "cassian_public_done"
+        ],
+        "lines": [
+          "You were at the wharf, then. He does that everywhere. Never sends anyone.",
+          "Storm cards in the crate. Take two. They cost us nothing and they have cost me nothing but sleep."
+        ]
+      },
+      {
+        "lines": [
+          "Coastal survey. Nothing to look at, and I mean that literally. It is soundings.",
+          "There is a crate of storm cards at the tent if you are walking on. They are free, they are always free."
+        ]
+      }
+    ],
+    "coast_word_veyl": [
+      {
+        "ifFlags": [
+          "lyra_doubt"
+        ],
+        "lines": [
+          "I heard what happened up the north road, and I am not having it laid at his door.",
+          "That man rebuilt our sea wall and would not put his name on it. You do not do that and then do this."
+        ]
+      },
+      {
+        "ifFlags": [
+          "cassian_public_done"
+        ],
+        "lines": [
+          "He stood on a table in the rain for an hour and answered every question he was asked.",
+          "My husband went in to shout at him about the harbour dues. Came out having been agreed with."
+        ]
+      },
+      {
+        "lines": [
+          "Veyl is speaking on the wharf. Actually here, actually himself, which nobody believed.",
+          "Half this city owes him a roof and the other half will not say so out loud."
         ]
       }
     ]

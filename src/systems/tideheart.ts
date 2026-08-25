@@ -125,11 +125,12 @@ export interface AurelianSite {
 
 /**
  * The stage the game is built to. Stage 1 is Act 1: Hearthmere, Route 1,
- * Briarbell, Route 2's ruin, Stonewake. Raise this when a later stage ships,
- * and not before -- it is the switch that keeps unbuilt sites out of the
- * player's hands.
+ * Briarbell, Route 2's ruin, Stonewake. Stage 2 is Act 2: Eastwind Ridge, the
+ * coast road and Tideglass. Raise this when a later stage ships, and not
+ * before -- it is the switch that keeps unbuilt sites out of the player's
+ * hands.
  */
-export const BUILT_STAGE = 1;
+export const BUILT_STAGE = 2;
 
 export const SITES: AurelianSite[] = [
   {
@@ -150,6 +151,43 @@ export const SITES: AurelianSite[] = [
         'People. Kin beside them, not behind them. Then the sea.',
         'Then something under the sea, drawn so large the mason ran out of wall.',
         'The light gutters out. The stone is cold again, and older than it was.',
+      ],
+    },
+  },
+  {
+    id: 'glass_quay',
+    stage: 2,
+    name: 'The Glass Quay',
+    /*
+     * ACT 2. The Aurelian mole the modern harbour was built on top of, and the
+     * reason the third city has the name it has: the old sea-wall runs out
+     * under the water in one unbroken piece of something that is not stone.
+     *
+     * NO `at` TILE, ON PURPOSE, and this is the whole trick of the beat. The
+     * mechanism is not a thing standing on a tile that somebody has to build
+     * and remember to hook up -- it is the ground. So the object stirs the
+     * moment the player sets foot in Tideglass or on the coast road above the
+     * old wall, with a steady half-intensity and no needle, and that happens
+     * whether or not the city's author ever heard of this file. It is what
+     * Cassian notices in the crowd, and it is what answers on the road when
+     * somebody puts a hand in the player's bag. See `act2_night_attempt` and
+     * `tideheart_wake_glass_quay` in data/events/common.json.
+     *
+     * The Hall and its works are on the list as well as the streets. Mabry
+     * flooded that hall herself and the tank under it is cut into the same
+     * wall, so the object going quietly mad three floors down is the correct
+     * answer and it costs one string.
+     */
+    maps: ['tideglass', 'tideglass_hall', 'tideglass_hall_works', 'route_4'],
+    near: 'The whole harbour is answering it. Not a room in it. The ground.',
+    after: 'Quieter now, and still not quiet. It knows this coast.',
+    echo: {
+      title: 'The Glass Quay',
+      lines: [
+        'The harbour, and not this one. The same water, a different wall.',
+        'Boats tied along it. People sitting on the edge with their feet in the sea.',
+        'Something enormous goes by underneath them, slow, and lights the whole bay green.',
+        'Nobody stands up. Nobody runs. A child waves at it.',
       ],
     },
   },

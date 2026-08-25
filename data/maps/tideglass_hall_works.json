@@ -1,0 +1,201 @@
+{
+  "id": "tideglass_hall_works",
+  "name": "The Race",
+  "music": "station",
+  "battleBackdrop": "coast",
+  "indoor": true,
+  "freeWade": true,
+  "rows": [
+    "IIIIIIIIIIIIIIIIIIIII",
+    "IIIIIIWWWWWWWWWIIIIII",
+    "IIIIIIWWWWWWWWWIIIIII",
+    "IIIIII=+=======IIIIII",
+    "IIIIII=========IIIIII",
+    "IIIIII=========IIIIII",
+    "IIIIIWWWWW~~WWWWIIIII",
+    "IIIIWWWWWW~~WWWWWIIII",
+    "IIIWWWWWWW~~WWW~~WIII",
+    "IWWWWWWWWW~~~~~~~===I",
+    "IWWWWWWWWW~~~~~~~===I",
+    "IWWWWWWWWW~~WWW~~===I",
+    "I=====~~WW~~WWWWW~~=I",
+    "I=====~~~~~~WWWWWWWWI",
+    "I=====~~~~~~WWWWWWWWI",
+    "I=====WWWWWWWWWWWWWWI",
+    "I=====~~~~~WWWWWWWWWI",
+    "I~~===~~~~~WWWWWWWWWI",
+    "IWWWWWW~~~~WWWWWWWWWI",
+    "I===================I",
+    "I===================I",
+    "I=S=================I",
+    "IIIIIIIIIIIIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 2,
+      "y": 21,
+      "toMap": "tideglass_hall",
+      "toX": 9,
+      "toY": 3,
+      "facing": "down",
+      "style": "stairs"
+    },
+    {
+      "x": 6,
+      "y": 3,
+      "toMap": "tideglass_hall",
+      "toX": 9,
+      "toY": 3,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tg_works_guide",
+      "sprite": "fisher",
+      "x": 6,
+      "y": 20,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_works_guide"
+    },
+    {
+      "id": "tg_hand_a",
+      "sprite": "sailor",
+      "x": 13,
+      "y": 19,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "tg_hand_a",
+      "sightRange": 4
+    },
+    {
+      "id": "tg_hand_b",
+      "sprite": "villager_m",
+      "x": 5,
+      "y": 15,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "tg_hand_b",
+      "sightRange": 3
+    },
+    {
+      "id": "tg_hand_c",
+      "sprite": "villager_f",
+      "x": 17,
+      "y": 11,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "tg_hand_c",
+      "sightRange": 2,
+      "script": "tg_winch"
+    },
+    {
+      "id": "tg_keeper",
+      "sprite": "elder",
+      "x": 10,
+      "y": 4,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_keeper"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 0,
+      "y": 21,
+      "text": [
+        "Cut into the bottom step, worn nearly smooth by forty years of wet boots:",
+        "THE TANK IS ALWAYS FULL. THE ONLY QUESTION IS WHICH WAY.",
+        "Below it, scratched much later and much less neatly: AND HOW FAST."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 18,
+      "text": [
+        "A depth board painted on the apron wall, in feet, up to twenty-two.",
+        "The paint stops at eleven, which is as high as a person can reach.",
+        "Somebody has chalked the rest of the numbers in anyway. Recently."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 17,
+      "y": 18,
+      "text": [
+        "A rack of grapples, poles and coiled line, all of it dry and dusty.",
+        "A card on the rack: FOR THE SEA GATE. NOT FOR PEOPLE.",
+        "Under it, in another hand: PEOPLE DO NOT NEED FETCHING OUT OF THE RACE."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 0,
+      "y": 14,
+      "text": [
+        "A brass plate bolted to the west staithe.",
+        "WEST STAITHE. DRAWN FROM THE APRON. RETURNED BY THE DRAIN.",
+        "Somebody has polished the word RETURNED and nothing else on the plate."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18,
+      "y": 8,
+      "text": [
+        "EAST STAITHE. A dead end, and built as one.",
+        "The race comes in here and stops, because the north sluice is shut.",
+        "Shut water still has to go somewhere. It comes here and it sulks."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 3,
+      "text": [
+        "THE GAUGE. A float, a chain and a needle, reading the tank itself.",
+        "A chalk mark on the glass shows where the needle should sit by evening.",
+        "The mark has been rubbed out and moved eleven times this month."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 2,
+      "y": 12,
+      "item": "great_potion",
+      "quantity": 2,
+      "flag": "item_tg_hall_a"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 19,
+      "y": 11,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_tg_hall_b"
+    },
+    {
+      "kind": "item",
+      "x": 19,
+      "y": 20,
+      "item": "net_vessel",
+      "quantity": 3,
+      "flag": "item_tg_hall_c"
+    }
+  ],
+  "_plan": "THE ROOM IS THE PUZZLE AND THE PUZZLE IS FLOW. A stone tank under the sea wall: everything is water except three stone staithes and the keeper's sill at the top. Dark water refuses you. Pale water is the race, and the race is not a path -- every pale tile is a step trigger that picks the player up and puts them down where the water is going (data/events/tideglass_hall_works.json). Nobody walks anywhere in this room. You choose which water to get into and then you find out where it goes, which is the difference between this Hall and a corridor with trainers in it.\n\nTHE CIRCUIT. Apron -> south lane at 9-10,18 -> west staithe. West staithe -> the race, east along rows 13-14 and north up columns 10-11 to the fork at rows 9-10. With the north sluice SHUT the fork throws you east along 12-16,9-10 into the east staithe, which is a dead end and says so on its own sign. The gate-hand stands on that dead end and she is also the winch: beat her, ask her, and she cranks the north sluice up -- which drops the east one, because a sluice is a beam and there is one beam. Then step one tile back west into 16,9 or 16,10 and the same water that dumped you here carries you north through the gate onto the keeper's sill. That single step is the whole design. The player does not learn a route; they learn that the route changed under them.\n\nEVERY LANE IS TWO TILES WIDE, AND THAT IS NOT DECORATION. The first cut of this room drew hairline one-tile channels, and they were beautiful and unenterable: the player body is eleven pixels in a sixteen-pixel tile, so a body that stopped anywhere off-centre had a shoulder in the deep water either side of the mouth, and the three-pixel corner assist in world/body.ts could not recover it. A driver walking the room from the apron could not get into the south lane at all, four attempts running, while the map's own canEnter said the tile was fine. Two tiles wide is the fix and it costs nothing: a bright two-wide channel between two dark deeps still reads as a channel.\n\nNOBODY IS EVER STRANDED. Each staithe has a drain -- 1,17 west and 17,12 east -- that returns the player to the apron beside the stair out, so leaving to heal is always a step away. Both drains are in a corner away from the traffic between the landing and the race mouth. The sill has its own stair at 6,3 which only goes up, so the keeper never has to be re-swum to. Landing tiles (4,16 west, 19,9 east, 10,5 sill) are deliberately NOT next to a lane, so nobody is picked straight back up by the water that just put them down.\n\nTRAINERS BLOCK NOTHING AND ARE AVOIDED BY NOBODY. Hand A watches row 19 across x9-12, and 9,19 and 10,19 are the only tiles that touch the south lane mouth. Hand B stands at 5,12 looking down the west staithe's east edge, which is the only edge the race touches. Hand C stands at 17,11 looking up column 17, and 17,9 and 17,10 are the only tiles that touch the race on the east staithe. Each is unavoidable and none is standing in a one-tile corridor, which was the Bell Hall's lesson.\n\nWHY freeWade. Pale water is collision 2 and this Hall's own reward is WADE, so the map turns it on for itself, exactly as the Bell Hall turns on freePush for its stones. There is no displayName on purpose: the race warps the player within this same map, and a banner would flash on every ride."
+}
