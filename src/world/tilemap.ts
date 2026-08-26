@@ -49,6 +49,17 @@ export interface AsciiMapFile {
    * src/gfx/fog.ts for what the number actually does.
    */
   fog?: number;
+  /**
+   * How heavily it snows on this map, 0 to 1. Absent or zero is a clear map.
+   *
+   * A number rather than a flag for the reason `fog` is one, and then for a
+   * second reason of its own: this is only the map's BASE weight. The squall
+   * on top of it is worked out per frame from the player's own position and
+   * the clock, so weather here is something the road passes through rather
+   * than a property of a tile -- see src/gfx/snowfall.ts, which is where the
+   * difference between this and the wetlands' fog is argued out.
+   */
+  snow?: number;
 }
 
 /**
@@ -117,6 +128,7 @@ export class TileMap {
   readonly freePush: boolean;
   readonly freeWade: boolean;
   readonly fog: number;
+  readonly snow: number;
 
   readonly ground: Uint16Array;
   readonly over: Uint16Array;
@@ -148,6 +160,7 @@ export class TileMap {
     this.freePush = file.freePush ?? false;
     this.freeWade = file.freeWade ?? false;
     this.fog = file.fog ?? 0;
+    this.snow = file.snow ?? 0;
 
     const n = this.width * this.height;
     this.ground = new Uint16Array(n);

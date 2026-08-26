@@ -1,0 +1,91 @@
+[
+  {
+    "id": "fo_arrive",
+    "_note": "THE THIRD SITE, AND THE PLAYER HAS NOTHING IN THEIR POCKET.\n\nAct 4 ended with Meridian taking the Tideheart, and src/systems/tideheart.ts makes that theft cost nothing to write around: with the object out of the bag, `siteForMap` stops answering and `tideheartEnteredMap` returns before it can play the arrival cue. So walking into the third Aurelian ruin in the game is SILENT, automatically, with nobody having had to remember it.\n\nThis scene is that silence, said once, in three short boxes, and then dropped. The player has been trained across two full acts that arriving somewhere old makes a sound and the row in their bag changes; the whole of what this beat does is let them stand in the doorway of the biggest one of the three and notice that nothing happened. It must not be explained here. The explanation is two floors up in a man's voice and it is one sentence long. 'The doors are open anyway' is as close as this file is allowed to get.\n\nWHY THERE IS NO `tideheart_given` ANYWHERE IN THIS FILE. That flag means 'Mira handed it over in Act 1' and it stays true for the rest of the game including every minute of Act 5. The question this act always means is `hasItem`, and the Act 4 author left the instruction in writing. Every branch in the three Observatory files asks `hasItem`.",
+    "trigger": "enter",
+    "map": "frostmere_observatory",
+    "onceFlag": "fo_entered",
+    "actions": [
+      { "kind": "sfx", "sound": "fx_wind" },
+      { "kind": "face", "who": "player", "dir": "up" },
+      { "kind": "wait", "frames": 22 },
+      {
+        "kind": "say",
+        "lines": [
+          "Pale cut stone. Grooves in the",
+          "floor. Black basalt behind them.",
+          "You know whose building this is."
+        ]
+      },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "if",
+        "cond": { "kind": "hasItem", "item": "tideheart" },
+        "then": [
+          {
+            "kind": "say",
+            "lines": [
+              "The thing in your bag started",
+              "answering down on the path."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "lines": [
+              "Nothing in your bag moves.",
+              "Nothing has moved in it since",
+              "Aureline."
+            ]
+          },
+          { "kind": "wait", "frames": 30 },
+          {
+            "kind": "say",
+            "lines": [
+              "The doors are open anyway."
+            ]
+          }
+        ]
+      },
+      { "kind": "wait", "frames": 18 },
+      { "kind": "setFlag", "flag": "act5_observatory_found" }
+    ]
+  },
+  {
+    "id": "fo_camp",
+    "_note": "ELIAS' CAMP, and the rule for it is that it is four tiles, three signs and two boxes.\n\nHe is going to speak to the player in about fifteen minutes. Anything down here that characterises him spends that scene early -- so the camp is equipment, catalogued flatly, in the voice of somebody reading labels off crates, and the only thing in it that is about a person rather than about a survey is a photograph the player is told they do not turn over.\n\nFires on the tiles AROUND the camp rather than on the furniture, so it cannot be missed by a player who never presses A at a table, and so it lands as walking into a corner and finding somebody's things rather than as reading a sign. Every tile listed is walkable and was checked against the map's own rows: 5,14 is the stool and 4,15 / 5,15 / 6,15 are the crate, the table and the second crate, so none of those four can carry a step script. A trigger on a solid tile is silent rather than broken, which is exactly the sort of thing that ships.",
+    "trigger": "step",
+    "map": "frostmere_observatory",
+    "onceFlag": "fo_camp_seen",
+    "at": [
+      { "x": 4, "y": 14 },
+      { "x": 6, "y": 14 },
+      { "x": 3, "y": 15 },
+      { "x": 7, "y": 15 },
+      { "x": 4, "y": 16 },
+      { "x": 5, "y": 16 },
+      { "x": 6, "y": 16 }
+    ],
+    "actions": [
+      { "kind": "wait", "frames": 12 },
+      {
+        "kind": "say",
+        "lines": [
+          "Somebody camped in the dry",
+          "corner, and did it properly.",
+          "Table squared. Stool pushed in."
+        ]
+      },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "lines": [
+          "The dust has lain flat on all",
+          "of it for eleven years."
+        ]
+      },
+      { "kind": "setFlag", "flag": "fo_camp_found" }
+    ]
+  }
+]

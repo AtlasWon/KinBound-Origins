@@ -1,0 +1,68 @@
+{
+  "$comment": "Six hundred stalls under one stone vault, which has not shut in six hundred years for plague, siege or weather, and is very full today with almost nobody buying anything. The letter-cutter's stall is the city's whole idea sold by the yard: people who will never be on the Roll still want a name cut into something.",
+  "speakers": {
+    "cs_mk_ropemaker": "ROPEMAKER",
+    "cs_mk_baker": "BAKER",
+    "cs_mk_smith": "SMITH",
+    "cs_mk_letterer": "LETTER-CUTTER",
+    "cs_mk_grocer": "GROCER",
+    "cs_mk_kid": "MARKET CHILD"
+  },
+  "entries": {
+    "cs_mk_ropemaker": [
+      {
+        "lines": [
+          "Cleared out. Six hundred fathom in four days and not one foot of it going up the mountain.",
+          "Roofs, shutters, boats and one man who wanted to tie his greenhouse to his house."
+        ]
+      }
+    ],
+    "cs_mk_baker": [
+      {
+        "lines": [
+          "The muster bread. Forty loaves every morning of a climb, and I have baked it anyway.",
+          "Six days of forty loaves. The clinic has had all of it and they can have the rest."
+        ]
+      }
+    ],
+    "cs_mk_smith": [
+      {
+        "lines": [
+          "Crampons, pins, and the little hooks for a rope bridge. That is my trade and it has stopped.",
+          "So I am making drain grates. Two hundred years my family has not made a drain grate."
+        ]
+      }
+    ],
+    "cs_mk_letterer": [
+      {
+        "ifFlags": ["cs_roll_name"],
+        "lines": [
+          "You are going on the wall. I will not be cutting yours - that is the yard's work, not mine.",
+          "Buy a spare set of your own letters anyway. Everybody does. Nobody admits it."
+        ]
+      },
+      {
+        "lines": [
+          "Letters in lead, any name, cut while you wait. For a gate post, a boat, a door.",
+          "Four thousand names go on that wall in nine hundred years. Rather a lot of us want one anyway."
+        ]
+      }
+    ],
+    "cs_mk_grocer": [
+      {
+        "lines": [
+          "Fish. On my stall. Out of the ravine, which has had nothing living in it since the city was built.",
+          "I am selling it because throwing it away felt worse. Nobody will touch it and I do not blame them."
+        ]
+      }
+    ],
+    "cs_mk_kid": [
+      {
+        "lines": [
+          "There is a drain in the floor and it is going like a river and Ma has tied a rag to it.",
+          "You can hear it under the whole market. It sounds like the market is on a boat."
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "$comment": "THE MUSTER: nine hundred years of people sleeping badly the night before, and this week nobody is going anywhere. Twenty beds, all of them slept in, and a wake call at half past three that has not been rung for six days. One climber is pointed at tarin_word_clinic in data/dialogue/common.json rather than at anything here, so the Tarin ledger's owner can reach into this room without touching this file.",
+  "speakers": {
+    "cs_muster_keeper": "MUSTER HOST",
+    "cs_muster_cook": "COOK",
+    "cs_muster_climber_a": "CLIMBER",
+    "cs_muster_climber_b": "CLIMBER",
+    "cs_muster_climber_c": "CLIMBER",
+    "cs_muster_kid": "HOST'S BOY"
+  },
+  "entries": {
+    "cs_muster_keeper": [
+      {
+        "ifFlags": ["crest_8_taken"],
+        "lines": [
+          "Eight. Then there is a bed here with your name against it, and it is currently under three others.",
+          "Come back at four in the morning on the day. There will be room. There is always room on the day."
+        ]
+      },
+      {
+        "lines": [
+          "Beds, boots, hot water, a fire, and a meal at four in the morning. Eight Crests, no charge.",
+          "Seven Crests, sit down anyway. That rule is older than the price and it is the better rule."
+        ]
+      }
+    ],
+    "cs_muster_cook": [
+      {
+        "lines": [
+          "I cook for forty at half past three and this week I have cooked for nobody at half past three.",
+          "So I cook at seven instead, and they eat it, and none of them look at me while they do."
+        ]
+      }
+    ],
+    "cs_muster_climber_a": [
+      {
+        "lines": [
+          "Nine days I have been in this bed. Nine. I got the eighth in Skyreach and ran the whole road.",
+          "You cannot stay sharp for nine days. Nobody can. That is what is actually wrong with all of us."
+        ]
+      }
+    ],
+    "cs_muster_climber_b": [
+      {
+        "lines": [
+          "I have been up twice. Never past the second Master, but I have been up.",
+          "The road is the best day of your life and it is four miles long and I want it back."
+        ]
+      }
+    ],
+    "cs_muster_climber_c": [
+      {
+        "lines": [
+          "Off a boat. Southeast coast, Tideglass. The harbour is putting up barriers - actual barriers.",
+          "My brother says the current turned round. Sailors say that kind of thing. He does not."
+        ]
+      }
+    ],
+    "cs_muster_kid": [
+      {
+        "lines": [
+          "Dad rings the bell at half past three. It is the loudest thing in the world.",
+          "I have not heard it for six days and I cannot sleep without it. That is stupid, isn't it."
+        ]
+      }
+    ]
+  }
+}

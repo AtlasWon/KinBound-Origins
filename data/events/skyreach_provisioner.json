@@ -1,0 +1,17 @@
+[
+  {
+    "id": "skyreach_shop",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "PROVISIONER",
+        "lines": [
+          "Everything in here came up the road on a back or across the gorge in a box.",
+          "The prices are what that cost. I have never once had to explain them twice."
+        ]
+      },
+      { "kind": "openShop", "shop": "skyreach_provisioner" }
+    ]
+  }
+]

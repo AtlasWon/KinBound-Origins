@@ -1,0 +1,25 @@
+{
+  "$comment": "The charcoal hollow. One voice, and it is a child's, because the hollow is the one place on this road that is warm and safe and a child would be allowed to sit in it -- and because a boy repeating what the grown-ups have said, without understanding any of it, is a cleaner way to deliver the same Act 5 beat than a fifth adult saying it properly.",
+  "speakers": {
+    "r8k_boy": "BURNER'S BOY"
+  },
+  "entries": {
+    "r8k_boy": [
+      {
+        "ifFlags": ["act4_theft"],
+        "lines": [
+          "Mam says the wood is crying. Da says do not say that to strangers.",
+          "It is not crying. It is just wet. But it is wet on the inside, which is worse.",
+          "Da says worse how, and Mam does not answer. She has stopped answering that one."
+        ]
+      },
+      {
+        "lines": [
+          "The pit has been alight since before my Mam was born. That is a hundred years.",
+          "If it goes out we have to fetch fire up from the town, and nobody has ever had to.",
+          "I am supposed to watch it. I am watching it. I am very good at it."
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "id": "crownspire_shop",
+    "$comment": "THE SHOP ID IS BORROWED AND THIS IS THE ONLY LINE THAT HAS TO CHANGE. data/items/shops.json is not this build's file and six agents were writing to it at once, so opening a Crownspire row would have meant editing a file somebody else owned; the counter therefore opens \"aureline_provisioner\", which is the fullest and best-gated stock list in the game and reads correctly for a big old city with a ladder in it. Whoever adds a \"crownspire_provisioner\" row to shops.json needs to change one string here and nothing else.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "COROW AND BELL",
+        "lines": [
+          "Two hundred and six years on this corner and we have never once had a wet floor.",
+          "Mind where you put your feet. What can I get you?"
+        ]
+      },
+      { "kind": "openShop", "shop": "aureline_provisioner" }
+    ]
+  }
+]

@@ -1,0 +1,89 @@
+{
+  "id": "frostmere_provisioner",
+  "name": "Interior",
+  "displayName": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "_design": "Canon asks for an equipment store, and this is one: rope, lamp oil, cleats and the blue mineral, with the restoratives shelved behind them. The prices are what it costs to get a barrel over the Wintergate, and the town subsidises exactly one line on the list.",
+  "rows": [
+    "IIIUIIIIIUIIIII",
+    "I;;;;;;;;;;;;;I",
+    "IPKKKFKKKKFF;;I",
+    "I;FFFFFFFFFF;;I",
+    "I;;;FFFF;;FFF;I",
+    "IFFFFFĘFFFFFFFI",
+    "I;;;FFFFF;;;FFI",
+    "IFFFFFFFFFFFFFI",
+    "IPFFFFFFFFFFFPI",
+    "IFFFFFFFFFFFFFI",
+    "IIIIIIIDIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 7,
+      "y": 10,
+      "toMap": "frostmere",
+      "toX": 43,
+      "toY": 23,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "fmp_keeper",
+      "sprite": "clerk",
+      "x": 5,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "frostmere_shop"
+    },
+    {
+      "id": "fmp_ropehand",
+      "sprite": "kid",
+      "x": 10,
+      "y": 5,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "fmp_ropehand"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 4,
+      "text": [
+        "A coil of line as thick as your wrist, and a card hanging off the end of it:",
+        "GUIDE ROPE. SOLD BY THE HOUSE LENGTH. THE TOWN PAYS HALF AND ALWAYS HAS.",
+        "The half the town pays is the reason there is a rope on every street out there."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 6,
+      "text": [
+        "Jars of a blue mineral, ground fine, in every size from a thimble to a bucket.",
+        "FROSTMERE BLUE. BURNS COLD, BURNS SLOW, AND CANNOT BE MISTAKEN FOR A WINDOW.",
+        "It is dug out of one seam above the town and it is not sold anywhere else."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 6,
+      "text": [
+        "Cleats, crampons, a short axe, and a board of them all with the prices chalked.",
+        "Somebody has added at the bottom: NONE OF THIS MAKES THE LAKE SAFE THIS YEAR.",
+        "The shopkeeper has not rubbed it out, which tells you what they think of it."
+      ]
+    }
+  ]
+}

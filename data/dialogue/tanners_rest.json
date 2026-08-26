@@ -141,6 +141,16 @@
     "tr_house": [
       {
         "ifFlags": [
+          "act4_done"
+        ],
+        "lines": [
+          "I was ten at the last Turning and I have been waiting eighty-one years to be wrong about it.",
+          "It is at the well. I went down and looked this morning and it is at the well.",
+          "Sit with me a minute. I do not want anything. I would just rather not be on my own."
+        ]
+      },
+      {
+        "ifFlags": [
           "met_kerrow"
         ],
         "lines": [
@@ -179,6 +189,16 @@
     ],
     "tr_tanner": [
       {
+        "ifFlags": [
+          "act4_done"
+        ],
+        "lines": [
+          "There is wind in the hollow. There has never been wind in the hollow.",
+          "Four hundred years of hides hung in still air and I took the lot down yesterday.",
+          "You cannot argue with it and you cannot move a village. So I took the hides down."
+        ]
+      },
+      {
         "lines": [
           "Salt on the wind and no wind in the hollow. That is the whole trick and you cannot fake it.",
           "Tideglass has the salt and no shelter. The ridge has the shelter and no salt.",
@@ -187,6 +207,16 @@
       }
     ],
     "tr_beaconwatch": [
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
+        "lines": [
+          "Nine of us on the rota and there are four up there now, day and night, keeping it in.",
+          "The wind takes it flat and then it comes back. We have burned a winter of wood in six days.",
+          "That man with the machine can come back if he likes. We will still say no. We will just say it tired."
+        ]
+      },
       {
         "lines": [
           "Up the ridge at dusk, light it, down again in the dark. Nine of us on the rota.",
@@ -222,6 +252,16 @@
       }
     ],
     "tr_bellman": [
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
+        "lines": [
+          "I rang it for weather. There is no reason on the board for weather.",
+          "Four hundred years of that rope and I am the one who made up a fourth reason.",
+          "Everybody came out. Nobody asked me which it was. That is what has stayed with me."
+        ]
+      },
       {
         "lines": [
           "Fire, wreck, or the beacon wanting wood. Three reasons and no others, ever.",

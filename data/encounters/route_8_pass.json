@@ -1,0 +1,132 @@
+{
+  "mapId": "route_8_pass",
+  "$comment": "The top of the road, and where Frost finally gets to be what the country is: thirty-two of every hundred against the climb's twenty-four. That is a deliberate step up and it is the last one -- the Frost Hall is on the other side of the col and a player who has come this far has met the type on a route before meeting it in a Hall, which is the order every type in this game is introduced in.\n\nStone still carries the rest of it, for the reason the climb's note gives: it is the one type neutral against all three starters both ways, and a table this high has no room to be unfair as well as high. Menhir is on it at six -- the only fully evolved Stone line in the wild anywhere in Caelora -- and meeting one should be an event rather than a tax.\n\nTHE WATER TABLE IS THE HOLE IN THE ICE, and it is the strangest table in the game on purpose. Deeplum is a Tide/Umbral that the Vellum places in a lake, and this is the lake. Four fifths of it is under two feet of ice and dark all winter. Levels are 32-37 against a team-raiser arriving at about 38.",
+  "methods": {
+    "tallGrass": {
+      "rate": 162,
+      "slots": [
+        {
+          "species": "frostnip",
+          "minLevel": 32,
+          "maxLevel": 34,
+          "weight": 16
+        },
+        {
+          "species": "rimehound",
+          "minLevel": 34,
+          "maxLevel": 36,
+          "weight": 16
+        },
+        {
+          "species": "cairnling",
+          "minLevel": 33,
+          "maxLevel": 35,
+          "weight": 12
+        },
+        {
+          "species": "chalkid",
+          "minLevel": 33,
+          "maxLevel": 35,
+          "weight": 10
+        },
+        {
+          "species": "burrowen",
+          "minLevel": 33,
+          "maxLevel": 35,
+          "weight": 10
+        },
+        {
+          "species": "bristlebuck",
+          "minLevel": 34,
+          "maxLevel": 36,
+          "weight": 10
+        },
+        {
+          "species": "craglide",
+          "minLevel": 34,
+          "maxLevel": 36,
+          "weight": 8
+        },
+        {
+          "species": "menhir",
+          "minLevel": 35,
+          "maxLevel": 37,
+          "weight": 6
+        },
+        {
+          "species": "mossback",
+          "minLevel": 33,
+          "maxLevel": 35,
+          "weight": 6
+        },
+        {
+          "species": "pipwing",
+          "minLevel": 32,
+          "maxLevel": 34,
+          "weight": 6
+        }
+      ]
+    },
+    "water": {
+      "rate": 110,
+      "slots": [
+        {
+          "species": "deeplum",
+          "minLevel": 34,
+          "maxLevel": 37,
+          "weight": 35
+        },
+        {
+          "species": "currentail",
+          "minLevel": 33,
+          "maxLevel": 36,
+          "weight": 30
+        },
+        {
+          "species": "rillfry",
+          "minLevel": 32,
+          "maxLevel": 35,
+          "weight": 20
+        },
+        {
+          "species": "gullswift",
+          "minLevel": 33,
+          "maxLevel": 36,
+          "weight": 15
+        }
+      ]
+    },
+    "fishOld": {
+      "slots": [
+        {
+          "species": "shalefin",
+          "minLevel": 20,
+          "maxLevel": 30,
+          "weight": 100
+        }
+      ]
+    },
+    "fishGood": {
+      "slots": [
+        {
+          "species": "currentail",
+          "minLevel": 33,
+          "maxLevel": 37,
+          "weight": 45
+        },
+        {
+          "species": "clatterclaw",
+          "minLevel": 34,
+          "maxLevel": 38,
+          "weight": 30
+        },
+        {
+          "species": "anchorling",
+          "minLevel": 34,
+          "maxLevel": 38,
+          "weight": 25
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "id": "route_9_falls",
+  "name": "Behind the Fall",
+  "displayName": "BEHIND THE FALL",
+  "music": "station",
+  "battleBackdrop": "cave",
+  "indoor": false,
+  "dark": false,
+  "regionPos": {
+    "x": 23,
+    "y": 4
+  },
+  "encounterTable": "route_9_falls",
+  "_design": "The rare-encounter spot and the optional branch of Route 9, and it is a room with one idea in it: SHELTER. The whole of Route 9 is a map about exposure -- a gale board every mile, a bridge with nothing either side of it, a wind that has closed the airship docks -- and the only way to make a player feel that is to give them ten quiet minutes behind a sheet of falling water and then send them back out into it. Nothing in here needs to be said out loud.",
+  "_plan": "One cavern, one ledge, one pool. Brinewisp is the rare slot and it is here because a Tide/Spirit that the Vellum puts in dead water belongs in a plunge pool nobody can see the bottom of, and because the player has met exactly one of them before, four acts ago, on the coast. The deep water in the middle of the pool is a Swim gate like every other one in the game.",
+  "warps": [
+    {
+      "x": 20,
+      "y": 29,
+      "toMap": "route_9",
+      "toX": 31,
+      "toY": 5,
+      "facing": "down",
+      "style": "cave"
+    },
+    {
+      "x": 21,
+      "y": 29,
+      "toMap": "route_9",
+      "toX": 31,
+      "toY": 5,
+      "facing": "down",
+      "style": "cave"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "r9f_hermit",
+      "sprite": "elder",
+      "x": 26,
+      "y": 14,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r9f_hermit",
+      "sightRange": 3
+    }
+  ],
+  "objects": [
+    {
+      "kind": "script",
+      "x": 29,
+      "y": 13,
+      "text": [
+        "A dry ledge along the back wall with sixty years of names cut into it.",
+        "Somebody has been keeping a tally of the water level in the pool below.",
+        "The last four marks are above every mark before them, and the last one is fresh."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 12,
+      "y": 12,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_r9f_ledge"
+    },
+    {
+      "kind": "item",
+      "x": 20,
+      "y": 25,
+      "item": "deep_vessel",
+      "quantity": 5,
+      "flag": "item_r9f_pool"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 31,
+      "y": 20,
+      "item": "thawcloth",
+      "quantity": 3,
+      "flag": "item_r9f_hidden"
+    }
+  ],
+  "rows": [
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCC⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓CCCCCCCCCCC",
+    "CCCCCCCCCCCC⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓CCCCCCCCCCC",
+    "CCCCCCCCCCCC⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓CCCCCCCCCCC",
+    "CCCCCCCCCCCCCC∇∇∇∇∇∇∇∇∇∇∇∇∇CCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCC∇∇∇∇∇∇∇∇∇∇∇∇∇CCCCCCCCCCCCC",
+    "CCCCCCCCCCCCC∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇CCCCCCCCCCCC",
+    "CCCCCCCCCCCC∇∇∇∇∇∇∇∇∇∇∇∇∇∇∆∇∇CCCCCCCCCCC",
+    "CCCCCCCCCCCC∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇CCCCCCCCCCC",
+    "CCCCCCCCCCC∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇CCCCCCCCCC",
+    "CCCCCCCCCCC~~~~∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇CCCCCCCCCC",
+    "CCCCCCCCCC∇~~~~~∇∇∇∇∇∇∆∇∇∇∇∇∇∇∆CCCCCCCCC",
+    "CCCCCCCCCC~~~~~∇∇∇∇∇∇∇∇∇∇∇∇∇∇´∇CCCCCCCCC",
+    "CCCCCCCCC∇=====================∇CCCCCCCC",
+    "CCCCCCCCC~~~~~∇∇∇∇∇∇∇∇∇~~~~~~∇∇∇CCCCCCCC",
+    "CCCCCCCC~~∆~~~∇∇∇∇∇∇∆∇∇~~~~~~∇∇∇∇CCCCCCC",
+    "CCCCCCCC~~~~~~∇∇∇∇∇∇∇∇∇~~~~~~∇∇∇∇CCCCCCC",
+    "CCCCCCC∇∇∇~~~~∆∇∇∇∇∇∇∇∇∇∇∇∇~~∇∇∇∇∇CCCCCC",
+    "CCCCCCCC∇∇∇~~~∇∇∇∇∇∇∇∇∇∇∇∇∇∇~∇∇∇∇CCCCCCC",
+    "CCCCCCCC∇∇∇~~~∇∇∇∇∇∇∇∇∆∆∇∇∇∇∇∇∆~~CCCCCCC",
+    "CCCCCCCCC∇∇~~~∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∆∇CCCCCCCC",
+    "CCCCCCCCC∇∆∇~∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∆∇CCCCCCCC",
+    "CCCCCCCCCC∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇CCCCCCCCC",
+    "CCCCCCCCCC∇∇∇∇∇~~~~~~~~~~~∇∇∆∇∇CCCCCCCCC",
+    "CCCCCCCCCCC∇∇∇∇~~WWWWWWW~~∇∇∇∇CCCCCCCCCC",
+    "CCCCCCCCCCC∇∇∇∇~~WWW==WW~~∇∇∇∇CCCCCCCCCC",
+    "CCCCCCCCCCCC∇∇∇~~~~~==~~~~∇∇∇CCCCCCCCCCC",
+    "CCCCCCCCCCCC=================CCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCC==CCCCCCCCCCCCCCCCCC"
+  ]
+}

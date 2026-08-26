@@ -294,6 +294,16 @@
     "tg_harbourmaster": [
       {
         "ifFlags": [
+          "act4_done"
+        ],
+        "lines": [
+          "Four hundred boats and not one of them is going out. I closed the harbour myself at six.",
+          "Baulks across the sea gate, sand up the Parade, and the whole city carrying it.",
+          "Nobody argued with me. Thirty-one years I have wanted that and I did not want it like this."
+        ]
+      },
+      {
+        "ifFlags": [
           "crest_3_taken"
         ],
         "lines": [
@@ -311,9 +321,23 @@
       }
     ],
     "tg_netter": [
-      "The flats are heaving. Everything that lives deep has come up onto the mud.",
-      "My mother would have called that a gift year. It is not. It is a run.",
-      "Things run from something. Nobody down here finishes that sentence."
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
+        "lines": [
+          "The flats are empty. Not fished out. Empty, in one tide, and they were heaving.",
+          "Everything that came up onto the mud has gone up the creeks and inland after that.",
+          "I said things run from something. I have stopped saying it. Everybody knows now."
+        ]
+      },
+      {
+        "lines": [
+          "The flats are heaving. Everything that lives deep has come up onto the mud.",
+          "My mother would have called that a gift year. It is not. It is a run.",
+          "Things run from something. Nobody down here finishes that sentence."
+        ]
+      }
     ],
     "tg_fishwife": [
       "Ninety slabs under that roof and eleven of them working.",
@@ -321,9 +345,23 @@
       "Somebody has to be here when it comes back. That is a job too."
     ],
     "tg_child": [
-      "Dad says the sea is holding its breath.",
-      "So I asked what happens when it lets go. He did not answer.",
-      "So I asked louder. He still did not answer."
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
+        "lines": [
+          "It let go.",
+          "Dad has not been home since Tuesday. He is down the mole with everybody else and the sandbags.",
+          "I am not asking him anything else. I have worked out that I do not want the answers."
+        ]
+      },
+      {
+        "lines": [
+          "Dad says the sea is holding its breath.",
+          "So I asked what happens when it lets go. He did not answer.",
+          "So I asked louder. He still did not answer."
+        ]
+      }
     ],
     "tg_porter": [
       "Fish out of the market, crates onto the mole, and it is the same shoulder either way.",
@@ -365,9 +403,23 @@
       "This spring is the first time anybody upstairs has asked us to hold a result back."
     ],
     "tg_gaugeman": [
-      "Come and look at the drum. Two hundred years of the same handsome wave.",
-      "Then look at the last four. Flat. Not low. Flat.",
-      "The sea does not go flat. The sea is the one thing that is never flat."
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
+        "lines": [
+          "Come and look at the drum. Go on. I have had four people in here and none of them would.",
+          "It came off the paper. The pen went up past the frame and drew on the casing.",
+          "Two hundred years of handsome wave and then that. I have kept the sheet. Somebody will want it."
+        ]
+      },
+      {
+        "lines": [
+          "Come and look at the drum. Two hundred years of the same handsome wave.",
+          "Then look at the last four. Flat. Not low. Flat.",
+          "The sea does not go flat. The sea is the one thing that is never flat."
+        ]
+      }
     ],
     "tg_surveyor": [
       {
@@ -428,9 +480,23 @@
       }
     ],
     "tg_lampkeeper": [
-      "Nine hundred and six paces out and the same back, every night of my life.",
-      "The light does not care whether anyone is watching. That is the good of it.",
-      "Since spring there have been hulls past the head running dark. Write that down somewhere."
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
+        "lines": [
+          "Nine hundred and six paces, and last night it took me an hour and I went out on my hands.",
+          "Water over the mole. Over it, in a wind that was not there at teatime.",
+          "The light was lit. It will be lit tonight. That is not bravery, it is only the job."
+        ]
+      },
+      {
+        "lines": [
+          "Nine hundred and six paces out and the same back, every night of my life.",
+          "The light does not care whether anyone is watching. That is the good of it.",
+          "Since spring there have been hulls past the head running dark. Write that down somewhere."
+        ]
+      }
     ],
     "tg_watchman": [
       "Height of water on the hour, all day, all night, and I signal the pilots.",

@@ -1,0 +1,356 @@
+{
+  "id": "route_9",
+  "name": "The Skyreach Stair",
+  "displayName": "ROUTE 9 - THE SKYREACH STAIR",
+  "music": "route_coast",
+  "battleBackdrop": "highland",
+  "indoor": false,
+  "regionPos": {
+    "x": 24,
+    "y": 5
+  },
+  "encounterTable": "route_9",
+  "_design": "The road east out of Aureline and up onto the cliffs, and the map where the game finally has a HOLE in it. Canon lists tall mountains, windy plateaus, giant valleys, waterfalls, rope bridges and sheer cliffs in one breath, and a route built out of all six of those is a scenery catalogue -- so one of them is the structure and the other five are its consequences. A chasm cuts the map from top to bottom, the west half is the approach and the east half is the plateau, and the only ways over are two bridges and a gap where a third one used to be.",
+  "_plan": "THE BRIDGE IS THE POINT AND IT IS BUILT TO BE FELT. Two cells wide, thirteen long, with six rows of nothing above and below it. The player can see the drop through the boards, cannot turn aside, and arrives somewhere they can only leave forwards or back. A field of tall grass has never once done that to anybody, and this is what canon means by asking for a rope bridge over a drop rather than another field.\n\nTHREE CROSSINGS, THREE ANSWERS. The main bridge at y24 is the road. The old bridge at y39 is one cell wide -- the only single-file walkway in the game -- and it is the optional branch, leading south and round to the falls. The third, at y13, is not there any more: two posts, a pinnacle standing in the middle of the gap with something on it, and no way over until the Gale Hall at the FAR END OF THIS ROAD hands the art over. That is the shortest come-back-later loop in Caelora and it is deliberate: the player can see the reward from the rim, walk twenty minutes, and come straight back for it.\n\nTHE FALL comes off the north wall into the gorge at the top of the map and is what gives the cliff its height. The stair cut down beside it leads behind the water -- route_9_falls -- which is the rare-encounter spot and the only place on this road that is out of the wind.",
+  "warps": [
+    {
+      "x": 0,
+      "y": 32,
+      "toMap": "aureline",
+      "toX": 149,
+      "toY": 90,
+      "facing": "left",
+      "style": "edge"
+    },
+    {
+      "x": 0,
+      "y": 33,
+      "toMap": "aureline",
+      "toX": 149,
+      "toY": 91,
+      "facing": "left",
+      "style": "edge"
+    },
+    {
+      "x": 0,
+      "y": 34,
+      "toMap": "aureline",
+      "toX": 149,
+      "toY": 92,
+      "facing": "left",
+      "style": "edge"
+    },
+    {
+      "x": 63,
+      "y": 24,
+      "toMap": "skyreach",
+      "toX": 1,
+      "toY": 41,
+      "facing": "right",
+      "style": "edge"
+    },
+    {
+      "x": 63,
+      "y": 25,
+      "toMap": "skyreach",
+      "toX": 1,
+      "toY": 42,
+      "facing": "right",
+      "style": "edge"
+    },
+    {
+      "x": 31,
+      "y": 4,
+      "toMap": "route_9_falls",
+      "toX": 20,
+      "toY": 28,
+      "facing": "up",
+      "style": "cave"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "r9_carter",
+      "sprite": "porter",
+      "x": 10,
+      "y": 33,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r9_carter",
+      "sightRange": 3
+    },
+    {
+      "id": "r9_lifthand",
+      "sprite": "dockhand",
+      "x": 20,
+      "y": 29,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r9_lifthand"
+    },
+    {
+      "id": "r9_ropewalker",
+      "sprite": "sailor",
+      "x": 21,
+      "y": 24,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r9_ropewalker",
+      "sightRange": 4
+    },
+    {
+      "id": "r9_bridgekeeper",
+      "sprite": "harbourmaster",
+      "x": 33,
+      "y": 25,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r9_bridgekeeper"
+    },
+    {
+      "id": "r9_windwatch",
+      "sprite": "meridian_sci_f",
+      "x": 40,
+      "y": 25,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r9_windwatch",
+      "sightRange": 3
+    },
+    {
+      "id": "r9_shepherd",
+      "sprite": "villager_f",
+      "x": 50,
+      "y": 30,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r9_shepherd",
+      "sightRange": 3
+    },
+    {
+      "id": "r9_dockrunner",
+      "sprite": "dockhand",
+      "x": 58,
+      "y": 24,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r9_dockrunner",
+      "sightRange": 4
+    },
+    {
+      "id": "r9_gapman",
+      "sprite": "hiker",
+      "x": 30,
+      "y": 13,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r9_gapman"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 36,
+      "text": [
+        "A board at the foot of the stair, lettered by somebody with a straight edge.",
+        "SKYREACH: FOUR MILES AND ALL OF THEM UP. THE BRIDGE IS THE ONLY WAY OVER.",
+        "Under it, newer paint: AND IT IS SAFE. IT HAS ALWAYS BEEN SAFE. STOP ASKING."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 20,
+      "y": 25,
+      "text": [
+        "The bridge head. Two cables made off round a stone bollard, and a tally board.",
+        "INSPECTED: THE FOURTEENTH. THE FIFTEENTH. THE SIXTEENTH. THE SIXTEENTH AGAIN.",
+        "Three inspections in three days, and then the same day twice."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 31,
+      "y": 15,
+      "text": [
+        "Two posts, and nothing between them. The cables are gone from both.",
+        "There is a pinnacle standing in the middle of the gap with something on it.",
+        "Air comes up this gap hard enough to lift snow off the rim and hold it there."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 50,
+      "y": 21,
+      "text": [
+        "A wind board on a mast, the kind the dock company puts up along the top road.",
+        "GUSTING 40. DOCKS CLOSED TO INBOUND. NO EXCEPTIONS AND NO ARGUMENTS.",
+        "The number has been rubbed out and rewritten so many times the board is thin."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 20,
+      "y": 41,
+      "text": [
+        "A hand-painted board where the lower path leaves the road.",
+        "OLD BRIDGE. ONE AT A TIME. NOBODY MAINTAINS IT AND NOBODY EVER DID."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 58,
+      "y": 27,
+      "text": [
+        "A last board before the town gate, weighted down with a stone on each arm.",
+        "SKYREACH. KEEP OFF THE DOCK BRIDGES IN A GALE. THIS MEANS EVERYBODY."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 4,
+      "y": 30,
+      "text": [
+        "A milestone, the last one the capital paid for. AURELINE IV."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 42,
+      "y": 27,
+      "text": [
+        "A milestone in the old lettering. CROWNSPIRE XXXI. SKYREACH II."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 59,
+      "y": 21,
+      "text": [
+        "A milestone with a dock-company plate nailed over the old face. SKYREACH I."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 30,
+      "y": 8,
+      "item": "great_potion",
+      "quantity": 3,
+      "flag": "item_r9_northrim"
+    },
+    {
+      "kind": "item",
+      "x": 56,
+      "y": 41,
+      "item": "full_heal",
+      "quantity": 3,
+      "flag": "item_r9_southshelf"
+    },
+    {
+      "kind": "item",
+      "x": 7,
+      "y": 11,
+      "item": "warden_vessel",
+      "quantity": 5,
+      "flag": "item_r9_valleyhead"
+    },
+    {
+      "kind": "item",
+      "x": 37,
+      "y": 13,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_r9_pinnacle"
+    },
+    {
+      "kind": "item",
+      "x": 48,
+      "y": 12,
+      "item": "strong_potion",
+      "quantity": 3,
+      "flag": "item_r9_plateau"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 14,
+      "y": 44,
+      "item": "ward_incense",
+      "quantity": 2,
+      "flag": "item_r9_hidden_south"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 60,
+      "y": 8,
+      "item": "full_rouse",
+      "quantity": 1,
+      "flag": "item_r9_hidden_high"
+    }
+  ],
+  "rows": [
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CC,.\"\"\"\"..,,...TT..,,..∧∧∧∧.,,..∇⊗⇓⇓⇓⊗⊗∇∧∧∧∧∧∧∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇CC",
+    "CC,,..,,..,,,..TT..,,..\"∧∧∧∧,,..∇⊗⇓⇓⇓⊗⊗∇∇.∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇CC",
+    "CC,,,,,,...,,*,..,***,..\"∧∧∧∧∧∧∧∇⊗⇓⇓⇓⊗⊗⊗∇∇∇∇∇∇∇∇∧∧∧∧∇∇∇∇∇∇∇∇∇∇CC",
+    "CC,,.,,,...,,,,..,**,,,.\"\"∧∧∧∧-∧∇⊗⇓⇓⇓⊗⊗⊗∇∇∇∇∇∇∇∧∧∧∧∧∧∧∧∇∇∇∇∇∇∇CC",
+    "CC....,*,.,*,,...,,...,\"\"\"\"\"∧∧-∇⊗⇓⇓⇓⊗⊗⊗∇∇∇∇∇∇∇∇∧∧∧∧∧∧∧∧∧∧∧∧∇∇∇CC",
+    "CC....,,,.,*,....,,.\"\"\"\"\"\"\"\"\"∧-∇⊗⇓⇓⇓⊗⊗⊗⊗∇∇∇∇∇∇∇,∧∧∧∧∧∧∧∧∧∧∧∧∇∇CC",
+    "CC.,,,,...,,,,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\",-∇⊗⇓⇓⇓⊗⊗⊗⊗∇∇∇∇∇∇∇.,,...∧∧∧∧∧∧∧∇∇CC",
+    "CC,,,,......,,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\".-∇⊗⇓⇓⇓⊗⊗⊗⊗∇∇∇∇∇∇∇∇∇,........∧∇∇∇CC",
+    "CC....,,....,,\"\"\"\"\"\"\"\"\"\"\"\"\"\",,-∇⊗⊗⊗⊗⊗⊗⊗⊗∇∧∧∇∇∇∇∇∇∇∇∇∇......∇∇∇CC",
+    "CC....,,....,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\",,,-∇⊗⊗⊗⊗⊗⊗⊗⊗∇∧...∇∇∇∇∇∇∇∇....∇∇∇∇CC",
+    "CC....TTTT...\"\"\"\"\"\"\"\"\"\"\",,..,,,-∋⊗⊗⊗⊗⊗⊗⊗⊗∇∧,..∇∇∇∇∇∇∇∇∇...∇∇∇∇CC",
+    "CC..TT..TT...\"\"\"\"\"\",...,**,,-----∇⊗⊗⊗∇⊗⊗⊗∇∆∋,,∇∇∇∇∇∇∇∇∇..∇∇∇∇∇CC",
+    "CC..TT..TT...\"\"\"\"\",...------,∧∧∧∧∇⊗⊗⊗∇⊗⊗⊗∇∆∆..∇∇∇∇∇∇∇∇∇∇.∇∇∇∇∇CC",
+    "CC..TTTT....,\"\"\"\"\"....-,,,..,∧∧´∧∇⊗⊗⊗∇⊗⊗⊗∇∆∆∧∧∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇CC",
+    "CC....TT....,\"\"\"\"\",....-,,...∧∧∧∧∇⊗⊗⊗⊗⊗⊗∇∆∆∆.∧∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇CC",
+    "CC.....TTTTT.\"\"\"\"\"*,,,*-........∇⊗⊗⊗⊗⊗⊗∇∧∧∆....∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇CC",
+    "CC.....TTTT,.\"\"\"\"******-.......∇⊗⊗⊗⊗⊗∇.∧∧∧∧....∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇CC",
+    "CC......TT,,,\"\"\"\",,**,.,-∧∧.,∇⊗⊗⊗⊗⊗∇∇..∧∧∧∧....∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇CC",
+    "CC,,....T,,*,\"\"\"\"..,*,.,-∧∧,∇⊗⊗⊗⊗∇.,,,,∧∧∧∧...√∇∇∇∇∇∇∇√∇∇∇∇∇√∇CC",
+    "CC,,,T.....,.\"\"\"\"..,,...\"∧∧∇⊗⊗⊗⊗∇......∧∧∧∧.....∇∇´∇∇∇∇∇∇∇∇■∇∇CC",
+    "CC**,,TT.......,,........∇⊗⊗⊗⊗∇,,,.....∧∧∧..,..∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇CC",
+    "CC,,,,..,,,....,,......-⊗⊗⊗⊗⊗⊗⊗---------------------------------",
+    "CC..,,..,*,,.....,,,,,,∋∈∈∈∈∈∈∈∋--------------------------------",
+    "CC......,*,,.....,,,´,.∋∈∈∈∈∈∈∈∋--------------------------------",
+    "CC,...,,**,,,.√....,*---⊗⊗⊗⊗⊗⊗⊗...∧∧∧∧..∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇,..∇∇∇∇CC",
+    "CC,,..,,,,,,,......-------⊗⊗⊗⊗∇...∧∧∧..∇∇∇■∇∇∇∇∇∇∇∇∇∇∇....´∇∇∇CC",
+    "CC,,,,....,*,..,,--------∇⊗⊗⊗⊗⊗∇...,,.∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇...,∇∇∇∇CC",
+    "CC,,*,√...,*,.---------\"\"\"∇⊗⊗⊗⊗⊗⊗∇.*,..∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇...,∇∇∇∇CC",
+    "CC,,■,.....,---------\"\"\"\"\"\"∇⊗⊗⊗⊗⊗⊗∇*,,.∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇.,..∇∇∇∇CC",
+    "CC,,*,...----------,\"\"\"\"\"\"\"\"∇⊗⊗⊗⊗⊗⊗∇,,.,,∇∇∇∇∇∇∇∇∇∇∇∇∇∇,.∇∇∇∇∇CC",
+    "-----------------..\"\"\"\"\"\"\"\"\"∇⊗⊗⊗⊗⊗⊗⊗∇,∧∧∧∧.∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇CC",
+    "--------------..-..\"\"\"..,...∇⊗⊗⊗⊗⊗⊗⊗∇∧∧∧∧∧..∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇CC",
+    "-----------..,,.-..\"\"\"..,...∇⊗⊗⊗⊗⊗⊗⊗⊗∇∧∧∧∧..∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇CC",
+    "CC\"...,,....,,,..-,\"\"\"T,....∇⊗⊗⊗⊗⊗⊗⊗⊗∇∧∧∧∧..,∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇CC",
+    "CC\"..,,,,.´..,,..-,\"\"\",,....∇⊗⊗⊗⊗⊗⊗⊗⊗∇∧∧∧∧..,∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇CC",
+    "CC,,,,,,,,.....,,-\"\"\"\"\".,,,,∇⊗⊗⊗⊗⊗⊗⊗⊗∇∧......∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇CC",
+    "CC,,,,,,,,.....TT.-\"\"\"\"\"\"∧,,∇⊗⊗⊗⊗⊗⊗⊗⊗∇,...,.∧∇∇∇∇∇∇∇∇∇∇--∇∇∇∇∇CC",
+    "CCT,,,**..,,,...T,----------∈∈∈∈∈∈∈∈∈∈∈------∧∧∇∇∇∇∇----∇∇∇∇∇∇CC",
+    "CCT,,,**..,*,...T,\"\"\"\"\"\"\"∧∧.,∇⊗⊗⊗⊗⊗⊗⊗∇.....∧∧--------∇∇∇∇∇∇∇∇∇CC",
+    "CC....,,,,,,....T*\"\"´\"\"\"\"∧∧...∇⊗⊗⊗⊗⊗⊗⊗∇.,..∧∧∧∧∧∧....∇∇∇∇∇∇∇∇∇CC",
+    "CC.....,,,,,...TT*\"\"\"\"\"\".......∇⊗⊗⊗⊗⊗⊗⊗∇,..∧∧∧∧∧∧∧∧..∇∇∇∇∇∇∇∇∇CC",
+    "CC\"\"\"\"\".........\"\"\"\"\"\"....,,.∧∧∧∇⊗⊗⊗⊗⊗⊗∇...∧∧∧∧∧∧∧∧∧.∇∇∇∇∇∇∇∇∇CC",
+    "CC\"\"\"\"\"\".....T\"\"\"\"\"\"\".....,,∧∧∧∧∧∇⊗⊗⊗⊗⊗⊗∇...∧∧∧∧∧∧∧∧∧∇∇∇∇∇∇∇∇∇CC",
+    "CC\"\"\"\"\"\".,...T\"\"\"\"\"\"\".....,,∧∧∧∧∧∧∇⊗⊗⊗⊗⊗∇...∧∧∧∧∧∧∧∧∇∇∇∇∇∇∇∇∇∇CC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "speakers": {
+    "sh_spur_guide": "SPUR HAND"
+  },
+  "entries": {
+    "sh_spur_guide": [
+      {
+        "ifFlags": [
+          "crest_7_taken"
+        ],
+        "lines": [
+          "Down the east side, four hops, and you are back here before the kettle boils.",
+          "That is what it is for. Nobody should have to earn the same gantry twice."
+        ]
+      },
+      {
+        "lines": [
+          "Three gantries up. A tile wide each, no rail, and every one of them is watched.",
+          "Four cornices down the east side when you are done, and they only go one way.",
+          "The two decks off to the west go nowhere. There is a box on each and somebody sitting by it."
+        ]
+      }
+    ]
+  }
+}

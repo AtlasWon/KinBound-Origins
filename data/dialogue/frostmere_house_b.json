@@ -1,0 +1,21 @@
+{
+  "speakers": { "fmb_watcher": "WEATHER KEEPER" },
+  "entries": {
+    "fmb_watcher": [
+      {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "Forty-one years in that book and I have never once handed the pen to anybody else.",
+          "I did, this month. Twice. I wanted a second hand on it in case mine was wrong.",
+          "It was not wrong. I would have been a great deal happier if it had been wrong."
+        ]
+      },
+      {
+        "lines": [
+          "Somebody in this town writes down the weather every day. It has been me since I was twenty.",
+          "It is not important. That is exactly why it works: nobody has ever leaned on the number."
+        ]
+      }
+    ]
+  }
+}

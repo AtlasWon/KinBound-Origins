@@ -1,0 +1,77 @@
+{
+  "_note": "The Hall is a Hall three days a week and a doss house the other four, which is a fact about Frostmere and not a joke about it. The child at the fire teaches the room's whole rule in three sentences and then says the important thing: that nobody would have told the player, and somebody should.",
+  "speakers": {
+    "fmhall_clerk": "HALL DESK",
+    "fmhall_reader": "CHALK HAND",
+    "fmhall_offshift": "OFF SHIFT",
+    "fmhall_child": "HALL CHILD",
+    "fmhall_lodger": "LODGER"
+  },
+  "entries": {
+    "fmhall_clerk": [
+      {
+        "ifFlags": ["crest_6_taken"],
+        "lines": [
+          "Marked you back up. Both columns match and the book is straight.",
+          "Eira sent word that she is staying down a while. She always does, after one."
+        ]
+      },
+      {
+        "lines": [
+          "Down the stairs. Tell me when you go and tell me when you come back.",
+          "That is not a formality. Nobody has drowned under this house in two hundred years,",
+          "and every one of those years somebody sat at this desk writing names in a book."
+        ]
+      }
+    ],
+    "fmhall_reader": [
+      {
+        "lines": [
+          "Six in the morning, every cell, every day, whether or not it has changed.",
+          "The days it has not changed are the dangerous ones, because that is when you guess.",
+          "So I mark it anyway. Tick, tick, tick, cross, tick. My arm aches and the town drinks."
+        ]
+      }
+    ],
+    "fmhall_offshift": [
+      {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "Pots on the ice: nineteen. We have never had more than eleven out at once.",
+          "Nineteen fires holding nineteen holes open, and the holes keep closing anyway,",
+          "and the ice round each one is getting worse and not better. Work that out for me."
+        ]
+      },
+      {
+        "lines": [
+          "You do not open a channel because you want a channel. You open it because of February.",
+          "In February this town takes its water out of holes in a floor. That is the whole reason."
+        ]
+      }
+    ],
+    "fmhall_child": [
+      {
+        "lines": [
+          "Tick means you can. Cross means you cannot. No mark means there is nothing there.",
+          "I have known that since before I could read the words. Everybody here knows it.",
+          "You would not, though, would you. Nobody tells you. Somebody ought to tell you."
+        ]
+      }
+    ],
+    "fmhall_lodger": [
+      {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "Our chimney is fine and our fuel is fine. I am here because the house is very quiet.",
+          "Sixteen bunks with somebody breathing in every one. It turns out that is the thing."
+        ]
+      },
+      {
+        "lines": [
+          "The Hall is a Hall three days a week and a doss house the other four.",
+          "Anywhere else in Caelora those would be two buildings. It has never occurred to us."
+        ]
+      }
+    ]
+  }
+}

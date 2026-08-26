@@ -1,0 +1,112 @@
+{
+  "id": "skyreach_dockoffice",
+  "name": "The Dock Office",
+  "displayName": "THE DOCK OFFICE",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIIIIUIIIII",
+    "IKKKKKKKfffffPffI",
+    "IfffffffffffffffI",
+    "IkkfffffffffAEffI",
+    "IffffffffffffffkI",
+    "IfAEffffffffffffI",
+    "IffffffffffffffPI",
+    "Ikffff$$$$ffffffI",
+    "IfffffffffffffffI",
+    "IPfffffffffffbekI",
+    "IfffffffffffffffI",
+    "IffffffffffffffPI",
+    "IIIIIIIIDIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 8,
+      "y": 12,
+      "toMap": "skyreach",
+      "toX": 61,
+      "toY": 18,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "sd_master",
+      "sprite": "harbourmaster",
+      "x": 8,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sd_master"
+    },
+    {
+      "id": "sd_clerk",
+      "sprite": "clerk",
+      "x": 3,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sd_clerk"
+    },
+    {
+      "id": "sd_pilot",
+      "sprite": "sailor",
+      "x": 12,
+      "y": 8,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sd_pilot"
+    },
+    {
+      "id": "sd_agent",
+      "sprite": "merchant",
+      "x": 4,
+      "y": 10,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sd_agent"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "THE SAILING BOARD, and it is a slate rather than a card, because it changes.",
+        "AURELINE TUES FRI. CROWNSPIRE DAILY. FROSTMERE WEATHER PERMITTING.",
+        "Three quarters of the slate has been wiped clean and the wipe marks are fresh."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 6,
+      "y": 7,
+      "text": [
+        "The loft bench, with a masthead stripped down on it and its bearing laid out beside.",
+        "A tag on the bearing: OFF MAST 7. SEIZED. RAN DRY IN FOURTEEN DAYS.",
+        "A second tag under it, in a different hand: THEY DO NOT RUN DRY IN FOURTEEN DAYS."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 16,
+      "y": 9,
+      "text": [
+        "A chart of the crescent with the airship lanes ruled on it in red.",
+        "Somebody has pencilled a new line from Skyreach out over open water, and stopped.",
+        "There is a question mark at the end of it and nothing else at all."
+      ]
+    }
+  ]
+}

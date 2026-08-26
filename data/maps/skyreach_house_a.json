@@ -1,0 +1,67 @@
+{
+  "id": "skyreach_house_a",
+  "name": "Interior",
+  "displayName": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIUIIIIIUII",
+    "IQNFFKFFFPI",
+    "IFFFFFFFFFI",
+    "IAEFFFFFbeI",
+    "IFFFFFFFFFI",
+    "IkFFrrFFFFI",
+    "IFFFrrFFFVI",
+    "IPFFFFFFFFI",
+    "IIIIIDIIIII"
+  ],
+  "warps": [
+    {
+      "x": 5,
+      "y": 8,
+      "toMap": "skyreach",
+      "toX": 20,
+      "toY": 38,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "sha_woman",
+      "sprite": "townsfolk_f",
+      "x": 4,
+      "y": 4,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sha_woman"
+    },
+    {
+      "id": "sha_child",
+      "sprite": "kid",
+      "x": 7,
+      "y": 6,
+      "facing": "left",
+      "movement": {
+        "kind": "wander",
+        "radius": 1
+      },
+      "script": "sha_child"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 5,
+      "text": [
+        "A shelf of small carved birds. Forty of them, all facing the same way.",
+        "A card in a child’s hand: THESE ARE ALL POINTING AT THE WIND.",
+        "A second card in an adult’s: THEY ARE NAILED DOWN. THEY POINT AT THE WALL."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,195 @@
+{
+  "id": "skyreach_hall",
+  "name": "The Masthouse",
+  "displayName": "THE GALE HALL",
+  "music": "station",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "_design": "THE SWITCH ROOM OF A CITY THAT RUNS ON WEATHER. Not a lobby: everything in here is doing a job, and the job is the eleven panels of the switchboard along the north wall, which is where every mast on both cliffs comes home. The accumulators are in the corners, the benches are where a burnt-out coil gets rewound, and the counter at the front is the only concession to the fact that strangers walk in.\n\nTHE KEEPER IS NOT IN THE ROOM AND SHE NEVER IS. Same shape as the Pile House, the Tide Hall and the Quarry Hall before it: a Hall that keeps a trade tests you at the trade. The door in the north wall goes out onto the Windward Spurs, which is where the masts are, and Idrisa Fenn is at the foot of the great one because that is where the noise is.",
+  "rows": [
+    "IIIIIIIIIDIIIIIIIII",
+    "IUU:::::::::::::UUI",
+    "I@@:::::::::::::@@I",
+    "I:::+++++++++++:::I",
+    "I:::?:::::::::?:::I",
+    "I:::::::::::::::::I",
+    "I$$$:::::::::::$$$I",
+    "I:KKKKKKK::::::::PI",
+    "I:::::::::::::::::I",
+    "Ik::::+@@@+::::::kI",
+    "I:::::::::::::::::I",
+    "I:AE:::::::::::EA:I",
+    "I:::::::::::::::::I",
+    "IP:::::::::::::::PI",
+    "IIIIIIIIDDIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 8,
+      "y": 14,
+      "toMap": "skyreach",
+      "toX": 59,
+      "toY": 49,
+      "facing": "down",
+      "style": "door"
+    },
+    {
+      "x": 9,
+      "y": 14,
+      "toMap": "skyreach",
+      "toX": 60,
+      "toY": 49,
+      "facing": "down",
+      "style": "door"
+    },
+    {
+      "x": 9,
+      "y": 0,
+      "toMap": "skyreach_hall_spurs",
+      "toX": 18,
+      "toY": 38,
+      "facing": "up",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "sh_hall_clerk",
+      "sprite": "clerk",
+      "x": 9,
+      "y": 7,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sh_hall_clerk"
+    },
+    {
+      "id": "sh_hall_switchhand",
+      "sprite": "meridian_sci_f",
+      "x": 6,
+      "y": 4,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sh_hall_switchhand"
+    },
+    {
+      "id": "sh_hall_winder",
+      "sprite": "netmender",
+      "x": 15,
+      "y": 7,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sh_hall_winder"
+    },
+    {
+      "id": "sh_hall_beaten",
+      "sprite": "hiker",
+      "x": 4,
+      "y": 12,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sh_hall_beaten"
+    },
+    {
+      "id": "sh_hall_child",
+      "sprite": "kid",
+      "x": 12,
+      "y": 11,
+      "facing": "left",
+      "movement": {
+        "kind": "wander",
+        "radius": 2
+      },
+      "script": "sh_hall_child"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 0,
+      "text": [
+        "Painted on the boards over the back door, and repainted every spring:",
+        "THE WIND IS NOT YOURS. THE MASTS ARE NOT YOURS. THE CHARGE IS NOT YOURS.",
+        "ALL THREE OF THEM WILL WORK WITH YOU ANYWAY. GO OUT AND ASK THEM NICELY."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 3,
+      "text": [
+        "THE BOARD. Eleven panels, one for every mast on both cliffs, and all eleven live.",
+        "Needles, dials, and a brass handle under each one with a leather guard over it.",
+        "Nothing is labelled. Everyone who works here has known the order since they were nine."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 3,
+      "text": [
+        "The far end of the board, where the numbers have been going wrong for a fortnight.",
+        "Somebody has pinned a paper strip along it with the readings written by hand.",
+        "The hand gets smaller and faster down the column, which is what worry looks like in ink."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 2,
+      "text": [
+        "The accumulators. Six of them, glass and copper, and the light in them moves.",
+        "A card: WE DO NOT STORE THE WIND. WE STORE WHAT IT LENT US THIS AFTERNOON.",
+        "Somebody has drawn a small unimpressed face beside the word LENT."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 6,
+      "text": [
+        "The winding bench. A burnt coil in a vice, half unwound, and it smells of hot varnish.",
+        "There are nine hundred turns on a mast coil and every one of them is put on by hand.",
+        "The tally on the wall says this is number four this month. In March it was one."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 17,
+      "y": 9,
+      "text": [
+        "Eight Bond Crests in a case, one for every Hall in Caelora.",
+        "The Gale Crest is seventh and it is not a disc. It is a small brass vane, and it turns.",
+        "It has turned in that case, indoors, in still air, since the day it was put there."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 9,
+      "text": [
+        "THE WIND LEDGER. A hundred and forty years of one number written twice a day.",
+        "The last page has a second column in a different ink, headed simply: AND FROM WHERE.",
+        "It has entries every day for nineteen days. Before that the column does not exist."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 17,
+      "y": 13,
+      "text": [
+        "A framed photograph: eleven people on a spur in a gale, all of them roped to each other.",
+        "The card under it names all eleven and then says, in the same careful lettering,",
+        "NOBODY IN THIS PICTURE IS HOLDING THE ROPE FOR THEMSELVES."
+      ]
+    }
+  ]
+}

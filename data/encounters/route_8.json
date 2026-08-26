@@ -1,0 +1,71 @@
+{
+  "mapId": "route_8",
+  "$comment": "The climb, and the first table in the game with Frost on it in any quantity. THE WHOLE PROBLEM WITH A FROST ROUTE IS THORNMARCH. Frost hits the Verdant starter's final form for double and there is no way round that in the chart, so the identity has to be carried at a weight the Verdant player can walk through: twenty-four of every hundred Kin here are Frost-typed and no more. What fills the rest is STONE, which is the one type in the chart that is exactly neutral against all three starters both ways -- Pebblet, Cairnling, Chalkid, and Slatewing between them are thirty-eight per cent -- and BEAST, which is neutral against two and RESISTED by the third. That is the Route 7 lesson applied to a type that bites harder: the mountain is made of rock, the rock is fair, and the snow is the flavour on top of it.\n\nMEASURED, not guessed at. Levels are 29-33 against a team-raising player who leaves Harrowgate at 34 and a solo lead who leaves it at 45, which is the two-to-four-under rule every table since the third pass has followed.",
+  "methods": {
+    "tallGrass": {
+      "rate": 158,
+      "slots": [
+        {
+          "species": "frostnip",
+          "minLevel": 29,
+          "maxLevel": 31,
+          "weight": 14
+        },
+        {
+          "species": "tuftail",
+          "minLevel": 30,
+          "maxLevel": 32,
+          "weight": 12
+        },
+        {
+          "species": "pebblet",
+          "minLevel": 29,
+          "maxLevel": 31,
+          "weight": 12
+        },
+        {
+          "species": "rimehound",
+          "minLevel": 31,
+          "maxLevel": 33,
+          "weight": 10
+        },
+        {
+          "species": "bristlebuck",
+          "minLevel": 31,
+          "maxLevel": 33,
+          "weight": 10
+        },
+        {
+          "species": "cairnling",
+          "minLevel": 31,
+          "maxLevel": 33,
+          "weight": 10
+        },
+        {
+          "species": "chalkid",
+          "minLevel": 30,
+          "maxLevel": 32,
+          "weight": 10
+        },
+        {
+          "species": "burrowen",
+          "minLevel": 31,
+          "maxLevel": 33,
+          "weight": 8
+        },
+        {
+          "species": "nibbet",
+          "minLevel": 29,
+          "maxLevel": 31,
+          "weight": 8
+        },
+        {
+          "species": "slatewing",
+          "minLevel": 30,
+          "maxLevel": 32,
+          "weight": 6
+        }
+      ]
+    }
+  }
+}

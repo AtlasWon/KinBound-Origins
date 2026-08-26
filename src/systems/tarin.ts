@@ -290,6 +290,115 @@ export const TARIN_LEDGER: TarinBeat[] = [
     where: 'Aureline',
     doing: 'Has not once asked whether you are all right. He knows the answer and he is staying close.',
   },
+
+  /*
+   * Stage 5. Act 5, the storm.
+   *
+   * THE COLUMN MOVES AGAIN, AND IT MOVES THE WRONG WAY IN THE MIDDLE. Act 1
+   * alternated ahead and behind, Act 2 held him level, Act 3 gave him two and
+   * stopped, Act 4 was flat on purpose. Act 5 is the act where the number
+   * finally has to finish -- canon puts him at seven or eight Crests by
+   * Crownspire -- so the interesting thing is not that it rises, it is WHERE it
+   * stalls. He is AHEAD at Frostmere, having taken the Frost Crest days before
+   * the player walked in and then not gone anywhere, and he is BEHIND at
+   * Skyreach, having lost three days on the dock bridges getting other people
+   * off them in the wind. That stall is his whole arc stated in one column: he
+   * started wanting to be strong and he is now a boy who will drop the count to
+   * hold a rope. Nothing in the dialogue has to say it, and nothing does.
+   *
+   * FOUR OF THESE SEVEN OPEN ON MAPS THAT ANOTHER AGENT IS BUILDING THIS WEEK,
+   * which is exactly the case `any` and the last-beat-wins rule in tarinBeat
+   * were put there for: a row keyed to a map id that never lands is stepped
+   * over rather than stranding him in it, and listing two plausible ids for the
+   * same place costs nothing. `snowroad` lists three because the road out of
+   * Aureline has no number yet -- Stage 4 stopped at route_7_north and route_8
+   * is a guess. If it is stepped over, he is simply still in Aureline until the
+   * player reaches Frostmere, which is survivable and dull rather than broken.
+   *
+   * `observatory` is the one row with no map fallback AT ALL, and that is
+   * deliberate. It must not open when the player walks into the Observatory; it
+   * must open when they have heard their father. Keying it to the room would
+   * have the town gossiping about a boy coming back down quiet before anything
+   * had happened to him. So it takes a flag or it takes nothing. Both spellings
+   * the Observatory build might use are listed; see the handover.
+   *
+   * HE HOLDS SIX FROM FROSTMERE TO THE END OF SKYREACH -- through the
+   * Observatory, which is three beats without the number moving, in the middle
+   * of the act where it is meant to be moving fastest. That is the Act 2 trick
+   * used once more and for the last time, and it is pointed at the one scene in
+   * the game where the count is beneath everybody.
+   */
+  {
+    id: 'snowroad',
+    opens: { any: [{ visited: 'route_8' }, { visited: 'route_9' }, { visited: 'route_8_pass' }] },
+    crests: 5,
+    where: 'the north road',
+    doing: 'Went up two days ahead of you in the wrong coat. Sent word back down with a coachman.',
+  },
+  {
+    id: 'frostmere',
+    opens: { any: [{ visited: 'frostmere' }, { visited: 'frostmere_hall' }] },
+    crests: 6,
+    where: 'Frostmere',
+    doing: 'Took the Frost Crest on Tuesday and then did not leave. He has been waiting for you.',
+  },
+  {
+    id: 'observatory',
+    opens: {
+      any: [
+        /*
+         * The Observatory's own flag, read out of
+         * data/events/frostmere_observatory_dome.json rather than agreed in
+         * advance: that build asked for "a ledger row keyed on that flag" and
+         * this is it. It is the RIGHT trigger, not merely a working one -- the
+         * beat has to open when the player has heard their father, not when
+         * they walked into the room.
+         */
+        { flag: 'act5_elias_message' },
+        /*
+         * LAST RESORT, and a worse trigger: the dome is the room the recording
+         * plays in, so standing in it is very nearly having heard it, but
+         * somebody who puts their head round the door and leaves opens the beat
+         * a scene early and the town starts gossiping about a boy who has not
+         * come back down yet. It is here because the failure it prevents is
+         * total -- if that flag is ever renamed, this row is stepped over
+         * entirely and Tarin is never at the Observatory at all.
+         */
+        { visited: 'frostmere_observatory_dome' },
+      ],
+    },
+    crests: 6,
+    where: 'the Observatory',
+    doing: 'Came up the hill behind you and stopped at the door. Has not said one funny thing since.',
+  },
+  {
+    id: 'skyreach',
+    opens: { any: [{ visited: 'skyreach' }, { visited: 'skyreach_hall' }] },
+    crests: 6,
+    where: 'Skyreach',
+    doing: 'Out on the dock bridges in it. Three days of that and not one hour at the Hall.',
+  },
+  {
+    id: 'windward',
+    opens: { any: [{ crest: 7 }, { flag: 'crest_7_taken' }] },
+    crests: 7,
+    where: 'Skyreach',
+    doing: 'Took the Gale Crest the morning the wind dropped, on no sleep, and went straight on.',
+  },
+  {
+    id: 'crownspire',
+    opens: { any: [{ visited: 'crownspire' }, { visited: 'crownspire_hall' }] },
+    crests: 7,
+    where: 'Crownspire',
+    doing: 'In the oldest city in Caelora, looking at the eighth Hall and saying nothing clever about it.',
+  },
+  {
+    id: 'summit_pact',
+    opens: { any: [{ crest: 8 }, { flag: 'crest_8_taken' }] },
+    crests: 8,
+    where: 'Crownspire',
+    doing: 'Eight. Both of you have eight. Neither of you has said the word Summit out loud yet.',
+  },
 ];
 
 /* ------------------------------------------------------------------ derived */

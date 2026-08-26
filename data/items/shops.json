@@ -527,5 +527,146 @@
         "requiresCrest": 6
       }
     ]
+  },
+  {
+    "id": "skyreach_provisioner",
+    "name": "Skyreach Provisioner",
+    "$comment": "The most expensive counter in Caelora to stock and the cheapest to explain: nothing on these shelves grew, was mined or was made within a day of here, so everything carries either a road or a cable. What it leans on is the two things a city on cliffs actually consumes -- healing, because people fall, and revives, because the Hall above it is the seventh one. The Warden Vessel is NOT on this list and cannot be: it has no price in data/items/items.json, and tests/state.test.js is right to fail a shop that sells one. It is a floor pickup, twice on this map and three times in the Hall, which is a better way to hand out five of them anyway.",
+    "greeting": [
+      "Everything here came up the road or across the gorge. The price is which."
+    ],
+    "stock": [
+      {
+        "item": "field_vessel"
+      },
+      {
+        "item": "fine_vessel"
+      },
+      {
+        "item": "deep_vessel"
+      },
+      {
+        "item": "net_vessel"
+      },
+      {
+        "item": "potion"
+      },
+      {
+        "item": "strong_potion"
+      },
+      {
+        "item": "great_potion",
+        "requiresCrest": 6
+      },
+      {
+        "item": "clearleaf"
+      },
+      {
+        "item": "steadyroot"
+      },
+      {
+        "item": "coolsalve"
+      },
+      {
+        "item": "thawcloth"
+      },
+      {
+        "item": "wakebell"
+      },
+      {
+        "item": "full_heal"
+      },
+      {
+        "item": "rouse",
+        "requiresCrest": 6
+      },
+      {
+        "item": "ward_incense"
+      },
+      {
+        "item": "escape_line"
+      },
+      {
+        "item": "dusk_vessel",
+        "requiresCrest": 5
+      },
+      {
+        "item": "full_restore",
+        "requiresCrest": 6
+      },
+      {
+        "item": "full_rouse",
+        "requiresCrest": 6
+      }
+    ]
+  },
+  {
+    "id": "frostmere_provisioner",
+    "name": "Frostmere Provisioner",
+    "$comment": "The equipment store canon asks for, and the only shop in Caelora where the town pays half of one line on the list. Rope is subsidised because a guide rope on every street is the reason nobody has been lost since 1849, and a public good the town buys is a cheaper policy than a search party. Everything else carries the cost of a barrel over the Wintergate, which is why the restoratives here are dear and the cold-weather goods are not. Thawcloth is the deepest stock in the game at this point on the road, for the obvious reason: this is the Frost Hall town, and the two Frost kin on the mountain both freeze what they hit.",
+    "greeting": [
+      "Rope is half price and the town pays the rest. The rest of it came over the pass on a sledge."
+    ],
+    "stock": [
+      {
+        "item": "field_vessel"
+      },
+      {
+        "item": "fine_vessel"
+      },
+      {
+        "item": "net_vessel"
+      },
+      {
+        "item": "potion"
+      },
+      {
+        "item": "strong_potion"
+      },
+      {
+        "item": "great_potion",
+        "requiresCrest": 5
+      },
+      {
+        "item": "thawcloth"
+      },
+      {
+        "item": "coolsalve"
+      },
+      {
+        "item": "clearleaf"
+      },
+      {
+        "item": "steadyroot"
+      },
+      {
+        "item": "wakebell"
+      },
+      {
+        "item": "full_heal"
+      },
+      {
+        "item": "rouse",
+        "requiresCrest": 5
+      },
+      {
+        "item": "ward_incense"
+      },
+      {
+        "item": "escape_line"
+      },
+      {
+        "item": "deep_vessel",
+        "requiresCrest": 5
+      },
+      {
+        "item": "dusk_vessel",
+        "requiresCrest": 5
+      },
+      {
+        "item": "full_restore",
+        "requiresCrest": 6
+      }
+    ]
   }
 ]

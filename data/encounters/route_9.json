@@ -1,0 +1,83 @@
+{
+  "mapId": "route_9",
+  "$comment": "The Skyreach Stair. Gale and Spark are what canon puts on these cliffs and both of them are dangerous to a starter: Gale is double on Volcatrix and Spark is double on Maelstrix, so a table that is half of each locks two of the three players out of their own road. It is capped instead. Thirty-four of every hundred Kin here are Gale-typed, twenty-four are Spark-typed, and the other forty-two are Stone and Beast, which are the two families in the chart that cannot punish anybody. Craglide carries both halves at once -- Stone/Gale, at home on a cliff, and the commonest thing on the plateau.\n\nMEASURED, not guessed at. Levels are 35-40 against a team-raising player who arrives from the Frost Hall at about 40 and a solo lead a good deal above that.",
+  "methods": {
+    "tallGrass": {
+      "rate": 160,
+      "slots": [
+        {
+          "species": "kestrelle",
+          "minLevel": 36,
+          "maxLevel": 38,
+          "weight": 12
+        },
+        {
+          "species": "craglide",
+          "minLevel": 37,
+          "maxLevel": 39,
+          "weight": 12
+        },
+        {
+          "species": "chalkid",
+          "minLevel": 35,
+          "maxLevel": 37,
+          "weight": 12
+        },
+        {
+          "species": "fizzlet",
+          "minLevel": 35,
+          "maxLevel": 37,
+          "weight": 10
+        },
+        {
+          "species": "voltwick",
+          "minLevel": 37,
+          "maxLevel": 39,
+          "weight": 8
+        },
+        {
+          "species": "chalkmar",
+          "minLevel": 38,
+          "maxLevel": 40,
+          "weight": 8
+        },
+        {
+          "species": "cairnling",
+          "minLevel": 36,
+          "maxLevel": 38,
+          "weight": 8
+        },
+        {
+          "species": "bristlebuck",
+          "minLevel": 37,
+          "maxLevel": 39,
+          "weight": 8
+        },
+        {
+          "species": "lantric",
+          "minLevel": 37,
+          "maxLevel": 39,
+          "weight": 6
+        },
+        {
+          "species": "pipwing",
+          "minLevel": 35,
+          "maxLevel": 37,
+          "weight": 6
+        },
+        {
+          "species": "burrowen",
+          "minLevel": 36,
+          "maxLevel": 38,
+          "weight": 6
+        },
+        {
+          "species": "galecrest",
+          "minLevel": 39,
+          "maxLevel": 40,
+          "weight": 4
+        }
+      ]
+    }
+  }
+}

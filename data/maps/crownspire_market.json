@@ -1,0 +1,159 @@
+{
+  "id": "crownspire_market",
+  "name": "The Market Under the Arch",
+  "displayName": "THE MARKET",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIIUUIIIIIIIIUUIIIIII",
+    "IFFFFFFFFFFFFFFFFFFFFI",
+    "IF;;;FF;;;;FF;;;;F;;FI",
+    "IFFFFFFFFFFFFFFFFFFFFI",
+    "IFKKKFFKKKKFFKKKKFKKFI",
+    "IFFFFFFFFFFFFFFFFFFFFI",
+    "IFFFFFFFFFFFFFFFFFFFFI",
+    "IF;;;;FF;;;;FF;;;;;;FI",
+    "IFFFFFFFFFFFFFFFFFFFFI",
+    "IFKKKKFFKKKKFFKKKKKKFI",
+    "IFFFFFFFFFFFFFFFFFFFFI",
+    "IPFFFFFFFFFFFFFFFFFFPI",
+    "IFFAAAFFFFFFFFFAAAFFFI",
+    "IFFEEEFFFFFFFFFEEEFFFI",
+    "IFFFFFFFFFFFFFFFFFFFFI",
+    "IIIIIIIIIIIDIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 11,
+      "y": 15,
+      "toMap": "crownspire",
+      "toX": 58,
+      "toY": 44,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "cs_mk_ropemaker",
+      "sprite": "netmender",
+      "x": 5,
+      "y": 4,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_mk_ropemaker"
+    },
+    {
+      "id": "cs_mk_baker",
+      "sprite": "villager_f",
+      "x": 11,
+      "y": 4,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_mk_baker"
+    },
+    {
+      "id": "cs_mk_smith",
+      "sprite": "porter",
+      "x": 17,
+      "y": 4,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_mk_smith"
+    },
+    {
+      "id": "cs_mk_letterer",
+      "sprite": "clerk",
+      "x": 6,
+      "y": 9,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_mk_letterer"
+    },
+    {
+      "id": "cs_mk_grocer",
+      "sprite": "villager_m",
+      "x": 12,
+      "y": 9,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_mk_grocer"
+    },
+    {
+      "id": "cs_mk_gossip",
+      "sprite": "townsfolk_f",
+      "x": 16,
+      "y": 11,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "tarin_word_shop"
+    },
+    {
+      "id": "cs_mk_kid",
+      "sprite": "kid",
+      "x": 7,
+      "y": 12,
+      "facing": "right",
+      "movement": {
+        "kind": "wander",
+        "radius": 2
+      },
+      "script": "cs_mk_kid"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 11,
+      "y": 0,
+      "text": [
+        "THE MARKET UNDER THE ARCH. Six hundred stalls under one stone vault.",
+        "It has not shut in six hundred years, for plague, for siege or for weather.",
+        "It is very full today, and almost nobody is buying anything."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 2,
+      "text": [
+        "A stall selling nothing but nails and letters cut in lead.",
+        "The letters are for people who want a name on something that is not the Roll.",
+        "A gate post. A boat. A door. A small stone in a garden."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 19,
+      "y": 7,
+      "text": [
+        "The fish stall, and there is fish on it, which there should not be.",
+        "The card says CAUGHT IN THE RAVINE. TAKE IT.",
+        "Nothing has lived in the ravine in the memory of anyone in this market."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 11,
+      "text": [
+        "A drain in the floor, running hard, with a grating over it.",
+        "Somebody has wedged a broom handle across the grating",
+        "and tied a rag to it, so people can see where it is before they find it."
+      ]
+    }
+  ]
+}

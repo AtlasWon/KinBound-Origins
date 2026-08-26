@@ -1,0 +1,51 @@
+{
+  "$comment": "The Skyreach Stair. Three voices, and all three of them are about the same thing without any of them naming it: something has changed the air. A lift hand whose cage will not sit still, a bridge keeper who has inspected a bridge three times in a week nobody asked him to, and a man standing at the gap where the third bridge was, who watched it go.\n\nThe bridge keeper is the one that matters. He is not frightened and he is not warning anybody -- he is a man who has done one job carefully for eleven years and has started doing it more often, and cannot say why. That is what the whole of Act 5 sounds like from outside.",
+  "speakers": {
+    "r9_lifthand": "LIFT HAND",
+    "r9_bridgekeeper": "BRIDGE KEEPER",
+    "r9_gapman": "SURVEYOR"
+  },
+  "entries": {
+    "r9_lifthand": [
+      {
+        "ifFlags": ["act4_theft"],
+        "lines": [
+          "The goods lift runs off the top and it has not run since the twelfth.",
+          "It is not the machinery. The cage will not hang still long enough to load.",
+          "Eleven years I have loaded that cage in weather that took the roof off the shed."
+        ]
+      },
+      {
+        "lines": [
+          "Everything that goes up to Skyreach either flies, comes up the lift, or is carried.",
+          "Two of those are shut this week. Have a guess which one you are."
+        ]
+      }
+    ],
+    "r9_bridgekeeper": [
+      {
+        "lines": [
+          "Two cables, eleven years, inspected on the sixteenth of every month.",
+          "I have been out on it three times this week and nobody asked me to.",
+          "It is sound. I would tell you if it was not. I keep going out anyway."
+        ]
+      }
+    ],
+    "r9_gapman": [
+      {
+        "ifFlags": ["act4_theft"],
+        "lines": [
+          "I was standing where you are when it went. Eleventh of the month, half past four.",
+          "It did not fray and it did not rot. The wind came up the gap and took it.",
+          "There is a way over there for somebody who can go up as well as across. Not me."
+        ]
+      },
+      {
+        "lines": [
+          "Third bridge. Was. There is something out on that pinnacle and it is not mine.",
+          "Whatever it is has been there since before the bridge went, and it can stay."
+        ]
+      }
+    ]
+  }
+}

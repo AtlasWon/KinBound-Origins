@@ -1,0 +1,162 @@
+{
+  "id": "crownspire_archive",
+  "name": "The Roll Archive",
+  "displayName": "THE ROLL ARCHIVE",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIIUUIIIIIIIIUUIIII",
+    "IkkkkkkkkkkkkkkkkkkI",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IkkkFkkkkFkkkkFkkkkI",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IkkkkFkkkkkkFkkkkkkI",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IFFAAAFFFFFFAAAFFFFI",
+    "IFFEEEFFFFFFEEEFFFFI",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IPFFFFFFFFFFFFFFFFPI",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IIIIIIIIIDIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 13,
+      "toMap": "crownspire",
+      "toX": 12,
+      "toY": 26,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "cs_archivist",
+      "sprite": "professor",
+      "x": 6,
+      "y": 6,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_archivist"
+    },
+    {
+      "id": "cs_arch_copyist",
+      "sprite": "villager_f",
+      "x": 14,
+      "y": 4,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_arch_copyist"
+    },
+    {
+      "id": "cs_arch_reader",
+      "sprite": "elder",
+      "x": 6,
+      "y": 8,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_arch_reader"
+    },
+    {
+      "id": "cs_arch_student",
+      "sprite": "kid",
+      "x": 11,
+      "y": 8,
+      "facing": "right",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "cs_arch_student"
+    },
+    {
+      "id": "cs_arch_stranger",
+      "sprite": "hiker",
+      "x": 16,
+      "y": 11,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_arch_stranger"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 1,
+      "text": [
+        "THE ROLL, WRITTEN. What the wall outside says in four thousand names,",
+        "these shelves say in four thousand paragraphs.",
+        "Who they were. What they carried. What they came back down and did afterwards."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 3,
+      "y": 3,
+      "text": [
+        "The oldest shelf. Nine hundred years, and the first two hundred are one volume.",
+        "People did not think it was worth writing down at first.",
+        "The first entry that runs to a page is a woman who went up to look for her brother."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 16,
+      "y": 3,
+      "text": [
+        "The current shelf, which is thin, because it is only eleven years old.",
+        "A gap has been left on it. The card in the gap says THIS YEAR.",
+        "Nothing has been put in it since the spring."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 5,
+      "text": [
+        "A drawer of letters from people who did NOT get up, kept in the same order.",
+        "The Archive has never separated them out.",
+        "The card on the drawer: THE ROLL IS NOT A LIST OF WINNERS. IT IS A LIST OF PEOPLE."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 10,
+      "text": [
+        "A weather ledger. Every day since the city started keeping one.",
+        "Rainfall in Crownspire, summer, nine hundred years: a column of noughts",
+        "and then, at the bottom, in fresh ink, six numbers that are not noughts."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18,
+      "y": 10,
+      "text": [
+        "A shelf of foreign records - Averra beyond Caelora. Six other leagues.",
+        "Islands with their own Kin and their own words for them.",
+        "Somebody has been reading them recently. There is a marker in three."
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 17,
+      "y": 12,
+      "item": "rouse",
+      "quantity": 1,
+      "flag": "item_cs_archive"
+    }
+  ]
+}

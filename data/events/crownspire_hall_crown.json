@@ -1,0 +1,329 @@
+[
+  {
+    "id": "cs_keeper",
+    "$comment": "THE EIGHTH CREST, AND THE ONE PLACE IN ACT 5 WHERE THE HARD ROAD IS OFFERED RATHER THAN IMPOSED. Canon asks for a Keeper with a diverse team and a challenge that tests everything the player has learned. Everything the player has learned is not a harder team -- it is the thing seven Halls never asked for, which is holding four different answers together across four fights with nothing put back in between. So the floor offers a CHOICE. THE CREST is one battle with Ord and it is the required path; it is measured at 97/90/87 for a novice at the level the road delivers and it is not a wall. THE LONG FLOOR is her three Stewards and then her, back to back, no clinic, and it grants no progress at all -- it puts the player's name on the Roll outside, which is the only thing this city has ever cared about, and it changes the monument, the mason, the reader, the registrar and Tarin. A player who has asked four times for an easier game can walk past it and lose nothing but a line of stone. A loss anywhere in the chain is onLoss continue and ends the walk politely rather than whiting out, because the chain exists to be attempted. The award block is one script called from both branches so the two paths cannot drift apart.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "hasCrest", "crest": 8 },
+        "then": [
+          {
+            "kind": "if",
+            "cond": { "kind": "flag", "flag": "cs_roll_name" },
+            "then": [
+              {
+                "kind": "say",
+                "who": "MERRIN ORD",
+                "lines": [
+                  "Eleven people have taken this floor in one walk since I have had it. You are the eleventh.",
+                  "I have written all eleven of them down and I am not going to tell you what I wrote."
+                ]
+              }
+            ],
+            "else": [
+              {
+                "kind": "say",
+                "who": "MERRIN ORD",
+                "lines": [
+                  "You have it. Go and be somewhere else - the gate is shut and there is nothing up here.",
+                  "The offer of the floor keeps, if you ever want it. It is not going anywhere and neither am I."
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "MERRIN ORD",
+            "lines": [
+              "There is a thing happening to the weather and it is not weather.",
+              "Whatever it is you are actually doing, {name} - and you are doing something - go and do it."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "if",
+            "cond": { "kind": "not", "of": { "kind": "hasCrest", "crest": 7 } },
+            "then": [
+              {
+                "kind": "say",
+                "who": "MERRIN ORD",
+                "lines": [
+                  "Seven first. I know how that sounds from up here and I am saying it anyway.",
+                  "I do not fight anybody twice. It would be unkind to let you spend your one go early."
+                ]
+              }
+            ],
+            "else": [
+              {
+                "kind": "say",
+                "who": "MERRIN ORD",
+                "lines": [
+                  "Merrin Ord. Forty years on this floor, and before that a very long time on the other side of it.",
+                  "Sit down if you want. Nobody ever does."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "MERRIN ORD",
+                "lines": [
+                  "There is no type over my door. Seven Halls tell you what they are before you go in;",
+                  "that is a kindness, and it is also a warning, and up here you get neither."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "MERRIN ORD",
+                "lines": [
+                  "You walked eight bays to get to me. Every one of them asked you one thing very well.",
+                  "I am not going to ask you anything you have not been asked. I am going to ask all of it at once."
+                ]
+              },
+              {
+                "kind": "choice",
+                "lines": ["So. How do you want it?"],
+                "options": [
+                  {
+                    "label": "The Crest",
+                    "then": [
+                      {
+                        "kind": "say",
+                        "who": "MERRIN ORD",
+                        "lines": ["Sensibly. Good. Stand there."]
+                      },
+                      { "kind": "battleTrainer", "trainer": "cs_keeper_ord", "onLoss": "continue" },
+                      {
+                        "kind": "if",
+                        "cond": { "kind": "var", "var": "last_battle_won", "op": "==", "value": 1 },
+                        "then": [{ "kind": "call", "script": "cs_crest_award" }]
+                      }
+                    ]
+                  },
+                  {
+                    "label": "The Long Floor",
+                    "then": [
+                      {
+                        "kind": "say",
+                        "who": "MERRIN ORD",
+                        "lines": [
+                          "Hollis, Derrin and Mabe, and then me, and nothing put back in between.",
+                          "It gets you nothing. The Crest is the Crest either way. It gets you cut into the wall outside."
+                        ]
+                      },
+                      {
+                        "kind": "ask",
+                        "lines": [
+                          "Four in a row, no clinic, whatever is in your bag is all there is.",
+                          "Take the Long Floor?"
+                        ],
+                        "yes": [
+                          {
+                            "kind": "say",
+                            "who": "MERRIN ORD",
+                            "lines": ["Right. I will send down for them. Do not sit down now."]
+                          },
+                          { "kind": "wait", "frames": 40 },
+                          {
+                            "kind": "say",
+                            "lines": [
+                              "Three sets of boots on the stair, unhurried, the way people come up something they know.",
+                              "Hollis first, because Hollis is always first."
+                            ]
+                          },
+                          { "kind": "battleTrainer", "trainer": "cs_steward_hollis", "onLoss": "continue" },
+                          {
+                            "kind": "if",
+                            "cond": { "kind": "var", "var": "last_battle_won", "op": "==", "value": 1 },
+                            "then": [
+                              { "kind": "battleTrainer", "trainer": "cs_steward_derrin", "onLoss": "continue" },
+                              {
+                                "kind": "if",
+                                "cond": { "kind": "var", "var": "last_battle_won", "op": "==", "value": 1 },
+                                "then": [
+                                  { "kind": "battleTrainer", "trainer": "cs_steward_mabe", "onLoss": "continue" },
+                                  {
+                                    "kind": "if",
+                                    "cond": { "kind": "var", "var": "last_battle_won", "op": "==", "value": 1 },
+                                    "then": [
+                                      {
+                                        "kind": "say",
+                                        "lines": [
+                                          "The three of them stand back against the north lights and do not say anything at all.",
+                                          "Ord puts her tea down, which in forty years she has done for eleven people."
+                                        ]
+                                      },
+                                      { "kind": "battleTrainer", "trainer": "cs_keeper_ord", "onLoss": "continue" },
+                                      {
+                                        "kind": "if",
+                                        "cond": { "kind": "var", "var": "last_battle_won", "op": "==", "value": 1 },
+                                        "then": [
+                                          { "kind": "setFlag", "flag": "cs_roll_name" },
+                                          { "kind": "call", "script": "cs_crest_award" },
+                                          { "kind": "call", "script": "cs_long_floor_after" }
+                                        ],
+                                        "else": [{ "kind": "call", "script": "cs_long_floor_stop" }]
+                                      }
+                                    ],
+                                    "else": [{ "kind": "call", "script": "cs_long_floor_stop" }]
+                                  }
+                                ],
+                                "else": [{ "kind": "call", "script": "cs_long_floor_stop" }]
+                              }
+                            ],
+                            "else": [{ "kind": "call", "script": "cs_long_floor_stop" }]
+                          }
+                        ],
+                        "no": [
+                          {
+                            "kind": "say",
+                            "who": "MERRIN ORD",
+                            "lines": ["Then we will do it the ordinary way, and the ordinary way is plenty."]
+                          },
+                          { "kind": "battleTrainer", "trainer": "cs_keeper_ord", "onLoss": "continue" },
+                          {
+                            "kind": "if",
+                            "cond": { "kind": "var", "var": "last_battle_won", "op": "==", "value": 1 },
+                            "then": [{ "kind": "call", "script": "cs_crest_award" }]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Not yet",
+                    "then": [
+                      {
+                        "kind": "say",
+                        "who": "MERRIN ORD",
+                        "lines": [
+                          "Good. That is a real answer and almost nobody gives it.",
+                          "The gallery is open. Go and lose to Mabe a few times - she is the one you are missing."
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cs_crest_award",
+    "$comment": "The award, called from both branches so the short road and the Long Floor cannot drift apart. The Crest is the CROWN CREST, the eighth and last, and the object is deliberately not metal: it is a chip of the terrace wall, which makes the whole city's argument in one line without anybody making a speech about it.",
+    "trigger": "call",
+    "actions": [
+      { "kind": "face", "who": "cs_keeper_ord", "dir": "left" },
+      { "kind": "wait", "frames": 45 },
+      {
+        "kind": "say",
+        "lines": [
+          "She goes to the north lights and stands at them a while, with her back to the room.",
+          "Six days of water on the glass, and behind the water a mountain that is not visible at all."
+        ]
+      },
+      { "kind": "face", "who": "cs_keeper_ord", "dir": "down" },
+      {
+        "kind": "say",
+        "who": "MERRIN ORD",
+        "lines": ["Hold your hand out. It is not going to be what you are expecting."]
+      },
+      { "kind": "giveCrest", "crest": 8, "name": "Crown Crest" },
+      { "kind": "sfx", "sound": "badge" },
+      { "kind": "say", "lines": ["You received the CROWN CREST.", "Eight of eight."] },
+      {
+        "kind": "say",
+        "who": "MERRIN ORD",
+        "lines": [
+          "It is a chip of the wall outside. Off the west leaf, where they dress the new stone.",
+          "Not a badge. A piece of the thing your name goes into."
+        ]
+      },
+      { "kind": "giveItem", "item": "full_restore", "count": 2 },
+      { "kind": "say", "lines": ["Merrin Ord handed over 2 Full Restores."] },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "who": "MERRIN ORD",
+        "lines": [
+          "Eight Halls, and every one of them was a person deciding you were worth an afternoon.",
+          "That is all a Crest has ever been. You are allowed to be pleased about it."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "MERRIN ORD",
+        "lines": [
+          "Now. The gate is shut, and I have been shut out of my own mountain for six days,",
+          "and in nine hundred and six years this city has never once had to write that down."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "MERRIN ORD",
+        "lines": [
+          "The Archive keeps rainfall. Summer, Crownspire, nine hundred years: a column of noughts.",
+          "Go and look at it. And then go and do whatever it is you have been carrying about with you."
+        ]
+      },
+      { "kind": "setFlag", "flag": "crest_8_taken" }
+    ]
+  },
+  {
+    "id": "cs_long_floor_after",
+    "$comment": "Only ever reached by finishing the chain. Nothing here is mechanical: the reward for the hard road is a mason in a yard and four thousand one hundred and ten names.",
+    "trigger": "call",
+    "actions": [
+      { "kind": "wait", "frames": 30 },
+      {
+        "kind": "say",
+        "lines": [
+          "Hollis, Derrin and Mabe are still standing against the lights and none of them has moved.",
+          "Derrin, who has no Crests at all, is the one who has to look at the floor."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "MERRIN ORD",
+        "lines": [
+          "Send down to the masons' yard. Tell Corrow to start the new leaf.",
+          "Yes, in this weather. He can cut it twice."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "MERRIN ORD",
+        "lines": [
+          "Four thousand one hundred and ten. You will not see it for a day or so.",
+          "It will be there for about nine hundred years, so I would not rush down."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cs_long_floor_stop",
+    "$comment": "A loss anywhere in the chain. It has to be gentle, and it has to be repeatable: the Crest is still available by the ordinary road, on the same visit, from the same conversation.",
+    "trigger": "call",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "MERRIN ORD",
+        "lines": [
+          "Stop there. That is not a failure, it is a reading, and I have taken it.",
+          "Go down, put them right, and come back up. The Crest is still on this floor."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "MERRIN ORD",
+        "lines": [
+          "And you may have it the ordinary way whenever you like. Nobody has ever thought less of that.",
+          "Eleven people in forty years, {name}. Eleven."
+        ]
+      }
+    ]
+  }
+]

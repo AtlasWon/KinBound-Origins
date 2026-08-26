@@ -1,0 +1,122 @@
+{
+  "id": "frostmere_inn",
+  "name": "Interior",
+  "displayName": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "_design": "Not a coaching inn. It is the winter hall: two long tables, sixteen bunks and a fire that has not been out since the building went up. A household whose fuel runs out comes here and nothing is said about it, which is the single most Frostmere fact in the game.",
+  "rows": [
+    "IIIUIIIIIIIUIIIII",
+    "IQNfKKKKKfffkkffI",
+    "IfffffffffffffffI",
+    "IfAAAffffffAAAffI",
+    "IEEEEfffĘfffEEEEI",
+    "IfffffffffffffffI",
+    "IbefffbefffbefffI",
+    "IffffffffffffffPI",
+    "IbefffbefffbefffI",
+    "IfffffffffffffffI",
+    "IPffffrrfffffffPI",
+    "IfffffrrffffffffI",
+    "IIIIIIIIDIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 8,
+      "y": 12,
+      "toMap": "frostmere",
+      "toX": 11,
+      "toY": 23,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "fmi_host",
+      "sprite": "villager_f",
+      "x": 5,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "fmi_host"
+    },
+    {
+      "id": "fmi_cutter",
+      "sprite": "dockhand",
+      "x": 4,
+      "y": 5,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "fmi_cutter"
+    },
+    {
+      "id": "fmi_metlead",
+      "sprite": "meridian_sci_f",
+      "x": 12,
+      "y": 5,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "fmi_metlead"
+    },
+    {
+      "id": "fmi_traveller",
+      "sprite": "merchant",
+      "x": 9,
+      "y": 9,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "fmi_traveller"
+    },
+    {
+      "id": "fmi_gossip",
+      "sprite": "townsfolk_m",
+      "x": 3,
+      "y": 10,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tarin_word_street"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 1,
+      "text": [
+        "The house board, and there is nothing on it about beds or money.",
+        "FUEL IN HAND. Sixteen household names, and a figure in days beside each.",
+        "Four of them read 0, and the four have been moved to the top of the list."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 4,
+      "text": [
+        "The lintel over the fire, worn smooth by two hundred years of hands going past:",
+        "THIS FIRE HAS NOT BEEN OUT. Under it, smaller, in a different century:",
+        "IT WENT OUT IN 1849. WE DO NOT COUNT THAT YEAR AND WE DO NOT TALK ABOUT IT."
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 15,
+      "y": 11,
+      "item": "strong_potion",
+      "quantity": 3,
+      "flag": "item_fmi_hidden"
+    }
+  ]
+}

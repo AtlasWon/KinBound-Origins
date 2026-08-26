@@ -1,0 +1,119 @@
+{
+  "id": "frostmere_observatory_dome",
+  "name": "The Frostmere Observatory",
+  "displayName": "THE DOME",
+  "music": "station",
+  "battleBackdrop": "cave",
+  "indoor": true,
+  "fog": 0.14,
+  "_plan": "THE EMOTIONAL PEAK OF THE GAME, and the room is built to get out of the way. Canon: do not fill this scene with dialogue -- let music, environment and the player carry it. So the dome is one round room with nothing standing in it, three signs, no puzzle, no battle, no branch and no exit but the one you came in by, and every decision in it is about making the middle of the floor the only place left to go.\n\nIT IS THE TEMPLE HEART TURNED INSIDE OUT, on purpose, tile for tile. At Embercoil eight seats faced in and every groove in the floor ran to a mark in the centre. Here the seats all face OUT, the four arms of current run from the middle to the wall, and the centre tile is bare floor with nothing cut in it at all. A player who sat in the listening room in Act 3 reads the difference off the picture; the signs only confirm what they have already noticed.\n\nTHE ROOM IS ON. Everything below this floor is dead stone with one lit groove threaded through it; this room has four, and they have been running for three thousand years, because these people left it running deliberately for whoever came next. That is also the answer to the mechanical question the act asks -- the player has NO TIDEHEART, and this is the one Aurelian room in the game that never needed one, because the people who built it had just finished learning what a lock is for.\n\nTHE HOLE IN THE ROOF is said in the sign by the stair, in two of the arrival boxes and in the fog, and it is deliberately NOT drawn on the floor. A pool of standing water was tried here and taken out again: shallow water is a saturated cyan and so is the Aurelian current, so a block of it stood in the same room as the four arms of light and beat them at 1x. The one picture this room exists to make is four lines of light running out of a bare middle, and nothing else on this floor may compete with it. Fog at 0.14 does the weather instead: cold air rather than an object, it moves, and it takes no attention. It earns its place for a second reason as well -- the message plays with the map music stopped, and a room open to a mountain has something to fill that silence with.\n\nTARIN at 12,14, behind requiresFlag fo_message_played, so he is standing in the doorway the moment the recording ends and not one second before. He is also spawned live by the scene itself -- see fo_message in data/events/frostmere_observatory_dome.json -- because the flag list is only consulted at map load, and the whole point of him is that he was already there. hiddenIfFlag fo_tarin_gone is set by nothing yet and is the hook for Stage 6: when he goes to the Temple of the Deep, a copy of him should not still be standing up a mountain.",
+  "rows": [
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΘΘΘΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΘΘΘ≈ΘΘΘΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΘΞΘΘΘ≈ΘΘΘΞΘΩΩΩΩΩ",
+    "ΩΩΩΩΩΘΘΘθΘ≈ΘθΘΘΘΩΩΩΩΩ",
+    "ΩΩΩΩΘΘΘΘΘΘ≈ΘΘΘΘΘΘΩΩΩΩ",
+    "ΩΩΩΩΞΘθΘΘΘ≈ΘΘΘθΘΞΩΩΩΩ",
+    "ΩΩΩΘΘΘΘΘΘΘ≈ΘΘΘΘΘΘΘΩΩΩ",
+    "ΩΩΩΘ≈≈≈≈≈≈Θ≈≈≈≈≈≈ΘΩΩΩ",
+    "ΩΩΩΘΘΘΘΘΘΘ≈ΘΘΘΘΘΘΘΩΩΩ",
+    "ΩΩΩΩΞΘθΘΘΘ≈ΘΘΘθΘΞΩΩΩΩ",
+    "ΩΩΩΩΘΘΘΘΘΘ≈ΘΘΘΘΘΘΩΩΩΩ",
+    "ΩΩΩΩΩΘΘΘθΘ≈ΘθΘΘΘΩΩΩΩΩ",
+    "ΩΩΩΩΩΘΞΘΘΘ≈ΘΘΘΞΘΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΘΘΘ≈ΘΘΘΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΘΘΘΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩSSSΩΩΩΩΩΩΩΩΩ"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 16,
+      "toMap": "frostmere_observatory_gallery",
+      "toX": 25,
+      "toY": 2,
+      "facing": "down",
+      "style": "stairs"
+    },
+    {
+      "x": 10,
+      "y": 16,
+      "toMap": "frostmere_observatory_gallery",
+      "toX": 25,
+      "toY": 2,
+      "facing": "down",
+      "style": "stairs"
+    },
+    {
+      "x": 11,
+      "y": 16,
+      "toMap": "frostmere_observatory_gallery",
+      "toX": 26,
+      "toY": 2,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "fo_tarin",
+      "x": 12,
+      "y": 14,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "fo_tarin",
+      "requiresFlag": "fo_message_played",
+      "hiddenIfFlag": "fo_tarin_gone"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 15,
+      "text": [
+        "The room is round and its roof",
+        "is a hole, and always was.",
+        "The cold comes straight down.",
+        "They finished this building and",
+        "left the sky in it on purpose."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 4,
+      "y": 8,
+      "text": [
+        "Seats all round the wall.",
+        "Every one of them faces out.",
+        "There is nothing in the middle.",
+        "That is not neglect.",
+        "That is the design."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 16,
+      "y": 8,
+      "text": [
+        "Eight sockets in a circle, cut to",
+        "hold something round.",
+        "All eight are empty.",
+        "The stone round them is smooth.",
+        "Downstairs they tore theirs out.",
+        "Up here they never put any in."
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 8,
+      "y": 12,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_fo_dome_seat"
+    }
+  ]
+}

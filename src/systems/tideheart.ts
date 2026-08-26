@@ -178,8 +178,25 @@ export interface AurelianSite {
  * get taken off the player. Stage 4 is listed here so that the number means
  * "the game is built this far" rather than "the last stage that happened to
  * add a ruin".
+ *
+ * STAGE 5 CLOSES THE SET OF THREE, and it does it for a player who is not
+ * carrying the object -- which is a state no row above it was written for, so
+ * it is worth saying here what a site row means when the bag is empty.
+ *
+ * Almost nothing, and that is correct. `readTideheart` and
+ * `tideheartEnteredMap` are both guarded on possession, so with the object in a
+ * case under the Meridian building the Observatory row does not stir, does not
+ * point, does not change a bag row that is not there, and does not play the
+ * arrival cue. Act 5 walks the player into the largest Aurelian building in the
+ * game and the instrument says nothing, automatically, because Act 4 took it --
+ * and the silence is the beat rather than a gap where a beat should be. The row
+ * still earns its place three ways: it names the maps, so `tideheartAudit`
+ * reports the site if the Observatory is ever renamed out from under it; it
+ * carries the echo, which is what the object comes back holding in Act 6; and
+ * it is live and correct the moment the object is in the player's hands again.
+ * See the row itself for what the echo is doing there at all.
  */
-export const BUILT_STAGE = 4;
+export const BUILT_STAGE = 5;
 
 export const SITES: AurelianSite[] = [
   {
@@ -324,6 +341,66 @@ export const SITES: AurelianSite[] = [
         'Something enormous inside the circle. It is not moving. It has been made not to move.',
         'The lights on the rings go from blue to white. The sea stands up. Then there is only water.',
         'Last of all, nine people on a hill, cutting a room out of rock so that somebody would know.',
+      ],
+    },
+  },
+  {
+    id: 'frostmere_observatory',
+    stage: 5,
+    name: 'The Frostmere Observatory',
+    /*
+     * ACT 5, the third and last of the sites Sorrell found in Elias' notes, and
+     * the only one the player reaches with an empty pocket. Meridian took the
+     * object in Aureline, and this row is written on the assumption that they
+     * still have it -- see the note on BUILT_STAGE above for what that means.
+     *
+     * NO `at` TILE, AND NOT FOR THE GLASS QUAY'S REASON. There the mechanism was
+     * the ground, so pointing at it was meaningless. Here there is no mechanism.
+     * The middle of the dome is a bare flag with nothing cut in it, ringed by
+     * eight empty sockets and a wall of seats that all face away from it,
+     * because the people who built this one had just finished watching what
+     * their machines did and put up one last building with no machine in it. An
+     * object that arrived in that room and produced a needle would be answering
+     * a question the room is the refusal of. So it pulls at a steady half and
+     * points at nothing, which is the only place in the game where a missing
+     * needle is the *content* rather than a shortcut.
+     *
+     * THREE MAPS AND NOT FROSTMERE. The town is somebody else's build and the
+     * Sanctum's rule holds: a row that names a map nobody has built is silent,
+     * but a row that names a map somebody else builds differently is worse than
+     * silent. If Frostmere wants the object stirring on the path up to the
+     * Observatory, add 'frostmere' to this list and nothing else moves.
+     *
+     * WHY IT HAS AN ECHO WHEN THE PLAYER HAS NOTHING TO TAKE ONE WITH. The flag
+     * is set by the scene either way -- see fo_message in
+     * data/events/frostmere_observatory_dome.json -- and that is a decision
+     * rather than an oversight. `echoes` is what the player has heard, and the
+     * whole weight of Act 6 is that the object comes back out of Cassian's case
+     * with the last thing their father said in it, next to the temple and the
+     * Sanctum. Filing this one only for a player who happened to be robbed
+     * differently would leave the set of three permanently two.
+     *
+     * The echo is also the only one of the four that is a VOICE. The other
+     * three are pictures with no commentary because the pictures are the point;
+     * this one is a man, close and tired, in a room, and the lines below are
+     * what the player remembers of it rather than a transcript of it. Nothing
+     * here repeats a sentence he actually says. It should not: the scene is
+     * played once and the memory of a thing is not the thing.
+     */
+    maps: [
+      'frostmere_observatory',
+      'frostmere_observatory_gallery',
+      'frostmere_observatory_dome',
+    ],
+    near: 'Steady, and warm, and pointing at nothing. There is nothing in here to point at.',
+    after: 'Quiet. It is carrying a voice now, and it is not a stranger\'s.',
+    echo: {
+      title: 'The Frostmere Observatory',
+      lines: [
+        'A round room with a hole in the roof, and no picture in it anywhere.',
+        'The other three were things seen. This one is a man talking, close, and tired.',
+        'He gets the work out of the way first, fast, so that he can say the rest of it.',
+        'The last of it is him deciding to tell her himself, because he will be home by winter.',
       ],
     },
   },

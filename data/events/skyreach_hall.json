@@ -1,0 +1,73 @@
+[
+  {
+    "id": "sh_hall_clerk",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "hasCrest", "crest": 7 },
+        "then": [
+          {
+            "kind": "say",
+            "who": "HALL CLERK",
+            "lines": [
+              "Signed out, timed, and written into the book like every rigger since 1791.",
+              "You are the four hundred and something. Nobody has ever counted properly."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "if",
+            "cond": { "kind": "not", "of": { "kind": "hasCrest", "crest": 6 } },
+            "then": [
+              {
+                "kind": "say",
+                "who": "HALL CLERK",
+                "lines": [
+                  "Six Crests before we open the back door. Frostmere's is the sixth.",
+                  "That is not us being grand. It is three gantries a tile wide in a crosswind."
+                ]
+              }
+            ],
+            "else": [
+              {
+                "kind": "say",
+                "who": "HALL CLERK",
+                "lines": [
+                  "Gale and Spark Hall. Everyone in Skyreach calls it the Masthouse and always has.",
+                  "We catch the wind for the whole city. The Hall is how we find out who else can."
+                ]
+              },
+              {
+                "kind": "if",
+                "cond": { "kind": "not", "of": { "kind": "flag", "flag": "sh_hall_signed" } },
+                "then": [
+                  { "kind": "setFlag", "flag": "sh_hall_signed" },
+                  {
+                    "kind": "say",
+                    "who": "HALL CLERK",
+                    "lines": [
+                      "Name in the book, and take these. Nobody goes out on the spurs without them.",
+                      "Not because anything out there will hurt you. Because we are not fools."
+                    ]
+                  },
+                  { "kind": "giveItem", "item": "steadyroot", "count": 3 },
+                  { "kind": "say", "lines": ["You received 3 Steadyroots."] }
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "HALL CLERK",
+                "lines": [
+                  "Keeper Fenn is at the foot of the great mast and she will not come in for you.",
+                  "Back door, three gantries, and read the board on the sill before you cross the first one."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

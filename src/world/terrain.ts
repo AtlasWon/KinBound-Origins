@@ -560,6 +560,173 @@ export const TERRAIN: Record<string, TerrainDef> = {
   // one nearest the track, and the halt is laid out with the line to the south.
   '▤': { ground: T.HALT_DECK, collision: 0, tag: 'floor', step: 'stone' },
   '▥': { ground: T.HALT_EDGE, collision: 0, tag: 'floor', step: 'stone' },
+
+  // --- The mountain roads: Route 8 to Frostmere, Route 9 to Skyreach. ---
+  //
+  // A seventh block, in a seventh script, for the reason every note above
+  // gives: printable ASCII ran out five settlements ago and two families that
+  // both grow have to be unable to collide. MATHEMATICAL OPERATORS is the
+  // mountain set. Nothing else in the game uses it, and no glyph here is
+  // confusable at a glance with one already spoken for -- which matters more
+  // on these two maps than on any before them, because Route 8 is ninety per
+  // cent five characters and a source you cannot read as a picture is a map
+  // nobody can edit.
+  //
+  // Mnemonic wherever it could be. '∴' is three flecks lying on the ground and
+  // '≋' the same snow banked into ridges; '∫' is the long line the road traces
+  // up the map; '∀' is a tuft of twigs; '∩' is a treetop and '∪' the same tree
+  // bowed under a load; '∆' is a lump of rock and '∇' the same rock shattered;
+  // '≅' is a flat sheet with water moving under it and '≠' the same sheet
+  // struck through, which is the only thing the map needs to say about rotten
+  // ice; '√' is a stacked mark, so it is the cairn; '∈' is a rung between two
+  // rails and '∋' the post it is made off on; '⊗' is a hole; '∧' is a blade
+  // combed over by the wind; '⇓' is a great deal of water going down.
+  //
+  // THE ONE RULE THIS FAMILY IS BUILT ON: on every other map in Caelora the
+  // road is the pale line and the country round it is dark. Up here it is the
+  // other way about. The ground is the brightest thing on the screen and
+  // everything the player has to read -- the road, the pines, the crags, the
+  // scrub they get jumped in, the ice they must not stand on -- is darker than
+  // it. That inversion is what a snow route feels like to walk across, and it
+  // is why the trodden road below is grey rather than gold.
+
+  // Open snow. The floor of Route 8, and the tile there is most of.
+  '∴': { ground: T.SNOW, collision: 0, tag: 'snow', step: 'grass' },
+  // Drift. Walkable, and it looks slower than it is on purpose: a player who
+  // reads a bank of sastrugi as "the long way round" and takes the road is
+  // reading the map exactly as intended.
+  '≋': { ground: T.SNOW_DEEP, collision: 0, tag: 'snow', step: 'grass' },
+  // Dwarf birch under the snow: this route's tall grass, and its encounters.
+  '∀': { ground: T.SNOW_SCRUB, collision: 6, tag: 'tallGrass', encounter: true, step: 'grass' },
+  // The trodden road. The one line a player can follow when the squall closes
+  // in, which is the whole reason the visibility is allowed to close at all.
+  '∫': { ground: T.SNOW_ROAD, collision: 0, tag: 'sand', step: 'dirt' },
+  // A cornice: a step down you can take and cannot take back.
+  '⌐': { ground: T.SNOW_LEDGE, collision: 3, tag: 'snow', ledge: 'down' },
+  // Conifer, bare and laden. Overlays standing on their own snow, so a player
+  // walking behind a stand is correctly drawn behind it, and so the ground
+  // under a wood is the ground the map put there.
+  // The same conifer standing on turf rather than on snow, which is what the
+  // pine BAND on the climb is made of: the wood is halfway up the mountain and
+  // the snow does not start until above it. No new art -- it is the identical
+  // overlay -- and it is the tile that lets the treeline arrive twenty columns
+  // before the snowline does.
+  '∏': { ground: T.GRASS, over: T.PINE, collision: 1, tag: 'grass' },
+  '∩': { ground: T.SNOW, over: T.PINE, collision: 1, tag: 'snow' },
+  '∪': { ground: T.SNOW, over: T.PINE_SNOW, collision: 1, tag: 'snow' },
+  // A boulder in the snow. Floorless, so one tile is a rock in a field, a rock
+  // in the road and a rock out on the scree without carrying a square of the
+  // wrong ground with it.
+  '∆': { over: T.SNOW_ROCK, collision: 1, tag: 'snow' },
+  // Scree: the rocky-hills band of the climb and the floor of every ledge on
+  // Skyreach. Tagged 'cave' so a battle out here backs onto rock rather than
+  // onto a lawn.
+  '∇': { ground: T.SCREE, collision: 0, tag: 'cave', step: 'stone' },
+  // Lake ice. Walkable, and the only walkable tile in the family that is
+  // darker than the ground around it -- which is what makes a frozen tarn read
+  // as a hole in the white from the far side of the screen.
+  '≅': { ground: T.LAKE_ICE, collision: 0, tag: 'snow', step: 'stone' },
+  // Rotten ice. Solid, and it has to be: it is the only way a map can say "not
+  // here" about a surface the player has already walked on twenty tiles back.
+  '≠': { ground: T.ICE_CRACK, collision: 1, tag: 'snow' },
+  // A cairn. Navigation equipment, not decoration -- both roads are laid out
+  // so that from any one of these you can see the next. Floorless, so it
+  // stands on snow, road and scree alike.
+  '√': { over: T.CAIRN, collision: 1, tag: 'snow' },
+  // The rope bridge, and the bollard the cables are made off on. The deck
+  // carries its OWN dark underneath, because the cell beside it is a chasm and
+  // there is no floor to borrow.
+  '∈': { ground: T.ROPE_DECK, collision: 0, tag: 'floor', step: 'wood' },
+  '∋': { over: T.ROPE_POST, collision: 1, tag: 'cave' },
+  // The drop. Solid, and the only solid tile in the game a player is meant to
+  // walk up to the edge of and look into.
+  '⊗': { ground: T.GORGE, collision: 1, tag: 'cave' },
+  // Plateau tussock: Skyreach's tall grass, and its only green.
+  '∧': { ground: T.WIND_TUSSOCK, collision: 6, tag: 'tallGrass', encounter: true, step: 'grass' },
+  // A fall. Solid, and it is what gives a cliff its height: a grey wall is a
+  // wall, and the same wall with a white thread down it is a mountain.
+  '⇓': { ground: T.WATERFALL, collision: 1, tag: 'water' },
+
+  // --- Frostmere, and the Frost Hall under it. -------------------------
+  //
+  // An eighth block, in an eighth script, for the reason every note above
+  // gives -- and this one had a second reason. The mountain roads next door
+  // took MATHEMATICAL OPERATORS for the *ground*, and Frostmere stands on that
+  // ground and adds nothing to it: the snow in this town is '∴', the road out
+  // of it is '∫', the pines round it are '∩'. What the town adds is the other
+  // half of the picture, the fourteen characters a settlement is BUILT from,
+  // and those had to be unmistakable from the ground they stand on at a
+  // glance. So: LATIN EXTENDED-A. Every glyph here is a letter wearing
+  // something, which is exactly how a Frostmere source file should read -- a
+  // recognisable building alphabet with the weather on it.
+  //
+  // Mnemonic throughout, and the letter is the thing. 'Ħ' is a wall with a
+  // course struck through it and 'Ĥ' the same wall with a light in it; 'Ď' is
+  // a door with the porch hood over it; 'Ř Ŗ Ŕ' is the roof read as '[ ^ ]',
+  // three accents leaning three ways; 'Ĵ' is a stack with smoke coming off it;
+  // 'Ł' is a post with a bracket on it; 'Ŵ' is wood; 'Ų' is a stack of cut
+  // blocks; 'Ę' is a pot standing on legs. The last three are the Hall: 'Ī' is
+  // ice with the chalk mark on it, 'Į' is the same ice with the crack going
+  // down through it, and 'ĩ' is what is underneath both of them.
+  //
+  // WHY THE TOWN IS THIS DARK. Every other settlement in Caelora is built out
+  // of something lighter than the country round it. Frostmere is the only one
+  // where the ground is the bright thing, so the buildings had to come from
+  // the bottom of the value range or the town dissolves into the field. A
+  // street of these characters on a page of '∴' is the silhouette of the
+  // place: black blocks in white, warm roofs, and one blue light per door.
+
+  // The wall, in three cuts. Mountain granite laid a metre thick, because
+  // stone is the only insulation there is up here and there is a mountain of
+  // it next door. The door is WALKABLE and is a doorway rather than a floor --
+  // see DOORWAY below -- because a Frostmere door is recessed into the
+  // thickness of its own wall, so the player really does step into the stone.
+  'Ħ': { ground: T.FROST_WALL, collision: 1, tag: 'floor' },
+  'Ĥ': { ground: T.FROST_WINDOW, collision: 1, tag: 'floor' },
+  'Ď': { ground: T.FROST_DOOR, collision: 0, tag: 'floor', step: 'stone' },
+  // Split cedar shingle with the winter still sitting on it, drawn like
+  // '[ ^ ]'. Timber and not slate, and the reason is in the tileset: slate
+  // sheds its load in one slab onto whoever is under it, shingle holds, and a
+  // foot of snow on a roof is a foot of insulation nobody paid for.
+  'Ř': { ground: T.ROOF_SHINGLE_L, collision: 1, tag: 'floor' },
+  'Ŗ': { ground: T.ROOF_SHINGLE, collision: 1, tag: 'floor' },
+  'Ŕ': { ground: T.ROOF_SHINGLE_R, collision: 1, tag: 'floor' },
+  // The chimney. It drops into a run of 'Ŗ' and it is the most important
+  // character on the map: a Frostmere roof with smoke over it is a house with
+  // somebody in it, and the player is about to walk somewhere there are none.
+  'Ĵ': { ground: T.ROOF_STACK, collision: 1, tag: 'floor' },
+  // The blue lantern on its rope post. Floorless, so one post stands in snow,
+  // on the swept road and on stone alike. The rope runs out of both sides of
+  // the cell at hand height, so a RUN of these reads as one line rather than
+  // as nine lamps -- which is the whole point of them, and the reason they are
+  // always laid in unbroken runs from door to door on the map.
+  'Ł': { over: T.LAMP_FROST, collision: 1, tag: 'snow' },
+  // Cordwood, and sawn lake ice packed in straw. Both floorless. The ice is
+  // the town's entire economy sitting in the street, and it is also the thing
+  // the storm ruins, so a player who has read one of these understands what
+  // has gone wrong here before anybody says it.
+  'Ŵ': { over: T.WOODPILE, collision: 1, tag: 'snow' },
+  'Ų': { over: T.ICE_STACK, collision: 1, tag: 'snow' },
+  // A pot of fire. The only hot thing in the set, floorless, and it does the
+  // same job in the street and out on the Hall's ice: it holds a piece of the
+  // world open. Solid -- you warm your hands at one, you do not stand in it.
+  'Ę': { over: T.FIREPOT, collision: 1, tag: 'floor' },
+
+  // The Frost Hall's floor: one substance in three states, and the whole
+  // argument of the sixth Hall is that the player needs two of them and cannot
+  // choose which. These are NOT the lake tiles above. Lake ice is weather;
+  // this is ice somebody measured and chalked at six o'clock this morning.
+  //
+  // Sound ice: passed, walkable, and the brightest floor in the game.
+  'Ī': { ground: T.ICE_SOUND, collision: 0, tag: 'snow', step: 'stone' },
+  // Failed ice: solid. The cracks are white, the lake is black through them,
+  // and the chalk is a cross -- so a player can read it from four tiles away
+  // and never has to learn it by falling through.
+  'Į': { ground: T.ICE_ROTTEN, collision: 1, tag: 'snow' },
+  // A channel the crew hold open with fire so the town has water in February.
+  // Collision 2, so it is the art the Tide Hall gave -- three Halls back, and
+  // this is the room that says what it was for.
+  'ĩ': { ground: T.ICE_THAW, collision: 2, tag: 'water', step: 'water' },
 };
 
 /**
@@ -571,6 +738,7 @@ export const TERRAIN: Record<string, TerrainDef> = {
  */
 const DOORWAY = new Set<number>([
   T.DOOR, T.DOOR_PORCH, T.CIVIC_DOOR, T.LAB_DOOR_L, T.LAB_DOOR_R, T.BASALT_DOOR, T.DOOR_TAR,
+  T.FROST_DOOR,
 ]);
 
 /** Whether a cell's ground may be borrowed by floorless terrain next to it. */

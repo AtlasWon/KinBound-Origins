@@ -1,0 +1,229 @@
+{
+  "id": "skyreach_hall_spurs",
+  "name": "The Windward Spurs",
+  "displayName": "THE WINDWARD SPURS",
+  "music": "station",
+  "battleBackdrop": "highland",
+  "indoor": false,
+  "_design": "THE SEVENTH HALL'S FLOOR IS OUTSIDE AND IT IS MOSTLY AIR. Three platforms hung off the ridge above Skyreach, one above the other, joined by three gantries a tile wide, with two scree decks off to the west and the whole of the gorge underneath. Nothing here is a corridor and nothing here is a room: at any moment the player can see exactly where they are going and exactly how little of it is ground.\n\nTHE CLIMB IS THE FIGHT AND THE FALL IS THE REWARD. Going up is gantries: the Fan, then Spur Two, then the Masthead, and the mouth of each gantry is watched by somebody. Coming down is the east side, which is four scree terraces with a cornice off the front of each -- a step you can take and cannot take back. So the walk home from Keeper Fenn is four hops and about eleven seconds, and nobody re-crosses a gantry they have already earned. The way down cannot be climbed and is not reachable from the sill; it is the masthead's own back stair and it exists so that winning does not cost the player the whole map again.\n\nTHE TWO DECKS ARE OPTIONAL AND THEY PAY. West of the Fan and west of Spur Two, across a short bridge each, is a scree shelf with an item on it and somebody standing on it who would like a fight. Neither is on the way to anything. That is deliberate: this Hall is three mandatory battles and two the player chooses, which for the seventh Crest in a game the player has asked four times to make easier is the right shape -- the difficulty belongs in the Keeper's team, not in the number of times you have to walk past somebody.",
+  "_plan": "WHERE EVERYBODY STANDS AND WHY.\n\n  Corran (17,26) watches right along row 26 on the Fan. Gantry three comes down at 18,25 and 18,26 is the only tile that reaches it, so he is unavoidable -- and he stands BESIDE that tile, never on it, because a trainer standing in the one doorway of a one-tile bridge is still standing there after you have beaten him.\n  Nesse (17,15) does exactly the same job on Spur Two for the gantry at 18,14.\n  Kellow (6,28) and Wisp (6,17) each watch the single tile their deck is entered by, and both decks are dead ends, which is why the mandatory count in this Hall is two and not four.\n  Idrisa Fenn (18,6) stands at the foot of the great mast. No dais, no arena, no furniture: the Keeper of a Hall about wind and charge should be standing in both of them.\n\nTHE GANTRIES HAVE FOUR ROWS OF NOTHING UNDER THE MIDDLE OF THEM, and the build script asserts it. The first cut of this map put the platforms two rows apart and stood the Fan directly on the sill, so gantry three crossed no air at all and the whole Hall read as one building with corridors in it. That is the failure this place exists not to have.\n\nNO WILD ENCOUNTERS. Not one tile of tussock up here, on purpose: the tussock is down on the headland where the player can choose to grind, and a Hall you have to fight your way through twice is a Hall nobody enjoys.",
+  "rows": [
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗CCCCCCCCCCCCC⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗",
+    "⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗C╫═☼═════☼═╫C⊗⊗⊗CCCCCCCC",
+    "          ⊗⊗C═══=²=═════C⊗⊗⊗C∇∇∇∇∇∇C",
+    "          ⊗⊗C═══=³=═════BBBBB∇∇∇∇∇∇C",
+    "          ⊗⊗C═══════════C⊗⊗⊗C∇∇∇√∇∇C",
+    "          ⊗⊗C═¶±±═══±±¶═C⊗⊗⊗C∇∇∇∇∇∇C",
+    "          ⊗⊗C═══════════C⊗⊗⊗C∇∇∇∇∇∇C",
+    "          ⊗⊗CCCCCCBCCCCCC⊗⊗⊗C⌐⌐⌐⌐⌐⌐C",
+    "          ⊗⊗⊗⊗⊗⊗⊗⊗B⊗⊗⊗⊗⊗⊗⊗⊗⊗C∇∇∇∇∇∇C",
+    "          ⊗⊗⊗⊗⊗⊗⊗⊗B⊗⊗⊗⊗⊗⊗⊗⊗⊗C∇∇∇∇∇∇C",
+    "           ⊗⊗⊗⊗⊗⊗⊗B⊗⊗⊗⊗⊗⊗⊗⊗⊗C∇∇¾∇∇∇C",
+    " ⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗B⊗⊗⊗⊗⊗⊗⊗⊗⊗C∇∇∇∇∇∇C",
+    " ⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗CCCCCBCCCCC⊗⊗⊗⊗C∇∇∇∇∇∇C",
+    " ⊗⊗CCCCCCC⊗⊗⊗C¶═══════¶C⊗⊗⊗⊗C∇∇∇∇∇∇C",
+    " ⊗⊗C∇∆∇∇∇C⊗⊗⊗C═=²=══=²=C⊗⊗⊗⊗C⌐⌐⌐⌐⌐⌐C",
+    " ⊗⊗C∇∇∇∇∇BBBBB═=³=══=³=C⊗⊗⊗⊗C∇∇∇∇∇∇C",
+    " ⊗⊗C∇∇∇∇∇C⊗⊗⊗C═════════C⊗⊗⊗⊗C∇∇∇∇∇∇C",
+    " ⊗⊗C∇∇∇∆∇C⊗⊗⊗C╫══☼═☼══╫C⊗⊗⊗⊗C∇∇∇∇∇∇C",
+    " ⊗⊗CCCCCCC⊗⊗⊗CCCCCBCCCCC⊗⊗⊗⊗C∇∇∇∇∇∇C",
+    " ⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗B⊗⊗⊗⊗⊗⊗⊗⊗⊗C∇√∇∇∇∇C",
+    " ⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗B⊗⊗⊗⊗⊗⊗⊗⊗⊗C∇∇∇∇∇∇C",
+    "          ⊗⊗⊗⊗⊗⊗⊗⊗B⊗⊗⊗⊗⊗⊗⊗⊗⊗C∇∇∇∇∇∇C",
+    " ⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗B⊗⊗⊗⊗⊗⊗⊗⊗⊗C⌐⌐⌐⌐⌐⌐C",
+    " ⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗CCCCCCBCCCCCC⊗⊗⊗C∇∇∇∇∇∇C",
+    " ⊗⊗CCCCCCC⊗⊗C¶══════════C⊗⊗⊗C∇∇∇∇∇∇C",
+    " ⊗⊗C¾¾∇∇∆C⊗⊗C═=²=════=²=C⊗⊗⊗C∇∇∇∇∇∇C",
+    " ⊗⊗C∇∇∇∇∇BBBB═=³=════=³=C⊗⊗⊗C∇∇∇∇∇∇C",
+    " ⊗⊗C∇∇∇∇∇C⊗⊗C══¾¾═══════C⊗⊗⊗C∇∇∇∇√∇C",
+    " ⊗⊗C∇∆∇∇∇C⊗⊗C╫═══☼═══☼╫¶C⊗⊗⊗C∇∇∇∇∇∇C",
+    " ⊗⊗CCCCCCC⊗⊗CCCCCCBCCCCCC⊗⊗⊗C∇∇∇∇∇∇C",
+    " ⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗B⊗⊗⊗⊗⊗⊗⊗⊗⊗C∇∇∇∇∇∇C",
+    " ⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗B⊗⊗⊗⊗⊗⊗⊗⊗⊗C∇∇∇∇∇∇C",
+    "       ⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗B⊗⊗⊗⊗⊗⊗⊗⊗⊗C∇∇∇∇∇∇C",
+    "       ⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗B⊗⊗⊗⊗⊗⊗⊗⊗⊗C⌐⌐⌐⌐⌐⌐C",
+    "       ⊗⊗C════════B════════════════C",
+    "⊗⊗⊗⊗⊗⊗⊗⊗⊗C═´═════════════´═════════C",
+    "⊗⊗⊗⊗⊗⊗⊗⊗⊗CCC█▓▓▓▓▓╬▓▓▓▓▓█CCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"
+  ],
+  "warps": [
+    {
+      "x": 18,
+      "y": 38,
+      "toMap": "skyreach_hall",
+      "toX": 9,
+      "toY": 1,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "sh_spur_guide",
+      "sprite": "porter",
+      "x": 14,
+      "y": 37,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sh_spur_guide"
+    },
+    {
+      "id": "sh_spur_corran",
+      "sprite": "dockhand",
+      "x": 17,
+      "y": 26,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "sh_spur_corran",
+      "sightRange": 2
+    },
+    {
+      "id": "sh_spur_kellow",
+      "sprite": "hiker",
+      "x": 6,
+      "y": 28,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "sh_spur_kellow",
+      "sightRange": 3
+    },
+    {
+      "id": "sh_spur_nesse",
+      "sprite": "meridian_sci_f",
+      "x": 17,
+      "y": 15,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "sh_spur_nesse",
+      "sightRange": 2
+    },
+    {
+      "id": "sh_spur_wisp",
+      "sprite": "townsfolk_f",
+      "x": 6,
+      "y": 17,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "sh_spur_wisp",
+      "sightRange": 3
+    },
+    {
+      "id": "sh_keeper",
+      "sprite": "harbourmaster",
+      "x": 18,
+      "y": 6,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sh_keeper"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "script",
+      "x": 11,
+      "y": 37,
+      "text": [
+        "THE SILL. The board is short and it has not been repainted in forty years.",
+        "THREE GANTRIES UP. FOUR CORNICES DOWN. THE WAY BACK IS NOT THE WAY THERE.",
+        "TAKE THE DECKS IF YOU WANT THEM. THEY GO NOWHERE. THAT IS WHAT THEY ARE FOR."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 25,
+      "y": 37,
+      "text": [
+        "A second board, hung under the first, and much newer.",
+        "NINETEEN DAYS OF WIND FROM THE WRONG QUARTER. MASTS 4 AND 7 FEATHERED.",
+        "IF IT BACKS AGAIN, COME OFF THE SPURS. NOBODY WILL ASK YOU WHY."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 13,
+      "y": 30,
+      "text": [
+        "The Fan, and the rail runs out at the edge of it, and then there is the gorge.",
+        "Four hundred feet, and the mist in it is going UP, which is the wrong way.",
+        "Everyone who works here checks that before they check anything else."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 22,
+      "y": 19,
+      "text": [
+        "SPUR TWO. Two masts, both turning, and the noise they make is not a hum.",
+        "It is a long single note, and it changes when the gorge breathes.",
+        "Somebody has chalked the note on the rail: G. Under it, dated last week: A FLAT."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 17,
+      "y": 4,
+      "text": [
+        "THE GREAT MAST. Ninety feet of it, and the whole cliff hums where you stand.",
+        "The plate at the foot: RAISED 1791. NEVER TAKEN DOWN. NEVER ONCE STOPPED.",
+        "Somebody has added, in a hand that is not the engraver's: NOT ONCE. ASK HER."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 13,
+      "y": 3,
+      "text": [
+        "From up here the whole of Skyreach is a set of lit shelves either side of a black line.",
+        "You can see the Cradle car crossing, very small, and the lamp on the lower dock.",
+        "You cannot see the bottom of anything. Nobody in this city ever has."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 4,
+      "y": 30,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_sh_lowdeck"
+    },
+    {
+      "kind": "item",
+      "x": 4,
+      "y": 16,
+      "item": "warden_vessel",
+      "quantity": 3,
+      "flag": "item_sh_highdeck"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 31,
+      "y": 13,
+      "item": "full_rouse",
+      "quantity": 1,
+      "flag": "item_sh_descent"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 20,
+      "y": 29,
+      "item": "great_potion",
+      "quantity": 2,
+      "flag": "item_sh_fan"
+    }
+  ]
+}

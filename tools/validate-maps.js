@@ -9,7 +9,15 @@ const MAPDIR = join(ROOT, 'data', 'maps');
 // Kept in step with TERRAIN in src/world/terrain.ts by hand; a character that
 // is legal there and missing here fails the map rather than the tileset.
 const LEGEND = new Set([...' .,*"-=~WsTtoO#wR[]^D|_!CcLfrIKSpBXx1234567890GghmbekAEVPJNQUF<%>()&jHMZdilnzquvy+?@$:/;aY' + "'`{}" + '¦§¤«¬»°·±÷¶µØÄÅÇ' + 'ΩΘθ≡≈ΦΨΣΞ' +'пюжцдщРДГСБЛЭШЄЯЪЧЏЂ' + '¨¸ß¥×º¡þøÞÆæ¿©®¯¹²³ª¾Ð´ìî' + '▦▧↑●▲■╪┅━┃┗┛┏┓╋╂┫▤▥'
-  + '═▬░▒▓█┌─┐▄╬▌▐▪▫◘╔╗╦╩╧╤☼♣♦╫♠◆○']);
+  + '═▬░▒▓█┌─┐▄╬▌▐▪▫◘╔╗╦╩╧╤☼♣♦╫♠◆○'
+  // Frostmere (Latin Extended-A): the built half of the north-west.
+  + 'ĦĤĎŘŖŔĴŁŴŲĘĪĮĩ'
+  // The mountains (Mathematical Operators): the ground the north-west and the
+  // north-east are both made of. Listed on its own line rather than folded into
+  // one of the runs above, because three stages' worth of maps are landing on
+  // this family at once and a merge that touches one line is a merge that loses
+  // a character. A Set does not mind seeing the same glyph twice.
+  + '∴≋∀∫⌐∩∪∆∇≅≠√∈∋⊗∧⇓∏']);
 
 let problems = 0;
 const ids = new Set();

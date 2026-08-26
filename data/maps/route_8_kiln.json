@@ -1,0 +1,140 @@
+{
+  "id": "route_8_kiln",
+  "name": "The Charcoal Hollow",
+  "displayName": "THE CHARCOAL HOLLOW",
+  "music": "route_west",
+  "battleBackdrop": "forest",
+  "indoor": false,
+  "regionPos": {
+    "x": 19,
+    "y": 3
+  },
+  "encounterTable": "route_8_kiln",
+  "_design": "The optional branch off Route 8 and its rare-encounter spot, in one place. A hollow in the pines where Frostmere's charcoal has been burned for forty years, sheltered enough that no snow reaches the floor of it -- which is the whole feeling of the map. You walk in out of the fall and the air is still, and there is a kiln in the middle with the last burn not quite out. That warmth is why the one Kin in Caelora that lives in chimneys is on this table and on no other table north of Emberfall.",
+  "_plan": "Small on purpose: a branch that takes twenty minutes is a second route, not a detour. One landmark (the kiln), one rare slot (Sootmoth at eight), one trainer, one hidden item in the cordwood, and one piece of storytelling that is the actual Act 5 beat -- the burners have gone down early because the wood is wet in a month it has never been wet in, and they are the third people on this road to say the same thing without any of them having met.",
+  "warps": [
+    {
+      "x": 16,
+      "y": 29,
+      "toMap": "route_8",
+      "toX": 57,
+      "toY": 2,
+      "facing": "down",
+      "style": "edge"
+    },
+    {
+      "x": 17,
+      "y": 29,
+      "toMap": "route_8",
+      "toX": 58,
+      "toY": 2,
+      "facing": "down",
+      "style": "edge"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "r8k_burner",
+      "sprite": "villager_f",
+      "x": 12,
+      "y": 16,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r8k_burner",
+      "sightRange": 3
+    },
+    {
+      "id": "r8k_boy",
+      "sprite": "kid",
+      "x": 21,
+      "y": 19,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "r8k_boy"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 21,
+      "text": [
+        "A tally board on a post, the kind kept in pencil and never rubbed out.",
+        "BURNS THIS SEASON: 9. LAST SEASON BY NOW: 21.",
+        "The last four have a line through them and one word beside each: WET."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 22,
+      "y": 11,
+      "text": [
+        "A rule board, painted forty years ago and repainted every one since.",
+        "THE PIT IS NEVER OUT. WHOEVER IS LAST BANKS IT.",
+        "Under the paint, in the wood, somebody has carved: IT HAS NOT BEEN OUT SINCE 1102."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 16,
+      "y": 17,
+      "text": [
+        "The kiln. A ring of stacked stone with the last burn banked down inside it.",
+        "The air above it wobbles. Snow coming down into it does not arrive.",
+        "It is the only warm thing between here and the top of the pass."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 23,
+      "y": 19,
+      "item": "strong_potion",
+      "quantity": 3,
+      "flag": "item_r8k_stack"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 8,
+      "y": 17,
+      "item": "deep_vessel",
+      "quantity": 3,
+      "flag": "item_r8k_hidden_cord"
+    }
+  ],
+  "rows": [
+    "∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏",
+    "∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏",
+    "∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏",
+    "∏∏∏∏∏∏∏∏...,*∏∏∏∏∏......\"\"\"\"\"∏∏∏∏∏",
+    "∏∏∏∏∏∏∏....,\"∏∏∏∏∏..,,,.\"\"\"\"\"∏∏∏∏∏",
+    "∏∏∏∏∏∏∏...,,\"∏∏∏∏\".,*,..\"\"\"\"\"∏∏∏∏∏",
+    "∏∏∏∏∏∏∏.,,,,.∏∏∏∏\",,*,...\"\"\"\"∏∏∏∏∏",
+    "∏∏∏∏∏∏∏∏,,,..∏∏∏∏,..,,...,\"∏∏∏∏∏∏∏",
+    "∏∏∏∏∏∏∏∏*,...∏∏∏∏.....,,∏∏∏∏∏∏∏∏∏∏",
+    "∏∏∏∏∏∏∏∏∏\",,.∏∏∏∏,,..,\"∏∏∏∏∏∏∏∏∏∏∏",
+    "∏∏∏∏∏∏∏∏∏\"\"\"\"∏,,,,-,\"\"\"∏∏∏∏∏∏∏∏∏∏∏",
+    "∏∏∏∏∏∏∏∏\"\"\"\"\"\",,.,,\"\"\"´¾¾∏∏∏∏∏∏∏∏∏",
+    "∏∏∏∏∏∏∏\"\"\"\"\"\"\",o...o\"\"¾¾¾∏∏∏∏∏∏∏∏∏",
+    "∏∏∏...\"\"\"\"\"\"\"\".OOOOO\"\"\"\"\"∏∏∏,,,∏∏∏",
+    "∏∏∏\"\"\",,-,.\"\"\".O···O,,,,,∏∏\"\"\",∏∏∏",
+    "∏∏∏\"\"\",,-,,,,,\"O···O,,,,,,,\"\"\",∏∏∏",
+    "∏∏∏\"\"\".,,--,.,\"OOOOO,,.,,,,\"\"\".∏∏∏",
+    "∏∏∏\"\"\".,----,,\"\"´-,,,,,,-,∏\"\"\",∏∏∏",
+    "∏∏∏\"\"..,-ªªªª\"\"\"\"\".,,,---∏∏∏**,∏∏∏",
+    "∏∏∏.....,ªªªª\"\"\"\"\",,-,,\"\"∏∏∏∏∏∏∏∏∏",
+    "∏∏∏,.....ªªªª\"\"\"\"\",,-,.\"∏∏∏∏∏∏∏∏∏∏",
+    "∏∏∏...,,,,,\"\"´\"\"\"\",---,\"∏∏∏∏∏∏∏∏∏∏",
+    "∏∏∏...,,*,,--,\"\"-------\"\"\"∏∏∏∏∏∏∏∏",
+    "∏∏∏...,,∏∏∏∏∏,\"\"--\"\",,\"\"\",,.∏∏∏∏∏∏",
+    "∏∏∏.∏∏∏∏∏∏∏∏∏∏∏∏--\"\"\"\"\".,,*,∏∏∏∏∏∏",
+    "∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏--\"\"\"\"\",,,*,∏∏∏∏∏∏",
+    "∏∏∏.∏∏∏∏∏∏∏∏∏∏∏∏--\"\"\"\"\",,,*,∏∏∏∏∏∏",
+    "∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏--∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏",
+    "∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏--∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏",
+    "∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏--∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏"
+  ]
+}

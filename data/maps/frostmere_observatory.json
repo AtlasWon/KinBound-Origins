@@ -1,0 +1,202 @@
+{
+  "id": "frostmere_observatory",
+  "name": "The Frostmere Observatory",
+  "displayName": "THE OBSERVATORY",
+  "music": "station",
+  "battleBackdrop": "cave",
+  "indoor": true,
+  "freeWade": true,
+  "fog": 0.28,
+  "_plan": "THE OPEN DOOR. The first room of the third and last Aurelian site, and the whole job of it is recognition and then wrongness. The stone is the stone from Embercoil and the Sanctum -- same pale cut limestone, same grooves in the floor, same basalt wall -- so a player who has been in the other two knows whose building this is before they have taken a step. What is different is that it is OPEN. No shutter, no seal, no plate, nothing to lift and nothing to answer: the doors are not shut because there is no fitting on this building that could shut them, and the sign by the doorway says so without saying why. The why is two floors up.\n\nTHE MOUNTAIN GETS FOUR PACES IN. The roof failed over the east corner some centuries back and the weather has been coming through it ever since, and what comes down lies against the wall as a pool. It is laid SOLID rather than sprinkled -- single tiles of water read as blobs dropped on the floor, a block reads as standing water -- and the map sets freeWade so that a wet corner is never a gate. The tile is shallow water and NOT the puddle tile: puddle() draws a square of dirt road under itself, and on cut limestone that printed a row of orange sandpits with blue lozenges in them.\n\nTHE FOG IS 0.28, the low middle of the range. The hall reads as cold air standing in a big unheated room and it is still atmosphere rather than navigation: at that density the clear circle is most of the screen and only the far corners thicken. The floor above has no fog at all, and the change in the air when the player comes up the stair is what both numbers are for. It was 0.16 first and did nothing whatever at 1x.\n\nONE LIT GROOVE, at x11, running the entire length of the hall from the doorway to the stair. It is the only live tile in the building below the dome and it is the entire navigation of the site: a player who reads nothing and talks to nobody still walks the right way, because there is one lamp on in a dark house and it goes upstairs. The dead grooves either side of it are cut to the identical pattern and carry nothing, which is what says the floor used to be one circuit and is not one now.\n\nELIAS' CAMP is in the dry west corner and it is four tiles and three signs. It must stay that small. The player is going to hear him in fifteen minutes and anything that explains him here spends the scene early -- so the camp is a table, a stool pushed in, and two of four numbered crates, and the only thing in it that is about a person rather than about equipment is a photograph the player is told they do not turn over. HIS SURNAME IS NOT ON THE CRATE. Canon gives him one name and inventing a second in a stencil nobody else on the act has seen is how a settlement three maps away ends up contradicting a prop.",
+  "rows": [
+    "CCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCΩΩΩΩΩΩΩΩSSSSΩΩΩΩΩΩΩΩCC",
+    "CCΩΘΘΘΘΘΘΘΘ≈ΘΘΘΘΘΘΘΘΘΩCC",
+    "CCΩΘΘΘΘΘΘΘΘ≈ΘΘΘΘΘΘΘΘΘΩCC",
+    "CCΩΞΘΘΘΘΘΘΘ≈ΘΘΘΘΘΘΘΘΞΩCC",
+    "CCΩΘ≡≡≡≡≡θΘ≈Θθ≡≡≡≡≡≡ΘΩCC",
+    "CCΩΘΘΘΘΘΘΘΘ≈ΘΘΘΘΘΘΘΘΘΩCC",
+    "CCΩΘΘΘΘΘΘΘΘ≈ΘΘΘΘΘΘΘΘΘΩCC",
+    "CCΩΞΘΘΘΘΘΘΘ≈ΘΘΘΘΘΘΘΘΞΩCC",
+    "CCΩΘΘΘΘΘΘΘΘ≈ΘΘΘΘΘΘΘΘΘΩCC",
+    "CCΩΘΘΘΘΘΘΘΘ≈ΘΘΘΘΘΘΘΘΘΩCC",
+    "CCΩΞΘΘΘΘΘΘΘ≈ΘΘΘΘΘΘΘΘΞΩCC",
+    "CCΩΘ≡≡≡≡≡θΘ≈Θθ≡≡≡≡≡≡ΘΩCC",
+    "CCΩΘΘEΘΘΘΘΘ≈ΘΘΘΘ~~~~ΘΩCC",
+    "CCΩΘ¾A¾ΘΘΘΘ≈ΘΘΘΘΘ~~~ΘΩCC",
+    "CCΩΘΘΘΘΘΘΘΘ≈ΘΘΘΘΘΘ~~ΘΩCC",
+    "CCΩΩΩΩΩΩΩΩΘΘΘΘΩΩΩΩΩΩΩΩCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCC"
+  ],
+  "_handover": "THE FROSTMERE SEAM, AND IT IS HALF-WIRED. This map owns the way OUT: the doorway at 11,17 and 12,17 goes to `frostmere` 20,6. The way IN is Frostmere's to build and it does not exist yet -- `frostmere` must carry a warp at its Observatory door landing on frostmere_observatory 11,16 or 12,16 (the two floor tiles directly inside the doorway; never on 11,17 or 12,17, which are this map's own exit warps, so arriving on one means the first press of Down does nothing). If Frostmere's Observatory door cannot be at 20,5 with walkable ground at 20,6, say so and this file changes two numbers -- it is the only coordinate in the site that is not mine to check.",
+  "warps": [
+    {
+      "x": 10,
+      "y": 17,
+      "toMap": "frostmere",
+      "toX": 20,
+      "toY": 6,
+      "facing": "down",
+      "style": "door"
+    },
+    {
+      "x": 11,
+      "y": 17,
+      "toMap": "frostmere",
+      "toX": 20,
+      "toY": 6,
+      "facing": "down",
+      "style": "door"
+    },
+    {
+      "x": 12,
+      "y": 17,
+      "toMap": "frostmere",
+      "toX": 20,
+      "toY": 6,
+      "facing": "down",
+      "style": "door"
+    },
+    {
+      "x": 13,
+      "y": 17,
+      "toMap": "frostmere",
+      "toX": 20,
+      "toY": 6,
+      "facing": "down",
+      "style": "door"
+    },
+    {
+      "x": 10,
+      "y": 2,
+      "toMap": "frostmere_observatory_gallery",
+      "toX": 3,
+      "toY": 9,
+      "facing": "up",
+      "style": "stairs"
+    },
+    {
+      "x": 11,
+      "y": 2,
+      "toMap": "frostmere_observatory_gallery",
+      "toX": 3,
+      "toY": 9,
+      "facing": "up",
+      "style": "stairs"
+    },
+    {
+      "x": 12,
+      "y": 2,
+      "toMap": "frostmere_observatory_gallery",
+      "toX": 4,
+      "toY": 9,
+      "facing": "up",
+      "style": "stairs"
+    },
+    {
+      "x": 13,
+      "y": 2,
+      "toMap": "frostmere_observatory_gallery",
+      "toX": 4,
+      "toY": 9,
+      "facing": "up",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 17,
+      "text": [
+        "The doors are gone, and the jambs",
+        "were never cut for bar or bolt.",
+        "Nothing here was made to be shut."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 15,
+      "y": 17,
+      "text": [
+        "One groove in the floor is lit.",
+        "It runs from here to the stair.",
+        "Somebody left a lamp on, once."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 5,
+      "y": 15,
+      "text": [
+        "A folding table. A folding stool.",
+        "Eleven years of dust, lying flat.",
+        "The stool is pushed in."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 4,
+      "y": 15,
+      "text": [
+        "A field crate, stencilled.",
+        "CAELORA SURVEY. CRATE 3 OF 4.",
+        "Three is here. One and two too.",
+        "Four went on the ship."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 6,
+      "y": 15,
+      "text": [
+        "A photograph, face down, under a",
+        "tin of tea gone to stone.",
+        "You do not turn it over."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 17,
+      "y": 17,
+      "text": [
+        "The roof went in over this corner",
+        "a few hundred winters back.",
+        "What comes down lies as water.",
+        "It gets four paces in.",
+        "It has been trying for three",
+        "thousand years."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 2,
+      "text": [
+        "Cut beside the stair: the mark the",
+        "Sanctum used for a person, ten",
+        "times, all facing the same way.",
+        "None of them faces the stair."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 16,
+      "y": 16,
+      "item": "thawcloth",
+      "quantity": 2,
+      "flag": "item_fo_hall_ledge"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 6,
+      "y": 16,
+      "item": "full_rouse",
+      "quantity": 1,
+      "flag": "item_fo_camp_kit"
+    }
+  ]
+}

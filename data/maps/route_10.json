@@ -1,0 +1,302 @@
+{
+  "id": "route_10",
+  "name": "The Crown Road",
+  "displayName": "ROUTE 10 - THE CROWN ROAD",
+  "music": "route_west",
+  "battleBackdrop": "highland",
+  "indoor": false,
+  "fog": 0.22,
+  "regionPos": {
+    "x": 29,
+    "y": 9
+  },
+  "encounterTable": "route_10",
+  "_design": "The last road of Act 5, and the only route in Caelora that is going DOWN. Everything since the capital has climbed; this one comes off the top of the world into the oldest settled country in the region, and the ground softens the whole way -- tussock and scree where it leaves Skyreach, terraced turf and hedge and standing timber where it arrives at Crownspire.\n\nTHE ROAD IS THE OLDEST THING ON IT, and it is the only preparation Crownspire gets from this side. Paved, kerbed, cut into the hill on a made shelf, with milestones on it in a lettering nobody uses any more. The eighth Hall is in the oldest city in Caelora and the player should arrive already believing that, without anybody having said it.\n\nIT WAS NOBODY\\u2019S MAP. Skyreach warps out of its south gate to route_10 and Crownspire warps out of its west gate to route_10, and neither build owned the road between them. Both ends existed before this file did, so both ends are matched exactly rather than asked to move.",
+  "_plan": "LOW CLOUD, NOT SNOW. fog at 0.22 -- a softening at the edges of the view that never stops anybody finding the road. The two mountain roads behind this one own the weather that takes your sight away and doing it a third time would spend the trick; what this map has instead is a sky sitting on the ground, which is what a col in a turning season looks like.\n\nTHE ARCH at 34,24 is the landmark: a wayside arch older than Crownspire\\u2019s walls, cut from the same granite, walkable, and the first thing anybody cut before the Halls that the player has been able to stand inside. THE TARN in the col is the Swim gate, with a boundary stone on an islet that two cities have both claimed for eight hundred years and neither can reach. THE BRANCH runs south into the abandoned terraces, which is where the rare Kin is and where the road stops being about mountains and starts being about people who left.",
+  "warps": [
+    {
+      "x": 20,
+      "y": 0,
+      "toMap": "skyreach",
+      "toX": 60,
+      "toY": 57,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 21,
+      "y": 0,
+      "toMap": "skyreach",
+      "toX": 61,
+      "toY": 57,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 55,
+      "y": 13,
+      "toMap": "crownspire",
+      "toX": 1,
+      "toY": 58,
+      "facing": "right",
+      "style": "edge"
+    },
+    {
+      "x": 55,
+      "y": 14,
+      "toMap": "crownspire",
+      "toX": 1,
+      "toY": 59,
+      "facing": "right",
+      "style": "edge"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "r10_toll",
+      "sprite": "villager_m",
+      "x": 22,
+      "y": 6,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r10_toll",
+      "sightRange": 3
+    },
+    {
+      "id": "r10_boundary",
+      "sprite": "elder",
+      "x": 14,
+      "y": 19,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r10_boundary"
+    },
+    {
+      "id": "r10_drover",
+      "sprite": "villager_f",
+      "x": 31,
+      "y": 21,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r10_drover",
+      "sightRange": 3
+    },
+    {
+      "id": "r10_mason",
+      "sprite": "porter",
+      "x": 37,
+      "y": 27,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r10_mason"
+    },
+    {
+      "id": "r10_terrace",
+      "sprite": "hiker",
+      "x": 36,
+      "y": 33,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r10_terrace",
+      "sightRange": 3
+    },
+    {
+      "id": "r10_courier",
+      "sprite": "porter",
+      "x": 44,
+      "y": 20,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r10_courier",
+      "sightRange": 4
+    },
+    {
+      "id": "r10_gatehand",
+      "sprite": "townsfolk_f",
+      "x": 51,
+      "y": 14,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r10_gatehand",
+      "sightRange": 4
+    }
+  ],
+  "objects": [
+    {
+      "kind": "script",
+      "x": 23,
+      "y": 6,
+      "text": [
+        "A milestone in a lettering that stopped being used four hundred years ago.",
+        "CROWNSPIRE XI. The numerals are cut an inch deep and have not worn."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 24,
+      "y": 6,
+      "text": [
+        "A toll board at the top of the road, with a rate card nobody has updated.",
+        "CARTS: TWO. BEASTS: ONE. FOOT: FREE, AND ALWAYS HAS BEEN.",
+        "Somebody has written under it: THE ROAD IS OLDER THAN THE TOLL. WALK ON."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 16,
+      "y": 12,
+      "text": [
+        "Out on the islet, a boundary stone with a face cut on either side.",
+        "One face says SKYREACH. The other says CROWNSPIRE. They are the same stone.",
+        "Nobody has stood beside it in eight hundred years to ask it which it meant."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 34,
+      "y": 19,
+      "text": [
+        "A milestone. CROWNSPIRE V. Below the number, one word: NEARLY."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 36,
+      "y": 28,
+      "text": [
+        "The arch. Granite, cut and set, and older than the city wall it points at.",
+        "There is no inscription on it and no door in it. It is a road going through a wall",
+        "that is not attached to anything, and it has been here longer than the road."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 32,
+      "y": 30,
+      "text": [
+        "A board at the head of the terrace path, gone silver with weather.",
+        "OLD TERRACES. NO GRAZING, NO CUTTING, NO BUILDING. BY ORDER, AND FOR NINE HUNDRED YEARS."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 47,
+      "y": 18,
+      "text": [
+        "A milestone. CROWNSPIRE I. The last one, and the only one anybody has cleaned."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 12,
+      "y": 26,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_r10_col"
+    },
+    {
+      "kind": "item",
+      "x": 16,
+      "y": 13,
+      "item": "full_rouse",
+      "quantity": 2,
+      "flag": "item_r10_islet"
+    },
+    {
+      "kind": "item",
+      "x": 44,
+      "y": 33,
+      "item": "great_potion",
+      "quantity": 3,
+      "flag": "item_r10_terrace"
+    },
+    {
+      "kind": "item",
+      "x": 50,
+      "y": 8,
+      "item": "warden_vessel",
+      "quantity": 5,
+      "flag": "item_r10_highfield"
+    },
+    {
+      "kind": "item",
+      "x": 26,
+      "y": 36,
+      "item": "full_heal",
+      "quantity": 3,
+      "flag": "item_r10_lowterrace"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 8,
+      "y": 33,
+      "item": "ward_incense",
+      "quantity": 2,
+      "flag": "item_r10_hidden_west"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 52,
+      "y": 30,
+      "item": "escape_line",
+      "quantity": 2,
+      "flag": "item_r10_hidden_east"
+    }
+  ],
+  "rows": [
+    "CCCCCCCCCCCCCCCCCCC===CCCCCCCCCCCCTTTTTTTTTTTTTTTTTTTTTT",
+    "CCCCCCCCCCCCCCCCCCC===CCCCCCCCCCCCTTTTTTTTTTTTTTTTTTTTTT",
+    "CC∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇===∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∧∧∧∧∧∧,,..,∇TT",
+    "CC∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇===∇∇∇∇∇∇∇∇∇∇∇∇∇......∧∧∧∧∧∧∧,,...∇TT",
+    "CC∇∇∇∇∇∇∇∇∇∇∇...∇∇∇===∇∇∇∇∇∇∇∇∇∇∇*,..,,.∧∧∧∧∧∧∧,,,,.∇∇TT",
+    "CC∇∇∇∇∇∇∇∇∇∇.∆∆∆.∇∇===∇∇´∇∇∇∇∇∇∇∇*,..,,.∧∧∧∧∧∧∇∇∇∇∇∇∇∇TT",
+    "CC∇∇∇∇∇∇∇∇∇∇∆∆∆∆,∇∇====´´∇∇∇∇∇∇∇,,,∆,**,∧∧∧∧∧∇∇∇∇∇∇∇∇∇TT",
+    "CC∇∇∇∇∇∇∇∇∇.∆∆∆∆,∇∇=====∇∇∇∇∇∇∇∇,,,∆***∧∧∧∧∧∧∇∇∇∇∇∇∇∇∇TT",
+    "CC∇∇∇∇∇∇∇∇∇∇∆~~~~~~~=====∇∇∇∇∇∇∇..∧∆∧∧∧∧∧∧∧∧∧∧∇∇∇∇∇∇∇∇TT",
+    "CC∇∇∇∇∇∇∇∇~~~WWWWWWW~=====∇∇∇∇∇∧∧∧∧∆∧∧∧∧∧∧∧∧∧∧∇∇∇∇∇∇∇∇TT",
+    "CC∇∇∇∇∇∇∇~~WWWWWWWWWWW=====∇∇∇∧∧∧∧∧∆∧∧∧∧∧∧∧∧∧∧∇∇∇∇´∇∇∇TT",
+    "CC∇∇∇∇∇∇~~WWWWWWWWWWWWW=====,∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∇∇∇∇∇∇∇∇TT",
+    "CC∇∇∇∇∇∇~WWWWWWW■WWWWWWW=====,..∧∧∧∧∧∧∧,,,,∧∧∧∇∇∇∇∇∇∇===",
+    "CC∇∇∇∇∇∇~WWWWWWW..WWWWWW~====,,,∧∧∧∧∧∧∧....,´,\"\"\"\"======",
+    "CC∇∇∇∇∇∇~WWWWWWWWWWWWWWW~=====,,.∧∧∧∧∧......,..=========",
+    "CC∇∇∇∇∇∇~~WWWWWWWWWWWWW~~.====,..∧∧∧∧∧.......===========",
+    "CC∇∇∇∇∇∇∇~~WWWWWWWWWWW~~..=====.´∧∧∧∧∧......=========,TT",
+    "CC∇∇∇∇∇∇∇∇~~~WWWWWWW~~~,∧∧∧====.,,,∧.*,..,========\"\",,TT",
+    "CC∇∇∇∇∇∇∇,,..~~~~~~~,,,∧∧∧∧=====,*,..**..======´\"\"\"\".,TT",
+    "CC∇∇∇∇,*,......,,,,,**∧∧∧∧∧∧======´..,,,======\"\"\",..\"\"TT",
+    "CC∇∇∇.**..∧.∆∆∆∆,,,***∧∧∧∧∧∧=================\"\"\"\",..\"\"TT",
+    "CC∇∇..,,.∧∧,∆∆∆∆,,,**,∧∧∧∧∧∧∧==============\"\"\"\"\"\",...\"TT",
+    "CC∇∇....∧∧∧∧∆∆∆∆.,,,*,.∧∧∧∧∧∧.-===========*\"\"\"\"\",,....TT",
+    "CC∇∇∇∧∧∧∧∧∧∧,∆∆..,,,,,,,∧∧∇∇∇∧-∧...======,*,\"\"\"......,TT",
+    "CC∇∇∇∇∇∇∇∧∧∧∧...,,,...,..∇∇∇∇∇-∧∧*▪▪▪==▪▪,*..\"......,*TT",
+    "CC∇∇∇∇∇∇∇∇∧∧∧..,,,,...,..∇∇∇∇-∧∧\"\"▪▪▪==▪▪,*.........,*TT",
+    "CC∧∇∇∇∇∇∇∇∧∧∧,,,,**,.,,,,∇∇∇∇-\"\"\",▪▪◘==▪▪,,,.........,TT",
+    "CC∧∇∇∇∇∇∇∇∇...,,,**,.,,,,,∇∇∇-...=========,,\"\".......,TT",
+    "CC,.∇∇∇∇∇∇.........,∧,....∇∇∇-,,...,´*,..,*\"\"\"\"...,,..TT",
+    "CC..∇∇∇∇∇∇........\"\"∧∧......-,,,...,,*,.\"\"\"\"\"\"\"..,,,..TT",
+    "CC,,.∇∇∇∇∇.,,,....\"\"\"\",.....--,*´......\"●●●●●●●●,,....TT",
+    "CC,,..∇∇..,,,,,...\"\"\"\"\",.....--*........\"\"\"\"\"\"\"*,,....TT",
+    "CC........,,,,....\"\"\"\"\",..,,.,--,.....,,,,,\"\"\"\"\",,..,,TT",
+    "CC..,,,,,.,,,..,,..\"\"\"\"\"\"\"\"\",,,--,,**,●●●●●●●●●●●●●\"\"*TT",
+    "CC..,,,,,......,,..\"\"\"\"\"\"\"\"\"\"\"\"\",-,*,,,,●------\"\"\"\"\"\"\"TT",
+    "CC,,****,....,,....\"\"\"\"\"\"\"\"\"\"\"\"\"\"*-------TTTT●,\"\"\"\"\"\"\"TT",
+    "CC,,,,,,,....,,....\"\"\"\"\"\"\"\"\"\"\"\"\"\"*,,,●●●●●●●●●●●●●●\"\"\"TT",
+    "CC,.........,*,..,,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"..,,●TTTT...,\"\"\"\",TT",
+    "CCTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+    "CCTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT"
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "id": "skyreach_market",
+  "name": "The Windgate Market",
+  "displayName": "THE WINDGATE MARKET",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUIIIIIIIIIUIIIII",
+    "I;;;;;;;;;;;;;;;;;I",
+    "IPKKKKfffKKKKffff;I",
+    "IfffffffffffffffffI",
+    "I;;;ffff;;;ffff;;;I",
+    "IfffffffffffffffffI",
+    "IffAEfffffffffAEffI",
+    "IfffffffffffffffffI",
+    "I;;;;fffff;;;;ffffI",
+    "IfffffffffffffffffI",
+    "IPfffffffffffffffPI",
+    "IfffffffffffffffffI",
+    "IIIIIIIIIDIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 12,
+      "toMap": "skyreach",
+      "toX": 68,
+      "toY": 29,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "sm_grocer",
+      "sprite": "merchant",
+      "x": 6,
+      "y": 3,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sm_grocer"
+    },
+    {
+      "id": "sm_glassman",
+      "sprite": "villager_m",
+      "x": 14,
+      "y": 3,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sm_glassman"
+    },
+    {
+      "id": "sm_fisher",
+      "sprite": "fisher",
+      "x": 5,
+      "y": 9,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sm_fisher"
+    },
+    {
+      "id": "sm_shopper",
+      "sprite": "townsfolk_f",
+      "x": 12,
+      "y": 7,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "sm_shopper"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "The price board, and there are two columns on it: CARRIED and FLOWN.",
+        "The flown column is much shorter and every number in it is much larger.",
+        "At the bottom, in chalk: EVERYTHING GREEN CAME UP THE ROAD. EVERYTHING FRESH FLEW."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18,
+      "y": 8,
+      "text": [
+        "A fish stall, three hundred miles from the sea and four hundred feet above everything.",
+        "The card: OFF THE ELEVEN O’CLOCK FROM TIDEGLASS. STILL COLD. STILL HONEST.",
+        "Under it, newer: NOTHING HAS COME UP THE COAST IN A FORTNIGHT. PLEASE DO NOT ASK."
+      ]
+    }
+  ]
+}

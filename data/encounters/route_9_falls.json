@@ -1,0 +1,104 @@
+{
+  "mapId": "route_9_falls",
+  "$comment": "Behind the fall. The rare slot is Brinewisp, and it is here for a reason the player can work out by standing in the room: a Tide/Spirit that the Vellum places in dead water belongs in a plunge pool nobody has ever seen the bottom of, and the last one the player met was four acts and two hundred miles ago on the coast. Everything else on this table is what shelters out of a gale -- Gale Kin that are not flying today, one Spark off the wet rock, and the Stone that lives in the cliff itself.",
+  "methods": {
+    "tallGrass": {
+      "rate": 150,
+      "slots": [
+        {
+          "species": "gullswift",
+          "minLevel": 37,
+          "maxLevel": 39,
+          "weight": 20
+        },
+        {
+          "species": "craglide",
+          "minLevel": 38,
+          "maxLevel": 40,
+          "weight": 16
+        },
+        {
+          "species": "fizzlet",
+          "minLevel": 37,
+          "maxLevel": 39,
+          "weight": 16
+        },
+        {
+          "species": "kestrelle",
+          "minLevel": 38,
+          "maxLevel": 40,
+          "weight": 14
+        },
+        {
+          "species": "chalkid",
+          "minLevel": 37,
+          "maxLevel": 39,
+          "weight": 14
+        },
+        {
+          "species": "rillfry",
+          "minLevel": 36,
+          "maxLevel": 38,
+          "weight": 12
+        },
+        {
+          "species": "brinewisp",
+          "minLevel": 39,
+          "maxLevel": 41,
+          "weight": 8
+        }
+      ]
+    },
+    "water": {
+      "rate": 110,
+      "slots": [
+        {
+          "species": "brinewisp",
+          "minLevel": 39,
+          "maxLevel": 42,
+          "weight": 34
+        },
+        {
+          "species": "currentail",
+          "minLevel": 38,
+          "maxLevel": 41,
+          "weight": 30
+        },
+        {
+          "species": "gullswift",
+          "minLevel": 38,
+          "maxLevel": 41,
+          "weight": 20
+        },
+        {
+          "species": "rillfry",
+          "minLevel": 37,
+          "maxLevel": 40,
+          "weight": 16
+        }
+      ]
+    },
+    "fishGood": {
+      "slots": [
+        {
+          "species": "currentail",
+          "minLevel": 38,
+          "maxLevel": 42,
+          "weight": 45
+        },
+        {
+          "species": "anchorling",
+          "minLevel": 39,
+          "maxLevel": 43,
+          "weight": 30
+        },
+        {
+          "species": "clatterclaw",
+          "minLevel": 39,
+          "maxLevel": 43,
+          "weight": 25
+        }
+      ]
+    }
+  }
+}

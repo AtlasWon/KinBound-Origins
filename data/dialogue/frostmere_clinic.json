@@ -1,0 +1,32 @@
+{
+  "speakers": {
+    "fmc_faller": "OFF THE TRAIL",
+    "fmc_visitor": "SITTING WITH HIM"
+  },
+  "entries": {
+    "fmc_faller": [
+      {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "I went up to the second cairn and I came down on my back for the last of it.",
+          "Rain. Freezing on as it landed. The whole trail was glass by the afternoon.",
+          "I have walked that trail since I was nine. I have never once needed a rope on it."
+        ]
+      },
+      {
+        "lines": [
+          "Nothing broken. Just cold, and cold makes you stupid, and stupid is the injury.",
+          "They keep you here until you can do the seven times table. That is the actual test."
+        ]
+      }
+    ],
+    "fmc_visitor": [
+      {
+        "lines": [
+          "Four beds, and two of them are always for the mountain. That is not pessimism.",
+          "It is two beds. It costs this town two beds a year to be somewhere people come back to."
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,173 @@
+{
+  "id": "crownspire_clinic",
+  "name": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUUIIIIIIIIIIUUIII",
+    "I++++++FF@@FF??F+++I",
+    "IPKKFKKFFFFFFKKFKKPI",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IkFFFFFFFFFFFFFFFFkI",
+    "IF/rrFFFFFFFFFFrr/FI",
+    "IFFrrFFFFFFFFFFrrFFI",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IFFFAAAFFFFFFAAAFFFI",
+    "IFFFEEEFFFFFFEEEFFFI",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IPFFFFFFFFFFFFFFFFPI",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IIIIIIIIIDIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 13,
+      "toMap": "crownspire",
+      "toX": 22,
+      "toY": 54,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "cs_clinic_keeper",
+      "sprite": "healer",
+      "x": 4,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "clinic_heal"
+    },
+    {
+      "id": "cs_clinic_roost",
+      "sprite": "professor",
+      "x": 15,
+      "y": 1,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "roost_terminal"
+    },
+    {
+      "id": "cs_clinic_nurse",
+      "sprite": "healer",
+      "x": 17,
+      "y": 3,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_clinic_nurse"
+    },
+    {
+      "id": "cs_clinic_vet",
+      "sprite": "villager_f",
+      "x": 7,
+      "y": 5,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_clinic_vet"
+    },
+    {
+      "id": "cs_clinic_wait",
+      "sprite": "hiker",
+      "x": 14,
+      "y": 6,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_clinic_wait"
+    },
+    {
+      "id": "cs_clinic_child",
+      "sprite": "kid",
+      "x": 9,
+      "y": 10,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "cs_clinic_child"
+    },
+    {
+      "id": "cs_clinic_warden",
+      "sprite": "elder",
+      "x": 3,
+      "y": 11,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_clinic_warden"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 6,
+      "y": 1,
+      "text": [
+        "The restorative bank, and a second one wheeled in from the Muster.",
+        "The clinic has never needed the second one before.",
+        "It is running, and it is full, and the queue outside is not getting shorter."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 1,
+      "text": [
+        "A brass terminal, twinned with every other in Caelora. THE ROOST.",
+        "Kin you cannot carry wait here. Somebody has hung a towel over the top of it,",
+        "because the ceiling has started letting water through and nobody can find where."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 3,
+      "y": 2,
+      "text": [
+        "The waiting board. TRAINERS: NO WAIT. WORKING KIN: NO WAIT.",
+        "A third line has been chalked under them this week:",
+        "COME DOWN OFF THE MOUNTAIN: NO WAIT, AND WE WILL COME AND GET YOU."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 4,
+      "text": [
+        "Case notes, and this week they are all the same three words in different hands:",
+        "COLD. WET. FRIGHTENED.",
+        "Not the Trainers. The Kin they have been carrying in out of the streets."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18,
+      "y": 4,
+      "text": [
+        "A rack of leaflets. The top one is new, printed in a hurry, badly aligned.",
+        "IF A KIN YOU DO NOT KNOW COMES DOWN INTO THE CITY, DO NOT CATCH IT.",
+        "IT IS NOT LOST. IT IS LEAVING SOMEWHERE."
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 1,
+      "y": 12,
+      "item": "full_heal",
+      "quantity": 2,
+      "flag": "item_cs_clinic"
+    }
+  ]
+}

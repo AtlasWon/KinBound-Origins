@@ -23,9 +23,9 @@ const visit = async (map, x, y, name) => {
   await d.shoot(name, 8, 2);
 };
 // Entry tiles taken from the maps' own warp destinations.
-await visit('route_7', 1, 57, 'a4-01-levels');
-await visit('harrowgate', 28, 34, 'a4-02-harrowgate');
-await visit('aureline', 75, 118, 'a4-03-aureline-gate');
-await visit('aureline', 40, 41, 'a4-04-aureline-meridian');
-await visit('aureline_meridian', 12, 18, 'a4-05-hq-atrium');
+await visit('route_8_pass', 1, 20, 'a5-01-wintergate');
+await visit('frostmere', 22, 23, 'a5-02-frostmere');
+await visit('skyreach', 60, 57, 'a5-03-skyreach');
+await visit('crownspire', 12, 26, 'a5-04-crownspire');
+await visit('frostmere_observatory_dome', 10, 15, 'a5-05-dome');
 return { out };

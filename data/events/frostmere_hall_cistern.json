@@ -1,0 +1,257 @@
+[
+  {
+    "id": "fmx_guide",
+    "_note": "THE RULE, ONCE, AT THE TOP OF THE STAIR. Three marks and nothing else to learn, and the same three lines are painted over the stairhead upstairs and on the landing board -- so a player who reads either sign never needs this, and a player who reads neither is told anyway before their foot goes on the ice. After that he shuts up, because a lesson that repeats turns the Hall's only mechanism into an interruption.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "not", "of": { "kind": "flag", "flag": "fm_marks" } },
+        "then": [
+          { "kind": "setFlag", "flag": "fm_marks" },
+          {
+            "kind": "say",
+            "who": "LANDING HAND",
+            "lines": [
+              "Three marks. I will say them once and then I will go back to the book.",
+              "A tick is twelve inches and your weight. You may stand on a tick."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "LANDING HAND",
+            "lines": [
+              "A cross is four inches and the dark. It will not take you and you will not fall in,",
+              "because four inches holds a person standing still. It does not hold a person walking."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "LANDING HAND",
+            "lines": [
+              "And where a pot is standing there is no floor at all. That is a channel and we cut it.",
+              "You will get wet. Everybody gets wet. There is no dry way to the middle of this room."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "who": "LANDING HAND",
+            "lines": [
+              "Tick, cross, fire. Read it, then move.",
+              "You will be in the water twice at least. Sooner you make your peace with that, sooner you are across."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "fmx_first_wet",
+    "_note": "ONE LINE, THE FIRST TIME THE PLAYER STEPS OFF THE ICE INTO A CHANNEL. The tiles listed are the mouths of the four channels off the landing strip, so it fires at the moment the room's argument first costs the player something, and never again.",
+    "trigger": "step",
+    "map": "frostmere_hall_cistern",
+    "onceFlag": "fm_first_wet",
+    "at": [
+      { "x": 4, "y": 2 },
+      { "x": 9, "y": 2 },
+      { "x": 14, "y": 2 },
+      { "x": 19, "y": 2 }
+    ],
+    "actions": [
+      { "kind": "sfx", "sound": "fx_water" },
+      {
+        "kind": "say",
+        "lines": [
+          "The cut is a hand's width of clear black and then the cold closes on you to the knee.",
+          "Behind you the ice you were standing on is a foot thick. It is the same water."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "fmx_cross",
+    "trigger": "step",
+    "map": "frostmere_hall_cistern",
+    "onceFlag": "fm_cross_seen",
+    "at": [
+      { "x": 4, "y": 5 },
+      { "x": 9, "y": 12 },
+      { "x": 14, "y": 6 },
+      { "x": 19, "y": 8 }
+    ],
+    "actions": [
+      {
+        "kind": "say",
+        "lines": [
+          "A cell you cannot go through, right where the shortest way through was.",
+          "The cross on it was drawn this morning, at six, by somebody who then went to bed."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "fmx_chalker",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "CHALK HAND",
+        "lines": [
+          "Nineteen. I have marked nineteen crosses that were ticks a fortnight ago."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "CHALK HAND",
+        "lines": [
+          "I do not mind the crosses. A cross is a thing I know.",
+          "It is the cells that went from tick to cross and back to tick in three days.",
+          "Ice does not do that. Ice has never once done that under this town."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "fmx_keeper",
+    "_note": "THE SIXTH CREST. Gated on hasCrest 5 the way Annik Tallow gates on four, so nobody arrives out of order; the scene is short because the Hall has already made its whole argument in tiles and the Keeper only has to name it. She reads the intake before the fight and after it, which is the same gesture Tallow makes on the great pile and is meant to rhyme with it: two Keepers in two towns whose trade is finding out what a thing is doing before putting any weight on it. Sets crest_6_taken, which is what the town's dialogue, the Hall desk and the rival ledger all read.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "hasCrest", "crest": 6 },
+        "then": [
+          {
+            "kind": "say",
+            "who": "EIRA BRAND",
+            "lines": [
+              "Stair is behind me and it only goes up. Go and be warm for an hour.",
+              "Then go up the trail. Whatever is at the top of it has been waiting longer than I have."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "if",
+            "cond": { "kind": "not", "of": { "kind": "hasCrest", "crest": 5 } },
+            "then": [
+              {
+                "kind": "say",
+                "who": "EIRA BRAND",
+                "lines": [
+                  "Five Crests before this one and you have not got them.",
+                  "I am not sending anybody back across that floor short. Go and get them. I will be here."
+                ]
+              }
+            ],
+            "else": [
+              {
+                "kind": "say",
+                "who": "EIRA BRAND",
+                "lines": [
+                  "You are wet to the knee and you came in on the only side that is open.",
+                  "So you read it. Good. Nobody who guesses gets this far -- they get to a cross and stop."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "EIRA BRAND",
+                "lines": [
+                  "Eira Brand. I read this tank at six every morning and I write down what it is doing.",
+                  "I do not decide which ice holds. People turn up here thinking that is the job."
+                ]
+              },
+              { "kind": "battleTrainer", "trainer": "fm_keeper_brand" },
+              {
+                "kind": "if",
+                "cond": { "kind": "var", "var": "last_battle_won", "op": "==", "value": 1 },
+                "then": [
+                  {
+                    "kind": "say",
+                    "who": "EIRA BRAND",
+                    "lines": ["Stand there a moment. I want to do something and it will look odd."]
+                  },
+                  { "kind": "face", "who": "fmx_keeper", "dir": "up" },
+                  { "kind": "wait", "frames": 60 },
+                  {
+                    "kind": "say",
+                    "lines": [
+                      "She lays her bare hand flat on the intake stone and leaves it there, not moving, a long time.",
+                      "Then she takes a piece of chalk out of her coat and draws a tick on it, the way you would sign a page."
+                    ]
+                  },
+                  { "kind": "face", "who": "fmx_keeper", "dir": "down" },
+                  {
+                    "kind": "say",
+                    "who": "EIRA BRAND",
+                    "lines": [
+                      "Flow is steady. That is not sentiment, that is the reading, and I take it after every fight.",
+                      "The tank does not care that we had one. It is worth remembering that somebody does not."
+                    ]
+                  },
+                  { "kind": "giveCrest", "crest": 6, "name": "Frost Crest" },
+                  { "kind": "sfx", "sound": "badge" },
+                  { "kind": "say", "lines": ["You received the FROST CREST.", "Six of eight."] },
+                  {
+                    "kind": "say",
+                    "who": "EIRA BRAND",
+                    "lines": [
+                      "It is cut out of the mere every winter and it goes back in the spring.",
+                      "Sixty-one of them have had my name on and not one of them still exists. That is the idea."
+                    ]
+                  },
+                  { "kind": "giveItem", "item": "thawcloth", "count": 3 },
+                  { "kind": "say", "lines": ["Eira handed over three Thawcloths."] },
+                  { "kind": "wait", "frames": 20 },
+                  {
+                    "kind": "say",
+                    "who": "EIRA BRAND",
+                    "lines": [
+                      "You crossed a floor that is a floor in some places and water in others and rotten in the rest.",
+                      "You did not make any of it hold. You found out which of it was holding."
+                    ]
+                  },
+                  {
+                    "kind": "say",
+                    "who": "EIRA BRAND",
+                    "lines": [
+                      "1849 is in the ledger upstairs. We cut the channels wide to get ahead of the freeze.",
+                      "The tank took in air and we lost the whole tank and half the winter with it."
+                    ]
+                  },
+                  {
+                    "kind": "say",
+                    "who": "EIRA BRAND",
+                    "lines": [
+                      "It is all the same water, {name}. Nobody ever chose which piece of it froze.",
+                      "You only ever get to choose what you do about that, and going and asking is a choice."
+                    ]
+                  },
+                  { "kind": "wait", "frames": 24 },
+                  {
+                    "kind": "say",
+                    "who": "EIRA BRAND",
+                    "lines": [
+                      "Now. I have read this lake for sixty-one years and this month it has been lying to me.",
+                      "There is a trail out of the top of this town and something Aurelian at the end of it."
+                    ]
+                  },
+                  {
+                    "kind": "say",
+                    "who": "EIRA BRAND",
+                    "lines": [
+                      "Foundation people have a cable running past it and up. I have asked twice what it draws.",
+                      "Go up. You will get further than I did, and I would very much like to be told."
+                    ]
+                  },
+                  { "kind": "setFlag", "flag": "crest_6_taken" }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

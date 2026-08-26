@@ -1,0 +1,69 @@
+{
+  "id": "skyreach_provisioner",
+  "name": "Interior",
+  "displayName": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "_design": "Everything on these shelves came up the road on somebody’s back or across the gorge on the Cradle, and the card under it says which. The rope is cheap and the glass is not.",
+  "rows": [
+    "IIIUIIIIIUIIIII",
+    "I;;;;;;;;;;;;;I",
+    "IPKKKKFKKKKF;;I",
+    "IFFFFFFFFFFF;;I",
+    "I;;FFFF;;FFFF;I",
+    "IFFFFFFFFFFFFFI",
+    "I;;;FFFFF;;;FFI",
+    "IFFFFFFFFFFFFFI",
+    "IPFFFFFFFFFFFPI",
+    "IFFFFFFFFFFFFFI",
+    "IIIIIIIDIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 7,
+      "y": 10,
+      "toMap": "skyreach",
+      "toX": 20,
+      "toY": 28,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "sp_keeper",
+      "sprite": "clerk",
+      "x": 6,
+      "y": 3,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "skyreach_shop"
+    },
+    {
+      "id": "sp_ropehand",
+      "sprite": "kid",
+      "x": 10,
+      "y": 5,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "sp_ropehand"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 8,
+      "text": [
+        "Coils of line, sorted by what each one is allowed to hold up.",
+        "KIT. FREIGHT. PEOPLE. The third bin is a different colour and always has been.",
+        "A card on it: THIS ROPE IS NOT CHEAPER BY THE YARD AND IT IS NOT GOING TO BE."
+      ]
+    }
+  ]
+}

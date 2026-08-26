@@ -1,0 +1,187 @@
+{
+  "id": "frostmere_hall",
+  "name": "Interior",
+  "displayName": "THE FROST HALL",
+  "music": "station",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "_design": "The room over the cistern, and it is two buildings at once: the office of the crew who read the town’s water, and the place everybody sleeps when a week goes bad. The bunks against the east wall are not decoration and neither is the fire.",
+  "rows": [
+    "IIIIIIIIIIIIIIIIIIIIIII",
+    "IUUfSfffffffffffffUUUUI",
+    "IkkfffffffffffffffP$$fI",
+    "IfffffffffffffffffffffI",
+    "IKKKKKffffffffffffffffI",
+    "IfffffffffffffffffffffI",
+    "IfffAEfffffĘffffAEffffI",
+    "IfffAEffffffffffAEffffI",
+    "IfffffffffffffffffffffI",
+    "IPffffffffffffffbefbefI",
+    "IfffffffffffffffffffffI",
+    "IffffffrrrffffffbefbefI",
+    "IfffffPrrrfffffffffffPI",
+    "IfffffffffffffffffffffI",
+    "IIIIIIIIIIIDIIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 11,
+      "y": 14,
+      "toMap": "frostmere",
+      "toX": 8,
+      "toY": 33,
+      "facing": "down",
+      "style": "door"
+    },
+    {
+      "x": 4,
+      "y": 1,
+      "toMap": "frostmere_hall_cistern",
+      "toX": 2,
+      "toY": 2,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "fmhall_clerk",
+      "sprite": "clerk",
+      "x": 3,
+      "y": 3,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "fmhall_clerk"
+    },
+    {
+      "id": "fmhall_reader",
+      "sprite": "netmender",
+      "x": 20,
+      "y": 3,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "fmhall_reader"
+    },
+    {
+      "id": "fmhall_offshift",
+      "sprite": "dockhand",
+      "x": 6,
+      "y": 7,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "fmhall_offshift"
+    },
+    {
+      "id": "fmhall_child",
+      "sprite": "kid",
+      "x": 12,
+      "y": 10,
+      "facing": "left",
+      "movement": {
+        "kind": "wander",
+        "radius": 2
+      },
+      "script": "fmhall_child"
+    },
+    {
+      "id": "fmhall_lodger",
+      "sprite": "townsfolk_f",
+      "x": 17,
+      "y": 10,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "fmhall_lodger"
+    },
+    {
+      "id": "fmhall_foundation",
+      "sprite": "meridian",
+      "x": 18,
+      "y": 13,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "foundation_word_liaison"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 4,
+      "y": 0,
+      "text": [
+        "Painted straight onto the boards over the stairhead, in a hand nobody has bettered:",
+        "THREE MARKS. A TICK IS ICE. A CROSS IS NOT ICE. NO MARK IS NOT ICE EITHER.",
+        "READ THE FLOOR BEFORE YOU STAND ON IT. THAT IS THE WHOLE OF THE TRADE."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 2,
+      "text": [
+        "THE INTAKE LEDGER. One page a day since 1802, and every page is the same four numbers.",
+        "DEPTH. FLOW. CUT. SOUND. Column after column of a town measuring its own water.",
+        "Somebody has gone under this building every morning for two hundred and twenty years."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 2,
+      "text": [
+        "The back of the ledger, where the numbers stop and the arguments start.",
+        "1849: CHANNELS CUT WIDE TO GET AHEAD OF THE FREEZE. THE TANK TOOK IN AIR.",
+        "1850: WE DO NOT GET AHEAD OF IT. WE FIND OUT WHAT IT IS DOING. AGREED, ALL HANDS."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 19,
+      "y": 2,
+      "text": [
+        "The chalk bench: boxes of it, graded, and a rack of the long-handled markers.",
+        "A card: SIX IN THE MORNING, EVERY CELL, EVERY DAY, WHETHER OR NOT IT CHANGED.",
+        "Under that: ESPECIALLY WHEN IT HAS NOT CHANGED. THAT IS WHEN PEOPLE STOP LOOKING."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 20,
+      "y": 2,
+      "text": [
+        "A rack of thaw pots, black with two centuries of use, hung by size.",
+        "The smallest would sit in your hands. The largest takes four people to carry.",
+        "A tally beside them: POTS ON THE ICE TODAY. The figure is higher than any year listed."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 22,
+      "y": 6,
+      "text": [
+        "Eight Bond Crests in a case, one for every Hall in Caelora.",
+        "The Frost Crest is sixth and it is the only one that is not the same twice:",
+        "it is cut from lake ice each winter and the case is a cold box with a lamp in it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 14,
+      "text": [
+        "A notice by the street door, hung at the height of a sixteen-year-old:",
+        "IF YOU ARE GOING DOWN, TELL THE DESK. IF YOU ARE COMING UP, TELL THE DESK.",
+        "NOBODY HAS DROWNED UNDER THIS HOUSE. IT IS NOT LUCK AND IT IS NOT SKILL EITHER."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "speakers": {
+    "sc_faller": "MAN WITH A STRAPPED ARM",
+    "sc_visitor": "VISITOR"
+  },
+  "entries": {
+    "sc_faller": [
+      {
+        "ifFlags": [
+          "crest_6_taken"
+        ],
+        "lines": [
+          "Gust took the plank out from under me on number four and I went down on the deck, not off it.",
+          "Nineteen years on the gantries and I have never once been surprised by the wind.",
+          "That is what is in this sling. Not the arm. The surprise."
+        ]
+      },
+      {
+        "lines": [
+          "Off a gantry. Not OFF off. On to it, hard, which is the good kind.",
+          "The bed by the window is for people who went off off. It has been empty since 1877.",
+          "Everybody who works up there knows the year. Nobody knows the name."
+        ]
+      }
+    ],
+    "sc_visitor": [
+      {
+        "lines": [
+          "I came up from Aureline on the Tuesday ship to see my sister and now there is no Friday ship.",
+          "She says stay. I would like to stay. I would like it better if staying were a choice."
+        ]
+      }
+    ]
+  }
+}

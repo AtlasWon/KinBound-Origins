@@ -1,0 +1,41 @@
+{
+  "$comment": "A mason's family in the old city. Nine of them are on the Roll, which is why the house has nine printed sets of it, and the son who is not on it is the one who cuts the names.",
+  "speakers": {
+    "cs_ha_mason": "MASON",
+    "cs_ha_wife": "WOMAN OF THE HOUSE",
+    "cs_ha_gran": "GRANDMOTHER"
+  },
+  "entries": {
+    "cs_ha_mason": [
+      {
+        "ifFlags": ["cs_roll_name"],
+        "lines": [
+          "I am cutting yours. Not today - you cannot cut into wet stone, it bruises grey at the edge.",
+          "It will be done properly. I have never once done one that was not done properly."
+        ]
+      },
+      {
+        "lines": [
+          "Nine of my family are on that wall and I am not one of them and I cut all nine.",
+          "People expect that to be sad. It has never once been sad. Ask me again in the spring."
+        ]
+      }
+    ],
+    "cs_ha_wife": [
+      {
+        "lines": [
+          "There is a stain on that ceiling that was not there last week and I do not want to discuss it.",
+          "Two basins. Two. In a house whose roof is four hundred years old and has never leaked."
+        ]
+      }
+    ],
+    "cs_ha_gran": [
+      {
+        "lines": [
+          "Third leaf, seventeen down, and a chip in the stone above it that my husband put there.",
+          "He said he wanted to be able to find me in the dark. He could, too."
+        ]
+      }
+    ]
+  }
+}

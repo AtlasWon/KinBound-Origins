@@ -1,0 +1,59 @@
+{
+  "mapId": "skyreach",
+  "$comment": "THE ONLY GRASS IN A CITY, AND IT IS THERE ON PURPOSE. Skyreach has one patch of anything living in it -- the plateau tussock on the Windward Headland, above the town, out among the masts -- and everything on this table is Gale, Spark, or the two of them together. That is not scenery. The player walks into Skyreach one Hall from the Summit, with the seventh Hall in front of them, and this is the field where they can raise the exact answer to it before they knock on the door. A Hall that specialises should always be next to the grass that arms you against it.\n\nTHE BAND IS UNDER THE HALL AND THAT IS THE WHOLE POINT. The Masthouse fights at 36-38; the tussock runs 35-42 and averages under it, so grinding here is preparation rather than a second Hall. MEASURED with tests/helpers/simulate.mjs at the level simulate.mjs's own STAGES table says the player arrives with -- L54 solo, L41 raising a team -- novice play, no items, one Kin in front, average roll and top of band: solo 100/100, 95/93, 98/97; team-raiser 97/97, 69/65, 81/77. The Flame column is the low one and it is the same shape as Route 6's 57/54 and Route 7 North's 79/78: this is Gale country and Gale is two-times on Volcatrix, which is exactly why a Cinderpaw player should want to catch something out here before they knock on the Hall door.\n\nGALECREST IS RARE AND IT IS THE CITY. Four in a hundred, at the top of the band, and it is the only fully evolved Gale/Spark Kin in Caelora. Meeting one over the masts it is named for should be an event; running into one every third step would make the headland a toll.",
+  "methods": {
+    "tallGrass": {
+      "rate": 120,
+      "slots": [
+        {
+          "species": "kestrelle",
+          "minLevel": 36,
+          "maxLevel": 39,
+          "weight": 20
+        },
+        {
+          "species": "craglide",
+          "minLevel": 37,
+          "maxLevel": 40,
+          "weight": 10
+        },
+        {
+          "species": "voltwick",
+          "minLevel": 37,
+          "maxLevel": 40,
+          "weight": 16
+        },
+        {
+          "species": "gullswift",
+          "minLevel": 36,
+          "maxLevel": 39,
+          "weight": 14
+        },
+        {
+          "species": "slatewing",
+          "minLevel": 35,
+          "maxLevel": 37,
+          "weight": 16
+        },
+        {
+          "species": "lantric",
+          "minLevel": 37,
+          "maxLevel": 39,
+          "weight": 14
+        },
+        {
+          "species": "fizzlet",
+          "minLevel": 35,
+          "maxLevel": 37,
+          "weight": 6
+        },
+        {
+          "species": "galecrest",
+          "minLevel": 40,
+          "maxLevel": 42,
+          "weight": 4
+        }
+      ]
+    }
+  }
+}

@@ -93,6 +93,14 @@
     ],
     "sw_warden": [
       {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "I told you the weather on the ridge does as it pleases. I would like that back, please.",
+          "Ramp road is shut above the second bend. Not the stone. The wind. I have never shut it for wind.",
+          "Whatever you are going north for, go the long way round and eat something first."
+        ]
+      },
+      {
         "ifFlags": ["crest_2_taken"],
         "lines": [
           "Two Crests. Kerb Street east, then, and the coast road after that.",
@@ -177,6 +185,14 @@
     ],
     "sw_carter": [
       {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "The cistern went over the lip on Tuesday and it has not stopped going over since.",
+          "Down Kerb Street, into the market, and the market is on a slope so you can watch it choose.",
+          "Four inches down in the spring and nobody thought it was a question. It is a question now."
+        ]
+      },
+      {
         "lines": [
           "The cistern's been on the square since before the terrace was cut.",
           "Fed off the mountain. Never dry, never once in living memory.",
@@ -186,6 +202,14 @@
       }
     ],
     "sw_lamplighter": [
+      {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "I light them going up and the wind has them out again before I am four lamps on.",
+          "So I have stopped. Nobody has ever seen this city dark and nobody is thanking me for it.",
+          "Come out at dusk anyway. You can see the whole of it, and there is nothing to see."
+        ]
+      },
       {
         "lines": [
           "Three hundred and forty lamps between the gate and the terrace.",

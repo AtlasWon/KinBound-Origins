@@ -1,0 +1,56 @@
+{
+  "speakers": {
+    "si_host": "INNKEEPER",
+    "si_stranded": "STRANDED TRADER",
+    "si_riggerelder": "OLD RIGGER"
+  },
+  "entries": {
+    "si_host": [
+      {
+        "ifFlags": [
+          "crest_6_taken"
+        ],
+        "lines": [
+          "Full. First time in eleven years and it is not the good kind of full.",
+          "Half of them are aeronauts who cannot fly and the other half are people they cannot take.",
+          "Sit down anyway. Nobody in Skyreach has ever been turned out of the Crosswind."
+        ]
+      },
+      {
+        "lines": [
+          "The Crosswind. We are the place you end up when you are on the wrong side at the wrong hour.",
+          "Last car off the Cradle is eleven, and about a third of this room missed it.",
+          "Nobody says anything about it. We have all missed it."
+        ]
+      }
+    ],
+    "si_stranded": [
+      {
+        "lines": [
+          "Six crates of Aurelian glass and a hold booked for Friday, and there is no Friday.",
+          "Glass does not go by road. Glass has never gone by road. That is the whole point of glass.",
+          "So I sit here, and I own six crates of the finest thing in Caelora, four hundred feet up."
+        ]
+      }
+    ],
+    "si_riggerelder": [
+      {
+        "ifFlags": [
+          "crest_7_taken"
+        ],
+        "lines": [
+          "Fenn gave you the Crest. She gave me one in 1859 and I have it upstairs in a drawer.",
+          "I was better than you at your age and I have had sixty years to be honest about that.",
+          "I was not. Sit down. I will tell you what I actually was."
+        ]
+      },
+      {
+        "lines": [
+          "Forty-one years on the masts and I have got all my fingers, which nobody believes.",
+          "You keep them by being frightened at the right times and only the right times.",
+          "The wind out there this month is the wrong times. I have not been up since the spring."
+        ]
+      }
+    ]
+  }
+}

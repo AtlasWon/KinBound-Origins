@@ -75,9 +75,23 @@
       }
     ],
     "ef_pan_walker": [
-      "I walk the water down. Four pans, one into the next, and it loses a little heat in each.",
-      "Straight off the rock it would strip the copper out of a main in a season.",
-      "My mother did this. Her mother did this. The pans are older than either of them."
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
+        "lines": [
+          "Four pans, and the rain is filling them faster than the rock is. Cold, into hot, over and over.",
+          "My mother walked this and her mother walked this and neither of them ever had to bail one out.",
+          "The pans are not for weather. Nothing in this city is for weather. There has never been any."
+        ]
+      },
+      {
+        "lines": [
+          "I walk the water down. Four pans, one into the next, and it loses a little heat in each.",
+          "Straight off the rock it would strip the copper out of a main in a season.",
+          "My mother did this. Her mother did this. The pans are older than either of them."
+        ]
+      }
     ],
     "ef_spring_keeper": [
       "The springs do not run because we are lucky. They run because something under us is breathing.",
@@ -133,8 +147,22 @@
       "We send bands and pipe collars as far as Skyreach. There is a Hall up on those cliffs roofed in our sheet."
     ],
     "ef_ash_sweeper": [
-      "Twice a month the mountain clears its throat and I have a week of work.",
-      "You get used to the sweeping. You do not get used to the taste."
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
+        "lines": [
+          "It rained on the ash. Nobody here has ever seen it rain on the ash.",
+          "It does not sweep. It sets. Every street in Emberfall has gone the colour and the weight of cement.",
+          "I have swept this city for nineteen years and today I went out with a shovel."
+        ]
+      },
+      {
+        "lines": [
+          "Twice a month the mountain clears its throat and I have a week of work.",
+          "You get used to the sweeping. You do not get used to the taste."
+        ]
+      }
     ],
     "ef_smith_wife": [
       "He comes home the colour of the road and sleeps like the dead. Forty years of it.",
@@ -162,8 +190,22 @@
       "So copper is dear and heat is free. Backwards, is it not."
     ],
     "ef_slag_child": [
-      "It is warm the whole way through. You can sit on it in the rain.",
-      "You cannot sit on the shiny bits. I only did that once."
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
+        "lines": [
+          "You cannot sit on it now. The whole heap is steaming and you cannot see your own feet.",
+          "It is not hot steam. That is the bit I do not like.",
+          "I told a grown-up and she said that is interesting and then she went indoors."
+        ]
+      },
+      {
+        "lines": [
+          "It is warm the whole way through. You can sit on it in the rain.",
+          "You cannot sit on the shiny bits. I only did that once."
+        ]
+      }
     ],
     "ef_temple_watcher": [
       {

@@ -1,0 +1,66 @@
+[
+  {
+    "id": "r9_updraft_gap",
+    "$comment": "The third bridge, and the shortest come-back-later loop in Caelora: the Gale Hall that hands over the art is at the FAR END OF THIS ROAD, so a player can see the reward from the rim at 32,13, walk twenty minutes to Skyreach, and come straight back for it. Gated on `when` rather than on a flag, so without the art the tile is an ordinary piece of rim and the board at 30,15 is the only thing that mentions it.",
+    "when": {
+      "kind": "hasArt",
+      "art": "updraft"
+    },
+    "trigger": "step",
+    "map": "route_9",
+    "at": [
+      {
+        "x": 32,
+        "y": 13
+      }
+    ],
+    "actions": [
+      {
+        "kind": "sfx",
+        "sound": "fx_wind"
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Air comes up this gap hard enough to hold snow in it. Hard enough for one crossing."
+        ]
+      },
+      {
+        "kind": "warp",
+        "map": "route_9",
+        "x": 37,
+        "y": 14,
+        "facing": "left",
+        "style": "warp"
+      }
+    ],
+    "$comment2": "NO EXPLICIT FADES. EventHost.warp does its own eighteen-frame fade out, load and fade in (src/scenes/eventHost.ts), so a fade action either side of it is a second fade fighting the first -- which is exactly what stopped the first cut of this script dead after the first line of dialogue. The warp is the whole transition."
+  },
+  {
+    "id": "r9_updraft_back",
+    "$comment": "The way off the pinnacle. It is on the cell BELOW the one the updraft sets you down on, and the thing you came for is on the cell above it -- see the note in tools/gen/route9.mjs. loadMap marks the arrival cell as already-entered, so a trigger or a pickup placed there never fires at all.",
+    "when": {
+      "kind": "hasArt",
+      "art": "updraft"
+    },
+    "trigger": "step",
+    "map": "route_9",
+    "at": [
+      {
+        "x": 37,
+        "y": 15
+      }
+    ],
+    "actions": [
+      {
+        "kind": "warp",
+        "map": "route_9",
+        "x": 32,
+        "y": 13,
+        "facing": "left",
+        "style": "warp"
+      }
+    ],
+    "$comment2": "NO EXPLICIT FADES. EventHost.warp does its own eighteen-frame fade out, load and fade in (src/scenes/eventHost.ts), so a fade action either side of it is a second fade fighting the first -- which is exactly what stopped the first cut of this script dead after the first line of dialogue. The warp is the whole transition."
+  }
+]

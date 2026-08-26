@@ -1,0 +1,57 @@
+{
+  "$comment": "The Long Gallery's voices. The room is the other seven Halls, laid out in the order the player met them, so the people standing in it are all talking about the same thing from different distances: what a Hall is for. The Steward trainers speak through their own trainer data and are not in this file.",
+  "speakers": {
+    "cs_hall_usher": "HALL USHER",
+    "cs_hall_oldclimber": "OLD CLIMBER",
+    "cs_hall_child": "BOY IN THE GALLERY",
+    "cs_hall_visitor": "VISITOR"
+  },
+  "entries": {
+    "cs_hall_usher": [
+      {
+        "ifFlags": ["crest_8_taken"],
+        "lines": [
+          "Down the stair and out through the bays, and take the long way round them if you like.",
+          "You have earned the long way round. It is the only thing anybody earns in here."
+        ]
+      },
+      {
+        "lines": [
+          "She is up there. She is always up there. Forty years and I have known her go home twice.",
+          "Read the eighth bay before you go up. It is the shortest card in the building."
+        ]
+      }
+    ],
+    "cs_hall_oldclimber": [
+      {
+        "lines": [
+          "I have stood in all eight of these bays and in seven of the real ones.",
+          "Briarbell rang the bell for me when I was nineteen. That was the easy one and I still hear it."
+        ]
+      }
+    ],
+    "cs_hall_child": [
+      {
+        "lines": [
+          "The eighth one is empty. There is a card and the card says she is not telling you.",
+          "I asked her what it was. She said come back when you are sixteen. I am nine."
+        ]
+      }
+    ],
+    "cs_hall_visitor": [
+      {
+        "ifFlags": ["cs_roll_name"],
+        "lines": [
+          "You went straight through. Four of them, no clinic. I was sitting right here.",
+          "I am going to tell people I saw that and they are not going to believe me."
+        ]
+      },
+      {
+        "lines": [
+          "I am not a Trainer. I come in on wet afternoons and read the bays and go home.",
+          "Everyone in Crownspire has done it. It is the closest most of us get to the road."
+        ]
+      }
+    ]
+  }
+}

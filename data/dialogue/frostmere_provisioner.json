@@ -1,0 +1,21 @@
+{
+  "speakers": { "fmp_ropehand": "ROPE HAND" },
+  "entries": {
+    "fmp_ropehand": [
+      {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "Nine house lengths of rope this week. Nine.",
+          "A good winter is two. People are stringing lines to doors that never had one."
+        ]
+      },
+      {
+        "lines": [
+          "I measure rope. That is my entire job and I am extremely good at it.",
+          "A house length is door to door plus two arms, and it is different for every house,",
+          "and I know all of them. Ask me one. Go on, ask me the Hall."
+        ]
+      }
+    ]
+  }
+}

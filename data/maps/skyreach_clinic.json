@@ -1,0 +1,101 @@
+{
+  "id": "skyreach_clinic",
+  "name": "Interior",
+  "displayName": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "_design": "The only clinic in Caelora with a wind gauge on the wall behind the counter, and the reason is on the ward board: four beds, and one of them is kept for people who came off a gantry rather than out of a fight.",
+  "rows": [
+    "IIIUIIIIIUIIIII",
+    "IQNFKKKKKFFF;;I",
+    "IFFFFFFFFFFFFFI",
+    "IbeFFFFFFFFFbeI",
+    "IFFFFFFFFFFFFFI",
+    "IbeFFFFFFFFFbeI",
+    "IFFFFF//FFFFFPI",
+    "IkFFFFrrFFFFFFI",
+    "IFFFFFFFFFFFFkI",
+    "IPFFFFFFFFFFFFI",
+    "IIIIIIIDIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 7,
+      "y": 10,
+      "toMap": "skyreach",
+      "toX": 12,
+      "toY": 28,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "sc_healer",
+      "sprite": "healer",
+      "x": 5,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "clinic_heal"
+    },
+    {
+      "id": "sc_roost",
+      "sprite": "professor",
+      "x": 11,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "roost_terminal"
+    },
+    {
+      "id": "sc_faller",
+      "sprite": "dockhand",
+      "x": 2,
+      "y": 4,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sc_faller"
+    },
+    {
+      "id": "sc_visitor",
+      "sprite": "villager_f",
+      "x": 12,
+      "y": 6,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sc_visitor"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 1,
+      "text": [
+        "The ward board. Four beds, and the headings have not been changed in ninety years.",
+        "TWO FOR KIN. ONE FOR WORK. ONE FOR THE GANTRIES.",
+        "Under the last heading, small and very neat: EMPTY SINCE 1877. KEEP IT SO."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "A brass wind gauge screwed to the wall behind the counter, and it is not decoration.",
+        "It is the first thing everybody in this room looks at when they come through the door.",
+        "The needle is over on the wrong side of the dial and it has been for nineteen days."
+      ]
+    }
+  ]
+}

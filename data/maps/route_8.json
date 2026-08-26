@@ -1,0 +1,412 @@
+{
+  "id": "route_8",
+  "name": "The Frostmere Road",
+  "displayName": "ROUTE 8 - THE CLIMB",
+  "music": "route_west",
+  "battleBackdrop": "highland",
+  "indoor": false,
+  "snow": 0.34,
+  "regionPos": {
+    "x": 19,
+    "y": 4
+  },
+  "encounterTable": "route_8",
+  "_design": "The road north-west out of Aureline, and the map whose whole job is to take the country away one thing at a time. It starts in the capital's own farmed plain on three lanes of macadam and ends nine miles later on two ruts of grit in the snow, and canon asks for the change to happen gradually along the road rather than at a boundary -- so the four bands overlap by six to eight columns each, the last hedge stands among the first pines, and the first snow lies in the shade of the last rocks. Nobody says the word mountain anywhere on this map.",
+  "_plan": "THREE THINGS DECIDE THE SHAPE.\n\nFIRST THE ROAD GIVES UP. Macadam, then a dirt track, then a trodden line. The surface changes where the COUNTRY changes and never at a seam, and it is the only thing on the map that tells the player how far they have come.\n\nSECOND THE AVALANCHE. A tongue of drift and snapped pine lying square across the direct line at x17-30, which is why the road now climbs north round it. It is the landmark, it is the storytelling -- this came down in a month that has never had weather in it -- and it is the reason the two cairns beyond it are worth walking to. The old road is still there underneath, and you can walk fifteen tiles of it before it stops.\n\nTHIRD THE WEATHER IS ON. snow is 0.34: a light steady fall the player can always see through, which is deliberately NOT the whiteout. This map is where they learn what the flakes mean; the pass beyond it is where it costs them something. See src/gfx/snowfall.ts.\n\nTHE OPTIONAL BRANCH is the spur north at x57-58 into the charcoal burners' hollow, which is where the rare Kin is and where the wood is wrong this year. THE COME-BACK-LATER is the scree bench at x4-10 y3-5, sealed on every side, forty feet above the road: Skyreach's Gale Hall is two settlements on and the script at the foot says so once. THE FOUNDATION STATION at x34-45 y26-34 is the public half of Meridian standing in the open with its instruments disagreeing with itself.",
+  "warps": [
+    {
+      "x": 83,
+      "y": 21,
+      "toMap": "aureline",
+      "toX": 2,
+      "toY": 54,
+      "facing": "right",
+      "style": "edge"
+    },
+    {
+      "x": 83,
+      "y": 22,
+      "toMap": "aureline",
+      "toX": 2,
+      "toY": 55,
+      "facing": "right",
+      "style": "edge"
+    },
+    {
+      "x": 83,
+      "y": 23,
+      "toMap": "aureline",
+      "toX": 2,
+      "toY": 56,
+      "facing": "right",
+      "style": "edge"
+    },
+    {
+      "x": 0,
+      "y": 9,
+      "toMap": "route_8_pass",
+      "toX": 73,
+      "toY": 29,
+      "facing": "left",
+      "style": "edge"
+    },
+    {
+      "x": 0,
+      "y": 10,
+      "toMap": "route_8_pass",
+      "toX": 73,
+      "toY": 30,
+      "facing": "left",
+      "style": "edge"
+    },
+    {
+      "x": 0,
+      "y": 11,
+      "toMap": "route_8_pass",
+      "toX": 73,
+      "toY": 31,
+      "facing": "left",
+      "style": "edge"
+    },
+    {
+      "x": 57,
+      "y": 0,
+      "toMap": "route_8_kiln",
+      "toX": 16,
+      "toY": 27,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 58,
+      "y": 0,
+      "toMap": "route_8_kiln",
+      "toX": 17,
+      "toY": 27,
+      "facing": "up",
+      "style": "edge"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "r8_drover",
+      "sprite": "villager_m",
+      "x": 76,
+      "y": 20,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r8_drover",
+      "sightRange": 3
+    },
+    {
+      "id": "r8_shepherd",
+      "sprite": "villager_f",
+      "x": 73,
+      "y": 27,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r8_shepherd"
+    },
+    {
+      "id": "r8_coachman",
+      "sprite": "porter",
+      "x": 66,
+      "y": 19,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r8_coachman"
+    },
+    {
+      "id": "r8_forester",
+      "sprite": "hiker",
+      "x": 60,
+      "y": 25,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r8_forester",
+      "sightRange": 3
+    },
+    {
+      "id": "r8_pineman",
+      "sprite": "villager_m",
+      "x": 51,
+      "y": 12,
+      "facing": "down",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "r8_pineman"
+    },
+    {
+      "id": "r8_agent",
+      "sprite": "meridian",
+      "x": 40,
+      "y": 24,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r8_agent",
+      "sightRange": 3
+    },
+    {
+      "id": "r8_hydro",
+      "sprite": "meridian_sci_f",
+      "x": 38,
+      "y": 31,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r8_hydro"
+    },
+    {
+      "id": "r8_carter",
+      "sprite": "porter",
+      "x": 34,
+      "y": 13,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r8_carter",
+      "sightRange": 3
+    },
+    {
+      "id": "r8_roadman",
+      "sprite": "villager_m",
+      "x": 31,
+      "y": 12,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r8_roadman"
+    },
+    {
+      "id": "r8_warden",
+      "sprite": "hiker",
+      "x": 11,
+      "y": 11,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r8_warden",
+      "sightRange": 4
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 72,
+      "y": 24,
+      "text": [
+        "A field gate, and a board wired to the top bar of it.",
+        "THE LAST GATE. SHUT IT BEHIND YOU. THERE IS NOTHING TO SHUT AFTER THIS ONE.",
+        "Somebody has added, in a different hand: THAT IS NOT A JOKE."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 69,
+      "y": 24,
+      "text": [
+        "A milestone, cut by the same yard that cut the ones on the Central Road.",
+        "FROSTMERE XVIII. AURELINE II.",
+        "The north face has an inch of snow on it. It is not the month for that."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 56,
+      "y": 22,
+      "text": [
+        "A forestry board at the mouth of the spur.",
+        "CHARCOAL HOLLOW. HAULAGE ONLY. NO FIRES OFF THE PIT.",
+        "The chalk under it says: BURNERS DOWN EARLY. WOOD WET. ASK ME WHY, I DO NOT KNOW."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 38,
+      "y": 25,
+      "text": [
+        "A notice bolted to the fence of the Foundation station.",
+        "MERIDIAN FOUNDATION - NORTHWEST WEATHER STATION 4. READINGS PUBLIC ON REQUEST.",
+        "Under it, a printed card: WE ARE AS SURPRISED AS YOU ARE. PLEASE DO ASK."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 44,
+      "y": 19,
+      "text": [
+        "A milestone. FROSTMERE XII.",
+        "Somebody has scratched a second line under the number: AND ALL OF IT UP."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 31,
+      "y": 17,
+      "text": [
+        "A road board at the fork, newer than everything round it.",
+        "OLD ROAD CLOSED. SLIDE. USE THE HIGH ROAD AND KEEP THE CAIRNS ON YOUR RIGHT.",
+        "The date on the corner is this year. This month."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 20,
+      "y": 12,
+      "text": [
+        "The slide, close to. Snow, shattered rock, and pine snapped off at the root.",
+        "The trees are lying with their heads pointing down the valley, all of them.",
+        "The road is somewhere under it. There is no telling how deep."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 13,
+      "y": 12,
+      "text": [
+        "A milestone, half buried, leaning downhill.",
+        "FROSTMERE V.",
+        "Somebody has dug the face clear this week and left the shovel against it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 11,
+      "y": 7,
+      "text": [
+        "A weathered board at the foot of a rock bench, forty feet up.",
+        "There is something on the shelf up there. Nothing on this face is a hold.",
+        "A gust off the col lifts loose snow up the rock and keeps it there. Not you. Not yet."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 25,
+      "y": 7,
+      "text": [
+        "A cairn, shoulder high, with a pale capstone somebody chose for being pale.",
+        "From here you can see the next one. From that one you will see the one after.",
+        "That is the whole system, and in this country it is enough."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 59,
+      "y": 9,
+      "item": "great_potion",
+      "quantity": 2,
+      "flag": "item_r8_pinewood"
+    },
+    {
+      "kind": "item",
+      "x": 76,
+      "y": 32,
+      "item": "strong_potion",
+      "quantity": 2,
+      "flag": "item_r8_pasture"
+    },
+    {
+      "kind": "item",
+      "x": 43,
+      "y": 33,
+      "item": "full_heal",
+      "quantity": 2,
+      "flag": "item_r8_station"
+    },
+    {
+      "kind": "item",
+      "x": 21,
+      "y": 25,
+      "item": "fine_vessel",
+      "quantity": 5,
+      "flag": "item_r8_below_slide"
+    },
+    {
+      "kind": "item",
+      "x": 6,
+      "y": 4,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_r8_shelf"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 65,
+      "y": 34,
+      "item": "ward_incense",
+      "quantity": 2,
+      "flag": "item_r8_hidden_wood"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 7,
+      "y": 14,
+      "item": "rouse",
+      "quantity": 2,
+      "flag": "item_r8_hidden_snow"
+    }
+  ],
+  "rows": [
+    "∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪CCCCCCCCCCCCCCCCCC∏∏∏∏∏∏∏∏∏∏--∏∏∏∏∏∏TTTTTTTTTTTTTTTTTTT",
+    "∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪CCCCCCCCCCCCCCCCCC∏∏∏∏∏∏∏∏∏∏--∏∏∏∏∏∏TTTTTTTTTTTTTTTTTTT",
+    "∪∪≋CCCCCCCCC∴∴∴∴∴∴∀∀∀≋≋≋∴∴∴∴∀CCCCCCCCCCCCCCCCCC***,,.....--......,,,,....ttTTTTTTtTT",
+    "∪∪≋C∇∇∇∇∇∇∇C∴∴∴∴∴∴∴∴∴≋≋≋∴∴∴∀∀∀∀∀∀∴∴∆∆oooo∇∇..∏∏,*,,,.\"\"\"\"--......,,,.....ttTTTTTTtTT",
+    "∪∪≋C∇∇∇∇∇∇∇C∴∴∴≋≋≋≋∴∴∴≋≋∴∀∀∀∀∀∀∀∀≋≋∆∆∆oo∇∇∇∇∏∏∏∏∏∏∏...,,,--,,,.................tttTT",
+    "∪∪∀C∇∇∇∇∇∇∇C√∴≋≋≋≋√∴∴∴≋≋√∀∀∀∀∀∀∀∀≋∆∆∆∆o∇∇∇∇∇∏∏∏∏∏∏∏∏.,,**--**,..........,,.......tTT",
+    "∪∪∀⌐⌐⌐⌐⌐⌐⌐⌐⌐∴∴≋≋≋≋≋∴∴∴≋≋∴∴∀∀∀∀√∀≋≋∆∆∆∆o∇∇∇∇∇∇∏∏∏∏∏∏∏..,**--,,...........,,........TT",
+    "∪∪≋≋∴∴√∴∴∴∴´∴∴≋≋≋∴∴∴∴≋≋≋≋´∴≋∀∀∀∀∀≋∆∆∆∆o∇∇∇∇∇∇∇∏∏∏∏∏∏..,**--.....,,,,,..,,,,.,,,...TT",
+    "∪∪≋≋∴∴∴∴∴∴∴∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫≋∀∀∀≋∴∆∆∆o∇∇∇∇∇∇\"∇∏∏∏∏∏∏.,**--.....,,,,,,.,,,,.,,,...TT",
+    "∫∫∫∫∴∫∴∴∴∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∴∴∀∴∆∆∆∇∇∇.,,\"\"\"∇∏∏∏∏...,,--\"\"\".......ttttttt......TT",
+    "∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∀∴∴∆∴∇∇..,,\"\"\"∇,∏∏∏....,--\"\"\"\".........ttttt.....TT",
+    "∫∫∫∫∫∫∫∫∫∫≋≋≋≋≋∴∴∴∆∴∴∴∴∴∴∴∫∫∫∫∫∫∫---∆∴∇∇..,,\"\"\"∇,.∏.....,--\"\"\".∏............t....tTT",
+    "∪∪≋≋∴∴∆∆≋≋≋≋≋■≋≋∆∆∆∆þ∆∆∆∆∆∆∆∫∫∫∫∫-------..,,,.,∇*.......,--**∏∏∏∏,,.......,,,..,,TTT",
+    "∪∪≋≋∴∴∴≋≋≋≋≋≋≋≋≋∆∆∆∆þ∆∆∆∆∆∆∆∆∆∫∫∫----------,,.,∇*.\".....,--**∏∏∏∏,,.......,,,..,,,TT",
+    "∪∪∴∴∴≋∴∴∴∴≋≋≋≋∴∴∆∆∆∆∆∆∆∆∆þ∆∆∆∆∆∆∴------------,,∇,\"\"\"..,,,--**∏∏∏tT.,,,,,,,,,,,,...TT",
+    "∪∪∴∴∴≋≋∴∴∴∴∴∴∴∴∴∆∆þþþ∆∆þþþ∆∆∆∆∆∆∴∴∴∴∇----------,\"\"\"\",,,*,--,*∏∏ttt.,,,*,,,,,,**...TT",
+    "∪∪∴∴∴∴∴∴∴∴∴∴∴∴∴∆∆∆∆∆∆∆∆þþþ∆∆∆∆∆∆.∇∇∇∇∇∇∇-------------------,*∏∏ttt,,,,,,,,,.,,,...TT",
+    "∪∪≋≋∴∴∴∴∴∴∴∴∴∴≋∆∆∆∆∆∆∆þþþþ∆∆∆∆≋´,∇∇∇∇..--∇-----------------,,.ttT,,,,...**.....,*,TT",
+    "∪∪∀∀∀∀∀∀∀∀∀∴∴∴≋∆∆∆∆∆∆∆þþþþ∆∆∆∆≋∆,∇∇∇∇..--∇∇∇-----------------....,,,,...,,.....,*,TT",
+    "∪∪∀∀∀∀∀∀∀∀∀∀∴∴∴≋∆∆∆∆∆∆∆∆þþ∆∆∆≋≋∆.∇∇∇∇..--∇∇∇■∇,.......-----------▦▦▦▦▦▦........,,,TT",
+    "∪∪∀∀∀∀∀∀∀∀∀∀∴∴∴≋∆∆∆∆∆∆∆∆∆þ∆∆∴∴∴∴.......--∇∇∇∇∇......,\"\"\"---------▦▦▦▦▦▦▦▦▦...,,,,,TT",
+    "∪∪∀∀∀∀∀∀∀∀∀∀∴∴∴≋∆∆∆∆∆∆∆∆∆∆∆∆∴∴∴∴,,.....--∇∇∇∇,.......\"\"\"\"\"-------▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦",
+    "∪∪∀≋∴∴∴∴∴∴∴∴≋≋≋≋≋≋≋≋≋≋∴∴∴≋≋∴∴∴∇,,,.....--.,,.........\"\"\"´\"\",,***...,,▦▦▦▦▦▦▦▦▦▦▦▦▦▦▦",
+    "∪∪≋≋∴∴∴∴∴∴∴∴≋≋≋∴∴∴≋≋≋≋∴∴∴≋≋∴∴∇∇∇,,.....--.,,.........\"\"\"\"\"\"\"\"\"**...,,,,,▦▦▦▦▦▦▦▦▦▦▦▦",
+    "∪∪∴∴∴∴∴≋≋∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴≋≋∴∴∴∇∇∇.....,,--.,,......,..\"\"\"\"\"\"\"\"\",,,,,,,■..´,,,,,\"\"\"\"TT",
+    "∪∪∴∴∴∴∴≋≋∴∴∴∴∴∴∴∴∴∴∴∴∴≋≋≋∴∴∴∴∇∇∇.....*´--,,......,,..\"\"\"\"\"\"\"\"\"..,*,,.t|___,_____\"\"TT",
+    "∪∪∴∴∴∴∴≋≋≋∴∴∴∴∴∴∴∴∴∴∴∴≋≋∴∴∴∴∴∇∇∇..¹¯¯¯¯--¯¯¯¯¹.,,....\"\"\"\"\"\"\"\"\"..,*,..t|t..,*,.\"\"\"\"TT",
+    "∪∪∴∴∴∴∴∴∴≋≋≋∴∴≋≋≋∴∴∴≋≋∴∴∴∴∴∴∴∇∇∇∇.¹∇∇∇∇∇∇∇∇∇∇¹∏∏∏∏∏∏....\"\"\"\"\"\"\".,*,..t|t..,*,...\".TT",
+    "∪∪∴∴∴∴∴∴∴≋≋≋∴∴∀∀∀∀∀∀∀∀∴∴∴∴∴∴∴∴∴∇∇.¹∇∇∇∇∇∇∇∇∇∇¹∏∏∏∏∏∏.......\"\"\"\"\"\"\",..t|t..,*,.....TT",
+    "∪∪∴∴∴∴∴∴∴≋∀∀∀∀∀∀∀∀∀∀∀∀≋∴∴∴∴∴∴∴∴∴∴.¹∇∇∇²∇∇∇²∇∇¹∏∏∏∏∏∏............\"\"\"\",T|T..,*,.....TT",
+    "∪∪≋≋∴∴∴∴∴∀∀∀∀∀∀∀∀∀∀∀∀∀∀∴∴∴∴∴∴∴∴∀∴.¹∇∇¾∇∇∇∇∇∇∇¹∏∏∏∏∏∏...............\"*T|T,,**,.....TT",
+    "∪∪≋≋∴∴∴∴∴∴∀∀∀∀∀∀∀∀∀∀∀∀∀≋∴∴∴∴∴∴∀∀∴.¹∇∇∇∇∇∇∇∇¾∇¹∏∏∏∏∏∏∏....,,........\",,,,,,**,.....TT",
+    "∪∪≋∴∴∴∴∴∴∴∀∴≋≋∴∴∴∴∀∀∀∀≋≋∴∴∴∴∴∴∴∴∇.¹∇³∇∇∇∇∇∇¾∇¹∏∏∏∏∏∏∏....,,\"\"∏∏∏ttt...,,****,...,.TT",
+    "∪∪∴∴∴∴∴∴∴∴∴∴∴≋∴∴∴∴∴∴≋≋≋≋∴∴∴∴∴∴∴∇∇∇¹∇∇∇∇∇∇∇∇∇∇¹∏∏∏∏∏∏∏....,,∏∏∏∏Ttt.t\"\"\"\"****,...,.TT",
+    "∪∪∴∴∴∴∴∴∴≋≋∴∴∴∴∴∴∴∴∴∴≋≋≋∆∴∴∴∴∴..∇∇¹¯¯¯¯¯¯¯¯¯¯¹∏∏∏∏∏∏∏....,∏∏∏∏TTt....\"\"\"\",,,,...,.TT",
+    "∪∪∴∴∴∴∴∴∴≋≋≋∴∴∴∴∴∴∴∴∴∴≋≋∆∴∴∴∴...∇∇∇∇∇∇∇∇o,...∏∏∏∏∏∏∏∏\",,,.∏∏∏tttt.....\"\"\"\",,,.....TT",
+    "∪∪∴≋≋≋≋∴∴≋≋≋∴∴∴∴∴∴∴∴∴∴≋≋∆∆∴∴∴∴,,∇∇∇∇∇∇∇oo....∏∏∏∏∏∏∏∏\",,.∏∏∏∏tTTT,....\"\"\".........TT",
+    "∪∪≋≋≋≋≋≋≋∀∀≋≋≋≋≋≋∴∴∴∴∴∴∴∆∴∴∴∴∴≋,∇∇∇∇∇∇∇∇o.,..∏∏∏\"\"\"\"\"\"∏∏∏∏∏∏∏TTTT,,..,,,..........TT",
+    "∪∪∀≋≋≋≋≋≋∀∀∀∀≋≋≋≋∴∀∀∀∀∴∴∆∴∴∴∴∴≋∴∇∇∇∇∇∇∇∇∇...∏∏.\"\"\"\"\"\"∏∏∏∏∏∏∏**\"\"**,..,,,...\"......TT",
+    "∪∪∀∀≋∴∆≋≋∴∀∀∀∀∀∴∀∀∀∀∀∴∴∴∴∴∴∴∀∀∀∀∴.....∇∴∴.......\"\"\"\"\"∏∏∏∏∏∏,..\"\",*,..,*,..\"\"\".....TT",
+    "∪∪∀∴∴∆∆∆≋∴∀∀∀∀∀∀∀∀∀∀∀∴≋≋∴∴∴∴∀∀∀∀∴∴.....∴\"∇.\"...,,\"\"\"\"∏∏∏∏∏∏...\"\",**,.,*,..\"\"\".....TT",
+    "∪∪∴∴∆∆∆∆∆∴∀∀∀∀∀∴∀∀∀∴∴∴≋≋∴∴∴∴∴∀∀∀∴∴.....∴∴∇\"\"\"...\"\"\"\".∏∏∏∏∏∏...\"\",,,..,*,...\"\".....TT",
+    "∪∪∴∴∆∆∆∆∆∴∴∴∴∴∴≋∴∴∴∴∴∴≋≋≋≋∴∴∴∀∀∀∀∴∴......∇\"\"\"\"\"\"\"\"..,∏∏∏∏∏∏,,,*\".....,,,...\",,,...TT",
+    "∪∪∴∴∆∆∆∆∴∴∴∴∴∴∴≋∴∴∀∀∴∴≋≋≋≋≋∴∴CCCCCCCCCCCCCCCCCC\"\"...,,∏∏∏∏.,,**\".....,,,....,,,...TT",
+    "∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪CCCCCCCCCCCCCCCCCC∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏TTTTTTTTTTTTTTTTTTT",
+    "∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪CCCCCCCCCCCCCCCCCC∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏∏TTTTTTTTTTTTTTTTTTT"
+  ]
+}

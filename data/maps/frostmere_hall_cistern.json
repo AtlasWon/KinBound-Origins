@@ -1,0 +1,209 @@
+{
+  "id": "frostmere_hall_cistern",
+  "name": "The Cistern",
+  "displayName": "THE CISTERN",
+  "music": "station",
+  "battleBackdrop": "cave",
+  "indoor": true,
+  "rows": [
+    "IIIIIIIIIIIIIIIIIIIIIIIII",
+    "I=S=====================I",
+    "IĪĪĘĩĪĪĪĘĩĪĪĪĪĩĘĪĪĪĩĘĪĪĪI",
+    "IĪĪĪĩĪĪĪĪĩĪĪĪĪĩĪĪĪĪĩĮĮĮĮI",
+    "IĪĪĪĩĮĮĮĮĩĪĪĪĪĩĪĪĪĪĪĪĪĪĪI",
+    "IĪĪĪĩĪĪĪĪĪĪĪĪĪĩĮĮĮĮĪĪĪĪĪI",
+    "IĮĮĮĩĪĪĪĪĪĪĪĪĪĩĪĪĪĪĩĪĪĪĪI",
+    "IĪĪĪĩĪĪĪĪĩĮĮĮĮĩĪĪĪĪĩĪĪĪĪI",
+    "IĪĪĪĪĪĪĪĪĩĮĮĮĮĮĪĪĪĪĩĪĪĪĪI",
+    "IĪĪĪĪĪĪĪĪĩĪ===ĩĪĪĪĪĩĮĮĮĮI",
+    "IĪĪĪĩĪĪĪĪĩĪ==SĪĪĪĪĪĩĪĪĪĪI",
+    "IĪĪĪĩĮĮĮĮĩĪ===ĪĪĪĪĪĩĪĪĪĪI",
+    "IĮĮĮĩĪĪĪĪĩĮĮĮĮĮĪĪĪĪĩĪĪĪĪI",
+    "IĪĪĪĩĪĪĪĪĪĪĪĪĪĩĮĮĮĮĩĪĪĪĪI",
+    "IĪĪĪĩĪĪĪĪĪĪĪĪĪĩĪĪĪĪĩĪĪĪĪI",
+    "IĪĪĪĩĪĪĪĪĩĮĮĮĮĩĪĪĪĪĪĪĪĪĪI",
+    "IĪĪĪĩĪĪĪĪĩĪĪĪĪĩĪĪĪĪĪĪĪĪĪI",
+    "IĪĪĪĩĪĮĮĮĩĪĪĪĪĩĪĪĪĪĩĮĮĮĮI",
+    "IĪĪĪĩĘĪĪĪĩĪĪĪĪĩĪĪĪĘĩĪĪĪĪI",
+    "IĪĪĪĩĪĪĪĪĩĪĪĪĪĩĪĪĪĪĩĪĪĪĪI",
+    "IIIIIIIIIIIIIIIIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 2,
+      "y": 1,
+      "toMap": "frostmere_hall",
+      "toX": 4,
+      "toY": 2,
+      "facing": "down",
+      "style": "stairs"
+    },
+    {
+      "x": 13,
+      "y": 10,
+      "toMap": "frostmere_hall",
+      "toX": 4,
+      "toY": 2,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "fmx_guide",
+      "sprite": "clerk",
+      "x": 5,
+      "y": 1,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "fmx_guide"
+    },
+    {
+      "id": "fmx_hand_a",
+      "sprite": "dockhand",
+      "x": 7,
+      "y": 3,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "fm_hall_roke",
+      "sightRange": 3
+    },
+    {
+      "id": "fmx_hand_b",
+      "sprite": "netmender",
+      "x": 9,
+      "y": 8,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "fm_hall_fell",
+      "sightRange": 3
+    },
+    {
+      "id": "fmx_hand_c",
+      "sprite": "porter",
+      "x": 17,
+      "y": 8,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "fm_hall_varn",
+      "sightRange": 3
+    },
+    {
+      "id": "fmx_hand_d",
+      "sprite": "fisher",
+      "x": 19,
+      "y": 12,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "fm_hall_slate",
+      "sightRange": 3
+    },
+    {
+      "id": "fmx_chalker",
+      "sprite": "villager_f",
+      "x": 16,
+      "y": 18,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "fmx_chalker"
+    },
+    {
+      "id": "fmx_keeper",
+      "sprite": "elder",
+      "x": 12,
+      "y": 10,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "fmx_keeper"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 0,
+      "y": 1,
+      "text": [
+        "The landing board, and it is three lines, and they are the only rule down here:",
+        "A TICK MEANS TWELVE INCHES AND YOUR WEIGHT. A CROSS MEANS FOUR AND THE DARK.",
+        "FIRE MEANS WATER. WHERE A POT IS STANDING, THERE IS NO FLOOR AND THERE NEVER WAS."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 24,
+      "y": 1,
+      "text": [
+        "A depth stick let into the tank wall and marked from the stone up.",
+        "The water is where the water is; the ice on it is a different measurement entirely.",
+        "Both are read at six. One of them has been the same number for eleven days."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 4,
+      "y": 0,
+      "text": [
+        "A thaw pot on the landing, banked and waiting, with a sack of the blue beside it.",
+        "A card: TWO HOURS TO OPEN A CELL. ONE NIGHT FOR IT TO CLOSE AGAIN.",
+        "We do not win this. We keep asking, and it keeps answering, and that is the job."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 0,
+      "y": 10,
+      "text": [
+        "Somebody has scratched into the tank wall at the waterline, small and deliberate:",
+        "IT IS ALL THE SAME WATER.",
+        "It has been gone over with chalk so often the letters stand out of the stone."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 22,
+      "y": 6,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_fmx_a"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 2,
+      "y": 18,
+      "item": "ward_incense",
+      "quantity": 1,
+      "flag": "item_fmx_b"
+    },
+    {
+      "kind": "item",
+      "x": 6,
+      "y": 14,
+      "item": "great_potion",
+      "quantity": 2,
+      "flag": "item_fmx_c"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 21,
+      "y": 15,
+      "item": "dusk_vessel",
+      "quantity": 3,
+      "flag": "item_fmx_d"
+    }
+  ],
+  "_plan": "ONE SUBSTANCE IN THREE STATES, AND THE PLAYER NEEDS TWO OF THEM.\n\nFive Halls exist already: a lesson about strategy, a working mine, a flooded\nstone tank, a forge, and something patient over a marsh. What only ice gives\nyou is that it is a floor which USED TO BE WATER and is going to be water\nagain, and that its thickness is the one property of a floor you can read off\nthe surface. So this room is the town cistern in the third week of a winter\nthat has gone wrong, and it is chalked.\n\nTHREE MARKS AND NOTHING ELSE TO LEARN. A tick is sound ice and you may stand\non it. A cross is failed ice: SOLID, black underneath, and it is solid on\npurpose -- a misread in this Hall costs a walk and never a life, and the mark\nis on the tile so nobody has to learn it by falling through. A thaw pot is\nstanding where the crew have opened a channel, and where a pot is standing\nthere is no floor at all. The rule is posted twice before a foot goes on the\nice: over the stairhead upstairs, and on the landing board at 0,1.\n\nNEITHER MEDIUM CROSSES THE ROOM AND THAT IS THE WHOLE DESIGN. The four\nchannels are broken where the crew stopped needing them, so a wader is put out\nonto the ice twice. Every ice strip is barred twice by failed cells, so a\nwalker is put into the water. The shortest route to Eira Brand changes medium\nSIX times and the build fails if it ever changes fewer than four -- see the\nverifier in the generator. The last four cells round the intake are crossed on\nevery side, so whoever reaches the Keeper arrives out of the water. That is\nthe only ending this room could have had.\n\nWADE IS THE FLOOR AND IT IS NOT FREE. The channels are collision 2 and\nfreeWade is deliberately not set: the art Marit Vane gave for the third Crest\nis what lets a player off the ice here, three Halls later. Crest 5 gates this\none, so nobody can arrive without it.\n\nNOBODY IS STRANDED AND NOTHING IS ONE-WAY. Every lane is walked both ways. The\nstair at 2,1 is the way in and the stair at 13,10 stands on the intake behind\nthe Keeper, so a winner does not re-walk the tank. There are no wild\nencounters in this room at all.\n\nFOUR HANDS AND TWO OF THEM ARE OPTIONAL, which is stated here because it is\nthe number the difficulty was measured against. Roke stands on the north ice\nwhere most players step off the landing and Fell stands IN the channel that\nthe intake is entered from, so those two are the toll. Ordway and Slate are on\nthe east side, which is a longer route to the same place and pays two items\nfor taking it.\n\nWHY THE KEEPER IS SAT ON A REservoir INTAKE AND NOT ON A DAIS. Eira Brand\nreads this floor at six every morning and writes down what it is doing. She\ndoes not decide which ice holds. A Hall about bond against control, in a town\nthat lives by a lake, has to be run by somebody whose entire trade is finding\nout what a thing is already doing before putting any weight on it -- and the\nsentence scratched at the waterline is the room saying it in five words."
+}

@@ -1,0 +1,78 @@
+{
+  "_note": "THE WINTER HALL. Storm variants gated on act4_done, as data/dialogue/common.json sets out. The Foundation lead in here is deliberately not a villain and does not know she is one: she is a good scientist who has been told to stop asking about her own cable, and everything she says is true.",
+  "speakers": {
+    "fmi_host": "INNKEEPER",
+    "fmi_cutter": "OFF-SHIFT CUTTER",
+    "fmi_metlead": "STATION LEAD",
+    "fmi_traveller": "TRAVELLER"
+  },
+  "entries": {
+    "fmi_host": [
+      {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "Sixteen bunks, and eleven of them are Frostmere people this week.",
+          "That is not a busy inn. That is four houses with no fire in them.",
+          "Nobody has said a word about it and nobody is going to. Sit where you like."
+        ]
+      },
+      {
+        "lines": [
+          "The board is fuel, not money. If your name is on it you are already welcome.",
+          "There is no ledger for this and there never has been. It would only embarrass people."
+        ]
+      }
+    ],
+    "fmi_cutter": [
+      {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "Six generations. My grandmother cut through a winter with a broken arm.",
+          "I have cut nine days out of forty and I am the best hand on the shore.",
+          "It is not me. I keep having to say that to myself in the actual words."
+        ]
+      },
+      {
+        "lines": [
+          "You cut with the grain of the freeze, always. Against it and the block shatters.",
+          "You cannot see the grain. You find it with the saw, in the first inch, every time.",
+          "Forty years and I still find it. I have never once known it before I started."
+        ]
+      }
+    ],
+    "fmi_metlead": [
+      {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "I have eleven identical days of readings and no explanation I would put my name on.",
+          "Weather is a system. Systems do not sit still. This one is sitting still.",
+          "I have written that sentence to Aureline four times and had four acknowledgements."
+        ]
+      },
+      {
+        "lines": [
+          "Foundation, but the boring end of it. Barometers. Nobody bothers us up here.",
+          "We have a station on the shoulder and another set higher, on the old cut.",
+          "That one is not weather. That one is somebody else's project and it draws power."
+        ]
+      }
+    ],
+    "fmi_traveller": [
+      {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "Averra is a big place and I have been over a good deal of it, so believe me:",
+          "the sea off Tideglass is wrong, the wetlands are wrong, and this lake is wrong.",
+          "Three regions. Same month. I do not have a theory. I have a route and I am changing it."
+        ]
+      },
+      {
+        "lines": [
+          "Nine towns in the world sell ice and this is the only one that is not lying about it.",
+          "The rest cut river and call it lake. You can taste the difference and I do.",
+          "I come four weeks over a mountain for it. Say that out loud and it sounds mad."
+        ]
+      }
+    ]
+  }
+}

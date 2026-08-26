@@ -1,0 +1,45 @@
+[
+  {
+    "id": "r8_updraft_shelf",
+    "$comment": "The scree bench above the road at 4-10,3-5, sealed on every side by rock. THIS IS THE ROUTE'S PROMISE TO COME BACK, and it is built out of a step trigger and a `when` gate rather than out of anything the engine had to learn. Walk onto 7,7 without the art and nothing happens at all -- the schema says a script whose `when` fails does nothing -- and the board at 11,7 is what tells the player why. Walk onto it with the art and the gust off the col that the board describes puts them on the shelf. The cornice along 3-11,6 is a one-way ledge, so the way down is the way down and needs no script.",
+    "when": {
+      "kind": "hasArt",
+      "art": "updraft"
+    },
+    "trigger": "step",
+    "map": "route_8",
+    "at": [
+      {
+        "x": 7,
+        "y": 7
+      }
+    ],
+    "actions": [
+      {
+        "kind": "sfx",
+        "sound": "fx_wind"
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The gust off the col comes up the rock face and does not stop at the top of it."
+        ]
+      },
+      {
+        "kind": "warp",
+        "map": "route_8",
+        "x": 7,
+        "y": 4,
+        "facing": "up",
+        "style": "warp"
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Forty feet up, on a bench of scree nobody has stood on in a long time."
+        ]
+      }
+    ],
+    "$comment2": "NO EXPLICIT FADES. EventHost.warp does its own eighteen-frame fade out, load and fade in (src/scenes/eventHost.ts), so a fade action either side of it is a second fade fighting the first -- which is exactly what stopped the first cut of this script dead after the first line of dialogue. The warp is the whole transition."
+  }
+]

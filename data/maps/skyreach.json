@@ -1,0 +1,723 @@
+{
+  "id": "skyreach",
+  "name": "Skyreach",
+  "displayName": "SKYREACH",
+  "music": "station",
+  "battleBackdrop": "highland",
+  "indoor": false,
+  "encounterTable": "skyreach",
+  "regionPos": {
+    "x": 27,
+    "y": 7
+  },
+  "_design": "SEVENTEEN THOUSAND PEOPLE ON BOTH SIDES OF A HOLE. Every other settlement in Caelora is a shape drawn on ground; this one is two shapes drawn on two cliffs with nothing between them, and the nothing is the design. The map is painted in that order and has to be read in it: the rock masses first, the walkable ground CARVED out of them second, the city stamped on third, and whatever is still untouched at the end is air. There is more air on this map than there is town.\n\nWHAT THE VOID DOES TO WALKING. The player can see the entire far side of Skyreach from the moment they arrive and cannot touch any of it. Distance here is not measured in tiles, it is measured in crossings, and there are only four: the LONG SPAN at row 44, fifteen tiles of plank and the only way anything heavy goes across; the CATWALK at row 6, one tile wide over the head of the gorge where the walls nearly meet, which the turbine crews use and nobody else does; THE CRADLE, the cable car, which is a pair of doors and turns a two-hundred-tile walk into one step; and the PIN bridge, which goes to a rock with nothing on it but an item and a very old cut.\n\nA CITY WITH NO STREET PLAN, BECAUSE THERE IS NOWHERE TO PUT ONE. Cragside on the west wall is cut granite and cobble and the only cart road in the city, and it is the old town for the simple reason that the west wall is the one you can drive up. The Rigging on the east wall is glass, plinth and steel decking, and it exists because the wind does, and it could not have existed a hundred years ago. Between them the two halves of Skyreach argue with each other in materials across four hundred feet of nothing, and neither of them can reach the other without a bridge somebody paid for.",
+  "_plan": "THE FOUR CROSSINGS, AND WHAT EACH ONE IS FOR.\n\n  LONG SPAN   32..46, rows 44-45. Two planks wide, no rail on the deck, and the reason Skyreach has an economy. It lands on the Hall's own shelf, so the player's first crossing puts them at the door of the seventh Hall whether they were going there or not.\n  CATWALK     33..38, row 6. One tile wide. The gorge is five tiles across at its head and the crews have been walking over it since before the docks existed. Nothing marks it, nothing rails it, and it is the shortest way from the turbine field to the airship apron.\n  THE CRADLE  the cable car: a door on the headland lip at 25,16 and a door on the dock apron at 50,16, with skyreach_lift as the car between them. This is the elevator answer. The two stations are eight tiles apart across the gorge and about two hundred and forty tiles apart on foot, and the ride is one step. It is the single largest thing anybody in this city ever built and it is drawn as two sheds.\n  PIN BRIDGE  38..45, row 16. A dead end on purpose, and paid for.\n\nAND THE THING THAT IS NOT A CROSSING. The old lower dock stands on its own stack at 34..37 / 28..31, four tiles of air off the Cragside lookout, with a lamp still burning on it. There is no bridge and there is not going to be one. It is the only place in Skyreach the player can see clearly and will never stand on, and the sign on the lookout rail says so plainly rather than promising a traversal art that may never exist. A city built over a hole should have exactly one thing in the hole that it lost.\n\nWHY THE CLINIC AND THE PROVISIONER ARE BOTH ON THE ROAD. Because in a town where half the streets are air, hunting for a clinic is not exploration, it is a walk back across a bridge. They are eight tiles apart on the one cart road, on the side the player arrives on, above the gate.\n\nWHERE THE RAILS ARE AND WHERE THEY ARE NOT. A rail is solid, so railing every lip would put the whole city behind a fence and cost the map the thing it is for. The lips say what they are with a cliff face and then black, which nowhere else in Caelora does; rails go only on the lookout, which is a balcony people lean on, and on the two ends of the Long Span, which are the two places somebody queues.\n\nNO WILD ENCOUNTERS AND NO TRAINERS IN THE STREET. Skyreach is a city, the Hall is where the fighting is, and the road agents either side own the grass.",
+  "rows": [
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC⊗⊗ ⊗⊗CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC⊗⊗ ⊗⊗CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC⊗⊗ ⊗⊗CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC⊗⊗ ⊗⊗CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCC∇∧∧∇∧=²=∧∧∧=²=∧∧▒=²=∧∇∧∧∇∇∧∧∧∇C⊗⊗⊗⊗⊗CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCC∇∧∧∇∇=³=∧∇∇=³=∧∇▒=³=∇=²=∇∇∇∇∇∇C⊗⊗⊗⊗⊗CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCC∇∇∇∇∇▒∇∇∇∇∇∇∇∇∇∇▒∇∇∇∇========∋∈∈∈∈∈∈=========CCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCC∇∧∧∇∇▒∇∇∧∧∧∇∆∇∇∧▒∧∇∇∧=∧▒∆∇∇∇∇∇C⊗⊗⊗⊗⊗CCCCCCCC▤▤▤▤▤▤═════════════════════CCCC",
+    "CCC∇vvvvvvvvv∇∇∇∇∇∇▒∇∇∇∇=∇▒√∇∇∇∇∇C⊗⊗⊗⊗⊗CCCCCCCC▤▤▤☼▤▤┌──┐══════┌──┐═════☼═CCCC",
+    "CCC∇vyvvvvyvv∇∇∇∇∇∇▒∇∇∇∇=²=∇∇C⊗⊗⊗⊗⊗⊗ ⊗⊗⊗⊗⊗⊗⊗⊗⊗▥▤▤▤▤▤▤█▓▓█══════█▓▓█═══════CCCC",
+    "CCC▒lnnnnnnnl▒▒▒▒▒▒▒▒▒▒▒=³=▒▒C⊗⊗⊗⊗⊗⊗ ⊗⊗⊗⊗▥▤▤▤▤▤▤▤▤¾¾▤▄▄▄▄══════▄▄▄▄══¾¾¾══CCCC",
+    "CCC∇lnnqunnnl∇∇∇∇∇∇∇∇∇∇∇∇∇▒∇∇C⊗⊗       ⊗⊗▥▤▤▤▤▤▤▤▤▤▤▤════════☼════════════CCCC",
+    "CCC==========´=======☼=∇∇∇▒∇∇C⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗▥☼´▤▤▤▤═════════════════════CCCC",
+    "CCC====================∇∇∇▒∇∇C⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗▥▥▤▤▤▤▤══════CCC════════════CCCC",
+    "CCC∇¶±±±±±±±±±¶∇∇∇∇∇===<%%%>∇C⊗⊗⊗CCCCCC⊗⊗⊗⊗⊗⊗⊗▥▥▤▤▤▤▤══════CCC════════════CCCC",
+    "CCC∇÷∇∇∇∇∇∇∇∇▒∇∇∇∇∇∇===HZdZH∇C⊗⊗⊗C░░´░C⊗⊗⊗⊗⊗⊗⊗▥▥┌──┐▤══════┌───┐══════════CCCC",
+    "CCC∇÷∇∇∇∇∇=²=▒∇∇∇∇∇∇===HZiZH∇C⊗⊗⊗C░░░░BBBBBBBB▥▥█▓╬█▤CCCCCC█▓▓▓█CCCC═══¾¾═CCCC",
+    "CCC▒÷▒▒▒▒▒=³=▒▒▒=²=▒=========C⊗⊗⊗C░░░░C⊗⊗⊗⊗⊗⊗⊗▥▥▤▤▤▤▤CCCCCC▄▄╬▄▄CCCC═══¾¾═CCCC",
+    "CCC∇÷∇∇∇∇∇∇∇∇▒∇∇=³=∇=========C⊗⊗⊗CCCCCC⊗⊗⊗⊗⊗⊗⊗▥▥▤▤▤▤▤═════════════════════CCCC",
+    "CCC∇∧∧∇∧∆∇∇∧∧▒∇∧∧∧∇∇===∧∇∧▒∧∇C⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗▥▥▤▤▤▤▤═════════════════════CCCC",
+    "CCC∇∇∇∇∇∇√∇∇=²=∇∇∇∇∇===∇∇∇▒∇∇C⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗▥══════════════☼════════════CCCC",
+    "CCC∇∇∇====☼=====☼===○○=∇∇∇∇∇∇C⊗⊗       ⊗⊗▥▤▤▤▤▤═══☼════¾¾¾¾═════════════☼═CCCC",
+    "CCCCCC▬▬=CCCCCCCCSSC○○CCCCCCCC⊗⊗       ⊗⊗▥▤▤▤▤▤═════════════════¾¾════════CCCC",
+    "CCC░░░░░░░░░░░░░░░░░░░░⊗⊗⊗⊗⊗⊗⊗⊗⊗       ⊗⊗⊗⊗⊗⊗⊗▥═══════════════════════════CCCC",
+    "CCC░☼░░░♣░░░░☼░░░♣░░░☼░⊗⊗⊗⊗⊗⊗⊗⊗⊗       ⊗⊗⊗⊗⊗⊗⊗C═══════════════════════════CCCC",
+    "CCC░░░▬▬░144443░░6999998⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗  ⊗⊗CC░░☼░░░░░♦░☼░░░░░░░☼░░░♦░░░☼░CCCC",
+    "CCC░░░▬▬░122523░░6770778╫╫╫╫╫C⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗  ⊗⊗CC░░░░┌───┐░░░┌────┐░░░░░░░░░░CCCC",
+    "CCC░░░▬▬░GGhgGG░░GGmgGGG═════╫⊗⊗CCCCCC⊗⊗  ⊗⊗CC░░░░█▓▓▓█░░░█▓▓▓▓█░░▌▌▐▌▌░░░CCCC",
+    "CCC════════════════════░═════╫⊗⊗C▤▤▤▤C⊗⊗  ⊗⊗CC░░░░█▓▓▓█░░░▄▄▄▄▄▄░░▌▌╬▌▌░░░CCCC",
+    "CCC═☼══════♦═☼═════♦═☼═C══☼══╫⊗⊗C☼▤▤▤C⊗⊗  ⊗⊗CC░░░░▄▄╬▄▄░░░░░░░░░░░░░░░░░░░CCCC",
+    "CCC░░░▬▬░░░░░░░░░░░░░░░C╫╫╫╫╫C⊗⊗C▤▤▤▤C⊗⊗  ⊗⊗CC░░░░░░░░░░░░<%%%%>░░░(&&&)░░CCCC",
+    "CCC▪▫▪▪▫▪▪▫▪░░▪▫▪▪▫▪▪▫▪▪▫░⊗⊗⊗⊗⊗⊗C▤▤▤▤C⊗⊗  ⊗⊗CC░░░░░░♣░░♣░░HZdZdH░░░MdMdM░░CCCC",
+    "CCC▪▫▪▪▫▪▪▫▪░░▪▫▪▪▫▪▪▫▪▪▫░⊗⊗⊗⊗⊗⊗C╫╫╫╫C⊗⊗  ⊗⊗CC░░░░░░░░░░░░MZZZZM░░░MZZZM░░CCCC",
+    "CCC▪▪◘▪▪▪◘▪▪░░▪▪◘▪▪▪▪▪◘▪▪░⊗⊗  ⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗  ⊗⊗CC░░☼░░░░░░░☼░░░░░░░☼░░░░░░░☼░CCCC",
+    "CCC☼═════════☼══════════☼═⊗⊗  ⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗  ⊗⊗CC════════════════════════════CCCC",
+    "CCC░░░▬▬░<%%%%>░░░(&&&)░░░⊗⊗              ⊗⊗⇓⊗⊗⊗CC░☼░░░░░░░░░☼░░░░░░░░░☼░░CCCC",
+    "CCC░░░▬▬░HZdZdH░░░MdMdM░░░⊗⊗              ⊗⊗⇓⊗⊗⊗CC░░▪▫▪▪▫▪▪▫▪░░░▪▫▪▪▫▪▪▫▪░CCCC",
+    "CCC░░░▬▬░HZiZZH░░░MZiZM░░░⊗⊗⊗⊗⊗⊗⊗⊗        ⊗⊗⇓⊗⊗⊗CC░░▪▫▪▪▫▪▪▫▪░░░▪▫▪▪▫▪▪▫▪░CCCC",
+    "CCC☼════════════☼═══════☼═⊗⊗⊗⊗⊗⊗⊗⊗        ⊗⊗⇓⊗⊗⊗CC░░▪▪▪▪▪▪▪▪▪░░░▪▪▪▪▪▪▪▪▪░CCCC",
+    "CCC░░░░░░░░░░░░░░░░░░░░░░░░░░░░░⊗⊗        ⊗⊗⇓⊗⊗⊗CC══════════´═════════════CCCC",
+    "CCC░☼░░░░░░♦░░░░☼░░░░♦░░░░░░☼░░░⊗⊗        ⊗⊗⇓⊗⊗⊗CC░░░░=²=░░░=²=░░░=²=░░=²=CCCC",
+    "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬C⊗⊗        ⊗⊗⇓⊗⊗⊗CC░░░░=³=░░░=³=░░░=³=░░=³=CCCC",
+    "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬C⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⇓⊗⊗⊗CC░☼░░░░♦░░░░☼░░░░░░░░░░░☼CCCC",
+    "CCC░░´░░░░░░░░░░░░░░░░░SS═´═════⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⇓⊗⊗⊗CCCCCCCCCCCCCCCCCCCCCCSSCCCCCC",
+    "CC▪▪▫▪▪░░░░░░░░░░░░░░░░░░═══════BBBBBBBBBBBBBBB══════════┌────┐═══════════CCCC",
+    "CC▪▪▫▪▪░░▪▫▪▪▫▪▪░░░░░░░░░═══════BBBBBBBBBBBBBBB═════════█▓▓▓▓▓▓█══════════CCCC",
+    "CC▪▪▪▪▪░░▪▫▪▪▫▪▪░░░░░░░░░════╫╫╫⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗╫══☼═════█▓▓▓▓▓▓█══☼═══════CCCC",
+    "CCC░░░░░░▪▪◘▪▪◘▪░░░░░░░░░░░░░░░░⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗╫════════█▓▓▓▓▓▓█══════════CCCC",
+    "CCC═☼════════☼══════════☼═░░░░░░⊗⊗           ⊗⊗╫════════▄▄▄╬╬▄▄▄══════════CCCC",
+    "CCC░░░░░░░░░░░░░░░░░░░░░░░CC⊗⊗⇓⊗⊗⊗       ⊗⊗⊗⊗⊗⊗╫══☼═══════════════════☼═══CCCC",
+    "CCC░░¾¾░░░░░░░░░░<%%%>¾¾░░CC⊗⊗⇓⊗⊗⊗       ⊗⊗⊗⊗⊗⊗═══════════════════════════CCCC",
+    "CCC░░¾¾░░░░░░░░░░HZdZH░░░░CC⊗⊗⇓⊗⊗        ⊗⊗C░╫░░░░░░░░░░░░░░▬▬´░░░░░░░░░░░CCCC",
+    "CCC░░░░░░░░░░░░░░HZiZH░░░░CC⊗⊗⇓⊗⊗        ⊗⊗C░░░░░░░░░░░░░░░░▬▬░░░░▪▫▪▪▫▪░░CCCC",
+    "CCC═════════☼═══════════☼═CC⊗⊗⇓⊗⊗        ⊗⊗C░╫░░░░░░◆░░░░░░░▬▬░░░░▪▪◘▪▪▪░░CCCC",
+    "CCC░░░░░░¾¾¾░░░░░░░░░░░░░░CC⊗⊗⇓⊗⊗        ⊗⊗C░░░░░░☼░░░░░☼░░░▬▬░░♦░░░░░☼░░░CCCC",
+    "CCC░░░░░░░░░░░░░░░░░░░░░░░CC⊗⊗⇓⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗C░╫░░░░░░░░░░░░░░▬▬░░░░░░░░░░░░CCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCC⊗⊗⇓⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗CCCCCCCCCCCCCCCCC▬▬CCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC▬▬CCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC▬▬CCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC▬▬CCCCCCCCCCCCCCCC"
+  ],
+  "warps": [
+    {
+      "x": 0,
+      "y": 41,
+      "toMap": "route_9",
+      "toX": 62,
+      "toY": 24,
+      "facing": "left",
+      "style": "edge"
+    },
+    {
+      "x": 0,
+      "y": 42,
+      "toMap": "route_9",
+      "toX": 62,
+      "toY": 25,
+      "facing": "left",
+      "style": "edge"
+    },
+    {
+      "x": 60,
+      "y": 59,
+      "toMap": "route_10",
+      "toX": 20,
+      "toY": 2,
+      "facing": "down",
+      "style": "edge"
+    },
+    {
+      "x": 61,
+      "y": 59,
+      "toMap": "route_10",
+      "toX": 21,
+      "toY": 2,
+      "facing": "down",
+      "style": "edge"
+    },
+    {
+      "x": 12,
+      "y": 27,
+      "toMap": "skyreach_clinic",
+      "toX": 7,
+      "toY": 10,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 20,
+      "y": 27,
+      "toMap": "skyreach_provisioner",
+      "toX": 7,
+      "toY": 10,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 11,
+      "y": 37,
+      "toMap": "skyreach_inn",
+      "toX": 8,
+      "toY": 12,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 20,
+      "y": 37,
+      "toMap": "skyreach_house_a",
+      "toX": 5,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 19,
+      "y": 52,
+      "toMap": "skyreach_house_b",
+      "toX": 5,
+      "toY": 8,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 7,
+      "y": 11,
+      "toMap": "skyreach_turbinehouse",
+      "toX": 9,
+      "toY": 13,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 8,
+      "y": 11,
+      "toMap": "skyreach_turbinehouse",
+      "toX": 10,
+      "toY": 13,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 25,
+      "y": 16,
+      "toMap": "skyreach_lift",
+      "toX": 0,
+      "toY": 3,
+      "facing": "right",
+      "style": "door"
+    },
+    {
+      "x": 50,
+      "y": 16,
+      "toMap": "skyreach_lift",
+      "toX": 10,
+      "toY": 3,
+      "facing": "left",
+      "style": "door"
+    },
+    {
+      "x": 61,
+      "y": 17,
+      "toMap": "skyreach_dockoffice",
+      "toX": 8,
+      "toY": 12,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 68,
+      "y": 28,
+      "toMap": "skyreach_market",
+      "toX": 9,
+      "toY": 12,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 59,
+      "y": 48,
+      "toMap": "skyreach_hall",
+      "toX": 8,
+      "toY": 14,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 60,
+      "y": 48,
+      "toMap": "skyreach_hall",
+      "toX": 9,
+      "toY": 14,
+      "facing": "up",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "sr_gatewarden",
+      "sprite": "concord",
+      "x": 4,
+      "y": 43,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sr_gatewarden"
+    },
+    {
+      "id": "sr_carter",
+      "sprite": "porter",
+      "x": 8,
+      "y": 51,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sr_carter"
+    },
+    {
+      "id": "sr_kite_child",
+      "sprite": "kid",
+      "x": 22,
+      "y": 45,
+      "facing": "right",
+      "movement": {
+        "kind": "wander",
+        "radius": 2
+      },
+      "script": "sr_kite_child"
+    },
+    {
+      "id": "sr_spanhand",
+      "sprite": "dockhand",
+      "x": 28,
+      "y": 44,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sr_spanhand"
+    },
+    {
+      "id": "sr_stonecutter",
+      "sprite": "villager_m",
+      "x": 6,
+      "y": 34,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sr_stonecutter"
+    },
+    {
+      "id": "sr_ropewright",
+      "sprite": "netmender",
+      "x": 15,
+      "y": 30,
+      "facing": "down",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "sr_ropewright"
+    },
+    {
+      "id": "sr_elder",
+      "sprite": "elder",
+      "x": 5,
+      "y": 24,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sr_elder"
+    },
+    {
+      "id": "sr_lookout_watch",
+      "sprite": "villager_f",
+      "x": 25,
+      "y": 29,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sr_lookout_watch"
+    },
+    {
+      "id": "sr_gossip",
+      "sprite": "townsfolk_f",
+      "x": 18,
+      "y": 29,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "sr_gossip"
+    },
+    {
+      "id": "sr_mastwright",
+      "sprite": "hiker",
+      "x": 15,
+      "y": 21,
+      "facing": "up",
+      "movement": {
+        "kind": "pace",
+        "axis": "x",
+        "distance": 3
+      },
+      "script": "sr_mastwright"
+    },
+    {
+      "id": "sr_weatherhand",
+      "sprite": "meridian_sci_f",
+      "x": 10,
+      "y": 12,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sr_weatherhand"
+    },
+    {
+      "id": "sr_cradle_west",
+      "sprite": "dockhand",
+      "x": 24,
+      "y": 18,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sr_cradle_west"
+    },
+    {
+      "id": "sr_catwalk_crew",
+      "sprite": "porter",
+      "x": 30,
+      "y": 6,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sr_catwalk_crew"
+    },
+    {
+      "id": "sr_cradle_east",
+      "sprite": "dockhand",
+      "x": 50,
+      "y": 18,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sr_cradle_east"
+    },
+    {
+      "id": "sr_dockmaster",
+      "sprite": "sailor",
+      "x": 58,
+      "y": 19,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sr_dockmaster"
+    },
+    {
+      "id": "sr_loader",
+      "sprite": "porter",
+      "x": 57,
+      "y": 22,
+      "facing": "up",
+      "movement": {
+        "kind": "pace",
+        "axis": "x",
+        "distance": 3
+      },
+      "script": "sr_loader"
+    },
+    {
+      "id": "sr_aeronaut",
+      "sprite": "sailor",
+      "x": 54,
+      "y": 11,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sr_aeronaut"
+    },
+    {
+      "id": "sr_freight_agent",
+      "sprite": "merchant",
+      "x": 70,
+      "y": 21,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sr_freight_agent"
+    },
+    {
+      "id": "sr_engineer",
+      "sprite": "meridian_sci",
+      "x": 60,
+      "y": 41,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sr_engineer"
+    },
+    {
+      "id": "sr_shop_child",
+      "sprite": "kid",
+      "x": 66,
+      "y": 29,
+      "facing": "left",
+      "movement": {
+        "kind": "wander",
+        "radius": 2
+      },
+      "script": "sr_shop_child"
+    },
+    {
+      "id": "sr_windwright",
+      "sprite": "townsfolk_m",
+      "x": 55,
+      "y": 33,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sr_windwright"
+    },
+    {
+      "id": "sr_hall_crier",
+      "sprite": "clerk",
+      "x": 55,
+      "y": 49,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sr_hall_crier"
+    },
+    {
+      "id": "sr_roadwarden",
+      "sprite": "concord",
+      "x": 59,
+      "y": 54,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sr_roadwarden"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "script",
+      "x": 5,
+      "y": 43,
+      "text": [
+        "THE ROAD GATE. SKYREACH. SEVENTEEN THOUSAND, GIVE OR TAKE THE SHIPS.",
+        "Below that, in the same paint and a much older hand:",
+        "NOTHING ON WHEELS CROSSES THE SPAN. UNLOAD HERE. THIS IS NOT NEGOTIABLE."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 26,
+      "y": 43,
+      "text": [
+        "THE LONG SPAN. Fifteen lengths of pine on four iron chains, rebuilt in 1874.",
+        "A weight board at the head of it, and the numbers are small and very exact.",
+        "Under them somebody has painted: LOOK AT THE FAR END, NOT AT YOUR FEET."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 28,
+      "y": 26,
+      "text": [
+        "THE CRAGSIDE LOOKOUT. There is a lamp burning on the stack across the gap.",
+        "The card wired to the rail: THAT IS THE LOWER DOCK. IT HAS NO BRIDGE.",
+        "THE STAIR WENT IN 1889. WE LIGHT THE LAMP BECAUSE SOMEBODY ALWAYS HAS."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 29,
+      "y": 28,
+      "text": [
+        "Four tiles of air, and on the far side a deck somebody sanded and oiled.",
+        "The rail either side of you has been worn pale by hands. Not by leaning.",
+        "By holding on and looking, which is a different grip and it shows."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 9,
+      "y": 22,
+      "text": [
+        "THE CUT. Two carts wide, driven through forty feet of rock by hand.",
+        "A date over the arch: 1802. Under it, added later and in better letters:",
+        "THE ONLY THING IN SKYREACH THAT WAS DUG. EVERYTHING ELSE WAS HUNG."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 20,
+      "y": 22,
+      "text": [
+        "THE CISTERN. Cut into the face, roofed, and fed off nine hundred feet of gutter.",
+        "There is no river up here and there never was.",
+        "A brass plate: EVERY DROP IN THIS TOWN FELL ON IT FIRST."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 13,
+      "y": 12,
+      "text": [
+        "THE WINDWARD HEADLAND. Eight masts, and the field runs on whether anyone is home.",
+        "A board at the gate: 3 TO 7 IS WORK. 8 IS WATCH IT. 9 IS FEATHER AND GO IN.",
+        "Somebody has chalked TWELVE under the list and not rubbed it out."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 33,
+      "y": 5,
+      "text": [
+        "The catwalk. One plank, two chains, and the gorge is only five wide here.",
+        "There is no rail because a rail would give you something to argue with.",
+        "The crews cross it eleven times a shift and nobody has ever painted a sign."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 36,
+      "y": 15,
+      "text": [
+        "THE PIN. A rock standing on its own in the middle of the gorge.",
+        "Somebody cut steps into the top of it a very long time ago, and then stopped.",
+        "The bridge is ninety years old. Whatever the steps were for is older than that."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 48,
+      "y": 12,
+      "text": [
+        "THE UPPER DOCKS. Three berths, two masts, and eleven sailings a week.",
+        "The board: AURELINE TUES FRI. CROWNSPIRE DAILY. FROSTMERE WEATHER PERMITTING.",
+        "Somebody has crossed out WEATHER PERMITTING and written NOT THIS MONTH."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 49,
+      "y": 16,
+      "text": [
+        "THE CRADLE, EAST STATION. One car, one cable, and eight tiles of air.",
+        "A notice: THE WALK ROUND IS TWO HOURS. THE RIDE IS NINETY SECONDS.",
+        "IT COST MORE THAN THE SPAN AND IT PAID FOR ITSELF IN FOUR YEARS."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 26,
+      "y": 16,
+      "text": [
+        "THE CRADLE, WEST STATION. The winding drum turns whether there is a car on it or not.",
+        "A brass plate on the housing: BUILT AT SKYREACH. TURNED BY SKYREACH.",
+        "Nothing here was carried up the road. It was all made at the top."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 60,
+      "y": 39,
+      "text": [
+        "THE LOWER RIGGING. Four masts, and every one of them feeds the Hall.",
+        "A board: CHARGE IS NOT SOMETHING WE MAKE. IT IS SOMETHING WE CATCH.",
+        "Under it, a much smaller hand: AND IT IS SOMETHING THAT CAN BE ASKED."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 58,
+      "y": 48,
+      "text": [
+        "THE MASTHOUSE. The Gale and Spark Hall of Skyreach. Keeper Idrisa Fenn.",
+        "Under the crest: SEVENTH OF EIGHT. ONE MORE AND THE ASCENT WILL HAVE YOU.",
+        "Somebody has written under that, in chalk, and nobody has taken it off: GOOD LUCK."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 62,
+      "y": 51,
+      "text": [
+        "The road south-east, down off the shelf and along the ridge to Crownspire.",
+        "A milepost: CROWNSPIRE. THE OLDEST CITY, AND THE LAST HALL.",
+        "The wind has taken the paint off the east face of it and left the west face perfect."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 51,
+      "y": 29,
+      "text": [
+        "A doorway in a wall of glass, and the plate beside it is a list of six offices.",
+        "Freight brokers, an assay room, two shipping agents, and a weather subscription.",
+        "None of them wants anything from you and all of them are extremely busy."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 4,
+      "y": 33,
+      "text": [
+        "An arch in the granite. Three storeys of somebody's tenement above it.",
+        "Chalked on the jamb at knee height, in six different hands, six different years:",
+        "the same six words, over and over. DO NOT LEAN ON THE RAIL."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 10,
+      "y": 47,
+      "text": [
+        "An arch under the shelf houses. A stack of folded kites leans inside it.",
+        "A card: CRAGSIDE CHILDREN'S KITE CLUB. NO FLYING FROM THE SPAN.",
+        "NO FLYING FROM THE LOOKOUT. NO FLYING FROM THE CRADLE. WE MEAN IT THIS TIME."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 35,
+      "y": 17,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_sr_pin"
+    },
+    {
+      "kind": "item",
+      "x": 7,
+      "y": 50,
+      "item": "great_potion",
+      "quantity": 2,
+      "flag": "item_sr_yard"
+    },
+    {
+      "kind": "item",
+      "x": 71,
+      "y": 22,
+      "item": "warden_vessel",
+      "quantity": 2,
+      "flag": "item_sr_dock"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 27,
+      "y": 4,
+      "item": "full_rouse",
+      "quantity": 1,
+      "flag": "item_sr_headland"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 25,
+      "y": 29,
+      "item": "rouse",
+      "quantity": 2,
+      "flag": "item_sr_lookout"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 44,
+      "y": 22,
+      "item": "escape_line",
+      "quantity": 2,
+      "flag": "item_sr_berth"
+    }
+  ]
+}

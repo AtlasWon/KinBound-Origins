@@ -1,0 +1,17 @@
+[
+  {
+    "id": "frostmere_shop",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "PROVISIONER",
+        "lines": [
+          "Rope is half price because the town pays the other half. Everything else came over the Wintergate.",
+          "You are welcome to be surprised at the prices. Everyone is. It does not move them."
+        ]
+      },
+      { "kind": "openShop", "shop": "frostmere_provisioner" }
+    ]
+  }
+]

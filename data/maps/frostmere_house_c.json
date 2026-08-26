@@ -1,0 +1,68 @@
+{
+  "id": "frostmere_house_c",
+  "name": "Interior",
+  "displayName": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "_design": "The shore terrace, and the family in it have cut ice for six generations. The saws are on the wall because there has been nothing to use them on since the second week of the season.",
+  "rows": [
+    "IIIUIIIUIII",
+    "IQNffĘffkfI",
+    "IfffffffffI",
+    "IkfAEfffbeI",
+    "IffAEffffPI",
+    "IfffffffffI",
+    "I/rrfffffkI",
+    "IfrrfffffbI",
+    "IfffffffefI",
+    "IIIIIDIIIII"
+  ],
+  "warps": [
+    {
+      "x": 5,
+      "y": 9,
+      "toMap": "frostmere",
+      "toX": 0,
+      "toY": 0,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "fmcc_cutter",
+      "sprite": "fisher",
+      "x": 2,
+      "y": 4,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "fmcc_cutter"
+    },
+    {
+      "id": "fmcc_son",
+      "sprite": "villager_m",
+      "x": 7,
+      "y": 7,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "fmcc_son"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 1,
+      "text": [
+        "Six ice saws on the wall, longest at the top, and the shortest is a child’s.",
+        "Each has a name filed into the tang. The oldest name is worn down to two letters.",
+        "They are all oiled. Somebody has oiled them recently and there is no work for them."
+      ]
+    }
+  ]
+}

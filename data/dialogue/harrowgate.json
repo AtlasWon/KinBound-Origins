@@ -22,6 +22,16 @@
     ],
     "hg_master": [
       {
+        "ifFlags": [
+          "act4_done"
+        ],
+        "lines": [
+          "The eleven-fifty was two hours late on Thursday. Water over the cutting at the eight-mile.",
+          "It has never been late. I have said that sentence to every passenger for twenty-two years.",
+          "So I have taken the board down. I am not standing under a board I cannot keep."
+        ]
+      },
+      {
         "lines": [
           "Four down, four up, and the eleven-fifty is the one everybody means.",
           "It carries the capital its bread and it has never once been late.",
@@ -47,6 +57,16 @@
       }
     ],
     "hg_farmer": [
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
+        "lines": [
+          "Whole crop, one price, agreed in the spring, and it is flat on its face in the mud.",
+          "So I am the only farmer in this parish who gets paid this year, and I cannot feel glad about it.",
+          "My father had four bad years. He never once had a field go over in a night."
+        ]
+      },
       {
         "lines": [
           "Whole crop, one buyer, one price, agreed before I put a seed in the ground.",

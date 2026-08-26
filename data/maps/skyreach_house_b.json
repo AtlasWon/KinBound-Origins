@@ -1,0 +1,66 @@
+{
+  "id": "skyreach_house_b",
+  "name": "Interior",
+  "displayName": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIUIIIIIUII",
+    "IQNFKKFF;;I",
+    "IFFFFFFFFFI",
+    "IbeFFFFFAEI",
+    "IFFFFFFFFFI",
+    "IFFrrrFFFkI",
+    "IkFFrrFFFFI",
+    "IPFFFFFF/PI",
+    "IIIIIDIIIII"
+  ],
+  "warps": [
+    {
+      "x": 5,
+      "y": 8,
+      "toMap": "skyreach",
+      "toX": 19,
+      "toY": 53,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "shb_carter",
+      "sprite": "porter",
+      "x": 3,
+      "y": 4,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "shb_carter"
+    },
+    {
+      "id": "shb_gran",
+      "sprite": "elder",
+      "x": 8,
+      "y": 6,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "shb_gran"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 1,
+      "text": [
+        "A row of ledgers on the shelf, one for every year, all of them freight books.",
+        "The spines run from 1802 to this year without a single gap in them.",
+        "The last four are visibly thinner than the eighty before them."
+      ]
+    }
+  ]
+}

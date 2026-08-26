@@ -1,0 +1,447 @@
+{
+  "id": "frostmere",
+  "name": "Frostmere",
+  "displayName": "FROSTMERE",
+  "music": "town_hearth",
+  "battleBackdrop": "highland",
+  "weather": "snow",
+  "indoor": false,
+  "rows": [
+    "∪∪cccccccccccccccccccccccccccccccccccccccccccccccccc∪∪",
+    "∪∪cccccccccccccccccccccccccccccccccccccccccccccccccc∪∪",
+    "∪∪CCCCCCCCCCCCCCCΩΩΩΩΩΩΩCCCCCCCCCCCCCCCCCCCCCCCCCCCC∪∪",
+    "∪∪CCCCCCCCCCCCCCCΩΩΩΩΩΩΩCCCCCCCCCCCCCCCCCCCCCCCCCCCC∪∪",
+    "∪∪CCCCCCCCCCCCCCCΩΩΩΩΩΩΩCCCCCCCCCCCCCCCCCCCCCCCCCCCC∪∪",
+    "∪∪CCccCCCCCCCCCCCΩΩΩΘΩΩΩCCCCCCCCCCCccccCCCCCCccccccc∪∪",
+    "∪∪∪c∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴CΘCCCc∴∴∴∴∴∴∴∴∴∴∴∴∴∴cCCCCC∴∴∴∴∴∴∪∪∪",
+    "∪∪∪∴∴∴∴∴∴∴∩∴∴∴∴∴∴∴∴cΘCCc∴∴∴Ł∴∴∴∴∴Ł∴∴∴∴∴∴ccCcc∴∴∴∴∴∴∪∪∪",
+    "∪∪∪∴∩∴∴∴∴∴∴∴∆∴∴∴∴∴∴ΘΘ∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∴∴∴c∴∴∴∴∆∴∴∴∪∪∪",
+    "∪∪∪∴∴∴∴∴∆∴∴∴∴∴∩∴∴∴∴∴∴∴∴∴√∴∴¯¯¯¯¯¯∴∴∴∴∫∫Ł∴∴∴∴∴∴∴∴∴∴∴∪∪∪",
+    "∪∪∪∴∴∴∴∴∴∴∴∴∴∴∴∴∴∆∴∴∴∴∴∴≋≋≋¹≋≋≋≋¹∴∴∴√∫∫∴∴∴∴∴∴∴∴∴∴∴∴∪∪∪",
+    "∪∪∪∴∴∴∩∴∴∴∴∴∴∴∴∆∴∴∴∴∴∴∴∴≋≋≋¹²³¾≋≋∴∴∴∴∫∫∴∴∴∴∴∴∴∴∴∴∴∴∪∪∪",
+    "∪∪∪∴≋≋≋≋≋≋≋≋≋≋≋∴∴∴∴∩∴∴∴∴≋≋≋¯¯¯¯¯¯∴∴∴Ł∫∫∴∴∴∴∴∴∴∴∴∴∴∴∪∪∪",
+    "∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∴∴∴∴∴∴∴∪∪∪∪∪∪∪∪∪∪∪∪∪∪∴∫∫∴∴∴∪∪∪∪∪∪∪∪∪∪∪∪",
+    "∪∪∩∩∩∩∩∩∩∩∩∩∩∩∩∩∪∪∪∪∪∩∩∩∩∩∩∩∩∩∩∩∩∩∩∩∴∫∫∴∪∩∩∩∩∩∩∩∩∩∩∩∪∪",
+    "∪∪∪∪∪∪∴∴∴∴∴∴∴∴∴∴∩∩∩∩∩∴∴∴∴∴∆∴∴∴∴∴∴∆∴∴∴∫∫∴∩∆∴∴∴∴∴∴∴∴∴∪∪∪",
+    "∪∪∪∪∪∪∴∴∴∴∴∴∩∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∩∴∴∴∴∴∴Ł∫∫∴∴∴∴∴∩∴∴∴∴∴∴∪∪∪",
+    "∪∪∪∪∪∴∴∴≋≋≋≋≋≋≋≋≋∴∴∴∴∴∴∩∴∴∴∴∴∴∴∴∴∴∴∴∴∫∫∩∴∴∴∴∴∆∴∴∴∴∪∪∪∪",
+    "∪∪∪∪∴∴∴∴ŘŖĴŖŖŖĴŖŔ∴∴∴∴∴∴∴∴∴∴∴≋≋≋≋≋≋≋≋≋∫∫∴∴∴∴∴∴∴∴∴∴∪∪∪∪∪",
+    "∪∪∪∴∴∴∴∴ĦĤĤĦĤĤĦĤĦ∴∴≋≋≋≋≋≋∴∴∴ŘŖĴŖŖŖĴŖŔ∫∫∴≋≋≋≋≋≋≋∴∪∪∪∪∪∪",
+    "∪∪∪∩∴∴∴∴ĦĤĤĦĤĤĦĤĦ∴∴144443∴∴∴ĦĤĦĦĤĦĦĤĦ∫∫∴6999998∴∪∪∪∪∪∪",
+    "∪∪∪∴∴∴∴∴ĦĦĦĦĦĦĦĦĦ∴∴122523∴∴∴ĦĦĦĦĦĦĦĦĦ∫∫∴6770778∴∴∪∪∪∪∪",
+    "∪∪∪∴∴∴∴∴ĦĦĦĎĦĦĦĦĦ∴∴GGhgGG∴∴∴ĦĦĎĦĦĦĎĦĦ∫∫∴GGmgGGG∴∴∪∪∪∪∪",
+    "∪∪∪∴Ł∴∴∴∴∴∴∴ŁĘ∴∴∴ŴŁ∴∴∴∴∴∴Ł∴Ŵ∴∴∴∴Ł∴∴∴∴∫∫Ł∴∴∴∴∴∴Ł∴∴∴∪∪∪∪",
+    "∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∴∴∪∪∪",
+    "∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∴∴∪∪∪",
+    "∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∴∴∪∪∪",
+    "∪∪∪ŘŖŖĴŖŖŖĴŖŖŔ∴∫∫∴∴∴∴Ł∴∴Ŵ∴Ł∴∴∫∫∴∴∴Ł∴∴∴∴∴Ł∴∫∫Ę≋≋Ł≋≋≋∪∪∪",
+    "∪∪∪ĦĤĦĤĤĦĤĤĦĤĦ∴∫∫∴≋≋≋≋≋≋≋≋≋≋∴∫∫∴≋≋≋≋≋≋≋≋≋∴∫∫≋≋≋≋≋Ŵ≋∪∪∪",
+    "∪∪∪ĦĤĦĤĤĦĤĤĦĤĦ∴∫∫∴ŘŖŖŖŖŖŖŖŖŔ∴∫∫∴ŘŖĴŖŖĴŖŔ∴∴∫∫≋≋≋≋≋≋≋∪∪∪",
+    "∪∪∪ĦĦĦĦĦĦĦĦĦĦĦ∴∫∫∴ĦĦĦĦĦĦĦĦĦĦ∴∫∫∴ĦĤĤĦĤĤĦ∴∴∴∫∫≋≋≋≋≋≋∩∪∪∪",
+    "∪∪∪ĦĤĦĦĦĦĦĦĦĤĦ∴∫∫∴ĦĦĦĦĦĦĦĦĦĦ∴∫∫∴ĦĦĦĦĦĦĦ∴∴∴∫∫∴∴∴∴∴∴∴∪∪∪",
+    "∪∪∪ĦĦĦĦĦĎĦĦĦĦĦ∴∫∫ŁĦĦĦĦĎĦĦĦĦĦŁ∫∫ŁĦĦĦĎĦĦĦ∴∴Ł∫∫∴Ł∴∴∩∴∴∪∪∪",
+    "∪∪∪∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∴∴∴∴∪∪∪",
+    "∪∪∪∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∴∴∴∴∪∪∪",
+    "∪∪∪∪∪ŲŲ≅≅≅≅≅≅≅≅≅≅≅≅≅≅∴ŲŲĘŲ∴≅≅≅≅≅≅≅≅≅≅≅≅≅≅∴ŲŲ∴∴∴∴≅≅≅≅∪∪",
+    "∪∪∪∪∪≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅∴∴∴∴≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅∴∴Ų∴≅≅≅≅≅∪∪",
+    "∪∪≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅∴∴≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅∴∴≅≅≅≅≅≅∪∪",
+    "∪∪≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅∪∪",
+    "∪∪≅≅≅≅≅≠≠≠≠≠≠≠≠≠≠≠≠≠≠≅≅≅≅≅≅≠≠≠≠≠≠≠≠≠≠≠≠≠≠≅≅≅≅≅≅≅≠≠≠≠∪∪",
+    "∪∪≅≅≅≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≅≅≅≅≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≅≅≅≅≠≠≠≠≠∪∪",
+    "∪∪≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≅≅≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≅≅≠≠≠≠≠≠∪∪",
+    "∪∪≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠∪∪",
+    "∪∪≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠∪∪",
+    "∪∪≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠∪∪",
+    "∪∪≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠≠∪∪"
+  ],
+  "warps": [
+    {
+      "x": 0,
+      "y": 24,
+      "toMap": "route_8_pass",
+      "toX": 1,
+      "toY": 20,
+      "facing": "right",
+      "style": "edge"
+    },
+    {
+      "x": 0,
+      "y": 25,
+      "toMap": "route_8_pass",
+      "toX": 1,
+      "toY": 21,
+      "facing": "right",
+      "style": "edge"
+    },
+    {
+      "x": 0,
+      "y": 26,
+      "toMap": "route_8_pass",
+      "toX": 1,
+      "toY": 22,
+      "facing": "right",
+      "style": "edge"
+    },
+    {
+      "x": 20,
+      "y": 5,
+      "toMap": "frostmere_observatory",
+      "toX": 11,
+      "toY": 16,
+      "facing": "up",
+      "style": "cave"
+    },
+    {
+      "x": 8,
+      "y": 32,
+      "toMap": "frostmere_hall",
+      "toX": 11,
+      "toY": 14,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 11,
+      "y": 22,
+      "toMap": "frostmere_inn",
+      "toX": 8,
+      "toY": 12,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 22,
+      "y": 22,
+      "toMap": "frostmere_clinic",
+      "toX": 7,
+      "toY": 10,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 30,
+      "y": 22,
+      "toMap": "frostmere_house_a",
+      "toX": 5,
+      "toY": 9,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 34,
+      "y": 22,
+      "toMap": "frostmere_house_b",
+      "toX": 5,
+      "toY": 9,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 43,
+      "y": 22,
+      "toMap": "frostmere_provisioner",
+      "toX": 7,
+      "toY": 10,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 22,
+      "y": 32,
+      "toMap": "frostmere_icehouse",
+      "toX": 9,
+      "toY": 12,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 35,
+      "y": 32,
+      "toMap": "frostmere_house_c",
+      "toX": 5,
+      "toY": 9,
+      "facing": "up",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "fm_warden",
+      "sprite": "hiker",
+      "x": 6,
+      "y": 25,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "fm_warden"
+    },
+    {
+      "id": "fm_ropekeeper",
+      "sprite": "villager_f",
+      "x": 14,
+      "y": 23,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "fm_ropekeeper"
+    },
+    {
+      "id": "fm_hall_queue",
+      "sprite": "villager_m",
+      "x": 10,
+      "y": 33,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "fm_hall_queue"
+    },
+    {
+      "id": "fm_child",
+      "sprite": "kid",
+      "x": 25,
+      "y": 25,
+      "facing": "down",
+      "movement": {
+        "kind": "wander",
+        "radius": 3
+      },
+      "script": "fm_child"
+    },
+    {
+      "id": "fm_woodward",
+      "sprite": "elder",
+      "x": 28,
+      "y": 23,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "fm_woodward"
+    },
+    {
+      "id": "fm_icemaster",
+      "sprite": "harbourmaster",
+      "x": 13,
+      "y": 34,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "fm_icemaster"
+    },
+    {
+      "id": "fm_icecutter",
+      "sprite": "dockhand",
+      "x": 14,
+      "y": 37,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "fm_icecutter"
+    },
+    {
+      "id": "fm_shorewatch",
+      "sprite": "fisher",
+      "x": 33,
+      "y": 36,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "fm_shorewatch"
+    },
+    {
+      "id": "fm_sledger",
+      "sprite": "porter",
+      "x": 24,
+      "y": 34,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "fm_sledger"
+    },
+    {
+      "id": "fm_trailhand",
+      "sprite": "hiker",
+      "x": 39,
+      "y": 11,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "fm_trailhand"
+    },
+    {
+      "id": "fm_metcrew",
+      "sprite": "meridian_sci",
+      "x": 30,
+      "y": 10,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "fm_metcrew"
+    },
+    {
+      "id": "town_tarin",
+      "_note": "THE RIVAL SYSTEM PUTS HIM HERE AND THIS MAP ONLY HAS TO GIVE HIM SOMEWHERE TO STAND. The id, the script and the hide-flag are the shared contract in src/systems/tarin.ts and data/events/common.json -- tarin_town branches on tarin_at_frostmere, fights the hardest rival battle in the story and then sets tarin_frostmere_done, which is what takes him off this street. Nothing about him is written here. He is in the middle row of Street One eight tiles inside the gate, because the ledger says he took the Crest on Tuesday and did not leave, and a boy who has been waiting four days is not standing somewhere you have to go and look for him.",
+      "sprite": "rival",
+      "x": 16,
+      "y": 25,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tarin_town",
+      "hiddenIfFlag": "tarin_frostmere_done"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 23,
+      "text": [
+        "The gate board, and it is a tally rather than a welcome. Two columns, chalked:",
+        "IN TODAY. OUT TODAY. The numbers have to match by dark or somebody goes looking.",
+        "Under them, in older paint: WE HAVE NOT LOST ANYBODY SINCE 1849. HELP US KEEP IT."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 4,
+      "y": 23,
+      "text": [
+        "A card wired to the lantern post at the height of somebody holding the rope:",
+        "BLUE IS A DOOR. YELLOW IS A WINDOW. IN A WHITEOUT A WINDOW IS A WALL.",
+        "WALK AT THE BLUE ONE. IF YOU CANNOT SEE ONE, DO NOT LET GO OF THE CORD."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 22,
+      "text": [
+        "The inn board, and it is not a menu. One line, painted very large:",
+        "IF YOUR FIRE IS OUT, COME HERE. WE WILL NOT ASK AND WE WILL NOT SAY.",
+        "The paint has been gone over so many times the letters stand off the wood."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 32,
+      "text": [
+        "Cut into the lintel of the Hall, deeper than anything else in this town:",
+        "THE WATER UNDER THIS HOUSE IS THE TOWN’S. THE HOUSE IS ONLY OVER IT.",
+        "Somebody keeps the letters clear of ice. You can see where the chisel goes."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 20,
+      "y": 32,
+      "text": [
+        "The ice house. No window in it anywhere, and the walls are two feet of sawdust.",
+        "A tally by the door: BLOCKS IN. BLOCKS OUT. SOLD TO, and then eleven town names.",
+        "This year’s IN column has been started, crossed out and started again four times."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 22,
+      "y": 35,
+      "text": [
+        "A depth board standing in the stacks, marked off in inches from the bottom.",
+        "CUTTING THICKNESS: TWELVE. Every winter since 1802 is scratched down the side.",
+        "The last three read fourteen, then eleven, then a mark at five with no year on it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 36,
+      "y": 16,
+      "text": [
+        "A trail board where the wood closes over the track, weathered nearly smooth:",
+        "THE OBSERVATORY. FOUR HOURS UP. NO WATER, NO SHELTER, NO SECOND ROUTE.",
+        "Under it, in a much newer hand: AND NOBODY UP THERE TO MEET YOU. GO ANYWAY."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 24,
+      "y": 9,
+      "text": [
+        "The first cairn above the treeline, and the stones on it are not all one age.",
+        "A slate wired to the top: FOR THE ONES THE MOUNTAIN KEPT. Nine names under it.",
+        "The rest of the slate is blank and ruled, which is somehow the worst part of it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 28,
+      "y": 9,
+      "text": [
+        "A wire fence, a mast and a generator running, on a shoulder where nothing else is.",
+        "A plate on the gate: MERIDIAN FOUNDATION — UPPER CAELORA WEATHER STATION.",
+        "Every instrument on it is pointed at the sky. The cable from them runs uphill."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 19,
+      "y": 5,
+      "text": [
+        "The doorway is cut square into the rock and there is nothing hung in it.",
+        "No hinge, no jamb, no seating for a bar. Whoever built this did not fit a door,",
+        "and the stone is dressed too well everywhere else for that to be an oversight."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 12,
+      "y": 17,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_fm_town_a"
+    },
+    {
+      "kind": "item",
+      "x": 8,
+      "y": 7,
+      "item": "thawcloth",
+      "quantity": 3,
+      "flag": "item_fm_town_b"
+    },
+    {
+      "kind": "item",
+      "x": 6,
+      "y": 10,
+      "item": "great_potion",
+      "quantity": 2,
+      "flag": "item_fm_town_c"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 30,
+      "y": 37,
+      "item": "full_heal",
+      "quantity": 2,
+      "flag": "item_fm_town_d"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 47,
+      "y": 19,
+      "item": "deep_vessel",
+      "quantity": 3,
+      "flag": "item_fm_town_e"
+    }
+  ],
+  "_plan": "A TOWN BUILT BY PEOPLE WHO EXPECT THE WEATHER TO TRY TO KILL THEM. Everything\non this map is downstream of that one sentence.\n\nTHREE OF ITS COORDINATES ARE NOT MINE AND THE PLAN IS BUILT ROUND THEM.\nroute_8_pass puts the player down at 2,24 / 2,25 / 2,26, so STREET ONE is three\nrows deep -- which is also the honest reason for it, since this is the only line\nFrostmere sweeps all winter and it is cut wide enough for two loaded ice sledges\nto pass. frostmere_observatory comes back out at 20,6, so the Aurelian doorway\nis cut into the rock at 20,5 with their apron running down to the trail at 20,8.\nBoth of those files were already on disk when this one was laid out.\n\nTHE WALLS ARE A METRE THICK AND THE HOUSES SHARE THEM. Frostmere is not a street\nof cottages, it is terraces: one long building either side of the road, because\na shared wall is a wall nobody is heating, and at three thousand people in a\nvalley this cold that is arithmetic rather than taste. The stone is the mountain\nthe town is hiding from, and it is the darkest built material in the game\nstanding in the brightest ground in the game. That is the silhouette of the\nplace, and it is why the Frostmere tiles are a BUILDING set that adds nothing to\nthe snow the mountain roads already own.\n\nEVERY DOOR IS RECESSED AND EVERY DOOR FACES SOUTH. A door flush with a wall opens\nagainst a drift and does not open at all, and the wind comes off the pass. So the\ndoors are cut back into the thickness of their own wall with a hood over them,\nand every one is in the south face of its terrace. That is why there are two\nstreets: the north terrace opens onto Street One and the shore terrace opens onto\nthe quay road, because they could not both face the one.\n\nTHE LANTERNS ARE BLUE BECAUSE A YELLOW ONE KILLS PEOPLE. A warm lamp and a lit\nwindow are the same colour through falling snow, and somebody who walks at a\nwindow in a whiteout dies against a wall. The rule is BLUE MEANS DOOR. The tile\ncarries its rope out of both sides of its cell, so the lanterns on this map are\nalways laid in RUNS ALONG A ROAD, a rope length apart, and never scattered as\ndecoration: in a bad week you do not walk between the lights, you hold the cord\nthat joins them.\n\nTHE MERE IS THE ECONOMY AND THE MERE IS THE STORM. Frostmere sells winter -- sawn\nlake ice packed in straw, south, to eleven towns with no other way to keep\nanything cold. The ice house has no window in it anywhere. And the outer half of\nthe lake is ROTTEN ICE, which is solid, so a player who walks out onto the mere\ngets four tiles and then a wall of white stars over black water. That is Act 5\nstated in terrain before one word of dialogue: the lake did not freeze this year,\nthe crews are standing about, and the depth board on the quay says the same thing\nin numbers.\n\nTHE FOUNDATION IS ALREADY UP THERE. A wire compound, a mast and a generator\nrunning on the shelf above the town, with a Foundation coat inside it. Nothing in\nFrostmere dialogue joins that to the weather. The map puts the two facts on one\nscreen and lets the player draw the line.\n\nTHE TREELINE AT ROW 13 IS LOAD-BEARING. Above it there is no way up except the\ntrail, so the shelf under the rock is not somewhere a player wanders into off the\nback of the town -- it is somewhere they went. That is the whole reason a\nfour-hour climb reads as a climb on a map forty-six rows tall."
+}

@@ -252,3 +252,131 @@ npx electron tools/capture.cjs tools/shots/tarinarc.js
 
 Shots land in `build/shots/tarin-*`. Edit `STARTER` at the top of the driver to
 walk the other two branches.
+
+---
+
+## Stage 5: Act 5, the storm
+
+Seven beats, three of them in person, one battle. The Crest column finishes —
+canon puts him at seven or eight by Crownspire — but the interesting thing is
+not that it rises, it is where it **stalls**.
+
+| # | Beat | Opens on | Crests | In person? |
+|---|---|---|---|---|
+| 1 | `snowroad` | `route_8` / `route_9` / `route_8_pass` visited | 5 | no |
+| 2 | `frostmere` | `frostmere` or `frostmere_hall` visited | 6 — **ahead** | yes, **battle** |
+| 3 | `observatory` | `act5_elias_message` (the dome's own flag) | 6 | yes, no jokes |
+| 4 | `skyreach` | `skyreach` or `skyreach_hall` visited | 6 — **behind** | no |
+| 5 | `windward` | Crest 7 | 7 | no |
+| 6 | `crownspire` | `crownspire` or `crownspire_hall` visited | 7 | yes, short |
+| 7 | `summit_pact` | Crest 8 | 8 | yes, the agreement |
+
+Two of those three in-person scenes need an actor somebody else has to place;
+the third already has one. **Frostmere has no Tarin on it** — the battle is
+unreachable until a `town_tarin` is stood on the apron. The **Observatory**
+wrote its own `fo_tarin` in the dome, which is a better scene than a shared
+branch for that room, so the `tarin_at_observatory` branch of `tarin_town` is
+the fallback for anywhere else the beat is still open — do not put a second
+actor in the dome. **Crownspire** already stands a `cs_tarin`, and
+`data/events/common.json` carries a `cs_tarin` wrapper that feeds it, in the
+`r3_tarin` pattern.
+
+He is **ahead** at Frostmere — he took the Frost Crest days before the player
+walked in and then did not go anywhere — and **behind** at Skyreach, because he
+lost three days on the dock bridges getting other people off them in the wind.
+That stall is his whole arc stated in the one column the player can see: he
+started wanting to be strong and he is now somebody who will drop the count to
+hold a rope. No line of dialogue says it, and none should.
+
+He holds six from Frostmere through the Observatory and out the far side of
+Skyreach — three beats without the number moving, in the middle of the act where
+it is meant to be moving fastest. That is the Act 2 trick used once more and for
+the last time, pointed at the one scene in the game where the count is beneath
+everybody.
+
+### The Frostmere battle
+
+Four kin, and the team is his whole journey rather than a power curve:
+
+| | | |
+|---|---|---|
+| Bristlebuck | 32, flat-zero IVs, hand-written moves | the Tuftail from Route 1 |
+| Tidewrack | 32, flat-zero IVs | the Shalefin he went down the Tideglass deep lane for |
+| Voltwick | 33, flat-zero IVs, hand-written moves | the Fizzlet off the central road |
+| his starter, second evolution | 36 | what Sorrell gave him |
+
+**Optional, and `onLoss` is `continue`.** He asks; the player may say no; a loss
+is a scene he offers to run again, not a whiteout. He also hands over two Great
+Potions before the ask. Those three things together are the difficulty valve,
+and they are why the fight can be tuned to "I had to try" instead of to a win
+rate that has to be safe for everybody.
+
+**The Act 1–2 all-Beast bench does not survive the second evolution.** Beast was
+chosen because it is neutral to all three starters, so the only type
+relationship left in the fight was the one that belongs there — his ace loses to
+yours. At 34 the starters gain a second type, and Bristlebuck (beast/verdant)
+becomes a wall for Thornmarch and Maelstrix while handing Volcatrix a free 2x.
+Measured, the three branches came apart to **13 / 69 / 46%** — the Slatewing
+failure this document already warns about, one act later.
+
+Tidewrack is the corrective and it was chosen by measurement, not taste: tide/
+stone is 4x open to a Verdant player, a quarter-damage wall to a Flame one and
+level to a Tide one, which is the exact inverse of what Bristlebuck does. With
+both on the field the branches close to within seven points at every level in
+the band. Bristlebuck also carries a hand-written moveset for one reason — it
+learns Recover at 30, and a self-healing wall in front of a novice player is a
+stall, not a fight.
+
+**Measured**, novice play, no items, matched party of four, 500 runs per cell
+(sprigling / cinderpaw / rilltail):
+
+| Player level | Win rate | HP the winner keeps | Kin still up |
+|---|---|---|---|
+| 36 | 68 / 71 / 81% | 39–43% | 1.9–2.1 of 4 |
+| **37** | **83 / 85 / 90%** | **42–46%** | **2.1** |
+| 38 | 90 / 91 / 94% | 51–58% | 2.5 |
+
+Veteran play at 37: 88 / 95 / 98%. Lone starter at the solo-lead level: L44
+88 / 81 / 73%, L46 98 / 88 / 89%. On the harness's own `CATCHABLE` bench —
+which swaps in a Galecrest the moment the party passes 36 — the same fight reads
+99 / 89 / 99% at L37; the table above uses a fixed, ordinary Act 3–4 bench
+(Weaverjaw, Craglide, Currentail) because the harness's own bench puts a
+74-point BST cliff in the middle of the band and makes the fight unreadable.
+
+The difficulty lives in the second and third columns, not the first. A win costs
+half the party.
+
+```js
+const m = await import('./tests/helpers/simulate.mjs');
+m.matchedRate('sprigling', 37, 'tarin_frostmere_rilltail', 500, 'novice');
+```
+
+**The band is the assumption most likely to go stale.** The progression table in
+`simulate.mjs` stops at Harrowgate, where the team-raiser leaves at 34; Aureline
+and the north-west road are assumed to add about three, putting arrival at
+Frostmere near 37. If the snow road lands heavier or lighter than that, **move
+all four levels together** — that is the only lever, and it keeps the branches
+level.
+
+### Files added
+
+```
+src/systems/tarin.ts             seven Act 5 rows appended to TARIN_LEDGER
+data/trainers/trainers.json      tarin_frostmere_sprigling / _cinderpaw / _rilltail
+data/events/common.json          three branches in tarin_town, and the cs_tarin wrapper
+tools/shots/tarinact5.js         drives the ledger and all three Act 5 scenes
+```
+
+`tools/shots/tarinact5.js` is the Act 5 smoke test. It walks the ledger beat by
+beat, prints the flags and `{tarin_where}` at each, then plays the Frostmere
+scene (including the battle), the Observatory and the agreement:
+
+```
+node tools/serve.js                                  # if nothing is on 5173
+npx electron tools/capture.cjs tools/shots/tarinact5.js
+```
+
+Shots land in `build/shots/t5-*`. It stages the scenes through the event runner
+on `tideglass_warehouse` rather than walking to them, because the three
+settlements were still being built when it was written — none of the scenes
+moves an actor, so none of them needs him standing there to run.

@@ -1,0 +1,52 @@
+{
+  "$comment": "Canon's Act 5 line about Kin migrating inland, landed in the one room in Crownspire that has to deal with the consequence. Eleven brought in yesterday and not one of them hurt: they came DOWN, out of the snow, and the leaflet on the rack says IT IS NOT LOST, IT IS LEAVING SOMEWHERE. The healer and the Roost use the shared clinic_heal and roost_terminal scripts in data/events/common.json and are not in this file.",
+  "speakers": {
+    "cs_clinic_nurse": "CLINIC NURSE",
+    "cs_clinic_vet": "KIN DOCTOR",
+    "cs_clinic_wait": "WAITING TRAINER",
+    "cs_clinic_child": "CHILD",
+    "cs_clinic_warden": "OFF-DUTY WARDEN"
+  },
+  "entries": {
+    "cs_clinic_nurse": [
+      {
+        "lines": [
+          "Everything is free and everything always has been. Do not stand there working out how to ask.",
+          "The kettle is free as well. Half this room is only here for the kettle."
+        ]
+      }
+    ],
+    "cs_clinic_vet": [
+      {
+        "lines": [
+          "Eleven yesterday. Nine the day before. Not one of them injured, and every one of them terrified.",
+          "Frostnip, mostly. Slatewing. Things that live above the snow line and have never come below it."
+        ]
+      }
+    ],
+    "cs_clinic_wait": [
+      {
+        "lines": [
+          "I found one on the Kingsbridge parapet. It let me pick it up. They never let you pick them up.",
+          "I have brought it in three times and it keeps going back to the bridge and looking north."
+        ]
+      }
+    ],
+    "cs_clinic_child": [
+      {
+        "lines": [
+          "I am allowed to sit with them if I am quiet. I am very quiet.",
+          "The one in the second tank is called Bell because nobody knew its name so I gave it one."
+        ]
+      }
+    ],
+    "cs_clinic_warden": [
+      {
+        "lines": [
+          "Twenty-two years on the gate. I have shut it for a night. I have never shut it for a week.",
+          "And the thing I keep not saying to anybody is that I do not think it is going to stop."
+        ]
+      }
+    ]
+  }
+}

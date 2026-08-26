@@ -1,0 +1,55 @@
+{
+  "speakers": {
+    "sm_grocer": "GROCER",
+    "sm_glassman": "GLASS MERCHANT",
+    "sm_fisher": "FISHMONGER",
+    "sm_shopper": "SHOPPER"
+  },
+  "entries": {
+    "sm_grocer": [
+      {
+        "lines": [
+          "Two columns on the board. CARRIED came up the road, FLOWN came in over the gorge.",
+          "Flown is four times the price and it is worth it about a third of the time.",
+          "The third of the time is the bit people remember, which is how I stay in business."
+        ]
+      }
+    ],
+    "sm_glassman": [
+      {
+        "lines": [
+          "Aurelian glass out of Tideglass. Not Aurelian, obviously. Aurelian STYLE. Read the card.",
+          "The real stuff is in a museum in the capital and it is four thousand years old and it is not cloudy.",
+          "Mine is cloudy. Mine is also nine hundred times cheaper. Choose."
+        ]
+      }
+    ],
+    "sm_fisher": [
+      {
+        "ifFlags": [
+          "crest_6_taken"
+        ],
+        "lines": [
+          "Nothing has come up the coast in a fortnight. Not one boat, not one crate, not one word.",
+          "They are not sunk. Somebody would know. They are TIED UP, which is worse.",
+          "Fishermen do not tie up for a fortnight. Fishermen tie up for two days and complain."
+        ]
+      },
+      {
+        "lines": [
+          "Off the eleven o clock from Tideglass and still cold when it got here. Ask me how.",
+          "Ice, straw, and four hundred feet of cold air on the way up. That is how.",
+          "Three hundred miles from the sea and I sell the freshest fish in the region. I love this city."
+        ]
+      }
+    ],
+    "sm_shopper": [
+      {
+        "lines": [
+          "Everything here is either from three streets away or from another region. Nothing in between.",
+          "There is no in between. There is no countryside. There is a plateau and then there is a drop."
+        ]
+      }
+    ]
+  }
+}

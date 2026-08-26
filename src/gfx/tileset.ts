@@ -398,6 +398,105 @@ export enum T {
   TRACK_SIGNAL,
   HALT_DECK,
   HALT_EDGE,
+  /**
+   * The mountain roads: Route 8 to Frostmere and Route 9 to Skyreach.
+   *
+   * The last open country in the game, and the first family in the file whose
+   * job is to INVERT the picture. Every route so far has been a pale road
+   * through dark country -- gold dirt in green turf, cinder in ash, plank over
+   * peat. Up here the ground is the brightest thing on the screen and
+   * everything a player needs to read is darker than it: the trodden road, the
+   * pines, the crags, the scrub they get jumped in, the ice. That inversion is
+   * the whole reason a snow map feels different to walk across, and it is
+   * carried by the palette rather than by any one tile.
+   *
+   * Two roads, one family, because they are the same mountain seen from two
+   * sides. Route 8 climbs into it and Route 9 walks along the top of it, so
+   * Route 8 spends the snow half of the set and Route 9 the rock-and-rope
+   * half, and the tiles they share -- scree, crag, cairn -- are what says they
+   * are the same range.
+   *
+   * Nothing in this family touches the shared Rng: every painter below draws
+   * from position hashes only, so appending here cannot move a varied tile
+   * anywhere else in the world. Appended at the very end for the reason given
+   * further up -- tile ids are atlas indices.
+   */
+  SNOW,
+  SNOW_DEEP,
+  SNOW_SCRUB,
+  SNOW_ROAD,
+  SNOW_LEDGE,
+  PINE,
+  PINE_SNOW,
+  SNOW_ROCK,
+  SCREE,
+  LAKE_ICE,
+  ICE_CRACK,
+  CAIRN,
+  ROPE_DECK,
+  ROPE_POST,
+  GORGE,
+  WIND_TUSSOCK,
+  WATERFALL,
+  /**
+   * Frostmere: what people BUILD when the weather is trying to kill them.
+   *
+   * Deliberately not a snow family. The mountain roads above own the ground --
+   * snow, trodden road, pine, crag, lake ice -- and this town stands on it and
+   * adds nothing to it. What Frostmere adds is the other half of the picture:
+   * the fourteen tiles a settlement at the top of the world is made of, and
+   * every one of them is an answer to the same question.
+   *
+   * WHY THE WALL IS THAT THICK. Mountain granite, laid a full metre, because
+   * stone is the only insulation there is up here and there is a mountain of
+   * it. That gives the town the darkest, heaviest frontage in Caelora standing
+   * in the brightest ground in Caelora, which is the whole silhouette of the
+   * place: black blocks in white, read from the far side of the lake.
+   *
+   * WHY THE DOOR IS SET BACK. Not decoration. A door flush with a wall in a
+   * north-west gale opens against a drift and does not open at all, so every
+   * door in Frostmere is recessed into the thickness of its own wall with the
+   * porch roof over it. The tile draws that recess, which is why it cannot be
+   * the porch door every other town uses.
+   *
+   * WHY THE ROOF IS TIMBER AND NOT SLATE. Slate sheds snow in one slab and
+   * kills whoever is under it. Split cedar shingle holds the load, and the
+   * town wants the load: a foot of snow on a roof is a foot of insulation the
+   * house did not pay for. So the roofs here are the only ones in the game
+   * drawn with the weather still sitting on them.
+   *
+   * WHY THE LANTERN IS BLUE. It is the one thing in the town nobody outside
+   * understands and it is not romance -- it is a rule. A warm light and a
+   * lit window are the same colour through falling snow, and a traveller who
+   * walks to a window in a whiteout dies against a wall. So Frostmere burns a
+   * mineral off the mountain that burns cold, and blue means DOOR: walk at it
+   * and there is a way in. Nothing else in the town is allowed to be that
+   * colour, which is why the pot of fire beside it is drawn as hot as it is.
+   *
+   * THE LAST THREE ARE THE FROST HALL AND ONLY THE FROST HALL. Sound ice,
+   * failed ice, and a channel held open with fire -- the same substance in the
+   * three states the Hall's crew put it in and take it out of. They are not
+   * the lake tiles above and must not be used as them: these carry a chalk
+   * mark, and the mark is the reading somebody took this morning.
+   *
+   * Nothing here touches the shared Rng: every painter draws from position
+   * hashes only. Appended at the very end for the reason given further up --
+   * tile ids are atlas indices.
+   */
+  FROST_WALL,
+  FROST_WINDOW,
+  FROST_DOOR,
+  ROOF_SHINGLE_L,
+  ROOF_SHINGLE,
+  ROOF_SHINGLE_R,
+  ROOF_STACK,
+  LAMP_FROST,
+  WOODPILE,
+  ICE_STACK,
+  FIREPOT,
+  ICE_SOUND,
+  ICE_ROTTEN,
+  ICE_THAW,
   COUNT,
 }
 
@@ -863,6 +962,144 @@ export const PAL = {
   scrubLight: '#877340',
   scrubHead: '#c09a4c',
   scrubTip: '#e6c072',
+
+  // --- The mountain roads: Route 8 and Route 9. -------------------------
+  //
+  // Snow is the hardest ground in the game to paint and it is hard for one
+  // reason: the house rule says the ground must be LIGHT so a sprite's outline
+  // separates from it, and snow is the only material that threatens to be
+  // lighter than the sprite. So the ramp is built from the top down. The
+  // brightest tone is reserved for sun catching a wind crest and is used on
+  // perhaps one unit in forty; the BODY of the field sits two full steps below
+  // white, and it is blue -- snow in open daylight is lit by sky, not by sun,
+  // and a neutral white field is the thing that made the first cut of this
+  // read as blank paper.
+  //
+  // Everything else in the family is here to be dark against it. That is the
+  // whole compositional argument of the two routes: on every other map the
+  // player reads a pale road against dark country, and up here it inverts --
+  // the ground is the bright thing and the pines, the crags and the scrub are
+  // holes cut in it.
+  snowDeep: '#7b93bd',
+  snowShade: '#9db1d4',
+  snowMid: '#bfcee6',
+  snowLight: '#d8e2f2',
+  snowPale: '#ecf1fa',
+  snowGlint: '#ffffff',
+
+  // Trodden snow. Not the ramp with the light taken out: a road that has been
+  // walked all winter is grey-brown, because what is in it is grit, boot dirt
+  // and the hill itself coming through. One clear step below the field either
+  // side of it, which is what lets a player follow the road in a squall when
+  // half the screen is gone.
+  trackDeep: '#5c5f6e',
+  trackDark: '#7c7f8d',
+  trackMid: '#9a9dab',
+  trackLight: '#b6bac6',
+  trackPale: '#d2d6df',
+
+  // Lake ice. Blue-green rather than blue -- lake ice takes its colour from
+  // the water under it and the Caeloran Sea's saturated navy is exactly wrong
+  // for something you are standing on. It is also the only surface in the
+  // family that is DARKER than the snow around it, which is the whole point:
+  // a frozen tarn has to read as a hole in the white from the far edge of the
+  // screen or nobody understands why the road goes round it.
+  iceDeep: '#2f6d78',
+  iceDark: '#43919c',
+  iceMid: '#5fb2bb',
+  iceLight: '#89cdd3',
+  icePale: '#c0e8ea',
+  iceRime: '#f0fbfb',
+
+  // Conifer. The darkest mass in the game and deliberately so. A snow map has
+  // no other way to draw a horizon: every value in the picture is crowded into
+  // the top of the ramp, so the treeline has to come from the bottom of a
+  // different one. Cold blue-green in shadow, barely warm at the tip, and the
+  // whole ramp holds under a snow load without turning to mud.
+  pineDeep: '#0e2a25',
+  pineDark: '#17423a',
+  pineMid: '#215a4c',
+  pineLight: '#2f7460',
+  pineHi: '#448f76',
+
+  // What still grows above the treeline: dwarf birch and dead heather standing
+  // out of the drift. Almost black, warm, and twiggy. This is the encounter
+  // tile of Route 8 and it is the only truly dark warm thing on the map, which
+  // is what makes it findable at 1x without a word of text.
+  heathDeep: '#231a20',
+  heathDark: '#3d2c31',
+  heathMid: '#5b4239',
+  heathLight: '#7d5c46',
+  heathTip: '#a68360',
+
+  // Skyreach. The plateau tussock is grass that lives in a permanent gale:
+  // bleached, combed one way, and far greyer than any turf below the cliffs.
+  // It is the one green on these two routes and it is barely a green.
+  tussockDeep: '#4c5535',
+  tussockDark: '#6b7548',
+  tussockMid: '#8b955c',
+  tussockLight: '#adb578',
+  tussockHead: '#d0d29a',
+
+  // Rope, plank and tar: the bridges. Warm, because they are the only made
+  // thing on a route of rock and sky and they have to look like somebody's
+  // work rather than part of the mountain.
+  ropeDeep: '#3a2a17',
+  ropeDark: '#5e4525',
+  ropeMid: '#8a6634',
+  ropeLight: '#b28a4b',
+  ropePale: '#d8b473',
+
+  // --- Frostmere. ------------------------------------------------------
+  //
+  // Three ramps and two lights, and all five exist because of the note on the
+  // mountain-road ramps above: up here the GROUND is the bright thing, so
+  // everything a town is built out of has to come from the bottom of the
+  // value range or the buildings dissolve into the field they stand in.
+  //
+  // The wall first. Frostmere is quarried out of the mountain it is hiding
+  // from, and mountain granite is a cold near-black with mica in it. It is the
+  // darkest built material in the game -- darker than Mirehaven's pitch, which
+  // was the previous record -- and it has to be: a stone town in deep snow is
+  // a silhouette problem before it is anything else, and this is the ramp that
+  // makes a house read as a house from forty tiles away across a frozen lake.
+  // The pale step is frost standing in the mortar courses, not sunlight.
+  frostWallDeep: '#191d24',
+  frostWallDark: '#2b313b',
+  frostWallMid: '#3f4753',
+  frostWallLight: '#586270',
+  frostWallPale: '#7c8695',
+
+  // Split cedar shingle, three winters old and silvered. Warm, and it is the
+  // only warm mass in the town's frontage -- which is the entire reason the
+  // roofs are timber in a place with a mountain of slate in it. A street of
+  // black stone under grey roofs is a prison; the same street under warm wood
+  // is somewhere people live.
+  shingleDeep: '#2e241a',
+  shingleDark: '#4a3a29',
+  shingleMid: '#6b573f',
+  shingleLight: '#8d7659',
+  shinglePale: '#b09878',
+
+  // The water under the ice. Not the sea and not the marsh: a deep cold lake
+  // seen through a hole somebody cut this morning, which is nearly black with
+  // one green note a long way down. It is the darkest thing on any Frostmere
+  // screen, and that is what makes failed ice legible as a warning without a
+  // word of text on it.
+  blackwaterDeep: '#050c11',
+  blackwaterDark: '#0c1d26',
+  blackwaterMid: '#153440',
+  blackwaterLight: '#215260',
+
+  // The blue lantern, and what it throws. Deliberately built like PAL.lampGlow
+  // and deliberately the opposite colour, because the town's whole rule is
+  // that these two lights must never be confused: warm is a window, cold is a
+  // door. The spills are translucent so one lamp lights snow, stone and ice
+  // alike without carrying a square of the wrong ground.
+  blueLampGlow: '#78dcff',
+  blueLampCore: '#e2fbff',
+  blueLampSpill: 'rgba(130,215,255,0.30)',
+  blueLampSpillFar: 'rgba(130,215,255,0.15)',
 } as const;
 
 /**
@@ -1057,6 +1294,58 @@ const VARIED: Partial<Record<number, number>> = {
   // Four stones, four different distances cut into them. A road signed with
   // the identical mark nine times over is worse than a road signed nowhere.
   [T.MILESTONE]: 4,
+  // The mountain roads. Appended last, as the note above requires, and safe for
+  // the second reason as well: every painter in this family draws from position
+  // hashes and never touches the shared Rng.
+  //
+  // Snow gets the widest set in the game, joint with turf, and it needs it more
+  // than turf ever did. Snow is a near-flat field of one value: there is no
+  // hue in it to hide a repeat behind and nothing growing out of it to break
+  // the eye's lock on the grid, so a lattice shows in a snowfield about twice
+  // as fast as it does in grass. The five snow tiles between them are ninety
+  // per cent of Route 8.
+  [T.SNOW]: 4,
+  [T.SNOW_DEEP]: 3,
+  [T.SNOW_SCRUB]: 3,
+  [T.SNOW_ROAD]: 3,
+  [T.SCREE]: 3,
+  // The treeline is the horizon of every snow map, so a pine wall drawn from
+  // one cut is a row of identical Christmas trees. The alternates differ in
+  // height, lean and how much snow is sitting on them, which is what makes a
+  // stand read as a stand.
+  [T.PINE]: 3,
+  [T.PINE_SNOW]: 3,
+  [T.SNOW_ROCK]: 2,
+  // Ice, for a reason none of the others has: its cracks are drawn by banding
+  // a noise contour that wraps at the cell, so without alternates every tile
+  // of a frozen tarn carries the identical fracture in the identical place.
+  [T.LAKE_ICE]: 3,
+  [T.WIND_TUSSOCK]: 3,
+  // Three cairns, three different builds. They are the waymarks of both roads
+  // and the player is meant to aim at the next one in a squall -- so they have
+  // to look like things people stacked, one at a time, over years.
+  [T.CAIRN]: 3,
+  // Frostmere. Appended last for the reason given at the top, and safe for the
+  // second one as well: every painter in this family draws from position hashes
+  // and never touches the shared Rng.
+  //
+  // The town is a terrace. Frostmere houses share walls because a shared wall
+  // is a wall you are not heating, so a Frostmere street is genuinely one
+  // building forty tiles long -- which means the wall and the roof are the two
+  // most repeated cells on the map by a wide margin, and a repeat in either
+  // reads as the same house stamped six times. What varies is which stones
+  // came out of the quarry big, how far the snow has crept back off the
+  // shingle, and which shutters somebody has closed, which is the only thing
+  // that varies on a real one.
+  [T.FROST_WALL]: 4,
+  [T.ROOF_SHINGLE]: 4,
+  [T.FROST_WINDOW]: 2,
+  // The Hall's floor. Sound ice gets three because the player reads the
+  // cistern cell by cell looking for the route through it, and a floor with
+  // one crack printed across every tile of it cannot be read at all.
+  [T.ICE_SOUND]: 3,
+  [T.ICE_THAW]: 2,
+  [T.WOODPILE]: 2,
 };
 
 /**
@@ -1559,6 +1848,42 @@ export class Tileset {
       case T.TRACK_SIGNAL: this.trackSignal(px); break;
       case T.HALT_DECK: this.haltDeck(px, fill, false); break;
       case T.HALT_EDGE: this.haltDeck(px, fill, true); break;
+      // --- The mountain roads. None of these is passed `rng`, on purpose: see
+      // the note on the enum entries. They draw from position hashes only.
+      case T.SNOW: this.snow(px, fill, 0); break;
+      case T.SNOW_DEEP: this.snow(px, fill, 1); break;
+      case T.SNOW_SCRUB: this.snowScrub(px, fill); break;
+      case T.SNOW_ROAD: this.snowRoad(px, fill); break;
+      case T.SNOW_LEDGE: this.snowLedge(px, fill); break;
+      case T.PINE: this.pine(px, false); break;
+      case T.PINE_SNOW: this.pine(px, true); break;
+      case T.SNOW_ROCK: this.snowRock(px, fill); break;
+      case T.SCREE: this.scree(px, fill); break;
+      case T.LAKE_ICE: this.lakeIce(px, fill, false); break;
+      case T.ICE_CRACK: this.lakeIce(px, fill, true); break;
+      case T.CAIRN: this.cairn(px); break;
+      case T.ROPE_DECK: this.ropeBridge(px, false); break;
+      case T.ROPE_POST: this.ropeBridge(px, true); break;
+      case T.GORGE: this.gorge(px, fill); break;
+      case T.WIND_TUSSOCK: this.windTussock(px, fill); break;
+      case T.WATERFALL: this.waterfall(px, fill); break;
+      // --- Frostmere. None of these is passed `rng` either, for the same
+      // reason: position hashes only, so the family cannot move a varied tile
+      // anywhere else in the world.
+      case T.FROST_WALL: this.frostWall(px, fill, 'plain'); break;
+      case T.FROST_WINDOW: this.frostWall(px, fill, 'window'); break;
+      case T.FROST_DOOR: this.frostWall(px, fill, 'door'); break;
+      case T.ROOF_SHINGLE_L: this.shingleSnowRoof(px, fill, 'left'); break;
+      case T.ROOF_SHINGLE: this.shingleSnowRoof(px, fill, 'mid'); break;
+      case T.ROOF_SHINGLE_R: this.shingleSnowRoof(px, fill, 'right'); break;
+      case T.ROOF_STACK: this.roofStack(px, fill); break;
+      case T.LAMP_FROST: this.blueLantern(px); break;
+      case T.WOODPILE: this.woodpile(px); break;
+      case T.ICE_STACK: this.iceStack(px); break;
+      case T.FIREPOT: this.firepot(px); break;
+      case T.ICE_SOUND: this.cisternIce(px, fill, 'sound'); break;
+      case T.ICE_ROTTEN: this.cisternIce(px, fill, 'rotten'); break;
+      case T.ICE_THAW: this.cisternIce(px, fill, 'thaw'); break;
 
       default: fill('#ff00ff'); break; // loud, so a missing tile is obvious
     }
@@ -9454,6 +9779,1520 @@ export class Tileset {
       P(x, 14, PAL.stoneMid);
       P(x, 15, PAL.stoneDeep);
       if ((x + 2) % 6 === 0) { P(x, 13, PAL.stoneDark); P(x, 14, PAL.stoneDark); }
+    }
+  }
+
+  /* ------------------------------------------------- the mountain roads */
+
+  /**
+   * Snow.
+   *
+   * The ground of Route 8, and the hardest ground in the game to get right,
+   * for a reason that has nothing to do with how snow looks. Every other
+   * outdoor tile in Caelora is built to the house rule that the ground must be
+   * light enough for a sprite's hard outline to separate from it. Snow is the
+   * one material that fails from the other end: paint it the white it actually
+   * is and the field is brighter than the character standing on it, the
+   * outline stops doing any work, and a player loses their own sprite.
+   *
+   * So the ramp is built downwards from white and the field lives two steps
+   * below it. What is left over -- `snowGlint` -- is spent on maybe one unit in
+   * forty, on the crest of a wind ridge, where a real snowfield actually does
+   * throw the sun back at you. That single restraint is most of why this reads
+   * as a surface with weather on it rather than as blank paper.
+   *
+   * The colour is BLUE, and not as a stylistic choice. Open snow is lit by sky
+   * and shaded by sky, so the whole thing sits in one narrow band of cold hue
+   * with no warm note anywhere in it. The first cut of this was neutral grey
+   * and read as concrete; the difference is entirely chroma.
+   *
+   * `drift` is the depth. Fresh level snow is smooth and nearly featureless;
+   * drifted snow has sastrugi in it -- hard wind-cut ridges, all lying the same
+   * way, which is the only thing on the map that tells a player which way the
+   * wind has been blowing for the last week.
+   */
+  private snow(px: Px, fill: (c: string) => void, drift: number): void {
+    fill(drift ? PAL.snowMid : PAL.snowLight);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    const W = (x: number, y: number, c: string) =>
+      P(((x % S) + S) % S, ((y % S) + S) % S, c);
+
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        // Two octaves: the broad shape of the drift, and the grain in it.
+        const broad = wrapNoise(x * DETAIL, y * DETAIL, 8, 1409 + drift * 7);
+        const fine = wrapNoise(x * DETAIL, y * DETAIL, 4, 1423 + drift * 7);
+        // The ridges lie on a shallow diagonal and repeat every five units,
+        // which does not divide sixteen -- so a field of this has no ruled
+        // line in it. The broad noise only *bends* them; it must not be
+        // allowed to break them up, because parallel is the whole reading.
+        // The first cut let the noise dominate and the result was four white
+        // lozenges per cell that looked like cloud lying on the floor.
+        const ridge = drift
+          ? Math.sin((x * 1.25 + y * 0.45) + broad * 1.1) * 0.5 + 0.5
+          : 0.5;
+        const n = drift
+          ? broad * 0.16 + fine * 0.10 + ridge * 0.74
+          : broad * 0.62 + fine * 0.23 + ridge * 0.15;
+        let c: string;
+        if (drift) {
+          c = n > 0.70 ? PAL.snowPale : n > 0.56 ? PAL.snowLight
+            : n > 0.40 ? PAL.snowMid : n > 0.27 ? PAL.snowShade : PAL.snowDeep;
+        } else {
+          c = n > 0.66 ? PAL.snowPale : n > 0.44 ? PAL.snowLight
+            : n > 0.28 ? PAL.snowMid : PAL.snowShade;
+        }
+        P(x, y, c);
+      }
+    }
+
+    // The glint. Rare, scattered, and always sitting on a unit that was already
+    // near the top of the ramp, so it reads as sun catching a crest rather than
+    // as white dirt thrown at the tile.
+    const glints = drift ? 5 : 3;
+    for (let i = 0; i < glints; i++) {
+      const gx = Math.floor(hash2(i, 41, 1429 + drift) * S);
+      const gy = Math.floor(hash2(i, 42, 1433 + drift) * S);
+      W(gx, gy, PAL.snowGlint);
+      W(gx + 1, gy, PAL.snowPale);
+    }
+    // Blown grit and dead needles, which is what stops a snowfield being
+    // sterile. Two or three specks a cell, no more -- this is the one tile in
+    // the game where noise is the enemy.
+    for (let i = 0; i < (drift ? 2 : 3); i++) {
+      W(Math.floor(hash2(i, 51, 1439 + drift) * S),
+        Math.floor(hash2(i, 52, 1447 + drift) * S),
+        hash2(i, 53, 1451) > 0.5 ? PAL.snowDeep : PAL.heathDark);
+    }
+    if (!drift) return;
+    // The cut edge of a sastruga: one hard bright line with a blue shadow under
+    // it. Wind-carved snow has an EDGE, and it is the only hard edge in the
+    // material -- without it a drift is a soft cloud and reads as fog on the
+    // floor. Three of them, all lying the same way, because a drift is the
+    // record of a wind that has been blowing from one quarter for a week.
+    // TWO, not three, and each one broken. Three unbroken ridges eight units
+    // apart print as hatching at map size -- a field of drift read as corduroy
+    // rather than as snow -- and what a real sastruga field has is a handful of
+    // long cut edges with a lot of soft ground between them.
+    for (const base of [2, 10]) {
+      for (let x = 0; x < S; x++) {
+        if (hash2(x, base, 1451) > 0.86) continue;   // the ridge is not continuous
+        const y = base + Math.round(x * 0.36) + (hash2(x, base, 1453) > 0.72 ? 1 : 0);
+        W(x, y, PAL.snowGlint);
+        W(x, y + 1, PAL.snowPale);
+        if (hash2(x, base, 1457) > 0.4) W(x, y + 2, PAL.snowShade);
+      }
+    }
+  }
+
+  /**
+   * Snow scrub: dwarf birch and dead heather standing out of the drift.
+   *
+   * The encounter tile of Route 8, and the only test that matters for one of
+   * those is whether a player can pick it out at 1x from the far side of the
+   * screen without being told. On ash that meant being the darkest mass in
+   * view; on farmland it meant being the most saturated. On snow it means
+   * being the only WARM thing on the map -- everything else in the family sits
+   * in the cold half of the wheel, so a patch of brown twigs reads instantly
+   * and reads as alive.
+   *
+   * Twigs, not blades. Whatever survives up here has no leaf on it in winter:
+   * it is a low tangle of bare woody stems with snow caught in the fork of
+   * every one. The snow caps are what tie it to the ground it stands in.
+   */
+  private snowScrub(px: Px, fill: (c: string) => void): void {
+    fill(PAL.snowMid);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    const W = (x: number, y: number, c: string) =>
+      P(((x % S) + S) % S, ((y % S) + S) % S, c);
+
+    // The snow the bush is standing in, one step down from the open field so
+    // the clump sits in a hollow of its own making.
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 8, 1459);
+        P(x, y, n > 0.62 ? PAL.snowLight : n > 0.38 ? PAL.snowMid : PAL.snowShade);
+      }
+    }
+
+    // Six stools of birch, each a fan of stems leaning off its own root. They
+    // are placed on a hashed grid rather than at random so no cell ever comes
+    // out bare -- an encounter tile with a gap in it is a tile a player walks
+    // past.
+    for (let i = 0; i < 6; i++) {
+      const rx = Math.floor(hash2(i, 61, 1471) * S);
+      const ry = 9 + Math.floor(hash2(i, 62, 1481) * 6);
+      const stems = 3 + Math.floor(hash2(i, 63, 1483) * 3);
+      for (let s = 0; s < stems; s++) {
+        const lean = (hash2(i, s + 70, 1487) - 0.5) * 3.2;
+        const h = 4 + Math.floor(hash2(i, s + 80, 1489) * 4);
+        for (let k = 0; k <= h; k++) {
+          const t = k / h;
+          const xx = rx + Math.round(lean * t * t);
+          const c = t > 0.72 ? PAL.heathLight : t > 0.36 ? PAL.heathMid : PAL.heathDark;
+          W(xx, ry - k, c);
+          if (t < 0.5) W(xx + 1, ry - k, PAL.heathDeep);
+        }
+        // Snow caught in the fork, and a catkin on about half the stems.
+        const tx = rx + Math.round(lean);
+        W(tx, ry - h - 1, hash2(i, s, 1493) > 0.5 ? PAL.snowPale : PAL.heathTip);
+        W(tx - 1, ry - h, PAL.snowLight);
+      }
+      // The shadow the stool throws, which is what stops the bush floating.
+      W(rx, ry + 1, PAL.snowDeep);
+      W(rx + 1, ry + 1, PAL.snowShade);
+    }
+  }
+
+  /**
+   * The trodden road.
+   *
+   * The one line a player can follow when the squall closes in, so it is built
+   * for exactly that job and nothing else. It is DARK -- grey-brown grit and
+   * boot dirt and the hill coming through -- which makes it the inverse of
+   * every other road in the game, and it is the reason Route 8 can take the
+   * visibility away without taking navigation away with it.
+   *
+   * A road under snow is not a swept road. Snow lies in the ruts and along the
+   * crown between them and gets pushed to the edges, so the tile is really
+   * three materials interleaved: packed grit where the traffic is, dirty ice
+   * in the wheel tracks, and clean snow at the verges.
+   */
+  private snowRoad(px: Px, fill: (c: string) => void): void {
+    fill(PAL.trackMid);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    const W = (x: number, y: number, c: string) =>
+      P(((x % S) + S) % S, ((y % S) + S) % S, c);
+
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        // Kept deliberately tight. A road is a made, compacted surface and a
+        // wide value range on soft noise reads as marble, which is exactly
+        // what the first cut of this came out as.
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 8, 1499) * 0.55
+          + wrapNoise(x * DETAIL, y * DETAIL, 4, 1511) * 0.45;
+        let c: string = n > 0.62 ? PAL.trackLight : n > 0.34 ? PAL.trackMid : PAL.trackDark;
+        const g = hash2(x, y, 1523);
+        if (g > 0.955) c = PAL.trackPale;
+        else if (g < 0.04) c = PAL.trackDeep;
+        P(x, y, c);
+      }
+    }
+    // NO WHEEL RUTS, and that is a decision rather than an omission. A rut is
+    // a directional mark, and this road climbs: it runs north for six tiles,
+    // turns west round a spur, doubles back and climbs again. A tile with two
+    // vertical grooves in it draws a ladder across every east-west stretch of
+    // that. What a road needs at this size is to be DARKER and FLATTER than
+    // the field either side of it, and everything below is in service of that.
+    //
+    // Trodden snow instead: patches of it lying where the traffic has not
+    // been, in blobs rather than lines, so the tile has no axis at all.
+    for (let i = 0; i < 7; i++) {
+      const cx = Math.floor(hash2(i, 21, 1531) * S);
+      const cy = Math.floor(hash2(i, 22, 1543) * S);
+      const r = 1 + Math.floor(hash2(i, 23, 1547) * 2);
+      for (let y = -r; y <= r; y++) {
+        for (let x = -r; x <= r; x++) {
+          if (x * x + y * y > r * r) continue;
+          W(cx + x, cy + y, hash2(cx + x, cy + y, 1549) > 0.35 ? PAL.snowShade : PAL.snowMid);
+        }
+      }
+    }
+    // Grit and stone worked up through it by the traffic. The dark end of the
+    // ramp, and the reason the road holds its value against the field when the
+    // whiteout takes everything else.
+    for (let i = 0; i < 9; i++) {
+      const gx = Math.floor(hash2(i, 31, 1553) * S);
+      const gy = Math.floor(hash2(i, 32, 1559) * S);
+      W(gx, gy, PAL.trackDeep);
+      W(gx + 1, gy, PAL.trackDark);
+    }
+    // Boot prints. Pairs, a stride apart, and always darker than the road --
+    // a print is a hole punched through the grit into the shadow underneath.
+    for (let i = 0; i < 3; i++) {
+      const bx = Math.floor(hash2(i, 71, 1549) * S);
+      const by = Math.floor(hash2(i, 72, 1553) * S);
+      W(bx, by, PAL.trackDeep); W(bx + 1, by, PAL.trackDeep);
+      W(bx, by + 1, PAL.trackDark); W(bx + 1, by + 1, PAL.trackDeep);
+    }
+  }
+
+  /**
+   * A snow bank you can drop off but not climb.
+   *
+   * The same contract as the turf ledge -- a one-way step down, hopped in the
+   * direction the tile faces -- rebuilt in the material. A cornice is not a
+   * grass bank with the green swapped out: what makes it read is the OVERHANG,
+   * the lip of hard snow standing out past the face under it with its own
+   * shadow beneath, which is the shape that says "this edge is not solid".
+   */
+  private snowLedge(px: Px, fill: (c: string) => void): void {
+    this.snow(px, fill, 0);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    for (let x = 0; x < S; x++) {
+      // A wandering lip, so a run of these is a bank and not a plank.
+      const lip = 5 + (hash2(x, 0, 1559) > 0.6 ? 1 : 0);
+      P(x, lip - 1, PAL.snowGlint);
+      P(x, lip, PAL.snowPale);
+      // The undercut: the face is in shadow all the way down, because the lip
+      // above it is what is stopping the light.
+      for (let k = 1; k <= 4; k++) {
+        const n = hash2(x >> 1, k, 1567);
+        P(x, lip + k, k === 1 ? PAL.snowShade
+          : k === 2 ? (n > 0.5 ? PAL.snowShade : PAL.snowDeep)
+            : k === 3 ? PAL.snowDeep
+              : (n > 0.5 ? PAL.snowDeep : PAL.stoneDark));
+      }
+      // Rock and heather showing through where the bank has broken away.
+      if (hash2(x, 5, 1571) > 0.68) {
+        P(x, lip + 2, PAL.stoneDark);
+        P(x, lip + 3, PAL.stoneDeep);
+      }
+      P(x, lip + 5, PAL.snowShade);
+      // The shadow the bank throws on the field below it.
+      P(x, lip + 6, 'rgba(60,80,130,0.34)');
+      if ((x * 3) % 4 !== 0) P(x, lip + 7, 'rgba(60,80,130,0.18)');
+    }
+  }
+
+  /**
+   * Conifer.
+   *
+   * The darkest mass in Caelora, and it has to be. A snow map has every value
+   * in the picture crowded into the top of one ramp, so the only way to draw a
+   * horizon on it is to bring in the bottom of a different one. A pine wall at
+   * the head of Route 8 is what makes the snowfield in front of it read as a
+   * field rather than as an absence of map.
+   *
+   * Built as a triangle of whorls rather than as one cone. A real spruce is a
+   * stack of branch tiers with daylight between them, and the tiers are what
+   * separate one tree from the next at this size -- a smooth cone reads as a
+   * road sign. `laden` puts the winter's snow on the upper side of every tier,
+   * which is a different tree, not the same tree with dots on it: a loaded
+   * branch hangs, so the tiers droop and the silhouette narrows.
+   */
+  private pine(px: Px, laden: boolean): void {
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    const v = (s: number) => hash2(s, s * 3 + 1, 1579);
+
+    const cx = 7.5 + (v(1) - 0.5) * 2.2;
+    const top = 0.6 + v(2) * 1.8;
+    const foot = 13.4 + v(3) * 1.2;
+    const halfW = 5.4 + v(4) * 1.4;
+
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const t = (y - top) / (foot - top);
+        if (t < 0 || t > 1) continue;
+        // The taper, with the whorls cut into it. Six tiers over the height;
+        // each one flares at its base and pinches at its top, which is the
+        // scalloped edge a spruce has.
+        const tier = ((t * 6) % 1);
+        const flare = 0.62 + tier * 0.38;
+        const droop = laden ? 0.86 : 1;
+        const w = halfW * (0.12 + t * 0.88) * flare * droop;
+        const dx = x - cx;
+        if (Math.abs(dx) > w) continue;
+
+        const edge = Math.abs(dx) / Math.max(0.8, w);
+        // Light from the upper left: the left flank of every tier catches it,
+        // the right flank and the underside of each tier are in shadow.
+        const lit = (-dx / Math.max(1, w)) * 0.55 + (1 - tier) * 0.35
+          + (hash2(x >> 1, y >> 1, 1583) - 0.5) * 0.3;
+        let c: string;
+        if (edge > 0.88) c = PAL.pineDeep;
+        else if (lit > 0.55) c = PAL.pineHi;
+        else if (lit > 0.24) c = PAL.pineLight;
+        else if (lit > -0.06) c = PAL.pineMid;
+        else if (lit > -0.42) c = PAL.pineDark;
+        else c = PAL.pineDeep;
+        P(x, y, c);
+
+        // Snow load: it lies on the top of each tier, thickest where the
+        // branch is widest, and it never reaches the outermost ring -- the
+        // silhouette has to stay dark or the treeline stops being a treeline.
+        if (laden && tier < 0.26 && edge < 0.8) {
+          P(x, y, hash2(x, y, 1597) > 0.28
+            ? (edge < 0.45 ? PAL.snowPale : PAL.snowLight)
+            : PAL.snowMid);
+        }
+      }
+    }
+
+    // Trunk, and the small dark skirt of needles at the foot. Two units wide
+    // is four screen pixels -- the smallest mark that still reads as a bole.
+    const tx = Math.round(cx) - 1;
+    for (let y = Math.round(foot) - 1; y < S; y++) {
+      P(tx, y, PAL.trunkDark);
+      P(tx + 1, y, PAL.trunkDeep);
+    }
+    for (let x = tx - 2; x <= tx + 3; x++) {
+      if (hash2(x, 1, 1601) > 0.35) P(x, Math.round(foot), PAL.pineDeep);
+    }
+    // The blue shadow the tree lays across the snow beside it. Translucent, so
+    // it darkens whatever the map put under the pine instead of stamping one
+    // colour of forest floor over snow, scree and road alike.
+    for (let y = Math.round(foot); y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const sx = (x - cx - 2.2) / 5.0, sy = (y - foot - 1.4) / 2.4;
+        if (sx * sx + sy * sy < 1) P(x, y, 'rgba(52,72,124,0.32)');
+      }
+    }
+  }
+
+  /**
+   * A boulder standing in the snow.
+   *
+   * Floorless, so one tile is a rock in a field, a rock on the road and a rock
+   * out on the scree without carrying a square of the wrong ground with it.
+   * The whole design is the snow ON it: a bare grey lump on a white field is a
+   * hole in the map, and a lump with a white cap and a blue shadow off its
+   * right shoulder is a rock in weather.
+   */
+  private snowRock(px: Px, fill: (c: string) => void): void {
+    void fill;
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    const v = (s: number) => hash2(s, s * 5 + 2, 1607);
+    const cx = 7.5 + (v(1) - 0.5) * 1.6;
+    const cy = 9.4 + (v(2) - 0.5) * 1.2;
+    const rx = 5.6 + v(3) * 1.1;
+    const ry = 4.4 + v(4) * 0.9;
+
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const dx = x - cx, dy = y - cy;
+        // Faceted, not round. Rock at this size is a handful of flat planes.
+        const wob = 1 + Math.sin(Math.atan2(dy, dx) * 4 + v(5) * 6.283) * 0.12;
+        const d = (dx * dx) / (rx * rx * wob * wob) + (dy * dy) / (ry * ry * wob * wob);
+        if (d > 1) {
+          // The rock's own shadow, thrown down and right onto whatever it is
+          // standing on.
+          const sx = (dx - 2.4) / (rx * 0.9), sy = (dy - 2.2) / (ry * 0.55);
+          if (sx * sx + sy * sy < 1) P(x, y, 'rgba(52,72,124,0.34)');
+          continue;
+        }
+        const lit = (-dx * 0.7 - dy) / rx + (hash2(x >> 1, y >> 1, 1609) - 0.5) * 0.4;
+        let c: string = d > 0.93 ? PAL.stoneDeep
+          : lit > 0.6 ? PAL.stonePale : lit > 0.2 ? PAL.stoneLight
+            : lit > -0.2 ? PAL.stoneMid : lit > -0.6 ? PAL.stoneDark : PAL.stoneDeep;
+        // The cap. It sits on the upper surface only and it has a hard lower
+        // edge, because settled snow does -- a soft fade reads as bloom.
+        if (dy < -ry * 0.18 + Math.sin(x * 0.9) * 0.7 && d < 0.94) {
+          c = lit > 0.25 ? PAL.snowGlint : lit > -0.2 ? PAL.snowPale : PAL.snowLight;
+        }
+        P(x, y, c);
+      }
+    }
+  }
+
+  /**
+   * Scree.
+   *
+   * The rocky-hills band of Route 8 and the whole floor of Skyreach's ledges:
+   * shattered stone with the snow blown off it. It is here because a climb
+   * that goes straight from grass to snow has no middle, and the middle is
+   * where the player is told what kind of mountain this is going to be.
+   *
+   * Every unit belongs to a chip rather than to a noise field. Loose rock is
+   * made of *pieces*, and a hashed grey wash -- which is what the first cut of
+   * this was -- reads as gravel-effect wallpaper. Three sizes of chip, each
+   * with a lit top-left face and a hard shadow on its lower right, and the
+   * gaps between them are the dark.
+   */
+  private scree(px: Px, fill: (c: string) => void): void {
+    fill(PAL.stoneDark);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    const W = (x: number, y: number, c: string) =>
+      P(((x % S) + S) % S, ((y % S) + S) % S, c);
+
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 4, 1613);
+        P(x, y, n > 0.58 ? PAL.stoneDark : n > 0.34 ? PAL.stoneDeep : '#3a3846');
+      }
+    }
+    // Thirty-odd chips a cell. Enough that the ground is made of them and the
+    // dark between is only a joint, not a field.
+    for (let i = 0; i < 34; i++) {
+      const cx = Math.floor(hash2(i, 81, 1619) * S);
+      const cy = Math.floor(hash2(i, 82, 1621) * S);
+      const w = 1 + Math.floor(hash2(i, 83, 1627) * 3);
+      const h = 1 + Math.floor(hash2(i, 84, 1637) * 2);
+      const tone = hash2(i, 85, 1657);
+      const top = tone > 0.86 ? PAL.stonePale : tone > 0.5 ? PAL.stoneLight : PAL.stoneMid;
+      const side = tone > 0.5 ? PAL.stoneMid : PAL.stoneDark;
+      for (let y = 0; y <= h; y++) {
+        for (let x = 0; x <= w; x++) {
+          W(cx + x, cy + y, y === 0 ? top : x === w ? side : (y === h ? side : top));
+        }
+      }
+      W(cx + w + 1, cy + h + 1, PAL.stoneDeep);
+    }
+    // Old snow, still lying in the shade between the stones.
+    for (let i = 0; i < 5; i++) {
+      const sx = Math.floor(hash2(i, 91, 1663) * S);
+      const sy = Math.floor(hash2(i, 92, 1667) * S);
+      W(sx, sy, PAL.snowMid);
+      W(sx + 1, sy, PAL.snowShade);
+    }
+  }
+
+  /**
+   * Lake ice.
+   *
+   * The one surface in this family that is DARKER than everything round it,
+   * and that is its entire job: a frozen tarn has to read as a hole cut in the
+   * white from the far side of the screen, or nobody understands why the road
+   * goes round it and nobody feels anything about stepping onto it.
+   *
+   * Blue-green, not blue. Lake ice takes its colour from the water underneath,
+   * and the saturated navy the sea is painted in is exactly wrong for a surface
+   * somebody is standing on -- it read as a hole in the world rather than as a
+   * floor. What sells ice at sixteen units is not colour anyway, it is the
+   * FRACTURE: long straight cracks that run right off the edges of the cell
+   * and meet the neighbours' at any angle, plus the rime frost blown into a
+   * feather along the lee side of each one.
+   *
+   * `cracked` is the same lake gone bad -- rotten, shelled, water showing
+   * through -- and it is solid, because it is the only way a map can say "not
+   * here" about a surface the player has already walked on somewhere else.
+   */
+  private lakeIce(px: Px, fill: (c: string) => void, cracked: boolean): void {
+    fill(cracked ? PAL.iceDeep : PAL.iceMid);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    const W = (x: number, y: number, c: string) =>
+      P(((x % S) + S) % S, ((y % S) + S) % S, c);
+
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 8, 1669);
+        const g = wrapNoise(x * DETAIL, y * DETAIL, 4, 1693);
+        let c: string;
+        if (cracked) {
+          c = n > 0.58 ? PAL.iceDark : n > 0.36 ? PAL.iceDeep : '#1d4a55';
+        } else {
+          // Broad and calm. Ice is a SHEET: the interest in it has to come
+          // from the fractures cut across it, and a high-frequency wash of
+          // four tones underneath turns a lake into a mosaic, which is what
+          // the first cut of this read as from three tiles away.
+          c = n > 0.66 ? PAL.iceLight : n > 0.34 ? PAL.iceMid : PAL.iceDark;
+          if (g > 0.88) c = PAL.icePale;
+        }
+        P(x, y, c);
+      }
+    }
+
+    // Fractures. Two per cell on open ice, each a straight line at its own
+    // angle running clean off both edges, so a lake of these is a web rather
+    // than a grid -- and two is the number, because three crossing inside one
+    // sixteen-unit cell is a shattered windscreen.
+    const lines = cracked ? 4 : 2;
+    for (let i = 0; i < lines; i++) {
+      const a = hash2(i, 101, 1697) * Math.PI;
+      const ox = hash2(i, 102, 1699) * S;
+      const oy = hash2(i, 103, 1709) * S;
+      const dx = Math.cos(a), dy = Math.sin(a);
+      for (let k = -S; k < S * 2; k++) {
+        const x = Math.round(ox + dx * k);
+        const y = Math.round(oy + dy * k);
+        W(x, y, cracked ? '#12333c' : PAL.iceDeep);
+        // Rime blown along the lee side. Sparse: the pale feather is what
+        // makes a crack read as a crack, and a continuous white line beside a
+        // continuous dark one is a railway.
+        if (hash2(k, i, 1721) > 0.62) {
+          W(x + (dy > 0 ? 1 : -1), y, cracked ? PAL.iceDark : PAL.iceRime);
+        }
+      }
+    }
+
+    if (!cracked) {
+      // Snow that never blew clear, in drifts along the cracks rather than in
+      // squares. This is the only soft thing on the tile and it is what stops
+      // a frozen tarn reading as glass.
+      for (let i = 0; i < 3; i++) {
+        const sx = Math.floor(hash2(i, 111, 1723) * S);
+        const sy = Math.floor(hash2(i, 112, 1733) * S);
+        for (let y = 0; y < 4; y++) {
+          for (let x = 0; x < 6; x++) {
+            const d = (x - 2.5) * (x - 2.5) / 9 + (y - 1.5) * (y - 1.5) / 3;
+            if (d < 1 && hash2(sx + x, sy + y, 1741) > 0.3) {
+              W(sx + x, sy + y, d < 0.5 ? PAL.snowLight : PAL.snowShade);
+            }
+          }
+        }
+      }
+      return;
+    }
+    // Rotten ice: whole plates tilted out of the sheet with black water
+    // between them. Big marks, because "do not walk on this" has to be legible
+    // at the distance a player decides from.
+    for (let i = 0; i < 5; i++) {
+      const sx = Math.floor(hash2(i, 121, 1747) * S);
+      const sy = Math.floor(hash2(i, 122, 1753) * S);
+      const w = 2 + Math.floor(hash2(i, 123, 1759) * 3);
+      const h = 2 + Math.floor(hash2(i, 124, 1777) * 2);
+      for (let x = 0; x <= w; x++) W(sx + x, sy, x < w ? PAL.iceRime : PAL.icePale);
+      for (let y = 1; y <= h; y++) {
+        for (let x = 0; x <= w; x++) {
+          W(sx + x, sy + y, y === h || x === w ? '#0d2830' : PAL.iceLight);
+        }
+      }
+    }
+  }
+
+  /**
+   * A cairn.
+   *
+   * The waymark of both mountain roads, and a piece of navigation equipment
+   * rather than decoration. Route 8 takes the player's sight away in a squall
+   * and gives them these instead: the rule the whole route is laid out to is
+   * that from any cairn you can see the next one. So it is tall, it is dark
+   * against the snow, and it has a pale capstone on top that carries at any
+   * distance the map can put between two of them.
+   *
+   * Floorless, so it stands on snow, road and scree alike -- which the stock
+   * signpost, which brings a square of lowland turf with it, cannot do.
+   */
+  private cairn(px: Px): void {
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    const v = (s: number) => hash2(s, s * 7 + 3, 1759);
+
+    // Seven or eight stones, each a little narrower than the one under it,
+    // each set down at its own slight angle. A cairn is somebody's patience.
+    let y = 15;
+    const layers = 7 + Math.floor(v(1) * 2);
+    for (let i = 0; i < layers; i++) {
+      const t = i / layers;
+      const half = Math.round(4.4 * (1 - t * 0.72));
+      const lean = Math.round((v(i + 10) - 0.5) * 2.2);
+      const h = 1 + (v(i + 20) > 0.55 ? 1 : 0);
+      for (let k = 0; k < h; k++) {
+        for (let x = -half; x <= half; x++) {
+          const cx = 7 + x + lean;
+          // Dark, and it has to be. The whole use of a cairn is that it is the
+          // one thing a player can still pick out when the squall has taken
+          // the hill away, and the ground it stands on is the brightest
+          // surface in the game -- so the stack is built from the BOTTOM of
+          // the stone ramp, with one lit edge, and nothing in it reaches
+          // stonePale at all.
+          const lit = (-x / Math.max(1, half)) * 0.6 + (k === 0 ? 0.5 : -0.3);
+          let c: string = lit > 0.6 ? PAL.stoneMid : lit > 0.15 ? PAL.stoneDark
+            : lit > -0.3 ? PAL.stoneDeep : '#33313f';
+          if (x === half) c = '#2b2937';
+          P(cx, y - k, c);
+        }
+        // Snow lying on the upper face of a stone -- but only on the ones the
+        // wind can reach, and only on part of each. Capping every course put
+        // white on nine tenths of the stack and the cairn came out as a
+        // snowman: the mark has to stay DARK, because dark against snow is the
+        // entire reason a player can pick the next one out of a squall.
+        if (k === h - 1 && i >= layers - 2) {
+          for (let x = -half; x <= half - 1; x++) {
+            if (hash2(x, i, 1783) > 0.6) P(7 + x + lean, y - k, PAL.snowPale);
+          }
+        }
+      }
+      y -= h;
+      if (y < 2) break;
+    }
+    // The capstone: one bright unit with a hard shadow under it, which is the
+    // mark the player is actually aiming at from eight tiles away.
+    P(7, y, PAL.snowGlint);
+    P(8, y, PAL.snowPale);
+    P(7, y + 1, PAL.stoneDeep);
+    // Footing, so the stack is standing on the ground rather than in front
+    // of it.
+    for (let x = 2; x <= 12; x++) P(x, 15, hash2(x, 9, 1789) > 0.4 ? PAL.snowShade : PAL.snowDeep);
+  }
+
+  /**
+   * The rope bridge.
+   *
+   * Skyreach's whole argument in one tile. A route can put a field of grass in
+   * front of a player or it can put a gap in front of them, and only one of
+   * those is a thing they will remember -- so the bridges here are drawn to be
+   * felt rather than looked at. The deck carries its OWN dark underneath,
+   * because the cell beside it is a chasm and there is no floor to borrow: the
+   * planks are lit, the space between and below them is not, and the gaps are
+   * wide enough that the drop is visible through the boards you are standing on.
+   *
+   * `post` is the anchor at either end -- a bollard of stacked stone with the
+   * cables made off round it. Floorless, so it stands on scree, rock and turf.
+   */
+  private ropeBridge(px: Px, post: boolean): void {
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    if (post) {
+      // The stone bollard. Squat, heavy, and obviously holding something.
+      for (let y = 5; y < S; y++) {
+        for (let x = 4; x <= 11; x++) {
+          const lit = ((7.5 - x) / 4) * 0.7 + (y < 7 ? 0.5 : -0.15);
+          let c: string = lit > 0.7 ? PAL.stonePale : lit > 0.25 ? PAL.stoneLight
+            : lit > -0.15 ? PAL.stoneMid : PAL.stoneDark;
+          if (x === 11 || y === S - 1) c = PAL.stoneDeep;
+          if ((y - 5) % 4 === 0 && x > 4) c = PAL.stoneDeep;   // the courses
+          P(x, y, c);
+        }
+      }
+      for (let x = 4; x <= 10; x++) P(x, 5, PAL.snowPale);
+      // The cables, made off round the head and running out to both edges.
+      for (const cy of [7, 10]) {
+        for (let x = 0; x < 4; x++) { P(x, cy, PAL.ropeMid); P(x, cy + 1, PAL.ropeDeep); }
+        for (let x = 12; x < S; x++) { P(x, cy, PAL.ropeMid); P(x, cy + 1, PAL.ropeDeep); }
+        for (let x = 4; x <= 11; x++) if ((x + cy) % 2) P(x, cy, PAL.ropeDark);
+      }
+      return;
+    }
+
+    // The drop, seen between the boards. Not black -- a gorge at this scale is
+    // full of light bouncing around in it, and flat black reads as a hole in
+    // the render rather than as depth.
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 8, 1787);
+        P(x, y, n > 0.66 ? '#3c4560' : n > 0.4 ? '#2c3349' : '#1e2436');
+      }
+    }
+    // Planks, laid across the run, four units apart with a gap between each.
+    for (let y = 0; y < S; y++) {
+      const plank = y % 4;
+      if (plank === 3) continue;                     // the gap you see through
+      for (let x = 1; x < S - 1; x++) {
+        const grain = hash2(x, y, 1789);
+        const c = plank === 0 ? (grain > 0.4 ? PAL.ropePale : PAL.ropeLight)
+          : plank === 1 ? (grain > 0.5 ? PAL.ropeLight : PAL.ropeMid)
+            : PAL.ropeDark;
+        P(x, y, c);
+      }
+      // The board ends, and the nail in each.
+      P(0, y, plank === 2 ? PAL.ropeDeep : PAL.ropeDark);
+      P(S - 1, y, PAL.ropeDeep);
+      if (plank === 0) { P(2, y, PAL.stoneLight); P(13, y, PAL.stoneLight); }
+    }
+    // The two carrying cables under the deck ends, and the handlines above.
+    for (const cx of [0, 15]) {
+      for (let y = 0; y < S; y++) P(cx, y, y % 4 === 3 ? PAL.ropeMid : PAL.ropeDeep);
+    }
+    for (const cx of [2, 13]) {
+      for (let y = 0; y < S; y++) if (y % 4 === 3) P(cx, y, PAL.ropeMid);
+    }
+  }
+
+  /**
+   * The gorge.
+   *
+   * What is under the bridges, and the reason they matter. Drawn as depth
+   * rather than as darkness: two rock walls falling away in perspective, the
+   * gap between them narrowing toward the bottom of the cell, and cold mist
+   * filling the last of it so the eye never reaches a floor.
+   *
+   * Solid, obviously, and it is the only solid tile in the game that a player
+   * is meant to stand at the edge of and look into.
+   */
+  private gorge(px: Px, fill: (c: string) => void): void {
+    fill('#232a3d');
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    for (let y = 0; y < S; y++) {
+      // How much of the cell is wall at this depth. Near the top the walls are
+      // wide and lit; further down they close in and go to mist.
+      const t = y / (S - 1);
+      const wall = Math.round(5.5 * (1 - t * 0.55));
+      for (let x = 0; x < S; x++) {
+        const inLeft = x < wall;
+        const inRight = x >= S - wall;
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 4, 1801);
+        let c: string;
+        if (inLeft || inRight) {
+          // Wall. The left face takes what light there is; the right is in
+          // shadow, and both darken with depth. Kept below stoneMid at its
+          // brightest on purpose -- a chasm ten cells wide has to read as ONE
+          // dark mass, and a lit wall at the top of every cell prints a
+          // colonnade across the whole of it.
+          const base = inLeft ? 0.68 - t * 0.5 : 0.36 - t * 0.4;
+          const v = base + (n - 0.5) * 0.26;
+          c = v > 0.58 ? PAL.stoneMid : v > 0.38 ? PAL.stoneDark
+            : v > 0.2 ? PAL.stoneDeep : v > 0.06 ? '#2b2937' : '#232231';
+        } else {
+          // The air in the gap: colder and paler with depth, which is haze.
+          const v = t * 0.7 + (n - 0.5) * 0.18;
+          c = v > 0.58 ? '#4b5673' : v > 0.4 ? '#3b445e' : v > 0.22 ? '#2c3349' : '#20263a';
+        }
+        P(x, y, c);
+      }
+    }
+    // Snow on the ledges of the upper wall, and one thread of white water a
+    // long way down. Both are scale: without something recognisable in it a
+    // chasm is just a dark rectangle.
+    for (let i = 0; i < 4; i++) {
+      const sx = Math.floor(hash2(i, 131, 1811) * 5);
+      const sy = Math.floor(hash2(i, 132, 1823) * 6);
+      P(sx, sy, PAL.snowShade);
+      P(S - 1 - sx, sy + 2, PAL.snowDeep);
+    }
+    for (let y = 11; y < S; y++) {
+      if (hash2(y, 7, 1831) > 0.45) P(7 + (y % 2), y, '#5d6b8c');
+    }
+  }
+
+  /**
+   * Plateau tussock.
+   *
+   * Skyreach's encounter tile, and its only green. Grass that lives in a
+   * permanent gale is bleached, wiry and COMBED -- every blade lying the same
+   * way, because the wind up here has one direction and never stops. That
+   * single property is what makes this legible as a different plant from every
+   * other tall grass in the game rather than as turf with the saturation
+   * pulled out of it.
+   *
+   * The seed heads are the warm note and they are the reason a patch reads at
+   * 1x from across the screen: bleached straw against grey rock is the highest
+   * contrast Skyreach has.
+   */
+  private windTussock(px: Px, fill: (c: string) => void): void {
+    fill(PAL.tussockDark);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+    const W = (x: number, y: number, c: string) =>
+      P(((x % S) + S) % S, ((y % S) + S) % S, c);
+
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 8, 1847);
+        P(x, y, n > 0.6 ? PAL.tussockDark : n > 0.36 ? PAL.tussockDeep : '#3a4029');
+      }
+    }
+    // Two ranks of blades, all leaning the same way, standing at their own
+    // heights. A level rank draws a horizontal band across every cell, and a
+    // field of that is a fence.
+    const stand = (x: number) => Math.floor(hash2(x, 9, 1861) * 3);
+    for (const base of [8, 15]) {
+      for (let x = 0; x < S; x++) {
+        const foot = base + stand(x);
+        const h = 5 + Math.floor(hash2(x, base, 1867) * 3);
+        // The comb: every blade leans right, hard, and further the taller it
+        // is. This is the only thing that separates the tile from ordinary
+        // tall grass at map size, so it is deliberately overstated -- a blade
+        // travels most of a cell sideways before it gets to the top.
+        const lean = 4.4 + hash2(x, base, 1871) * 1.8;
+        for (let k = 1; k <= h; k++) {
+          const t = k / h;
+          const xx = x + Math.round(lean * t * t);
+          const c = t > 0.62 ? PAL.tussockLight : t > 0.3 ? PAL.tussockMid : PAL.tussockDark;
+          W(xx, foot - k, c);
+          if (t < 0.6) W(xx + 1, foot - k, PAL.tussockDeep);
+        }
+        const ex = x + Math.round(lean);
+        if (hash2(x, base, 1873) > 0.55) {
+          W(ex, foot - h, PAL.tussockHead);
+          W(ex + 1, foot - h - 1, PAL.tussockHead);
+        }
+      }
+    }
+    // Rock showing through, because nothing up here has soil under all of it.
+    for (let i = 0; i < 4; i++) {
+      const rx = Math.floor(hash2(i, 141, 1877) * S);
+      const ry = Math.floor(hash2(i, 142, 1879) * S);
+      W(rx, ry, PAL.stoneMid); W(rx + 1, ry, PAL.stoneDark);
+      W(rx, ry + 1, PAL.stoneDeep);
+    }
+  }
+
+  /**
+   * A waterfall.
+   *
+   * Route 9 is built round three of them and they are all doing the same job:
+   * giving a cliff a scale. A grey wall twenty tiles high is a wall; the same
+   * wall with a white thread down it is a mountain, because the eye knows
+   * roughly how fast water falls and reads the height off it.
+   *
+   * Solid. Drawn as a column of water on rock rather than as a rectangle of
+   * white: the rock is visible down both edges, the fall has a lit side and a
+   * shaded side, and the streaks run at different speeds so a vertical run of
+   * these never prints the same mark twice.
+   */
+  private waterfall(px: Px, fill: (c: string) => void): void {
+    fill(PAL.waterMid);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        // NO ROCK MARGINS, and that is a correction rather than an omission.
+        // The first cut drew two units of cliff down each side of every cell,
+        // which is right for a fall one tile wide and wrong for every other
+        // one: a three-column fall came out as three narrow falls with a
+        // pillar of rock between each, because the margins met in the middle.
+        // A fall is placed against rock by the MAP, so the tile can be all
+        // water and any width of it reads as one sheet.
+        //
+        // The body: brightest a little left of centre, where the water is
+        // thickest and moving fastest, and the noise wraps at the cell so the
+        // sheet is continuous across a seam.
+        const t = x / (S - 1);
+        const core = 1 - Math.abs(t - 0.44) * 1.7;
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 8, 1901);
+        const v = core * 0.7 + n * 0.4;
+        P(x, y, v > 0.86 ? PAL.waterFoam : v > 0.66 ? PAL.waterPale
+          : v > 0.46 ? PAL.waterLight : v > 0.28 ? PAL.waterMid : PAL.waterDark);
+      }
+    }
+    // Streaks. Each is a full-height thread at its own brightness, which is
+    // what makes a fall read as moving rather than as a painted stripe.
+    for (let i = 0; i < 7; i++) {
+      const sx = Math.floor(hash2(i, 151, 1907) * S);
+      const bright = hash2(i, 152, 1913);
+      for (let y = 0; y < S; y++) {
+        if (hash2(sx, y + i * 7, 1931) > 0.22) {
+          P(sx, y, bright > 0.7 ? PAL.waterFoam : bright > 0.4 ? PAL.waterPale : PAL.waterLight);
+        }
+      }
+    }
+    // Spray, freezing where it lands. It is the one detail that puts this fall
+    // on THESE two routes and not on the coast, and it is scattered rather
+    // than run down the margins for the reason above: a mark on the edge of a
+    // cell is a mark down the seam of a sheet.
+    for (let i = 0; i < 6; i++) {
+      const sx = Math.floor(hash2(i, 161, 1933) * S);
+      const sy = Math.floor(hash2(i, 162, 1949) * S);
+      P(sx, sy, PAL.iceRime);
+      P(sx, sy + 1, PAL.icePale);
+    }
+  }
+
+  /* --------------------------------------------------------- Frostmere */
+
+  /**
+   * The town wall, in three cuts: blank, window and door.
+   *
+   * Coursed mountain rubble, and the courses are deliberately huge -- five
+   * units deep, six across, joints broken between courses. Every other wall
+   * in the game is a surface with a texture on it; this one is a wall you can
+   * count the stones in, because the one thing a Frostmere frontage has to say
+   * before it says anything else is HOW THICK IT IS.
+   *
+   * The window and the door are both cuts INTO that thickness rather than
+   * things stuck on the front of it, and that is the whole reason this cannot
+   * be the plastered wall or the porch door every other town uses. A door
+   * flush with a wall opens against a drift; a window flush with a wall is a
+   * hole in the insulation. So both are recessed, both have a reveal drawn
+   * round them showing the depth of the stone, and the light in both is warm,
+   * because warmth is the only thing anybody up here is trying to keep.
+   */
+  private frostWall(
+    px: Px, fill: (c: string) => void,
+    cut: 'plain' | 'window' | 'door',
+  ): void {
+    fill(PAL.frostWallMid);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    for (let y = 0; y < S; y++) {
+      const course = Math.floor(y / 5);
+      const inC = y % 5;
+      const shift = course * 3;
+      for (let x = 0; x < S; x++) {
+        const block = Math.floor((x + shift) / 6);
+        const n = hash2(block, course, 2111);
+        let c: string = n > 0.68 ? PAL.frostWallLight
+          : n < 0.32 ? PAL.frostWallDark : PAL.frostWallMid;
+        // Mica. The one glint a near-black stone gets, and the only reason the
+        // frontage is a material rather than a rectangle of ink.
+        if (hash2(x, y, 2113) > 0.965) c = PAL.frostWallPale;
+        if (inC === 0) c = n > 0.5 ? PAL.frostWallLight : PAL.frostWallMid;
+        if (inC === 4) c = PAL.frostWallDeep;
+        if ((x + shift) % 6 === 0) c = PAL.frostWallDeep;
+        P(x, y, c);
+      }
+    }
+    // Frost standing in the beds. Broken rather than ruled -- a continuous
+    // pale line every five rows is a ladder painted on the house.
+    for (let y = 4; y < S; y += 5) {
+      for (let x = 0; x < S; x++) if (hash2(x, y, 2129) > 0.62) P(x, y, PAL.frostWallPale);
+    }
+    this.wallHead(P, PAL.frostWallDeep, PAL.outline);
+    // No plinth of paler stone: the wall goes into the snow, and the last two
+    // rows are the shadow it throws on the drift banked against it.
+    for (let x = 0; x < S; x++) { P(x, 14, PAL.frostWallDeep); P(x, 15, PAL.outline); }
+
+    if (cut === 'window') {
+      // Small, and set back three units. The reveal is what sells the metre:
+      // the head and both cheeks are in shadow, the sill catches the light,
+      // and the glass is the warm colour that is NOT allowed on a lantern.
+      for (let y = 3; y <= 10; y++) {
+        for (let x = 4; x <= 11; x++) {
+          const reveal = y === 3 || x === 4 || x === 11;
+          if (reveal) { P(x, y, PAL.frostWallDeep); continue; }
+          if (y === 10) { P(x, y, PAL.frostWallPale); continue; }   // the sill
+          P(x, y, x + y < 12 ? CITY.lampCore : x + y < 16 ? CITY.lampGlow : PAL.glass);
+        }
+      }
+      for (let y = 4; y <= 9; y++) P(7, y, PAL.trunkDark);          // the mullion
+      for (let x = 5; x <= 10; x++) P(x, 6, PAL.trunkDark);
+      // Shutters, pinned back against the stone and closed every night of the
+      // year. They are drawn open because the player is here in the daytime.
+      for (let y = 3; y <= 10; y++) {
+        P(2, y, PAL.shingleDark); P(3, y, PAL.shingleMid);
+        P(12, y, PAL.shingleMid); P(13, y, PAL.shingleDeep);
+      }
+      for (const x of [2, 3, 12, 13]) { P(x, 3, PAL.shingleLight); P(x, 10, PAL.shingleDeep); }
+    }
+
+    if (cut === 'door') {
+      // The porch: a hood of shingle over a recess, and the door itself four
+      // units back inside the stone. Walkable, so the player steps INTO the
+      // thickness of the wall on their way in, which is the point of it.
+      for (let x = 2; x <= 13; x++) {
+        P(x, 1, PAL.shingleLight);
+        P(x, 2, PAL.shingleMid);
+        P(x, 3, PAL.shingleDeep);
+      }
+      P(2, 1, PAL.outline); P(13, 1, PAL.outline);
+      for (let y = 4; y <= 15; y++) {
+        for (let x = 3; x <= 12; x++) {
+          const cheek = x === 3 || x === 4 || x === 11 || x === 12;
+          P(x, y, cheek ? PAL.frostWallDark : PAL.frostWallDeep);
+        }
+      }
+      // The door. Vertical boards, iron strap hinges, and a hand-latch worn
+      // pale. Deliberately the warm material -- from across the street the
+      // only two warm things on a Frostmere house are the window and this.
+      for (let y = 5; y <= 15; y++) {
+        for (let x = 5; x <= 10; x++) {
+          const board = (x - 5) % 3;
+          P(x, y, board === 0 ? PAL.shingleDark
+            : board === 1 ? PAL.shingleMid : PAL.shingleDeep);
+        }
+      }
+      for (const y of [7, 12]) {
+        for (let x = 5; x <= 10; x++) P(x, y, PAL.steelDark);
+        P(5, y, PAL.steelLight); P(10, y, PAL.steelDeep);
+      }
+      P(9, 9, PAL.steelPale); P(9, 10, PAL.steelDark);
+      for (let x = 5; x <= 10; x++) P(x, 5, PAL.shingleLight);
+      // Trodden snow blown into the recess and never quite cleared out of it.
+      for (let x = 3; x <= 12; x++) if (hash2(x, 3, 2131) > 0.4) P(x, 15, PAL.snowShade);
+    }
+  }
+
+  /**
+   * The roof, with the winter still sitting on it.
+   *
+   * Split cedar shingle, and the snow load is not decoration: slate sheds in
+   * one slab and kills whoever is underneath, shingle holds, and a foot of
+   * snow on a roof is a foot of insulation nobody paid for. So this is the
+   * only roof in the game drawn with weather on it, and the drawing order is
+   * the argument -- timber at the eave where the house is warmest and the snow
+   * has gone, snow over the ridge where it never does, and a ragged wet line
+   * between the two that lands differently on every tile.
+   *
+   * The icicles along the eave are the tell that the line is a melt line and
+   * not a paint line, and they are worth the units they cost.
+   */
+  private shingleSnowRoof(
+    px: Px, fill: (c: string) => void,
+    part: 'mid' | 'left' | 'right',
+  ): void {
+    fill(PAL.shingleMid);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    /*
+     * COURSES, NOT PICKETS. The first cut of this drew a vertical joint at
+     * full contrast every four units and scattered pale streaks down the
+     * grain, and with only five rows of timber showing under the snow the
+     * verticals won: the roof came out as a row of stakes with a drift on top
+     * of it. Everything here is horizontal first now -- a lit butt at the top
+     * of each course, a hard shadow under it, and the joint between two
+     * shingles kept one step above the shadow so it can never out-shout the
+     * course line it crosses.
+     */
+    for (let y = 0; y < S; y++) {
+      const course = Math.floor(y / 4);
+      const inC = y % 4;
+      const shift = (course % 2) * 2;
+      for (let x = 0; x < S; x++) {
+        const col = (x + shift) % 4;
+        const n = hash2(Math.floor((x + shift) / 4), course, 2137);
+        let c: string = n > 0.7 ? PAL.shingleLight : n < 0.3 ? PAL.shingleDark : PAL.shingleMid;
+        if (inC === 0) c = n > 0.5 ? PAL.shinglePale : PAL.shingleLight;
+        else if (inC === 3) c = PAL.shingleDeep;
+        if (col === 0 && inC !== 0 && inC !== 3) c = PAL.shingleDark;
+        P(x, y, c);
+      }
+    }
+
+    /*
+     * The snow load, and the melt line is the thing that had to be tamed.
+     * It ran on a wave of nearly two units plus a per-column coin flip, which
+     * cut the edge of the drift into teeth and made the timber under it read
+     * as spikes. One unit of wave and no coin flip: a roof of any width still
+     * has no step at any seam, because the wave has a whole period across the
+     * cell, but the edge is now a line with a sag in it rather than a saw.
+     */
+    const melt = (x: number) => 8 + Math.round(Math.sin((x / S) * Math.PI * 2 + 1.1));
+    for (let x = 0; x < S; x++) {
+      const m = melt(x);
+      for (let y = 0; y < m; y++) {
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 6, 2153);
+        P(x, y, n > 0.62 ? PAL.snowPale : n < 0.38 ? PAL.snowShade : PAL.snowLight);
+      }
+      P(x, m, PAL.snowDeep);            // the wet lip of the load
+      P(x, m + 1, PAL.shingleDeep);     // the shingle it is sliding off
+    }
+    // Ridge: sawn capping boards with the snow lying unbroken over them,
+    // because the ridge is the one place it never goes.
+    for (let x = 0; x < S; x++) {
+      P(x, 0, PAL.outline);
+      P(x, 1, PAL.snowGlint);
+      P(x, 2, PAL.snowPale);
+    }
+    // Eave, and the icicles hanging off it.
+    for (let x = 0; x < S; x++) {
+      P(x, 14, PAL.shingleDeep);
+      P(x, 15, PAL.outline);
+    }
+    for (let x = 0; x < S; x++) {
+      if (hash2(x, 7, 2161) < 0.72) continue;
+      const len = 1 + Math.floor(hash2(x, 8, 2179) * 3);
+      for (let k = 0; k < len; k++) P(x, 13 - k, k === 0 ? PAL.iceRime : PAL.icePale);
+      P(x, 13, PAL.iceLight);
+    }
+
+    // Barge boards, and the drift built up against the lee one. The left end
+    // faces the light and the right does not, which is the whole reason the
+    // two of them are separate tiles.
+    if (part === 'left') {
+      for (let y = 0; y < S; y++) {
+        P(0, y, PAL.outline);
+        P(1, y, PAL.shingleDeep);
+        P(2, y, y < melt(2) ? PAL.snowPale : PAL.shingleLight);
+      }
+    }
+    if (part === 'right') {
+      for (let y = 0; y < S; y++) {
+        P(15, y, PAL.outline);
+        P(14, y, PAL.shingleDeep);
+        P(13, y, y < melt(13) ? PAL.snowShade : PAL.shingleDark);
+      }
+    }
+  }
+
+  /**
+   * The chimney, and the reason the town is alive.
+   *
+   * It drops into a run of roof the way the terracotta chimney does, and it is
+   * the single most important tile on the map: a Frostmere street with smoke
+   * standing over it is a street with people in it, and a Frostmere street
+   * without one is what the player will be walking through in the mountains an
+   * hour later. The smoke goes straight up, because there is no wind down here
+   * in the bowl -- and that stillness is the whole comfort of the place.
+   */
+  private roofStack(px: Px, fill: (c: string) => void): void {
+    this.shingleSnowRoof(px, fill, 'mid');
+    const P = this.unit(px);
+
+    // The stack: the same coursed granite as the wall, capped with a stone
+    // that keeps the snow out of the flue.
+    for (let y = 3; y <= 14; y++) {
+      for (let x = 5; x <= 10; x++) {
+        const n = hash2(x, Math.floor(y / 3), 2203);
+        P(x, y, n > 0.66 ? PAL.frostWallLight : n < 0.34 ? PAL.frostWallDark : PAL.frostWallMid);
+      }
+      P(5, y, PAL.frostWallDeep); P(10, y, PAL.frostWallDeep);
+    }
+    for (let x = 4; x <= 11; x++) { P(x, 3, PAL.snowPale); P(x, 4, PAL.frostWallPale); }
+    P(4, 3, PAL.outline); P(11, 3, PAL.outline);
+    // The flue, and what is coming out of it.
+    for (let x = 6; x <= 9; x++) P(x, 4, PAL.outline);
+    for (let k = 0; k < 4; k++) {
+      const y = 2 - k;
+      const w = 1 + Math.floor(k / 2);
+      for (let x = 7 - w; x <= 8 + w; x++) {
+        if (hash2(x, y + 8, 2207) < 0.35) continue;
+        P(x, y, k > 1 ? PAL.snowShade : PAL.trackLight);
+      }
+    }
+  }
+
+  /**
+   * The blue lantern, on its rope post.
+   *
+   * The one thing about this town outsiders get wrong. It is not decoration
+   * and it is not magic: a warm lamp and a lit window are the same colour
+   * through falling snow, and somebody who walks at a window in a whiteout
+   * dies against a wall. So Frostmere burns a cold mineral off the mountain,
+   * and blue means DOOR -- walk at it and there is a way in.
+   *
+   * The rope is half the tile and it is the more important half. It runs out
+   * of both sides at hand height, so a line of these reads as ONE thing rather
+   * than as nine lamps: in a bad week you do not navigate between the lights,
+   * you hold the line that joins them and you do not let go. Floorless, so one
+   * post stands in snow, on a swept road and on stone alike.
+   */
+  private blueLantern(px: Px): void {
+    const P = this.unit(px);
+
+    // The rope, straight out to both edges so a run of posts is continuous.
+    for (let x = 0; x < TILE_SIZE; x++) {
+      if (x >= 6 && x <= 9) continue;
+      const sag = x < 6 ? 6 - x : x - 9;
+      const y = 6 + (sag > 3 ? 1 : 0);
+      P(x, y, hash2(x, 0, 2213) > 0.7 ? PAL.ropeLight : PAL.ropeMid);
+      P(x, y + 1, PAL.ropeDeep);
+      // Rime on the windward side of the cord. It is what makes a rope read as
+      // a rope in this weather rather than as a scratch on the screen.
+      if (hash2(x, 1, 2221) > 0.78) P(x, y - 1, PAL.iceRime);
+    }
+
+    // The post: a squared larch trunk, iced up its north face.
+    for (let y = 5; y <= 15; y++) {
+      P(7, y, PAL.shingleLight);
+      P(8, y, hash2(8, y, 2237) > 0.72 ? PAL.icePale : PAL.shingleDark);
+    }
+    P(6, 15, PAL.shingleDeep); P(9, 15, PAL.shingleDeep);
+
+    // The lamp: an iron box on a bracket, four panes, and the light in it.
+    P(6, 3, CITY.ironMid); P(7, 3, CITY.ironDark);
+    for (let y = 4; y <= 9; y++) { P(4, y, CITY.ironDark); P(9, y, CITY.ironDark); }
+    for (let x = 4; x <= 9; x++) { P(x, 3, CITY.ironDark); P(x, 10, CITY.ironMid); }
+    for (let y = 4; y <= 9; y++) {
+      for (let x = 5; x <= 8; x++) {
+        const d = Math.abs(x - 6.5) + Math.abs(y - 6.5);
+        P(x, y, d < 1.6 ? PAL.blueLampCore : d < 3 ? PAL.blueLampGlow : PAL.iceDark);
+      }
+    }
+    // What it throws. Translucent, so it lights snow, stone and ice alike.
+    for (let y = 2; y <= 12; y++) {
+      for (let x = 1; x <= 12; x++) {
+        if (x >= 4 && x <= 9 && y >= 3 && y <= 10) continue;
+        const d = Math.hypot(x - 6.5, y - 6.5);
+        if (d < 4.5) P(x, y, PAL.blueLampSpill);
+        else if (d < 6.5) P(x, y, PAL.blueLampSpillFar);
+      }
+    }
+    this.footShadow(P, 6, 9, 15);
+  }
+
+  /**
+   * Cordwood, stacked and capped.
+   *
+   * Every wall in Frostmere that faces away from the wind has one of these
+   * against it, and a stack is a household's whole winter counted in rows.
+   * The sawn ends face out, which is how a woodpile is really built and also
+   * the only way it reads as wood at this size -- a stack seen along the logs
+   * is a heap of grey sticks. Floorless.
+   */
+  private woodpile(px: Px): void {
+    const P = this.unit(px);
+
+    for (let row = 0; row < 4; row++) {
+      const y0 = 14 - row * 3;
+      const off = row % 2 ? 1 : 0;
+      for (let i = 0; i < 5; i++) {
+        const cx = 1 + off + i * 3;
+        const n = hash2(cx, row, 2239);
+        const bark = n > 0.6 ? PAL.trunkDark : PAL.trunkDeep;
+        for (let y = y0 - 2; y <= y0; y++) {
+          for (let x = cx; x <= cx + 2; x++) {
+            const rim = y === y0 - 2 || y === y0 || x === cx || x === cx + 2;
+            P(x, y, rim ? bark : n > 0.5 ? PAL.woodLight : PAL.woodMid);
+          }
+        }
+        // The heart of the log: a ring and a split. Without it the end is a
+        // pale square and the stack is masonry.
+        P(cx + 1, y0 - 1, PAL.woodPale);
+        if (n > 0.45) P(cx + 1, y0 - 2, PAL.woodDark);
+      }
+    }
+    // Snow along the top course and a board over it. You cover a stack or you
+    // spend February burning water.
+    for (let x = 0; x < TILE_SIZE; x++) {
+      P(x, 1, PAL.snowPale);
+      P(x, 2, PAL.snowShade);
+      P(x, 3, PAL.shingleDark);
+    }
+    this.footShadow(P, 1, 14, 15);
+  }
+
+  /**
+   * Sawn lake ice, stacked under straw.
+   *
+   * Frostmere's entire economy in one tile. They cut the mere in blocks all
+   * winter, pack them in straw in stone sheds and sell the cold south -- which
+   * is the only thing this valley has that anybody else wants, and the reason
+   * a town of three thousand exists at the top of a mountain road.
+   *
+   * It is also the tile the storm ruins, and nothing here has to change for
+   * that: a player who has stood in front of one of these knows what the ice
+   * crews are for long before anybody tells them the lake is going wrong.
+   */
+  private iceStack(px: Px): void {
+    const P = this.unit(px);
+
+    /*
+     * ICE FIRST AND STRAW SECOND, which is the opposite of the first cut of
+     * this. That one ruled a full-width band of straw between every course and
+     * came out as a yellow trellis with something blue behind it -- the tile
+     * the town's whole economy sits in read as scaffolding. The straw is now
+     * a broken line ONLY where two courses meet, and the blocks are two to a
+     * row rather than three, so a block is wide enough to have a lit top and a
+     * cut face and still be a block at one pixel per unit.
+     */
+    for (let row = 0; row < 3; row++) {
+      const y0 = 14 - row * 5;
+      const off = row % 2 ? 1 : 0;
+      for (let i = 0; i < 3; i++) {
+        const cx = off + i * 7 - 2;
+        for (let y = y0 - 4; y <= y0; y++) {
+          for (let x = cx; x <= cx + 6; x++) {
+            if (x < 0 || x > 15 || y < 0) continue;
+            let c: string;
+            if (y === y0) c = PAL.blackwaterDark;             // the shadow one course throws on the next
+            else if (y === y0 - 1) c = PAL.iceDeep;            // the block's own dark underside
+            else if (y === y0 - 4) c = PAL.iceRime;            // the lit top face
+            else if (x === cx) c = PAL.iceDeep;                // the arris between two blocks
+            else if (x < cx + 3) c = PAL.icePale;
+            else c = PAL.iceLight;
+            P(x, y, c);
+          }
+        }
+        // The saw's own signature: two scores down the cut face. It is the
+        // whole difference between a block of ice and a block of glass.
+        for (let y = y0 - 3; y < y0 - 1; y++) {
+          const x = cx + 3;
+          if (x >= 0 && x <= 15) P(x, y, PAL.iceMid);
+        }
+      }
+    }
+    // Straw, and only where two courses meet. Ice packed in straw keeps until
+    // August; ice packed in nothing keeps until Tuesday.
+    for (const y of [14, 9, 4]) {
+      for (let x = 0; x < TILE_SIZE; x++) {
+        if (hash2(x, y, 2243) < 0.45) continue;
+        P(x, y, hash2(x, y, 2251) > 0.5 ? PAL.wheatMid : PAL.wheatDark);
+      }
+    }
+    this.footShadow(P, 0, 15, 15);
+  }
+
+  /**
+   * A pot of fire.
+   *
+   * An iron tripod with a coal fire in it, and the only hot thing in the
+   * Frostmere set. It stands in the street outside the winter hall and it
+   * stands out on the ice in the Frost Hall, and it is the same object doing
+   * the same job in both places: holding a piece of the world open.
+   *
+   * Deliberately the loudest colour on any screen it appears on. Everything
+   * else in this town is blue, black or white, so one of these reads from the
+   * far side of the map -- which is what makes the Hall's floor plan legible
+   * before the player has taken a step onto it.
+   */
+  private firepot(px: Px): void {
+    const P = this.unit(px);
+
+    // Legs.
+    for (let k = 0; k <= 3; k++) {
+      P(3 + k, 12 + k, CITY.ironDark);
+      P(12 - k, 12 + k, CITY.ironDark);
+      P(4 + k, 12 + k, CITY.ironMid);
+    }
+    for (let y = 12; y <= 15; y++) P(8, y, CITY.ironMid);
+    // The bowl.
+    for (let y = 7; y <= 12; y++) {
+      const inset = y >= 11 ? y - 10 : 0;
+      for (let x = 3 + inset; x <= 12 - inset; x++) {
+        P(x, y, y === 7 ? CITY.ironLight : x < 6 ? CITY.ironMid : CITY.ironDark);
+      }
+    }
+    // The fire. Four tones and a white heart, because two tones is a sticker.
+    for (let y = 4; y <= 8; y++) {
+      for (let x = 4; x <= 11; x++) {
+        const d = Math.hypot((x - 7.5) / 1.5, (y - 7.5) / 2.2);
+        if (d + hash2(x, y, 2267) * 0.5 > 2.1) continue;
+        P(x, y, d < 0.7 ? PAL.emberWhite : d < 1.3 ? PAL.emberPale
+          : d < 1.8 ? PAL.emberLight : PAL.emberMid);
+      }
+    }
+    for (let k = 0; k < 3; k++) {
+      const x = 5 + k * 3;
+      P(x, 3 - (k % 2), PAL.emberLight);
+      P(x, 2 - (k % 2), PAL.emberDark);
+    }
+    // The spill, warm, and the reason a firepot standing on ice reads as a
+    // hole melted round it rather than as a brazier standing on a floor.
+    for (let y = 3; y <= 15; y++) {
+      for (let x = 0; x < TILE_SIZE; x++) {
+        if (x >= 3 && x <= 12 && y >= 4 && y <= 12) continue;
+        const d = Math.hypot(x - 7.5, y - 8.5);
+        if (d < 6) P(x, y, CITY.lampSpill);
+        else if (d < 8) P(x, y, CITY.lampSpillFar);
+      }
+    }
+  }
+
+  /**
+   * The Frost Hall's floor: one substance in three states.
+   *
+   * These are NOT the lake tiles the mountain roads use, and using them as
+   * such would throw away the only thing this Hall has to say. Lake ice out on
+   * the mere is weather. This is ice somebody has MEASURED -- the Hall's crew
+   * cut, read and chalk the cistern every morning of the winter, and the mark
+   * on the tile is this morning's reading.
+   *
+   *   sound  -- passed. Pale, chalked with a tick, and the brightest floor in
+   *             the game.
+   *   rotten -- failed. The chalk is a cross, the cracks radiate white from a
+   *             middle that has already gone, and the black lake shows through
+   *             them. Solid, and the whole point is that the player can see
+   *             all of that before they touch it.
+   *   thaw   -- a channel the crew hold open with fire so the town has water.
+   *             Wadeable, and one step from the black it is: the broken rind
+   *             of ice round the rim is what stops it reading as a hole cut in
+   *             the floor.
+   *
+   * Between them they say the sentence the Hall exists to say. It is all the
+   * same water, and nobody chose which piece of it froze.
+   */
+  private cisternIce(
+    px: Px, fill: (c: string) => void,
+    kind: 'sound' | 'rotten' | 'thaw',
+  ): void {
+    fill(kind === 'thaw' ? PAL.blackwaterMid : PAL.icePale);
+    const P = this.unit(px);
+    const S = TILE_SIZE;
+
+    if (kind === 'thaw') {
+      // Open water, still, with the cold coming off it. Value only -- there is
+      // no hue in a channel this deep, and that is what makes it read as depth
+      // rather than as a blue tile.
+      for (let y = 0; y < S; y++) {
+        for (let x = 0; x < S; x++) {
+          const n = wrapNoise(x * DETAIL, y * DETAIL, 8, 2269) * 0.6
+            + wrapNoise(x * DETAIL, y * DETAIL, 4, 2273) * 0.4;
+          P(x, y, n > 0.66 ? PAL.blackwaterLight
+            : n < 0.34 ? PAL.blackwaterDeep : PAL.blackwaterDark);
+        }
+      }
+      // Two slow rings of meltwater scum, wrapped, so a channel of any length
+      // has no seam in it.
+      for (let i = 0; i < 2; i++) {
+        const cy = 3 + i * 7;
+        for (let x = 0; x < S; x++) {
+          const y = cy + Math.round(Math.sin((x / S) * Math.PI * 2 + i * 2.1) * 1.4);
+          P(x, ((y % S) + S) % S, PAL.iceDeep);
+        }
+      }
+      // The rind. Ice never stops trying to close a channel and the crew never
+      // stop breaking it, so the rim is broken rather than drawn round the
+      // cell -- a continuous outline here reads as a tiled swimming bath.
+      for (let x = 0; x < S; x++) {
+        if (hash2(x, 3, 2281) > 0.25) { P(x, 0, PAL.iceRime); P(x, 1, PAL.icePale); }
+        if (hash2(x, 4, 2287) > 0.25) { P(x, 15, PAL.icePale); P(x, 14, PAL.iceLight); }
+      }
+      // The two long sides get a rind as well, and a brighter one, because a
+      // channel is drawn as a COLUMN of these and the eye has to be able to
+      // follow the two edges of it down the room past the cells either side.
+      for (let y = 0; y < S; y++) {
+        P(0, y, hash2(y, 5, 2293) > 0.4 ? PAL.iceRime : PAL.icePale);
+        P(15, y, hash2(y, 6, 2297) > 0.4 ? PAL.icePale : PAL.iceLight);
+      }
+      return;
+    }
+
+    // Sound and rotten share a body, because they are the same thickness of
+    // the same substance and only the reading is different. Milky where the
+    // air is trapped in it, clear where it is not.
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const n = wrapNoise(x * DETAIL, y * DETAIL, 8, 2309) * 0.55
+          + wrapNoise(x * DETAIL, y * DETAIL, 4, 2311) * 0.45;
+        let c: string = n > 0.66 ? PAL.iceRime : n > 0.5 ? PAL.icePale
+          : n > 0.34 ? PAL.iceLight : PAL.iceMid;
+        if (hash2(x, y, 2333) > 0.95) c = PAL.iceRime;
+        P(x, y, c);
+      }
+    }
+    // Frozen-in feathers: air bled out of the water as it set. They run in
+    // strings, which is the one thing separating thick ice from a wash.
+    for (let i = 0; i < 5; i++) {
+      let fx = Math.floor(hash2(i, 1, 2339) * S);
+      let fy = Math.floor(hash2(i, 2, 2341) * S);
+      for (let k = 0; k < 6; k++) {
+        P(((fx % S) + S) % S, ((fy % S) + S) % S, PAL.iceRime);
+        fx += hash2(i, k + 3, 2347) > 0.5 ? 1 : 0;
+        fy += 1 + (hash2(i, k + 9, 2351) > 0.7 ? 1 : 0);
+      }
+    }
+    // The saw kerf. The crew cut this floor into a grid in order to read it,
+    // and the grid is what makes the Hall's floor a PLAN rather than a
+    // surface: the player can see the cells, so they can see the route.
+    for (let x = 0; x < S; x++) P(x, 0, PAL.iceMid);
+    for (let y = 0; y < S; y++) P(0, y, PAL.iceMid);
+
+    if (kind === 'sound') {
+      /*
+       * The chalk, and it is TWO units thick on purpose. This is the mark the
+       * whole Hall is read off -- a player looks at a cell and decides whether
+       * to put their weight on it -- and a one-unit stroke on a pale field is
+       * invisible at 1x, which turns a floor you can read into a floor you
+       * have to memorise. Drawn with a shadow under it so it reads as chalk
+       * lying ON the ice rather than as a crack in it.
+       */
+      const tick = (x: number, y: number) => {
+        P(x, y, PAL.snowGlint); P(x, y + 1, PAL.snowGlint); P(x, y + 2, PAL.iceMid);
+      };
+      for (let k = 0; k < 5; k++) tick(6 + k, 9 - k);
+      for (let k = 0; k < 3; k++) tick(4 + k, 6 + k);
+      return;
+    }
+
+    // Rotten. The cracks radiate from a middle that has already gone, the
+    // black is the lake coming up through them, and the chalk is a cross.
+    const arms: Array<[number, number]> = [
+      [1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [-1, -1], [1, -1], [-1, 1],
+    ];
+    for (const [dx, dy] of arms) {
+      for (let r = 1; r <= 7; r++) {
+        const jitter = Math.round(hash2(r, dx + 2, 2357) * 1.4 - 0.7);
+        const x = 8 + dx * r + (dy === 0 ? 0 : jitter);
+        const y = 8 + dy * r + (dx === 0 ? 0 : jitter);
+        if (x < 0 || y < 1 || x > 15 || y > 15) continue;
+        P(x, y, r < 4 ? PAL.blackwaterLight : PAL.iceDeep);
+        P(x, y - 1, PAL.snowGlint);
+        P(x, y + 1, PAL.iceRime);
+      }
+    }
+    /*
+     * The hole in the middle is kept SMALL, and that is a correction. The first
+     * cut opened it to a radius of nearly three and the cell came out as a
+     * black blob in a white field -- which read as OPEN WATER, the one thing
+     * this tile is not, and put it in direct competition with the thaw channel
+     * two cells away. Failed ice is ice: what the player should see is a star
+     * of white fracture with the lake showing thinly through the middle of it.
+     */
+    for (let y = 6; y <= 10; y++) {
+      for (let x = 6; x <= 10; x++) {
+        const d = Math.hypot(x - 8, y - 8);
+        if (d > 1.7) continue;
+        P(x, y, d < 0.9 ? PAL.blackwaterDark : PAL.blackwaterLight);
+      }
+    }
+    for (let k = 0; k < 5; k++) {
+      P(1 + k, 1 + k, PAL.snowGlint);
+      P(5 - k, 1 + k, PAL.snowGlint);
     }
   }
 

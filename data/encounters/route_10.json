@@ -1,0 +1,122 @@
+{
+  "mapId": "route_10",
+  "$comment": "The Crown Road, and the widest table in the game. That is the point of it rather than an accident: the eighth Hall is two miles down this road and its Keeper fights with a mixed team, so the road in front of it is the one place in Caelora where a player meets a bit of everything and has to answer all of it. Eleven slots, seven types, nothing over twelve per cent, and no two of the top four sharing a weakness.\n\nMEASURED. Levels are 41-45 against a team-raising player who arrives from the Gale Hall at about 45. Menhir and Galecrest carry the top of the band at eight and eight -- they are the two fully evolved Kin out here and meeting one should be an event rather than a tax.",
+  "methods": {
+    "tallGrass": {
+      "rate": 158,
+      "slots": [
+        {
+          "species": "bristlebuck",
+          "minLevel": 39,
+          "maxLevel": 41,
+          "weight": 12
+        },
+        {
+          "species": "burrowen",
+          "minLevel": 39,
+          "maxLevel": 41,
+          "weight": 12
+        },
+        {
+          "species": "chalkmar",
+          "minLevel": 40,
+          "maxLevel": 42,
+          "weight": 10
+        },
+        {
+          "species": "craglide",
+          "minLevel": 40,
+          "maxLevel": 42,
+          "weight": 10
+        },
+        {
+          "species": "kestrelle",
+          "minLevel": 39,
+          "maxLevel": 41,
+          "weight": 10
+        },
+        {
+          "species": "menhir",
+          "minLevel": 41,
+          "maxLevel": 43,
+          "weight": 8
+        },
+        {
+          "species": "galecrest",
+          "minLevel": 41,
+          "maxLevel": 43,
+          "weight": 8
+        },
+        {
+          "species": "voltwick",
+          "minLevel": 40,
+          "maxLevel": 42,
+          "weight": 8
+        },
+        {
+          "species": "mossback",
+          "minLevel": 39,
+          "maxLevel": 41,
+          "weight": 8
+        },
+        {
+          "species": "tallowmoth",
+          "minLevel": 40,
+          "maxLevel": 42,
+          "weight": 8
+        },
+        {
+          "species": "weaverjaw",
+          "minLevel": 41,
+          "maxLevel": 43,
+          "weight": 6
+        }
+      ]
+    },
+    "water": {
+      "rate": 110,
+      "slots": [
+        {
+          "species": "currentail",
+          "minLevel": 41,
+          "maxLevel": 44,
+          "weight": 40
+        },
+        {
+          "species": "gullswift",
+          "minLevel": 41,
+          "maxLevel": 44,
+          "weight": 30
+        },
+        {
+          "species": "rillfry",
+          "minLevel": 40,
+          "maxLevel": 43,
+          "weight": 30
+        }
+      ]
+    },
+    "fishGood": {
+      "slots": [
+        {
+          "species": "currentail",
+          "minLevel": 41,
+          "maxLevel": 45,
+          "weight": 45
+        },
+        {
+          "species": "anchorling",
+          "minLevel": 42,
+          "maxLevel": 46,
+          "weight": 30
+        },
+        {
+          "species": "clatterclaw",
+          "minLevel": 42,
+          "maxLevel": 46,
+          "weight": 25
+        }
+      ]
+    }
+  }
+}

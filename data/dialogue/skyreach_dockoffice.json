@@ -1,0 +1,75 @@
+{
+  "speakers": {
+    "sd_master": "DOCK MASTER",
+    "sd_clerk": "DOCK CLERK",
+    "sd_pilot": "PILOT",
+    "sd_agent": "SHIPPING AGENT"
+  },
+  "entries": {
+    "sd_master": [
+      {
+        "ifFlags": [
+          "storm_rising"
+        ],
+        "lines": [
+          "Everything is on the ground and everything stays on the ground. Do not ask me for an exception.",
+          "I have grounded this dock four times in nineteen years and all four were named storms.",
+          "This one has not got a name. That is precisely why."
+        ]
+      },
+      {
+        "ifFlags": [
+          "crest_6_taken"
+        ],
+        "lines": [
+          "Eleven a week. I have flown four in the last fortnight and I did not enjoy any of them.",
+          "A pilot can beat into a gale all day. What they cannot do is guess.",
+          "Nineteen days of the wind changing its mind is nineteen days of nobody being able to guess."
+        ]
+      },
+      {
+        "lines": [
+          "Three berths, two masts, eleven sailings, and the whole thing hangs on that slate.",
+          "Aureline Tuesday and Friday. Crownspire daily. Frostmere when the weather says so.",
+          "The weather has always had the last word here. That is not new. It is just louder."
+        ]
+      }
+    ],
+    "sd_clerk": [
+      {
+        "lines": [
+          "Bookings, manifests, and telling people the thing they do not want to hear.",
+          "I am extremely good at the third one and it is the only part anybody remembers."
+        ]
+      }
+    ],
+    "sd_pilot": [
+      {
+        "ifFlags": [
+          "crest_6_taken"
+        ],
+        "lines": [
+          "I took the Frostmere run last week and turned back over the lake. First time ever.",
+          "It was not rough. That is what I keep saying and nobody hears it.",
+          "It was not rough. It was WRONG. The air was going up where it has never gone up."
+        ]
+      },
+      {
+        "lines": [
+          "Skyreach to Crownspire is ninety minutes and the finest ninety minutes in Averra.",
+          "You come off the plateau, the whole crescent opens out, and the sea is there the entire way.",
+          "I have done it eleven hundred times and I have never once read a book on it."
+        ]
+      }
+    ],
+    "sd_agent": [
+      {
+        "lines": [
+          "Nine tenths of what leaves this dock leaves Caelora entirely. People forget that.",
+          "Glass to two regions I have never seen. Spice up from islands with names I say wrong.",
+          "Averra is very large and this is a small window in the side of it."
+        ]
+      }
+    ]
+  }
+}

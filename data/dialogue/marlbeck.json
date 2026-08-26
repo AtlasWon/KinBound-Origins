@@ -9,6 +9,14 @@
   "entries": {
     "mb_engineman": [
       {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "She lifts eleven feet and she has been lifting eleven feet since Sunday without stopping.",
+          "I have never run her past a day. There is no number in the book for what I am doing.",
+          "Come in and look if you like. I would be glad of somebody in here who is not me."
+        ]
+      },
+      {
         "lines": [
           "She lifts eleven feet. That is the whole village in one number.",
           "Everything you are standing on is below the water behind me. Every inch of it.",
@@ -18,6 +26,14 @@
     ],
     "mb_elder": [
       {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "Sixty-one years I said you worry about the man, not the bank.",
+          "The man is in that engine house and he has not slept in four days and he is doing everything right.",
+          "So now I am stood in my own lane at my age finding out what I worry about after that."
+        ]
+      },
+      {
         "lines": [
           "Look up at the drain. Now look at my roof. Go on, both.",
           "Sixty-one years I have slept under water and not one night wondered about it.",
@@ -26,6 +42,14 @@
       }
     ],
     "mb_child": [
+      {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "Nobody is waking up because nobody is going to sleep.",
+          "Mum has put the good chair by the window so she can see the drain from it.",
+          "I am not allowed to ask why. I already know why. I can see the drain too."
+        ]
+      },
       {
         "lines": [
           "When the engine stops in the night everybody wakes up.",

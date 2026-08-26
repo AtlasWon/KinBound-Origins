@@ -1,0 +1,66 @@
+{
+  "speakers": {
+    "st_chief": "STATION CHIEF",
+    "st_observer": "FOUNDATION OBSERVER",
+    "st_mastwright": "MASTWRIGHT",
+    "st_apprentice": "APPRENTICE"
+  },
+  "entries": {
+    "st_chief": [
+      {
+        "ifFlags": [
+          "crest_6_taken"
+        ],
+        "lines": [
+          "I have run this station eleven years and I have never filed a reading I could not explain.",
+          "I have filed nineteen. The Foundation trained me, paid me and taught me to count honestly.",
+          "And now I am counting something honestly and I am frightened of what the answer is."
+        ]
+      },
+      {
+        "lines": [
+          "Foundation station. We keep the gauges, the town keeps the masts, and we share the coil bench.",
+          "That is eleven years of arrangement and not one page of contract, which I like enormously.",
+          "Pressure has been falling for nineteen days without a storm arriving. That is not a thing."
+        ]
+      }
+    ],
+    "st_observer": [
+      {
+        "ifFlags": [
+          "crest_6_taken"
+        ],
+        "lines": [
+          "Eight arrows for eight quarters, and seven of them are steady as a rock.",
+          "The eighth swings. Always the eighth. Always the one pointing at the open sea.",
+          "I have stopped writing readings under it. I write times now. That is all it is: times."
+        ]
+      },
+      {
+        "lines": [
+          "The board is the whole job. Pressure, temperature, and where it is coming from.",
+          "Where it is coming from is the one nobody outside this room ever asks about.",
+          "It is also the only one that has changed. Funny how that works."
+        ]
+      }
+    ],
+    "st_mastwright": [
+      {
+        "lines": [
+          "I do not work for the Foundation. I work for the town and I use their bench because it is a good bench.",
+          "They have never once asked me for anything. Eleven years.",
+          "When people in Tideglass say the name like it is a swear word, I do not know who they mean."
+        ]
+      }
+    ],
+    "st_apprentice": [
+      {
+        "lines": [
+          "Number seven seized a bearing in fourteen days. Fourteen! They run for nine years!",
+          "The chief said write it down and do not guess. I wrote it down.",
+          "I guessed a bit at the bottom. In pencil."
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "id": "skyreach_inn",
+  "name": "Interior",
+  "displayName": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "_design": "The Crosswind. Everybody who is on the wrong side of the city at the wrong hour ends up in here, which is why the room is arranged round one long rug instead of round the fire.",
+  "rows": [
+    "IIIUIIIIIIIUIIIII",
+    "IQNFFKKKKKFFFFPFI",
+    "IFFFFFFFFFFFFFFFI",
+    "IAEFFFFFFFFFFAEFI",
+    "IFFFFFFFFFFFFFFFI",
+    "IFFFFrrrrrFFFFFFI",
+    "IkFFFrrrrrFFFFFkI",
+    "IFFFFrrrrrFFFFFFI",
+    "IbeFFFFFFFFFFbeFI",
+    "IFFFFFFFFFFFFFFFI",
+    "IbeFFFFFFFFFFbeFI",
+    "IPFFFFFFFFFFFFFPI",
+    "IIIIIIIIDIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 8,
+      "y": 12,
+      "toMap": "skyreach",
+      "toX": 11,
+      "toY": 38,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "si_host",
+      "sprite": "villager_f",
+      "x": 6,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "si_host"
+    },
+    {
+      "id": "si_stranded",
+      "sprite": "merchant",
+      "x": 3,
+      "y": 9,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "si_stranded"
+    },
+    {
+      "id": "si_riggerelder",
+      "sprite": "elder",
+      "x": 13,
+      "y": 6,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "si_riggerelder"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 14,
+      "y": 1,
+      "text": [
+        "THE CROSSWIND. Beds, board, and the last car off the Cradle at eleven.",
+        "Under the tariff, in a different hand and much older ink:",
+        "IF YOU MISS IT WE WILL NOT SAY ANYTHING. WE HAVE ALL MISSED IT."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "$comment": "The road to Frostmere. FIVE PEOPLE, FIVE JOBS, AND NOT ONE OF THEM KNOWS ANYTHING. Canon asks for the weather to turn across the whole region and for the world to visibly respond, and on an empty mountain road that cannot be somebody announcing it -- it has to be a shepherd who is a month early, a woodsman who cannot dry timber, a roadman digging out a milestone in the eighth month, and a Foundation hydrologist whose own instruments disagree with each other and who says so honestly, because she has no idea what her employer is doing four hundred miles away under the sea. Put the five together and they are the only warning the player gets before Frostmere. Separately, every one of them is just complaining about work.\n\nThe coachman is Tarin's beat as the road sees it -- see the `snowroad` row in src/systems/tarin.ts. The player hears about their best friend from a stranger who thinks he is telling a funny story about a boy in the wrong coat.",
+  "speakers": {
+    "r8_shepherd": "SHEPHERD",
+    "r8_coachman": "COACHMAN",
+    "r8_pineman": "WOODSMAN",
+    "r8_hydro": "FOUNDATION HYDROLOGIST",
+    "r8_roadman": "ROADMAN"
+  },
+  "entries": {
+    "r8_shepherd": [
+      {
+        "lines": [
+          "Down early. Do not ask me why, I have been asked eleven times since the gate.",
+          "They started walking down on their own. I only opened the gate for them."
+        ]
+      }
+    ],
+    "r8_coachman": [
+      {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "Boy your age went up Tuesday in a coat for a different month entirely.",
+          "Would not turn round. Gave me a message for somebody and would not say who.",
+          "It was: TELL THEM I WENT ON. Half of Frostmere has heard it by now."
+        ]
+      },
+      {
+        "lines": [
+          "Aureline to Frostmere, two days, and the second day is all of the hill.",
+          "There is no other road. People ask. There has never been another road."
+        ]
+      }
+    ],
+    "r8_pineman": [
+      {
+        "lines": [
+          "The wood is wet. Standing wood, in the eighth month, wet through.",
+          "I have told the burners, I have told the wagon office, I have told the gate.",
+          "Everybody says the same thing back. Funny year."
+        ]
+      }
+    ],
+    "r8_hydro": [
+      {
+        "ifFlags": ["act4_theft"],
+        "lines": [
+          "Honestly? I do not know. Pressure is dropping and the wind is backing and neither should be.",
+          "I have written to Aureline four times. They send back a form saying the data is noted.",
+          "The Foundation is the best-funded science in Caelora and nobody will tell me anything."
+        ]
+      },
+      {
+        "lines": [
+          "Station Four. Wind, pressure, snowfall, and the lake level twice a day.",
+          "The instruments are good. They are the best in the region. They disagree with each other.",
+          "That does not happen. That is not a thing that happens."
+        ]
+      }
+    ],
+    "r8_roadman": [
+      {
+        "lines": [
+          "Digging a milestone out. In the eighth month. With a shovel I keep leaning on it.",
+          "I have done this road thirty years and I have never dug in summer.",
+          "It is not summer any more. That is all I will say and I will not say it twice."
+        ]
+      }
+    ]
+  }
+}

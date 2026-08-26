@@ -1,0 +1,33 @@
+{
+  "speakers": {
+    "fmh_master": "ICE HOUSE MASTER",
+    "fmh_packer": "PACKER"
+  },
+  "entries": {
+    "fmh_master": [
+      {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "Ninety-one blocks. A bad year is four hundred, and I have ninety-one.",
+          "Aureline has an order in for three hundred and I have not written back yet.",
+          "Nine days of not writing back. I have never done that in my life."
+        ]
+      },
+      {
+        "lines": [
+          "Two walls, two feet of sawdust between them, and no window anywhere. That is it.",
+          "That is the whole invention. A box that keeps the dark cold, for eight hundred years.",
+          "People come up from the capital expecting machinery. There is a door and some straw."
+        ]
+      }
+    ],
+    "fmh_packer": [
+      {
+        "lines": [
+          "Straw between every course, and never let two blocks touch. They weld if they touch.",
+          "You get one shed of welded ice in your life and you never manage it twice."
+        ]
+      }
+    ]
+  }
+}

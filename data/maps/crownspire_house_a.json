@@ -1,0 +1,89 @@
+{
+  "id": "crownspire_house_a",
+  "name": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUUIIIIIIIIIIIIII",
+    "IJNQFFFFFFFFFFkkkFI",
+    "IFFFFFFFFFFFFFFFFFI",
+    "IFAAAFFFFFFFFbeFFFI",
+    "IFEEEFFFFFFFFFFFFFI",
+    "IFFFFFFFFFFFFFFFFFI",
+    "IF//rrFFFFVFFFFFPFI",
+    "IFFFrrFFFFFFFFFFFFI",
+    "IFFFFFFFFFFFFFFFFFI",
+    "IPFFFFFFFFFFFFFFFFI",
+    "IFFFFFFFFFFFFFFFFFI",
+    "IIIIIIIIIDIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 11,
+      "toMap": "crownspire",
+      "toX": 23,
+      "toY": 44,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "cs_ha_mason",
+      "sprite": "villager_m",
+      "x": 5,
+      "y": 3,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_ha_mason"
+    },
+    {
+      "id": "cs_ha_wife",
+      "sprite": "villager_f",
+      "x": 14,
+      "y": 6,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_ha_wife"
+    },
+    {
+      "id": "cs_ha_gran",
+      "sprite": "elder",
+      "x": 3,
+      "y": 9,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_ha_gran"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 15,
+      "y": 1,
+      "text": [
+        "Four shelves of the same book: THE ROLL, PRINTED, in nine volumes, nine times over.",
+        "Every household in the old city has a set. Most have one.",
+        "This family has nine because nine of them are in it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 6,
+      "text": [
+        "A basin under a ceiling stain, and a second basin beside the first,",
+        "and a towel between them that is not doing anything useful.",
+        "The stain was not there last week."
+      ]
+    }
+  ]
+}

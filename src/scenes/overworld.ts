@@ -35,6 +35,7 @@ import { ICON_SIZE, iconSprite } from '../gfx/kinsprite.js';
 import { createKin, type Kin } from '../systems/kin.js';
 import { registry } from '../data/registry.js';
 import { drawFog } from '../gfx/fog.js';
+import { drawSnowfall } from '../gfx/snowfall.js';
 import type { Battle } from '../battle/battle.js';
 import type { AiTier, EncounterMethod, EncounterTable } from '../data/schema.js';
 
@@ -1567,6 +1568,12 @@ export class OverworldScene implements Scene {
     // dark fog and src/gfx/fog.ts never has to know what time it is.
     if (this.map.fog > 0) {
       drawFog(r, this.map, this.player.centerX, this.player.footY - TILE_SIZE / 2, game.ticks);
+    }
+    // Snow, on the same terms and for the same reason. The two never run on
+    // the same map -- fog is standing air and a squall is moving air -- but
+    // nothing here needs to enforce that: a map declares one or the other.
+    if (this.map.snow > 0) {
+      drawSnowfall(r, this.map, this.player.centerX, this.player.footY - TILE_SIZE / 2, game.ticks);
     }
 
     if (!this.map.indoor) {

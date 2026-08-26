@@ -138,6 +138,16 @@
     ],
     "au_market_fishwife": [
       {
+        "ifFlags": [
+          "act4_done"
+        ],
+        "lines": [
+          "Empty slab, scrubbed, and I have stood behind it since six because what else would I do.",
+          "There is no rail and there are no boats and there is a woman in Tideglass doing this same thing.",
+          "I have never met her. I have thought about her all week."
+        ]
+      },
+      {
         "lines": [
           "Off the coast this morning, on this slab by noon, and that is the rail, whatever the carters say.",
           "Though the Tideglass boats have been coming in light. Three weeks of light."
@@ -330,6 +340,16 @@
     ],
     "au_park_keeper": [
       {
+        "ifFlags": [
+          "act4_done"
+        ],
+        "lines": [
+          "A hundred and ninety. I counted twice, sat down on the path, and counted a third time.",
+          "They have come in off the plain and off the coast road and they are not leaving.",
+          "Four times they asked me to fence it. Now they are asking me to fence them out. Same answer."
+        ]
+      },
+      {
         "lines": [
           "Sixty-one Kin in the Greatpark last count and not one of them belongs to anybody.",
           "Four times they have asked me to fence it. Four times I have said the same thing.",
@@ -394,6 +414,16 @@
       }
     ],
     "au_spires_broker": [
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
+        "lines": [
+          "Nobody is buying weather cover. There is nobody left in this hall willing to sell it.",
+          "Four houses shut their books on Monday morning inside the same half hour.",
+          "I said somebody knew something. I was right and it has done me no good whatsoever."
+        ]
+      },
       {
         "lines": [
           "Grain, iron, glass, charter hulls, and weather insurance, which is the one that is moving.",
@@ -500,6 +530,16 @@
     ],
     "au_square_sitter": [
       {
+        "ifFlags": [
+          "act4_done"
+        ],
+        "lines": [
+          "There are flowers all round the basin. Nobody organised it. People just started.",
+          "FOR THOSE THE WEATHER TOOK. It has been a history lesson my whole life.",
+          "I would like it to go back to being a history lesson, please."
+        ]
+      },
+      {
         "lines": [
           "The plaque on the basin says FOR THOSE THE WEATHER TOOK.",
           "My brother is on it. So is a girl of nine that Dr Veyl paid for himself and never explained.",
@@ -524,6 +564,16 @@
     ],
     "au_station_clerk": [
       {
+        "ifFlags": [
+          "act4_done"
+        ],
+        "lines": [
+          "Frostmere, Skyreach, the coast line and the Eastern Halt. Suspended, all four.",
+          "I am selling tickets to Stonewake and that is the whole of my window now.",
+          "I used to say weather. I have stopped saying weather. People have started asking what I mean."
+        ]
+      },
+      {
         "lines": [
           "Stonewake, Tideglass, Emberfall, the Eastern Halt. All running, all late.",
           "Frostmere is suspended. Weather, they say, in a month that has never had weather in it."
@@ -531,6 +581,16 @@
       }
     ],
     "au_station_frostmere": [
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
+        "lines": [
+          "I am done waiting. There are boots on my feet that have never been outside this city.",
+          "My cousin has stopped writing. That is not like her and I am not going to sit here about it.",
+          "If you are going north as well, go north. Do not sit on a bag. I sat on a bag for nine days."
+        ]
+      },
       {
         "lines": [
           "Three days I have been sitting on this bag waiting for the northern line.",

@@ -51,6 +51,16 @@
     "hm_villager": [
       {
         "ifFlags": [
+          "act4_done"
+        ],
+        "lines": [
+          "Wellhead's brim full and it is humming again. Loud enough that Nell can hear it, and Nell hears nothing.",
+          "Down to a hand's depth in the spring and full to the lip now, and no rain worth the name up here.",
+          "Nobody has told me what that means. I would settle for somebody admitting it means something."
+        ]
+      },
+      {
+        "ifFlags": [
           "crest_2_taken"
         ],
         "lines": [
@@ -88,6 +98,16 @@
       }
     ],
     "hm_kid": [
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
+        "lines": [
+          "There are eleven on Route 1 now and I can name four of them, same four as always.",
+          "The new ones came up the road. UP the road, from the coast, which is the wrong way for anything.",
+          "I have put them in my book with no names on. It is the worst page in there and it is my favourite."
+        ]
+      },
       {
         "ifFlags": [
           "got_starter"
@@ -293,6 +313,16 @@
     "hm_trader": [
       {
         "ifFlags": [
+          "act4_done"
+        ],
+        "lines": [
+          "My cousin keeps a stall on the Tideglass Parade and she has come home. Walked it.",
+          "She will not say much about it. She has never in her life not said much about anything.",
+          "So there is one more stall in this square this Tuesday. That is all it looks like from here."
+        ]
+      },
+      {
+        "ifFlags": [
           "got_starter"
         ],
         "lines": [
@@ -338,6 +368,16 @@
       }
     ],
     "hm_fisher": [
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
+        "lines": [
+          "You have stood at a harbour by now. Do not tell me. I can see you worked out I was right.",
+          "The mere has come up over the staithe and the fish are back out in the middle of it, all of them.",
+          "One river, one man, my whole life. And I knew. That is not a comfort, {name}. I thought it would be."
+        ]
+      },
       {
         "ifFlags": [
           "got_starter"
@@ -786,6 +826,16 @@
     "coast_word_veyl": [
       {
         "ifFlags": [
+          "act4_done"
+        ],
+        "lines": [
+          "We were on his sea wall until four this morning, laying bags on the top of it.",
+          "His wall. The one he would not put his name on. Holding, so far, and everybody saying so.",
+          "And he has not come. Every other time, he came. I keep looking down the road for him."
+        ]
+      },
+      {
+        "ifFlags": [
           "lyra_doubt"
         ],
         "lines": [
@@ -809,5 +859,6 @@
         ]
       }
     ]
-  }
+  },
+  "_storm": "ACT 5, THE WEATHER. Canon: once Meridian begin waking the ancient systems the weather turns across the whole region and NPC dialogue changes with it. The gate for every one of those variants, in this file and in the ten settlement files, is the flag act4_done -- the one the theft sets as the player walks out of the Aureline square, which is exactly the moment Meridian have the Tideheart and start. No new flag was invented and no engine change was needed: registry.lines already resolves ifFlags, first match wins, so each storm block sits at the TOP of its entry's variant list and the pre-storm lines stay underneath untouched. If a later beat wants a second, worse tier, add a block above the act4_done one on its own flag -- an unset flag simply falls through to this tier, so it degrades safely. RESTRAINT IS THE POINT: roughly two or three people per settlement changed, never a whole town, and several of the strongest lines (Maben's law in Hearthmere, the Tideglass old hand's \"busy is what a city looks like just before something happens to it\", the Mirehaven harbourmaster telling you not to lean on anything you did not test) were deliberately LEFT ALONE, because they land harder unchanged. Ordering is carried by content rather than by flags: the coast is frightened, the inland towns are puzzled, and Hearthmere hears it from somebody's cousin. Nobody anywhere blames Meridian -- the world notices weather, not a cause."
 }

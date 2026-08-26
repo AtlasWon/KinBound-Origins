@@ -81,6 +81,38 @@
       "kind": "town"
     },
     {
+      "id": "route_8",
+      "name": "Route 8",
+      "x": 19,
+      "y": 4,
+      "kind": "route",
+      "blurb": "Plains, pine, rock, and then the snow starts."
+    },
+    {
+      "id": "route_8_pass",
+      "name": "The Wintergate",
+      "x": 17,
+      "y": 4,
+      "kind": "route",
+      "blurb": "A frozen tarn, a roofless refuge, and four tiles of mountain."
+    },
+    {
+      "id": "route_9",
+      "name": "The Skyreach Stair",
+      "x": 24,
+      "y": 5,
+      "kind": "route",
+      "blurb": "A gorge, three bridges, and only two of them standing."
+    },
+    {
+      "id": "route_10",
+      "name": "The Crown Road",
+      "x": 29,
+      "y": 9,
+      "kind": "route",
+      "blurb": "Nine hundred years of paving, going downhill at last."
+    },
+    {
       "id": "the_ascent",
       "name": "The Ascent",
       "x": 25,

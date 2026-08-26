@@ -8,6 +8,69 @@ Add a new `## vX.Y.Z` heading above the others before running `npm run ship`.
 
 ---
 
+## v0.17.0
+
+### The climb
+
+North-west out of the capital the country gives up by degrees — plains, pine
+wood, rocky hills, then the first snow — and the road gives up with it. Three
+lanes of the capital's macadam become a dirt track, then two ruts of trodden
+grit. An avalanche fan lies square across the old road, still walkable for four
+tiles before it stops, which is why the new road climbs round it.
+
+Higher up, **it snows on you.** Not a picture of snow — weather you walk into,
+that takes the dark things away first: the road, the rocks, the pines. The
+cairns are set six columns apart because that is how far you can see when it
+closes in.
+
+### Frostmere
+
+Two and a half thousand people who expect the weather to try to kill them.
+Terraces rather than cottages, because a shared wall is a wall nobody heats. A
+metre of mountain granite. Every door recessed into the thickness of the wall
+and facing south out of the wind — which is why the town has two streets, since
+the two terraces could not both face the one.
+
+The sixth Bond Crest is here, and so is your friend, and he is not the Trainer
+you last fought.
+
+### The Observatory
+
+The third of your father's sites, and the last.
+
+You reach it with nothing in your pocket. There is a recording, and it is short.
+
+Tarin is there afterwards and does not make a single joke.
+
+### Skyreach
+
+A city built across a gorge, and the gorge is most of it. Cragside is cut
+granite and cobble; the Rigging is glass and steel decking and exists because
+the wind does. You can see the whole far side from the moment you arrive and you
+cannot touch any of it — the space between is the city's whole design.
+
+The seventh Crest.
+
+### Crownspire
+
+Nine hundred and six years of cutting names into terrace walls: four thousand
+one hundred and nine of them, with room for forty more.
+
+The eighth Hallkeeper does not specialise. After seven Halls each built around
+one idea, the last one is about you.
+
+### The weather
+
+Meridian have started the machines, and Caelora has noticed.
+
+Thirty-seven conversations across ten places you have already walked have
+changed — not everyone, and not everywhere. The people who live below the water
+line north of Mirehaven know exactly what rain means. A fisherman in Tideglass
+knew a week before anyone inland. Hearthmere is furthest from the sea and hears
+about it last, from somebody's cousin.
+
+Nobody announces it. You are expected to notice.
+
 ## v0.16.0
 
 ### The long road north

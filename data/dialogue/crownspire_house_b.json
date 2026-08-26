@@ -1,0 +1,34 @@
+{
+  "$comment": "The retired gate warden's house, and the quietest room in Crownspire. Forty years of one-word log entries -- OPEN, fourteen thousand times -- and six lines at the end that are not that word. The Frostnip on the floor is a mountain Kin that came down into the city and has been let stay; it is a drawn object on the map, not an encounter.",
+  "speakers": {
+    "cs_hb_warden": "RETIRED WARDEN",
+    "cs_hb_daughter": "HER DAUGHTER",
+    "cs_hb_kin": "GRANDSON"
+  },
+  "entries": {
+    "cs_hb_warden": [
+      {
+        "lines": [
+          "Forty years I wrote one word in that book every morning and the word was OPEN.",
+          "My son writes it now. He has written a different one six times and he comes here afterwards."
+        ]
+      }
+    ],
+    "cs_hb_daughter": [
+      {
+        "lines": [
+          "She had the chair at the window facing the mountain. I turned it to face the fire.",
+          "She turned it back. I turned it round again. We have not spoken about it once."
+        ]
+      }
+    ],
+    "cs_hb_kin": [
+      {
+        "lines": [
+          "It walked in on Tuesday. Gran opened the door for it and did not say anything.",
+          "It sits there. It will not go near the window. Gran will not go near the window either."
+        ]
+      }
+    ]
+  }
+}

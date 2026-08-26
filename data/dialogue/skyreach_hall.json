@@ -1,0 +1,66 @@
+{
+  "speakers": {
+    "sh_hall_switchhand": "SWITCH HAND",
+    "sh_hall_winder": "COIL WINDER",
+    "sh_hall_beaten": "TRAINER",
+    "sh_hall_child": "HALL CHILD"
+  },
+  "entries": {
+    "sh_hall_switchhand": [
+      {
+        "ifFlags": [
+          "crest_6_taken"
+        ],
+        "lines": [
+          "Eleven panels, eleven masts, and I know the order the way you know your own name.",
+          "Two of them are dark. Fenn feathered them on Tuesday and she has never feathered one in eleven years.",
+          "She did not explain. She said the word FEATHER and went back out. That is the whole conversation."
+        ]
+      },
+      {
+        "lines": [
+          "Nothing on that board is labelled and nothing on it ever will be.",
+          "You learn it at nine, standing where you are standing, and then you know it for life.",
+          "A label is a thing you read. In here you do not have time to read."
+        ]
+      }
+    ],
+    "sh_hall_winder": [
+      {
+        "lines": [
+          "Nine hundred turns on a mast coil, every one of them by hand, and you cannot hurry it.",
+          "This is number four this month. In March it was one. In March it is always one.",
+          "I am not going to say what that means. I just wind them. Somebody else can say it."
+        ]
+      }
+    ],
+    "sh_hall_beaten": [
+      {
+        "ifFlags": [
+          "crest_7_taken"
+        ],
+        "lines": [
+          "You went up and you came down with it. Right. I have been up four times.",
+          "Not four attempts. Four times up, and I turned round twice before I got to the top.",
+          "She has never once said anything about that. That is somehow much worse."
+        ]
+      },
+      {
+        "lines": [
+          "Do not look at the gorge on the gantries. Look at where the gantry stops.",
+          "It is a tile wide and it is completely safe and none of that helps, so use the trick.",
+          "The trick is: look at where you are going. It is the whole trick. It works."
+        ]
+      }
+    ],
+    "sh_hall_child": [
+      {
+        "lines": [
+          "You are going OUT there? In this?",
+          "Grandad says the Hall is the only building in Skyreach with its front door on the inside.",
+          "I do not know what that means. He laughed for ages."
+        ]
+      }
+    ]
+  }
+}

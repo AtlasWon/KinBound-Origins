@@ -1,0 +1,84 @@
+{
+  "id": "skyreach_lift",
+  "name": "The Cradle",
+  "displayName": "THE CRADLE",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "_design": "The car. Eleven feet of oak in an iron cage on one cable, and it crosses the gorge in ninety seconds. Two doors, because it has to open on two different cliffs, and the whole of this city’s answer to its own shape is in that one fact.",
+  "rows": [
+    "IIUIIIIIUII",
+    "IfffffffffI",
+    "Ik///////PI",
+    "DfffffffffD",
+    "IfffffffffI",
+    "IAEfffffEAI",
+    "IIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 0,
+      "y": 3,
+      "toMap": "skyreach",
+      "toX": 25,
+      "toY": 17,
+      "facing": "down",
+      "style": "door"
+    },
+    {
+      "x": 10,
+      "y": 3,
+      "toMap": "skyreach",
+      "toX": 50,
+      "toY": 17,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "sl_operator",
+      "sprite": "dockhand",
+      "x": 5,
+      "y": 1,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sl_operator"
+    },
+    {
+      "id": "sl_passenger",
+      "sprite": "townsfolk_m",
+      "x": 2,
+      "y": 4,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sl_passenger"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 0,
+      "text": [
+        "A card screwed to the door frame, and it is the only rule in the car:",
+        "WHILE THE CAGE IS MOVING, BOTH DOORS ARE THE SAME DOOR.",
+        "DO NOT TEST THIS. SOMEBODY TESTED THIS."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 0,
+      "text": [
+        "Out of the window: four hundred feet of nothing, and a lamp burning on a stack.",
+        "The crossing takes ninety seconds and every passenger looks at the lamp.",
+        "Every single time. Nobody in Skyreach has ever been able to explain why."
+      ]
+    }
+  ]
+}

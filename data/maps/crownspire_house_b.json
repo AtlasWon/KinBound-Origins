@@ -1,0 +1,95 @@
+{
+  "id": "crownspire_house_b",
+  "name": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIIUUIIIIIIIIIIIII",
+    "IkkkFFFFFFFFFJNQFFI",
+    "IFFFFFFFFFFFFFFFFFI",
+    "IbeFFFFFFFFFFAAAFFI",
+    "IFFFFFFFFFFFFEEEFFI",
+    "IFFFFFFFFFFFFFFFFFI",
+    "IPFFFF//rrFFFFFFFFI",
+    "IFFFFFFFFrrFFFFFPFI",
+    "IFFFFFFFFFFFFFFFFFI",
+    "IFFFFFFFFFFFFFFFFFI",
+    "IFFFFFFFFFFFFFFFFFI",
+    "IIIIIIIIIDIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 11,
+      "toMap": "crownspire",
+      "toX": 35,
+      "toY": 54,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "cs_hb_warden",
+      "sprite": "elder",
+      "x": 16,
+      "y": 4,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_hb_warden"
+    },
+    {
+      "id": "cs_hb_daughter",
+      "sprite": "townsfolk_f",
+      "x": 6,
+      "y": 7,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_hb_daughter"
+    },
+    {
+      "id": "cs_hb_kin",
+      "sprite": "kid",
+      "x": 4,
+      "y": 9,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "cs_hb_kin"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 1,
+      "text": [
+        "The warden's own shelf. Forty years of gate logs, one line a day.",
+        "OPEN. OPEN. OPEN. OPEN. Fourteen thousand times, in her hand.",
+        "The last six lines are one word and it is not that one."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 16,
+      "y": 7,
+      "text": [
+        "A window facing the mountain, and a chair in front of it, and nobody in the chair.",
+        "The chair has been moved to face the fire instead.",
+        "Somebody moved it back. Somebody moved it again."
+      ]
+    },
+    {
+      "kind": "kin",
+      "x": 11,
+      "y": 9,
+      "species": "frostnip"
+    }
+  ]
+}

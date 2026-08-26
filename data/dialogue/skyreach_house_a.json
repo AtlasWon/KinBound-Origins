@@ -1,0 +1,25 @@
+{
+  "speakers": {
+    "sha_woman": "WOMAN",
+    "sha_child": "CHILD"
+  },
+  "entries": {
+    "sha_woman": [
+      {
+        "lines": [
+          "You get used to the noise. Everybody says that and everybody means it.",
+          "You do not get used to the day the noise changes. That takes about four seconds.",
+          "It changed nineteen days ago and I have not slept properly since."
+        ]
+      }
+    ],
+    "sha_child": [
+      {
+        "lines": [
+          "They are pointing at the wind. Mum says they are nailed down but they are POINTING.",
+          "They all point the same way and the wind goes the same way, so."
+        ]
+      }
+    ]
+  }
+}

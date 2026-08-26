@@ -1,0 +1,149 @@
+[
+  {
+    "id": "fo_gallery_arrive",
+    "_note": "Four boxes, and three of them are about air.\n\nThe hall below runs at fog 0.16 because the roof has failed and the mountain is standing in it. This floor has no fog at all, and the change is worth stating once because it is the fact the whole site turns on: everything the player has seen of these people so far was found buried, drowned, sealed or dug out, and this one was simply left, with the doors off, and nothing has been in it since.\n\nNo mention of the rings here. The gallery's panels make that case in the player's own time and a script that gets in front of them takes the discovery away.",
+    "trigger": "enter",
+    "map": "frostmere_observatory_gallery",
+    "onceFlag": "fo_gallery_entered",
+    "actions": [
+      { "kind": "wait", "frames": 18 },
+      {
+        "kind": "say",
+        "lines": [
+          "Past the stair the air stops",
+          "moving."
+        ]
+      },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "lines": [
+          "No water on the flags.",
+          "No drift in the corners.",
+          "Nothing blown in from anywhere."
+        ]
+      },
+      { "kind": "wait", "frames": 18 },
+      {
+        "kind": "say",
+        "lines": [
+          "The mountain gets as far as the",
+          "room below this one."
+        ]
+      },
+      { "kind": "wait", "frames": 22 },
+      {
+        "kind": "say",
+        "lines": [
+          "Both of the others had to be",
+          "dug into.",
+          "This one was left standing open."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "fo_counting",
+    "_note": "THE STORM, seen from the one building in Caelora that was put up to see it coming.\n\nMeridian have begun switching the old systems on and the weather is going wrong across the whole region -- winds up, currents strange, Kin moving inland, rain out of nowhere, coastal towns building barriers. Every settlement in Act 5 says a version of that in its own voice. This is the version with no opinion in it: an Aurelian instrument that has been keeping an even count since before Caelora had roads, and a fortnight of marks that are not even.\n\nIt states nothing and names nobody, and the last box is five words on their own. A player walking out of Aureline with Project Abyss Crown in their head does not need the sentence finished, and a player who somehow does not have it yet gets a cold fact rather than a lecture. The sign on 9,10 says the same thing standing still; this fires on the row in front of it so that it cannot be walked past.",
+    "trigger": "step",
+    "map": "frostmere_observatory_gallery",
+    "onceFlag": "fo_counting_seen",
+    "at": [
+      { "x": 8, "y": 9 },
+      { "x": 9, "y": 9 },
+      { "x": 10, "y": 9 }
+    ],
+    "actions": [
+      { "kind": "wait", "frames": 12 },
+      {
+        "kind": "say",
+        "lines": [
+          "One groove in this floor is cut",
+          "across, over and over."
+        ]
+      },
+      { "kind": "wait", "frames": 18 },
+      {
+        "kind": "say",
+        "lines": [
+          "Even. Even. Even, as far along",
+          "it as a hand can follow."
+        ]
+      },
+      { "kind": "wait", "frames": 16 },
+      { "kind": "sfx", "sound": "fx_frost" },
+      {
+        "kind": "say",
+        "lines": [
+          "Then the last hand's worth,",
+          "which are not even at all."
+        ]
+      },
+      { "kind": "wait", "frames": 22 },
+      {
+        "kind": "say",
+        "lines": [
+          "It has been steady since before",
+          "there was a road up here."
+        ]
+      },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "lines": [
+          "It stopped being steady some",
+          "time in the last fortnight."
+        ]
+      },
+      { "kind": "setFlag", "flag": "act5_observatory_count" }
+    ]
+  },
+  {
+    "id": "fo_chalk",
+    "_note": "ELIAS, in this room, kneeling, with a piece of chalk.\n\nFour boxes and it is the only thing in the gallery that is about him. He numbered the panels one to five, which is a working archaeologist doing the ordinary first job; and then he wrote a six with nothing beside it. The player is not told why, and never is.\n\nDeliberately NOT tied to the panel signs. A player who read all five and then finds the numbering has a small quiet moment of having done the same work he did; a player who read none of them still gets a man on his knees on a cold floor.",
+    "trigger": "step",
+    "map": "frostmere_observatory_gallery",
+    "onceFlag": "fo_chalk_seen",
+    "at": [
+      { "x": 26, "y": 5 },
+      { "x": 27, "y": 5 },
+      { "x": 27, "y": 4 },
+      { "x": 27, "y": 6 }
+    ],
+    "actions": [
+      { "kind": "wait", "frames": 12 },
+      {
+        "kind": "say",
+        "lines": [
+          "Chalk on the stone at the end of",
+          "the gallery, low down."
+        ]
+      },
+      { "kind": "wait", "frames": 18 },
+      {
+        "kind": "say",
+        "lines": [
+          "Five numbers against five",
+          "panels, in a careful hand."
+        ]
+      },
+      { "kind": "wait", "frames": 18 },
+      {
+        "kind": "say",
+        "lines": [
+          "Then a six, on its own, with",
+          "nothing written beside it."
+        ]
+      },
+      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "say",
+        "lines": [
+          "There is no sixth panel in",
+          "this room."
+        ]
+      },
+      { "kind": "setFlag", "flag": "fo_chalk_found" }
+    ]
+  }
+]

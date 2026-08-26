@@ -1,0 +1,224 @@
+{
+  "id": "frostmere_observatory_gallery",
+  "name": "The Frostmere Observatory",
+  "displayName": "THE WATCH FLOOR",
+  "music": "station",
+  "battleBackdrop": "cave",
+  "indoor": true,
+  "_plan": "THE WATCH FLOOR, and the room where the site stops being a repeat and starts being an argument. The player has been in Aurelian architecture twice and both times it was a machine: Embercoil is a listening station wound round a shaft with a ring vault off it, and the Sanctum is a sealed box with a plinth in the middle of it. This is a gallery of pictures with twenty seats in front of them, and there is not one ring in the building. That absence is the whole of what this floor has to say and it is said three ways: the seats all face out and none faces in (the exact inverse of the temple heart, where nothing faced the way out), the panels are all pictures of watching and none is a picture of a mechanism, and the alcove off the south side is the ring room with the rings levered out of the floor from the inside.\n\nNO FOG ON THIS FLOOR, ON PURPOSE. The hall below is at 0.16 because the mountain is in it; past the stair the building is exactly as it was left, and the change in the air when the player comes up is worth more than any line describing it.\n\nTHE COUNTING GROOVE at 9,10 is the storm, seen from the one building in Caelora that was put up to see it coming. It states no conclusion and names nobody, and the last page of it is four words on their own. A player who has walked out of Aureline knowing what Meridian are about to switch on does not need the sentence finished.\n\nTHE CHALK at 28,5 is Elias, in this room, eleven years ago, numbering the panels one to five -- and a sixth number with nothing written beside it, because whatever he was going to put there he did not put there. It is the only thing in the gallery that is about him.\n\nONE GAP IN THE SEATS at 14,4 and 15,4, so the row reads as a row and is still a room a person can cross. The live groove runs along y6 in front of the seats, up out of the west stairwell and up again at the east end, so the navigation of the whole site stays \"follow the lit line\".",
+  "rows": [
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩSSSΩΩΩ",
+    "ΩΩΘΘΘΘΘθΘΘΘθΘΘΘθΘΘΘθΘΘΘθΘ≈ΘΘΩΩ",
+    "ΩΩΘΘΘΘΘ≡ΘΘΘ≡ΘΘΘ≡ΘΘΘ≡ΘΘΘ≡Θ≈ΘΘΩΩ",
+    "ΩΩΘΘΘΞΞΞΞΞΞΞΞΞΘΘΞΞΞΞΞΞΞΞΞ≈ΘΘΩΩ",
+    "ΩΩΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘ≈ΘΘΩΩ",
+    "ΩΩΘ≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈ΘΘΩΩ",
+    "ΩΩΘ≈ΘΘΘΘΘθΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΩΩ",
+    "ΩΩΘ≈ΘΘΘΘΘ≡ΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΩΩ",
+    "ΩΩΘ≈ΘΘΘΘΘ≡ΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΩΩ",
+    "ΩΩSSSΩΩΩΩΩΩΩΩΩΩΩΩΩΩΘΘΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩθΘΘθΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩθΘΘθΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ"
+  ],
+  "warps": [
+    {
+      "x": 2,
+      "y": 10,
+      "toMap": "frostmere_observatory",
+      "toX": 11,
+      "toY": 3,
+      "facing": "down",
+      "style": "stairs"
+    },
+    {
+      "x": 3,
+      "y": 10,
+      "toMap": "frostmere_observatory",
+      "toX": 11,
+      "toY": 3,
+      "facing": "down",
+      "style": "stairs"
+    },
+    {
+      "x": 4,
+      "y": 10,
+      "toMap": "frostmere_observatory",
+      "toX": 12,
+      "toY": 3,
+      "facing": "down",
+      "style": "stairs"
+    },
+    {
+      "x": 24,
+      "y": 1,
+      "toMap": "frostmere_observatory_dome",
+      "toX": 10,
+      "toY": 15,
+      "facing": "up",
+      "style": "stairs"
+    },
+    {
+      "x": 25,
+      "y": 1,
+      "toMap": "frostmere_observatory_dome",
+      "toX": 10,
+      "toY": 15,
+      "facing": "up",
+      "style": "stairs"
+    },
+    {
+      "x": 26,
+      "y": 1,
+      "toMap": "frostmere_observatory_dome",
+      "toX": 10,
+      "toY": 15,
+      "facing": "up",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 1,
+      "text": [
+        "A panel, cut deep and finished.",
+        "The sea, and the coast you walked.",
+        "Where the towns are: water.",
+        "Carved by somebody who was there."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 11,
+      "y": 1,
+      "text": [
+        "People walking uphill, carrying",
+        "instruments. Drawn small, and",
+        "there are not many of them.",
+        "Everything they carry measures.",
+        "Nothing they carry holds."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 15,
+      "y": 1,
+      "text": [
+        "This building went up after.",
+        "It is the last thing these people",
+        "ever built.",
+        "As far from the sea as the land",
+        "allows, and as high as they could",
+        "climb.",
+        "Not to hide from it.",
+        "To see it without reaching it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 19,
+      "y": 1,
+      "text": [
+        "Every panel here is a picture of",
+        "watching.",
+        "None is a picture of a machine.",
+        "There is not one ring in this",
+        "building."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 23,
+      "y": 1,
+      "text": [
+        "The last panel is a doorway with",
+        "nothing in it, cut low.",
+        "You would have to stoop.",
+        "Under it, the mark the Sanctum",
+        "used for a promise."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 4,
+      "text": [
+        "Twenty seats in one line, all",
+        "facing the same wall.",
+        "At the temple they faced inward.",
+        "Nothing in this room faces in."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 10,
+      "text": [
+        "One groove here is cut across,",
+        "over and over, in even marks.",
+        "It runs back into the wall.",
+        "Even, and even, and even, as far",
+        "back as a hand can follow.",
+        "The last hand's worth are not.",
+        "Those ones are this month."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 28,
+      "y": 5,
+      "text": [
+        "Chalk on the stone, low down,",
+        "where somebody knelt to write.",
+        "Five panels, numbered one to five.",
+        "Then a six, with nothing by it.",
+        "The chalk is not three thousand",
+        "years old."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 19,
+      "y": 13,
+      "text": [
+        "Four sockets cut in the floor,",
+        "round, the size of a cartwheel.",
+        "All four are empty.",
+        "The lips are chewed where a bar",
+        "went in and somebody leaned.",
+        "They did it from the inside."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 22,
+      "y": 12,
+      "text": [
+        "One word cut beside the sockets.",
+        "Deep. By a hand in a hurry.",
+        "It is the temple's mark for fire.",
+        "Struck through."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 8,
+      "y": 8,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_fo_gallery_bench"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 20,
+      "y": 12,
+      "item": "warden_vessel",
+      "quantity": 1,
+      "flag": "item_fo_socket"
+    }
+  ]
+}

@@ -1,0 +1,824 @@
+{
+  "id": "crownspire",
+  "name": "Crownspire",
+  "displayName": "CROWNSPIRE",
+  "music": "station",
+  "battleBackdrop": "quarry",
+  "indoor": false,
+  "regionPos": {
+    "x": 31,
+    "y": 11
+  },
+  "rows": [
+    "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC▪▫▪▪▪▪▪▪▫▪CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC▪▫▪▪▪▪▪▪▫▪CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC▪▪▪◘◘◘◘▪▪▪CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪══◆═══◆═══◆═══◆══´╫╫◆════◆╫╫´═══◆═══◆═══◆═══◆═▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪",
+    "▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪════☼═══p═══☼═════════════════p═══☼═══════☼═══▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪",
+    "▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪═♦═══♣══♦══════♣═══════════════♣═════p♦══♣═══♦▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪",
+    "▪▪▪▪══════════════════════════════[^^^^^^^^^^^^^^^^^^^^^^^^^^]══════════════════════════════▪▪▪▪",
+    "▪▪▪▪══▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪═══▫▪▫▪▪▫▪▫▪▪▫▪▫▪▪▫▪▫▪▪▫▪▫▪▪▫▪▫═══▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪══▪▪▪▪",
+    "▪▪▪▪══▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪═══▪▫▪▫▪▪▫▪▫▪▪▫▪▫▪▪▫▪▫▪▪▫▪▫▪▪▫▪═══▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪══▪▪▪▪",
+    "▪▪▪▪══▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪═══▪▪▫▪▫▪▪▫▪▫▪▪▫▪▫▪▪▫▪▫▪▪▫▪▫▪▪▫═══▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪══▪▪▪▪",
+    "▪▪▪▪══▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪═══▫▪▪▫▪▫▪▪▫▪▫▪▪▫▪▫▪▪▫▪▫▪▪▫▪▫▪▪═══▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪══▪▪▪▪",
+    "▪▪▪▪══▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪═══▪▫▪▪▫▪▫▪▪▫▪▫▪▪▫▪▫▪▪▫▪▫▪▪▫▪▫▪═══▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪══▪▪▪▪",
+    "▪▪▪▪══▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪═══▫▪▫▪▪▫▪▫▪▪▫▪▫▪▪▫▪▫▪▪▫▪▫▪▪▫▪▫═══▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪══▪▪▪▪",
+    "▪▪▪▪════◆════◆════◆════◆════◆═════▪▪▪▪▪▪▪▪▪▪▪▪▪◘◘▪▪▪▪▪▪▪▪▪▪▪▪▪═════◆════◆════◆════◆════◆════▪▪▪▪",
+    "▪▪▪▪═════════════════════p═════════════════´═◆════◆═════════════════════════════════════════▪▪▪▪",
+    "▪▪▪▪═════p☼═════════☼═════☼═════☼══════════════════════════════☼═════☼═════════☼═════☼══p═══▪▪▪▪",
+    "▪▪▪▪════════════♦═══════♦══════════════════╫═══p════╫═════════════════p♦═══════════♦════════▪▪▪▪",
+    "▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪╫════════╫▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪",
+    "▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪╫════════╫▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪",
+    "▪▪▪▪░(&&&&&&&&&&&&&)░░░♠♠♠♠♠♠♠♠▒♠♠♠♠♠♠♠♠░░════════════░░♠♠♠♠♠♠♠♠▒♠♠♠♠♠♠♠♠░░░<%%%%%%%%%%%%%>░▪▪▪▪",
+    "▪▪▪▪░▪▫▪▪▫▪▫▪▪▫▪▫▪▪▫░░░♠...◆...▒...◆...♠░░═◆════════◆═░p♠...◆...▒...◆...♠░░░▫▪▪▫▪▫▪▪▫▪▫▪▪▫▪░▪▪▪▪",
+    "▪▪▪▪░▫▪▫▪▪▫▪▫▪▪▫▪▫▪▪░░░♠.......▒.......♠░░☼p═════════☼░░♠.......▒.......♠░░░▪▫▪▪▫▪▫▪▪▫▪▫▪▪▫░▪▪▪▪",
+    "▪▪▪▪░▪▫▪▫▪▪▫▪▫▪▪▫▪▫▪░░░♠.*....*▒...*...♠░░════════════░░♠.*....*▒...*...♠░░░▫▪▫▪▪▫▪▫▪▪▫▪▫▪▪░▪▪▪▪",
+    "▪▪▪▪░▪▪▪▪▪▪▪◘▪▪▪▪▪▪▪░░░♠♠♠♠♠♠♠♠▒♠♠♠♠♠♠♠♠░░═══○○○○○○═══░░♠♠♠♠♠♠♠♠▒♠♠♠♠♠♠♠♠░░░▪▪▪▪▪▪▪◘▪▪▪▪▪▪▪░▪▪▪▪",
+    "▪▪▪▪░░░░░░░´░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░═══○○○○○○═══░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░´░░░░░░░▪▪▪▪",
+    "▪▪▪▪░░░░░░◆░░░░░◆░░░░░◆░░░░░◆░░░░░◆░░░░░░░═══○○○○○○═══░░░░░░░◆░░░░░◆░░░░░◆░░░░░◆░░░░░◆░░░░░░▪▪▪▪",
+    "▪▪▪▪░░░░☼░░░░░░░░░░░☼░░░░░░░░░░░☼░░░░░░░░░════════════░░░░░░░░☼░░░░░░░░░░░☼░░░░░░░░░░░☼░░░░░▪▪▪▪",
+    "▪▪▪▪░░░░░░░░░☼░░░░░☼░░░░░☼░░░░░☼░░░░░p░░░░☼══════════☼░░░░░p░░░░☼░░░░░☼░░░░░☼░░░░░☼░░░░░░░░░▪▪▪▪",
+    "▪▪▪▪░░░♣░░░░░░░░░░░░░♣░░░░░░░░░░░░░░░░░♣░░═◆════════◆═░░♣░░░░░░░░░░░░░░░░░♣░░░░░░░░░░░░░♣░░░▪▪▪▪",
+    "▪▪▪▪░░░░░░░░♦░░░░░░░░p░░♦░░░░░░░░░░░♦░░░░░════════════░░░░░░♦░░░░░░p░░░░♦░░░░░░░░░░░♦░░░░░░░▪▪▪▪",
+    "▪▪▪▪╫╫╫╫╫╫╫╫╫░░░░╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫░░░░░░░░╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫░░░░╫╫╫╫╫╫╫╫╫╫╫▪▪▪▪",
+    "▪▪▪▪WWWWWWWWW╫══╫WWWWWWWWWWWWWWWWWWWWWWWWWWW╫══════╫WWWWWWWWWWWWWWWWWWWWWWWWW╫══╫WWWWWWWWWWW▪▪▪▪",
+    "▪▪▪▪WWWWWWWWW╫══╫WWWWWWWWWWWWWWWWWWWWWWWWWWW╫══════╫WWWWWWWWWWWWWWWWWWWWWWWWW╫══╫WWWWWWWWWWW▪▪▪▪",
+    "▪▪▪▪WWWWWWWWW╫══╫WWWWWWWWWWWWWWWWWWWWWWWWWWW╫══════╫WWWWWWWWWWWWWWWWWWWWWWWWW╫══╫WWWWWWWWWWW▪▪▪▪",
+    "▪▪▪▪╫╫╫╫╫╫╫╫╫░░░░╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫░░░░░░░░╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫░░░░╫╫╫╫╫╫╫╫╫╫╫▪▪▪▪",
+    "▪▪▪▪░░♣p░░░░░░░░░░░♦░░░░░░░░░░░░░░░♦░░░░░♣░░░░░░░░░░░░░♣░░░░░░░░░░░░♦░░░░░░░░░░░░░♦░░░p░░░♣░▪▪▪▪",
+    "▪▪▪▪░░░░░░░░☼░░░░░░░░░░░░░☼░░░░░░░░░░░░░░░░░p░░░☼░░░░░░░░░░░░░☼░░░░░░░░░░░☼░░░░░░░░░░░☼░░░░░▪▪▪▪",
+    "▪▪▪▪░[^^^^^^]░░░░<%%%%%%%%%%%%>░░(&&&&&&&&&)░░░░░░░░[^^^^^^^^^^^^]░░<%%%%%%%>░░░░(&&&&&&&&)░▪▪▪▪",
+    "▪▪▪▪░▪▫▪▫▪▪▫▪░░░░▫▪▫▪▪▫▪▫▪▪▫▪▫▪░░▫▪▪▫▪▫▪▪▫▪▫░░░░░░░░▪▪▫▪▫▪▪▫▪▫▪▪▫▪░░▫▪▫▪▪▫▪▫▪░░░░▫▪▪▫▪▫▪▪▫▪░▪▪▪▪",
+    "▪▪▪▪░▪▪▫▪▫▪▪▫░░░░▪▫▪▫▪▪▫▪▫▪▪▫▪▫░░▪▫▪▪▫▪▫▪▪▫▪░░░░░░░░▫▪▪▫▪▫▪▪▫▪▫▪▪▫░░▪▫▪▫▪▪▫▪▫░░░░▪▫▪▪▫▪▫▪▪▫░▪▪▪▪",
+    "▪▪▪▪░▫▪▪▫▪▫▪▪░░░░▪▪▫▪▫▪▪▫▪▫▪▪▫▪░░▫▪▫▪▪▫▪▫▪▪▫░░░░░░░░▪▫▪▪▫▪▫▪▪▫▪▫▪▪░░▪▪▫▪▫▪▪▫▪░░░░▫▪▫▪▪▫▪▫▪▪░▪▪▪▪",
+    "▪▪▪▪░▪▪▪▪▪▪▪▪░░░░▪▪▪▪▪▪◘▪▪▪▪▪▪▪░░▪▪▪▪▪▪▪▪▪▪▪░░░░░░░░▪▪▪▪▪▪◘▪▪▪▪▪▪▪░░▪▪▪▪▪▪▪▪▪░░░░▪▪▪▪▪▪▪▪▪▪░▪▪▪▪",
+    "▪▪▪▪░░░░░░░☼░░░░░p░░░░░░░░░░░☼░░░░░░░░░░☼░░░░░░░p░░░░░░░░░░░░☼░░░░░░░░░☼░░░░░░░░░░░░░░░░☼░░░▪▪▪▪",
+    "▪▪▪▪░░░░░░░░░░░░░░░░♦░░░░░░░░░p░░░♦░░░░░░░░░░░░░░░░░░░░░░░░░░░░♦░░p░░░░░░░♦░░░░░░░░░░░░░░░░░▪▪▪▪",
+    "▪▪▪▪▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▪▪▪▪",
+    "▪▪▪▪▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▪▪▪▪",
+    "▪▪▪▪░░░░☼░p░░░░░░░░░░░░░░☼░░░░░░░░░░☼░░░░░░░░p░░░░░░░░░░░☼░░░░░░░░☼░░░░░░░░░░░░p░░░░☼░░░░░░░▪▪▪▪",
+    "▪▪▪▪░<%%%%%%>░░░░144444443░░[^^^^^^^^^^^^^^]░░░░░░░░699999998░░(&&&&&&&&&&&&)░░░░<%%%%%%%%>░▪▪▪▪",
+    "▪▪▪▪░▪▪▫▪▫▪▪▫░░░░122252223░░▪▫▪▫▪▪▫▪▫▪▪▫▪▫▪▪░░░░░░░░677707778░░▫▪▪▫▪▫▪▪▫▪▫▪▪▫░░░░▪▫▪▫▪▪▫▪▫▪░▪▪▪▪",
+    "▪▪▪▪░▫▪▪▫▪▫▪▪░░░░GGGGGGGGG░░▪▪▫▪▫▪▪▫▪▫▪▪▫▪▫▪░░░░░░░░GGGGGGGGG░░▪▫▪▪▫▪▫▪▪▫▪▫▪▪░░░░▪▪▫▪▫▪▪▫▪▫░▪▪▪▪",
+    "▪▪▪▪░▪▫▪▪▫▪▫▪░░░░GGGGGGGGG░░▫▪▪▫▪▫▪▪▫▪▫▪▪▫▪▫░░░░░░░░GGGGGGGGG░░▫▪▫▪▪▫▪▫▪▪▫▪▫▪░░░░▫▪▪▫▪▫▪▪▫▪░▪▪▪▪",
+    "▪▪▪▪░▪▪▪▪▪▪▪▪░░░░GGGGhgGGG░░▪▪▪▪▪▪▪◘▪▪▪▪▪▪▪▪░░░░░░░░GGGGmgGGG░░▪▪▪▪▪▪▪▪▪▪▪▪▪▪░░░░▪▪▪▪▪▪▪▪▪▪░▪▪▪▪",
+    "▪▪▪▪░░░░░☼░░p░░░░░░░░░░░░░░☼░░░░░░░░░░☼░░░░░░░░░░░░░░░░░░░░☼░░░░░░░░☼░p░░░░░░░░░░░░░░░☼░░░░░▪▪▪▪",
+    "▪▪▪▪░░░░░░░░░░░░░░░░░░♦░░░░░░░░░░♦░░░░░░░░p░░░░░░░░░░░░░░░░░░░░░░♦░░░░░░░░░░♦░░░░░░░░░░░░░░p▪▪▪▪",
+    "▪▪▪▪░░░░░░░░░☼░░░░░☼░░░░░☼░░░░░☼░p░░░☼░░░░░☼░░░░░░░░░░░░░░p░■░░░░■░░░░░■░░░░░■░░░░░■░░░░░■░░▪▪▪▪",
+    "▪▪▪▪░░░░░░p░♣░░░░░░░░░░░♣░░░´´░░░░░░░░░░♣░░░░░░░♦░░░♦░░░´░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▪▪▪▪",
+    "◘◘◘◘▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▪▪▪▪",
+    "◘◘◘◘▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▪▪▪▪",
+    "▪▪▪▪░░░░░░╫╫╫╫╫╫╫╫╫╫░░╫╫╫╫╫╫╫╫╫╫╫╫╫╫░░╫╫╫╫╫╫╫░░░░░░░░░░░░░░░░░░■░░░░░p■░░░░░░░■░░░░░░■░░░░░░▪▪▪▪",
+    "▪▪▪▪░░♦░♣░░░░░░░░░░░░░░░p░░░░░░░░░░░░░░░░░░░░░░♣░░♣p♦░░░░░♦░░░◆░░░░░◆░░░░░◆░░░░░◆░░░░░◆░░░♣p▪▪▪▪",
+    "▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪",
+    "▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪",
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT"
+  ],
+  "warps": [
+    {
+      "x": 47,
+      "y": 15,
+      "toMap": "crownspire_hall",
+      "toX": 7,
+      "toY": 21,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 48,
+      "y": 15,
+      "toMap": "crownspire_hall",
+      "toX": 8,
+      "toY": 21,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 12,
+      "y": 25,
+      "toMap": "crownspire_archive",
+      "toX": 9,
+      "toY": 13,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 83,
+      "y": 25,
+      "toMap": "crownspire_inn",
+      "toX": 9,
+      "toY": 13,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 58,
+      "y": 43,
+      "toMap": "crownspire_market",
+      "toX": 11,
+      "toY": 15,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 23,
+      "y": 43,
+      "toMap": "crownspire_house_a",
+      "toX": 9,
+      "toY": 11,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 35,
+      "y": 53,
+      "toMap": "crownspire_house_b",
+      "toX": 9,
+      "toY": 11,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 22,
+      "y": 53,
+      "toMap": "crownspire_clinic",
+      "toX": 9,
+      "toY": 13,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 57,
+      "y": 53,
+      "toMap": "crownspire_provisioner",
+      "toX": 10,
+      "toY": 11,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 0,
+      "y": 58,
+      "toMap": "route_10",
+      "toX": 53,
+      "toY": 13,
+      "facing": "left",
+      "style": "edge"
+    },
+    {
+      "x": 0,
+      "y": 59,
+      "toMap": "route_10",
+      "toX": 53,
+      "toY": 14,
+      "facing": "left",
+      "style": "edge"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "cs_warden",
+      "sprite": "elder",
+      "x": 47,
+      "y": 5,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_warden"
+    },
+    {
+      "id": "cs_gate_wait_a",
+      "sprite": "hiker",
+      "x": 39,
+      "y": 7,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "cs_gate_wait_a"
+    },
+    {
+      "id": "cs_gate_wait_b",
+      "sprite": "townsfolk_f",
+      "x": 57,
+      "y": 7,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_gate_wait_b"
+    },
+    {
+      "id": "cs_gate_wait_c",
+      "sprite": "rival",
+      "x": 62,
+      "y": 6,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "tarin_word_street"
+    },
+    {
+      "id": "cs_roll_reader",
+      "sprite": "elder",
+      "x": 19,
+      "y": 16,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_roll_reader"
+    },
+    {
+      "id": "cs_roll_child",
+      "sprite": "kid",
+      "x": 25,
+      "y": 17,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "cs_roll_child"
+    },
+    {
+      "id": "cs_roll_mason",
+      "sprite": "porter",
+      "x": 72,
+      "y": 16,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_roll_mason"
+    },
+    {
+      "id": "cs_roll_widow",
+      "sprite": "villager_f",
+      "x": 82,
+      "y": 17,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_roll_widow"
+    },
+    {
+      "id": "cs_hall_doorman",
+      "sprite": "clerk",
+      "x": 53,
+      "y": 17,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_hall_doorman"
+    },
+    {
+      "id": "cs_tarin",
+      "sprite": "rival",
+      "x": 47,
+      "y": 22,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_tarin"
+    },
+    {
+      "id": "cs_plaza_crier",
+      "sprite": "townsfolk_m",
+      "x": 30,
+      "y": 29,
+      "facing": "down",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "cs_plaza_crier"
+    },
+    {
+      "id": "cs_plaza_pilgrim",
+      "sprite": "villager_f",
+      "x": 62,
+      "y": 29,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_plaza_pilgrim"
+    },
+    {
+      "id": "cs_plaza_kid",
+      "sprite": "kid",
+      "x": 37,
+      "y": 30,
+      "facing": "right",
+      "movement": {
+        "kind": "wander",
+        "radius": 2
+      },
+      "script": "cs_plaza_kid"
+    },
+    {
+      "id": "cs_archivist_out",
+      "sprite": "professor",
+      "x": 14,
+      "y": 27,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_archivist_out"
+    },
+    {
+      "id": "cs_muster_host",
+      "sprite": "merchant",
+      "x": 81,
+      "y": 27,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_muster_host"
+    },
+    {
+      "id": "cs_plaza_watcher",
+      "sprite": "villager_m",
+      "x": 68,
+      "y": 30,
+      "facing": "down",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "tarin_word_street"
+    },
+    {
+      "id": "cs_plaza_sweep",
+      "sprite": "porter",
+      "x": 20,
+      "y": 30,
+      "facing": "right",
+      "movement": {
+        "kind": "pace",
+        "axis": "x",
+        "distance": 3
+      },
+      "script": "cs_plaza_sweep"
+    },
+    {
+      "id": "cs_river_watch",
+      "sprite": "dockhand",
+      "x": 20,
+      "y": 37,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_river_watch"
+    },
+    {
+      "id": "cs_bridge_old",
+      "sprite": "elder",
+      "x": 47,
+      "y": 38,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_bridge_old"
+    },
+    {
+      "id": "cs_river_gauge",
+      "sprite": "clerk",
+      "x": 62,
+      "y": 37,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_river_gauge"
+    },
+    {
+      "id": "cs_river_kid",
+      "sprite": "kid",
+      "x": 79,
+      "y": 38,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "cs_river_kid"
+    },
+    {
+      "id": "cs_street_carter",
+      "sprite": "porter",
+      "x": 30,
+      "y": 44,
+      "facing": "down",
+      "movement": {
+        "kind": "pace",
+        "axis": "x",
+        "distance": 4
+      },
+      "script": "cs_street_carter"
+    },
+    {
+      "id": "cs_street_glazier",
+      "sprite": "villager_m",
+      "x": 44,
+      "y": 45,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_street_glazier"
+    },
+    {
+      "id": "cs_street_gran",
+      "sprite": "elder",
+      "x": 12,
+      "y": 48,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_street_gran"
+    },
+    {
+      "id": "cs_street_courier",
+      "sprite": "hiker",
+      "x": 72,
+      "y": 48,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "tarin_word_shop"
+    },
+    {
+      "id": "cs_clinic_step",
+      "sprite": "healer",
+      "x": 26,
+      "y": 54,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_clinic_step"
+    },
+    {
+      "id": "cs_shop_step",
+      "sprite": "clerk",
+      "x": 62,
+      "y": 54,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_shop_step"
+    },
+    {
+      "id": "cs_street_child",
+      "sprite": "kid",
+      "x": 47,
+      "y": 55,
+      "facing": "down",
+      "movement": {
+        "kind": "wander",
+        "radius": 2
+      },
+      "script": "cs_street_child"
+    },
+    {
+      "id": "cs_muster_a",
+      "sprite": "hiker",
+      "x": 18,
+      "y": 57,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_muster_a"
+    },
+    {
+      "id": "cs_muster_b",
+      "sprite": "townsfolk_f",
+      "x": 25,
+      "y": 57,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_muster_b"
+    },
+    {
+      "id": "cs_muster_c",
+      "sprite": "villager_m",
+      "x": 33,
+      "y": 61,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_muster_c"
+    },
+    {
+      "id": "cs_muster_d",
+      "sprite": "townsfolk_m",
+      "x": 44,
+      "y": 57,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "cs_muster_d"
+    },
+    {
+      "id": "cs_gate_guard",
+      "sprite": "clerk",
+      "x": 6,
+      "y": 57,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_gate_guard"
+    },
+    {
+      "id": "cs_mason_head",
+      "sprite": "villager_f",
+      "x": 66,
+      "y": 59,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_mason_head"
+    },
+    {
+      "id": "cs_mason_hand",
+      "sprite": "porter",
+      "x": 76,
+      "y": 60,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "cs_mason_hand"
+    },
+    {
+      "id": "cs_mason_prentice",
+      "sprite": "kid",
+      "x": 84,
+      "y": 59,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_mason_prentice"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 42,
+      "y": 5,
+      "text": [
+        "THE ASCENT GATE. Open every day since the road was cut.",
+        "A board has been nailed over the notice: SHUT. WEATHER. NO EXCEPTIONS.",
+        "The nails are new and somebody drove them in badly, in a hurry, in the rain."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 47,
+      "y": 3,
+      "text": [
+        "The gate. Two leaves of oak in an iron frame, taller than a house, and shut.",
+        "A plank has been nailed across them at chest height, badly, in the wet.",
+        "The wood under the nails is nine hundred years old and has never had a nail in it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 53,
+      "y": 5,
+      "text": [
+        "The tally board beside the gate, kept by the wardens for nine hundred years.",
+        "DAYS THE GATE HAS BEEN SHUT IN LIVING MEMORY: 0.",
+        "Under it, in wet chalk that keeps running: 6."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 43,
+      "y": 16,
+      "text": [
+        "THE EIGHTH HALL OF CAELORA. No type is named over this door.",
+        "The other seven tell you what they are before you go in.",
+        "This one does not, and the omission is the oldest joke in the city."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 15,
+      "text": [
+        "THE ROLL, WEST LEAF. Every name that has stood on the Summit, cut in order.",
+        "The first is nine hundred and six years old and is one word long.",
+        "The letters are a finger deep. They were cut to outlast the people who cut them."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 23,
+      "y": 15,
+      "text": [
+        "Four thousand one hundred and nine names, and room on this wall for forty more.",
+        "The masons have already dressed the next leaf. It is leaning against the wall behind you.",
+        "Crownspire has never once assumed there would be nobody else."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 77,
+      "y": 15,
+      "text": [
+        "THE ROLL, EAST LEAF. The last two hundred years, and the letters are shallower.",
+        "Not because the masons got worse. Because more people come now,",
+        "and a city that cuts four names a year cuts them deeper than one that cuts forty."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 87,
+      "y": 15,
+      "text": [
+        "A name near the end has been cut twice, one over the other, badly aligned.",
+        "The mason who did it left a note in the Archive: SHE ASKED ME TO WAIT.",
+        "SHE CAME BACK DOWN AND WENT UP AGAIN. I AM NOT SORRY I WAITED."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 11,
+      "y": 26,
+      "text": [
+        "THE ROLL ARCHIVE. Nine hundred years of who went up, and what they took.",
+        "Open to anybody. There is no desk between you and the shelves.",
+        "The card on the door: YOU MAY TOUCH THEM. THEY WERE WRITTEN TO BE TOUCHED."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 84,
+      "y": 26,
+      "text": [
+        "THE MUSTER. Beds, boots, hot water and a fire, for anybody with eight Crests.",
+        "Nine hundred years of people sleeping badly the night before.",
+        "Somebody has chalked on the step: FULL. HAS BEEN FULL FOR A WEEK."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 43,
+      "y": 32,
+      "text": [
+        "KINGSBRIDGE. Six hundred years old and the middle of the three.",
+        "The city is not named for the towers. It is named for this.",
+        "The water under it is four feet higher than the mark that says NEVER."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 32,
+      "text": [
+        "THE OLD SPAN, west. The narrowest of the three, and the first.",
+        "Chalk marks up the pier record every flood since the city started counting.",
+        "The highest is dated last Tuesday and there is nothing above it but stone."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 81,
+      "y": 32,
+      "text": [
+        "THE NEW SPAN, east. Ninety years old, which here means new.",
+        "The gauge house keeps a lamp on it all night now.",
+        "Somebody has taken the boats out of the water and put them in the street."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 57,
+      "y": 43,
+      "text": [
+        "THE MARKET UNDER THE ARCH. Six hundred stalls and a stone roof.",
+        "The roof is why it is still trading. Nothing else in this street is."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 53,
+      "text": [
+        "A milestone, set into the wall of the corner house and worn nearly smooth.",
+        "AURELINE 61. SKYREACH 22. THE SUMMIT 4.",
+        "Four. It has said four for nine hundred years and it has never been further."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 28,
+      "y": 57,
+      "text": [
+        "THE MUSTER YARD. Where the climb forms up, at first light, on the day.",
+        "The stones are worn into two grooves where nine centuries of people have stood in line."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 29,
+      "y": 57,
+      "text": [
+        "The board that says when the next climb goes up.",
+        "The date has been wiped and rewritten four times and is now wiped and not rewritten.",
+        "Underneath, in a different hand: WE WILL POST IT. GO AND SLEEP."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 56,
+      "y": 57,
+      "text": [
+        "THE MASONS' YARD. Half-cut blocks, a lot of them, standing about in the rain.",
+        "A card wired to the nearest: DO NOT MOVE. LETTERS FACING IN."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 36,
+      "text": [
+        "A flood board, bolted to the parapet, with the years cut into it.",
+        "The last four are 1712, 1801, 1889 and a fresh one with no year on it yet.",
+        "The mason is waiting to see whether it is finished before he dates it."
+      ]
+    },
+    {
+      "kind": "kin",
+      "x": 34,
+      "y": 24,
+      "species": "frostnip"
+    },
+    {
+      "kind": "kin",
+      "x": 66,
+      "y": 24,
+      "species": "slatewing"
+    },
+    {
+      "kind": "kin",
+      "x": 12,
+      "y": 60,
+      "species": "frostnip"
+    },
+    {
+      "kind": "kin",
+      "x": 87,
+      "y": 44,
+      "species": "slatewing"
+    },
+    {
+      "kind": "item",
+      "x": 5,
+      "y": 61,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_cs_yard"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 90,
+      "y": 21,
+      "item": "rouse",
+      "quantity": 1,
+      "flag": "item_cs_plaza"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 5,
+      "y": 37,
+      "item": "great_potion",
+      "quantity": 2,
+      "flag": "item_cs_river"
+    }
+  ],
+  "_plan": "THE CITY IS A LEDGER YOU CAN WALK THROUGH. Crownspire has been cutting the \nname of everybody who reached the Summit into its terrace walls for nine \nhundred and six years, and that one fact decides the whole plan: the map \nclimbs from the gate to the Roll, every plaza is furnished with monuments \nrather than with lawn, and the last thing between the player and the \nmountain is a wall with four thousand names on it and room for forty more.\n\nIT IS BUILT OUT OF AURELINE'S OLD KIT AND NOTHING ELSE, ON PURPOSE. The \ncapital is glass and steel over three surviving streets of granite; \nCrownspire is those three streets, all the way to the walls, and the \nargument only lands if the material is literally the same one. So there is \nno new terrain character in this build and no new art: granite, sash, \narch, cobble, three roof families and the city furniture. What makes it \nread as a different place is proportion. The modern kit stacks and this \none does not, so height here is not a tower -- it is that EVERY range is \nfive rows, in the poorest street as well as the best, and the eye reads a \ncity with no cheap quarter in it.\n\nTHE STORM, WITHOUT SETTING map.weather. Map weather is invisible on the \noverworld -- nothing draws it -- and it is NOT invisible in battle: it is \npassed straight into Battle, where rain is tide x1.5 and flame x0.5. \nSetting rain over a city with a Kin Hall in it would quietly nerf every \nCinderpaw player through the eighth Crest. The storm is carried instead by \nstanding water on the stone (the p tiles, thirty-eight of them, in a city \nwhere it does not rain in summer), by the river four feet over the mark \nthat says NEVER, by mountain Kin sitting in the plaza and the muster yard, \nand by every one of thirty-six people talking about the same six days.\n\nNOBODY IS FIGHTING IN CROWNSPIRE AND THAT IS THE POINT. The Ascent gate is \nshut for the first time in living memory, so the city is full of Trainers \nwith eight Crests and nowhere to take them: the muster yard is a queue for \na gate that will not open, the Muster inn has been full for a week, and \nthe date board has been wiped four times and left blank. Every battle in \nthis settlement is inside the Hall, which is also why the streets can be \nwalked end to end without a sight line firing.\n\nTHE THREE BRIDGES ARE THE CITY'S SPINE AND THE STREET GRID IS CUT TO THEM. \nThe ravine runs the full width at y33-35 and there are exactly three ways \nover it; every north-south street in the old city is held open at a bridge \nhead (x13-16, x44-51, x77-80), so a player who crosses at any bridge walks \nstraight through both terraces to the West Road without meeting a wall. \nThe first pass had the middle bridge landing in the side of a market and \nthat is exactly the fault this layout is built to make impossible.",
+  "_join": "THE SKYREACH ROAD IS THE ONE JOIN THIS MAP DOES NOT OWN.\nCrownspire warps out at x0, y58 and y59 (the west gate arch) to a map called\n\"route_10\", landing at 53,13 and 53,14. The road owes two warps back at its\nx54, y13 and y14 -> crownspire 1,58 and 1,59, facing right, style \"edge\".\nIf the Skyreach-to-Crownspire road is named anything other than route_10,\nthe only change needed here is that string, twice."
+}

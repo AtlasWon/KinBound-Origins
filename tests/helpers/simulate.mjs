@@ -293,6 +293,58 @@ export const STAGES = [
   { name: 'Route 7 N', grass: 'route_7_north', wilds: 14,
     trainers: ['r7n_wagon', 'r7n_ganger', 'r7n_ferry', 'r7n_reaper', 'r7n_courier', 'r7n_wire', 'r7r_linesman'] },
   { name: 'Harrowgate', grass: null, wilds: 0, trainers: ['hg_granary_hand'] },
+  /*
+   * Stage 5, the storm: the two mountain roads out of the capital, and the
+   * Crown Road on to Crownspire. Appended in the order the roads run.
+   *
+   * THE THREE HALL ROWS BELOW ARE DELIBERATELY EMPTY and must be filled in by
+   * whoever builds them. Frostmere, Skyreach and Crownspire each pay a Keeper
+   * and three or four hands' worth of experience, and with those rows blank
+   * this table UNDER-counts where the player is by three or four levels by the
+   * time they reach the Crown Road. That is the safe direction to be wrong in
+   * -- every win rate measured against it is pessimistic, so a route that
+   * reads as fair here is fairer in the game than it looks. It is still wrong,
+   * and the roads were cut against it knowing that.
+   *
+   * The optional branches are listed because this table is the CEILING of what
+   * the road pays: a player who takes neither the charcoal hollow nor the
+   * falls arrives at each Hall about a level under the numbers below, which is
+   * the margin the encounter tables are cut against.
+   */
+  { name: 'Route 8', grass: 'route_8', wilds: 14,
+    trainers: ['r8_drover', 'r8_forester', 'r8_agent', 'r8_carter', 'r8_warden', 'r8k_burner'] },
+  { name: 'Wintergate', grass: 'route_8_pass', wilds: 14,
+    trainers: ['r8p_packman', 'r8p_iceman', 'r8p_lakewarden', 'r8p_gatewarden'] },
+  // Hall 6, the Frost Crest, filled in as the note above asks. Four hands and
+  // a Keeper, in the order the cistern is crossed: Roke on the north ice where
+  // the landing puts you, Fell in the channel the intake is entered from, then
+  // the two on the east side who are the longer way round, then Eira Brand on
+  // the intake itself. Roke and Fell are the only two a route can be forced
+  // through; Varn and Slate are optional and are listed because this table is
+  // the CEILING of what the Hall pays.
+  { name: 'Frostmere', grass: null, wilds: 0,
+    trainers: ['fm_hall_roke', 'fm_hall_fell', 'fm_hall_varn', 'fm_hall_slate', 'fm_keeper_brand'] },
+  { name: 'Route 9', grass: 'route_9', wilds: 14,
+    trainers: ['r9_carter', 'r9_ropewalker', 'r9_windwatch', 'r9_shepherd', 'r9f_hermit', 'r9_dockrunner'] },
+  // Hall 7, the Gale Crest, filled into the row the road agent left empty for
+  // it. Corran and Nesse are the two the Masthouse cannot be crossed without;
+  // Kellow and Wisp stand on the two dead-end decks and are listed because this
+  // table is the CEILING of what the stage pays, not the floor. The Windward
+  // Headland has one patch of tussock on it, but Skyreach is a settlement row
+  // and settlements carry no wild allowance here, exactly as Mirehaven does not.
+  { name: 'Skyreach', grass: null, wilds: 0,
+    trainers: ['sh_spur_corran', 'sh_spur_kellow', 'sh_spur_nesse', 'sh_spur_wisp', 'sh_keeper_fenn'] },
+  { name: 'Route 10', grass: 'route_10', wilds: 14,
+    trainers: ['r10_toll', 'r10_drover', 'r10_terrace', 'r10_courier', 'r10_gatehand'] },
+  // Hall 8, the Crown Crest, filled in as the note above asks. The three
+  // Stewards stand in the Long Gallery off the centre aisle and are all
+  // optional -- they are listed because this table is the CEILING of what the
+  // Hall pays -- and Merrin Ord is on the Crown Floor above it. The Long Floor
+  // (the three Stewards and the Keeper back to back, offered as a choice on
+  // that floor) is NOT a fifth row: it re-fights the same four and pays them
+  // once, because a trainer already defeated pays nothing the second time.
+  { name: 'Crownspire', grass: null, wilds: 0,
+    trainers: ['cs_steward_hollis', 'cs_steward_derrin', 'cs_steward_mabe', 'cs_keeper_ord'] },
 ];
 
 /**

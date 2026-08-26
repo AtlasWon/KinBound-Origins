@@ -1,0 +1,163 @@
+{
+  "id": "crownspire_inn",
+  "name": "The Muster",
+  "displayName": "THE MUSTER",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUUIIIIIIIIIUUIIII",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IKKKFKKFFFFFFFFFFPFI",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IFAAAFFAAAFFAAAFFFFI",
+    "IFEEEFFEEEFFEEEFFFFI",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IbeFFbeFFbeFFbeFFbeI",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IbeFFbeFFbeFFbeFFbeI",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IPFFFFFFFFFFFFFFFFPI",
+    "IFFFFFFFFFFFFFFFFFFI",
+    "IIIIIIIIIDIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 13,
+      "toMap": "crownspire",
+      "toX": 83,
+      "toY": 26,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "cs_muster_keeper",
+      "sprite": "merchant",
+      "x": 4,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_muster_keeper"
+    },
+    {
+      "id": "cs_muster_cook",
+      "sprite": "villager_f",
+      "x": 16,
+      "y": 3,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_muster_cook"
+    },
+    {
+      "id": "cs_muster_climber_a",
+      "sprite": "hiker",
+      "x": 10,
+      "y": 4,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_muster_climber_a"
+    },
+    {
+      "id": "cs_muster_climber_b",
+      "sprite": "townsfolk_f",
+      "x": 13,
+      "y": 6,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_muster_climber_b"
+    },
+    {
+      "id": "cs_muster_climber_c",
+      "sprite": "sailor",
+      "x": 4,
+      "y": 8,
+      "facing": "right",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "cs_muster_climber_c"
+    },
+    {
+      "id": "cs_muster_climber_d",
+      "sprite": "townsfolk_m",
+      "x": 17,
+      "y": 8,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tarin_word_clinic"
+    },
+    {
+      "id": "cs_muster_kid",
+      "sprite": "kid",
+      "x": 11,
+      "y": 10,
+      "facing": "down",
+      "movement": {
+        "kind": "wander",
+        "radius": 2
+      },
+      "script": "cs_muster_kid"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 5,
+      "y": 2,
+      "text": [
+        "The board. Beds, boots, hot water, a fire, and a meal at four in the morning.",
+        "Nine hundred years and the price has never changed: eight Crests.",
+        "Under it: AND IF YOU HAVE SEVEN, SAY SO, AND SIT DOWN ANYWAY."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 0,
+      "text": [
+        "The window over the yard. From here you can see the whole muster ground",
+        "and the stair, and the gate, and the weather coming off the mountain.",
+        "Nobody in this room is looking anywhere else."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 0,
+      "y": 7,
+      "text": [
+        "Twenty beds in two rows, made, turned down, and every one of them slept in.",
+        "A card at the end of the row: WAKE CALL 0330. IT HAS NOT BEEN RUNG FOR SIX DAYS."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 19,
+      "y": 9,
+      "text": [
+        "The boot rack by the fire. Forty pairs of boots, drying, and not drying.",
+        "Somebody has put a note on the rail: THEY WILL NOT DRY. STOP MOVING THEM."
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 18,
+      "y": 12,
+      "item": "great_potion",
+      "quantity": 1,
+      "flag": "item_cs_inn"
+    }
+  ]
+}

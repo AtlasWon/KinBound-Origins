@@ -25,6 +25,14 @@
   "entries": {
     "bb_bellwright": [
       {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "All six. All night. I said tuned bells argue and these ones only talk.",
+          "They are arguing. Six hundred times up that tree and I have never heard them do it.",
+          "Nobody in Briarbell slept and nobody in Briarbell has said one word about it."
+        ]
+      },
+      {
         "ifFlags": ["crest_1_taken"],
         "lines": [
           "Heard the fourth bell go while you were in there. It only does that for a good one.",
@@ -116,6 +124,14 @@
     ],
     "bb_farmer": [
       {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "They are not coming out of the wood. They are coming through it, from the far side, all day.",
+          "Coast kin. Things with fins on, in my barley, forty miles from any water they belong in.",
+          "And they still go to the tree. Whatever else has changed, they still go to the tree."
+        ]
+      },
+      {
         "lines": [
           "Twelve acres of barley and a fence I'm always mending.",
           "The kin come down out of the wood at dusk and go straight past it. Every night.",
@@ -160,6 +176,14 @@
       "Buy the vessels though. Genuinely. The road north is not empty."
     ],
     "bb_inn_guest": [
+      {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "I came inland to stop thinking about the sea and the sea has followed me up a valley.",
+          "I said you could feel it wrong through a hull. You can feel it through a floor now.",
+          "There is no ship I know of that I would rather be on than in this room, and I hate this room."
+        ]
+      },
       {
         "lines": [
           "Off a coaster out of Tideglass, three weeks inland and I'm still walking odd.",

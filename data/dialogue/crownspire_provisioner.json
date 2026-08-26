@@ -1,0 +1,43 @@
+{
+  "$comment": "The shop counter itself is an event (crownspire_shop, in data/events/crownspire_provisioner.json) because it has to open a shop. NOTE FOR WHOEVER OWNS data/items/shops.json: this counter currently opens the shop id \"aureline_provisioner\", because shops.json is not this build's file and six agents are writing to it at once. Crownspire wants a row of its own -- id \"crownspire_provisioner\", a name like Corrow and Bell, and rope, canvas and cold-weather stock -- and switching to it is one string in that event file.",
+  "speakers": {
+    "cs_shop_second": "SECOND COUNTER",
+    "cs_shop_porter": "STOCK PORTER",
+    "cs_shop_buyer": "BUYER",
+    "cs_shop_gran": "OLD WOMAN"
+  },
+  "entries": {
+    "cs_shop_second": [
+      {
+        "lines": [
+          "Second counter is rope, canvas, oil and lamp wick, and three of those are nearly gone.",
+          "Nobody is buying them to climb with. They are buying them to tie their roofs down."
+        ]
+      }
+    ],
+    "cs_shop_porter": [
+      {
+        "lines": [
+          "The Frostmere order has not come. Eleven years I have taken that order in on a Tuesday.",
+          "The carter got as far as the pass and turned round, and he is not a man who turns round."
+        ]
+      }
+    ],
+    "cs_shop_buyer": [
+      {
+        "lines": [
+          "Thawcloth. All of it. Whatever you have got.",
+          "Not for me. For whatever is going to be sitting in the plaza tomorrow morning."
+        ]
+      }
+    ],
+    "cs_shop_gran": [
+      {
+        "lines": [
+          "In my day you bought your rope from the market and your medicine from the clinic,",
+          "and both of them were free, and one of them still is. Work out which. Go on."
+        ]
+      }
+    ]
+  }
+}

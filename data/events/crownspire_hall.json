@@ -1,0 +1,105 @@
+[
+  {
+    "id": "cs_hall_registrar",
+    "$comment": "The gate on the eighth Hall, and the only one: seven Crests to be written into the register. He stands IN the counter run at 4,18 rather than behind it, because npcInFront reaches one tile and a clerk parked behind an unbroken counter can be looked at and never spoken to. The Full Heals are given once, on signing, and are the only handout in the building -- the Long Floor upstairs is run with no clinic between fights and the bag is the whole of the player's margin, so the Hall makes sure there is something in it.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "hasCrest", "crest": 8 },
+        "then": [
+          {
+            "kind": "say",
+            "who": "REGISTRAR",
+            "lines": [
+              "Signed out. Eight Crests, and the date, and the time, which was quicker than you think it was.",
+              "Volume two hundred and eleven, page forty. You are in the book now."
+            ]
+          },
+          {
+            "kind": "if",
+            "cond": { "kind": "flag", "flag": "cs_roll_name" },
+            "then": [
+              {
+                "kind": "say",
+                "who": "REGISTRAR",
+                "lines": [
+                  "And there is a second line under yours that I do not often get to write.",
+                  "TOOK THE FLOOR IN ONE WALK. Eleven of those in my time. Eleven."
+                ]
+              }
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "if",
+            "cond": { "kind": "not", "of": { "kind": "hasCrest", "crest": 7 } },
+            "then": [
+              {
+                "kind": "say",
+                "who": "REGISTRAR",
+                "lines": [
+                  "Seven before this one. Skyreach's is the seventh and I can see that you have not got it.",
+                  "That is not me being grand. The Keeper does not fight anybody twice and I would rather you got one go."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "REGISTRAR",
+                "lines": [
+                  "Walk the gallery while you are here. It is open to anybody and it always has been.",
+                  "Eight bays. Seven of them you have already stood in, somewhere else, a long way from here."
+                ]
+              }
+            ],
+            "else": [
+              {
+                "kind": "if",
+                "cond": { "kind": "not", "of": { "kind": "flag", "flag": "cs_hall_signed" } },
+                "then": [
+                  { "kind": "setFlag", "flag": "cs_hall_signed" },
+                  {
+                    "kind": "say",
+                    "who": "REGISTRAR",
+                    "lines": [
+                      "Seven. Name in the book, then, and the date, and I will leave the time blank.",
+                      "Everybody wants the time blank. Nobody wants to know how long they took."
+                    ]
+                  },
+                  { "kind": "giveItem", "item": "full_heal", "count": 3 },
+                  { "kind": "say", "lines": ["You received 3 Full Heals."] },
+                  {
+                    "kind": "say",
+                    "who": "REGISTRAR",
+                    "lines": [
+                      "Take those. Not because anything up there is unfair. Because she will not stop for you,",
+                      "and there is no clinic on the Crown Floor, and there never has been."
+                    ]
+                  }
+                ],
+                "else": [
+                  {
+                    "kind": "say",
+                    "who": "REGISTRAR",
+                    "lines": [
+                      "You are in the book. The stair is at the top of the gallery and she is at the top of the stair."
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "REGISTRAR",
+                "lines": [
+                  "Walk the bays first. All eight, both sides, and read the last one properly.",
+                  "It is the only one that is empty and it is the only one anybody remembers."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

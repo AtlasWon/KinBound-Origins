@@ -1,0 +1,407 @@
+[
+  {
+    "id": "fo_dome_arrive",
+    "_note": "Five short boxes, and none of them is about the player's father.\n\nThe room has one job before the recording plays and it is to be the temple heart turned inside out. At Embercoil eight seats faced in and every groove ran to a mark in the middle of the floor; here the seats all face out, the current runs from the middle to the wall, and the middle is bare. A player who sat in that room in Act 3 does not need any of that pointed at, so it is pointed at exactly once, flatly, and then the scene gets out of the way and lets them walk.\n\nThe last box is the instruction and it is disguised as an observation. There is nothing standing in the middle of this floor -- which is the only reason a player crosses a hundred and fifty tiles of empty room to go and stand on one particular tile of it.",
+    "trigger": "enter",
+    "map": "frostmere_observatory_dome",
+    "onceFlag": "fo_dome_entered",
+    "actions": [
+      { "kind": "sfx", "sound": "fx_wind" },
+      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "say",
+        "lines": [
+          "The stair comes up into a round",
+          "room with a hole in the roof."
+        ]
+      },
+      { "kind": "wait", "frames": 22 },
+      {
+        "kind": "say",
+        "lines": [
+          "It is snowing into the middle",
+          "of the floor."
+        ]
+      },
+      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "say",
+        "lines": [
+          "Seats all the way round the wall.",
+          "Every one of them is facing",
+          "away from you."
+        ]
+      },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "lines": [
+          "The current in the floor runs",
+          "out from the middle to the wall."
+        ]
+      },
+      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "say",
+        "lines": [
+          "There is nothing standing in",
+          "the middle."
+        ]
+      },
+      { "kind": "setFlag", "flag": "act5_observatory_dome" }
+    ]
+  },
+
+  {
+    "id": "fo_message",
+    "_note": "ELIAS' FINAL MESSAGE. The emotional peak of the game.\n\nCANON IS A CONSTRAINT HERE AND NOT A NOTE ON STYLE: 'Do not fill this scene with excessive dialogue. Let music, environment, player reaction and visuals carry much of the emotion.' So the count is fixed and small. He gets fifteen boxes and about a hundred and thirty words, there is a wait between every one of them, and the map music is STOPPED for the whole of it -- the mountain through the hole in the roof is the only sound in the room, which is what the hole in the roof is for.\n\nEVERY BOX IN THIS SCRIPT IS EXACTLY ONE PAGE, and that is measured rather than hoped for. The dialogue box re-wraps authored lines by pixel width and chunks them three display lines to a page (src/ui/dialogue.ts), so a long line silently becomes two and drops the page turn into the middle of a sentence -- which is what the first cut of this did to 'and you hope. There has never been' / 'another way.' Held under the wrap width, one authored line is one display line, three are one page, and every silence in the scene lands where it was written. tools/shots/_obsbox.js pages the whole site through the game's own wrapper and reports any break that is not at a full stop.\n\nWHAT HE HAS TO ESTABLISH is five facts and they are dispatched in five boxes, flatly, first, in the voice of a man getting the work out of the way: he knew he might not come back; Neravoss must never be controlled; the Tideheart was built to talk and not to hold; forcing it awake terrifies it; the only safe way through is trust. Everything after 'That is the rest of it done' is not lore, and that is the whole architecture of the scene. Canon: what he says about Neravoss matters less than the fact that a man recording his own likely death chose what to spend the end of it on.\n\nTHE LAST TWO BOXES ARE THE POINT. He starts to leave a message for his wife, stops, and tells himself he will do it in person, because he is going to be home before the winter. He is wrong. He has been wrong for eleven years. The player is standing in the snow while he says it. Nothing in the scene comments on this and nothing ever should.\n\nWHY THERE IS NO TIDEHEART IN IT. The player was robbed in Aureline and arrives here with an empty pocket, and this is the only Aurelian room in the game that does not care -- no seal, no plate, no socket, nothing to answer. That is not a workaround for the theft, it is the argument of the building: these people had just finished learning what a lock is for and the last thing they built has nothing on the door. Elias says so in one box and does not explain it. The `hasItem` branch exists for the postgame player who comes back carrying it, and it adds one box and takes nothing away.\n\nWHY IT FILES tideheart_echo_frostmere_observatory ANYWAY. See the SITES row in src/systems/tideheart.ts. The echo flag is the game's record that a playback has happened and is readable, and it is deliberately not conditioned on possession -- so when Cassian hands the object back at the Temple in Act 6 the last thing the player's father said is in it alongside Embercoil and the Sanctum, which is most of the reason the object matters by the end. The box about the case in the room with no windows is the only sentence in the scene that is not about this room, and it is there to make that connection out loud, once.",
+    "trigger": "step",
+    "map": "frostmere_observatory_dome",
+    "onceFlag": "fo_message_played",
+    "at": [{ "x": 10, "y": 8 }],
+    "actions": [
+      { "kind": "face", "who": "player", "dir": "up" },
+      { "kind": "wait", "frames": 20 },
+      { "kind": "music", "track": "stop" },
+      { "kind": "wait", "frames": 36 },
+      { "kind": "sfx", "sound": "fx_charge" },
+      { "kind": "shake", "frames": 16, "power": 1 },
+      { "kind": "wait", "frames": 28 },
+      {
+        "kind": "say",
+        "lines": [
+          "The four lines in the floor",
+          "change direction."
+        ]
+      },
+      { "kind": "wait", "frames": 18 },
+      {
+        "kind": "say",
+        "lines": [
+          "Everything that was going out",
+          "to the wall comes in."
+        ]
+      },
+      { "kind": "wait", "frames": 22 },
+      {
+        "kind": "if",
+        "cond": { "kind": "hasItem", "item": "tideheart" },
+        "then": [
+          {
+            "kind": "say",
+            "lines": [
+              "The thing in your bag goes off",
+              "like a struck bell, and holds",
+              "the note."
+            ]
+          },
+          { "kind": "wait", "frames": 20 }
+        ]
+      },
+      { "kind": "sfx", "sound": "fx_light" },
+      { "kind": "wait", "frames": 32 },
+      {
+        "kind": "say",
+        "lines": [
+          "Somebody clears their throat,",
+          "eleven years ago, in this room."
+        ]
+      },
+      { "kind": "wait", "frames": 44 },
+
+      { "kind": "say", "who": "ELIAS", "lines": ["Right."] },
+      { "kind": "wait", "frames": 36 },
+      {
+        "kind": "say",
+        "who": "ELIAS",
+        "lines": [
+          "I keep trying to picture you",
+          "tall. I have no idea whether",
+          "you are."
+        ]
+      },
+      { "kind": "wait", "frames": 32 },
+      {
+        "kind": "say",
+        "who": "ELIAS",
+        "lines": [
+          "I go out again in the spring.",
+          "I might not come back this time."
+        ]
+      },
+      { "kind": "wait", "frames": 30 },
+      {
+        "kind": "say",
+        "who": "ELIAS",
+        "lines": [
+          "So: the part that matters, and",
+          "then the rest."
+        ]
+      },
+      { "kind": "wait", "frames": 28 },
+
+      {
+        "kind": "say",
+        "who": "ELIAS",
+        "lines": [
+          "The thing under the sea is",
+          "called Neravoss."
+        ]
+      },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "who": "ELIAS",
+        "lines": [
+          "It is not a weapon and it is",
+          "not a door.",
+          "Nobody is ever to hold it."
+        ]
+      },
+      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "say",
+        "who": "ELIAS",
+        "lines": [
+          "What I sent your mother is not",
+          "a key. It talks.",
+          "That is all it was built to do."
+        ]
+      },
+      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "say",
+        "who": "ELIAS",
+        "lines": [
+          "Push it awake and it wakes up",
+          "frightened.",
+          "Everything after that is weather."
+        ]
+      },
+      { "kind": "wait", "frames": 26 },
+      {
+        "kind": "say",
+        "who": "ELIAS",
+        "lines": [
+          "There is no clever way round it.",
+          "You go, you are honest with it,",
+          "and you hope."
+        ]
+      },
+      { "kind": "wait", "frames": 44 },
+
+      {
+        "kind": "say",
+        "who": "ELIAS",
+        "lines": [
+          "That is the rest of it done."
+        ]
+      },
+      { "kind": "wait", "frames": 34 },
+      {
+        "kind": "say",
+        "who": "ELIAS",
+        "lines": [
+          "I left it in this one because it",
+          "is the only room of theirs with",
+          "nothing on the door."
+        ]
+      },
+      { "kind": "wait", "frames": 30 },
+      { "kind": "sfx", "sound": "fx_wind" },
+      { "kind": "wait", "frames": 26 },
+      {
+        "kind": "say",
+        "who": "ELIAS",
+        "lines": [
+          "If you are hearing this, you got",
+          "up a mountain to do it."
+        ]
+      },
+      { "kind": "wait", "frames": 44 },
+      {
+        "kind": "say",
+        "who": "ELIAS",
+        "lines": [
+          "I would have liked to see that."
+        ]
+      },
+      { "kind": "wait", "frames": 50 },
+      {
+        "kind": "say",
+        "who": "ELIAS",
+        "lines": [
+          "Tell your mother --"
+        ]
+      },
+      { "kind": "wait", "frames": 54 },
+      {
+        "kind": "say",
+        "who": "ELIAS",
+        "lines": [
+          "No. I will tell her myself.",
+          "I will be home before the winter."
+        ]
+      },
+
+      { "kind": "wait", "frames": 64 },
+      { "kind": "sfx", "sound": "fx_light" },
+      { "kind": "shake", "frames": 12, "power": 1 },
+      { "kind": "wait", "frames": 38 },
+      {
+        "kind": "say",
+        "lines": [
+          "The light goes back out of the",
+          "floor, from the middle outwards."
+        ]
+      },
+      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "say",
+        "lines": [
+          "The four lines are running to",
+          "the wall again."
+        ]
+      },
+      { "kind": "wait", "frames": 30 },
+      { "kind": "sfx", "sound": "fx_wind" },
+      { "kind": "wait", "frames": 40 },
+
+      {
+        "kind": "if",
+        "cond": { "kind": "hasItem", "item": "tideheart" },
+        "then": [
+          { "kind": "call", "script": "tideheart_wake_frostmere_observatory" }
+        ],
+        "else": [
+          { "kind": "setFlag", "flag": "tideheart_echo_frostmere_observatory" },
+          {
+            "kind": "say",
+            "lines": [
+              "A long way south of here, in a",
+              "case, in a room with no windows,",
+              "something turns over."
+            ]
+          },
+          { "kind": "wait", "frames": 34 }
+        ]
+      },
+
+      { "kind": "setFlag", "flag": "act5_elias_message" },
+
+      {
+        "kind": "say",
+        "lines": [
+          "There is somebody standing at",
+          "the top of the stair.",
+          "There has been for a while."
+        ]
+      },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "fo_tarin",
+          "sprite": "rival",
+          "x": 12,
+          "y": 14,
+          "facing": "up",
+          "movement": { "kind": "static" },
+          "script": "fo_tarin"
+        }
+      },
+      { "kind": "wait", "frames": 44 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "I came up about four minutes in."
+        ]
+      },
+      { "kind": "wait", "frames": 28 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "I was not going to walk into",
+          "the middle of that."
+        ]
+      },
+      { "kind": "wait", "frames": 48 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "He sounds like you."
+        ]
+      },
+      { "kind": "wait", "frames": 54 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "I will be over by the stair.",
+          "Take as long as you want."
+        ]
+      },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "I mean it. Nothing after this",
+          "has to be today."
+        ]
+      },
+      { "kind": "face", "who": "fo_tarin", "dir": "down" }
+    ]
+  },
+
+  {
+    "id": "fo_tarin",
+    "_note": "TARIN, AND HE DOES NOT MAKE A SINGLE JOKE. Canon is explicit about it and the reason it lands is that he has been funny for five acts and the player has been trained to expect it -- so the silence is the payoff, and one gag anywhere in this file would spend the whole of it. Nothing he says here is a setup, a deflection or a comparison of Crest counts, which between them are about ninety per cent of his dialogue in Acts 1 to 4.\n\nHIS LEDGER IS SOMEBODY ELSE'S FILE. src/systems/tarin.ts is the ordered list of where he is and what he has done, and it is not mine to append to; nothing here writes a tarin_* flag or assumes a beat. What this scene publishes is act5_elias_message, and a ledger row keyed on that flag places him correctly with no coordination beyond the name. See the handover.\n\nWhat he says on the first press is the whole of his character in Act 5: he has four things he could say, all four are wrong, and instead of picking the least wrong one he says none of them. That is a sixteen-year-old who has learned something. The second press is practical and kind and points at the road, because somebody has to.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "fo_tarin_said" },
+        "then": [
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "Frostmere is at the bottom of",
+              "the path, and the Hall is in it."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "None of that has to be today",
+              "either."
+            ]
+          },
+          { "kind": "end" }
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "I have got about four things I",
+          "could say to you."
+        ]
+      },
+      { "kind": "wait", "frames": 26 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "All four of them are wrong.",
+          "So I am not going to say any."
+        ]
+      },
+      { "kind": "setFlag", "flag": "fo_tarin_said" }
+    ]
+  }
+]

@@ -1,0 +1,36 @@
+{
+  "speakers": {
+    "shb_carter": "FREIGHT CARTER",
+    "shb_gran": "GRANDMOTHER"
+  },
+  "entries": {
+    "shb_carter": [
+      {
+        "lines": [
+          "Ledgers on that shelf go back to 1802 and my family has written every line of them.",
+          "The last four years are thin because everything that used to come up the road now flies.",
+          "I am not bitter. My daughter loads airships. I am extremely proud and slightly bitter."
+        ]
+      }
+    ],
+    "shb_gran": [
+      {
+        "ifFlags": [
+          "crest_6_taken"
+        ],
+        "lines": [
+          "There was a year, when I was small, when the wind stopped for a whole day. Just stopped.",
+          "Everyone came outside. Nobody could work. The town was so quiet people cried.",
+          "This is not that. This is the opposite of that and I would rather have that."
+        ]
+      },
+      {
+        "lines": [
+          "Eighty-one years on this cliff and I have crossed to the other side four times.",
+          "It is very nice over there. Everything is new and nothing is bolted to anything.",
+          "Four times in eighty-one years. It is right there. I could throw a shoe at it."
+        ]
+      }
+    ]
+  }
+}

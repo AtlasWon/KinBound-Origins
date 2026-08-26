@@ -1,0 +1,36 @@
+{
+  "speakers": { "fmcc_cutter": "SIX GENERATIONS", "fmcc_son": "HIS SON" },
+  "entries": {
+    "fmcc_cutter": [
+      {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "The saws are down off the wall, oiled, and back up on the wall again.",
+          "Third time this month. There is nothing else to do with my hands and they know it."
+        ]
+      },
+      {
+        "lines": [
+          "Six names on six saws, and the top one is worn down to two letters.",
+          "You are given one at eleven and you file your own name into the tang. It takes a week.",
+          "Do it badly and you live with it. Mine has a crooked R and I am fifty-eight."
+        ]
+      }
+    ],
+    "fmcc_son": [
+      {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "I have not filed my name in yet. You do it the winter you first cut.",
+          "Nobody has said anything about that. Everybody in this house has thought about it."
+        ]
+      },
+      {
+        "lines": [
+          "Mine is the short one, third from the bottom. It is not sharp, and that is on purpose.",
+          "Dad says a sharp saw in a soft hand takes the hand. So I get a blunt one for a year."
+        ]
+      }
+    ]
+  }
+}

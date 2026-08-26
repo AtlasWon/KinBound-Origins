@@ -1,0 +1,66 @@
+{
+  "$comment": "THE ROLL ARCHIVE, which is where the storm stops being weather. Nine hundred years of rainfall records with a column of noughts in the summer rows and six numbers at the bottom that are not noughts is the single hardest piece of evidence in Act 5 that something is being done to Caelora rather than happening to it -- and the game never says so out loud, because a shelf saying it is better than a person saying it. The stranger reading the foreign shelf is the Averra note canon asks for: other regions, other leagues, other Kin.",
+  "speakers": {
+    "cs_archivist": "ARCHIVIST CORVELL",
+    "cs_arch_copyist": "COPYIST",
+    "cs_arch_reader": "READER",
+    "cs_arch_student": "STUDENT",
+    "cs_arch_stranger": "STRANGER"
+  },
+  "entries": {
+    "cs_archivist": [
+      {
+        "ifFlags": ["cs_roll_name"],
+        "lines": [
+          "I have started your entry. Not the name - the name is the mason's. The paragraph is mine.",
+          "Come and correct it in about fifty years. Everybody's is wrong and nobody ever comes back."
+        ]
+      },
+      {
+        "ifFlags": ["crest_8_taken"],
+        "lines": [
+          "Eight. Then you are a person this building is going to have to write about eventually.",
+          "Do not let that go to your head. So is everybody in the yard outside."
+        ]
+      },
+      {
+        "lines": [
+          "No desk, no counter, no gloves. They were written to be touched and they have been.",
+          "Second shelf on the left is the weather. I would start there, if I were you, this week."
+        ]
+      }
+    ],
+    "cs_arch_copyist": [
+      {
+        "lines": [
+          "I copy the damaged ones out before they go. Eleven volumes behind and always will be.",
+          "The 1712 flood took the middle of the fourth shelf. We are still guessing at forty names."
+        ]
+      }
+    ],
+    "cs_arch_reader": [
+      {
+        "lines": [
+          "Nine hundred years of summers in this column and every one of them is a nought.",
+          "The last six lines are not noughts. I have read this page eleven times and it does not change."
+        ]
+      }
+    ],
+    "cs_arch_student": [
+      {
+        "lines": [
+          "It is not just here. The Skyreach wind logs go strange the same week. I checked.",
+          "My tutor says coincidence. My tutor has not looked at the Skyreach wind logs."
+        ]
+      }
+    ],
+    "cs_arch_stranger": [
+      {
+        "lines": [
+          "Six other leagues on this shelf and Caelora thinks it is the whole of Averra.",
+          "There is an island chain out east with a Kin that nests in the mast of a moving ship. Truly."
+        ]
+      }
+    ]
+  }
+}

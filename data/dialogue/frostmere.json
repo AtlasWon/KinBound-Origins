@@ -1,0 +1,192 @@
+{
+  "_note": "FROSTMERE, OUTSIDE. The storm variants are gated on act4_done, the same flag data/dialogue/common.json uses for every other settlement -- see the _storm note in that file. Frostmere is the one town where the pre-storm lines could not simply be left alone underneath, because this town MEASURES the weather for a living and would have noticed first: so the base tier already has people who are uneasy, and the act4_done tier is them stopping being polite about it. Nobody here blames Meridian. They blame the lake, and they are wrong, and that is the point.",
+  "speakers": {
+    "fm_warden": "GATE WARDEN",
+    "fm_ropekeeper": "LAMP TRIMMER",
+    "fm_hall_queue": "WAITING HER TURN",
+    "fm_child": "FROSTMERE CHILD",
+    "fm_woodward": "WOODWARD",
+    "fm_icemaster": "ICE MASTER",
+    "fm_icecutter": "ICE CUTTER",
+    "fm_shorewatch": "SHORE WATCH",
+    "fm_sledger": "SLEDGE HAND",
+    "fm_trailhand": "TRAIL HAND",
+    "fm_metcrew": "FOUNDATION OBSERVER"
+  },
+  "entries": {
+    "fm_warden": [
+      {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "In today: nine. Out today: eleven. You can see the problem with that.",
+          "Two of them are Foundation and they went up the trail, so I have stopped counting them.",
+          "I do not like having a column I have stopped counting."
+        ]
+      },
+      {
+        "lines": [
+          "You are in the book now. Name, hour, and which way you came.",
+          "You go out, you tell me. You do not go out, you tell me that too.",
+          "Nobody here thinks that is rude. Down your way I gather they do."
+        ]
+      }
+    ],
+    "fm_ropekeeper": [
+      {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "I have trimmed every lamp on this street twice this week and I will do it again tonight.",
+          "The wind is coming down the pass in a way it does in March. It is not March.",
+          "So the ropes go up early and I do not care how it looks."
+        ]
+      },
+      {
+        "lines": [
+          "Blue burns cold and burns slow and it is the one light nobody's window makes.",
+          "That is all it is. There is no charm in it and no mystery in it.",
+          "A stranger walks at a warm light and finds a wall. We had that happen once."
+        ]
+      }
+    ],
+    "fm_hall_queue": [
+      {
+        "ifFlags": ["crest_6_taken"],
+        "lines": [
+          "You went down and came back up and Eira let you have it. Good.",
+          "She would not have, if you had gone across it the way people do the first time."
+        ]
+      },
+      {
+        "lines": [
+          "The Hall takes challengers in the order they put their name at the desk.",
+          "I am not a challenger. I am here because our chimney is out and the Hall is warm.",
+          "You go on ahead. Genuinely. That is what the room is for."
+        ]
+      }
+    ],
+    "fm_child": [
+      {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "Dad says we are not to go on the lake. Not the middle bit, ANY of it.",
+          "He has never said any of it before. He says the middle bit every year."
+        ]
+      },
+      {
+        "lines": [
+          "I can hold the rope from our door to the Hall with my eyes shut. I have done it.",
+          "Mum timed me. It is eleven and a bit if you do not stop at the fire."
+        ]
+      }
+    ],
+    "fm_woodward": [
+      {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "Four households on nothing and it is not the middle of the season yet.",
+          "They are all ice families. No cut, no wage, no fuel. It runs downhill like that.",
+          "They are in the inn and they will stay in the inn. That part still works."
+        ]
+      },
+      {
+        "lines": [
+          "Every stack in this town is measured and the figure goes on the board in the inn.",
+          "Not to shame anybody. So that we know who to walk a barrow to before they ask.",
+          "Asking is the hard part. We took it out of the arrangement two hundred years ago."
+        ]
+      }
+    ],
+    "fm_icemaster": [
+      {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "Twelve inches is a floor. Five is a lid. I have five, and I have had five for eleven days.",
+          "Rain. In this valley, at this height, in the deep of the year. Twice.",
+          "I have no column in my book for rain. I have had to rule one."
+        ]
+      },
+      {
+        "lines": [
+          "Frostmere sells winter. That is the whole of it, and it is not a joke.",
+          "Sawn, stacked in straw, and it goes south to eleven towns that have no other cold.",
+          "Two hundred years we have done it and the lake has never once been late."
+        ]
+      }
+    ],
+    "fm_icecutter": [
+      {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "Saw is oiled. Sled is greased. Team is fed. Ice is five inches.",
+          "So I stand here, and I look at it, and at noon I go and look at it again."
+        ]
+      },
+      {
+        "lines": [
+          "Do not come past the last stack. I am not being unfriendly.",
+          "You can see where it goes from white to a sort of grey-white. That is the line.",
+          "Everything past it is a picture of a floor."
+        ]
+      }
+    ],
+    "fm_shorewatch": [
+      {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "Something came in off the mountain last night and went along the shore in the dark.",
+          "Four of them. Big. Not ours -- ours would not come down to the water.",
+          "They were going somewhere and they did not stop, and that is what I did not like."
+        ]
+      },
+      {
+        "lines": [
+          "Somebody has to be looking at it. That is not superstition, that is the rota.",
+          "You watch a lake and you know its noises. When it takes, it grumbles all night.",
+          "It has not grumbled once. It has been quiet since the middle of last month."
+        ]
+      }
+    ],
+    "fm_sledger": [
+      {
+        "lines": [
+          "Runners want greasing whether or not there is anything to put on them.",
+          "You let a sledge stand a season and the wood forgets what it is for. So do people."
+        ]
+      }
+    ],
+    "fm_trailhand": [
+      {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "Four hours up, and I would not, not this week, not for anybody.",
+          "There is weather sitting on the shoulder that has not moved in nine days.",
+          "Weather moves. That is the one thing about it you can rely on and it is not doing it."
+        ]
+      },
+      {
+        "lines": [
+          "The trail goes up to the old cut and stops there. Nothing above it and nothing past it.",
+          "It is Aurelian. We did not build it and we do not use it.",
+          "We keep the cairns up, though. Somebody built those, and it was not them."
+        ]
+      }
+    ],
+    "fm_metcrew": [
+      {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "Pressure, wind, cloud base, three times a day, and I send it down the wire at six.",
+          "I have sent the same reading eleven days running and it is not an instrument fault.",
+          "I asked to be recalled. They said stay and keep sending. So I am staying and sending."
+        ]
+      },
+      {
+        "lines": [
+          "Upper Caelora Station. Foundation work, and honest work: somebody has to measure it.",
+          "The cable? It goes on up the mountain to another set. Not mine, not my department.",
+          "I have never been asked what that set is for and I have stopped noticing that."
+        ]
+      }
+    ]
+  }
+}

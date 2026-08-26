@@ -1,0 +1,27 @@
+{
+  "speakers": { "cs_crown_aide": "FLOOR AIDE" },
+  "entries": {
+    "cs_crown_aide": [
+      {
+        "ifFlags": ["cs_roll_name"],
+        "lines": [
+          "She put her tea down. I have worked this floor nine years and I have seen her do that once.",
+          "Twice now."
+        ]
+      },
+      {
+        "ifFlags": ["crest_8_taken"],
+        "lines": [
+          "Eight. That is the whole set and there is nowhere further to take them until the gate opens.",
+          "Sit at the lights a minute. Everybody does, afterwards, and nobody plans to."
+        ]
+      },
+      {
+        "lines": [
+          "She keeps a book a year on everyone who comes up. Not who won. What they brought.",
+          "Forty volumes. I have read three and I had to stop, because she is very kind in them."
+        ]
+      }
+    ]
+  }
+}

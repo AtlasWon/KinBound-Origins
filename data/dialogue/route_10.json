@@ -1,0 +1,34 @@
+{
+  "$comment": "The Crown Road. TWO VOICES AND NEITHER OF THEM IS ABOUT THE STORM, which is the point: this is the last quiet map in Act 5 and the last one before the eighth Hall, and after four maps of people saying the weather is wrong it would be a relief and a lie to have two more. So one of them is about a boundary stone nobody can reach and one is about a wall somebody cut nine hundred years ago, and both of them are quietly about the same thing the whole game is about -- what people leave behind them, and what the people who come after make of it.\n\nThe mason is the closest this road comes to Crownspire's argument. He works stone for a living, he has spent his life looking at something better than anything he can do, and he is not bitter about it.",
+  "speakers": {
+    "r10_boundary": "BOUNDARY WARDEN",
+    "r10_mason": "MASON"
+  },
+  "entries": {
+    "r10_boundary": [
+      {
+        "lines": [
+          "Out there on the islet. One stone, two faces, two names cut on it.",
+          "Skyreach on one side and Crownspire on the other, and eight hundred years of arguing.",
+          "Nobody has ever got out to it to see which way round they are. That is the joke."
+        ]
+      }
+    ],
+    "r10_mason": [
+      {
+        "ifFlags": ["crest_5_taken"],
+        "lines": [
+          "I cut stone. Thirty years. That arch was cut by somebody who was better than me.",
+          "No mortar in it. None. It has stood through everything and it holds itself up.",
+          "I come and look at it when a job has gone badly. It has never once cheered me up."
+        ]
+      },
+      {
+        "lines": [
+          "Granite, and the same granite the city wall is, and older than the city wall.",
+          "It is a doorway with no building. It was here before the road that goes through it."
+        ]
+      }
+    ]
+  }
+}

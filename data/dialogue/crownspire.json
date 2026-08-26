@@ -1,0 +1,328 @@
+{
+  "$comment": "Crownspire's street voices. THE STORM IS THE WEATHER OF EVERY LINE IN THIS FILE. Canon's Act 5 list -- winds rise, rain out of nowhere, Kin migrate inland, coastal towns build barriers -- reaches an inland stone city as three things: rain in the one place in Caelora where it does not rain in summer, a ravine four feet over the mark that says NEVER, and mountain Kin walking down into the streets. Nothing is gated on a storm flag, because Crownspire only exists in Act 5 and every person in it has already had six days of it. The second thing every voice carries is the Ascent gate, which is shut for the first time in living memory, so the city is full of Trainers with eight Crests and nowhere to take them. Lines gated on crest_8_taken change after the eighth Crest; lines gated on cs_roll_name change only for a player who took the Long Floor.",
+  "speakers": {
+    "cs_gate_wait_a": "WAITING TRAINER",
+    "cs_gate_wait_b": "WAITING TRAINER",
+    "cs_roll_reader": "OLD READER",
+    "cs_roll_child": "GIRL AT THE WALL",
+    "cs_roll_mason": "LETTER-CUTTER",
+    "cs_roll_widow": "WOMAN AT THE EAST LEAF",
+    "cs_hall_doorman": "HALL PORTER",
+    "cs_plaza_crier": "PLAZA CRIER",
+    "cs_plaza_pilgrim": "TRAVELLER",
+    "cs_plaza_kid": "BOY",
+    "cs_archivist_out": "ARCHIVE KEEPER",
+    "cs_muster_host": "MUSTER HOST",
+    "cs_plaza_sweep": "SWEEPER",
+    "cs_river_watch": "RIVER WATCH",
+    "cs_bridge_old": "OLD MAN ON KINGSBRIDGE",
+    "cs_river_gauge": "GAUGE CLERK",
+    "cs_river_kid": "GIRL ON THE NEW SPAN",
+    "cs_street_carter": "CARTER",
+    "cs_street_glazier": "GLAZIER",
+    "cs_street_gran": "OLD WOMAN",
+    "cs_clinic_step": "CLINIC HAND",
+    "cs_shop_step": "SHOP CLERK",
+    "cs_street_child": "CHILD",
+    "cs_muster_a": "CLIMBER",
+    "cs_muster_b": "CLIMBER",
+    "cs_muster_c": "CLIMBER",
+    "cs_muster_d": "CLIMBER",
+    "cs_gate_guard": "WEST GATE WARD",
+    "cs_mason_head": "MASTER MASON",
+    "cs_mason_hand": "MASON'S HAND",
+    "cs_mason_prentice": "APPRENTICE"
+  },
+  "entries": {
+    "cs_gate_wait_a": [
+      {
+        "ifFlags": ["crest_8_taken"],
+        "lines": [
+          "Eight, is it. Well. Now you can stand here and look at it like the rest of us.",
+          "There is a bench. I would take the bench."
+        ]
+      },
+      {
+        "lines": [
+          "Nine days. Nine. I have eight Crests, I am fit, and I am standing in a puddle.",
+          "You cannot argue with a warden and you certainly cannot argue with the sky."
+        ]
+      }
+    ],
+    "cs_gate_wait_b": [
+      {
+        "lines": [
+          "The road up is four miles and I have walked eleven hundred to get to it.",
+          "So no, I am not going home. I will be here when they open it."
+        ]
+      }
+    ],
+    "cs_roll_reader": [
+      {
+        "ifFlags": ["cs_roll_name"],
+        "lines": [
+          "They cut yours yesterday. I watched him do it. He took his time over the first letter.",
+          "Nine hundred and six years, and the mason still takes his time over the first letter."
+        ]
+      },
+      {
+        "lines": [
+          "Four thousand one hundred and nine. I have read every one of them and I am not finished.",
+          "Reading a name properly means finding out who it was. That takes about a week each."
+        ]
+      }
+    ],
+    "cs_roll_child": [
+      {
+        "lines": [
+          "My great-gran is on here somewhere. Third leaf, Gran says, near a chip in the stone.",
+          "There are nine chips in the stone. I have checked."
+        ]
+      }
+    ],
+    "cs_roll_mason": [
+      {
+        "ifFlags": ["cs_roll_name"],
+        "lines": [
+          "Yours went in this morning. Not the deep cut - I do the deep cut in dry weather.",
+          "I will come back and do it again properly in the spring. I always do."
+        ]
+      },
+      {
+        "lines": [
+          "Six days of rain on stone that has had none in eleven hundred summers.",
+          "It is lifting the letters. Not breaking them. Lifting them, like something under the skin."
+        ]
+      }
+    ],
+    "cs_roll_widow": [
+      {
+        "lines": [
+          "That one. Fourth from the end. He was forty-one and he had no business going up.",
+          "I did not talk him out of it and I have never once been sorry about that."
+        ]
+      }
+    ],
+    "cs_hall_doorman": [
+      {
+        "ifFlags": ["crest_8_taken"],
+        "lines": [
+          "Eight. Door is open to you for good now - come and sit in the warm whenever you like.",
+          "Most of them do, in the end. It is the only building in the city with a dry floor."
+        ]
+      },
+      {
+        "lines": [
+          "Keeper Ord is up on the Crown Floor and she has been up there since four.",
+          "Walk the gallery first. Everybody who goes straight up regrets going straight up."
+        ]
+      }
+    ],
+    "cs_plaza_crier": [
+      {
+        "lines": [
+          "NO CLIMB TODAY. NO CLIMB TOMORROW. WARDENS WILL POST WHEN THERE IS ONE.",
+          "I have shouted that four hundred times this week and I have started to hate my own voice."
+        ]
+      }
+    ],
+    "cs_plaza_pilgrim": [
+      {
+        "lines": [
+          "I came from the far islands to stand in this square. Two months on a boat.",
+          "It is worth it. It would be worth it if I never got any further than this."
+        ]
+      }
+    ],
+    "cs_plaza_kid": [
+      {
+        "lines": [
+          "There was a Frostnip asleep by the basin this morning. A real one, off the mountain.",
+          "Dad says do not touch it. Dad says it did not come down here for fun."
+        ]
+      }
+    ],
+    "cs_archivist_out": [
+      {
+        "lines": [
+          "The Archive is open, and it is open to you, and there is no desk in the way.",
+          "Nine hundred years of who went up. Come in out of the wet and read some of it."
+        ]
+      }
+    ],
+    "cs_muster_host": [
+      {
+        "lines": [
+          "Full. Twenty beds, twenty people, and eleven more asleep on the floor by the fire.",
+          "I have not turned anybody out and I am not going to. Come in anyway."
+        ]
+      }
+    ],
+    "cs_plaza_sweep": [
+      {
+        "lines": [
+          "Sweeping water. That is my week. You cannot sweep water and I am doing it anyway.",
+          "The drains were cut for a city that gets four inches a year. We have had nine."
+        ]
+      }
+    ],
+    "cs_river_watch": [
+      {
+        "lines": [
+          "Four feet over the NEVER mark. That mark was cut in 1712 by somebody being funny.",
+          "Nobody has ever had to look at it before. Now everybody in the city knows where it is."
+        ]
+      }
+    ],
+    "cs_bridge_old": [
+      {
+        "lines": [
+          "Six hundred years this span. My grandfather's grandfather fished off it.",
+          "You feel that through your boots? That is not the crowd. That is the water."
+        ]
+      }
+    ],
+    "cs_river_gauge": [
+      {
+        "lines": [
+          "The gauge only goes to eight. Somebody has pinned a strip of card above the eight.",
+          "The card has numbers on it in pencil. That is the whole of our flood defence."
+        ]
+      }
+    ],
+    "cs_river_kid": [
+      {
+        "lines": [
+          "There are fish in it. There have never been fish in it.",
+          "They came down from somewhere. Everything is coming down from somewhere this week."
+        ]
+      }
+    ],
+    "cs_street_carter": [
+      {
+        "lines": [
+          "Two hundred bags of sand up from the Skyreach road and the road is going too.",
+          "Whatever is doing this, it is not doing it to Crownspire. It is doing it to everywhere."
+        ]
+      }
+    ],
+    "cs_street_glazier": [
+      {
+        "lines": [
+          "I have reglazed nine sashes in six days and the wind took two of them back.",
+          "Not a gale. There has been no gale. It is coming down the mountain in one direction."
+        ]
+      }
+    ],
+    "cs_street_gran": [
+      {
+        "lines": [
+          "Eighty-one years in this street. I have seen it rain in summer exactly twice.",
+          "Both times it lasted an afternoon. This is the sixth day, dear."
+        ]
+      }
+    ],
+    "cs_clinic_step": [
+      {
+        "lines": [
+          "Bring them in. Anything you find in the street - anything - bring it in.",
+          "We had eleven yesterday and not one of them was hurt. Just frightened and a long way down."
+        ]
+      }
+    ],
+    "cs_shop_step": [
+      {
+        "lines": [
+          "Rope, canvas and oil. That is the whole shop this week and we are nearly out of two of them.",
+          "Nobody is buying it to climb with. They are buying it to tie things down."
+        ]
+      }
+    ],
+    "cs_street_child": [
+      {
+        "lines": [
+          "I am not allowed on the bridges. Nobody is allowed on the bridges.",
+          "Everybody is on the bridges."
+        ]
+      }
+    ],
+    "cs_muster_a": [
+      {
+        "ifFlags": ["crest_8_taken"],
+        "lines": [
+          "Eight? Then you are in the yard with the rest of us, and welcome.",
+          "We will go up together when it opens. That is how a muster works. Always has."
+        ]
+      },
+      {
+        "lines": [
+          "Six of us slept in this yard last night because the Muster is full.",
+          "Nobody minds. It is the last night before, over and over, and it never comes."
+        ]
+      }
+    ],
+    "cs_muster_b": [
+      {
+        "lines": [
+          "I got my eighth in the spring and I have been training in the rain ever since.",
+          "The gate is not the problem. Waiting is the problem. Waiting makes you soft."
+        ]
+      }
+    ],
+    "cs_muster_c": [
+      {
+        "lines": [
+          "You know what nobody says out loud? That it might not be weather.",
+          "Six days. In summer. Here. Say it is weather again and mean it."
+        ]
+      }
+    ],
+    "cs_muster_d": [
+      {
+        "lines": [
+          "The wind out of Skyreach turned round on Tuesday and has not turned back.",
+          "My cousin is a docker up there. She says the airships have been in the sheds all week."
+        ]
+      }
+    ],
+    "cs_gate_guard": [
+      {
+        "lines": [
+          "West gate. In from the Skyreach stair, out the same way, and mind the road below the arch.",
+          "It is running like a beck. In Crownspire. In August."
+        ]
+      }
+    ],
+    "cs_mason_head": [
+      {
+        "ifFlags": ["cs_roll_name"],
+        "lines": [
+          "That block there. That is the next leaf, and yours is the first cut on it.",
+          "Four thousand one hundred and ten. I have been waiting eleven years to start a new leaf."
+        ]
+      },
+      {
+        "lines": [
+          "Forty blocks dressed and standing out in the wet because the shed is full of people.",
+          "Letters facing in. Always facing in. A half-cut name is nobody's business but ours."
+        ]
+      }
+    ],
+    "cs_mason_hand": [
+      {
+        "lines": [
+          "You cut into wet stone and it bruises. Comes out grey round the edges, like a knock.",
+          "So we are not cutting. Forty blocks and a yard full of us doing absolutely nothing."
+        ]
+      }
+    ],
+    "cs_mason_prentice": [
+      {
+        "lines": [
+          "Third year. I am allowed to cut the numbers and not the names yet.",
+          "Master says a number can be recut and a name cannot. I think about that a lot."
+        ]
+      }
+    ]
+  }
+}

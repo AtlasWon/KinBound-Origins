@@ -1,0 +1,380 @@
+{
+  "$comment": "THE STORM, AND HOW THIS TOWN SHOWS IT. Skyreach is the one settlement in Caelora whose entire economy is the weather: the masts, the docks, the Cradle and the Hall all live or die on where the wind is coming from. So the change canon asks for -- every settlement's dialogue moving as the region turns -- is not a layer painted on top here, it is the thing everybody was already talking about. Three tiers, in this order, first match wins:\n\n  storm_rising    the shared Act 5 flag, if whoever owns the region-wide turn sets one. Skyreach reads it and does not set it.\n  crest_6_taken   the Frost Crest, which means the player has been to the Observatory and knows what Meridian are doing. From here the town's worry has a shape.\n  (default)       nineteen days of wind from the wrong quarter, and nobody able to say why.\n\nThe default tier is ALREADY the weather going wrong, because a player can walk in here before Frostmere and the boards on the walls say nineteen days either way. What the flags add is not the storm. It is the town working out that it is not weather.",
+  "speakers": {
+    "sr_gatewarden": "GATE WARDEN",
+    "sr_carter": "CARTER",
+    "sr_kite_child": "SKYREACH CHILD",
+    "sr_spanhand": "SPAN HAND",
+    "sr_stonecutter": "STONECUTTER",
+    "sr_ropewright": "ROPEWRIGHT",
+    "sr_elder": "ELDER",
+    "sr_lookout_watch": "WOMAN AT THE RAIL",
+    "sr_gossip": "TOWNSWOMAN",
+    "sr_mastwright": "MASTWRIGHT",
+    "sr_weatherhand": "FOUNDATION OBSERVER",
+    "sr_cradle_west": "CABLE HAND",
+    "sr_catwalk_crew": "TURBINE CREW",
+    "sr_cradle_east": "CABLE HAND",
+    "sr_dockmaster": "DOCK MASTER",
+    "sr_loader": "LOADER",
+    "sr_aeronaut": "AERONAUT",
+    "sr_freight_agent": "FREIGHT AGENT",
+    "sr_engineer": "MAST ENGINEER",
+    "sr_shop_child": "RIGGING CHILD",
+    "sr_windwright": "WINDWRIGHT",
+    "sr_hall_crier": "HALL CLERK",
+    "sr_roadwarden": "ROAD WARDEN"
+  },
+  "entries": {
+    "sr_gatewarden": [
+      {
+        "ifFlags": ["storm_rising"],
+        "lines": [
+          "Road is still open. I am telling everyone that before they ask, because everyone asks.",
+          "Skyreach. Seventeen thousand, on two cliffs, and nothing at all in the middle.",
+          "Whatever you have come for, do it today. I would not swear to tomorrow."
+        ]
+      },
+      {
+        "ifFlags": ["crest_6_taken"],
+        "lines": [
+          "Skyreach. Seventeen thousand, on two cliffs, with a hole down the middle of it.",
+          "You came up from the snow. Then you already know what the sky has been doing.",
+          "We have known for nineteen days. We just did not have anything to call it."
+        ]
+      },
+      {
+        "lines": [
+          "Skyreach. Seventeen thousand, on two cliffs, with a hole down the middle of it.",
+          "Everything you can walk on, somebody hung there. Everything else is air.",
+          "Clinic and provisioner are both up the road, on this side. Do that first."
+        ]
+      }
+    ],
+    "sr_carter": [
+      {
+        "ifFlags": ["crest_6_taken"],
+        "lines": [
+          "Nothing on wheels crosses the span, so everything that comes up the road stops here.",
+          "Used to be nine wagons a day. It has been three, and yesterday it was one.",
+          "They are not scared of the road. They are scared of what is at the other end of it."
+        ]
+      },
+      {
+        "lines": [
+          "Nothing on wheels crosses the span, so everything that comes up the road stops in my yard.",
+          "Then it goes across on somebody's back, or up on the Cradle, or it does not go.",
+          "Two hundred years and nobody has thought of a better way. I have stopped waiting."
+        ]
+      }
+    ],
+    "sr_kite_child": [
+      {
+        "ifFlags": ["crest_6_taken"],
+        "lines": [
+          "My kite went DOWN. Kites do not go down. They go up, that is what up is FOR.",
+          "Dad says do not fly it this month. He did not say do not, he said do not THIS MONTH.",
+          "That is worse. That means he knows how long."
+        ]
+      },
+      {
+        "lines": [
+          "There is a sign in town that says no flying from the span. And the lookout. And the Cradle.",
+          "It does not say anything about the gate shelf, so.",
+          "You can see three of them from here on a good day. Ours is the green one."
+        ]
+      }
+    ],
+    "sr_spanhand": [
+      {
+        "ifFlags": ["storm_rising"],
+        "lines": [
+          "Weight limit is halved as of this morning and I am not arguing with anybody about it.",
+          "The span is fine. The span is four iron chains and it has held since 1874.",
+          "It is the crosswind on it I do not like, and I have never said that before in my life."
+        ]
+      },
+      {
+        "lines": [
+          "Fifteen lengths, four chains, and I walk every one of them at first light.",
+          "Look at the far end, not at your feet. Everybody who has ever frozen out there looked down.",
+          "Go on. It is the shortest four hundred feet in Caelora and it does not care about you."
+        ]
+      }
+    ],
+    "sr_stonecutter": [
+      {
+        "lines": [
+          "This side is cut. That side is hung. That is the whole argument between us and them.",
+          "Cragside took four generations and it is not going anywhere.",
+          "The Rigging took eleven years and it makes more money than we ever did. I know. I know."
+        ]
+      }
+    ],
+    "sr_ropewright": [
+      {
+        "ifFlags": ["crest_6_taken"],
+        "lines": [
+          "I splice the Cradle cable. Nine strands, and I have opened it up twice this month.",
+          "It is not wearing wrong. It is being pulled in a direction it was never hung to be pulled.",
+          "You cannot splice that out. You can only keep looking at it."
+        ]
+      },
+      {
+        "lines": [
+          "I splice the Cradle cable, and once a year I do it with the car sitting on the far side.",
+          "Nine strands. You open six, you never open more than six, and you do it in the morning.",
+          "My mother did it before me and her hands shook less. She would say that is the wrong lesson."
+        ]
+      }
+    ],
+    "sr_elder": [
+      {
+        "ifFlags": ["crest_6_taken"],
+        "lines": [
+          "A hundred and forty years of readings in the Hall and the wind has never once backed like this.",
+          "Not in a storm, not in the bad winter, not in my grandmother's whole life.",
+          "So it is not weather, is it. Weather repeats. That is what makes it weather."
+        ]
+      },
+      {
+        "lines": [
+          "There was no reason for a town here. No harbour, no field, no ore, no river.",
+          "There was wind, and for nine hundred years wind was a problem and not a resource.",
+          "Then somebody built a mast, and now we are the second richest place in Caelora."
+        ]
+      }
+    ],
+    "sr_lookout_watch": [
+      {
+        "ifFlags": ["crest_7_taken"],
+        "lines": [
+          "You have got the Gale Crest. Then you have stood on the spurs and looked at the same drop.",
+          "It is different from up there. Down here you can see the lamp. Up there you cannot see anything.",
+          "I still prefer down here, and I have never worked out whether that is cowardice."
+        ]
+      },
+      {
+        "lines": [
+          "Two tiles of air. You could throw a coat across it. Nobody has ever got a bridge to stand.",
+          "The stack is free at the bottom, you see. Nothing to build a bridge OFF.",
+          "The stair went up the inside of it from the gorge floor, and nobody has been down there since."
+        ]
+      }
+    ],
+    "sr_gossip": [
+      {
+        "ifFlags": ["tarin_ahead"],
+        "lines": [
+          "There was a lad through here two days ago, out of Frostmere. Tarin. Loud one.",
+          "Went up the Masthouse, came down with the Crest, and did not stop for a drink.",
+          "He asked where {name} was. Not who. Where."
+        ]
+      },
+      {
+        "ifFlags": ["tarin_behind"],
+        "lines": [
+          "A boy called Tarin came off the Cradle white as a sheet and would not admit it.",
+          "He is somewhere behind you and he is not going to say so.",
+          "Whoever he is racing, I hope they are kind about it. He would not be."
+        ]
+      },
+      {
+        "lines": [
+          "Everybody here has a side, and it is whichever one they were born on.",
+          "I was born in Cragside and I have lived in the Rigging for twenty years.",
+          "I still say I am going OVER when I go home, and home is the place I sleep. Work that out."
+        ]
+      }
+    ],
+    "sr_mastwright": [
+      {
+        "ifFlags": ["storm_rising"],
+        "lines": [
+          "Four and seven are feathered. Nine is feathered. I have never feathered three in a week.",
+          "Feathering is what you do so a mast does not tear itself off the cliff.",
+          "The rest are running and I am watching them the way you watch a pan on a stove."
+        ]
+      },
+      {
+        "lines": [
+          "Eight masts on this headland and I know all eight by the sound they make.",
+          "Three to seven is work, eight is watch it, nine is feather them and go inside.",
+          "Somebody chalked TWELVE on the board last week. That was not a joke and I have not rubbed it off."
+        ]
+      }
+    ],
+    "sr_weatherhand": [
+      {
+        "ifFlags": ["crest_6_taken"],
+        "lines": [
+          "I file two readings a day to Aureline and I have done for six years. Nobody has answered in nineteen days.",
+          "I am Foundation. I fix gauges and I count rain and I have never once been asked to lie.",
+          "So either they are very busy, or somebody has decided I do not need to know. I do not like either."
+        ]
+      },
+      {
+        "lines": [
+          "Meridian Foundation, weather station, and before you look at me like that -- I count rain.",
+          "The station has been here eleven years and the town likes us, which I know is unusual.",
+          "The wind has backed nineteen days running. It should not do that. It has never done that."
+        ]
+      }
+    ],
+    "sr_cradle_west": [
+      {
+        "ifFlags": ["storm_rising"],
+        "lines": [
+          "One car, one cable, and I am running it on the quarter hour instead of on demand.",
+          "Not because it is unsafe. Because I want to be the one deciding when it goes out.",
+          "Step in and stand in the middle. It will be ninety seconds and then you are on the far cliff."
+        ]
+      },
+      {
+        "lines": [
+          "The walk round is two hours. The car is ninety seconds. Nobody has ever chosen the walk.",
+          "In you get. It opens on the other side and you step out on the docks.",
+          "It is the same door. I have said that eleven thousand times and it is still true."
+        ]
+      }
+    ],
+    "sr_catwalk_crew": [
+      {
+        "lines": [
+          "One plank, two cables, five tiles of gorge. It is the shortest crossing in the city.",
+          "No rail, before you ask. A rail gives you something to argue with halfway across.",
+          "We do it eleven times a shift. You will do it once and you will remember it for a year."
+        ]
+      }
+    ],
+    "sr_cradle_east": [
+      {
+        "lines": [
+          "Cost more than the span and paid for itself in four years, and half the town still calls it a folly.",
+          "They call it a folly on the way to the car they are about to get into.",
+          "Go on. West side puts you out above the old town, by the wind house."
+        ]
+      }
+    ],
+    "sr_dockmaster": [
+      {
+        "ifFlags": ["crest_6_taken"],
+        "lines": [
+          "Eleven sailings a week and I have cancelled seven of them in a fortnight.",
+          "Not for wind strength. For wind DIRECTION, which is not a thing I have ever cancelled for.",
+          "A ship can beat into a gale. It cannot beat into a gale that keeps changing its mind."
+        ]
+      },
+      {
+        "lines": [
+          "Three berths, two masts, eleven sailings a week, and the whole thing runs on a slate.",
+          "Aureline Tuesday and Friday, Crownspire daily, Frostmere when the weather says so.",
+          "Airships are not brave. They are extremely well informed, which is better."
+        ]
+      }
+    ],
+    "sr_loader": [
+      {
+        "lines": [
+          "Everything soft goes up the road and everything that spoils comes in by air.",
+          "Fish from Tideglass in the morning and it is still cold when it gets to the market.",
+          "Three hundred miles. Four hundred feet up. Still cold. I think about that a lot."
+        ]
+      }
+    ],
+    "sr_aeronaut": [
+      {
+        "ifFlags": ["storm_rising"],
+        "lines": [
+          "I have flown this coast for twenty-two years and I have never asked to be grounded before.",
+          "I asked this morning. He said yes before I finished the sentence, which tells you plenty.",
+          "The air over the sea is doing something. Not a storm. Storms have edges."
+        ]
+      },
+      {
+        "lines": [
+          "Twenty-two years on the coast run and the wind here is the most honest in Caelora.",
+          "Straight off the plateau, all day, every day, and you can set a watch by it.",
+          "Could. You could set a watch by it. I am going to stop saying it the old way eventually."
+        ]
+      }
+    ],
+    "sr_freight_agent": [
+      {
+        "lines": [
+          "I sell space in a hold. That is all. I have never in my life been on one of them.",
+          "Averra is a very large place and about nine tenths of what crosses this dock is going out of Caelora.",
+          "Spice out of the southern islands, glass to two regions I could not point at on a chart."
+        ]
+      }
+    ],
+    "sr_engineer": [
+      {
+        "ifFlags": ["crest_6_taken"],
+        "lines": [
+          "Four masts down here and every one of them feeds the Masthouse. That is not symbolic.",
+          "The Hall runs on charge the city catches, and the city is catching it wrong this month.",
+          "Fenn has not shut a mast down in eleven years. She shut two on Tuesday."
+        ]
+      },
+      {
+        "lines": [
+          "Charge is not something we make. It is something we catch, and then we are very careful with it.",
+          "The Hall was built here so that the Keeper is standing in the thing she is teaching.",
+          "You will see. There is no arena up there. There is a mast and a lot of weather."
+        ]
+      }
+    ],
+    "sr_shop_child": [
+      {
+        "lines": [
+          "I have never been over. Not once. I am ten.",
+          "Mum says it is two hours round or ninety seconds across and neither one is free.",
+          "I can SEE it. It is right there. I could shout at it and somebody would hear me."
+        ]
+      }
+    ],
+    "sr_windwright": [
+      {
+        "lines": [
+          "Every house on this side was built after the first mast went up. Every one.",
+          "You can date a street in Skyreach by whether it has glass in it.",
+          "Cragside thinks that makes us new money. Cragside is entirely correct and we do not mind."
+        ]
+      }
+    ],
+    "sr_hall_crier": [
+      {
+        "ifFlags": ["crest_7_taken"],
+        "lines": [
+          "Seven of eight, and the record says so in the book downstairs now.",
+          "One more, in Crownspire, and then the Ascent has to let you through the gate.",
+          "Fenn will not say it, so I will: that was quick, and she does not think you were lucky."
+        ]
+      },
+      {
+        "lines": [
+          "The Masthouse. Gale and Spark, seventh Crest, and Keeper Fenn is not in the building.",
+          "She is out on the spurs, which is where the masts are, which is where the work is.",
+          "Through the machine floor and out the back door. Mind the gantries. Hold nothing you cannot drop."
+        ]
+      }
+    ],
+    "sr_roadwarden": [
+      {
+        "ifFlags": ["crest_7_taken"],
+        "lines": [
+          "South-east from here, along the ridge, and you are in Crownspire by evening.",
+          "Oldest city in Caelora and the last Hall in it. After that there is only the Ascent.",
+          "Go carefully. The wind on that ridge has been coming from the sea and the sea is a long way off."
+        ]
+      },
+      {
+        "lines": [
+          "Road out is south-east, down off the shelf and along the ridge. Crownspire by evening.",
+          "You will want the Crest here first. Nobody is going to stop you, but Ord will ask."
+        ]
+      }
+    ]
+  }
+}

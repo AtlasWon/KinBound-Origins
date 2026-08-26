@@ -1,0 +1,131 @@
+{
+  "id": "crownspire_provisioner",
+  "name": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIUUIIIIIIIIIIUUIIIII",
+    "I;;;;;;;;;;;;;;;;;;;;I",
+    "IPKKKKFKKKFFKKKFKKKKPI",
+    "IFFFFFFFFFFFFFFFFFFFFI",
+    "I;;;;FF;;;FF;;;FF;;;;I",
+    "IFFFFFFFFFFFFFFFFFFFFI",
+    "IFF;;;FFFFFFFFFF;;;FFI",
+    "IFFFFFFFFFFFFFFFFFFFFI",
+    "I;;;;FF;;;FF;;;FF;;;;I",
+    "IFFFFFFFFFFFFFFFFFFFFI",
+    "IPFFFFFFFFFFFFFFFFFFPI",
+    "IIIIIIIIIIDIIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 10,
+      "y": 11,
+      "toMap": "crownspire",
+      "toX": 57,
+      "toY": 54,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "cs_shopkeeper",
+      "sprite": "merchant",
+      "x": 6,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "crownspire_shop"
+    },
+    {
+      "id": "cs_shop_second",
+      "sprite": "clerk",
+      "x": 15,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_shop_second"
+    },
+    {
+      "id": "cs_shop_porter",
+      "sprite": "porter",
+      "x": 4,
+      "y": 5,
+      "facing": "up",
+      "movement": {
+        "kind": "pace",
+        "axis": "x",
+        "distance": 3
+      },
+      "script": "cs_shop_porter"
+    },
+    {
+      "id": "cs_shop_buyer",
+      "sprite": "hiker",
+      "x": 16,
+      "y": 7,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_shop_buyer"
+    },
+    {
+      "id": "cs_shop_gran",
+      "sprite": "elder",
+      "x": 8,
+      "y": 9,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_shop_gran"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 1,
+      "text": [
+        "The rope shelf, which in Crownspire is the shelf everything else is arranged round.",
+        "Line, cord, tape, spare crampon straps, and four grades of oiled canvas.",
+        "Three quarters of it has gone this week and none of it went up the mountain."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 3,
+      "y": 4,
+      "text": [
+        "The restoratives, and a hand-written card leaning against the Full Restores:",
+        "ONE PER PERSON WHILE THE GATE IS SHUT.",
+        "WE ARE NOT SHORT. WE JUST WOULD RATHER NOT BE."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18,
+      "y": 6,
+      "text": [
+        "A rack of thawcloth and coldsalve, which this shop sells more of than any other",
+        "in Caelora, because of what is at the top of the road.",
+        "The Frostmere order has not come through. It is the first time in eleven years."
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 19,
+      "y": 10,
+      "item": "escape_line",
+      "quantity": 1,
+      "flag": "item_cs_shop"
+    }
+  ]
+}

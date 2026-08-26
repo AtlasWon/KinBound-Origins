@@ -1525,6 +1525,237 @@
     ]
   },
   {
+    "id": "tarin_frostmere_sprigling",
+    "$comment": "ACT 5, FROSTMERE, AND THE LAST TIME THEY FIGHT BEFORE THE SUMMIT. Canon asks for significantly harder than anything earlier because both of them are serious Trainers now; the difficulty is carried by the SHAPE of the team and the price of winning, not by the win rate, because a rival the player cannot pass is a wall in the middle of the most emotional act in the game. OPTIONAL, and onLoss is \"continue\", exactly as at Tideglass -- he asks, the player may say no, and a loss is a scene he offers to run again rather than a whiteout. THE TEAM IS HIS WHOLE JOURNEY. Bristlebuck is the Tuftail he has carried since Route 1; Tidewrack is the Shalefin he went down the Tideglass deep lane for in Act 2 (see tarin_tideglass_*); Voltwick is the Fizzlet off the central road in Act 4; the ace is the starter Sorrell gave him, in its second evolution, which it reaches at 34. Keyed by the species HE leads with, per docs/TARIN.md, never by the player s. WHY THIS BENCH AND NOT THE OLD BEAST ONE. The Act 1-2 bench was two plain Beast kin because Beast is neutral to all three starters and the only type relationship left in the fight should be the one that belongs there -- his ace loses to yours. That stops working at the second evolution, because the starters gain a second type at 34 and Bristlebuck (beast/verdant) turns into a wall for Thornmarch and Maelstrix while handing Volcatrix a free 2x: measured, the three branches came apart to 13 / 69 / 46 percent, which is the Slatewing failure docs/TARIN.md warns about, one act later. Tidewrack (tide/stone) is the corrective and it was chosen by measurement: it is 4x open to a Verdant player, a quarter-damage wall to a Flame one, and level to a Tide one, which is precisely the inverse of what Bristlebuck does. With both on the field the branches close to within seven points at every level in the band. Bristlebuck also has a hand-written moveset for one reason: it learns Recover at 30, and a self-healing wall in front of a novice player is a stall, not a fight. MEASURED at the level the road delivers, novice play, no items, matched party of four, 500 runs per cell (sprigling / cinderpaw / rilltail): L36 68/71/81, L37 83/85/90, L38 90/91/94. The winner keeps 42-46 percent of their party HP and finishes with two of four kin standing, which is where the difficulty actually lives. Veteran play at L37: 88/95/98. Lone starter at the solo-lead level: L44 88/81/73, L46 98/88/89. The three bench kin carry flat-zero IVs -- Vane s lever, used here so the team can READ as a real one on screen (32, 32, 33 behind a 36 ace) instead of being cut to level 30 to hit the same numbers. THE BAND IS THE ASSUMPTION MOST LIKELY TO GO STALE. Stage 4 s progression table stops at Harrowgate, where the team-raiser leaves at 34; the north-west road and Aureline are assumed to add about three, putting arrival at Frostmere near 37. If the snow road lands heavier or lighter than that, move ALL FOUR LEVELS TOGETHER -- that is the only lever, and it keeps the three branches level.",
+    "name": "Tarin",
+    "className": "Rival",
+    "sprite": "rival",
+    "ai": "trained",
+    "payout": 460,
+    "party": [
+      {
+        "species": "bristlebuck",
+        "level": 32,
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        },
+        "moves": [
+          "thornrake",
+          "batter",
+          "vinewhip"
+        ]
+      },
+      {
+        "species": "tidewrack",
+        "level": 32,
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      },
+      {
+        "species": "voltwick",
+        "level": 33,
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        },
+        "moves": [
+          "arcjolt",
+          "static_nip",
+          "tailwind_call"
+        ]
+      },
+      {
+        "species": "thornmarch",
+        "level": 36
+      }
+    ],
+    "intro": [
+      "You have been carrying the capital around since we left it and I cannot take it off you.",
+      "So put it here instead. All of it."
+    ],
+    "defeat": [
+      "There it is. That is every mile of the road, all at once.",
+      "Good. Now I know exactly what I am chasing."
+    ],
+    "victory": [
+      "No. Put them back together and come at me again.",
+      "I am not having that one. Not today, not off you."
+    ],
+    "afterward": [
+      "There is a light on that hill above the town every night at nine.",
+      "Four nights I have watched it. Go up there. I will still be here."
+    ]
+  },
+  {
+    "id": "tarin_frostmere_cinderpaw",
+    "$comment": "ACT 5, FROSTMERE, AND THE LAST TIME THEY FIGHT BEFORE THE SUMMIT. Canon asks for significantly harder than anything earlier because both of them are serious Trainers now; the difficulty is carried by the SHAPE of the team and the price of winning, not by the win rate, because a rival the player cannot pass is a wall in the middle of the most emotional act in the game. OPTIONAL, and onLoss is \"continue\", exactly as at Tideglass -- he asks, the player may say no, and a loss is a scene he offers to run again rather than a whiteout. THE TEAM IS HIS WHOLE JOURNEY. Bristlebuck is the Tuftail he has carried since Route 1; Tidewrack is the Shalefin he went down the Tideglass deep lane for in Act 2 (see tarin_tideglass_*); Voltwick is the Fizzlet off the central road in Act 4; the ace is the starter Sorrell gave him, in its second evolution, which it reaches at 34. Keyed by the species HE leads with, per docs/TARIN.md, never by the player s. WHY THIS BENCH AND NOT THE OLD BEAST ONE. The Act 1-2 bench was two plain Beast kin because Beast is neutral to all three starters and the only type relationship left in the fight should be the one that belongs there -- his ace loses to yours. That stops working at the second evolution, because the starters gain a second type at 34 and Bristlebuck (beast/verdant) turns into a wall for Thornmarch and Maelstrix while handing Volcatrix a free 2x: measured, the three branches came apart to 13 / 69 / 46 percent, which is the Slatewing failure docs/TARIN.md warns about, one act later. Tidewrack (tide/stone) is the corrective and it was chosen by measurement: it is 4x open to a Verdant player, a quarter-damage wall to a Flame one, and level to a Tide one, which is precisely the inverse of what Bristlebuck does. With both on the field the branches close to within seven points at every level in the band. Bristlebuck also has a hand-written moveset for one reason: it learns Recover at 30, and a self-healing wall in front of a novice player is a stall, not a fight. MEASURED at the level the road delivers, novice play, no items, matched party of four, 500 runs per cell (sprigling / cinderpaw / rilltail): L36 68/71/81, L37 83/85/90, L38 90/91/94. The winner keeps 42-46 percent of their party HP and finishes with two of four kin standing, which is where the difficulty actually lives. Veteran play at L37: 88/95/98. Lone starter at the solo-lead level: L44 88/81/73, L46 98/88/89. The three bench kin carry flat-zero IVs -- Vane s lever, used here so the team can READ as a real one on screen (32, 32, 33 behind a 36 ace) instead of being cut to level 30 to hit the same numbers. THE BAND IS THE ASSUMPTION MOST LIKELY TO GO STALE. Stage 4 s progression table stops at Harrowgate, where the team-raiser leaves at 34; the north-west road and Aureline are assumed to add about three, putting arrival at Frostmere near 37. If the snow road lands heavier or lighter than that, move ALL FOUR LEVELS TOGETHER -- that is the only lever, and it keeps the three branches level.",
+    "name": "Tarin",
+    "className": "Rival",
+    "sprite": "rival",
+    "ai": "trained",
+    "payout": 460,
+    "party": [
+      {
+        "species": "bristlebuck",
+        "level": 32,
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        },
+        "moves": [
+          "thornrake",
+          "batter",
+          "vinewhip"
+        ]
+      },
+      {
+        "species": "tidewrack",
+        "level": 32,
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      },
+      {
+        "species": "voltwick",
+        "level": 33,
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        },
+        "moves": [
+          "arcjolt",
+          "static_nip",
+          "tailwind_call"
+        ]
+      },
+      {
+        "species": "volcatrix",
+        "level": 36
+      }
+    ],
+    "intro": [
+      "You have been carrying the capital around since we left it and I cannot take it off you.",
+      "So put it here instead. All of it."
+    ],
+    "defeat": [
+      "There it is. That is every mile of the road, all at once.",
+      "Good. Now I know exactly what I am chasing."
+    ],
+    "victory": [
+      "No. Put them back together and come at me again.",
+      "I am not having that one. Not today, not off you."
+    ],
+    "afterward": [
+      "There is a light on that hill above the town every night at nine.",
+      "Four nights I have watched it. Go up there. I will still be here."
+    ]
+  },
+  {
+    "id": "tarin_frostmere_rilltail",
+    "$comment": "ACT 5, FROSTMERE, AND THE LAST TIME THEY FIGHT BEFORE THE SUMMIT. Canon asks for significantly harder than anything earlier because both of them are serious Trainers now; the difficulty is carried by the SHAPE of the team and the price of winning, not by the win rate, because a rival the player cannot pass is a wall in the middle of the most emotional act in the game. OPTIONAL, and onLoss is \"continue\", exactly as at Tideglass -- he asks, the player may say no, and a loss is a scene he offers to run again rather than a whiteout. THE TEAM IS HIS WHOLE JOURNEY. Bristlebuck is the Tuftail he has carried since Route 1; Tidewrack is the Shalefin he went down the Tideglass deep lane for in Act 2 (see tarin_tideglass_*); Voltwick is the Fizzlet off the central road in Act 4; the ace is the starter Sorrell gave him, in its second evolution, which it reaches at 34. Keyed by the species HE leads with, per docs/TARIN.md, never by the player s. WHY THIS BENCH AND NOT THE OLD BEAST ONE. The Act 1-2 bench was two plain Beast kin because Beast is neutral to all three starters and the only type relationship left in the fight should be the one that belongs there -- his ace loses to yours. That stops working at the second evolution, because the starters gain a second type at 34 and Bristlebuck (beast/verdant) turns into a wall for Thornmarch and Maelstrix while handing Volcatrix a free 2x: measured, the three branches came apart to 13 / 69 / 46 percent, which is the Slatewing failure docs/TARIN.md warns about, one act later. Tidewrack (tide/stone) is the corrective and it was chosen by measurement: it is 4x open to a Verdant player, a quarter-damage wall to a Flame one, and level to a Tide one, which is precisely the inverse of what Bristlebuck does. With both on the field the branches close to within seven points at every level in the band. Bristlebuck also has a hand-written moveset for one reason: it learns Recover at 30, and a self-healing wall in front of a novice player is a stall, not a fight. MEASURED at the level the road delivers, novice play, no items, matched party of four, 500 runs per cell (sprigling / cinderpaw / rilltail): L36 68/71/81, L37 83/85/90, L38 90/91/94. The winner keeps 42-46 percent of their party HP and finishes with two of four kin standing, which is where the difficulty actually lives. Veteran play at L37: 88/95/98. Lone starter at the solo-lead level: L44 88/81/73, L46 98/88/89. The three bench kin carry flat-zero IVs -- Vane s lever, used here so the team can READ as a real one on screen (32, 32, 33 behind a 36 ace) instead of being cut to level 30 to hit the same numbers. THE BAND IS THE ASSUMPTION MOST LIKELY TO GO STALE. Stage 4 s progression table stops at Harrowgate, where the team-raiser leaves at 34; the north-west road and Aureline are assumed to add about three, putting arrival at Frostmere near 37. If the snow road lands heavier or lighter than that, move ALL FOUR LEVELS TOGETHER -- that is the only lever, and it keeps the three branches level.",
+    "name": "Tarin",
+    "className": "Rival",
+    "sprite": "rival",
+    "ai": "trained",
+    "payout": 460,
+    "party": [
+      {
+        "species": "bristlebuck",
+        "level": 32,
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        },
+        "moves": [
+          "thornrake",
+          "batter",
+          "vinewhip"
+        ]
+      },
+      {
+        "species": "tidewrack",
+        "level": 32,
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      },
+      {
+        "species": "voltwick",
+        "level": 33,
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        },
+        "moves": [
+          "arcjolt",
+          "static_nip",
+          "tailwind_call"
+        ]
+      },
+      {
+        "species": "maelstrix",
+        "level": 36
+      }
+    ],
+    "intro": [
+      "You have been carrying the capital around since we left it and I cannot take it off you.",
+      "So put it here instead. All of it."
+    ],
+    "defeat": [
+      "There it is. That is every mile of the road, all at once.",
+      "Good. Now I know exactly what I am chasing."
+    ],
+    "victory": [
+      "No. Put them back together and come at me again.",
+      "I am not having that one. Not today, not off you."
+    ],
+    "afterward": [
+      "There is a light on that hill above the town every night at nine.",
+      "Four nights I have watched it. Go up there. I will still be here."
+    ]
+  },
+  {
     "id": "tg_hand_a",
     "$comment": "Hall 3, the apron: two small kin off the steps, the fight that exists to be won while the player is still dry. She stands at 13,19 watching row 19 across x9-12, and 9,19 and 10,19 are the only apron tiles that touch the south lane mouth, so she is unavoidable without standing in anybody's way. Measured, novice play, no items, 400 runs: lone starter at the solo-lead level 100/100/100, matched party at the team-raiser level 100/100/100.",
     "name": "Ollen",
@@ -3185,6 +3416,1485 @@
     "afterward": [
       "The whole parish, every year, to one buyer. Signed and framed on the wall.",
       "It is a good price. That is what nobody says out loud, and it is why nobody argues."
+    ]
+  },
+  {
+    "id": "cs_steward_hollis",
+    "$comment": "HALL 8, first Steward. The Long Gallery is staffed by three people who did not get to the top, which is the melancholy the whole city is made of, and Hollis is the one who got highest -- fourth Master, and came back down. His row is therefore ORDINARY REACH and nothing clever: three kin anyone could have raised, three unrelated primary types, and no pair of them resistant to the same thing, so no starter is walled. He stands at 6,16 in the gallery, off the centre aisle, and so does every other Steward: none of the three has a sight line down the middle, which makes all three optional for a player who only wants the Crest and makes all three matter to a player who takes the Long Floor. MEASURED at the level the road really delivers -- simulate.mjs now carries the whole Act 5 road and puts the team-raiser in this gallery on L43 -- novice play, no bag items, matched party, 400 runs (sprigling / cinderpaw / rilltail): L41 98/87/95, L43 99/94/98, L44 100/96/99. Tidewrack replaced a Chalkmar here after measurement: stone/iron behind a Kestrelle put the Flame column at 66 percent, because a novice presses the strongest move it owns and Volcatrix's strongest is Kilnburst, which stone halves.",
+    "name": "Hollis",
+    "className": "Hall Steward",
+    "sprite": "hiker",
+    "ai": "trained",
+    "payout": 190,
+    "party": [
+      {
+        "species": "burrowen",
+        "level": 36,
+        "moves": [
+          "fissure_step",
+          "batter",
+          "gravelspray"
+        ]
+      },
+      {
+        "species": "kestrelle",
+        "level": 37,
+        "moves": [
+          "stoop",
+          "batter",
+          "wingbeat"
+        ]
+      },
+      {
+        "species": "tidewrack",
+        "level": 38,
+        "moves": [
+          "breakwater",
+          "shale_edge",
+          "hullcrack"
+        ]
+      }
+    ],
+    "intro": [
+      "Fourth Master. That is as far as I ever got, and I tell everybody who asks.",
+      "Nothing here is going to surprise you. That is rather the point of me."
+    ],
+    "defeat": [
+      "Good. You did not overthink it. Most people overthink it."
+    ],
+    "victory": [
+      "Go and walk the bays again. They are in that order for a reason."
+    ],
+    "afterward": [
+      "People assume I stayed because I could not face going back up.",
+      "I stayed because somebody has to be standing here when the next one walks in."
+    ]
+  },
+  {
+    "id": "cs_steward_derrin",
+    "$comment": "HALL 8, second Steward, and deliberately the softest row in the building: he is the one who never earned a Crest at all and runs the floor anyway. He is also the only trainer in Crownspire standing anywhere near the middle of a room -- 13,11, one column off the aisle -- so a player walking up x14 never trips him and a player who wants a fight can find one without hunting. MEASURED, novice play, no items, matched party, 400 runs at the levels the road delivers: L41 92/100/96, L43 97/100/100, L44 99/100/100. He is the softest row in the building and that is the point of him.",
+    "name": "Derrin",
+    "className": "Hall Steward",
+    "sprite": "clerk",
+    "ai": "trained",
+    "payout": 190,
+    "party": [
+      {
+        "species": "mossback",
+        "level": 36,
+        "moves": [
+          "thornrake",
+          "stonefling",
+          "rootdrink"
+        ]
+      },
+      {
+        "species": "sootmoth",
+        "level": 37,
+        "moves": [
+          "cinderlash",
+          "shellstrike",
+          "gustline"
+        ]
+      },
+      {
+        "species": "rimehound",
+        "level": 38,
+        "moves": [
+          "chillbite",
+          "batter",
+          "rimewind"
+        ]
+      }
+    ],
+    "intro": [
+      "No Crests. None, ever, and I run this floor. You are allowed to find that funny.",
+      "Most people stop finding it funny about three exchanges in."
+    ],
+    "defeat": [
+      "There it is. That is the thing I stand here to watch for."
+    ],
+    "victory": [
+      "No Crests, mind. Have a think about that on the way down."
+    ],
+    "afterward": [
+      "There is a drawer in the Archive of letters from people who did not get up.",
+      "The card on it says THE ROLL IS NOT A LIST OF WINNERS. I go and read it about once a month."
+    ]
+  },
+  {
+    "id": "cs_steward_mabe",
+    "$comment": "HALL 8, third Steward and the hardest of the three: she keeps the types a Caeloran road hardly ever shows anybody. Radiant on the lead, worked iron on the ace, and a plain Tide kin in the middle because that is what waits at the top of the mountain. The row is built so that each starter has exactly ONE good target in it -- Flame answers the Chitin/Radiant, Verdant answers the Tide, Tide answers the Stone/Iron -- which is the shape that stops a three-kin row having a column it simply walls. MEASURED, novice, no items, matched party, 400 runs: L41 96/75/100, L43 98/87/100, L44 100/93/100. The Flame column is the low one and stays low on purpose: Currentail halves Kilnburst and Volcatrix leads with it, which is exactly the lesson this Steward stands here to teach. She is optional and off the aisle.",
+    "name": "Mabe",
+    "className": "Hall Steward",
+    "sprite": "townsfolk_f",
+    "ai": "veteran",
+    "payout": 210,
+    "party": [
+      {
+        "species": "tallowmoth",
+        "level": 36,
+        "moves": [
+          "glimmer",
+          "silkbind",
+          "gustline"
+        ]
+      },
+      {
+        "species": "currentail",
+        "level": 37,
+        "moves": [
+          "breakwater",
+          "undertow",
+          "spray"
+        ]
+      },
+      {
+        "species": "chalkmar",
+        "level": 39,
+        "moves": [
+          "shale_edge",
+          "rivet_punch",
+          "stonefling"
+        ]
+      }
+    ],
+    "intro": [
+      "Radiant. Worked iron. And a perfectly ordinary Tide kin in the middle.",
+      "You will have met one of those three properly. Let us find out which."
+    ],
+    "defeat": [
+      "Two of three, and you worked the last one out in the room. Good."
+    ],
+    "victory": [
+      "There is a hole in what you know. That is not a criticism, it is a map."
+    ],
+    "afterward": [
+      "Seven Halls teach you one idea each and teach it beautifully.",
+      "Somebody has to be the one who shows you what you were never shown."
+    ]
+  },
+  {
+    "id": "cs_keeper_ord",
+    "$comment": "HALL 8, THE CROWN CREST, and the last Hallkeeper in the story. CANON: a DIVERSE team rather than one type, and a challenge that tests everything the player has learned. Diversity is a hard rule here and not a flavour note -- five kin, five different PRIMARY types (beast, flame, gale, spark, stone), eight of the seventeen types on one bench, and no pair of them resistant to the same thing, so there is no single answer on the player's side and no column that gets walled. Gale appears twice, in two secondary slots, and that is the one compromise: every alternative ace measured worse for one starter than Craglide does for all three. Every moveset is drawn from the species' own learnset at that level, so nothing on this bench is a kin the player could not have raised themselves. No held item, for the reason Roxen, Vane, Mabry, Cade and Tallow all give: Battle.doItem never consumes a foe-side item, so one Potion in that list is an unlimited heal. Recover was cut from Bristlebuck after the first pass -- a self-healing lead in front of a novice who presses the strongest move it owns is a twelve-minute stalemate, which is the exact complaint this project has had four times. THE FOUR SUPPORTS CARRY FLAT-ZERO IVs. That is Vane's lever, used here so the team can READ as the eighth Hall's on screen -- 35, 35, 36, 36 behind a 40 ace -- instead of being cut to the high twenties to hit the same win rates. THE ACE IS 41 AND EVERY NUMBER IN THE ROW IS TUNED RATHER THAN GUESSED. The first draft ran 38/38/39/39/41 with ordinary IVs and measured 15/5/8 percent for a novice at L40, which would have put the worst wall in the game on the last Crest in the story; flat-zero IVs on all five is what let the levels stay where the ladder wants them. THE ARRIVAL LEVEL IS NOW MEASURED AND NOT ASSUMED. tests/helpers/simulate.mjs carries the whole Act 5 road, and the Crownspire row in it names these four trainers, so progression() answers the question directly: the team-raiser meets Ord on L44 and the solo lead on L59. MEASURED there, novice play, no bag items, matched party of four, 400 runs (sprigling / cinderpaw / rilltail): L42 92/87/77, L44 99/99/95, L46 100/99/99. Veteran play, matched party: L44 98/97/97. Lone starter, novice: L55 99/52/82, L59 99/61/100 -- and a lone starter against a five-kin Keeper is not a fight anybody has, it is one kin against five with no healing. THE LADDER. Hall 6 (fm_keeper_brand) tops out at 38, Hall 7 (sh_keeper_fenn) at 36, and the Crown Road (r10_*) at 40, so 41 is one over the road that leads to the door and three over the last Keeper. If Act 5 is re-cut, move all five levels together -- that is the only lever, and it keeps the three starter columns level",
+    "name": "Merrin Ord",
+    "className": "Keeper",
+    "sprite": "elder",
+    "ai": "keeper",
+    "payout": 260,
+    "party": [
+      {
+        "species": "bristlebuck",
+        "level": 38,
+        "moves": [
+          "bull_rush",
+          "thornrake",
+          "batter"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      },
+      {
+        "species": "emberbore",
+        "level": 38,
+        "moves": [
+          "kilnburst",
+          "landslide",
+          "cinderlash"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      },
+      {
+        "species": "gullswift",
+        "level": 39,
+        "moves": [
+          "stoop",
+          "breakwater",
+          "wingbeat"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      },
+      {
+        "species": "voltwick",
+        "level": 39,
+        "moves": [
+          "arcjolt",
+          "static_nip",
+          "earthing_wire"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      },
+      {
+        "species": "craglide",
+        "level": 41,
+        "moves": [
+          "quarryfall",
+          "stoop",
+          "shale_edge"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      }
+    ],
+    "intro": [
+      "Forty years on this floor and I have never once opened with a question.",
+      "Merrin Ord. Show me the whole of it."
+    ],
+    "defeat": [
+      "All of it. At once. Yes."
+    ],
+    "victory": [
+      "Down the stair, and do not go and sit in the Muster feeling sorry about it.",
+      "Come back up when you have found the one you were missing."
+    ],
+    "afterward": [
+      "Seven Halls taught you seven things and every one of them was true on its own.",
+      "The eighth is only ever the arithmetic. That is why it goes last."
+    ]
+  },
+  {
+    "id": "sh_spur_corran",
+    "$comment": "HALL 7, and the first of only two fights in it a player cannot walk past. He stands at 17,21 on the Fan and watches right along row 21, because 18,21 is the one tile that reaches the gantry -- beside the door, never in it. Two Kin, both under the level the road delivers, and Kestrelle deliberately leads: Gale is two-times on Volcatrix and a Flame player meeting it first, at 34, on a two-Kin row, learns the shape of this Hall while it is still cheap to learn it.",
+    "name": "Corran",
+    "className": "Mast Rigger",
+    "sprite": "dockhand",
+    "ai": "trained",
+    "payout": 150,
+    "party": [
+      {
+        "species": "kestrelle",
+        "level": 36,
+        "moves": [
+          "wingbeat",
+          "quickstep",
+          "unnerve"
+        ]
+      },
+      {
+        "species": "voltwick",
+        "level": 37,
+        "moves": [
+          "arcjolt",
+          "static_nip"
+        ]
+      }
+    ],
+    "intro": [
+      "Nine hundred turns on a coil and I have put every one of them on by hand.",
+      "You want the Crest, you come past me. Nothing personal, I am just where the plank is."
+    ],
+    "defeat": [
+      "Right. On you go, and hold the rail on the gantry."
+    ],
+    "victory": [
+      "Go and sit down a minute. Everybody does, the first time they look over the edge."
+    ],
+    "afterward": [
+      "Two masts on this spur and I know both of them by the noise they make.",
+      "Number four has been singing flat for a fortnight. That is not a bearing. I checked."
+    ]
+  },
+  {
+    "id": "sh_spur_kellow",
+    "$comment": "HALL 7, optional. The low deck west of the Fan is a dead end with a Full Restore on it and one bridge in, and he watches the single tile that bridge lands on. Optional means optional: nothing in this Hall requires him and the Crest can be taken without ever crossing to him. Craglide leads because Stone is the answer to Flame and this is the row where a Cinderpaw player finds that out with a way back over their shoulder.",
+    "name": "Kellow",
+    "className": "Spar Hand",
+    "sprite": "hiker",
+    "ai": "trained",
+    "payout": 150,
+    "party": [
+      {
+        "species": "craglide",
+        "level": 37,
+        "moves": [
+          "shale_edge",
+          "wingbeat",
+          "grit_field"
+        ]
+      },
+      {
+        "species": "gullswift",
+        "level": 37,
+        "moves": [
+          "gustline",
+          "wingbeat"
+        ]
+      }
+    ],
+    "intro": [
+      "Nobody comes out here. There is nothing on this deck but a box and the drop.",
+      "So you are either lost or you are thorough. Either way, since you came."
+    ],
+    "defeat": [
+      "Thorough, then."
+    ],
+    "victory": [
+      "Take the box anyway. It is not mine and it was never a prize."
+    ],
+    "afterward": [
+      "I sit out here on the windward side because it is the only quiet in Skyreach.",
+      "It is the loudest place in the city. You work that out after about a year."
+    ]
+  },
+  {
+    "id": "sh_spur_nesse",
+    "$comment": "HALL 7, and the second and last mandatory fight. Same job as Corran one platform up, same geometry: 17,12 watching row 12, with 18,12 the only tile that reaches the gantry to the Masthead. Foundation staff with a licence, exactly like Idris on Route 7 North -- Meridian run the weather station on the headland and everybody in this city likes them for it, which is the whole reason Act 5 hurts here. Lantric is Spark/Iron, so a Tide player is taking two-times off both rows; Rivet Punch is on the sheet to give a Verdant/Stone lead something to be afraid of, because otherwise Thornmarch resists this entire Hall at a quarter.",
+    "name": "Nesse",
+    "className": "Foundation Linesman",
+    "sprite": "meridian_sci_f",
+    "ai": "trained",
+    "payout": 158,
+    "party": [
+      {
+        "species": "lantric",
+        "level": 37,
+        "moves": [
+          "arcjolt",
+          "rivet_punch",
+          "plating"
+        ]
+      },
+      {
+        "species": "voltwick",
+        "level": 38,
+        "moves": [
+          "arcjolt",
+          "static_nip"
+        ]
+      }
+    ],
+    "intro": [
+      "The Foundation keeps the station and the Hall keeps the masts, and we share the coil bench.",
+      "It has worked for eleven years. Come on, then. I am owed a fight and it is a slow week."
+    ],
+    "defeat": [
+      "Good. Fenn is up top. She will have heard that from here."
+    ],
+    "victory": [
+      "Come back down when you have rested. The gantry is not going anywhere."
+    ],
+    "afterward": [
+      "I file a reading to Aureline twice a day and I have done for six years.",
+      "For nineteen days now nobody has acknowledged one. That has never happened before."
+    ]
+  },
+  {
+    "id": "sh_spur_wisp",
+    "$comment": "HALL 7, optional. The high deck west of Spur Two, a dead end with three Warden Vessels on it, and she watches the tile the bridge lands on. Three Kin against Kellow's two and one level up, because the second optional fight should be the harder one -- the player has already chosen twice by the time they are standing here.",
+    "name": "Wisp",
+    "className": "Kite Flier",
+    "sprite": "townsfolk_f",
+    "ai": "trained",
+    "payout": 155,
+    "party": [
+      {
+        "species": "kestrelle",
+        "level": 37,
+        "moves": [
+          "stoop",
+          "quickstep",
+          "tailwind_call"
+        ]
+      },
+      {
+        "species": "gullswift",
+        "level": 37,
+        "moves": [
+          "wingbeat",
+          "gustline"
+        ]
+      },
+      {
+        "species": "voltwick",
+        "level": 38,
+        "moves": [
+          "arcjolt",
+          "static_nip",
+          "earthing_wire"
+        ]
+      }
+    ],
+    "intro": [
+      "I have been flying off this deck since I was six and the Hall has never once stopped me.",
+      "They put a sign up in town instead. Come on, I have got twenty minutes."
+    ],
+    "defeat": [
+      "That was worth twenty minutes."
+    ],
+    "victory": [
+      "Go on, take the vessels. They put them out here so somebody would come and get them."
+    ],
+    "afterward": [
+      "You cannot fly a kite in Skyreach at the moment. I have tried every day for a fortnight.",
+      "It goes up, and then it goes sideways, and then it goes DOWN. Kites do not go down."
+    ]
+  },
+  {
+    "id": "sh_keeper_fenn",
+    "$comment": "HALL 7, THE GALE CREST, and the Gale/Spark Hall of Skyreach. THE STRUCTURAL PROBLEM IS THAT THIS HALL CANNOT HELP PUNISHING TWO STARTERS AT ONCE. Gale is two-times on Volcatrix (Flame/Brawl) and Spark is two-times on Maelstrix (Tide/Psyche), and a Hall that is honestly Gale AND Spark is holding both of those in one hand -- while Thornmarch (Verdant/Stone) takes Spark at a QUARTER and Gale at neutral and walks through the whole row. So the fix is Marit Vane's and Annik Tallow's, applied to the offence rather than to the types: every Kin below the ace is capped to mid-power moves in its own type (Wingbeat 60 and Gustline 40, not Skylift 90; Arcjolt 65, not Thunderhead 100), Craglide carries Shale Edge so the Verdant/Stone lead has something real to answer, and the ace is the only row in the Hall allowed a ninety-power move. WHY THE ACE IS GALECREST AND NOT ANYTHING ELSE. It is the only Gale/Spark Kin in Caelora and it lives on the plateau this city is built on; the seventh Hall keeping anything else would be a Hall about the wrong place. It carries flat-zero IVs -- Vane's lever, the one that moved the lone-Sprigling row from 61 to 75 at Tideglass -- because a 510 base-stat ace at the top of a four-Kin row is the single most dangerous thing on this table and the player has asked four times for an easier game. No bag item, for the reason Roxen, Mabry, Vane, Cade and Tallow all give: Battle.doItem never consumes a foe-side item, so one Potion in that list is an unlimited heal. MEASURED, not guessed at, and re-measured when the ground moved. The road agents appended the whole of Act 5 to simulate.mjs's STAGES table while this Hall was being written, which moved the arrival level from the 37 the first pass had worked out by hand to the 41 the table now states, and every level on this row moved up four with it. THE NUMBERS, at the level the table says the player is holding on the Skyreach row -- L54 solo lead, L41 raising a team -- novice play, no items, 300 runs. MATCHED PARTY: Sprigling 100, Cinderpaw 99, Rilltail 100. And the four trainers on the spurs: 100/100/100, 100/98/100, 100/100/98, 100/97/100. LONE STARTER at L54: 100 / 51 / 89. The Flame column there is one Kin against four with no healing and it is the floor rather than a target -- see the note at the top of simulate.mjs -- but it is worth writing down WHY it is the worst floor in the game so far: Gale is two-times on Volcatrix and every single row in this Hall can throw Gale, so a solo Cinderpaw takes four consecutive super-effective attackers with nothing to switch to. THE TUNING WAS THREE CUTS AND ALL THREE WERE MEASURED. The first pass ran the support at 35/36/36 with Shale Edge on Craglide and a Skylift ace, and read 99/83/85 matched. Shale Edge came down to Stonefling, which is the Flame column's only relief; the three support Kin each came down a level relative to the ace; and the ace's third attack became Tailwind Call, because a Keeper of the wind spending a turn calling it is both the right picture and four points on the two columns that needed them. THE ACE SITS AT 38 ON PURPOSE: one under the aces on Route 10, two under Ord at Crownspire, and four over the aces on Route 9. The seventh Hall should be the hardest thing the player has met and still be the second hardest thing in front of them.",
+    "name": "Idrisa Fenn",
+    "className": "Keeper",
+    "sprite": "harbourmaster",
+    "ai": "keeper",
+    "payout": 210,
+    "party": [
+      {
+        "species": "gullswift",
+        "level": 36,
+        "moves": [
+          "wingbeat",
+          "gustline",
+          "tailwind_call"
+        ]
+      },
+      {
+        "species": "voltwick",
+        "level": 37,
+        "moves": [
+          "arcjolt",
+          "static_nip",
+          "earthing_wire"
+        ]
+      },
+      {
+        "species": "craglide",
+        "level": 37,
+        "moves": [
+          "stonefling",
+          "wingbeat",
+          "grit_field"
+        ]
+      },
+      {
+        "species": "galecrest",
+        "level": 38,
+        "moves": [
+          "skylift",
+          "arcjolt",
+          "tailwind_call"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      }
+    ],
+    "intro": [
+      "You came up three gantries in a crosswind and you did not once look down. Good.",
+      "Idrisa Fenn. I keep the masts. Let us find out what you have been carrying."
+    ],
+    "defeat": [
+      "Ha! Hold on to something."
+    ],
+    "victory": [
+      "Down you go, and come back up when you are ready. The wind will still be here."
+    ],
+    "afterward": [
+      "Seven of eight. There is one Hall left and it is in the oldest city in Caelora.",
+      "Ord keeps it, and he does not specialise in anything. Bear that in mind."
+    ]
+  },
+  {
+    "id": "fm_hall_roke",
+    "$comment": "THE FIRST FIGHT ON THE ICE, and it is on the north strip where most players step off the landing, so it is the one nobody walks past. Two kin and both of them are the lake and the rock this town stands between: a Cairnling off the crag and a Tidewrack out of the deep cut. Levels sit a step under the road the player just walked -- route_8_pass tops out at r8p_gatewarden 37 -- because the first fight inside a Hall should confirm the player is in the right place and not tell them they are not.",
+    "name": "Halvard Roke",
+    "className": "Cutter",
+    "sprite": "dockhand",
+    "ai": "trained",
+    "payout": 132,
+    "party": [
+      {
+        "species": "cairnling",
+        "level": 32
+      },
+      {
+        "species": "tidewrack",
+        "level": 34
+      }
+    ],
+    "intro": [
+      "Mind where you put that. Read it first, then put it there.",
+      "No, I am not going to tell you which one. That is the entire trade."
+    ],
+    "defeat": [
+      "Hm. You read it."
+    ],
+    "victory": [
+      "Go up and look at the board again. It is three lines and it is not long."
+    ],
+    "afterward": [
+      "Tick, cross, no mark. Three things, and people still come down here and guess.",
+      "The pots are the ones I would worry about. Where a fire is standing there is no floor."
+    ]
+  },
+  {
+    "id": "fm_hall_fell",
+    "$comment": "THE TOLL, and she is standing IN the channel that the intake is entered from -- the room is built so the last step onto Eira Brand comes out of the water, and Sigrun Fell is in that water. Two kin, both lake, and Currentail is the fastest thing in the Hall on purpose: a fight in a thawed channel should feel like the water is quicker than you are. She is the only trainer in this room a player cannot route around, so she is measured as the mandatory one.",
+    "name": "Sigrun Fell",
+    "className": "Cutter",
+    "sprite": "netmender",
+    "ai": "trained",
+    "payout": 140,
+    "party": [
+      {
+        "species": "shalefin",
+        "level": 32
+      },
+      {
+        "species": "currentail",
+        "level": 34
+      }
+    ],
+    "intro": [
+      "You are in the water, which means you read it right and you are still coming.",
+      "Right. Then you can have the same fight I get every morning."
+    ],
+    "defeat": [
+      "That is the channel yours, then. I am only holding it open."
+    ],
+    "victory": [
+      "Out you get. Stand by a pot until you stop shaking and then try again."
+    ],
+    "afterward": [
+      "Two hours to open a cell with fire. One night for it to close over again.",
+      "We do not win this. We keep asking. It keeps answering. That is the whole job."
+    ]
+  },
+  {
+    "id": "fm_hall_varn",
+    "$comment": "THE EAST SIDE, and he is optional: the east strips are a longer route to the same intake and they pay two items for taking them, which is the Mirehaven precedent -- being wrong in a Hall should cost a walk and never a punishment. Three kin, and Chalkmar is the joke nobody in the room will explain, because chalk is what this whole floor is marked with. Iron under the stone gives a Flame player a clean opening, which is deliberate: the Keeper behind him is two thirds cold water.",
+    "name": "Bekk Varn",
+    "className": "Chalk Hand",
+    "sprite": "porter",
+    "ai": "trained",
+    "payout": 138,
+    "party": [
+      {
+        "species": "chalkid",
+        "level": 33
+      },
+      {
+        "species": "mossback",
+        "level": 34
+      },
+      {
+        "species": "chalkmar",
+        "level": 35
+      }
+    ],
+    "intro": [
+      "I mark this floor at six in the morning and I mark it whether it changed or not.",
+      "The mornings it has not changed are the ones people die on. Come on, then."
+    ],
+    "defeat": [
+      "Fair. You looked before you moved. Not everybody does."
+    ],
+    "victory": [
+      "You went straight over a cross. I watched you do it and it held. Do not do it again."
+    ],
+    "afterward": [
+      "Nineteen pots out this week. We have never had more than eleven.",
+      "And the ice round each of them is going backwards, which is not how fire works."
+    ]
+  },
+  {
+    "id": "fm_hall_slate",
+    "$comment": "THE STRONGEST HAND IN THE ROOM AND STILL NOT THE KEEPER. Optional, on the east channel, and he is the fight that tells a player who came the long way that the long way was worth walking. Three kin with a Rimehound under them: the ace here is one step below Eira Brand and one step above every other hand, which is the same shape sw_hall_delve_c has in the Quarry Hall.",
+    "name": "Oren Slate",
+    "className": "Cutter",
+    "sprite": "fisher",
+    "ai": "trained",
+    "payout": 150,
+    "party": [
+      {
+        "species": "frostnip",
+        "level": 33
+      },
+      {
+        "species": "gullswift",
+        "level": 34
+      },
+      {
+        "species": "rimehound",
+        "level": 35
+      }
+    ],
+    "intro": [
+      "Nothing to cut. Nothing to load. Nothing to do since the second week.",
+      "So I came down here, where at least the water still behaves."
+    ],
+    "defeat": [
+      "Good. That is the first hour of this month I have not thought about the lake."
+    ],
+    "victory": [
+      "Sorry. I have a great deal of unspent afternoon in me at the moment."
+    ],
+    "afterward": [
+      "Six generations of us have cut that mere and it has never once been late.",
+      "It is late. Nobody has said the word out loud yet and I am not going to be first."
+    ]
+  },
+  {
+    "id": "fm_keeper_brand",
+    "$comment": "HALL 6, THE FROST CREST. THE STRUCTURAL PROBLEM IS THAT CAELORA HAS TWO FROST KIN. Frostnip is a level-25 evolution and Rimehound is its line, and that is the whole type, so an all-Frost row at this level is one real kin and three passengers. So this is built the way Vane and Tallow are built -- the offence spread off type, and the FLAVOUR carried by where the kin come from rather than by what they are. Every one of them is out of this valley: the chalk the crew mark the floor with, the water still moving under the intake, the crag the town is quarried out of, and the pack that runs the lake ice. THE COLUMN THAT HAD TO BE PROTECTED IS FLAME. Two Tide kin at this level is a wall a Cinderpaw player cannot get through -- the exact trap tg_keeper_vane and mh_keeper_tallow both warn about -- so Currentail is the only Tide on the row and Chalkmar leads with iron under the stone, which a Flame player opens on. Verdant gets Chalkmar and Currentail free and then meets gale and frost; Tide gets two stone rows free and then meets a Rimehound that resists it. Nobody is handed the whole fight and nobody is locked out of it. NO BAG ITEM, for the reason Roxen, Mabry, Vane, Cade and Tallow all give: Battle.doItem never consumes a foe-side item, so one Potion in that list is an unlimited heal. MEASURED with tests/helpers/simulate.mjs -- see the numbers in the handover; the ace was cut from 39 to 38 after the first pass, and Craglide from 37 to 36, because the road that really delivers the player here tops out at 37 and a Hall should not be a level above the road in front of it.",
+    "name": "Eira Brand",
+    "className": "Keeper",
+    "sprite": "elder",
+    "ai": "keeper",
+    "payout": 200,
+    "party": [
+      {
+        "species": "chalkmar",
+        "level": 34,
+        "moves": [
+          "quarryfall",
+          "rivet_punch",
+          "plating",
+          "shale_edge"
+        ]
+      },
+      {
+        "species": "currentail",
+        "level": 35,
+        "moves": [
+          "hullcrack",
+          "breakwater",
+          "chillbite",
+          "undertow"
+        ]
+      },
+      {
+        "species": "bristlebuck",
+        "level": 36,
+        "moves": [
+          "thornrake",
+          "bull_rush",
+          "batter",
+          "recover"
+        ]
+      },
+      {
+        "species": "rimehound",
+        "level": 38,
+        "moves": [
+          "coldsnap",
+          "throatgrip",
+          "rimewind",
+          "quickstep"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      }
+    ],
+    "intro": [
+      "You came out of the water, so you read it. Everybody who gets here reads it.",
+      "Eira Brand. I do not decide which ice holds. Let us see what you are holding."
+    ],
+    "defeat": [
+      "Sound. All the way down."
+    ],
+    "victory": [
+      "Up the stair behind me and go and get warm. The tank is not going anywhere.",
+      "Neither am I. I am here at six every morning of my life."
+    ],
+    "afterward": [
+      "It is all the same water. Somebody scratched that on the wall and they were right.",
+      "Nobody chose which piece of it froze. We only ever chose what to do about that."
+    ]
+  },
+  {
+    "id": "r8_drover",
+    "name": "Nell",
+    "className": "Drover",
+    "sprite": "villager_m",
+    "ai": "trained",
+    "payout": 140,
+    "party": [
+      {
+        "species": "nibbet",
+        "level": 31
+      },
+      {
+        "species": "tuftail",
+        "level": 31
+      },
+      {
+        "species": "burrowen",
+        "level": 32
+      }
+    ],
+    "intro": [
+      "Forty head down to the winter pasture, a month before I ever have.",
+      "I am not in a hurry and I am not in a mood. Fight me while they drink."
+    ],
+    "defeat": [
+      "Fair enough. Mind the gate."
+    ],
+    "victory": [
+      "Everything on this road is going the same way. Down."
+    ],
+    "afterward": [
+      "I have brought them down in the last week of the tenth month my whole life.",
+      "This is the eighth. Ask anybody up there, they will all tell you something like it."
+    ]
+  },
+  {
+    "id": "r8_forester",
+    "name": "Ord",
+    "className": "Forester",
+    "sprite": "hiker",
+    "ai": "trained",
+    "payout": 144,
+    "party": [
+      {
+        "species": "pipwing",
+        "level": 31
+      },
+      {
+        "species": "mossback",
+        "level": 32
+      },
+      {
+        "species": "bristlebuck",
+        "level": 33
+      }
+    ],
+    "intro": [
+      "Marking for the winter fell. Or I was, before the wood went wrong on me.",
+      "Come on, then. It is not as though I am cutting anything today."
+    ],
+    "defeat": [
+      "Good. Something went right."
+    ],
+    "victory": [
+      "Twenty years in this wood. I know what it does."
+    ],
+    "afterward": [
+      "Standing timber is dry as a bone in the eighth month. Always.",
+      "Every stick I have put a saw to this week has run wet down my arm."
+    ]
+  },
+  {
+    "id": "r8_agent",
+    "name": "Peral",
+    "className": "Foundation Agent",
+    "sprite": "meridian",
+    "ai": "veteran",
+    "payout": 156,
+    "party": [
+      {
+        "species": "fizzlet",
+        "level": 32
+      },
+      {
+        "species": "lantric",
+        "level": 33
+      }
+    ],
+    "intro": [
+      "Station Four. You can go in. The readings are public, it says so on the board.",
+      "You can also go in the hard way. Some people would rather."
+    ],
+    "defeat": [
+      "Right. In you go. Ask her anything you like."
+    ],
+    "victory": [
+      "Public does not mean unattended."
+    ],
+    "afterward": [
+      "I have stood on this gate two years and never turned anybody away.",
+      "Nobody has ever wanted to know before."
+    ]
+  },
+  {
+    "id": "r8_carter",
+    "name": "Bram",
+    "className": "Carter",
+    "sprite": "porter",
+    "ai": "trained",
+    "payout": 148,
+    "party": [
+      {
+        "species": "pebblet",
+        "level": 32
+      },
+      {
+        "species": "nibbet",
+        "level": 32
+      },
+      {
+        "species": "cairnling",
+        "level": 33
+      }
+    ],
+    "intro": [
+      "Empty going up, loaded coming down, and the road worse every trip.",
+      "Give me five minutes of not thinking about the road."
+    ],
+    "defeat": [
+      "That did it. Thanks."
+    ],
+    "victory": [
+      "Try that with a ton behind you."
+    ],
+    "afterward": [
+      "They will have to cut a new line round that slide before the spring.",
+      "They will not. There is no money in a road to two thousand people."
+    ]
+  },
+  {
+    "id": "r8_warden",
+    "name": "Sisel",
+    "className": "Snow Warden",
+    "sprite": "hiker",
+    "ai": "veteran",
+    "payout": 160,
+    "party": [
+      {
+        "species": "frostnip",
+        "level": 32
+      },
+      {
+        "species": "chalkid",
+        "level": 33
+      },
+      {
+        "species": "rimehound",
+        "level": 34
+      }
+    ],
+    "intro": [
+      "Warden. I dig milestones out and I count cairns, and I have done both twice this month.",
+      "You are dressed for a road. Not for this one. Let me see what else you have."
+    ],
+    "defeat": [
+      "Better than the coat, anyway."
+    ],
+    "victory": [
+      "Keep them on your right. That is all I ask of anybody."
+    ],
+    "afterward": [
+      "Forty-one cairns between the gate and the town. Forty-one last month as well.",
+      "It is the only number up here that has not changed."
+    ]
+  },
+  {
+    "id": "r8k_burner",
+    "name": "Ivet",
+    "className": "Kiln Hand",
+    "sprite": "villager_f",
+    "ai": "trained",
+    "payout": 150,
+    "party": [
+      {
+        "species": "sootmoth",
+        "level": 33
+      },
+      {
+        "species": "nettlebug",
+        "level": 32
+      },
+      {
+        "species": "tuftail",
+        "level": 33
+      }
+    ],
+    "intro": [
+      "Nine burns. We do twenty-one by now. Every year. Since my grandmother.",
+      "I have nothing to do and I am furious about it. Come here."
+    ],
+    "defeat": [
+      "That is the first thing that has burned properly all month."
+    ],
+    "victory": [
+      "Anger is not a disadvantage. Ask anybody who works a pit."
+    ],
+    "afterward": [
+      "Wet wood does not burn. It steams, and steam is not charcoal.",
+      "The town gets cold in three weeks and we are twelve burns short of it."
+    ]
+  },
+  {
+    "id": "r8p_packman",
+    "name": "Coll",
+    "className": "Packman",
+    "sprite": "porter",
+    "ai": "trained",
+    "payout": 168,
+    "party": [
+      {
+        "species": "burrowen",
+        "level": 33
+      },
+      {
+        "species": "cairnling",
+        "level": 33
+      },
+      {
+        "species": "rimehound",
+        "level": 34
+      }
+    ],
+    "intro": [
+      "Everything the town eats between now and the thaw goes over that col on a back.",
+      "Mostly mine. Five minutes."
+    ],
+    "defeat": [
+      "Right. Up."
+    ],
+    "victory": [
+      "I carry ninety pounds over that twice a week."
+    ],
+    "afterward": [
+      "The road shuts in the tenth month. Normally.",
+      "I have started going twice a week instead of once. Nobody told me to."
+    ]
+  },
+  {
+    "id": "r8p_iceman",
+    "name": "Halder",
+    "className": "Ice Cutter",
+    "sprite": "dockhand",
+    "ai": "trained",
+    "payout": 170,
+    "party": [
+      {
+        "species": "frostnip",
+        "level": 33
+      },
+      {
+        "species": "rillfry",
+        "level": 33
+      },
+      {
+        "species": "currentail",
+        "level": 34
+      }
+    ],
+    "intro": [
+      "Do not walk on it. I will say that first and then we can do this properly.",
+      "Everybody says do not walk on it. I am the one who measures it."
+    ],
+    "defeat": [
+      "Still do not walk on it."
+    ],
+    "victory": [
+      "Six inches. Six. Five. Seven. Four. In five days."
+    ],
+    "afterward": [
+      "Sound ice thickens. That is what it does. It is the only thing it does.",
+      "Mine has gone up and down all week like a tide. Ice does not have a tide."
+    ]
+  },
+  {
+    "id": "r8p_lakewarden",
+    "name": "Ruen",
+    "className": "Lake Warden",
+    "sprite": "hiker",
+    "ai": "veteran",
+    "payout": 176,
+    "party": [
+      {
+        "species": "frostnip",
+        "level": 33
+      },
+      {
+        "species": "deeplum",
+        "level": 34
+      },
+      {
+        "species": "rimehound",
+        "level": 35
+      }
+    ],
+    "intro": [
+      "You came round. Good. Most people come round.",
+      "The ones who do not, I go out and get. Let us see which you are."
+    ],
+    "defeat": [
+      "Round. Every time. Thank you."
+    ],
+    "victory": [
+      "It is not longer than a funeral."
+    ],
+    "afterward": [
+      "Four people off that lake in eleven years.",
+      "Two of them this month. Both said it looked the same as it always looks."
+    ]
+  },
+  {
+    "id": "r8p_gatewarden",
+    "name": "Anse",
+    "className": "Pass Warden",
+    "sprite": "villager_m",
+    "ai": "veteran",
+    "payout": 184,
+    "party": [
+      {
+        "species": "cairnling",
+        "level": 34
+      },
+      {
+        "species": "chalkid",
+        "level": 34
+      },
+      {
+        "species": "rimehound",
+        "level": 35
+      }
+    ],
+    "intro": [
+      "The Wintergate. Four tiles of mountain and then it is downhill into the town.",
+      "Everybody through here gets asked the same thing. Show me you could get back."
+    ],
+    "defeat": [
+      "Go on down. The light on the hill is the Observatory."
+    ],
+    "victory": [
+      "Then you go down in the morning, with somebody. That is the rule, not a slight."
+    ],
+    "afterward": [
+      "Two thousand eight hundred people up there and all of them know when the road shuts.",
+      "It has not shut. It is three weeks late, and nobody in that town is sleeping."
+    ]
+  },
+  {
+    "id": "r9_carter",
+    "name": "Wend",
+    "className": "Carter",
+    "sprite": "porter",
+    "ai": "trained",
+    "payout": 190,
+    "party": [
+      {
+        "species": "nibbet",
+        "level": 34
+      },
+      {
+        "species": "chalkid",
+        "level": 35
+      },
+      {
+        "species": "kestrelle",
+        "level": 36
+      }
+    ],
+    "intro": [
+      "Four miles and all of them up, and a bridge in the middle you cannot take a cart over.",
+      "So it comes off here and goes on a back. Ask me how I feel about that."
+    ],
+    "defeat": [
+      "Better. Go on."
+    ],
+    "victory": [
+      "Everything on this road is carried. Remember that when you get up there."
+    ],
+    "afterward": [
+      "Skyreach has an airship dock and a lift and a hundred feet of crane.",
+      "And the last four miles of everything it eats comes up on a person."
+    ]
+  },
+  {
+    "id": "r9_ropewalker",
+    "name": "Sev",
+    "className": "Ropewalker",
+    "sprite": "sailor",
+    "ai": "veteran",
+    "payout": 204,
+    "party": [
+      {
+        "species": "slatewing",
+        "level": 34
+      },
+      {
+        "species": "chalkid",
+        "level": 35
+      },
+      {
+        "species": "craglide",
+        "level": 35
+      }
+    ],
+    "intro": [
+      "You are about to walk it. Everybody stops here first and pretends they are not.",
+      "Have a fight instead. It is the same amount of not looking down."
+    ],
+    "defeat": [
+      "Right. Off you go. Do not stop in the middle."
+    ],
+    "victory": [
+      "Nobody has ever fallen off it. I say that a great deal."
+    ],
+    "afterward": [
+      "Two cables, eleven years, inspected the sixteenth of every month.",
+      "I have inspected it three times this week. Nobody asked me to."
+    ]
+  },
+  {
+    "id": "r9_windwatch",
+    "name": "Idris",
+    "className": "Foundation Windwatch",
+    "sprite": "meridian_sci_f",
+    "ai": "veteran",
+    "payout": 212,
+    "party": [
+      {
+        "species": "fizzlet",
+        "level": 34
+      },
+      {
+        "species": "chalkid",
+        "level": 35
+      },
+      {
+        "species": "voltwick",
+        "level": 35
+      }
+    ],
+    "intro": [
+      "Wind station. I count gusts and I write down a number and I send it to Aureline.",
+      "Aureline has stopped writing back. So I have some time."
+    ],
+    "defeat": [
+      "Take the readings if you want them. Everybody should have them."
+    ],
+    "victory": [
+      "Forty, gusting sixty, out of a quarter it has never come from."
+    ],
+    "afterward": [
+      "This wind is backing. Backing means the whole system is turning round.",
+      "Systems that size turn over a season. This one has done it in eleven days."
+    ]
+  },
+  {
+    "id": "r9_shepherd",
+    "name": "Ferrow",
+    "className": "Cliff Shepherd",
+    "sprite": "villager_f",
+    "ai": "trained",
+    "payout": 198,
+    "party": [
+      {
+        "species": "tuftail",
+        "level": 33
+      },
+      {
+        "species": "cairnling",
+        "level": 34
+      },
+      {
+        "species": "bristlebuck",
+        "level": 35
+      }
+    ],
+    "intro": [
+      "They graze the top and they know the edge better than I do.",
+      "They have not gone near it for a week. That is the whole of my news."
+    ],
+    "defeat": [
+      "There. Now I have two things to think about."
+    ],
+    "victory": [
+      "They stay off the edge and so do I."
+    ],
+    "afterward": [
+      "A sheep will stand on a foot of ledge in a gale and think nothing of it.",
+      "Mine are all lying down in the middle of a field. Every one of them."
+    ]
+  },
+  {
+    "id": "r9_dockrunner",
+    "name": "Pell",
+    "className": "Dock Runner",
+    "sprite": "dockhand",
+    "ai": "veteran",
+    "payout": 220,
+    "party": [
+      {
+        "species": "pipwing",
+        "level": 34
+      },
+      {
+        "species": "chalkmar",
+        "level": 35
+      },
+      {
+        "species": "kestrelle",
+        "level": 36
+      }
+    ],
+    "intro": [
+      "Docks are shut. Third day. I run the messages down the road instead.",
+      "I am quick and I am bored, and those are the two worst things to be at once."
+    ],
+    "defeat": [
+      "Fine. Fine! Go and see it for yourself."
+    ],
+    "victory": [
+      "Quick, see."
+    ],
+    "afterward": [
+      "Nothing has come in or gone out of Skyreach by air since the twelfth.",
+      "There is an airship sitting on the plateau under sixty ropes and nobody will move it."
+    ]
+  },
+  {
+    "id": "r9f_hermit",
+    "name": "Ossa",
+    "className": "Waterkeeper",
+    "sprite": "elder",
+    "ai": "veteran",
+    "payout": 216,
+    "party": [
+      {
+        "species": "rillfry",
+        "level": 34
+      },
+      {
+        "species": "chalkid",
+        "level": 35
+      },
+      {
+        "species": "brinewisp",
+        "level": 36
+      }
+    ],
+    "intro": [
+      "Quiet in here, is it not. That is what everybody says and then they say nothing else.",
+      "Sit a moment. Then earn the moment."
+    ],
+    "defeat": [
+      "Good. Sit as long as you like."
+    ],
+    "victory": [
+      "The water has been coming over harder every day. It does not usually."
+    ],
+    "afterward": [
+      "Sixty years of names on that ledge and every one of them cut in the dry.",
+      "I cut mine at the far end because I thought I had room. The pool is four marks up on it."
+    ]
+  },
+  {
+    "id": "r10_toll",
+    "name": "Marrek",
+    "className": "Tollkeeper",
+    "sprite": "villager_m",
+    "ai": "trained",
+    "payout": 232,
+    "party": [
+      {
+        "species": "nibbet",
+        "level": 37
+      },
+      {
+        "species": "mossback",
+        "level": 38
+      },
+      {
+        "species": "burrowen",
+        "level": 39
+      }
+    ],
+    "intro": [
+      "Foot passage is free. It has been free since before there was a toll.",
+      "A fight is not free. A fight is the best thing that has happened to me this month."
+    ],
+    "defeat": [
+      "On you go. Mind the arch, everybody looks up at it and walks into the kerb."
+    ],
+    "victory": [
+      "Nine hundred years of road and nobody has ever hurried on it."
+    ],
+    "afterward": [
+      "My family has kept this gate for six generations and never once shut it.",
+      "Crownspire shut ITS gate on the fourteenth. First time in my life."
+    ]
+  },
+  {
+    "id": "r10_drover",
+    "name": "Isolde",
+    "className": "Drover",
+    "sprite": "villager_f",
+    "ai": "trained",
+    "payout": 236,
+    "party": [
+      {
+        "species": "tuftail",
+        "level": 37
+      },
+      {
+        "species": "chalkid",
+        "level": 38
+      },
+      {
+        "species": "bristlebuck",
+        "level": 39
+      }
+    ],
+    "intro": [
+      "Down off the top for the winter, same as every year, and the road is full.",
+      "Full of everybody else doing the same a month early. Move, and I will show you why I am cross."
+    ],
+    "defeat": [
+      "Right. Now shift."
+    ],
+    "victory": [
+      "Twenty years and I have never queued on the Crown Road."
+    ],
+    "afterward": [
+      "There are four droves on this road today. There should be none until the tenth month.",
+      "Nobody arranged it. We all just went."
+    ]
+  },
+  {
+    "id": "r10_terrace",
+    "name": "Hesk",
+    "className": "Terrace Walker",
+    "sprite": "hiker",
+    "ai": "veteran",
+    "payout": 244,
+    "party": [
+      {
+        "species": "cairnling",
+        "level": 37
+      },
+      {
+        "species": "gravelet",
+        "level": 38
+      },
+      {
+        "species": "menhir",
+        "level": 39
+      }
+    ],
+    "intro": [
+      "Nine hundred years of terraces down there and not a soul on them since the plague year.",
+      "I walk them. Somebody should. Come down and see what walks them with me."
+    ],
+    "defeat": [
+      "Good. Go and look at the bottom one. Take your time."
+    ],
+    "victory": [
+      "Everything up here is older than everything anybody says about it."
+    ],
+    "afterward": [
+      "They fed a city of forty thousand off these steps.",
+      "Then they did not need to, and in one generation nobody could remember how."
+    ]
+  },
+  {
+    "id": "r10_courier",
+    "name": "Anvet",
+    "className": "City Courier",
+    "sprite": "porter",
+    "ai": "veteran",
+    "payout": 252,
+    "party": [
+      {
+        "species": "fizzlet",
+        "level": 38
+      },
+      {
+        "species": "burrowen",
+        "level": 39
+      },
+      {
+        "species": "chalkmar",
+        "level": 40
+      }
+    ],
+    "intro": [
+      "Crownspire to Skyreach and back, twice a day, and I have never once been late.",
+      "I have been late four times this fortnight. Get out of the road or be in it properly."
+    ],
+    "defeat": [
+      "Late again. Worth it."
+    ],
+    "victory": [
+      "Told you."
+    ],
+    "afterward": [
+      "It is the weather. Everyone says it is the weather like that explains it.",
+      "The weather is the THING that is wrong. It is not the reason."
+    ]
+  },
+  {
+    "id": "r10_gatehand",
+    "name": "Sefa",
+    "className": "Gate Hand",
+    "sprite": "townsfolk_f",
+    "ai": "veteran",
+    "payout": 252,
+    "party": [
+      {
+        "species": "craglide",
+        "level": 36
+      },
+      {
+        "species": "bristlebuck",
+        "level": 38
+      },
+      {
+        "species": "cairnling",
+        "level": 39
+      }
+    ],
+    "intro": [
+      "Last mile. Everybody coming to the Hall comes past me and most of them are not ready.",
+      "I am not the Keeper and I am not going to be kind about it either."
+    ],
+    "defeat": [
+      "Go on in. You will do."
+    ],
+    "victory": [
+      "Come back when three of them can stand up."
+    ],
+    "afterward": [
+      "The Keeper in there does not fight with one type. She fights with all of them.",
+      "Whatever you have been leaning on for eight Halls, she has the answer to it."
     ]
   }
 ]

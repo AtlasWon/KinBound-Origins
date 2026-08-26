@@ -1,0 +1,279 @@
+{
+  "id": "crownspire_hall",
+  "name": "The Long Gallery",
+  "displayName": "THE EIGHTH HALL",
+  "music": "station",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIIIIIIIIIIIIII",
+    "IUUFFFFFFFFFFUUI",
+    "IFFFFFFSSFFFFFFI",
+    "IFFFFFFFFFFFFFFI",
+    "IIkFFFFFFFFFFkII",
+    "IIFFFFFFFFFFFFII",
+    "IAFFFFFFFFFFFFAI",
+    "IIFFFFFFFFFFFFII",
+    "IIFFFFFFFFFFFFII",
+    "IAFFFFPFFPFFFFAI",
+    "IIFFFFFFFFFFFFII",
+    "IIFFFFFFFFFFFFII",
+    "IAFFFFFFFFFFFFAI",
+    "IIFFFAAAFFFFFFII",
+    "IIFFFEEEFFFFFFII",
+    "IAFFFFFFFFFFFFAI",
+    "IIFFFFFFFFFFFFII",
+    "IIFFFFFFFFFFFFII",
+    "IIKKFKKFFFFFFFII",
+    "IIFFFFFFFFFFFFII",
+    "IIPFFFFFFFFFFPII",
+    "IIIIIIIDDIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 7,
+      "y": 21,
+      "toMap": "crownspire",
+      "toX": 47,
+      "toY": 16,
+      "facing": "down",
+      "style": "door"
+    },
+    {
+      "x": 8,
+      "y": 21,
+      "toMap": "crownspire",
+      "toX": 48,
+      "toY": 16,
+      "facing": "down",
+      "style": "door"
+    },
+    {
+      "x": 7,
+      "y": 2,
+      "toMap": "crownspire_hall_crown",
+      "toX": 7,
+      "toY": 13,
+      "facing": "up",
+      "style": "stairs"
+    },
+    {
+      "x": 8,
+      "y": 2,
+      "toMap": "crownspire_hall_crown",
+      "toX": 8,
+      "toY": 13,
+      "facing": "up",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "cs_hall_registrar",
+      "sprite": "clerk",
+      "x": 4,
+      "y": 18,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_hall_registrar"
+    },
+    {
+      "id": "cs_hall_usher",
+      "sprite": "concord",
+      "x": 11,
+      "y": 3,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_hall_usher"
+    },
+    {
+      "id": "cs_hall_oldclimber",
+      "sprite": "elder",
+      "x": 3,
+      "y": 9,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_hall_oldclimber"
+    },
+    {
+      "id": "cs_hall_child",
+      "sprite": "kid",
+      "x": 9,
+      "y": 13,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "cs_hall_child"
+    },
+    {
+      "id": "cs_hall_visitor",
+      "sprite": "villager_m",
+      "x": 12,
+      "y": 16,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_hall_visitor"
+    },
+    {
+      "id": "cs_hall_hollis",
+      "sprite": "hiker",
+      "x": 4,
+      "y": 16,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "cs_steward_hollis",
+      "sightRange": 4
+    },
+    {
+      "id": "cs_hall_derrin",
+      "sprite": "clerk",
+      "x": 7,
+      "y": 11,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "cs_steward_derrin",
+      "sightRange": 5
+    },
+    {
+      "id": "cs_hall_mabe",
+      "sprite": "townsfolk_f",
+      "x": 12,
+      "y": 7,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "cs_steward_mabe",
+      "sightRange": 4
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 6,
+      "y": 21,
+      "text": [
+        "Cut into the threshold, worn to a shine by nine hundred years of boots:",
+        "THE EIGHTH ASKS NOTHING NEW OF YOU.",
+        "IT ASKS ALL OF IT AT ONCE."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 3,
+      "y": 18,
+      "text": [
+        "The register. Name, Crests, and the date you walked in.",
+        "Two hundred and eleven volumes behind the clerk, and one open on the desk.",
+        "Today has four names on it. Last week had ninety."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 15,
+      "text": [
+        "THE FIRST BAY - BRIARBELL. A bell rope on a plinth, hung where a child could reach it.",
+        "THE HALL ASKED: do you know what your Kin is good at?",
+        "Everybody answers this one. It is on the wall because everybody forgets it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 14,
+      "y": 15,
+      "text": [
+        "THE SECOND BAY - STONEWAKE. A counterweight, a length of chain, and three stones.",
+        "THE HALL ASKED: will you go down to somebody who will not come up to you?"
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 12,
+      "text": [
+        "THE THIRD BAY - TIDEGLASS. A tide table, a lane marker, and a stopwatch that still runs.",
+        "THE HALL ASKED: can you do it faster than that?",
+        "Somebody has pencilled underneath: SHE COULD. YOU PROBABLY CANNOT. GO ANYWAY."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 14,
+      "y": 12,
+      "text": [
+        "THE FOURTH BAY - EMBERFALL. A tally cut for a flue that does not exist.",
+        "THE HALL ASKED: whose share are you spending?"
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 9,
+      "text": [
+        "THE FIFTH BAY - MIREHAVEN. A disc of set silk, a hundred and sixty years old, on black cloth.",
+        "THE HALL ASKED: can you stand still in the dark?"
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 14,
+      "y": 9,
+      "text": [
+        "THE SIXTH BAY - FROSTMERE. Kept cold. The card in front of it is frosted over.",
+        "THE HALL ASKED: what do you do when nothing is moving?"
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 6,
+      "text": [
+        "THE SEVENTH BAY - SKYREACH. A wind vane, indoors, on a mount that lets it turn.",
+        "It has pointed the same way for six days and the card does not explain why.",
+        "THE HALL ASKED: can you hold on?"
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 14,
+      "y": 6,
+      "text": [
+        "THE EIGHTH BAY. Empty, swept, and a card on an easel in the Keeper's own hand:",
+        "I AM NOT GOING TO TELL YOU WHAT THIS ONE ASKS.",
+        "YOU HAVE WALKED PAST THE ANSWER SEVEN TIMES."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 6,
+      "y": 0,
+      "text": [
+        "The stair to the Crown Floor. Twelve steps, and a rail worn through on the left.",
+        "Everybody puts the same hand out. Nobody has ever worked out why it is always that one."
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 13,
+      "y": 19,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_cs_hall"
+    }
+  ],
+  "_plan": "THE FLOOR IS THE OTHER SEVEN HALLS. Canon gives the eighth Keeper a diverse team and a challenge that tests everything the player has learned, and the cheapest way to make \"everything\" mean something is to put it on the walls: eight bays down a long gallery, one per Hall of Caelora, each holding the object that Hall used and the question it asked, in the order the player met them. Walking in from the door you pass Briarbell first and Skyreach last, and the eighth bay is swept and empty with a card on an easel saying the Keeper is not going to tell you. SIXTEEN WIDE AND TWENTY-TWO DEEP, AND THE FIRST NUMBER IS THE ONE THAT MATTERS. The first pass was twenty-six wide and the walk found the fault at once: the screen is fifteen tiles across, so a player standing in the middle of the aisle could not see either wall, and a gallery of eight bays had no bay in it. Narrow and long is what a gallery is. The three Stewards stand off the centre line -- Hollis watches column 4, Derrin column 7, Mabe column 12 -- so a player who only wants the Crest can walk up columns 9 to 11 and meet nobody, and all three are still there for a player who takes the Long Floor upstairs. The registrar stands IN the counter run at 4,18 rather than behind it, because npcInFront reaches one tile and a clerk parked behind an unbroken counter can be looked at and never spoken to."
+}

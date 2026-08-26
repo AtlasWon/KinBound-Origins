@@ -1,0 +1,256 @@
+[
+  {
+    "id": "cs_warden",
+    "$comment": "THE ASCENT GATE, AND THE STUB THE PLAYER MUST NOT WALK INTO. Stages 6 to 8 are not built, and the honest way to say so is not an invisible wall: it is a gate that has been open every day for nine hundred years, shut this week, with a warden in front of it who will tell you exactly why and exactly what would change it. Everything he says is true inside Act 5 and stays true when Stage 7 opens the road -- nothing here has to be retracted later.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "hasCrest", "crest": 8 },
+        "then": [
+          {
+            "kind": "say",
+            "who": "GATE WARDEN",
+            "lines": [
+              "Eight. Right. I am going to write your name in the book and then I am going to shut it again.",
+              "Not you. The gate. It has been shut for six days and it is going to stay shut."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "GATE WARDEN",
+            "lines": [
+              "Four miles of road and half of it is above the snow line. Wind on it like a hand.",
+              "I have put people up that road in bad weather before. I am not doing it in this."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "GATE WARDEN",
+            "lines": [
+              "When it turns, we post it in the yard and the whole city knows in an hour.",
+              "Go and do whatever it is you are actually here for, {name}. This will keep."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "who": "GATE WARDEN",
+            "lines": [
+              "Shut. Weather. No exceptions, and I have said that eleven hundred times this week.",
+              "Come back with eight and I will still say it, so do not hurry on my account."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "GATE WARDEN",
+            "lines": [
+              "My mother had this post. Her father had it. Neither of them ever shut it.",
+              "There is a tally board behind you with a nought on it. I had to chalk over the nought."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cs_tarin",
+    "$comment": "TARIN AT CROWNSPIRE, AND THE AGREEMENT ABOUT THE SUMMIT. Canon: at Crownspire they agree that once Meridian is finished, they both go up. His Crest count is owned by src/systems/tarin.ts and this scene does not assume a number -- it asks tarin_holds_8, then tarin_holds_7, and falls through to a line that is true whatever the ledger says, so it cannot break if the ledger owner lands a different beat. It sets cs_summit_pact for the ledger and for Stage 7 to read; nothing here sets a tarin_* flag, because those are derived and setFlag cannot touch them. He is standing at the foot of the Crown Stair looking up it, and he makes exactly one joke in the whole scene, before the pact rather than after it.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "cs_summit_pact" },
+        "then": [
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "Still shut. I check at six and I check at four, and it is still shut.",
+              "Doesn't matter. We know where we are going. Go and finish the other thing."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "if",
+            "cond": { "kind": "hasCrest", "crest": 8 },
+            "then": [
+              { "kind": "face", "who": "cs_tarin", "dir": "down" },
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "Eight. You have got eight.",
+                  "I have been standing at the bottom of these steps for two days working out what to say."
+                ]
+              },
+              {
+                "kind": "if",
+                "cond": { "kind": "flag", "flag": "tarin_holds_8" },
+                "then": [
+                  {
+                    "kind": "say",
+                    "who": "TARIN",
+                    "lines": [
+                      "So have I. Took me four goes at Ord and I am not going to pretend it was three.",
+                      "Which means there is nothing left between either of us and that road up there."
+                    ]
+                  }
+                ],
+                "else": [
+                  {
+                    "kind": "if",
+                    "cond": { "kind": "flag", "flag": "tarin_holds_7" },
+                    "then": [
+                      {
+                        "kind": "say",
+                        "who": "TARIN",
+                        "lines": [
+                          "Seven. I go up to Ord tomorrow and I am going to lose to her at least twice first.",
+                          "I am fine about it. I am saying it out loud so that I stay fine about it."
+                        ]
+                      }
+                    ],
+                    "else": [
+                      {
+                        "kind": "say",
+                        "who": "TARIN",
+                        "lines": [
+                          "I am behind you. Again. I have decided to find that funny this time.",
+                          "I will get there. That has never been the part I was worried about."
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              { "kind": "face", "who": "cs_tarin", "dir": "up" },
+              { "kind": "wait", "frames": 50 },
+              {
+                "kind": "say",
+                "lines": [
+                  "He looks up the Crown Stair for a while, at the terrace, and past it at the shut gate.",
+                  "Somewhere above all of it there is a mountain, and today there is only weather where it should be."
+                ]
+              },
+              { "kind": "face", "who": "cs_tarin", "dir": "down" },
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "I could go up on my own, you know. The moment they open it. I have thought about it."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "I am not going to. Meridian first. Whatever that turns out to mean, and I know it is bad.",
+                  "And then the Summit, and we go up the same morning. Both of us. Say yes."
+                ]
+              },
+              {
+                "kind": "ask",
+                "lines": ["The same morning. Both of you."],
+                "yes": [
+                  {
+                    "kind": "say",
+                    "who": "TARIN",
+                    "lines": [
+                      "Right. Good. That is that settled and I am not going to make a thing of it."
+                    ]
+                  }
+                ],
+                "no": [
+                  {
+                    "kind": "say",
+                    "who": "TARIN",
+                    "lines": [
+                      "You are going to say yes eventually, so I am writing it down as a yes.",
+                      "I have been right about this since we were eleven."
+                    ]
+                  }
+                ]
+              },
+              { "kind": "setFlag", "flag": "cs_summit_pact" },
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "Four thousand one hundred and nine names on that wall and not one of them went up as a pair.",
+                  "I looked. Two days, and I looked at all of them."
+                ]
+              },
+              {
+                "kind": "if",
+                "cond": { "kind": "flag", "flag": "cs_roll_name" },
+                "then": [
+                  {
+                    "kind": "say",
+                    "who": "TARIN",
+                    "lines": [
+                      "They are cutting yours in the yard, by the way. I went and watched.",
+                      "I am going to be so unbearable about mine. Fair warning."
+                    ]
+                  }
+                ]
+              }
+            ],
+            "else": [
+              {
+                "kind": "if",
+                "cond": { "kind": "flag", "flag": "cs_tarin_met" },
+                "then": [
+                  {
+                    "kind": "say",
+                    "who": "TARIN",
+                    "lines": [
+                      "Ord is up there. Go on. I want to hear what she does to you.",
+                      "That came out wrong. I want to hear how it went."
+                    ]
+                  }
+                ],
+                "else": [
+                  { "kind": "setFlag", "flag": "cs_tarin_met" },
+                  {
+                    "kind": "say",
+                    "who": "TARIN",
+                    "lines": [
+                      "Two days I have been in this square. You take your time, don't you."
+                    ]
+                  },
+                  {
+                    "kind": "say",
+                    "who": "TARIN",
+                    "lines": [
+                      "I have been up to the gate every morning at six. Every morning it is shut.",
+                      "There is a man there whose family has held the post for three generations and he is frightened."
+                    ]
+                  },
+                  {
+                    "kind": "say",
+                    "who": "TARIN",
+                    "lines": [
+                      "It does not rain here, {name}. Not in summer. The Archive has nine hundred years of noughts.",
+                      "Everybody in this city is talking about the weather and nobody is talking about the weather."
+                    ]
+                  },
+                  {
+                    "kind": "say",
+                    "who": "TARIN",
+                    "lines": [
+                      "Go and take the eighth off Ord. Walk her gallery first - the whole of it, both sides.",
+                      "I did not, the first time. She let me not, which was worse."
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

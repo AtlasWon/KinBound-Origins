@@ -1,0 +1,217 @@
+[
+  {
+    "id": "sh_spur_first_gantry",
+    "_note": "THE RULE, DELIVERED ONCE, ON THE FIRST TILE OF THE FIRST GANTRY. One script, one tile, one onceFlag, because a line that fires on every crossing turns the only mechanism this Hall has into an interruption. It fires on the gantry itself and not on the sill in front of it: stepping off the rock is the moment worth marking.",
+    "trigger": "step",
+    "map": "skyreach_hall_spurs",
+    "onceFlag": "sh_gantry_seen",
+    "at": [{ "x": 18, "y": 36 }],
+    "actions": [
+      { "kind": "sfx", "sound": "fx_wind" },
+      {
+        "kind": "say",
+        "lines": [
+          "One plank wide, no rail, and four hundred feet of gorge going down either side of your boots.",
+          "It does not move. It is bolted through the rock at both ends and it does not move at all.",
+          "Look at where the gantry stops. That is the whole trick and everybody up here uses it."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sh_spur_masthead",
+    "trigger": "step",
+    "map": "skyreach_hall_spurs",
+    "onceFlag": "sh_masthead_seen",
+    "at": [{ "x": 18, "y": 8 }],
+    "actions": [
+      { "kind": "shake", "frames": 24, "power": 1 },
+      {
+        "kind": "say",
+        "lines": [
+          "The note off the great mast comes down through the rock and up through your feet.",
+          "It has been doing that since 1791 and it has never once stopped.",
+          "Somebody is standing at the foot of it with her back to you, listening to it."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sh_keeper",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "hasCrest", "crest": 7 },
+        "then": [
+          {
+            "kind": "say",
+            "who": "IDRISA FENN",
+            "lines": [
+              "East side, four hops, and you are back on the sill. It only goes down. That is the point of it.",
+              "Crownspire next. Ord keeps the eighth and he does not specialise in anything at all."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "if",
+            "cond": { "kind": "not", "of": { "kind": "hasCrest", "crest": 6 } },
+            "then": [
+              {
+                "kind": "say",
+                "who": "IDRISA FENN",
+                "lines": [
+                  "Six before this one, and you are short. No, I am not going to make an exception.",
+                  "Go and get them. The wind will still be here and so will I."
+                ]
+              }
+            ],
+            "else": [
+              {
+                "kind": "say",
+                "who": "IDRISA FENN",
+                "lines": [
+                  "Three gantries in a crosswind and you did not look down once. Good.",
+                  "Idrisa Fenn. I keep the masts."
+                ]
+              },
+              { "kind": "face", "who": "sh_keeper", "dir": "up" },
+              { "kind": "wait", "frames": 50 },
+              {
+                "kind": "say",
+                "lines": [
+                  "She puts her hand flat on the mast and holds it there, not moving, for a long time.",
+                  "Ninety feet of it, humming, and she is reading it the way other people read a page."
+                ]
+              },
+              { "kind": "face", "who": "sh_keeper", "dir": "down" },
+              {
+                "kind": "say",
+                "who": "IDRISA FENN",
+                "lines": [
+                  "A flat. It was G in the spring. It has been A flat for nineteen days.",
+                  "That is not the mast. Nothing has changed on this cliff. Something has changed out at sea."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "IDRISA FENN",
+                "lines": [
+                  "So. Seven of eight, and you did not come up here for a lecture about my mast.",
+                  "Let us find out what you have been carrying."
+                ]
+              },
+              { "kind": "battleTrainer", "trainer": "sh_keeper_fenn" },
+              {
+                "kind": "if",
+                "cond": { "kind": "var", "var": "last_battle_won", "op": "==", "value": 1 },
+                "then": [
+                  {
+                    "kind": "say",
+                    "who": "IDRISA FENN",
+                    "lines": [
+                      "Ha! Hold on to something.",
+                      "That is not a figure of speech, it is the wind, and it does that when I lose."
+                    ]
+                  },
+                  { "kind": "giveCrest", "crest": 7, "name": "Gale Crest" },
+                  { "kind": "sfx", "sound": "badge" },
+                  {
+                    "kind": "say",
+                    "lines": ["You received the GALE CREST.", "Seven of eight."]
+                  },
+                  {
+                    "kind": "say",
+                    "who": "IDRISA FENN",
+                    "lines": [
+                      "It is a vane, and it turns. Put it in a drawer and it will still be turning next year.",
+                      "Nobody in Skyreach has ever been able to say why and nobody has ever tried to stop it."
+                    ]
+                  },
+                  { "kind": "giveItem", "item": "full_restore", "count": 1 },
+                  { "kind": "say", "lines": ["Idrisa handed over a Full Restore."] },
+                  { "kind": "wait", "frames": 20 },
+                  {
+                    "kind": "say",
+                    "who": "IDRISA FENN",
+                    "lines": [
+                      "This city ran on nothing for nine hundred years. Wind was the reason nobody lived here.",
+                      "Then somebody stood on this rock and stopped asking how to shut it out."
+                    ]
+                  },
+                  {
+                    "kind": "say",
+                    "who": "IDRISA FENN",
+                    "lines": [
+                      "Every mast on both cliffs is feathered when it is asked to be and free the rest of the time.",
+                      "You do not hold wind. You stand where it is going and you take what it gives you.",
+                      "Try to hold it and it takes the mast off the cliff. We have the photographs."
+                    ]
+                  },
+                  { "kind": "setFlag", "flag": "crest_7_taken" },
+                  {
+                    "kind": "if",
+                    "cond": { "kind": "flag", "flag": "crest_6_taken" },
+                    "then": [
+                      {
+                        "kind": "say",
+                        "who": "IDRISA FENN",
+                        "lines": [
+                          "You came up from Frostmere. Then you have seen the Observatory and I have not.",
+                          "I do not want the details. I have a hundred and forty years of readings in that Hall.",
+                          "I only want to know one thing, and you can answer it with a yes or a no."
+                        ]
+                      },
+                      {
+                        "kind": "say",
+                        "who": "IDRISA FENN",
+                        "lines": [
+                          "Is somebody trying to hold something down?"
+                        ]
+                      },
+                      { "kind": "wait", "frames": 40 },
+                      {
+                        "kind": "say",
+                        "lines": [
+                          "You do not say anything. You do not have to.",
+                          "She looks out east, over the gorge and past the docks, at a very long way of nothing."
+                        ]
+                      },
+                      {
+                        "kind": "say",
+                        "who": "IDRISA FENN",
+                        "lines": [
+                          "Right. Crownspire. Ord keeps the eighth and he keeps it with a bit of everything.",
+                          "And whatever it is you are going to do after that -- go and do it quickly."
+                        ]
+                      }
+                    ],
+                    "else": [
+                      {
+                        "kind": "say",
+                        "who": "IDRISA FENN",
+                        "lines": [
+                          "Frostmere, if you have not been. There is a Hall there and something above the town.",
+                          "And then Crownspire for the eighth, and then the Ascent has to let you through."
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "say",
+                    "who": "IDRISA FENN",
+                    "lines": [
+                      "Down the east side. Four cornices, and they only go one way.",
+                      "Nobody should have to earn the same gantry twice."
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

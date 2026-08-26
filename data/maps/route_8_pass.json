@@ -1,0 +1,339 @@
+{
+  "id": "route_8_pass",
+  "name": "The Wintergate",
+  "displayName": "ROUTE 8 - THE WINTERGATE",
+  "music": "route_west",
+  "battleBackdrop": "highland",
+  "indoor": false,
+  "snow": 1,
+  "regionPos": {
+    "x": 17,
+    "y": 4
+  },
+  "encounterTable": "route_8_pass",
+  "_design": "The top of the road, and the map the whiteout was written for. Canon's last three steps in order: heavy snow at the east end, the frozen lakes in the middle, the passes at the west. snow is 1 here against 0.34 on the climb below, so a squall genuinely takes the hill away -- and every decision in the layout exists to make that survivable rather than cruel. The road is the darkest thing on the map. The cairns are eight tiles apart and always in sight of it. There is exactly one place a player can get lost, and they have to walk onto it on purpose.",
+  "_plan": "THE TARN IS THE MAP. Twenty-four cells of lake ice, the only surface up here darker than the ground round it, so it reads as a hole cut in the white from the far edge of the screen. The road goes north of it the whole way and is never in doubt. Crossing the ice saves about twenty tiles and costs you the margin, which is thin, rotten, and drawn as such -- the wall of broken ice round the rim is the one thing on this map that teaches by stopping you.\n\nTHE HOLE AND THE ISLET. Cut for water, kept open all winter, with something lying on the rock in the middle of it in plain sight. It is on the way to nothing, it is signed once at 30,26, and it stays shut until Swim, exactly as the junction pool on Route 7 does.\n\nTHE WINTERGATE. Two crags at x12-16 with the road threaded between them and the mountain closing to four tiles. It is a gate in the plainest sense and it is what the map is named for.\n\nTHE REFUGE at 20,8 is a drystone shelter, roofless for a century, and the only wall on this side of the mountain. It is built out of the capital's granite kit on purpose: it is the only stone in the game cut by people rather than by weather.",
+  "warps": [
+    {
+      "x": 75,
+      "y": 29,
+      "toMap": "route_8",
+      "toX": 1,
+      "toY": 9,
+      "facing": "right",
+      "style": "edge"
+    },
+    {
+      "x": 75,
+      "y": 30,
+      "toMap": "route_8",
+      "toX": 1,
+      "toY": 10,
+      "facing": "right",
+      "style": "edge"
+    },
+    {
+      "x": 75,
+      "y": 31,
+      "toMap": "route_8",
+      "toX": 1,
+      "toY": 11,
+      "facing": "right",
+      "style": "edge"
+    },
+    {
+      "x": 0,
+      "y": 20,
+      "toMap": "frostmere",
+      "toX": 1,
+      "toY": 24,
+      "facing": "left",
+      "style": "edge"
+    },
+    {
+      "x": 0,
+      "y": 21,
+      "toMap": "frostmere",
+      "toX": 1,
+      "toY": 25,
+      "facing": "left",
+      "style": "edge"
+    },
+    {
+      "x": 0,
+      "y": 22,
+      "toMap": "frostmere",
+      "toX": 1,
+      "toY": 26,
+      "facing": "left",
+      "style": "edge"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "r8p_packman",
+      "sprite": "porter",
+      "x": 61,
+      "y": 26,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r8p_packman",
+      "sightRange": 3
+    },
+    {
+      "id": "r8p_gauge",
+      "sprite": "dockhand",
+      "x": 53,
+      "y": 27,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r8p_gauge"
+    },
+    {
+      "id": "r8p_iceman",
+      "sprite": "dockhand",
+      "x": 51,
+      "y": 25,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r8p_iceman",
+      "sightRange": 3
+    },
+    {
+      "id": "r8p_lakewarden",
+      "sprite": "hiker",
+      "x": 29,
+      "y": 25,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r8p_lakewarden",
+      "sightRange": 4
+    },
+    {
+      "id": "r8p_pilgrim",
+      "sprite": "elder",
+      "x": 23,
+      "y": 12,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "r8p_pilgrim"
+    },
+    {
+      "id": "r8p_gatewarden",
+      "sprite": "villager_m",
+      "x": 17,
+      "y": 20,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "r8p_gatewarden",
+      "sightRange": 4
+    }
+  ],
+  "objects": [
+    {
+      "kind": "script",
+      "x": 59,
+      "y": 30,
+      "text": [
+        "A milestone with only two letters left on it and a cairn built round the stump.",
+        "Whoever built the cairn did not move the stone. They built the cairn round it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 56,
+      "y": 24,
+      "text": [
+        "A board on two legs, guyed down with wire.",
+        "THE LAKE IS NOT A ROAD. THE ROAD IS A ROAD. IT GOES ROUND. IT IS NOT LONGER THAN A FUNERAL.",
+        "The wire has been replaced recently, and the old wire is coiled neatly under it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 52,
+      "y": 25,
+      "text": [
+        "A gauge board driven into the beach, marked off in inches.",
+        "SOUND ICE AT 8. THIS WEEK: 6, 6, 5, 7, 4.",
+        "Five readings in five days and no two of them going the same way."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 30,
+      "y": 26,
+      "text": [
+        "The cut, kept open all winter for water, and something pale lying on the islet.",
+        "Nobody has been out to it. Nobody is going to walk out to it either.",
+        "The margin here is grey where it should be white. Grey ice is ice with water in it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 67,
+      "y": 26,
+      "text": [
+        "A board where the road leaves the last of the trees.",
+        "NO WOOD ABOVE THIS POINT. NO SHELTER FOR FOUR MILES EXCEPT THE REFUGE.",
+        "KEEP THE CAIRNS ON YOUR RIGHT GOING UP AND ON YOUR LEFT COMING DOWN."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 20,
+      "y": 12,
+      "text": [
+        "The refuge: four drystone walls, no roof, and a hearth full of old snow.",
+        "A slate by the door has names scratched on it in three different centuries.",
+        "The last one is from Tuesday, in a hurried hand, and it is not a name. It is: THANK YOU."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 35,
+      "y": 17,
+      "text": [
+        "A milestone. FROSTMERE II.",
+        "From here the road goes down. That is the first time it has done that in nine miles."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 23,
+      "text": [
+        "A board at the top of the descent, facing the way you came.",
+        "FROSTMERE BELOW. THE OBSERVATORY IS THE LIGHT ABOVE THE TOWN.",
+        "IF THE LIGHT IS ON, SOMEBODY IS UP THERE. IT HAS BEEN ON A LONG TIME."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 64,
+      "y": 20,
+      "text": [
+        "A milestone lying on its side with three stones stacked on top of it.",
+        "The stack is not a cairn. It is the mark for where the milestone is, under the snow."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 69,
+      "y": 38,
+      "item": "great_potion",
+      "quantity": 3,
+      "flag": "item_r8p_eastdrift"
+    },
+    {
+      "kind": "item",
+      "x": 26,
+      "y": 8,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_r8p_refuge"
+    },
+    {
+      "kind": "item",
+      "x": 55,
+      "y": 9,
+      "item": "warden_vessel",
+      "quantity": 3,
+      "flag": "item_r8p_highdrift"
+    },
+    {
+      "kind": "item",
+      "x": 41,
+      "y": 27,
+      "item": "full_rouse",
+      "quantity": 2,
+      "flag": "item_r8p_islet"
+    },
+    {
+      "kind": "item",
+      "x": 14,
+      "y": 22,
+      "item": "full_heal",
+      "quantity": 3,
+      "flag": "item_r8p_gate"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 45,
+      "y": 40,
+      "item": "thawcloth",
+      "quantity": 4,
+      "flag": "item_r8p_hidden_south"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 4,
+      "y": 30,
+      "item": "ward_incense",
+      "quantity": 2,
+      "flag": "item_r8p_hidden_col"
+    }
+  ],
+  "rows": [
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪CC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪CC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC∴∴∴∴∴≋≋∴∴∴∴∴∪∪∪∴∴∴≋∀∀∀CC",
+    "CC∇∇∇∇∇∇∇∇∇∇CCCC∇∴∴∴∴∴∴∴≋≋∴≋≋∀∀∀∀≋≋≋≋∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴≋≋∴∴∴∴∴∴∴∴∴∴∴∴≋≋≋CC",
+    "CC∇∇∇∇∇∇∇∇∇∇CCCC∇∴∴∴∴∴∴∴∴≋∴∴≋∀∀∀≋∴∴≋≋≋∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴≋≋≋∴∪∪∴∴∴∴∴∴∴∴∴∴∴∴CC",
+    "CC∇∇∇∇∇∇∇∇∇∇CCCC∴∴∴∴∴∴∴∴∴≋∴∴≋∀∀∀≋∴∴∴≋≋≋∴∴∴≋≋≋≋∴∴∴∴∴∴∴∴≋≋≋≋≋∪∪∪∪∴∴∴∴∴∴∴∴∴∴∴CC",
+    "CC∇∇∇∇∇∇∇∇∇∇CCCC≋≋≋∴∴∴∴∴∴∴∴∴≋≋∀≋≋∴∴∴∴∴∴∴∴∴∴∴≋≋∴∴∴∴∴∴∴∴∴∴∴∴∴∪∪∪∪∴∴∴∴∴∴∴∴∴∴∴CC",
+    "CC∇∇∇∇∇∇∇∇∇∇CCCC∴≋≋∴∴∴∴∴∴∴∴∴∴≋≋≋≋≋√≋∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∪∪∪∪∴∴∴∴∴∴∴∴∴≋≋CC",
+    "CC∇∇∇∇∇∇∇∇∇∇CCCC∴≋≋∴▪▪▪▪▪▪∴∴√∴≋∴≋≋≋≋∴∴∴∴√∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∪∪∪∪∴∴∴∴∴≋∴∴≋≋≋CC",
+    "CC∇∇∇∇∇∇∇∇∇∇CCCC∴∴∴∴▪▪▪▪▪▪∴∴∴∴∴∴≋≋≋≋≋∴∴∴∴∴∴∴∴∴√∴∴∴∴∴∴∴∴∴∴∴∴∴∪∪∪∴∴∴∴∴∴∴∴∴∪≋CC",
+    "CC∇∇∇∇∇∇∇∇∇∇CCCC∴∴∴∴▪▪◘◘▪▪∴∴∴∴∴∴∴∫∫∫∫∫∫∫∴∴∴∴∴∴∴≋≋≋≋∴∴∴∴∴∴∴∴∴∪∪∴∴∴∴∴∴∴∪∪∪∪∪CC",
+    "CC∇∇∇∇∇∇∇∇∇∇CCCC∴∴∴∇∇∇√∇∇∇∇∴∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∴∴≋≋∀≋≋∴∴∴∴∴∴∴≋≋≋≋∴∴∴∴∴∪∪∪∪∪∪∪CC",
+    "CC∇∇∇∇∇∇∇∇≋≋CCCC∴∴∇∇´∇∇∇∴∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∫∀∀≋∴√∴∴∴∴≋≋∀∀≋∴∴∪∪∪∪∪∪∪∪∪∪CC",
+    "CC∇∇∇∇∇∇≋∴≋≋CCCC∴∇∇∇∇∇∇∇∫∫∫∫∫∫∫∫∫∫∫∫∀∫∫∫∫∫∫∫∫∫∫∫∫∫∫∴∴∴∴∴∴∴≋≋≋≋∴∴∴∴∪∪∪∪∪∪∪∪CC",
+    "CC∇∇∇∇∇∇∴∴≋≋CCCC√∇∇∇∇∇∫∫∫∫∫∫∫∫∫∴≋≋∇∀∀∀≋∴≋∫∫∫∫∫∫∫∫∫∫∫∴∴∴≋∴∴∴≋≋≋∴∴∴∴∴≋≋∪∪∪∪∪CC",
+    "CC∇∇∇∇∇∇∴∴∴≋CCCC∇∇∇∇∫∫∫∫∫∫∫∴∴∴∴∴≋≋∴∴≋∴∴∴≋∴∴∴≋∫∫∫∫∫∫∫∫∴∴≋∴∴∴∴∴∴∴∴∴∴∴≋≋≋≋∀∀∀CC",
+    "CC∇∇∇∇∇∇∇∴∴∴CCCC∇∇∫∫∫∫∫∫∫∫´≋≋≋≋∴≋≋∴∴∴∴∴∴≋≋≋≋≋≋∀∀∫∫∫∫∫∫∴∴∴∴∴∴∴∴∴∴∴∴∴∴≋≋≋∀∀∀CC",
+    "CC∇∇√∇∇∇∇∇√∇CCCC∫∫∫∫∫∫∫∫≋≋≋≋≋≋≋≋≋∴∴■∴∴∴∴≋∀∀∀∀∀∀∀∀∫∫∫∫∫∫∫∴∴√∴∴∴∴∴∴≋≋≋≋≋≋∀∀≋CC",
+    "CC∇∇∇∇∇∇∴∴∴∴∴∴∫∫∫∫∫∫∴∫≋≋≋≋≋≋∀∀∀≋≋∴≠≠≠≠≠≠≠≠≠≠≠≠≠∀∀≋∴∫∫∫∫∫∫≋≋≋∴∴∴∴∴≋≋≋≋≋∀∀∀≋CC",
+    "CC∇∇∇∇∇∇∴∴∴∫∫∫∫∫∫∫∫∫∴≋≋≋≋≋≋≋∀∀∀≠≠≠≅≅≅≅≅≅≅≅≅≅≅≅≅≠≠≠´∴∫∫∫∫∫∫≋≋≋∴∴∴∴≋≋≋≋≋≋∀∀≋CC",
+    "∫∫∫∫∫∫∫∫∴∫∫∫∫∫∫∫∫∫∫∴∴≋≋≋≋≋≋≋∀≠≠≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≠≠≠∴∫∫∫∫∫∫≋≋≋≋≋´∴∴∴∴≋≋∀∀∀CC",
+    "∫∫∫∫∫∫∫∫∴∫∫∫∫∫∫∫∴∴∴∴∴≋≋≋≋≋≋≋≠≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅≠≠≠∴∫∫∫∫∫∫∫≋∴∴√∴∴∴∴∴≋≋∀∀CC",
+    "∫∫∫∫∫∫∫∫∴∫∫∫∫∴∴∴∴∴∴∴∴≋≋≋≋≋∴∴∴∴≅≅≠≠≠≅≅≅≅≅≅≅≅≅≅≅≠≠≠≅≅≅∴∴∴∴∫∫∫∫∫∫∴∴∴∴∪∪∴∴≋≋∀∀CC",
+    "CC∇∇∇∇∇∇´∴∴∴∴∴∴∴∴∴∴∴∴≋≋≋≋≋∴∴∴∴≅≠≠≠≠≠≅≅≅≅≅≅≅≅≅≅≠≠≠≅≅≅∴∴∴∴´∫∫∫∫∫∫∴■∪∪∪∪∴∴≋∀∀CC",
+    "CC∇∇∇∇∇∇∴∴∴∴∴∴∴∴∴∴∴∴∴≋≋≋≋≠∴∴∴∴≅≠≠≠≠≠≅≅≅≅≅≅≅≅≅≅≠≠≠≅≅≅∴∴∴∴´∴∫∫∫∫∫∫∫∪∪∪∪∴∴≋∀∀CC",
+    "CC∇∇∇∇∇∇∇∇∇∇CCCCC≋∇∇∇∇≋≋≋≠∴∴∴∴≅≠≠≠≠≠≅≅WWWWWWWW≅≅≅≅≅≅´∴∴∴≋≋∴∫∫∫∫∫∫∫∪∪∪∴√≋∀∀CC",
+    "CC∴∇∇∇∇∇∇∇∇≋CCCCC≋≋∇∇∇∇≋≠≠∴∴∴∴´≅≠≠≠≅≅≅WWW∆WWWW≅≅≅≅≅≅∴∴∴∴≠∴∴∴∴∫∫∫∫∫∫´∴∴∴≋≋≋CC",
+    "CC≋≋∇∇∇∇∇∇∇≋CCCCC≋≋∇∇∇∇∴≠≠∴∴∴∴≅≅≅≅≅≅≅≅WWW∴∴WWW≅≅≅≅≅≅∴∴∴∴≠∴≋≋≋≋∫∫∫∫∫∫∫∫≋≋≋≋CC",
+    "CC≋≋∇∇∇∇∇∇∇∴CCCCC≋≋∇∇∇∇∴≠≠∴∴∴∴≅≅≅≅≅≠≠≠WWWWWWWW≠≅≅≅≅≅∴∴∴∴≠≋≋∀∀∀≋∫∫∫∫∫∫∫∫∫∫∫∫C",
+    "CC≋≋∇∇∇∇∇∇∇∴CCCCC≋≋∇∇∇∇∴∴≠∴∴∴∴≅≅≅≅≅≠≠≠WWWWWWWW≠≠≅≅≅≅∴∴∴∴≋∀∀∀∀∀∀∀≋∫∫∫∫∫∫∫∫∫∫∫",
+    "CC≋≋∇∇∇∇∇∇∇∴CCCCC≋≋∇∇∇∇∴≋≠≠≅≅≅≅≅≅≅≅≠≠≠≠≠≠≅≅≠≠≠≠≠≅≅≅≅≅≅≅≠∀∀∀´∀∀∀∀≋≋≋´∫∫∫∫∫∫∫∫",
+    "CC≋≋∇∇∇∇∇∇∴∴CCCCC≋≋∇∇∇∇∇∴≋≠≠≅≅≅≅≅≅≅≅≅≠≠≠≠≠≅≠≠≠≠≠≅≅≅≅≅≅≠≋∀∀∀∀∀∀∀∀≋≋≋≋≋≋≋∴∫∫∫∫",
+    "CC≋≋≋≋≋≋∴∴∴∴CCCCC≋∇∇∇∇∇∇∇∴≠≠≠≅≅≅≅≅≅≅≅≠≠≠≠≠≅≅≠≠≠≅≅≅≅≅≅≠≠≋≋≋∀∀∀∀∀∀≋≋≋≋≋≋∴∴∴∴CC",
+    "CC∇≋≋∴∴∴∴∴∴∴CCCCC∴∇∇∇∇∇∇∇∇∴∴≠≅≅≅≅≅≅≅≅≠≠≠≠≠≅≅≅≅≅≅≅≅≅≅≠∴∴∴∴≋≋■≋≋≋≋≋≋≋≋≋≋∴∴∴∴CC",
+    "CC∇≋∴∴∴∴∴∴∴∴CCCCC∴∇∇∇∇∇∇∇∇∇∇∴≠≠≅≅≅≅≅≅≅≠≠≠≅≅≅≅≅≅≅≠≅≠≠∴∴∴∴∴∴∴∴∴∴≋≋≋≋≋≋≋≋∴∴∴∴CC",
+    "CC∇≋∴∴∴∴∴∴∴∴CCCCC∴∇∇∇∇∇∇∇∇∇∇∇∴∴≠≠≠≅≠≅≅≅≅≅≅≅≅≅≅≅≠≠≠∴∴∴∴∴∴∴≋≋∴∴∴∴≋≋≋≋≋≋≋∴∴∴∴CC",
+    "CC∇∇∴∴∴∴∴∴≋≋CCCCC∴∇∇∇∇∇∇∇∇∇∇∇∴∴∴∴≋≠≠≠≠≠≠≠≠≠≠≠≠≠∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴≋≋≋∀≋≋≋∴∴∴∴CC",
+    "CC∇∇∴∴∴∴∴≋≋≋CCCCC∴∴∇∇∇∇∇∇≋≋≋∴∴∴∴∴≋∀∀∀∀≋∴∴∴∴∴≋≋∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴≋≋≋∀≋≋≋∴∴∴∴CC",
+    "CC∇∇∇∇∴∴∴∴≋≋CCCCC∴∴∴∇∇∇≋≋≋≋∴∴∴∴∴∴∴≋≋≋≋∴∴∴∴∴∴≋≋∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴≋≋≋∀∀∀≋≋≋∴∴∴CC",
+    "CC∇∇∇∇∇∇∇∴∴∴CCCCC∴∴≋≋≋≋≋≋≋∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴≋≋∴∴∴∴∴≋∴≋≋≋≋≋∴∴∴∴∴≋≋≋∀∀∀∀≋≋≋≋≋CC",
+    "CC∇∇∇∇∇∇∇∇∴∴CCCCC≋≋≋≋≋∴∴∴∴∴≋≋≋≋∴∴∴∴∴∴∴∴∴∴∴≋≋∴∴∴≋≋≋≋≋∀∀∀∀≋≋∴∴∴∴≋≋≋∀∀∀∀∀≋≋∪∪CC",
+    "CC∇∇∇∇∇∇∇∇∴∴CCCCC≋≋≋≋≋∴∴∴∴∴≋≋≋≋∴∴∴∴∴∴∴∴∴∴∴≋≋∴∴≋≋∀∀∀∀∀∀∀∀∀≋≋∴∴∴∴≋∀∀∀∀∀∀∀∪∪∪CC",
+    "CC∇∇∇∇∇∇∇∇∴∴CCCCC≋≋≋≋≋∴∴∴∴∴∆∆∆≋∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴≋∀∀∀∀∀∀∀∀∀∀∀≋∴∴∴∴≋∀∀∀∀∀∀∀∪∪∪CC",
+    "CC∇∇∇∇∇∇∇∇∴∴CCCCC≋≋≋≋≋∴∴∴∴∴∆∆≋≋∴∴∴∴∴∴∴∴∴∴∴∴∴∴≋≋∀∀∀∀∀∀∀∀∀∀≋≋∴∴∴≋≋∀∀∀∀∀∀∀∪∪∪CC",
+    "CC∇∇∇∇∇∇∇∇∴∴CCCCC≋≋≋≋≋≋∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴≋≋≋∀∀∀∀∀∀∀∀≋≋≋∴∴∴≋≋∀∀∀∀∀∀∀∪∪∪CC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC≋∴∴∴∴∴≋≋≋≋≋∀∀∀∀∀∀∀∪∪∪∪CC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪CC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪∪CC"
+  ]
+}

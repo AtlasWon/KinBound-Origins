@@ -343,7 +343,7 @@
   },
   {
     "id": "tarin_town",
-    "_note": "TARIN 3 and 4 of 4 -- see docs/TARIN.md. ONE script for every town he ever turns up in. It branches on the ledger flags published by src/systems/tarin.ts (tarin_at_<beat>), so the town decides what scene this is, not the map. A later stage adds him to a settlement by appending a branch here and putting an NPC on the map with id \"town_tarin\" and script \"tarin_town\", hidden by that branch's done-flag. No new file, no new plumbing. The removeNpc names \"town_tarin\" and is a no-op on a map that wraps this script in one of its own.",
+    "_note": "TARIN 3 and 4 of 4 -- see docs/TARIN.md. ONE script for every town he ever turns up in. It branches on the ledger flags published by src/systems/tarin.ts (tarin_at_<beat>), so the town decides what scene this is, not the map. A later stage adds him to a settlement by appending a branch here and putting an NPC on the map with id \"town_tarin\" and script \"tarin_town\", hidden by that branch's done-flag. No new file, no new plumbing. The removeNpc names \"town_tarin\" and is a no-op on a map that wraps this script in one of its own. STAGE 5 ADDED THREE BRANCHES -- tarin_at_frostmere (the hardest battle in the story, optional and onLoss continue), tarin_at_observatory and tarin_at_summit_pact at Crownspire. THE OBSERVATORY BRANCH DELIBERATELY DOES NOT removeNpc. He is meant to still be standing in that room when the player walks out of it, so it sets tarin_observatory_done and branches on it for a short repeat line instead; a map that wants him gone can still hide him with hiddenIfFlag on that same flag. Every other branch removes him as normal.",
     "trigger": "interact",
     "actions": [
       {
@@ -646,6 +646,482 @@
                   "Ask me when you want it. I am not going anywhere useful."
                 ]
               }
+            ]
+          },
+          {
+            "kind": "end"
+          }
+        ]
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
+          "flag": "tarin_at_frostmere"
+        },
+        "then": [
+          {
+            "kind": "if",
+            "cond": {
+              "kind": "not",
+              "of": {
+                "kind": "flag",
+                "flag": "tarin_frostmere_talked"
+              }
+            },
+            "then": [
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "Four days I have been in this town. Do you know what there is to do in this town?",
+                  "There is a Hall, there is snow, and there is a woman who sells hot milk."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "I took the Crest on Tuesday. I could have been at Skyreach by now.",
+                  "I did not go."
+                ]
+              },
+              {
+                "kind": "choice",
+                "lines": [
+                  "He is not selling it. He is just saying it."
+                ],
+                "options": [
+                  {
+                    "label": "Why not?",
+                    "then": [
+                      {
+                        "kind": "say",
+                        "who": "TARIN",
+                        "lines": [
+                          "Because you were somewhere behind me with nothing in your pocket.",
+                          "And my legs would not do it. That is the whole reason and it is not a good one."
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "label": "You waited.",
+                    "then": [
+                      {
+                        "kind": "say",
+                        "who": "TARIN",
+                        "lines": [
+                          "I waited. Do not make a thing of it.",
+                          "I have already made a thing of it, on my own, for four days."
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "wait",
+                "frames": 12
+              },
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "It rained here yesterday. In this month. On this mountain.",
+                  "The keeper has lived here sixty-one years and she went out into the street to look at it."
+                ]
+              },
+              {
+                "kind": "setFlag",
+                "flag": "tarin_frostmere_talked"
+              }
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "Here. I have been carrying these about for four days as well."
+            ]
+          },
+          {
+            "kind": "giveItem",
+            "item": "great_potion",
+            "count": 2
+          },
+          {
+            "kind": "say",
+            "lines": [
+              "Tarin handed over 2 Great Potions."
+            ]
+          },
+          {
+            "kind": "ask",
+            "lines": [
+              "Everything you have. Nothing held back for the sake of my feelings.",
+              "I want to know what the two of us are before the rest of this happens."
+            ],
+            "yes": [
+              {
+                "kind": "if",
+                "cond": {
+                  "kind": "flag",
+                  "flag": "starter_sprigling"
+                },
+                "then": [
+                  {
+                    "kind": "battleTrainer",
+                    "trainer": "tarin_frostmere_rilltail",
+                    "onLoss": "continue"
+                  }
+                ],
+                "else": [
+                  {
+                    "kind": "if",
+                    "cond": {
+                      "kind": "flag",
+                      "flag": "starter_cinderpaw"
+                    },
+                    "then": [
+                      {
+                        "kind": "battleTrainer",
+                        "trainer": "tarin_frostmere_sprigling",
+                        "onLoss": "continue"
+                      }
+                    ],
+                    "else": [
+                      {
+                        "kind": "battleTrainer",
+                        "trainer": "tarin_frostmere_cinderpaw",
+                        "onLoss": "continue"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "if",
+                "cond": {
+                  "kind": "var",
+                  "var": "last_battle_won",
+                  "op": "==",
+                  "value": 1
+                },
+                "then": [
+                  {
+                    "kind": "say",
+                    "who": "TARIN",
+                    "lines": [
+                      "...Right.",
+                      "That is the best I have ever been, and it was not enough. Good."
+                    ]
+                  },
+                  {
+                    "kind": "say",
+                    "who": "TARIN",
+                    "lines": [
+                      "Do not say anything kind to me. I will only be annoyed about it later."
+                    ]
+                  },
+                  {
+                    "kind": "say",
+                    "who": "TARIN",
+                    "lines": [
+                      "Go up the hill. There is a light on it at nine every night and it is your father's.",
+                      "I will be at the bottom of it when you come down."
+                    ]
+                  },
+                  {
+                    "kind": "setFlag",
+                    "flag": "tarin_frostmere_done"
+                  },
+                  {
+                    "kind": "removeNpc",
+                    "who": "town_tarin"
+                  }
+                ],
+                "else": [
+                  {
+                    "kind": "say",
+                    "who": "TARIN",
+                    "lines": [
+                      "No.",
+                      "No, I am not having it like that. Not this one."
+                    ]
+                  },
+                  {
+                    "kind": "say",
+                    "who": "TARIN",
+                    "lines": [
+                      "Get them seen to and come back at me. I have nowhere to be.",
+                      "I have spent four days proving that."
+                    ]
+                  }
+                ]
+              }
+            ],
+            "no": [
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "Fine. It keeps.",
+                  "Everything keeps up here. That is the entire point of the place."
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "end"
+          }
+        ]
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
+          "flag": "tarin_at_observatory"
+        },
+        "then": [
+          {
+            "kind": "if",
+            "cond": {
+              "kind": "not",
+              "of": {
+                "kind": "flag",
+                "flag": "tarin_observatory_done"
+              }
+            },
+            "then": [
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "I am not going to ask."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "I have known you since we were four. I know what your face does."
+                ]
+              },
+              {
+                "kind": "wait",
+                "frames": 12
+              },
+              {
+                "kind": "choice",
+                "lines": [
+                  "He came up the hill in the dark and he is not out of breath. He walked it."
+                ],
+                "options": [
+                  {
+                    "label": "He knew.",
+                    "then": [
+                      {
+                        "kind": "say",
+                        "who": "TARIN",
+                        "lines": [
+                          "Yes."
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Say nothing.",
+                    "then": [
+                      {
+                        "kind": "say",
+                        "who": "TARIN",
+                        "lines": [
+                          "Yeah."
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "wait",
+                "frames": 12
+              },
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "He got as far as this room."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "You are going further than this room.",
+                  "That is not me being kind to you. That is just where you are going."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "I will walk down with you. We do not have to talk on the way."
+                ]
+              },
+              {
+                "kind": "setFlag",
+                "flag": "tarin_observatory_done"
+              }
+            ],
+            "else": [
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "I am still here. Take as long as you want."
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "end"
+          }
+        ]
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
+          "flag": "tarin_at_summit_pact"
+        },
+        "then": [
+          {
+            "kind": "sfx",
+            "sound": "badge"
+          },
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "Eight."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "Eight for me and eight for you, in the oldest city in Caelora, on the same afternoon.",
+              "I had a joke ready for this. It was not a good one."
+            ]
+          },
+          {
+            "kind": "choice",
+            "lines": [
+              "He is holding the eighth one flat on his palm. He has not put it away since he came out."
+            ],
+            "options": [
+              {
+                "label": "Eight each.",
+                "then": [
+                  {
+                    "kind": "say",
+                    "who": "TARIN",
+                    "lines": [
+                      "Eight each. Nobody out of Hearthmere has ever had one.",
+                      "There are two of us."
+                    ]
+                  }
+                ]
+              },
+              {
+                "label": "You went first.",
+                "then": [
+                  {
+                    "kind": "say",
+                    "who": "TARIN",
+                    "lines": [
+                      "By an hour. One hour, after four hundred miles.",
+                      "That is not winning. That is weather."
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "wait",
+            "frames": 12
+          },
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "Right. The thing I actually came out here to say."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "There is a Summit at the end of this and I am not going up it without you.",
+              "Not out of nerves. It does not count if you are not in it."
+            ]
+          },
+          {
+            "kind": "choice",
+            "lines": [
+              "He goes quiet the way he goes quiet when it is serious. It never lasts. It is lasting."
+            ],
+            "options": [
+              {
+                "label": "After Meridian.",
+                "then": [
+                  {
+                    "kind": "say",
+                    "who": "TARIN",
+                    "lines": [
+                      "After Meridian. Say it like a promise, because I am going to hold you to it."
+                    ]
+                  }
+                ]
+              },
+              {
+                "label": "Both of us.",
+                "then": [
+                  {
+                    "kind": "say",
+                    "who": "TARIN",
+                    "lines": [
+                      "Both of us. Finish this first.",
+                      "Then that road, and then we find out which of us it is."
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "I have spent ten years trying to beat you, {name}.",
+              "It took me until a mountain to work out that is not the same as wanting you to lose."
+            ]
+          },
+          {
+            "kind": "setFlag",
+            "flag": "tarin_summit_pact_done"
+          },
+          {
+            "kind": "removeNpc",
+            "who": "town_tarin"
+          },
+          {
+            "kind": "say",
+            "lines": [
+              "He goes back up the street. He does not look round, and he is not hurrying either."
             ]
           },
           {
@@ -1221,6 +1697,36 @@
       {
         "kind": "setFlag",
         "flag": "tideheart_echo_mirehaven_sanctum"
+      }
+    ]
+  },
+  {
+    "id": "tideheart_wake_frostmere_observatory",
+    "_note": "ACT 5. The stock close for the third and last of the three Aurelian sites Sorrell found in Elias' notes, and the only one of the four that the shipped game does not call.\n\nThat is deliberate and it is the whole shape of the act. data/events/frostmere_observatory_dome.json/fo_message owns the playback, because the player reaches the Frostmere Observatory with an EMPTY POCKET -- Meridian took the object in Aureline and Act 5 does not give it back -- and the room lets them in anyway, which is the argument of that building and the reason canon puts the last message in it. So the scene files the echo itself on the path where there is nothing to file it with, and calls this only on the branch where the player is somehow carrying the object.\n\nWhich makes this the postgame version, and it earns its place on disk three times over: tests/tideheart.test.js requires one wake script per built site and fails the moment BUILT_STAGE goes to 5 without it; a player who climbs back up the mountain in Stage 8 holding the object again should get the object’s own half of the beat rather than nothing; and a later map that wants the Observatory playback without the scene has something to call.",
+    "trigger": "call",
+    "when": {
+      "kind": "hasItem",
+      "item": "tideheart"
+    },
+    "actions": [
+      {
+        "kind": "sfx",
+        "sound": "fx_light"
+      },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "It has gone quiet in your hand, and it is warmer than this room is.",
+          "Whatever was in that floor is in there now, with the other two."
+        ]
+      },
+      {
+        "kind": "setFlag",
+        "flag": "tideheart_echo_frostmere_observatory"
       }
     ]
   },
@@ -2931,6 +3437,110 @@
     "actions": [
       { "kind": "removeNpc", "who": "ad_veyl" },
       { "kind": "removeNpc", "who": "ad_kell" }
+    ]
+  },
+  {
+    "id": "cs_tarin",
+    "_note": "TARIN AT CROWNSPIRE. A wrapper, not a scene -- the scene is the tarin_at_summit_pact branch of tarin_town, which is where every Tarin scene lives so none of them is lost when somebody rewrites a town. See docs/TARIN.md. data/maps/crownspire.json already stands a cs_tarin actor at 47,22 outside the eighth Hall, with no requiresFlag and no hiddenIfFlag, and points it at this id; this exists so that keeps working, and so the eighth city does not answer with the generic passing-through fallback at the bottom of tarin_town. IT IS A FALLBACK AS WELL AS A JOIN: registry.scriptsFor loads common.json first and then the map file over the top, keyed by id, so if the Crownspire build writes its own cs_tarin in data/events/crownspire.json that one wins and this one goes quiet. THE LADDER IS ORDERED DONE-FIRST because the actor has no hiddenIfFlag and tarin_town s removeNpc names town_tarin, which is a no-op here: he is still standing there after the agreement, and without the first branch he would play the whole agreement again every time he was spoken to. ARRIVAL IS HANDLED HERE RATHER THAN AS A FOURTH BRANCH OF tarin_town for a mechanical reason -- one actor cannot carry two requiresFlags, and tarin_at_crownspire is cleared the moment tarin_at_summit_pact opens, so an NPC gated on the first would vanish before the second could run.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
+          "flag": "tarin_summit_pact_done"
+        },
+        "then": [
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "Go on. I will be here when you get back, and so will the mountain."
+            ]
+          },
+          {
+            "kind": "end"
+          }
+        ]
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
+          "flag": "tarin_at_summit_pact"
+        },
+        "then": [
+          {
+            "kind": "call",
+            "script": "tarin_town"
+          },
+          {
+            "kind": "end"
+          }
+        ]
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
+          "flag": "tarin_at_crownspire"
+        },
+        "then": [
+          {
+            "kind": "if",
+            "cond": {
+              "kind": "not",
+              "of": {
+                "kind": "flag",
+                "flag": "tarin_crownspire_talked"
+              }
+            },
+            "then": [
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "Seven. I took the Gale one the morning the wind dropped and I have not slept properly since."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "Look at that door. Nine hundred years of people walking through that door.",
+                  "They have been cutting the names into the wall the whole time. There is still room on it."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "The keeper in there has no type at all. She just has a team.",
+                  "Everything either of us has learned, all at once, in one room."
+                ]
+              },
+              {
+                "kind": "setFlag",
+                "flag": "tarin_crownspire_talked"
+              }
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "Go and get the eighth one. I want to be stood here when you come out with it."
+            ]
+          },
+          {
+            "kind": "end"
+          }
+        ]
+      },
+      {
+        "kind": "call",
+        "script": "tarin_town"
+      }
     ]
   }
 ]

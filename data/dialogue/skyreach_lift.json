@@ -1,0 +1,36 @@
+{
+  "speakers": {
+    "sl_operator": "CABLE OPERATOR",
+    "sl_passenger": "PASSENGER"
+  },
+  "entries": {
+    "sl_operator": [
+      {
+        "ifFlags": [
+          "crest_6_taken"
+        ],
+        "lines": [
+          "Ninety seconds. Stand in the middle and do not lean on the doors.",
+          "I have run this car nine years and it has never yawed. It yawed on Tuesday.",
+          "I did not tell anybody. I am telling you because you are going to be in it."
+        ]
+      },
+      {
+        "lines": [
+          "Ninety seconds across, and the walk round is two hours. That is the whole of my argument.",
+          "Stand in the middle. Both doors work, and while we are moving they are the same door.",
+          "Somebody tested that once. There is a card about it on the frame now."
+        ]
+      }
+    ],
+    "sl_passenger": [
+      {
+        "lines": [
+          "Every single person in this car is about to look out of the window at that lamp.",
+          "The lower dock. No bridge, no stair, no way to it, and somebody keeps it lit.",
+          "Nobody knows who. There is money in the town books for oil and no name against it."
+        ]
+      }
+    ]
+  }
+}

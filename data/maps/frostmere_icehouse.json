@@ -1,0 +1,89 @@
+{
+  "id": "frostmere_icehouse",
+  "name": "Interior",
+  "displayName": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "_design": "A box for keeping the dark cold. Double walls with two feet of sawdust between them, no window anywhere, and a floor that drains. The building is the town’s savings account and this winter it is going to be half empty, which is the whole of the Frostmere storm scene told in stacked blocks.",
+  "rows": [
+    "IIIIIIIIIIIIIIIIIII",
+    "I=================I",
+    "I=ŲŲŲ=ŲŲŲ=ŲŲŲ=ŲŲ==I",
+    "I=ŲŲŲ=ŲŲŲ=ŲŲŲ=ŲŲ==I",
+    "I=================I",
+    "I=ŲŲŲ=ŲŲŲ=ŲŲŲ=ŲŲ==I",
+    "I=ŲŲŲ=ŲŲŲ=ŲŲŲ=ŲŲ==I",
+    "I=================I",
+    "I=ŲŲŲ=ŲŲŲ=====ŲŲ==I",
+    "I=ŲŲŲ=ŲŲŲ=====ŲŲ==I",
+    "I=================I",
+    "I=$===============I",
+    "IIIIIIIIIDIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 12,
+      "toMap": "frostmere",
+      "toX": 22,
+      "toY": 33,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "fmh_master",
+      "sprite": "porter",
+      "x": 4,
+      "y": 11,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "fmh_master"
+    },
+    {
+      "id": "fmh_packer",
+      "sprite": "villager_m",
+      "x": 12,
+      "y": 8,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "fmh_packer"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 11,
+      "text": [
+        "The ledger bench, and the ledger on it is the only book in Frostmere with a lock.",
+        "IN. OUT. SOLD TO. Eleven towns down the south column, some of them a month away.",
+        "Aureline takes more of it than the other ten together and always has."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 14,
+      "y": 8,
+      "text": [
+        "The gap in the stacks where the rest of this winter was supposed to go.",
+        "Somebody has chalked the floor out in squares and numbered them to four hundred.",
+        "The numbering stops being chalk and becomes a list of dates at ninety-one."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 16,
+      "y": 9,
+      "item": "thawcloth",
+      "quantity": 2,
+      "flag": "item_fmh_ice"
+    }
+  ]
+}

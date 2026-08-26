@@ -1,0 +1,124 @@
+{
+  "id": "skyreach_turbinehouse",
+  "name": "The Wind House",
+  "displayName": "THE WIND HOUSE",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "_design": "Half town machine hall and half Meridian Foundation weather station, and the two halves are separated by nothing except which side of the room the paperwork is on. That is deliberate: this is what the Foundation looks like when it is genuinely useful, and everybody in Skyreach likes them for it.",
+  "rows": [
+    "IIIIIIIIIIIIIIIIIIIII",
+    "IUU:::::::::::::::UUI",
+    "I@@:::::::::::::::@@I",
+    "I:::+++++++++++++:::I",
+    "I:::?:::::?:::::?:::I",
+    "I:::::::::::::::::::I",
+    "I$$$:::::::::::::$$$I",
+    "I:::::::::::::::::::I",
+    "Ik::::::@@@::::::::kI",
+    "I:::::::::::::::::::I",
+    "I:AE:::::::::::::EA:I",
+    "I:::::::::::::::::::I",
+    "IP:::::::::::::::::PI",
+    "IIIIIIIIIDDIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 13,
+      "toMap": "skyreach",
+      "toX": 7,
+      "toY": 12,
+      "facing": "down",
+      "style": "door"
+    },
+    {
+      "x": 10,
+      "y": 13,
+      "toMap": "skyreach",
+      "toX": 8,
+      "toY": 12,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "st_chief",
+      "sprite": "meridian_sci",
+      "x": 6,
+      "y": 5,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "st_chief"
+    },
+    {
+      "id": "st_observer",
+      "sprite": "meridian_sci_f",
+      "x": 14,
+      "y": 5,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "st_observer"
+    },
+    {
+      "id": "st_mastwright",
+      "sprite": "porter",
+      "x": 4,
+      "y": 9,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "st_mastwright"
+    },
+    {
+      "id": "st_apprentice",
+      "sprite": "kid",
+      "x": 15,
+      "y": 10,
+      "facing": "left",
+      "movement": {
+        "kind": "wander",
+        "radius": 2
+      },
+      "script": "st_apprentice"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 3,
+      "text": [
+        "THE STATION BOARD. Pressure, temperature, and eight arrows for eight quarters.",
+        "Seven of the arrows are steady. The eighth has been swinging since the month began.",
+        "Somebody has stopped writing readings under it and started writing times instead."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 8,
+      "text": [
+        "The tank room, and the light in the glass is going round rather than sitting still.",
+        "A Foundation card: SAMPLE HELD FOR AURELINE. DO NOT DISCHARGE.",
+        "It is dated three weeks ago. Nobody has come for it and nobody has written since."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 6,
+      "text": [
+        "The bench, and the chart pinned over it is not a weather chart.",
+        "It is the crescent, the whole coast, with nineteen small crosses on it and no key.",
+        "Somebody has written in the margin, in pencil: WHY ARE THEY ALL ON THE WATER."
+      ]
+    }
+  ]
+}

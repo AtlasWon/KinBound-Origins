@@ -1,0 +1,69 @@
+{
+  "id": "frostmere_house_a",
+  "name": "Interior",
+  "displayName": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "_design": "A weaver’s. The loom pays for the winter and the winter is what there is time to weave in, which is the economy of every house on this street stated once.",
+  "rows": [
+    "IIIUIIIUIII",
+    "IQNffĘffkfI",
+    "IfffffffffI",
+    "IkfAEfffbeI",
+    "IffAEffffPI",
+    "IfffffffffI",
+    "I/rrfffffkI",
+    "IfrrfffffbI",
+    "IfffffffefI",
+    "IIIIIDIIIII"
+  ],
+  "warps": [
+    {
+      "x": 5,
+      "y": 9,
+      "toMap": "frostmere",
+      "toX": 0,
+      "toY": 0,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "fma_weaver",
+      "sprite": "villager_f",
+      "x": 2,
+      "y": 4,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "fma_weaver"
+    },
+    {
+      "id": "fma_child",
+      "sprite": "kid",
+      "x": 7,
+      "y": 6,
+      "facing": "down",
+      "movement": {
+        "kind": "wander",
+        "radius": 2
+      },
+      "script": "fma_child"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 1,
+      "text": [
+        "A shelf of cloth in the one colour nobody outside this valley wants.",
+        "Undyed, greased, and woven so tight it will hold water. It is not for selling.",
+        "Every child in Frostmere has a coat of it before they have a name they answer to."
+      ]
+    }
+  ]
+}

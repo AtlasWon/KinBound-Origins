@@ -35,6 +35,14 @@
     ],
     "mh_ferrywoman": [
       {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "Walk it. I am not putting anybody across in this and I have never said that in my life.",
+          "Ninety seconds, and yesterday the ninety seconds took me eleven minutes and a broken pole.",
+          "Go the long way. It is still a beautiful walk. Keep hold of the rail."
+        ]
+      },
+      {
         "lines": [
           "You can walk to the East Stage. It takes forty minutes and it is a beautiful walk.",
           "Or I can put you across in ninety seconds for nothing, because I am going anyway.",
@@ -113,6 +121,14 @@
     ],
     "mh_child": [
       {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "The green has gone. All of it, all at once, and the water under the boards is just water.",
+          "I sat out there half the night in case they came back.",
+          "Mum says it is only Kin. She said it in her going-to-cry voice this time."
+        ]
+      },
+      {
         "ifFlags": ["crest_5_taken"],
         "lines": [
           "Everyone says do not go under the decks. I go under the decks.",
@@ -129,6 +145,14 @@
       }
     ],
     "mh_stiltwright": [
+      {
+        "ifFlags": ["act4_done"],
+        "lines": [
+          "I asked you if the foot was worth it. It was worth it. It is not enough.",
+          "We are cutting and lifting the third row now, in the wet, with the whole town holding lamps.",
+          "A foot bought us three years. I do not know what this one buys and I am building it anyway."
+        ]
+      },
       {
         "lines": [
           "Every pile under this row I have been down to and put my hands on.",

@@ -1,0 +1,101 @@
+{
+  "id": "frostmere_clinic",
+  "name": "Interior",
+  "displayName": "Interior",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "_design": "The only building in Frostmere with a bed nobody has to be ill to use. Two of the four are for people the mountain sent back, and the bulletin rack by the door is a weather board first and a notice board second.",
+  "rows": [
+    "IIIUIIIIIUIIIII",
+    "IQNFKKKKKFF;;FI",
+    "IFFFFFFFFFFFFFI",
+    "IkFFFFFĘFFFFFkI",
+    "IFbeFFFFFFbeFFI",
+    "IFFFFFFFFFFFFFI",
+    "IPFFFF//FFFFFPI",
+    "IFFFFFrrFFFFFFI",
+    "IkFFFFFFFFFFFPI",
+    "IFFFFFFFFFFFFFI",
+    "IIIIIIIDIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 7,
+      "y": 10,
+      "toMap": "frostmere",
+      "toX": 22,
+      "toY": 23,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "fmc_keeper",
+      "sprite": "healer",
+      "x": 5,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "clinic_heal"
+    },
+    {
+      "id": "fmc_roost",
+      "sprite": "professor",
+      "x": 11,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "roost_terminal"
+    },
+    {
+      "id": "fmc_faller",
+      "sprite": "hiker",
+      "x": 3,
+      "y": 5,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "fmc_faller"
+    },
+    {
+      "id": "fmc_visitor",
+      "sprite": "villager_f",
+      "x": 11,
+      "y": 5,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "fmc_visitor"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 1,
+      "text": [
+        "The bulletin rack, and the top sheet on it is the weather and not the news.",
+        "WIND. CLOUD BASE. WATER AT THE INTAKE. ICE AT THE CUT. Three weeks of readings.",
+        "The ICE column has been under twelve every day of it, and it is filled in anyway."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "The stove, the kettle, and over the counter the restorative bank in green.",
+        "A card taped to the glass: WE DO NOT CHARGE FOR HEAT, DRY CLOTHES OR A CHAIR.",
+        "Under it, drily: THE REST OF IT WE DO, AND WE ARE NOT SORRY."
+      ]
+    }
+  ]
+}

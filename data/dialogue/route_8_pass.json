@@ -1,0 +1,35 @@
+{
+  "$comment": "The Wintergate. TWO VOICES ONLY, and that is the design: this is the emptiest map in Caelora and it has to feel it. An ice cutter reading a gauge that has stopped making sense, and an old woman walking up to a light she can see from the col. Neither of them is told anything and neither of them explains anything.\n\nThe pilgrim is the first person in the game to say the word Observatory to the player as a place rather than as a note in Elias' papers, and she says it as somebody who has been walking to it for thirty years without knowing whose it is. That is the whole preparation the Observatory gets from this road, and it is enough.",
+  "speakers": {
+    "r8p_gauge": "GAUGE HAND",
+    "r8p_pilgrim": "OLD WOMAN"
+  },
+  "entries": {
+    "r8p_gauge": [
+      {
+        "lines": [
+          "Eight inches is sound. Under eight and nobody goes on, not for anything.",
+          "I have taken five readings this week and got five numbers, and two of them went DOWN.",
+          "Ice does not get thinner in a cold week. I would like somebody to explain that to me."
+        ]
+      }
+    ],
+    "r8p_pilgrim": [
+      {
+        "ifFlags": ["act4_theft"],
+        "lines": [
+          "I walk up to the light every year. My mother did. I do not know who keeps it on.",
+          "Somebody must. It has never once been out, and it is not out now.",
+          "It is the only thing in this whole month that is behaving itself."
+        ]
+      },
+      {
+        "lines": [
+          "You can see it from the col if the air is clear. Small, and high above the town.",
+          "The Observatory, they call it. Nobody in Frostmere goes up. They just look at it.",
+          "Thirty years I have come. I have never gone up either. It did not seem like mine to go into."
+        ]
+      }
+    ]
+  }
+}

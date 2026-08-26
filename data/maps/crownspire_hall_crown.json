@@ -1,0 +1,120 @@
+{
+  "id": "crownspire_hall_crown",
+  "name": "The Crown Floor",
+  "displayName": "THE CROWN FLOOR",
+  "music": "station",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "IIIIIIIIIIIIIIII",
+    "IUUUUUUUUUUUUUUI",
+    "IFFFFFFFFFFFFFFI",
+    "IPFFFFFFFFFFFFPI",
+    "IkFFFFFFFFFFFFkI",
+    "IkFFFFFFFFFFFFkI",
+    "IkFFFFFFFFFFFFkI",
+    "IFFFFFFFFFFFFFFI",
+    "IFFFFFFFFFFFFFFI",
+    "IFFFFFFFFFFFFFFI",
+    "IAAFFFFFFFFFFAAI",
+    "IEEFFFFFFFFFFEEI",
+    "IPFFFFFFFFFFFFPI",
+    "IFFFFFFSSFFFFFFI",
+    "IIIIIIIIIIIIIIII"
+  ],
+  "warps": [
+    {
+      "x": 7,
+      "y": 13,
+      "toMap": "crownspire_hall",
+      "toX": 7,
+      "toY": 3,
+      "facing": "down",
+      "style": "stairs"
+    },
+    {
+      "x": 8,
+      "y": 13,
+      "toMap": "crownspire_hall",
+      "toX": 8,
+      "toY": 3,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "cs_keeper_ord",
+      "sprite": "elder",
+      "x": 7,
+      "y": 3,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "cs_keeper"
+    },
+    {
+      "id": "cs_crown_aide",
+      "sprite": "clerk",
+      "x": 3,
+      "y": 8,
+      "facing": "right",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "cs_crown_aide"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 1,
+      "text": [
+        "The north lights. On a clear day the Ascent fills all fourteen of them.",
+        "There has not been a clear day for six.",
+        "The glass is running with water and the mountain is a grey suggestion behind it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 5,
+      "text": [
+        "Forty years of her notes, one volume a year, on the Kin of every Trainer",
+        "who has stood on this floor. Not who won. What they brought, and why.",
+        "The spines are labelled by year. The year is the only thing on them."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 14,
+      "y": 5,
+      "text": [
+        "A rack of eight practice Crests, cast in lead, for people to hold.",
+        "Seven are worn smooth. The eighth is as sharp as the day it came out of the mould.",
+        "Nobody comes up here to hold the eighth one."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 10,
+      "text": [
+        "A small table, two chairs, a pot of tea and three cups.",
+        "Three, because in forty years she has never got used to somebody bringing a friend."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 14,
+      "y": 10,
+      "text": [
+        "A window seat worn through to the boards, facing the stair rather than the mountain.",
+        "She sits here between challengers, watching the top of the steps."
+      ]
+    }
+  ],
+  "_plan": "THE ROOM IS QUIET AND THE FIGHT IS OPTIONAL TWICE OVER. The Crest is one battle with Keeper Ord and it is measured at 97/90/87 for a novice at the level the road delivers. The Long Floor -- her three Stewards and then her, back to back, with no clinic between -- is offered as a choice and never as a gate, because the player has asked four times for an easier game and the last Crest in the story is the worst possible place in the game to put a wall. What the hard road buys is not progress. It is a name cut into the wall outside, which is the only thing this city has ever cared about, and it changes the monument, the mason, the reader, the registrar and Tarin. Sixteen wide, like the gallery below it, so the fourteen north lights and both side walls are on screen from the middle of the floor."
+}
