@@ -1,0 +1,252 @@
+{
+  "id": "temple_deep_power_stage",
+  "name": "Temple of the Deep",
+  "displayName": "THE CROWN WORKS",
+  "music": "station",
+  "battleBackdrop": "cave",
+  "indoor": true,
+  "_plan": "PROJECT ABYSS CROWN, INSTALLED. THE LOWER STAGE.\n\nIn Act 4 the player stood in a basement in Aureline and read a rack of\nsixty cradles with fifty-one filled, nine standing empty at the end of the\nrow with a card giving the date the last nine were due, and a board chalked\nFIND. WAKE. RING. HOLD with REQUIRES THE HEART under WAKE. That month is\nnow. This room is the other end of the waybill: the crates that were\nstencilled for a harbour with no road are open and empty against the wall,\nthe nine cradles are here, and they are empty because the rings are out\nthere. Every sign in this room is written to be read by somebody who read\nthat basement, and not one of them repeats it.\n\nTHE ROOM IS AURELIAN AND THE PLANT IS NOT, AND THE JOIN IS THE POINT.\nOmega wall, Theta floor and the grooves still running down both long edges\nat x3 and x30 -- and over the middle of it, laid rather than built, a\nrectangle of laboratory decking with a generator row bolted to the north\nwall and a header pipe running the length of it. Nothing here was cut. It\nwas carried down a stair.\n\nTHE TRENCH IS THE IMAGE THE ROOM EXISTS FOR. Meridian have chopped a\nchannel through their own decking and through the east wall at 22-33,14-16,\nrailed both sides, and put the cable head on the deck at 20-21,15. The cable\ngoes into the water and does not come back. It is the only water in the room\nand it is the only thing in the room that is not tidy.\n\nRACK ONE (9-17,7) IS THE RETURNS and holds two rings that came off the sea\nfloor and were not sent out again; its sign gives the reason and the reason\nis the split ring in the Aureline basement said in one more sentence. RACK\nTWO (9-17,10) is cradles fifty-two to sixty, and it is empty.\n\nTHIS IS \"THE LOWER STAGE\" THE CLIMAX ONE FLOOR UP KEEPS NAMING. The scene\non the control ring (data/events/temple_deep_power.json, another author)\nhas Meridian's own people stop working and start running, and Tarin leave\nthe argument to go down and move them. These are those people. Every one of\nthem carries hiddenIfFlag `td_power_done`, so once that scene has run this\nfloor is empty -- except Officer Sennhal in the sick bay at 6,15, who stays,\nbecause what she is looking after cannot walk out on its own.\n\nNO TRAINERS ON THIS FLOOR, DELIBERATELY. The hardest battle in the game is\none floor up and the player has been asked for four acts to be allowed an\neasier ride; a corridor of guards before the climax spends exactly the\nresources the climax needs. What the floor has instead is Sennhal, who heals\nthe party as often as you like and does not ask who you are. That is the\nsave point before the boss, dressed as the enemy being ordinary -- which is\nthe whole of what CANON.md says about the people who work for Meridian.",
+  "rows": [
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩSSΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΘ≡ΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘ≡ΘΩΩ",
+    "ΩΩΘ≡ΘΘ³ΘΘ³ΘΘ³ΘΘ³ΘΘ³ΘΘ³ΘΘ³ΘΘ³ΘΘ≡ΘΩΩ",
+    "ΩΩΘ≡Θ±±±±±±±±±±±±±±±±±±±±±±±±Θ≡ΘΩΩ",
+    "ΩΩΘ≡ΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘ≡ΘΩΩ",
+    "ΩΩΘ≡Θ::::::::::::::::::::::::Θ≡ΘΩΩ",
+    "ΩΩΘ≡Θ::::ΦΦΞΞΞΞΞΞΞ:::::::::::Θ≡ΘΩΩ",
+    "ΩΩΘ≡Θ::::::::::::::::$$E:::::Θ≡ΘΩΩ",
+    "ΩΩΘ≡Θ::::::::::::::::::::::::Θ≡ΘΩΩ",
+    "ΩΩΘ≡Θ::::ΞΞΞΞΞΞΞΞΞ:::::::::::Θ≡ΘΩΩ",
+    "ΩΩΘ≡Θ::::::::::::::::::::::::Θ≡ΘΩΩ",
+    "ΩΩΘ≡Θ:@@:::::::::::::::::::::Θ≡ΘΩΩ",
+    "ΩΩΘ≡Θ::::::?++::::::::╫╫╫╫╫╫╫╫╫╫ΩΩ",
+    "ΩΩΘ≡Θ:¾¾::::::::::::¶:WWWWWWWWWWWW",
+    "ΩΩΘ≡Θ:::@:::::::::::::WWWWWWWWWWWW",
+    "ΩΩΘ≡Θ:::$:::::::::::¶:WWWWWWWWWWWW",
+    "ΩΩΘ≡Θ:¾¾::::::::::::::╫╫╫╫╫╫╫╫╫╫ΩΩ",
+    "ΩΩΘ≡Θ::::::::::::::::::::::::Θ≡ΘΩΩ",
+    "ΩΩΘ≡Θ:¾¾¾¾::?++?:::::::::::::Θ≡ΘΩΩ",
+    "ΩΩΘ≡Θ::::::::::::::::::::¾¾¾:Θ≡ΘΩΩ",
+    "ΩΩΘ≡Θ::::::::::::::::::::::::Θ≡ΘΩΩ",
+    "ΩΩΘ≡ΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘ≡ΘΩΩ",
+    "ΩΩΘ≡ΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘ≡ΘΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΘΘΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩSSΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ"
+  ],
+  "warps": [
+    {
+      "x": 16,
+      "y": 25,
+      "toMap": "temple_deep_tunnels",
+      "toX": 14,
+      "toY": 2,
+      "facing": "down",
+      "style": "stairs"
+    },
+    {
+      "x": 17,
+      "y": 25,
+      "toMap": "temple_deep_tunnels",
+      "toX": 15,
+      "toY": 2,
+      "facing": "down",
+      "style": "stairs"
+    },
+    {
+      "x": 16,
+      "y": 1,
+      "toMap": "temple_deep_power",
+      "toX": 9,
+      "toY": 15,
+      "facing": "up",
+      "style": "stairs"
+    },
+    {
+      "x": 17,
+      "y": 1,
+      "toMap": "temple_deep_power",
+      "toX": 10,
+      "toY": 15,
+      "facing": "up",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tds_fitter",
+      "sprite": "meridian_sci",
+      "x": 13,
+      "y": 11,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tds_fitter",
+      "hiddenIfFlag": "td_power_done"
+    },
+    {
+      "id": "tds_officer",
+      "sprite": "meridian_sci_f",
+      "x": 6,
+      "y": 15,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tds_officer"
+    },
+    {
+      "id": "tds_hand",
+      "sprite": "meridian",
+      "x": 24,
+      "y": 19,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tds_hand",
+      "hiddenIfFlag": "td_power_done"
+    },
+    {
+      "id": "tds_young",
+      "sprite": "meridian",
+      "x": 19,
+      "y": 12,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tds_young",
+      "hiddenIfFlag": "td_power_done"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 7,
+      "text": [
+        "RACK ONE. RETURNS. Two rings back off the floor and not sent out again.",
+        "Both cards say the same thing, in the same hand, in the same six words.",
+        "RING SOUND. WITHDRAWN ON SUBJECT RESPONSE."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 10,
+      "text": [
+        "RACK TWO. CRADLES 52-60. All nine standing open.",
+        "In Aureline these nine were the ones that had not been made yet.",
+        "They were made. They are out there."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 21,
+      "y": 8,
+      "text": [
+        "The bench, and the same four words chalked on the board above it.",
+        "FIND. WAKE. RING. HOLD. The first three have been struck through.",
+        "HOLD has not been struck through. Under it, a tally, and it is climbing."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 20,
+      "y": 14,
+      "text": [
+        "The cable head. Sixty conductors go in and one armoured trunk comes out.",
+        "It runs down the trench, through the wall, and into the sea.",
+        "Nothing on this floor tells you how far. The load sheet does not either."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 6,
+      "y": 3,
+      "text": [
+        "A generator, and seven more like it down this wall.",
+        "A card on the header gives the draw at full load, in plain figures.",
+        "It is more current than the city of Aureline takes on a winter night."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 19,
+      "text": [
+        "Crates, opened, emptied and stacked flat against the wall.",
+        "The stencil on every one of them still says SURVEY EQUIPMENT.",
+        "The waybill nailed to the top one says sixty of the same thing."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 19,
+      "text": [
+        "A console cycling one trace, the way the one in Aureline was cycling it.",
+        "It is the same reading. It is not the same shape any more.",
+        "It used to rise and fall evenly. Now it goes up and it stays up."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 6,
+      "y": 12,
+      "text": [
+        "Two tanks, a pallet of dry kit, and forty pairs of boots in rows.",
+        "Somebody has chalked names above the pegs. Most of the pegs are empty.",
+        "Whatever the people who work here are doing, they are all doing it now."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 26,
+      "y": 20,
+      "text": [
+        "A crate that never got opened, addressed to the works and not the ship.",
+        "CRADLE 61. SPARE. HOLD FOR INSTRUCTION.",
+        "Somebody expected to need a sixty-first."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 8,
+      "text": [
+        "The Aurelian groove runs the length of this wall and out under the deck.",
+        "The plating has been cut round it rather than over it.",
+        "Somebody on this crew respected it enough to go the long way."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 14,
+      "text": [
+        "Four crates on end make three walls, and inside them somebody keeps a bay.",
+        "Blankets, a bucket, a lamp, and a chalked list of names on the top crate.",
+        "They are not people. They are Kin, and the list is in treatment order."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 5,
+      "y": 21,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_tds_stores"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 29,
+      "y": 6,
+      "item": "full_rouse",
+      "quantity": 1,
+      "flag": "item_tds_corner"
+    }
+  ]
+}

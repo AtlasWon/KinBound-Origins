@@ -1,9 +1,24 @@
 {
-  "speakers": { "fma_weaver": "WEAVER", "fma_child": "HER DAUGHTER" },
+  "speakers": {
+    "fma_weaver": "WEAVER",
+    "fma_child": "HER DAUGHTER"
+  },
   "entries": {
     "fma_weaver": [
       {
-        "ifFlags": ["act4_done"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Two of the six came back to be let out. Grown men who own coats, stood sheepish in my doorway.",
+          "I let them out and I charged them for it. They were glad to pay for something ordinary.",
+          "The other four are being worn. Nobody up here has ever been sorry to own a coat."
+        ]
+      },
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
         "lines": [
           "Six coats ordered in a fortnight, and four of them for grown men who own coats.",
           "They are not cold. They are getting ready for something and they cannot say what."

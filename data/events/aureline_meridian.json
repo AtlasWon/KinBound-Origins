@@ -599,5 +599,323 @@
         "flag": "act4_done"
       }
     ]
+  },
+  {
+    "id": "aftermath_atrium",
+    "_note": "STAGE 6, THE AFTERMATH, BEAT 2: LYRA REBUILDS MERIDIAN.\n\nAPPENDED to the Act 4 file rather than given one of its own, because the engine only loads data/events/<mapId>.json (Registry.loadScriptsFor) -- a scene that plays in this atrium has to live in this array or it is never fetched at all. Nothing above it is touched.\n\nSAME ROOM AS THE FIRST BEAT OF ACT 4, DELIBERATELY. am_arrive opened on a relief queue going out through the doors with a woman at the front of it being given money, and the whole unease of Act 4 was that every true thing in this room stayed true. So the aftermath opens on the same shot. The queue is still moving. It was always real, and Lyra's decision is only worth anything because it was.\n\nCANON: 'Lyra chooses to rebuild Meridian into something legitimate: conservation, ethical archaeology, disaster research. This is her arc landing, and it should be a decision rather than a reward.' So she has already decided before the player walks in, the player is not offered a vote on it, and the one thing she asks for is not approval. She asks somebody to be in the room. That is the difference between a decision and a reward, and the scene is built on it.\n\nSHE IS NOT REPLACING HER FATHER AND THE SCRIPT SAYS SO. Three things kept, everything else burned, no survey floor, nothing under anything -- and an instruction to come back and burn it down if it ever grows a floor nobody talks about. Bond versus control, said by the daughter of the man who lost that argument.\n\nGATE. act6_done, set by the climax; see the note on aftermath_quay in data/events/tideglass.json for the contract. Listed last in this array so that am_arrive and aur_act4_close both decline on their onceFlags before this one takes its turn -- only the first 'enter' script that starts is run.\n\nWHAT IT HANDS ON. lyra_rebuilds, which the Foundation offices in Stonewake and Tideglass and the field voices in data/dialogue/common.json all read, and a pointer at the Summit registry on the other side of the city, which is where this stage ends.",
+    "trigger": "enter",
+    "map": "aureline_meridian",
+    "onceFlag": "aftermath_atrium_done",
+    "when": {
+      "kind": "flag",
+      "flag": "act6_done"
+    },
+    "actions": [
+      {
+        "kind": "wait",
+        "frames": 26
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The atrium is louder than you have ever heard it and none of the noise is people talking.",
+          "It is paper."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Forty crates on a floor that has never had a crate on it,",
+          "and two clerks from the capital counting things into them out loud."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 18
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The relief queue goes out through the doors, and it is moving,",
+          "and the woman at the front of it is being given money."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "It has not stopped once all week.",
+          "Nobody has asked it to."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "setFlag",
+        "flag": "af_hq_cast"
+      },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "af_hq_lyra",
+          "sprite": "lyra",
+          "x": 13,
+          "y": 16,
+          "facing": "down",
+          "movement": {
+            "kind": "static"
+          }
+        }
+      },
+      {
+        "kind": "face",
+        "who": "player",
+        "dir": "up"
+      },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "Nine days.",
+          "Four hundred people upstairs found out what they had been part of by reading it in the Press."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "Two resigned by letter. One came in anyway, sat down at her desk, cried for an hour,",
+          "and then did a full day of work. I have not stopped thinking about her."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 18
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "The commission want the whole thing wound up. Papers, buildings, boats, the name struck off.",
+          "Six weeks and there would be nothing here at all."
+        ]
+      },
+      {
+        "kind": "choice",
+        "lines": [
+          "She says it flatly, the way you say a thing you have already argued about with somebody and won."
+        ],
+        "options": [
+          {
+            "label": "Maybe they should.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "LYRA",
+                "lines": [
+                  "That is the tidy answer. It costs eleven hundred people their wages",
+                  "and it takes the pumps out of Marlbeck by the spring."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "LYRA",
+                "lines": [
+                  "I have been the tidy answer's daughter my whole life.",
+                  "I am not going to do the other half of him as well."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "What do you want?",
+            "then": [
+              {
+                "kind": "say",
+                "who": "LYRA",
+                "lines": [
+                  "Three things kept and everything else burned.",
+                  "I have written down which three and I have not shown it to anybody yet."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "None of it was yours.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "LYRA",
+                "lines": [
+                  "I know. That is not the question, and I would rather you did not hand me the easy one.",
+                  "Everybody has, all week. It has not helped once."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "Conservation. Kin, coast, fen, the lot, and no collecting.",
+          "Archaeology under the region's licence and not ours, with somebody from outside on every dig."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "Disaster research. Published. Every figure, to anybody who asks, the week it is taken.",
+          "Storm cards stay free. They were always the only honest thing we printed."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "No survey floor. No directorate that does not exist.",
+          "Nothing under anything, ever again."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "There is one sheet in her hand with her own name already written at the bottom of it.",
+          "She has been holding it since before you came in."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "I am not asking you to tell me it is a good idea.",
+          "I have had a week of that and it is worth nothing."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "I am asking you to be standing there while I sign it.",
+          "So there is one person in the room who knows what it is instead of what it says."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 22
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "You stay where you are."
+        ]
+      },
+      {
+        "kind": "sfx",
+        "sound": "page_turn"
+      },
+      {
+        "kind": "wait",
+        "frames": 24
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "She signs it against the end of the counter with a clerk's pen that is nearly dry,",
+          "and does not do it again more neatly."
+        ]
+      },
+      {
+        "kind": "setFlag",
+        "flag": "lyra_rebuilds"
+      },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "The Meridian Foundation.",
+          "Eleven hundred people and three things."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 18
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "If it ever gets big enough to have a floor nobody talks about, come back and burn it down.",
+          "I am saying that to you as an instruction and I would like it taken as one."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 22
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Behind her the relief queue moves up one."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 22
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "Your friend has been in the Summit registry on the east side for two days,",
+          "pretending to read the standing list. Go and put him out of his misery."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
+      {
+        "kind": "move",
+        "who": "af_hq_lyra",
+        "steps": [
+          "up",
+          "up",
+          "up"
+        ]
+      },
+      {
+        "kind": "removeNpc",
+        "who": "af_hq_lyra"
+      },
+      {
+        "kind": "setFlag",
+        "flag": "af_hq_cast",
+        "value": false
+      }
+    ]
   }
 ]

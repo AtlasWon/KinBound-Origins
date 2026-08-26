@@ -257,6 +257,17 @@
       },
       "script": "am_tarin",
       "hiddenIfFlag": "act4_inside"
+    },
+    {
+      "id": "af_hq_lyra",
+      "sprite": "lyra",
+      "x": 13,
+      "y": 16,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "requiresFlag": "af_hq_cast"
     }
   ],
   "objects": [

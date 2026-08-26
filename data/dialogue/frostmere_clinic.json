@@ -6,7 +6,19 @@
   "entries": {
     "fmc_faller": [
       {
-        "ifFlags": ["act4_done"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "The trail is a trail again. Rock, snow, a bit of a slither, and no glass on it anywhere.",
+          "I went back up to the second cairn on Sunday with the rope in my bag and did not take it out.",
+          "I am going to keep carrying it. That is what the last month is worth to me."
+        ]
+      },
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
         "lines": [
           "I went up to the second cairn and I came down on my back for the last of it.",
           "Rain. Freezing on as it landed. The whole trail was glass by the afternoon.",

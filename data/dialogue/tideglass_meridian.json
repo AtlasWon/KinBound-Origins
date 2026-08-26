@@ -7,23 +7,79 @@
   },
   "entries": {
     "tg_station_lead": [
-      "Everything on this floor is public. Ask for a figure and you will get the figure.",
-      "The floor below is survey, and survey has never been public anywhere.",
-      "I have worked here eleven years and I have been down it four times."
+      {
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Everything on this floor is public, and so is the floor below it, as of Monday morning.",
+          "Four times in eleven years I went down survey. I have been down twice this week with a clerk.",
+          "There is nothing down there now except tables. I do not know what I thought I would find."
+        ]
+      },
+      {
+        "lines": [
+          "Everything on this floor is public. Ask for a figure and you will get the figure.",
+          "The floor below is survey, and survey has never been public anywhere.",
+          "I have worked here eleven years and I have been down it four times."
+        ]
+      }
     ],
     "tg_station_sci": [
-      "I run the storm glasses. In spring I called a squall six hours out and the fleet came in.",
-      "Nine boats. Nine crews. That is what this building is for.",
-      "When somebody tells you what we are, start with the nine."
+      {
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "I called a squall six hours out in the spring and nine crews came in. That is still true.",
+          "It is on the notice in the window now, with the other thing, on the same sheet of paper.",
+          "When somebody tells you what we were, make them read the whole sheet."
+        ]
+      },
+      {
+        "lines": [
+          "I run the storm glasses. In spring I called a squall six hours out and the fleet came in.",
+          "Nine boats. Nine crews. That is what this building is for.",
+          "When somebody tells you what we are, start with the nine."
+        ]
+      }
     ],
     "tg_station_sci_f": [
-      "The equipment coming down the ridge road is not ours. Not this station.",
-      "It comes through us and goes onto the water and none of it is logged here.",
-      "I asked. I was told it was a different directorate. There is no different directorate."
+      {
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "The equipment that came down the ridge road is on the quay in pieces and two clerks are counting it.",
+          "I was told there was no different directorate. There was a different directorate.",
+          "Nobody has thanked me and nobody is going to, and that is correct. All I ever did was ask."
+        ]
+      },
+      {
+        "lines": [
+          "The equipment coming down the ridge road is not ours. Not this station.",
+          "It comes through us and goes onto the water and none of it is logged here.",
+          "I asked. I was told it was a different directorate. There is no different directorate."
+        ]
+      }
     ],
     "tg_station_hand": [
-      "Best job I have ever had. Warm building, fair pay, and the work is good work.",
-      "Whatever anybody tells you outside, most of us are exactly what it says on the door."
+      {
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Best job I have ever had, and I have spent nine days working out what building I was standing in.",
+          "Warm building, fair pay, good work. All of that was true the entire time and it is still true.",
+          "Most of us are exactly what it says on the door. It is a different door now, that is all."
+        ]
+      },
+      {
+        "lines": [
+          "Best job I have ever had. Warm building, fair pay, and the work is good work.",
+          "Whatever anybody tells you outside, most of us are exactly what it says on the door."
+        ]
+      }
     ]
   }
 }

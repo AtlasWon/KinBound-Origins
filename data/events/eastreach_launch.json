@@ -1,0 +1,245 @@
+[
+  {
+    "id": "lch_cast_off",
+    "_note": "STAGE 6, THE OPERATION, BEAT 2: THE CROSSING.\n\nTHE ENGINE HAS NO VEHICLES, so a boat cannot move. What CAN move is the sea, the weather, the camera and the people, and this map is built entirely out of those four. The player is given the deck and left on it; the crossing happens because the world around them gets worse while they walk about on eleven metres of planking.\n\nTHE WEATHER IS SHOWN AND NEVER DESCRIBED. The map carries snow 0.55 -- the engine's driving-spray layer -- against the quay's 0.3 and the shore's 0.7. Nobody in the act ever says the storm is getting worse. There is simply more of it on the screen every time the map changes, and by the shore the far end of the beach has gone.\n\nWHY THE BEATS ARE STEP TRIGGERS. A cutscene of a crossing is somebody else's crossing. lch_sea fires amidships, which is the one row every route from the stern to the bow has to cross, so nobody misses the sea coming aboard; lch_sight fires at the bow rail, because the first sight of what Meridian have built should happen because the player walked forward to look.",
+    "trigger": "enter",
+    "map": "eastreach_launch",
+    "onceFlag": "lch_cast_off_done",
+    "actions": [
+      { "kind": "wait", "frames": 20 },
+      { "kind": "sfx", "sound": "rain" },
+      {
+        "kind": "say",
+        "lines": [
+          "The mole goes out of sight in eleven minutes.",
+          "Nobody counts it out loud. Everybody on this deck has been watching for it."
+        ]
+      },
+      { "kind": "wait", "frames": 14 },
+      {
+        "kind": "say",
+        "lines": [
+          "Twenty other boats are strung out to the north and south of you, a mile apart and holding station.",
+          "From here they are hulls, and then they are marks, and then they are only spray."
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "lch_sea",
+    "_note": "THE SEA COMES ABOARD, and it is a band across the whole beam at row 8 rather than a tile, so that no route forward can miss it. Shake plus thunder plus one box: this engine does the physical part of a storm well and the wordy part badly, so the words are three lines and the rest is the renderer.",
+    "trigger": "step",
+    "map": "eastreach_launch",
+    "onceFlag": "lch_sea_done",
+    "at": [
+      { "x": 8, "y": 8 },
+      { "x": 9, "y": 8 },
+      { "x": 10, "y": 8 },
+      { "x": 15, "y": 8 },
+      { "x": 16, "y": 8 },
+      { "x": 17, "y": 8 },
+      { "x": 8, "y": 7 },
+      { "x": 9, "y": 7 },
+      { "x": 10, "y": 7 },
+      { "x": 11, "y": 7 },
+      { "x": 12, "y": 7 },
+      { "x": 13, "y": 7 },
+      { "x": 14, "y": 7 },
+      { "x": 15, "y": 7 },
+      { "x": 16, "y": 7 },
+      { "x": 17, "y": 7 }
+    ],
+    "actions": [
+      { "kind": "sfx", "sound": "thunder" },
+      { "kind": "shake", "frames": 40, "power": 4 },
+      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "say",
+        "lines": [
+          "A sea comes over the port rail and takes the whole length of the deck at once.",
+          "It is over your boots before you have understood that it is happening."
+        ]
+      },
+      { "kind": "shake", "frames": 20, "power": 2 },
+      {
+        "kind": "say",
+        "who": "BOAT HAND",
+        "lines": [
+          "That is the fourth. Closer together every time, and every one of them out of the east.",
+          "Something is making those. Weather does not queue up."
+        ]
+      },
+      { "kind": "weather", "weather": "storm" }
+    ]
+  },
+
+  {
+    "id": "lch_sight",
+    "_note": "THE FIRST SIGHT OF PROJECT ABYSS CROWN, and the only place in the act where the picture is carried by words, because the thing being described is eleven miles of open sea away and cannot be drawn on a tile map.\n\nTHE ORDER OF THE THREE BOXES IS THE WHOLE EFFECT: legs first, then the deck across the top of them, then -- last, and quietly -- the walls under the water. A player who has read the Sanctum and the Observatory works out what the walls are one beat before Marit Vane says it, which is the right beat for them to work it out on.\n\nIT LANDS THE BOAT ITSELF. There is no walkable warp on this map: the crossing ends because it has arrived, and the fade is the eleven miles nobody wants to play.",
+    "trigger": "step",
+    "map": "eastreach_launch",
+    "onceFlag": "lch_sight_done",
+    "at": [
+      { "x": 9, "y": 4 },
+      { "x": 10, "y": 4 },
+      { "x": 11, "y": 4 },
+      { "x": 12, "y": 4 },
+      { "x": 13, "y": 4 },
+      { "x": 14, "y": 4 },
+      { "x": 15, "y": 4 },
+      { "x": 16, "y": 4 }
+    ],
+    "actions": [
+      { "kind": "wait", "frames": 26 },
+      {
+        "kind": "say",
+        "lines": [
+          "Something stands up out of the water ahead of the bow.",
+          "Then another one. Then two more, further off, and they are all the same height."
+        ]
+      },
+      { "kind": "wait", "frames": 18 },
+      {
+        "kind": "say",
+        "lines": [
+          "Legs. Grey, riveted, wet to two thirds of the way up, and taller than the Tideglass light.",
+          "There is a deck across the top of them and it is bigger than a market square."
+        ]
+      },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "lines": [
+          "Under the deck the sea is full of walls.",
+          "They are in rows, and the rows have gaps in them at even intervals."
+        ]
+      },
+      { "kind": "wait", "frames": 22 },
+      {
+        "kind": "face", "who": "lch_vane", "dir": "up"
+      },
+      {
+        "kind": "say",
+        "who": "MARIT VANE",
+        "lines": [
+          "Those are gaps because those are doors.",
+          "That is a street. Somebody's street, with the roofs still on it."
+        ]
+      },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "There are eleven hundred people on Foundation wages and not one of them has seen this.",
+          "I have signed the paper for it. Four times."
+        ]
+      },
+      { "kind": "wait", "frames": 18 },
+      { "kind": "sfx", "sound": "thunder" },
+      { "kind": "shake", "frames": 30, "power": 3 },
+      {
+        "kind": "say",
+        "who": "PROFESSOR SORRELL",
+        "lines": [
+          "Get her in behind the legs and put us on the shingle.",
+          "If they have not seen twenty-one boats by now they are not going to see one more."
+        ]
+      },
+      { "kind": "fade", "to": "black", "frames": 50 },
+      { "kind": "wait", "frames": 40 },
+      { "kind": "setFlag", "flag": "op_crossed" },
+      {
+        "kind": "warp",
+        "map": "eastreach_shore",
+        "x": 12,
+        "y": 24,
+        "facing": "up"
+      }
+    ]
+  },
+
+  {
+    "id": "lch_lyra",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "lch_sea_done" },
+        "then": [
+          {
+            "kind": "say",
+            "who": "LYRA",
+            "lines": [
+              "Four days ago I told myself I was coming out here to argue with him.",
+              "I have not thought of one single thing to say since we cleared the mole."
+            ]
+          },
+          { "kind": "end" }
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "He taught me to read a chart on a table this size.",
+          "I keep noticing that today and I would very much like to stop."
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "lch_sorrell",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "lch_sea_done" },
+        "then": [
+          {
+            "kind": "say",
+            "who": "PROFESSOR SORRELL",
+            "lines": [
+              "I am sixty and I am extremely wet and I have not enjoyed anything this much in years.",
+              "Do not tell the clinic hand I said so."
+            ]
+          },
+          { "kind": "end" }
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "PROFESSOR SORRELL",
+        "lines": [
+          "Elias sat where you are standing. Not this boat. This crossing.",
+          "He wrote three lines about it and two of them were about the birds."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "PROFESSOR SORRELL",
+        "lines": [
+          "There have been no birds since the mole.",
+          "I have been looking for an hour and a half and there have been none at all."
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "lch_vane",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "MARIT VANE",
+        "lines": [
+          "Bow rail. Best place on any boat and the worst place on this one.",
+          "Go and look anyway. You will want to have seen it before somebody tells you about it."
+        ]
+      }
+    ]
+  }
+]

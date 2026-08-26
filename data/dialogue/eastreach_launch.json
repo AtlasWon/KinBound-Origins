@@ -1,0 +1,23 @@
+{
+  "_note": "THE CROSSING. One voice, because there is one person aboard who is not in the story: the hand who is steering. Everything the passengers say is in data/events/eastreach_launch.json, where it can be gated on how far into the sea they are.",
+  "speakers": {
+    "lch_hand": "BOAT HAND"
+  },
+  "entries": {
+    "lch_hand": [
+      {
+        "ifFlags": ["lch_sea_done"],
+        "lines": [
+          "I have been asked four times today whether she will take it. She will take it.",
+          "Nobody has yet asked me whether I will, and I would rather they did not."
+        ]
+      },
+      {
+        "lines": [
+          "Eleven miles on this heading and then we are behind the legs of the thing.",
+          "After that I am told there is a beach. I have not met anybody who has stood on it."
+        ]
+      }
+    ]
+  }
+}

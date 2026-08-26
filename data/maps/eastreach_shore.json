@@ -1,0 +1,202 @@
+{
+  "id": "eastreach_shore",
+  "name": "The Drowned Shore",
+  "displayName": "THE DROWNED SHORE",
+  "music": "station",
+  "battleBackdrop": "coast",
+  "indoor": false,
+  "snow": 0.7,
+  "weather": "storm",
+  "regionPos": {
+    "x": 36,
+    "y": 21
+  },
+  "_design": "The island, and the first sight of what Meridian have built on top of a drowned ruin. The map is one picture and it is composed left to right: black cliff, a shingle beachhead with the boats up on it, four rows of open sea, an Aurelian avenue standing in that sea with its roofs still in two rows, and four grey legs the height of the whole map going up out of it to a deck the player cannot see. Nobody has to say that Meridian have built a rig on a graveyard. It is drawn, and it is the first thing on the screen.",
+  "_plan": "THE ISLAND IS NEARLY ALL CLIFF, AND THAT IS THE ANSWER TO A QUESTION THE MAP WOULD OTHERWISE RAISE. If there were land here, Meridian would have built on the land. There is a hundred and fifty metres of black crag and one beach the sea threw up, so they built out over the ruin instead, which is exactly the decision the whole act is about.\n\nTHE AVENUE IS A STREET AND THE PLAYER CAN SEE THE KERBS. Two rows of Aurelian building tops break the surface with a lane of open water between them, two roofs stand proud of it, and Meridian have bolted a pontoon down the middle from the beach to the foot of their stair. Walking that plank is walking down a road with six metres of sea over it, and the roofs on either hand are the houses.\n\nSWIM IS NOT GRANTED HERE AND MUST NOT BE. It is taught two maps further on, on the last dry step inside the temple -- see data/events/temple_deep_tunnels.json -- so anything on this map gated behind deep water is gated behind an art the player does not have while they are crossing. What is behind it is therefore a REWARD and never the road: the roof at 25,17 is two rows off the plank with something buried on it, which makes this one more of the come-back-later pickups the region has been collecting since Stage 1, rather than a wall in the middle of the climax.\n\nTHE BEACHHEAD IS THE CHECKPOINT. Two boats up on the shingle, the stores off them, and the clinic hand who came with the second boat. Respawn is set here by the landing scene. A player who loses on the platform wakes up on the beach and not in Tideglass, which for a climax is not a convenience -- it is the difference between a hard fight and a punishment.",
+  "warps": [
+    {
+      "x": 40,
+      "y": 1,
+      "toMap": "eastreach_platform",
+      "toX": 20,
+      "toY": 24,
+      "facing": "up",
+      "style": "stairs"
+    },
+    {
+      "x": 41,
+      "y": 1,
+      "toMap": "eastreach_platform",
+      "toX": 21,
+      "toY": 24,
+      "facing": "up",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "sh_vane",
+      "sprite": "elder",
+      "x": 15,
+      "y": 19,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sh_vane"
+    },
+    {
+      "id": "sh_healer",
+      "sprite": "healer",
+      "x": 8,
+      "y": 21,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sh_healer"
+    },
+    {
+      "id": "sh_sorrell",
+      "sprite": "professor",
+      "x": 11,
+      "y": 19,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sh_sorrell"
+    },
+    {
+      "id": "sh_signal",
+      "sprite": "sailor",
+      "x": 17,
+      "y": 16,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sh_signal"
+    },
+    {
+      "id": "sh_tallow",
+      "sprite": "harbourmaster",
+      "x": 5,
+      "y": 21,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sh_tallow"
+    },
+    {
+      "id": "sh_lyra",
+      "sprite": "lyra",
+      "x": 20,
+      "y": 16,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sh_lyra"
+    },
+    {
+      "id": "sh_watch",
+      "sprite": "meridian",
+      "x": 40,
+      "y": 5,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "op_shore_watch",
+      "sightRange": 4
+    }
+  ],
+  "objects": [
+    {
+      "kind": "script",
+      "x": 9,
+      "y": 22,
+      "text": [
+        "The stores, landed and covered. Rope, lamp oil, four crates of bandage and one of tea.",
+        "Somebody has written HOLD ON THE TEA on the top crate and been comprehensively ignored."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 16,
+      "text": [
+        "A post driven into the shingle an hour ago with a board nailed across it.",
+        "BOATS: THIS FAR AND NO FARTHER. THE STREET UNDER YOU IS FULL OF ROOF."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 20,
+      "y": 17,
+      "text": [
+        "The last of the shingle. Past this the shore keeps going down and does not stop.",
+        "Six metres under the swell there is a kerb, and a doorway, and a step worn in the middle."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 41,
+      "y": 10,
+      "text": [
+        "A leg of the thing overhead. Grey plate, wet, cold enough to feel from a tile away.",
+        "It has been driven straight down through the roof of a house that had a chimney."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 3,
+      "y": 15,
+      "item": "full_heal",
+      "quantity": 2,
+      "flag": "item_op_shore_rocks"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 25,
+      "y": 17,
+      "item": "full_restore",
+      "quantity": 2,
+      "flag": "item_op_shore_street"
+    }
+  ],
+  "rows": [
+    "ÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆWWWWWWWWWWWWWWWWW╫╫╫╫╫",
+    "ÆÆÆÆÆÆÆÆÆÞÞÆÆÆÆÆÆÆÆÆÆÆWWWWWWWWWWWWWWWW╫=====",
+    "ÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÞÞÆWWWWWWWWWWWWWWWW╫=====",
+    "ÆÆÆÞÞÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆWWW┌─┐WWWWW┌─┐WW╫=====",
+    "ÆÆÆÆÆÆÆÆÞÆÆÆÆÆÆÆÆÆÆÆÆÆWWW███WWWWW███WW╫=====",
+    "ÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÞÞÆÆÆÆÆWWW███WWWWW███WW╫=====",
+    "ÆÆÆÆÆÆÆÆÆÆææÆÆÆÆÞÆÆÆÆÆWWW███WWWWW███WW╫=====",
+    "ÆÆÆÆÆÆÞÞÆÆÆÆÆÆÆÆÆÆÆÆÆÆWWW▄▄▄WWWWW▄▄▄WW╫=====",
+    "ÆÆÆÆÆÆÆÆÆÆÆÆÞÞÆÆÆææÆÆÆWWWWWWWWWWWWWWWW╫=====",
+    "ÆÆÞÞÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆÆWWΩΩΩWWΩΩΩWWΩΩΩW╫==╫╫╫",
+    "ÆÆÆÆÆæææÆÆÆÆÆÆæææÆÆÆÆÆWWΩΘΩWWΩΘΩWWΩΘΩWW==██W",
+    "ææææææææææææææææææææææWWΩΩΩWWΩΩΩWWΩΩΩWW==██W",
+    "~~¦¦ÆÆ¦¦¦¦¦¦ÆÆ¦¦¦¦ÞÞÞÞWWWWWWWWWWWWWWWWW==▄▄W",
+    "~~¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦ÞÞÞÞWWWWWWWWWWWWWWWWW==WWW",
+    "~~∇∇∇∇Þ∇∇∇∇∇∇∇∇ø∇²∇∇∇∇WWWWWθWWWWWWWWWWW==WWW",
+    "~~∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇дддддΘдддддΘддддд==WWW",
+    "~~∇∇∇∇∇∇∇Ђ∇∇∇∇∇∇∇∇∇Л∇∇WWWWWWWWWWWWWWWWWWWWWW",
+    "~~∇∇∇∇∇ø∇∇∇∇ª∇∇∇∇∇∇∇ø∇WWWΘWWWWWWWWWWWWWWWWWW",
+    "~~∇∇∇∇∇∇∇∇∇∇∇∇∇∇ø∇∇∇∇∇WWΩΩΩWWΩΩΩWWΩΩΩWWWWWWW",
+    "~~∇¾∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇WWΩΘΩWWΩΘΩWWΩΘΩWWWWWWW",
+    "~~∇∇ø∇∇ª∇∇∇∇∇∇∇∇∇∇∇¾∇∇WWΩΩΩWWΩΩΩWWΩΩΩWWWWWWW",
+    "~~∇∇∇∇∇∇∇∇¾∇∇∇Л∇∇∇∇∇∇∇WWW┌─┐WWWWW┌─┐WWWWWWWW",
+    "~~∇∇Ђ∇∇∇∇¾¾∇∇∇∇∇∇∇∇∇∇∇WWW███WWWWW███WWWWWWWW",
+    "~~∇∇∇Л∇∇∇∇∇∇∇¾∇∇∇∇∇Þ∇∇WWW███WWWWW███WWWWWWWW",
+    "~~∇∇∇∇∇∇∇∇∇ø∇∇∇∇∇∇ø∇∇∇WWW███WWWWW███WWWWWWWW",
+    "~~∇Þ∇∇ББ∇∇∇∇ББ∇∇Ђ∇∇∇∇∇WWW▄▄▄WWWWW▄▄▄WWWWWWWW",
+    "~~∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇ББ∇∇∇WWWWWWWWWWWWWWWWWWWWWW",
+    "~~~~~~~~~~~~~~~~~~~~~~WWWWWWWWWWWWWWWWWWWWWW",
+    "~~~~~~~~~~~~~~~~~~~~~~WWWWWWWWWWWWWWWWWWWWWW",
+    "~~~~~~~~~~~~~~~~~~~~~~WWWWWWWWWWWWWWWWWWWWWW"
+  ]
+}

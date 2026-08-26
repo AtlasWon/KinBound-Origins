@@ -141,6 +141,26 @@
     "tr_house": [
       {
         "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "It went back off the well on Thursday. I went down and looked and it was off the well.",
+          "Eighty-one years of waiting to be wrong, and I was right, and it has passed, and I am still here.",
+          "Sit with me a minute. I still do not want anything. It is just a better minute than the last one."
+        ]
+      },
+      {
+        "ifFlags": [
+          "neravoss_restrained"
+        ],
+        "lines": [
+          "It is past the well. It was at the well on Tuesday and this morning it is in the tannery yard.",
+          "The south road has not flooded. It has gone. There is no road there now, there is a channel.",
+          "You came in from somewhere. Tell me which way, and then go back out of it while it is still there."
+        ]
+      },
+      {
+        "ifFlags": [
           "act4_done"
         ],
         "lines": [
@@ -190,6 +210,16 @@
     "tr_tanner": [
       {
         "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "The wind stopped. Four days ago, in an afternoon, and the hollow is still air again.",
+          "I have hung the hides back up and then I stood underneath them for a long time.",
+          "Four hundred years. I very nearly broke it. I did not break it."
+        ]
+      },
+      {
+        "ifFlags": [
           "act4_done"
         ],
         "lines": [
@@ -207,6 +237,26 @@
       }
     ],
     "tr_beaconwatch": [
+      {
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Fire is out. Not blown out. The nine of us let it out, together, on Thursday morning.",
+          "We burned a winter of wood in six days and the parish has already carted us a winter of wood.",
+          "That man is not coming back. Somebody read us what he wrote. We would still have said no."
+        ]
+      },
+      {
+        "ifFlags": [
+          "neravoss_restrained"
+        ],
+        "lines": [
+          "It went out at two. Nine of us on that ridge and it went out at two in the morning.",
+          "We had it back by first light. Wet wood, so it smokes, and from out at sea it will look like nothing at all.",
+          "So there is a light and there is not a light. I have not worked out which one to say in the village."
+        ]
+      },
       {
         "ifFlags": [
           "act4_done"
@@ -252,6 +302,26 @@
       }
     ],
     "tr_bellman": [
+      {
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "I rang it once more and everybody came out again, and this time I told them why before they asked.",
+          "Three reasons on the board and a fourth underneath in pencil, in my hand.",
+          "Somebody will make that permanent after I am gone. I am not going to be the one who does it."
+        ]
+      },
+      {
+        "ifFlags": [
+          "neravoss_restrained"
+        ],
+        "lines": [
+          "I rang it at six and eleven people came out.",
+          "Fire, wreck, beacon, weather. Four reasons on that board and not one of them covers an empty street.",
+          "I am going to keep ringing it. Somebody up on the ridge road might hear it and know which way the village is."
+        ]
+      },
       {
         "ifFlags": [
           "act4_done"

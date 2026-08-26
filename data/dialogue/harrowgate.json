@@ -9,7 +9,8 @@
     "hg_cross": "AT THE CROSS",
     "hg_baker": "BAKER",
     "hg_girl": "GIRL",
-    "hg_tarin_word": "DROVER"
+    "hg_tarin_word": "DROVER",
+    "hg_bankman": "BANK GANG"
   },
   "entries": {
     "hg_porter": [
@@ -21,6 +22,26 @@
       }
     ],
     "hg_master": [
+      {
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "The eleven-fifty was on time on Monday and I went out on the platform to watch it not be late.",
+          "There is a new bank on the cutting at the eight-mile and forty men put it there in six days.",
+          "Board is back up. I checked every column on it twice before I hung it."
+        ]
+      },
+      {
+        "ifFlags": [
+          "neravoss_restrained"
+        ],
+        "lines": [
+          "The eleven-fifty went at eleven-fifty. First time in three weeks, and I did not enjoy it.",
+          "Nine coaches, every one of them standing, up off the coast and inland. Nothing at all going back down.",
+          "I have put the board up again. There is one time on it now and it is the same time all day."
+        ]
+      },
       {
         "ifFlags": [
           "act4_done"
@@ -57,6 +78,16 @@
       }
     ],
     "hg_farmer": [
+      {
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Half the crop came back up. Half. Nobody in this parish has seen barley do that and nobody can tell me why.",
+          "I am still the only farmer here who gets paid in full and I still cannot feel glad about it.",
+          "So the difference has gone into next door's field and he has been told it was an error in the ledger."
+        ]
+      },
       {
         "ifFlags": [
           "act4_done"
@@ -132,6 +163,15 @@
       {
         "lines": [
           "Everybody on this road is going the same way and pretending it is a coincidence."
+        ]
+      }
+    ],
+    "hg_bankman": [
+      {
+        "lines": [
+          "Six days, forty men, and a new bank on the cutting at the eight-mile that will outlive the line.",
+          "Half of them came off farms that are under water. They came anyway and they would not take the coin.",
+          "The eleven-fifty went over it on Monday at full speed. All forty of us stood up."
         ]
       }
     ]

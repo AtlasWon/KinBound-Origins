@@ -1,0 +1,103 @@
+{
+  "id": "eastreach_launch",
+  "name": "The Eastreach",
+  "displayName": "THE EASTREACH",
+  "music": "route_coast",
+  "battleBackdrop": "coast",
+  "indoor": false,
+  "snow": 0.55,
+  "weather": "storm",
+  "regionPos": {
+    "x": 34,
+    "y": 20
+  },
+  "_design": "The crossing, and the answer to a question this engine asks rudely: there is no vehicle system, so a boat cannot move. What CAN move is the sea, the weather, the camera and the people -- so the boat is a small map the player is free to walk about on while all four of those get worse around them. Eleven metres of deck, sea to every edge, and the beats fired off step tiles as the player goes forward. It is the only map in the game with no ground on it at all.",
+  "_plan": "WHY THE PLAYER IS NOT LOCKED IN A CUTSCENE. A cutscene of a crossing is somebody else's crossing. Giving the player the deck means the beats land where they are standing: the first sea comes aboard while they are aft with Sorrell, the worst of it fires at the bow rail, and the sight of the platforms comes because they walked forward to look. Every beat is a step trigger, so the pace is theirs.\n\nTHE WEATHER IS ON THE MAP, NOT IN THE TEXT. snow 0.55 -- the engine's driving-spray layer -- against the quay's 0.3 and the shore's 0.7. The player is never told it is getting worse. The screen simply has more in it every time they change map, and by the shore the far end of the beach has gone.\n\nDEEP WATER ON EVERY EDGE IS DELIBERATE. Nobody has Swim yet when they cross -- it is granted on the far shore -- so the rail is the rail, and the one gap in it is the stern, where the plank was. A player who comes back here in the postgame with Swim can paddle off the stern and find the edge of the map, which is water, which is what is there.",
+  "warps": [],
+  "npcs": [
+    {
+      "id": "lch_lyra",
+      "sprite": "lyra",
+      "x": 12,
+      "y": 8,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "lch_lyra"
+    },
+    {
+      "id": "lch_sorrell",
+      "sprite": "professor",
+      "x": 10,
+      "y": 12,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "lch_sorrell"
+    },
+    {
+      "id": "lch_vane",
+      "sprite": "elder",
+      "x": 15,
+      "y": 5,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "lch_vane"
+    },
+    {
+      "id": "lch_hand",
+      "sprite": "sailor",
+      "x": 14,
+      "y": 12,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "lch_hand"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "script",
+      "x": 12,
+      "y": 3,
+      "text": [
+        "The bow rail. The sea ahead is the colour of a bruise all the way up to the sky.",
+        "There is no horizon any more. The water and the cloud have joined up."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 18,
+      "y": 11,
+      "text": [
+        "A tide gauge lashed to the rail, borrowed from the Institute and already useless.",
+        "The needle has been hard against the pin for an hour and a half."
+      ]
+    }
+  ],
+  "rows": [
+    "WWWWWWWWWWWWWWWWWWWWWWWWWW",
+    "WWWWWWWWWWWWWWWWWWWWWWWWWW",
+    "WWWWWWWWWWWWWWWWWWWWWWWWWW",
+    "WWWWWWWWWРРРРРРРРWWWWWWWWW",
+    "WWWWWWWWРддддддддРWWWWWWWW",
+    "WWWWWWWРддддддддддРWWWWWWW",
+    "WWWWWWWРд¾ддЂддд¾дРWWWWWWW",
+    "WWWWWWWРд¾ддддддддРWWWWWWW",
+    "WWWWWWWРддддддддЛдРWWWWWWW",
+    "WWWWWWWРддд╧╧╧╧дддРWWWWWWW",
+    "WWWWWWWРддд╤╤╤╤дддРWWWWWWW",
+    "WWWWWWWРдддMZZMдддРWWWWWWW",
+    "WWWWWWWРдЛдддддд³дРWWWWWWW",
+    "WWWWWWWWWддддддддWWWWWWWWW",
+    "WWWWWWWWWРРРРдРРРWWWWWWWWW",
+    "WWWWWWWWWWWWWWWWWWWWWWWWWW",
+    "WWWWWWWWWWWWWWWWWWWWWWWWWW",
+    "WWWWWWWWWWWWWWWWWWWWWWWWWW"
+  ]
+}

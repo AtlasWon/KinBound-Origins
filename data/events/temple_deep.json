@@ -1,0 +1,467 @@
+[
+  {
+    "id": "td_arrive",
+    "_note": "A STEP SCRIPT AND NOT AN ENTER SCRIPT, ON PURPOSE, AND THE REASON IS A JOIN. Somebody else owns the operation that puts the player on this island, and their arrival may well be a scripted warp inside a fade. An `enter` script on this map would fire in the middle of that, interleaving my two boxes with their scene. These five tiles are the south edge of the deck, three rows up the pontoon from the landing, so this can only run once the player is walking under their own control, and it can only run after whatever else has finished.\n\nAND IT SETS THE RESPAWN, which is the single most valuable line on this map. Until something calls setRespawn the player is still pinned to the last Kin Clinic they slept in, which is on the mainland behind an entire operation; fainting anywhere in the temple would throw them off the island. Onwen at 15,12 sets it again when she heals, but she is past the checkpoint, and this is the tile that guarantees it from the first step.",
+    "trigger": "step",
+    "map": "temple_deep",
+    "onceFlag": "td_arrived",
+    "at": [
+      {
+        "x": 18,
+        "y": 29
+      },
+      {
+        "x": 19,
+        "y": 29
+      },
+      {
+        "x": 20,
+        "y": 29
+      },
+      {
+        "x": 21,
+        "y": 29
+      },
+      {
+        "x": 22,
+        "y": 29
+      }
+    ],
+    "actions": [
+      {
+        "kind": "face",
+        "who": "player",
+        "dir": "up"
+      },
+      {
+        "kind": "wait",
+        "frames": 12
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The plank ends and the deck begins, and the deck goes away north under floodlamps.",
+          "You cannot see the end of it. You can see the lamps."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Every crate is roped. Every mast is guyed. Somebody spent last night making this place fast.",
+          "The wind decided that, not the schedule."
+        ]
+      },
+      {
+        "kind": "setRespawn",
+        "map": "temple_deep",
+        "x": 20,
+        "y": 30
+      },
+      {
+        "kind": "setFlag",
+        "flag": "td_arrived"
+      }
+    ]
+  },
+  {
+    "id": "td_boat_crew",
+    "_note": "The way off the island, said out loud, because a player who cannot see an exit assumes there is not one. He runs the shuttle back to the staging platform and nothing further, which is both true (the warp at 19-20,32 goes exactly there) and the right amount of no.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "not",
+          "of": {
+            "kind": "flag",
+            "flag": "td_crew_met"
+          }
+        },
+        "then": [
+          {
+            "kind": "say",
+            "who": "BOAT CREW",
+            "lines": [
+              "I can run you back to the staging platform any time you want it.",
+              "Step on the plank behind me and I will get the cover off her."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "BOAT CREW",
+            "lines": [
+              "Anywhere further than that, no. Look at the sea and then do not ask me twice."
+            ]
+          },
+          {
+            "kind": "setFlag",
+            "flag": "td_crew_met"
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "who": "BOAT CREW",
+            "lines": [
+              "Nine days ferrying crates out here, and today I ferried you.",
+              "I am not going to say which was heavier."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "td_quartermaster",
+    "_note": "The site's size given as a number rather than a description, and then the number turned over. Eleven hundred out, forty-one back. Canon says most of the Foundation are ordinary people doing ordinary work; he is one, he is good at his job, and his job is the thing that has told him.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "QUARTERMASTER",
+        "lines": [
+          "Eleven hundred items off the boats in nine days. I signed for every one of them."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "QUARTERMASTER",
+        "lines": [
+          "Forty-one have gone back on. Everything else that came out here is still out here.",
+          "That includes the people, before you ask me."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "td_marrow",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
+          "flag": "td_checkpoint_done"
+        },
+        "then": [
+          {
+            "kind": "say",
+            "who": "MARROW",
+            "lines": [
+              "Down the stair, then, and mind the third step; it is not one of ours.",
+              "Nine days I have stood over that hole and nobody has told me what is in it."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "who": "MARROW",
+            "lines": [
+              "The fence is shut. It has been shut nine days and it will be shut when I go off.",
+              "You can stand there as long as you like."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "td_checkpoint",
+    "_note": "THE ONE UNAVOIDABLE FIGHT ON THE PLATFORM. The mesh fence runs the whole width of the spine at row 15 with a three-tile gate at 19-21; Marrow stands on 20,15 and is solid, so the only two tiles a player can pass through are 19,15 and 21,15, and both of them are listed here. There is no route north up this map that does not step on one.\n\nonLoss is CONTINUE and that is deliberate. A whiteout in the middle of the climax throws the player back to the last Kin Clinic they used, which is on the mainland, on the far side of somebody else's operation -- and this project has been asked four times for an easier game. Losing here costs a page of text and Marrow saying something better than he would have said if he had lost. The player goes through either way, because the fence was never the point and he says so.",
+    "trigger": "step",
+    "map": "temple_deep",
+    "onceFlag": "td_checkpoint_done",
+    "at": [
+      {
+        "x": 19,
+        "y": 15
+      },
+      {
+        "x": 20,
+        "y": 15
+      },
+      {
+        "x": 21,
+        "y": 15
+      }
+    ],
+    "actions": [
+      {
+        "kind": "face",
+        "who": "player",
+        "dir": "up"
+      },
+      {
+        "kind": "wait",
+        "frames": 10
+      },
+      {
+        "kind": "say",
+        "who": "MARROW",
+        "lines": [
+          "That is far enough. I had your description off the second boat, so let us not do the part where you deny it."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "MARROW",
+        "lines": [
+          "I am not going to argue with you about any of it.",
+          "I am going to be a fence. It is what I am for."
+        ]
+      },
+      {
+        "kind": "battleTrainer",
+        "trainer": "td_deck_marrow",
+        "onLoss": "continue"
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "var",
+          "var": "last_battle_won",
+          "op": "==",
+          "value": 1
+        },
+        "then": [
+          {
+            "kind": "say",
+            "who": "MARROW",
+            "lines": [
+              "Then I am the wrong man to have been put on a fence."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "who": "MARROW",
+            "lines": [
+              "Sit down. You are no good to anybody upright and you are no good to me either."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "MARROW",
+            "lines": [
+              "...And then go on through. I was told to hold a fence. Nobody said anything about holding a child."
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "setFlag",
+        "flag": "td_checkpoint_done"
+      },
+      {
+        "kind": "say",
+        "who": "MARROW",
+        "lines": [
+          "The gate is not locked. It has never been locked.",
+          "That is the part of this job nobody up here likes to say out loud."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "td_medic",
+    "_note": "THE DIFFICULTY VALVE, AND IT IS THE WHOLE REASON SHE EXISTS. Free healing at the top of the deck, one tile from the stair down, and setRespawn on her own tile so that a faint anywhere in this temple wakes the player up here instead of throwing them back across the region. She is a Kin Clinic keeper off the boats and NOT a member of the story's cast: Tarin, Lyra, Sorrell and the Hallkeepers all belong to whoever is running the operation, and putting one of them on this deck would be claiming a person who is somebody else's to place.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "not",
+          "of": {
+            "kind": "flag",
+            "flag": "td_medic_met"
+          }
+        },
+        "then": [
+          {
+            "kind": "say",
+            "who": "ONWEN",
+            "lines": [
+              "Onwen. Kin Clinic, Tideglass. Nobody sent me and nobody has asked me to leave."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "ONWEN",
+            "lines": [
+              "I have moved this post four times today. It moves when the deck moves.",
+              "Right now the deck is you."
+            ]
+          },
+          {
+            "kind": "setFlag",
+            "flag": "td_medic_met"
+          }
+        ]
+      },
+      {
+        "kind": "ask",
+        "who": "ONWEN",
+        "lines": [
+          "Shall I look at them, {name}? It costs the same as it costs anywhere."
+        ],
+        "yes": [
+          {
+            "kind": "setRespawn"
+          },
+          {
+            "kind": "healParty"
+          },
+          {
+            "kind": "wait",
+            "frames": 10
+          },
+          {
+            "kind": "say",
+            "who": "ONWEN",
+            "lines": [
+              "There. All of them on their feet."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "ONWEN",
+            "lines": [
+              "And if it goes badly down there, you wake up here. Not the mainland. Here.",
+              "I have said that to nine people today and I have meant it nine times."
+            ]
+          }
+        ],
+        "no": [
+          {
+            "kind": "say",
+            "who": "ONWEN",
+            "lines": [
+              "Then I will be here, and the kettle will be on, and I will be quietly furious about it."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "td_shelter_control",
+    "_note": "The instrument saying the true thing and the form having no box for it. This is the Foundation as canon describes it -- real science, real people, and a chain of command that has decided in advance what the answer is.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "SHELTER CONTROL",
+        "lines": [
+          "Trace one is the sea. Trace two is the sea.",
+          "Trace three has not been the sea for six days."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "SHELTER CONTROL",
+        "lines": [
+          "I have logged it as an instrument fault forty-one times.",
+          "Not because I think it is one. Because that is the box the form has."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "td_shelter_tech",
+    "_note": "THE TIDEHEART LINE, AND IT ASKS BEFORE IT SPEAKS. Meridian took the object in Act 4 and Cassian gives it back three floors down, in somebody else's chamber, so on this map the player does not have it and she can describe it as a locked box in the Commander's cabin. If the player IS holding it -- because a later build changed the order, or because a driver put it in the bag -- the branch says something that is still true instead of something that is wrong.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "FIELD ARCHAEOLOGIST",
+        "lines": [
+          "I came out here for the archaeology. Nine days, and I have not been below the deck plate once."
+        ]
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "not",
+          "of": {
+            "kind": "hasItem",
+            "item": "tideheart"
+          }
+        },
+        "then": [
+          {
+            "kind": "say",
+            "who": "FIELD ARCHAEOLOGIST",
+            "lines": [
+              "There is a case in the Commander's cabin that came out on the first boat in a locked box.",
+              "Nobody is allowed to look at it. I have looked at the box."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "FIELD ARCHAEOLOGIST",
+            "lines": [
+              "The greatest site anyone has ever found, and I have been shown the lid of it and a box."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "who": "FIELD ARCHAEOLOGIST",
+            "lines": [
+              "...That. In your hand. That is what came out on the first boat in a locked box.",
+              "Then whatever is in the Commander's case is not what we were told it was."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "td_engineer_ordy",
+    "_note": "The generators are at nine tenths of rating and the trunk lines are warm the wrong way round. Neither he nor the player is told what that means; the sign at 5,20 says the trunks are the only unlabelled thing on a rig where everything is labelled, and between them that is the whole of Project Abyss Crown said without naming it.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "PLANT ENGINEER",
+        "lines": [
+          "Do not stand on the trunk lines. Not because they are dangerous.",
+          "Because they are warm."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "PLANT ENGINEER",
+        "lines": [
+          "Cable that thick carries heat away from the load. It does not bring it back.",
+          "Something down there is pushing up them and I have stopped writing it in the book."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "td_tower_clerk",
+    "_note": "The masts, and the one fact that makes the whole surface installation frightening in two sentences: whatever they are asking has started answering faster. Nobody on this deck is allowed to say the word awake.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "TOWER CLERK",
+        "lines": [
+          "The masts ask. Something answers. I write the answer down and pass it to the shelter."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TOWER CLERK",
+        "lines": [
+          "Nine days ago it took four hours to answer.",
+          "This morning it answered before we had finished asking."
+        ]
+      }
+    ]
+  }
+]

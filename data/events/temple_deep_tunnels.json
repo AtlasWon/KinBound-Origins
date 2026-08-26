@@ -1,0 +1,199 @@
+[
+  {
+    "id": "tdt_swim",
+    "_note": "SWIM. THE SIXTH FIELD ART, AND THE ONE THE GAME HAS BEEN SHORT OF SINCE STAGE 1.\n\nThe engine has had deep water since the first map: collision code 8, three terrain characters using it, and eight earlier maps with a reward standing on an islet behind it -- route 5, route 6, route 7, the fen, route 7 north, the pass, the falls and route 10. Nothing anywhere granted it. Halls 6, 7 and 8 grant no art at all, so there was no Hall left to hang it on, and this is the ocean act. It is granted HERE, on the last dry step in the game, and everything shut behind that code across the whole region opens on this box.\n\nIT IS A STEP SCRIPT AND NOT AN INTERACT, ON PURPOSE. An art that can be walked past is an art that can be missed, and a missed Swim is eight orphaned pickups and a Caelora with holes in it. The trigger is the whole width of the quay lip at y25 -- every tile of it except 11,25, which is the one Marit steps onto, and which cannot be reached without crossing one of the others first (she is standing on 11,26 and an NPC is solid). There is no way north out of this room that does not cross this row.\n\nMARIT VANE GIVES IT BECAUSE SHE GAVE WADE. She is the Tide Hallkeeper from Tideglass; in Act 2 she handed the player the art that lets them choose which water to stand in, and her line for it was 'you do not move water, you decide where you are standing when it arrives'. This is that lesson finished: here there is no standing. Canon puts Hallkeepers on the operation and the temple author has already put the boats and the landing party on the island above, so she is where she should be.\n\nTHE HEAL, THE FULL RESTORE AND THE RESPAWN ARE ALL THE SAME DECISION. The player has asked four times for an easier game and the hardest battle in the story is two floors north of this step. This is the last quiet room before it, so the scene tops the party up, hands over a Full Restore, and moves the respawn to 14,26 -- one tile inside the landing hall, on dry Aurelian floor with Marit next to it. Fainting to a wild in the nave now costs a swim back across the room instead of a boat ride to the mainland. The temple author sets a respawn on the platform above (Onwen's aid post, temple_deep 15,12); this one is later and closer and overrides it on purpose, and the whiteout path heals the party on the way, so waking up here is a full recovery.\n\nNPC OWNERSHIP: tdt_marit and tdt_hand are placed on data/maps/temple_deep_tunnels.json and are the only two people on this floor. Nothing in this file names anybody from another map or sets any flag but its own.",
+    "trigger": "step",
+    "map": "temple_deep_tunnels",
+    "onceFlag": "tdt_swim_taught",
+    "at": [
+      { "x": 9, "y": 25 },
+      { "x": 10, "y": 25 },
+      { "x": 12, "y": 25 },
+      { "x": 13, "y": 25 },
+      { "x": 14, "y": 25 },
+      { "x": 15, "y": 25 },
+      { "x": 16, "y": 25 },
+      { "x": 17, "y": 25 },
+      { "x": 18, "y": 25 },
+      { "x": 19, "y": 25 },
+      { "x": 20, "y": 25 }
+    ],
+    "actions": [
+      { "kind": "move", "who": "tdt_marit", "steps": ["up"] },
+      { "kind": "face", "who": "tdt_marit", "dir": "up" },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "lines": [
+          "The Tide Hallkeeper comes up onto the lip beside you.",
+          "She looks at the water, and not at you, for a good deal longer than is comfortable."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "MARIT VANE",
+        "lines": [
+          "Thirty years of harbours and I have never seen a quay built to stop at a drop.",
+          "They did not run out of stone. They meant it to stop here."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "MARIT VANE",
+        "lines": [
+          "Everything past this line is over your head, and it stays over your head.",
+          "That is not deep water. That is the sea with a roof on it."
+        ]
+      },
+      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "say",
+        "who": "MARIT VANE",
+        "lines": [
+          "I taught you to choose which water to stand in. You have been doing it since Tideglass.",
+          "There is no standing here. That is the rest of the lesson and it took me nine years."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "MARIT VANE",
+        "lines": [
+          "You go in. You keep your kin where you can touch them and you let it have your weight.",
+          "It is not a thing you beat. It is a thing you agree with."
+        ]
+      },
+      { "kind": "setRespawn", "map": "temple_deep_tunnels", "x": 14, "y": 26 },
+      { "kind": "giveArt", "art": "swim" },
+      { "kind": "sfx", "sound": "obtain_art" },
+      {
+        "kind": "say",
+        "lines": [
+          "You learned the field art SWIM.",
+          "Deep water out in the world can be crossed now."
+        ]
+      },
+      { "kind": "wait", "frames": 18 },
+      {
+        "kind": "say",
+        "who": "MARIT VANE",
+        "lines": [
+          "Half the coast of Caelora has been shut to you your whole life and you never noticed.",
+          "It is not shut any more. Every pool, every channel, every rock off every road."
+        ]
+      },
+      { "kind": "sfx", "sound": "item_heal" },
+      { "kind": "healParty" },
+      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "say",
+        "lines": [
+          "She goes down the line of your kin with the flat of her hand and a wet cloth,",
+          "the way she has done it to four hundred haulers' animals on a harbour wall."
+        ]
+      },
+      { "kind": "giveItem", "item": "full_restore", "count": 1 },
+      { "kind": "say", "lines": ["Marit handed over a Full Restore."] },
+      { "kind": "wait", "frames": 14 },
+      {
+        "kind": "say",
+        "who": "MARIT VANE",
+        "lines": [
+          "I am not coming. Somebody has to be on this step when you come back up it.",
+          "Go on."
+        ]
+      },
+      { "kind": "face", "who": "tdt_marit", "dir": "up" },
+      {
+        "kind": "say",
+        "lines": [
+          "She sits down on the cut edge with her boots in the sea, and does not watch you go."
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "tdt_marit",
+    "_note": "Three states and no plot in any of them. Before the lip she tells the player to come and look; after it she keeps the step; once the works upstairs have gone quiet she says the one thing a harbourmaster says about a thing that big. She never reports the story, because on this floor she does not know it yet.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "neravoss_calm" },
+        "then": [
+          {
+            "kind": "say",
+            "who": "MARIT VANE",
+            "lines": [
+              "It went past this hall on its way out. I felt the floor take the weight of it.",
+              "Thirty years reading a gauge, and the sea has never once been that quiet."
+            ]
+          },
+          { "kind": "end" }
+        ]
+      },
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "tdt_swim_taught" },
+        "then": [
+          {
+            "kind": "say",
+            "who": "MARIT VANE",
+            "lines": [
+              "Still here. Somebody has to be, and I am no use at all further in than this.",
+              "Come back up this step, {name}. That is the only instruction I have got."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "who": "MARIT VANE",
+            "lines": [
+              "Do not go past the lip yet. Come and stand on it first and look at what it is.",
+              "Two minutes of looking has saved more people than every rope I have ever thrown."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "tdt_hand",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "tdt_swim_taught" },
+        "then": [
+          {
+            "kind": "say",
+            "who": "TIDEGLASS HAND",
+            "lines": [
+              "Four of us carried her kit down that stair and she carried it back up twice.",
+              "Said it was in the wrong order. It was in the wrong order."
+            ]
+          },
+          { "kind": "end" }
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TIDEGLASS HAND",
+        "lines": [
+          "Off the Tideglass boats, all six of us, and not one of us was told what for.",
+          "We came because she went. That is generally how it works with her."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TIDEGLASS HAND",
+        "lines": [
+          "There is a cable in the east arm out there, new, thick as a leg.",
+          "It goes north into the rock and nobody on this island will tell us where to."
+        ]
+      }
+    ]
+  }
+]

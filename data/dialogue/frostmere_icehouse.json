@@ -6,7 +6,19 @@
   "entries": {
     "fmh_master": [
       {
-        "ifFlags": ["act4_done"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Two hundred and six blocks, and there is a month of season left in it yet.",
+          "I have written back to Aureline. Two hundred and not three, and I told them why in one line.",
+          "They answered the same day and said take your time. Nobody in that building has ever said that to me."
+        ]
+      },
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
         "lines": [
           "Ninety-one blocks. A bad year is four hundred, and I have ninety-one.",
           "Aureline has an order in for three hundred and I have not written back yet.",

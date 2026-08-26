@@ -1194,6 +1194,18 @@
         "kind": "lookAround"
       },
       "script": "au_summit_hopeful"
+    },
+    {
+      "id": "au_notice_reader",
+      "sprite": "clerk",
+      "x": 39,
+      "y": 41,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "au_notice_reader",
+      "requiresFlag": "act6_done"
     }
   ],
   "objects": [

@@ -197,6 +197,18 @@
         "kind": "static"
       },
       "script": "hg_tarin_word"
+    },
+    {
+      "id": "hg_bankman",
+      "sprite": "hiker",
+      "x": 20,
+      "y": 20,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hg_bankman",
+      "requiresFlag": "act6_done"
     }
   ],
   "objects": [

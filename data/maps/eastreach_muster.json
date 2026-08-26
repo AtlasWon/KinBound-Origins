@@ -1,0 +1,297 @@
+{
+  "id": "eastreach_muster",
+  "name": "The East Quay",
+  "displayName": "THE EAST QUAY",
+  "music": "route_coast",
+  "battleBackdrop": "coast",
+  "indoor": false,
+  "regionPos": {
+    "x": 33,
+    "y": 20
+  },
+  "snow": 0.3,
+  "weather": "rain",
+  "_design": "The mole east of Tideglass, and the payoff of five acts of travelling. Canon names who is in the operation -- the player, Tarin, Lyra, Professor Sorrell, helpful regional Trainers and certain Hallkeepers -- and the whole design problem of this map is that a roll-call is not a scene. So the map is a LINE. A hundred and fifty metres of stone with the sea on both sides of it and one way along it, and every person who came is standing somewhere between the arch and the boat. The player does not attend a briefing. They walk the length of it, and the people they beat for eight Crests are in the way.",
+  "_plan": "THREE THINGS CARRY IT.\n\nTHE SHAPE. Seven walkable rows between two railings, and the sea is visible from all seven. There is one route and it is east, so the order the cast is met in is fixed by geometry rather than by a script: Sorrell at the chart table first because he is the reason anybody is here, then the Hallkeepers, then the hands and the regional Trainers, then Lyra at the boats, then Tarin at the very end. Nothing is locked and nobody is told where to go.\n\nTHE FLEET. Six boats made off along the north side with their gangways down, before the player has spoken to one person. That is 'they all came' said in tiles, and it is said before the first dialogue box, which is the only way it lands. The seventh berth is at the head and it is the one the player gets into.\n\nTHE WEATHER. Every lamp on the mole is lit and it is the middle of the afternoon. The map carries snow 0.3 -- this engine's driving-spray layer -- and it is the LIGHTEST of the four maps in this act on purpose. The storm gets worse as the act goes east and it has to start somewhere a player can still see the far end of the quay.\n\nTHE HEAD IS SHORT OF THE EDGE. Four columns of open water east of the last stone, so the mole ends in something rather than in a map boundary. That is where Tarin says goodbye, and it matters that the player can see there is nothing past him.",
+  "warps": [
+    {
+      "x": 0,
+      "y": 7,
+      "toMap": "tideglass",
+      "toX": 71,
+      "toY": 58,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 0,
+      "y": 8,
+      "toMap": "tideglass",
+      "toX": 72,
+      "toY": 58,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 1,
+      "y": 7,
+      "toMap": "tideglass",
+      "toX": 71,
+      "toY": 58,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 1,
+      "y": 8,
+      "toMap": "tideglass",
+      "toX": 72,
+      "toY": 58,
+      "facing": "up",
+      "style": "edge"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "op_sorrell",
+      "sprite": "professor",
+      "x": 4,
+      "y": 7,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "op_sorrell"
+    },
+    {
+      "id": "op_clerk",
+      "sprite": "clerk",
+      "x": 3,
+      "y": 5,
+      "facing": "down",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "op_clerk"
+    },
+    {
+      "id": "op_vane",
+      "sprite": "elder",
+      "x": 12,
+      "y": 9,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "op_vane"
+    },
+    {
+      "id": "op_roxen",
+      "sprite": "hiker",
+      "x": 14,
+      "y": 8,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "op_roxen"
+    },
+    {
+      "id": "op_healer",
+      "sprite": "healer",
+      "x": 18,
+      "y": 10,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "op_healer"
+    },
+    {
+      "id": "op_tallow",
+      "sprite": "harbourmaster",
+      "x": 21,
+      "y": 8,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "op_tallow"
+    },
+    {
+      "id": "op_fenn",
+      "sprite": "harbourmaster",
+      "x": 25,
+      "y": 9,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "op_fenn"
+    },
+    {
+      "id": "op_cade",
+      "sprite": "villager_m",
+      "x": 28,
+      "y": 8,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "op_cade"
+    },
+    {
+      "id": "op_trainer_a",
+      "sprite": "sailor",
+      "x": 31,
+      "y": 9,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "op_trainer_a"
+    },
+    {
+      "id": "op_trainer_b",
+      "sprite": "villager_f",
+      "x": 34,
+      "y": 7,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "op_trainer_b"
+    },
+    {
+      "id": "op_trainer_c",
+      "sprite": "fisher",
+      "x": 37,
+      "y": 10,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "op_trainer_c"
+    },
+    {
+      "id": "op_dockhand",
+      "sprite": "dockhand",
+      "x": 39,
+      "y": 7,
+      "facing": "down",
+      "movement": {
+        "kind": "pace",
+        "axis": "x",
+        "distance": 3
+      },
+      "script": "op_dockhand"
+    },
+    {
+      "id": "op_lyra",
+      "sprite": "lyra",
+      "x": 43,
+      "y": 8,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "op_lyra"
+    },
+    {
+      "id": "op_tarin",
+      "sprite": "rival",
+      "x": 45,
+      "y": 6,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "op_tarin",
+      "hiddenIfFlag": "op_tarin_gone"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 3,
+      "y": 10,
+      "text": [
+        "A harbour board, and somebody has chalked clean across the sailing times.",
+        "EAST QUAY CLOSED TO TRADE. ALL BERTHS TAKEN. NO, NOT FOR MONEY.",
+        "Under it, in a different hand: ASK THE OLD MAN AT THE TABLE."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 4,
+      "y": 6,
+      "text": [
+        "A chart table under a weighted tarpaulin, and the chart on it is the eastern sea.",
+        "Somebody has ruled a line out from this quay and put a cross on nothing at all.",
+        "The cross has been gone over so many times it has worn through the paper."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 23,
+      "y": 6,
+      "text": [
+        "A generator, running. Every lamp on the mole is lit and it is two in the afternoon.",
+        "A hand has chalked the fuel hours on the casing and then crossed the number out twice."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 24,
+      "y": 7,
+      "text": [
+        "A wind mast with the flags still bent on, and every one of them standing straight out.",
+        "The board under it reads BOATS TO REPORT. Nobody has reported since Tuesday."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 47,
+      "y": 7,
+      "text": [
+        "The head of the mole. Four hundred years of cut stone, and then the sea.",
+        "The swell comes in from the east and hits it hard enough to be felt through your boots."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 46,
+      "y": 10,
+      "item": "full_restore",
+      "quantity": 2,
+      "flag": "item_op_quay_head"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 34,
+      "y": 3,
+      "item": "full_rouse",
+      "quantity": 1,
+      "flag": "item_op_quay_hidden"
+    }
+  ],
+  "rows": [
+    "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+    "WWWWWWССWWWWWССWWWWWССWWWWWССWWWWWССWWWWWССWWWWWWWWW",
+    "WWWWWWББWWWWWББWWWWWББWWWWWББWWWWWББWWWWWББWWWWWWWWW",
+    "~~~~~~дд~~~~~дд~~~~~дд~~~~~дд~~~~~дд~~~~~дд~~~~~WWWW",
+    "▪▪╫╫╫╫==╫╫╫╫╫==╫╫╫╫╫==╫╫╫╫╫==╫╫╫╫╫==╫╫╫╫╫==╫╫╫╫╫WWWW",
+    "▪▪==Ђ=╧╧╧╧╧╧Ђ==╧╧╧╧╧==Ђ===Ђ==╧╧╧╧╧==Ђ==Ђ======Ђ=WWWW",
+    "▫▫==$=╤╤╤╤╤╤=¾¾╤╤╤╤╤===³¾¾===╤╤╤╤╤=¾¾¾==ª===¾¾==WWWW",
+    "◘◘====MMZZMM=¾=MMZMM====²====MMZMM=¾==========¾ЂWWWW",
+    "◘◘==============================================WWWW",
+    "▫▫==============================================WWWW",
+    "▪▪=´===Y=======Y========Y========Y======Y=======WWWW",
+    "▪▪╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫==╫╫WWWW",
+    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~BB~~WWWW",
+    "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWСддддддддСWW",
+    "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWдРддРдWWWW",
+    "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW~~~~~~~~WWW",
+    "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+  ]
+}

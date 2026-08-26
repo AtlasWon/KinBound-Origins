@@ -1,0 +1,457 @@
+[
+  {
+    "id": "tdr_arrive",
+    "_note": "An ENTER script rather than a step one, which is the opposite of the choice on the platform above and for the opposite reason: both ends of this stair are mine, so there is no other scene this can collide with, and the arrival tile itself cannot carry a step script anyway -- loadMap seeds lastTile, so onEnterTile never runs for the tile a warp puts you on. Two boxes, and the second one is the whole job of this map: the player has met this architecture twice and has never met it at this size.",
+    "trigger": "enter",
+    "map": "temple_deep_ruins",
+    "onceFlag": "tdr_entered",
+    "actions": [
+      {
+        "kind": "face",
+        "who": "player",
+        "dir": "down"
+      },
+      {
+        "kind": "wait",
+        "frames": 14
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The stair comes down out of the steel, and four steps from the bottom it stops being steel."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Cut stone. A spiral worked into the floor. A hall going away in front of you into the dark.",
+          "You have stood in a room like this twice. Neither of them was a hall."
+        ]
+      },
+      {
+        "kind": "setFlag",
+        "flag": "tdr_entered"
+      }
+    ]
+  },
+  {
+    "id": "tdr_camp_wren",
+    "_note": "The catalogue, and the one detail in it that is worth more than the other two hundred and thirteen. Canon: the Aurelians understood Kin deeply and lived alongside Neravoss peacefully for a long time. A civilisation that kept the same shape of bowl for three thousand years is a civilisation that was not in a hurry, which is exactly the thing Meridian are not.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "CATALOGUER WREN",
+        "lines": [
+          "Two hundred and fourteen items off this floor and I have drawn and numbered every one."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "CATALOGUER WREN",
+        "lines": [
+          "Number one was a bowl. Number two hundred and fourteen was a bowl.",
+          "Three thousand years between them and they never once changed the shape."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tdr_camp_hand",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "SITE HAND",
+        "lines": [
+          "I carry to the arches and no further. Nobody has told me not to go past them.",
+          "I just do not."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tdr_lip_diver",
+    "_note": "Reads hasArt so the second box is different once the player has Swim -- which they will not have on the way down (it is granted below, on temple_deep_tunnels) and will have on the way back. It is the only line on either of my maps that notices the art, and it notices it as a person would: with some alarm.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "DIVER",
+        "lines": [
+          "Fourteen dives. Every one of them straight down, and every one of them into a room."
+        ]
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "hasArt",
+          "art": "swim"
+        },
+        "then": [
+          {
+            "kind": "say",
+            "who": "DIVER",
+            "lines": [
+              "You went in. On purpose. With no line and no lamp.",
+              "I have both and I still have to be talked into it."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "who": "DIVER",
+            "lines": [
+              "You can get across on the fallen work if you have a head for it and dry boots do not matter.",
+              "I would not. There is no bottom under that."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tdr_nave",
+    "_note": "THE WHOLE OF ROW 19, thirty-two tiles, because the arch wall at y17 has three openings and all three of them land on this lip -- a script on the middle four would be a scene a player who took the west arch never sees.\n\nTHIS SCRIPT USED TO GRANT SWIM AND DOES NOT ANY MORE. The map below (temple_deep_tunnels) is built as the game's Swim gate and hands the art over at its quay, from Marit Vane, who gave the player Wade in Act 2. Her scene is the better one and it cannot move, so this nave stopped being a gate: the fallen drums at 19-20,20 through 17-18,25 cross it without any art at all. What is left here is the look at the water, and the one piece of navigation the room owes the player -- that the way across is the wreckage, and the way on is down.",
+    "trigger": "step",
+    "map": "temple_deep_ruins",
+    "onceFlag": "tdr_nave_seen",
+    "at": [
+      {
+        "x": 4,
+        "y": 19
+      },
+      {
+        "x": 5,
+        "y": 19
+      },
+      {
+        "x": 6,
+        "y": 19
+      },
+      {
+        "x": 7,
+        "y": 19
+      },
+      {
+        "x": 8,
+        "y": 19
+      },
+      {
+        "x": 9,
+        "y": 19
+      },
+      {
+        "x": 10,
+        "y": 19
+      },
+      {
+        "x": 11,
+        "y": 19
+      },
+      {
+        "x": 12,
+        "y": 19
+      },
+      {
+        "x": 13,
+        "y": 19
+      },
+      {
+        "x": 14,
+        "y": 19
+      },
+      {
+        "x": 15,
+        "y": 19
+      },
+      {
+        "x": 16,
+        "y": 19
+      },
+      {
+        "x": 17,
+        "y": 19
+      },
+      {
+        "x": 18,
+        "y": 19
+      },
+      {
+        "x": 19,
+        "y": 19
+      },
+      {
+        "x": 20,
+        "y": 19
+      },
+      {
+        "x": 21,
+        "y": 19
+      },
+      {
+        "x": 22,
+        "y": 19
+      },
+      {
+        "x": 23,
+        "y": 19
+      },
+      {
+        "x": 24,
+        "y": 19
+      },
+      {
+        "x": 25,
+        "y": 19
+      },
+      {
+        "x": 26,
+        "y": 19
+      },
+      {
+        "x": 27,
+        "y": 19
+      },
+      {
+        "x": 28,
+        "y": 19
+      },
+      {
+        "x": 29,
+        "y": 19
+      },
+      {
+        "x": 30,
+        "y": 19
+      },
+      {
+        "x": 31,
+        "y": 19
+      },
+      {
+        "x": 32,
+        "y": 19
+      },
+      {
+        "x": 33,
+        "y": 19
+      },
+      {
+        "x": 34,
+        "y": 19
+      },
+      {
+        "x": 35,
+        "y": 19
+      }
+    ],
+    "actions": [
+      {
+        "kind": "face",
+        "who": "player",
+        "dir": "down"
+      },
+      {
+        "kind": "wait",
+        "frames": 12
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The floor of the next hall is gone."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Not broken. Gone. The sea came in and took the floor away and kept it,",
+          "and the columns stand up out of the water like the last few teeth in a jaw."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "A line of fallen drums crosses it, more or less, if you do not mind water on both sides of you."
+        ]
+      },
+      {
+        "kind": "setFlag",
+        "flag": "tdr_nave_seen"
+      }
+    ]
+  },
+  {
+    "id": "tdr_ring",
+    "_note": "THE ARGUMENT OF THE WHOLE STORY, DRAWN RATHER THAN SAID, and then named in one box because the player was told the answer at Mirehaven and is now standing in the question. Eighteen Aurelian rings in a circle, and a nineteenth in the middle of them that was made this year and is a quarter the size. Canon: the Aurelians tried to make Neravoss move the weather for them, the machines hurt it, and the Deluge is what followed. Meridian have read that report. Bern says so himself after he loses.\n\nThe whole of row 26 carries it, for the same reason the nave script carries the whole of row 19: the crossing lands at 17-18,26 but a player who comes back later and swims can climb out anywhere along it.",
+    "trigger": "step",
+    "map": "temple_deep_ruins",
+    "onceFlag": "tdr_ring_seen",
+    "at": [
+      {
+        "x": 4,
+        "y": 26
+      },
+      {
+        "x": 5,
+        "y": 26
+      },
+      {
+        "x": 6,
+        "y": 26
+      },
+      {
+        "x": 7,
+        "y": 26
+      },
+      {
+        "x": 8,
+        "y": 26
+      },
+      {
+        "x": 9,
+        "y": 26
+      },
+      {
+        "x": 10,
+        "y": 26
+      },
+      {
+        "x": 11,
+        "y": 26
+      },
+      {
+        "x": 12,
+        "y": 26
+      },
+      {
+        "x": 13,
+        "y": 26
+      },
+      {
+        "x": 14,
+        "y": 26
+      },
+      {
+        "x": 15,
+        "y": 26
+      },
+      {
+        "x": 16,
+        "y": 26
+      },
+      {
+        "x": 17,
+        "y": 26
+      },
+      {
+        "x": 18,
+        "y": 26
+      },
+      {
+        "x": 19,
+        "y": 26
+      },
+      {
+        "x": 20,
+        "y": 26
+      },
+      {
+        "x": 21,
+        "y": 26
+      },
+      {
+        "x": 22,
+        "y": 26
+      },
+      {
+        "x": 23,
+        "y": 26
+      },
+      {
+        "x": 24,
+        "y": 26
+      },
+      {
+        "x": 25,
+        "y": 26
+      },
+      {
+        "x": 26,
+        "y": 26
+      },
+      {
+        "x": 27,
+        "y": 26
+      },
+      {
+        "x": 28,
+        "y": 26
+      },
+      {
+        "x": 29,
+        "y": 26
+      },
+      {
+        "x": 30,
+        "y": 26
+      },
+      {
+        "x": 31,
+        "y": 26
+      },
+      {
+        "x": 32,
+        "y": 26
+      },
+      {
+        "x": 33,
+        "y": 26
+      },
+      {
+        "x": 34,
+        "y": 26
+      },
+      {
+        "x": 35,
+        "y": 26
+      }
+    ],
+    "actions": [
+      {
+        "kind": "face",
+        "who": "player",
+        "dir": "down"
+      },
+      {
+        "kind": "wait",
+        "frames": 12
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Eighteen rings of cut stone, twice your height, standing in a circle on a floor cut like a spiral."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "In the middle of them, on a steel cradle bolted through the spiral, there is a nineteenth.",
+          "It is a quarter the size. It hums. It was made this year."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The Sanctum told you what happened the last time people put rings on it.",
+          "Somebody read that. Somebody read it, and set this one anyway."
+        ]
+      },
+      {
+        "kind": "setFlag",
+        "flag": "tdr_ring_seen"
+      }
+    ]
+  }
+]

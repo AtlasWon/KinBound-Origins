@@ -1,9 +1,23 @@
 {
-  "speakers": { "fmp_ropehand": "ROPE HAND" },
+  "speakers": {
+    "fmp_ropehand": "ROPE HAND"
+  },
   "entries": {
     "fmp_ropehand": [
       {
-        "ifFlags": ["act4_done"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Two house lengths this week. Two is a good winter.",
+          "People are taking the lines down off doors that never had one, and coiling them, and putting them away.",
+          "Not throwing them out. Putting them away. I have noticed that and I have not said anything about it."
+        ]
+      },
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
         "lines": [
           "Nine house lengths of rope this week. Nine.",
           "A good winter is two. People are stringing lines to doors that never had one."

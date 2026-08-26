@@ -202,6 +202,18 @@
       "script": "hm_tarin_idle",
       "requiresFlag": "mom_sendoff",
       "hiddenIfFlag": "met_tarin"
+    },
+    {
+      "id": "hm_roofer",
+      "sprite": "villager_m",
+      "x": 12,
+      "y": 24,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hm_roofer",
+      "requiresFlag": "act6_done"
     }
   ],
   "objects": [

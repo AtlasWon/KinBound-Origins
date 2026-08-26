@@ -1,0 +1,59 @@
+{
+  "mapId": "temple_deep_ruins",
+  "$comment": "THE DROWNED NAVE, AND NOTHING ELSE ON THE MAP. Deep water is the only character in this building that declares\nan encounter -- the vestibule, the causeway, the lip and the ring floor are all cut stone and all silent,\nexactly as the Embercoil note argues a sealed hall should be. The shallow flood in the processional aisles is\nsilent too: it is ankle-deep water over a temple floor, not a habitat.\n\nSO THE PLAYER CHOOSES THEIR OWN EXPOSURE. The nave is crossed on a staggered causeway of fallen drums which is\ndry stone the whole way, so the compulsory crossing never fights anybody. Going INTO the water is a decision --\nfor the two islets at 11,23 and 28,23, or on the way back once the lower temple has handed over Swim -- and\nthis table is what that decision costs. Rate 85 rather than a route's 150 for the same reason.\n\nMEASURED, one kin, novice, no items, mean band then worst-of-band, sprigling / cinderpaw / rilltail:\n   L44  99/55/94  worst 96/51/90       L46  99/65/96  worst 99/60/95\nSame argument as the sea above: the band came down two levels to buy the Flame column, which read FORTY-SEVEN\nat the levels this was first cut to. The ceiling is a single rare Maelstrix at 40-41 -- a fully grown 510-point\nkin, the thing old sailors will not name out loud, at weight 6, which is one fight in seventeen. It is meant to\nbe the memory of this room, not the end of a run.\n\nNothing is above its own evolution level: Maelstrix evolves at 34, Tidewrack at 29, Clatterclaw at 27,\nCurrentail at 20, and Deeplum, Brinewisp, Anchorling and Bladderwrack do not evolve. Weights total 100.",
+  "methods": {
+    "tallGrass": {
+      "rate": 85,
+      "slots": [
+        {
+          "species": "deeplum",
+          "minLevel": 37,
+          "maxLevel": 39,
+          "weight": 20
+        },
+        {
+          "species": "brinewisp",
+          "minLevel": 37,
+          "maxLevel": 39,
+          "weight": 18
+        },
+        {
+          "species": "currentail",
+          "minLevel": 37,
+          "maxLevel": 39,
+          "weight": 16
+        },
+        {
+          "species": "clatterclaw",
+          "minLevel": 37,
+          "maxLevel": 40,
+          "weight": 14
+        },
+        {
+          "species": "anchorling",
+          "minLevel": 37,
+          "maxLevel": 40,
+          "weight": 12
+        },
+        {
+          "species": "tidewrack",
+          "minLevel": 38,
+          "maxLevel": 40,
+          "weight": 10
+        },
+        {
+          "species": "maelstrix",
+          "minLevel": 40,
+          "maxLevel": 41,
+          "weight": 6
+        },
+        {
+          "species": "bladderwrack",
+          "minLevel": 37,
+          "maxLevel": 39,
+          "weight": 4
+        }
+      ]
+    }
+  }
+}

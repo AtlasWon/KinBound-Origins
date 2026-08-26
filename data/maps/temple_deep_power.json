@@ -1,0 +1,176 @@
+{
+  "id": "temple_deep_power",
+  "name": "Temple of the Deep",
+  "displayName": "THE CONTROL RING",
+  "music": "station",
+  "battleBackdrop": "cave",
+  "indoor": true,
+  "_plan": "THE CONTROL RING. Nine days of steel dropped down a three thousand year\nold shaft, with the sea round the edge of the plate and a very long way\nunderneath it.\n\nTHE CLIMAX OF THE STORY HAPPENS ON THIS DECK AND SOMEBODY ELSE WROTE IT.\ndata/events/temple_deep_power.json (another author) runs Cassian using the\nTideheart, Neravoss rising, the nine collars closing, Lyra reaching her\nfather, Cassian breaking, Kell overriding him and the hardest battle in the\ngame -- and it was written before this map existed. Its cast note lists the\nfive coordinates it needs and asks the map author to agree with them, so\nthis map agrees with them. Every one of these tiles is open plate with no\nfurniture, no rail and no sign on it, and the rail pass in the generator\nsteps over them by name:\n    9,15 / 10,15  the player, arriving up the stair from the works\n    10,7          VEYL, at the console in the centre of the ring\n    17,3          KELL, at the master board, the far end of the deck\n    12,10         LYRA, between them and nearer her father\n    9,13          TARIN, at the head of the stair he later leaves down\nIF THAT SCENE EVER MOVES ITS PEOPLE, MOVE THESE TILES, NOT THE SCENE.\n\nTHE ROOM IS ONE SENTENCE: a steel disc in an Aurelian well. The shaft is\nstone and the water in it is the open sea; the plate is Foundation decking,\nrailed all the way round its lip except where the scene needs somebody\nstanding; the stair the player comes up is a gangway hung off the south of\nit, and the way on into the chamber is a hole cut through the north wall of\nthe shaft. There is nothing Aurelian on the plate and nothing of Meridian's\nin the stone, and that is the whole of the design.\n\nNO `weather` FIELD ON THIS MAP, AND IT MUST STAY THAT WAY. Battle weather\nis read straight off map.weather, and the trainer note on td_kell measured\nrain at 1.5x on her Tide half and 0.5x against a Flame player -- twenty-six\npoints off the win rate. The storm in the climax is text and it has to stay\ntext. The same goes for an encounter table: there is none, and the water\nround the plate must never get one.\n\nTHE RING HANDS ARE MINE AND THEY ARE NOT TRAINERS. Four of them, at four of\nthe eight stations, and they are the \"two of the nine ring hands look at\nVeyl\" the scene narrates. They speak through data/dialogue/temple_deep_power\n.json rather than through an event script, so that nothing in this map\nneeds a line in the file the climax lives in. All four carry an\n`ifFlags: td_power_done` variant, because a person who watched that happen\ndoes not say the same thing afterwards.",
+  "rows": [
+    "ΩΩΩΩΩΩΩΩΩΩΩSSΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩWWW╫╫::╫WWWΩΩΩΩΩΩΩ",
+    "ΩΩΩΩWW╫╫╫:::::╫╫╫WWΩΩΩΩΩ",
+    "ΩΩΩWW╫::?::::?::?:WWΩΩΩΩ",
+    "ΩΩWW╫:::::::::::::╫WWΩΩΩ",
+    "ΩWW╫:::::::::::?:::╫WWΩΩ",
+    "ΩW╫:::?::+?+::::::¾:╫WΩΩ",
+    "ΩW╫:::::::::::::::::╫WΩΩ",
+    "ΩW╫:::::¶::::¶::::::╫WΩΩ",
+    "ΩW╫::?:::::::::::?::╫WΩΩ",
+    "ΩW╫:::::::::::::::::╫WΩΩ",
+    "ΩWW╫:::::::::::::::╫WWΩΩ",
+    "ΩΩWW¾::?::::::?:::╫WWΩΩΩ",
+    "ΩΩΩWW╫:::::::::::╫WWΩΩΩΩ",
+    "ΩΩΩΩWW╫╫╫:::::╫╫╫WWΩΩΩΩΩ",
+    "ΩΩΩΩΩΩWWW::╫╫╫WWWΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩ╫::╫WWΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩ╫SS╫ΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 17,
+      "toMap": "temple_deep_power_stage",
+      "toX": 16,
+      "toY": 2,
+      "facing": "down",
+      "style": "stairs"
+    },
+    {
+      "x": 10,
+      "y": 17,
+      "toMap": "temple_deep_power_stage",
+      "toX": 17,
+      "toY": 2,
+      "facing": "down",
+      "style": "stairs"
+    },
+    {
+      "x": 11,
+      "y": 0,
+      "toMap": "temple_deep_heart",
+      "toX": 19,
+      "toY": 34,
+      "facing": "up",
+      "style": "stairs"
+    },
+    {
+      "x": 12,
+      "y": 0,
+      "toMap": "temple_deep_heart",
+      "toX": 20,
+      "toY": 34,
+      "facing": "up",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tdp_ring_a",
+      "sprite": "meridian_sci",
+      "x": 6,
+      "y": 7,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tdp_ring_a"
+    },
+    {
+      "id": "tdp_ring_b",
+      "sprite": "meridian",
+      "x": 13,
+      "y": 4,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tdp_ring_b"
+    },
+    {
+      "id": "tdp_ring_c",
+      "sprite": "meridian_sci_f",
+      "x": 17,
+      "y": 10,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tdp_ring_c"
+    },
+    {
+      "id": "tdp_ring_d",
+      "sprite": "meridian",
+      "x": 7,
+      "y": 13,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tdp_ring_d"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 6,
+      "text": [
+        "The console in the middle of the plate, and it is the newest thing here.",
+        "One shaped hollow in the top of it, the size of a palm, lined in felt.",
+        "Nothing else on this deck was built around an object that is not here."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 16,
+      "y": 3,
+      "text": [
+        "The master board. Nine columns, numbered one to nine, all of them live.",
+        "One key at the bottom of it, under a cover, labelled ALL STATIONS RELEASE.",
+        "The cover has a seal on it and the seal has never been broken."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 8,
+      "text": [
+        "A trunk comes up through the plate, thick as a mast, and goes down again.",
+        "There are sixty of these under this deck.",
+        "They all go the same way, and the way is down."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 11,
+      "y": 15,
+      "text": [
+        "Between the plate and the shaft wall there is a hand's width of nothing.",
+        "Under the grating there is no floor at all.",
+        "There is the sea, and it is a very long way down, and it is black."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 8,
+      "text": [
+        "The shaft wall, cut, dressed and grooved, going up past the lamps.",
+        "Nine days of steel standing inside three thousand years of stone.",
+        "Nobody has put a single bolt through the stone. They could not."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18,
+      "y": 6,
+      "text": [
+        "Kit lashed down with rope, the way you lash things down at sea.",
+        "A tarpaulin, a stretcher, and two crates of dry clothes for forty people.",
+        "Somebody here has thought properly about the night going wrong."
+      ]
+    }
+  ]
+}

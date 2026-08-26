@@ -1,0 +1,571 @@
+[
+  {
+    "id": "op_arrive",
+    "_note": "STAGE 6, THE OPERATION, BEAT 1: THE EAST QUAY.\n\nCANON, EXACTLY: Cassian has gone to a distant island off the eastern coast, Meridian have built platforms over the site, THE PLAYER CANNOT REACH IT ALONE, and so a large operation begins with the player, Tarin, Lyra, Professor Sorrell, helpful regional Trainers and certain Hallkeepers in it.\n\nTHE PROBLEM THIS MAP EXISTS TO SOLVE IS THAT A ROLL-CALL IS NOT A SCENE. Naming six Hallkeepers in a dialogue box is a list. So nobody is named here: they are STANDING on a hundred and fifty metres of mole with the sea on both sides, and the player meets them in the order geometry puts them in, one at a time, on their own feet, and can walk past any of them. This opening scene says exactly two things -- that the boats are already there, and that Sorrell is at the far end of the table -- and then gets out of the way for the length of the quay.\n\nWHY IT IS NOT A CUTSCENE WITH EVERYONE IN IT. Five acts of travelling are being paid off, and a payoff the player watches is worth less than one they walk through. The six berths, six boats, six gangways down are drawn on the map BEFORE the first dialogue box, which is the only place that sentence lands.",
+    "trigger": "enter",
+    "map": "eastreach_muster",
+    "onceFlag": "op_quay_arrived",
+    "actions": [
+      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "say",
+        "lines": [
+          "Six boats along the north side with their gangways down, and berths here for two.",
+          "Two of them are Mirehaven punts and they have come round the whole east coast."
+        ]
+      },
+      { "kind": "wait", "frames": 12 },
+      {
+        "kind": "say",
+        "lines": [
+          "Every lamp on the mole is lit and it is the middle of the afternoon.",
+          "Nobody has turned to look at you. Everybody has already been told you were coming."
+        ]
+      },
+      { "kind": "setFlag", "flag": "op_called" }
+    ]
+  },
+
+  {
+    "id": "op_sorrell",
+    "_note": "SORRELL RUNS THE OPERATION AND HE IS NOT ENJOYING IT. He is sixty, he studies how people and Kin live together, and he has spent four days doing logistics. Canon's job for him here is to make the plan legible in three boxes and then hand the act back to the player: what Meridian have built, why it cannot be taken quietly, and what the player's part of it is.\n\nTHE PLAN IS DELIBERATELY NOT CLEVER, and he says so. Twenty-one boats at once is not a stratagem, it is arithmetic, and the whole point of it is that the player is the one nobody is looking at. That also states Tarin's half of the job without stealing his scene.\n\nHE GIVES ITEMS. The player has asked four times for an easier game and the hardest battle in the story is three maps away.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "op_briefed" },
+        "then": [
+          {
+            "kind": "say",
+            "who": "PROFESSOR SORRELL",
+            "lines": [
+              "Twenty-one boats. I have counted them so often the number has stopped meaning anything.",
+              "Go and see Tarin at the head of the mole before you get into one."
+            ]
+          },
+          { "kind": "end" }
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "PROFESSOR SORRELL",
+        "lines": [
+          "Ah. Good.",
+          "I have been standing at this table for four days and I have run out of things to check twice."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "PROFESSOR SORRELL",
+        "lines": [
+          "The island is eleven miles east and it is not on any chart worth the paper.",
+          "Meridian have built platforms on top of it. Not on the rock. On top of the ruin."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "PROFESSOR SORRELL",
+        "lines": [
+          "There is no quiet way in. Two people in a boat would be seen at four miles.",
+          "So we are not going to be clever. We are going to be twenty-one boats at once."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "PROFESSOR SORRELL",
+        "lines": [
+          "Every glass on that platform will be pointed at the water.",
+          "You are the one nobody is looking at. That is the entire plan and it is all we have."
+        ]
+      },
+      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "say",
+        "who": "PROFESSOR SORRELL",
+        "lines": [
+          "Take these. I have been told twice today that I fuss.",
+          "I intend to go on fussing until somebody stops me."
+        ]
+      },
+      { "kind": "sfx", "sound": "item" },
+      { "kind": "giveItem", "item": "full_restore", "count": 3 },
+      { "kind": "giveItem", "item": "full_heal", "count": 3 },
+      { "kind": "giveItem", "item": "full_rouse", "count": 2 },
+      {
+        "kind": "say",
+        "lines": [
+          "Sorrell handed over 3 Full Restores, 3 Full Heals and 2 Full Rouses."
+        ]
+      },
+      { "kind": "wait", "frames": 14 },
+      {
+        "kind": "say",
+        "who": "PROFESSOR SORRELL",
+        "lines": [
+          "Your father made this crossing once and I signed the paper that sent him.",
+          "I am not going to say the rest of that sentence. Go and talk to Tarin."
+        ]
+      },
+      { "kind": "setFlag", "flag": "op_briefed" }
+    ]
+  },
+
+  {
+    "id": "op_vane",
+    "_note": "MARIT VANE, HALL 3, TIDEGLASS. THE FIRST OF THE TWO KEEPERS WHO ARE HERE BECAUSE OF SOMETHING SPECIFIC THAT HAPPENED WHEN THE PLAYER FOUGHT THEM.\n\nHer afterward line in data/trainers/trainers.json, unchanged since Stage 2, is: 'Go and listen to him. Then ask him what he does the first time the sea says no.' She sent a sixteen-year-old to hear Cassian Veyl speak in her own harbour and gave them a question to put to him. Act 2 never let the player ask it. She is standing on this quay to be there when he has to answer it anyway, and that is a debt being called in rather than a cameo.\n\nShe also carries on into the temple -- she is the one who teaches Swim on the last dry step in data/events/temple_deep_tunnels.json -- so her being aboard is load-bearing for somebody else's build as well as this one.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "op_vane_met" },
+        "then": [
+          {
+            "kind": "say",
+            "who": "MARIT VANE",
+            "lines": [
+              "Water first. Questions afterwards. It has never once been the other way round."
+            ]
+          },
+          { "kind": "end" }
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "MARIT VANE",
+        "lines": [
+          "I told you to go and listen to him, and then to ask him what he does the first time the sea says no.",
+          "Do you remember that."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "MARIT VANE",
+        "lines": [
+          "You never got to ask it. He took the thing out of your bag instead.",
+          "So the sea is going to ask it for you, and I am going to be standing there."
+        ]
+      },
+      { "kind": "wait", "frames": 14 },
+      {
+        "kind": "say",
+        "who": "MARIT VANE",
+        "lines": [
+          "Thirty years of this harbour. I have never seen the Basin sit the way it sat this morning.",
+          "Flat, and wrong, and not one gull on it."
+        ]
+      },
+      { "kind": "setFlag", "flag": "op_vane_met" }
+    ]
+  },
+
+  {
+    "id": "op_roxen",
+    "_note": "ROXEN QUILL, HALL 2, STONEWAKE. THE SECOND OF THE TWO, and his hook is the last line he ever said to the player: 'Kerb Street east when you are ready. Tideglass is a long way and worth it. And take a look at the water when you get there. Just look at it.'\n\nHe told a child to look at the sea because he had never been able to. He is a Terra Keeper with nothing in his hand that swims and he came anyway, which is the whole of his defeat line -- out-waited, not out-hit -- pointed at himself.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "op_roxen_met" },
+        "then": [
+          {
+            "kind": "say",
+            "who": "ROXEN QUILL",
+            "lines": [
+              "Terra, weight and patience. Two of those are no use whatsoever on a boat."
+            ]
+          },
+          { "kind": "end" }
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "ROXEN QUILL",
+        "lines": [
+          "I told you to look at the water when you got to Tideglass. Have you looked at it lately."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "ROXEN QUILL",
+        "lines": [
+          "I have been down a quarry since I was nineteen and I have never once been out of sight of land.",
+          "There is nothing in my hand that swims and I am getting in a boat regardless."
+        ]
+      },
+      { "kind": "wait", "frames": 12 },
+      {
+        "kind": "say",
+        "who": "ROXEN QUILL",
+        "lines": [
+          "You out-waited me in my own Hall. That is the harder one and I said so at the time.",
+          "Do the same to whatever is out there."
+        ]
+      },
+      { "kind": "setFlag", "flag": "op_roxen_met" }
+    ]
+  },
+
+  {
+    "id": "op_tallow",
+    "_note": "ANNIK TALLOW, HALL 5, MIREHAVEN. Two of the boats on this quay are hers and they came round the coast under oars, because Mirehaven does not have four days of fuel and never has. Her hook is her opening line -- 'You stood still. Good. That is the only part of this I cannot teach.'",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "op_tallow_met" },
+        "then": [
+          {
+            "kind": "say",
+            "who": "ANNIK TALLOW",
+            "lines": [
+              "Mirehaven is not built. Mirehaven is agreed. So is this quay, today."
+            ]
+          },
+          { "kind": "end" }
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "ANNIK TALLOW",
+        "lines": [
+          "Two of these are mine and they came round the coast under oars.",
+          "We do not keep four days of fuel in the whole town. We keep four days of arguing."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "ANNIK TALLOW",
+        "lines": [
+          "You stood still in my Hall when the floor was moving.",
+          "That is why nobody here is going to ask whether you are frightened. It would be a waste of a question."
+        ]
+      },
+      { "kind": "setFlag", "flag": "op_tallow_met" }
+    ]
+  },
+
+  {
+    "id": "op_fenn",
+    "_note": "IDRISA FENN, HALL 7, SKYREACH. She keeps the masts on the cliff and she has spent three hours re-rigging twenty-one boats for a wind nobody has a number for. Her hook is her opening line -- three gantries in a crosswind and never looked down -- and it is used as an instruction rather than a compliment.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "op_fenn_met" },
+        "then": [
+          {
+            "kind": "say",
+            "who": "IDRISA FENN",
+            "lines": [
+              "Three hours and nineteen masts. Do not lean on the two I have not got to."
+            ]
+          },
+          { "kind": "end" }
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "IDRISA FENN",
+        "lines": [
+          "Every mast on this quay was rigged for a coasting breeze and that is not what is coming.",
+          "I have had three hours and no ladder that I trust."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "IDRISA FENN",
+        "lines": [
+          "You came up three gantries in a crosswind and you did not once look down.",
+          "Whatever it is you are going to be standing on out there, do exactly that again."
+        ]
+      },
+      { "kind": "setFlag", "flag": "op_fenn_met" }
+    ]
+  },
+
+  {
+    "id": "op_cade",
+    "_note": "ORRIN CADE, HALL 4, EMBERFALL. His afterward line is the one that has been waiting for a scene since Stage 3: four hundred and twelve columns on the board in his foundry, and one of them is a person, and he is not sure he likes it. He has come to find out what the column does.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "op_cade_met" },
+        "then": [
+          {
+            "kind": "say",
+            "who": "ORRIN CADE",
+            "lines": [
+              "Boiler six is a disgrace and I have decided to be at peace about it."
+            ]
+          },
+          { "kind": "end" }
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "ORRIN CADE",
+        "lines": [
+          "I have been down all six of these boilers this morning. Four are honest work.",
+          "One is somebody's idea of adequate and one is a crime."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "ORRIN CADE",
+        "lines": [
+          "Four hundred and twelve columns on my board and one of them has a name in it.",
+          "I have thought about that every day since. I came to see what the column does next."
+        ]
+      },
+      { "kind": "setFlag", "flag": "op_cade_met" }
+    ]
+  },
+
+  {
+    "id": "op_healer",
+    "_note": "THE LAST CLINIC IN CAELORA before three maps of Meridian and the hardest fight in the story. It heals every time and says so, because a player who has asked four times for an easier game should never have to wonder whether the free heal is one-use.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "CLINIC HAND",
+        "lines": [
+          "The Institute sent the whole clinic down and then sent me after it.",
+          "Sit down. There is a kettle and there is not going to be another one."
+        ]
+      },
+      { "kind": "healParty" },
+      { "kind": "sfx", "sound": "heal_done" },
+      {
+        "kind": "say",
+        "who": "CLINIC HAND",
+        "lines": [
+          "There. Come back to me before you get in that boat.",
+          "I am going with the second wave and I would rather not be needed."
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "op_lyra",
+    "_note": "LYRA AT THE BOATS. Canon puts her in the operation and her arc is doubt resolving into a choice; the choice itself is her father's scene inside the temple and is not this one. What is hers HERE is the cost: she has signed her father's name on Foundation paper since she was fourteen because he asked her to, that signature is what opened the records sleeve in Act 4, and she has now spent it on eleven boats. She says the number and does not make anything of it.\n\nShe must not promise the player anything about what Cassian will do. She does not know, she says so, and that is the most honest thing in the act.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "op_lyra_met" },
+        "then": [
+          {
+            "kind": "say",
+            "who": "LYRA",
+            "lines": [
+              "Stern line is on a slip. When you are aboard we go, and we do not come back for anybody."
+            ]
+          },
+          { "kind": "end" }
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "Eleven of these are chartered on Foundation paper.",
+          "I signed for them. In his hand, the way I have signed everything since I was fourteen."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "That is the last time that is ever going to work, and I spent it on this.",
+          "I would like it noted that I did not think about it for very long."
+        ]
+      },
+      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "He has your father's Tideheart and he is eleven miles that way.",
+          "I am not going to tell you what he does when he sees you. I do not know. I have never known."
+        ]
+      },
+      { "kind": "setFlag", "flag": "op_lyra_met" }
+    ]
+  },
+
+  {
+    "id": "op_tarin",
+    "_note": "TARIN'S GOODBYE, AND THE ONE SCENE IN THIS ACT THAT HAD TO BE ON THIS MAP.\n\nCANON SPELLS HIS ROLE OUT: he disables Meridian towers while the player moves on the central facility. So he is elsewhere for the whole of the rest of the operation, and the player has to FEEL that rather than be told it. The way to make an absence felt is to stage the parting -- at the far end of the quay, with the second boat behind him and nothing past it -- and then never show him again until the towers start going out.\n\nHE DOES NOT ASK TO COME. That is the arc finishing. He started wanting to be strong and he is now a boy who will take the job nobody will see him do, on his own, with nineteen people who are not his friend. The Crest count is raised exactly once, by him, as a joke that does not work, and then dropped for good.\n\nHE WALKS ONTO THE OTHER BOAT AT THE END OF IT and is removed, and the map's own hiddenIfFlag on op_tarin_gone keeps him gone on a reload. The player boards a different boat, at the other rail, facing the other way. Nothing says that. It is where the two gangways are.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Eight and eight. All the way from a lawn in Hearthmere and we finished level."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "I had a line ready about that. I have had it ready since Crownspire.",
+          "It is not any good and I am not going to use it."
+        ]
+      },
+      { "kind": "wait", "frames": 18 },
+      { "kind": "face", "who": "op_tarin", "dir": "left" },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "There are four towers on the ring. Relays. They are what holds the thing down.",
+          "While you walk in the front, we take them off it."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Nineteen of us. I am the one who knows what a Meridian relay looks like from the outside,",
+          "which is a sentence I never expected to be true about me."
+        ]
+      },
+      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "So I am not coming with you.",
+          "That is the first time. I have counted."
+        ]
+      },
+      {
+        "kind": "choice",
+        "lines": [
+          "He is looking at the boat and not at you, which is what he does."
+        ],
+        "options": [
+          {
+            "label": "Be careful.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "No.",
+                  "You be careful. I will be quick, which is the one I am good at."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "I could come with you.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "You could. And then there would be nobody at the front door.",
+                  "I have thought about it for four days. It is the only bit I did think about."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "(Say nothing.)",
+            "then": [
+              {
+                "kind": "say",
+                "lines": [
+                  "You do not say anything.",
+                  "He nods at the water as though you had, which is somehow worse."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Go on. I will see the lights go out from where I am.",
+          "You will see them from where you are. That will do us."
+        ]
+      },
+      { "kind": "wait", "frames": 14 },
+      {
+        "kind": "move",
+        "who": "op_tarin",
+        "steps": ["up", "left", "left", "left", "up", "up"]
+      },
+      { "kind": "removeNpc", "who": "op_tarin" },
+      { "kind": "setFlag", "flag": "op_tarin_gone" },
+      { "kind": "wait", "frames": 26 },
+      {
+        "kind": "say",
+        "lines": [
+          "The second boat casts off and goes north-east, up the coast, away from the line on the chart.",
+          "Yours does not go north-east."
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "op_board",
+    "_note": "THE POINT OF NO RETURN, ON THE PLANK RATHER THAN AT THE RAIL, so that a No leaves the player standing on a plank and not inside a boat.\n\nIT IS GATED ON TARIN AND NOT ON SORRELL. The briefing can be skipped -- a player who has read the boards knows the plan -- but the parting cannot, because it is the payoff of five acts and because the ledger row that puts him on the towers opens off it. Lyra refuses in his voice rather than in a system's: she is holding the stern line and she does not move.",
+    "trigger": "step",
+    "map": "eastreach_muster",
+    "at": [
+      { "x": 44, "y": 12 },
+      { "x": 45, "y": 12 }
+    ],
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "not", "of": { "kind": "flag", "flag": "op_tarin_gone" } },
+        "then": [
+          {
+            "kind": "say",
+            "who": "LYRA",
+            "lines": [
+              "Not yet.",
+              "He is at the head of the mole and he is waiting for you to come and not say it."
+            ]
+          },
+          { "kind": "move", "who": "player", "steps": ["up"] },
+          { "kind": "end" }
+        ]
+      },
+      {
+        "kind": "ask",
+        "lines": [
+          "The stern line is on a slip and Lyra has her hand on it.",
+          "Once you are aboard, the quay is behind you."
+        ],
+        "yes": [
+          { "kind": "setFlag", "flag": "op_sailed" },
+          { "kind": "sfx", "sound": "warp" },
+          { "kind": "fade", "to": "black", "frames": 40 },
+          { "kind": "wait", "frames": 30 },
+          {
+            "kind": "warp",
+            "map": "eastreach_launch",
+            "x": 13,
+            "y": 13,
+            "facing": "up"
+          }
+        ],
+        "no": [
+          { "kind": "move", "who": "player", "steps": ["up"] }
+        ]
+      }
+    ]
+  }
+]

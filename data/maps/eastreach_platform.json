@@ -1,0 +1,198 @@
+{
+  "id": "eastreach_platform",
+  "name": "Abyss Crown",
+  "displayName": "ABYSS CROWN - THE OUTER DECK",
+  "music": "station",
+  "battleBackdrop": "coast",
+  "indoor": false,
+  "snow": 0.75,
+  "weather": "storm",
+  "regionPos": {
+    "x": 37,
+    "y": 21
+  },
+  "_design": "Project Abyss Crown, from underneath. Three bays of grating over the drowned city, joined by catwalks a tile and a half wide, and at the north end a doorway three thousand years older than anything else on the map with a Meridian crest bolted over it. This is the last ground before the Temple and it belongs to the operation rather than to the dungeon: it is where Meridian are met, where Tarin's towers go out, and where the player stops being somebody who arrived and becomes somebody who is inside.",
+  "_plan": "THE CATWALKS ARE THE MAP. Three bays that could have been one deck are cut into three, and the only ways across are four tiles wide in total. A fight at the end of a catwalk over a sixty-foot drop is a different fight from the same party on open ground even though the engine cannot tell the difference; what the engine CAN do is make the player see the sea through the gap on the way to it, and it does, twice, on the only road there is.\n\nTARIN'S TOWERS GO OUT FROM HERE AND THEY ARE HEARD, NOT DESCRIBED. Canon gives him the other half of the job -- he is disabling towers while the player moves on the facility -- so he is not on this map and must not be. What IS on this map is the consequence: three times, at fixed places, the deck lurches, the lamps drop, and the Meridian standing on it say something they were not going to say. Their dialogue is gated on op_tower_1/2/3, so the same guard is a different person the third time. That is the only way somebody who is off screen can be felt rather than reported.\n\nSNOW 0.75, THE HEAVIEST IN THE ACT, and the fourth step of a ramp that started at 0.3 on the quay. Nobody says the weather is worse. The player simply has not been able to see this far for two maps.\n\nTHE DOOR IS SOMEBODY ELSE'S AND THE SEAM IS MADE FROM BOTH SIDES. The warp on 19,4 and 20,4 goes to temple_deep 19,32 and 20,32, which is the plank landing at the foot of that build's entrance hall; their own return warp comes back to 19,5 and 20,5, the two deck tiles directly under this door. Neither half was agreed in advance -- each was read off the other's finished map -- which is why both are written down here as well as there.",
+  "warps": [
+    {
+      "x": 19,
+      "y": 4,
+      "toMap": "temple_deep",
+      "toX": 19,
+      "toY": 32,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 20,
+      "y": 4,
+      "toMap": "temple_deep",
+      "toX": 20,
+      "toY": 32,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 20,
+      "y": 25,
+      "toMap": "eastreach_shore",
+      "toX": 40,
+      "toY": 2,
+      "facing": "down",
+      "style": "stairs"
+    },
+    {
+      "x": 21,
+      "y": 25,
+      "toMap": "eastreach_shore",
+      "toX": 41,
+      "toY": 2,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "pf_hand",
+      "sprite": "meridian",
+      "x": 16,
+      "y": 22,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "op_deck_hand",
+      "sightRange": 5
+    },
+    {
+      "id": "pf_lead",
+      "sprite": "meridian_lead",
+      "x": 16,
+      "y": 11,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "op_deck_lead",
+      "sightRange": 3
+    },
+    {
+      "id": "pf_tech",
+      "sprite": "meridian_sci_f",
+      "x": 24,
+      "y": 11,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "op_deck_tech",
+      "sightRange": 3
+    },
+    {
+      "id": "pf_sci",
+      "sprite": "meridian_sci",
+      "x": 14,
+      "y": 11,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "pf_sci"
+    },
+    {
+      "id": "pf_clerk",
+      "sprite": "clerk",
+      "x": 25,
+      "y": 8,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "pf_clerk"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "script",
+      "x": 18,
+      "y": 14,
+      "text": [
+        "The winch house. Six drums, all of them paid out, all of them going straight down.",
+        "The board says what is on the ends of them. RING ELEMENT ONE THROUGH SIX: SET."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 11,
+      "y": 16,
+      "text": [
+        "A safety board, screwed on straight and kept clean.",
+        "THIS IS A FOUNDATION SITE. NOTHING BELOW THIS DECK IS SALVAGE. RESPECT THE WORKS.",
+        "Somebody who works here has scratched a word under that and then scratched it out again."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 10,
+      "y": 17,
+      "text": [
+        "A cable run. Six inches of copper under wet plate, humming hard enough to feel.",
+        "It comes up out of the sea and goes north, and it does not come back."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 18,
+      "y": 4,
+      "text": [
+        "The doorway. Grey stone, a spiral cut round it, the sea has worn it smooth at the foot.",
+        "Meridian have cased the whole of it in plate and bolted their crest over the arch.",
+        "The bolts have gone into the carving. Somebody did that on purpose and then went to lunch."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 32,
+      "y": 17,
+      "item": "full_restore",
+      "quantity": 2,
+      "flag": "item_op_deck_stores"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 6,
+      "y": 12,
+      "item": "full_heal",
+      "quantity": 2,
+      "flag": "item_op_deck_hidden"
+    }
+  ],
+  "rows": [
+    "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+    "WWWWWWWWWWW╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫WWWWWWWWWWW",
+    "WWWWWWWWWWW╫▓╔╔╔╔ΩΩΩΩΩΩ╔╔╔╔▓╫WWWWWWWWWWW",
+    "WWWWWWWWWWW╫▓╔╔╔╔ΩΩ╦╦ΩΩ╔╔╔╔▓╫WWWWWWWWWWW",
+    "WWWWWWWWWWW╫▓╔╔╔╔ΩΩ╩╩ΩΩ╔╔╔╔▓╫WWWWWWWWWWW",
+    "WWWWWWWWWWW╫FFFFFFFFFFFFFFFF╫WWWWWWWWWWW",
+    "WWWWWWWWWWW╫FFFF☼FFFFFF☼FF¾F╫WWWWWWWWWWW",
+    "WWWWWWWWWWW╫F³FFFFFFFFFFFF¾F╫WWWWWWWWWWW",
+    "WWWWWWWWWWW╫FF²FFFFFFFFFFFFF╫WWWWWWWWWWW",
+    "WWWWW╫╫╫╫╫╫╫╫╫╫╫F╫╫╫╫╫╫╫F╫╫╫╫╫╫╫╫╫╫WWWWW",
+    "WWWWW╫FFFFFFFFFFFFFFFFFFFFFFFF²FFF╫WWWWW",
+    "WWWWW╫F╫╫╫╫╫FFFFFFFFFFFFF³³F╫╫╫╫╫F╫WWWWW",
+    "WWWWW╫F╫WWW╫FFFFF╧╧╧╧FFFFFFF╫WWW╫F╫WWWWW",
+    "WWWWW╫F╫WWW╫FFFFF╤╤╤╤FFFFFFF╫WWW╫F╫WWWWW",
+    "WWWWW╫F╫WWW╫FFFFF╔╗╗╔FFFFFFF╫WWW╫F╫WWWWW",
+    "WWWWW╫F╫╫╫╫╫FFFFFFFFFFFFFFFF╫╫╫╫╫F╫WWWWW",
+    "WWWWW╫FFFFF´FF¾¾FFFFF¾¾FFFFFFFFFFF╫WWWWW",
+    "WWWWW╫FF±±±±±¶FFFFFFFFFFFFFFFFFFFª╫WWWWW",
+    "WWWWW╫╫╫╫╫╫╫╫╫╫╫╫FF╫╫╫╫FF╫╫╫╫╫╫╫╫╫╫WWWWW",
+    "WWWWWWWWWWWWW╫╫╫╫FF╫╫╫╫FF╫╫╫╫WWWWWWWWWWW",
+    "WWWWWWWWWWWWW╫FFFFFFFFFFFFF³╫WWWWWWWWWWW",
+    "WWWWWWWWWWWWW╫F¾¾FFFFFF╫╫╫╫F╫WWWWWWWWWWW",
+    "WWWWWWWWWWWWW╫FFFFFFFFF╫WW╫F╫WWWWWWWWWWW",
+    "WWWWWWWWWWWWW╫FFFFFFFFF╫WW╫F╫WWWWWWWWWWW",
+    "WWWWWWWWWWWWW╫FFFFFFFFF╫╫╫╫F╫WWWWWWWWWWW",
+    "WWWWWWWWWWWWW╫╫╫╫╫╫╫FF╫╫╫╫╫╫╫WWWWWWWWWWW"
+  ]
+}

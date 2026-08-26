@@ -33,7 +33,19 @@
     ],
     "aur_hq_desk": [
       {
-        "ifFlags": ["aur_hq_pass"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Four thousand a week has become eleven thousand a week and not one of them wants a tour.",
+          "I have still turned nobody away. I am not going to start with the ones who are angry.",
+          "There is a list on the counter of every floor in this building and what is on it. Take one."
+        ]
+      },
+      {
+        "ifFlags": [
+          "aur_hq_pass"
+        ],
         "lines": [
           "Badges back at the desk when you go, and if you find a room you did not mean to,",
           "come and tell me and nobody will be cross. Everybody does it once."
@@ -47,6 +59,16 @@
       }
     ],
     "aur_hq_giving": [
+      {
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Two coins a month since the flood. I have not stopped and nobody is going to talk me out of it.",
+          "They sent me the accounts on Friday, same as every year. It is a much longer document this year.",
+          "I have read all of it. Down to the pencils. That was the arrangement and they have kept it."
+        ]
+      },
       {
         "lines": [
           "Two coins a month since the flood. It is not much and they never once said so.",
@@ -65,6 +87,16 @@
     ],
     "aur_hq_vet": [
       {
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Forty-one thousand back in the reed beds and the commission has been through every one of the books.",
+          "They found nothing. I have never been so pleased to have wasted a fortnight of somebody's life.",
+          "I still walk down and watch every release. That was never the part anybody had to come and check."
+        ]
+      },
+      {
         "lines": [
           "Bred here, tagged here, and let go in the reed beds at three months.",
           "I have put forty-one thousand of them back and I still walk down and watch every release."
@@ -73,7 +105,19 @@
     ],
     "aur_hq_ocean": [
       {
-        "ifFlags": ["aur_hq_pass"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "I have the specification for the deep tanks. It came down on Thursday in an envelope with my name on it.",
+          "Nine pins in open water, in a ring, at a hundred and forty fathoms. I have read it four times.",
+          "I asked twice and was thanked for my interest. I would like somebody to know that I asked."
+        ]
+      },
+      {
+        "ifFlags": [
+          "aur_hq_pass"
+        ],
         "lines": [
           "You have a badge on. Then you can ask the question the public cannot.",
           "No, I do not know what the deep tanks are for. I asked for the specification twice.",
@@ -90,6 +134,16 @@
     ],
     "aur_hq_relief": [
       {
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Nine thousand packs east in the spring and four thousand west this week, and not one cart was stopped.",
+          "Whatever they are pulling apart upstairs, nobody has been within forty feet of my warehouse.",
+          "That is the only sentence I have said all week that I am completely sure of."
+        ]
+      },
+      {
         "lines": [
           "Nine thousand packs east in the spring and every one of them paid for out of that box.",
           "You want to know what the Foundation is? It is a warehouse and a fast cart.",
@@ -98,6 +152,16 @@
       }
     ],
     "aur_hq_donor": [
+      {
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "There is still a bell on that shore. I came in and looked at the map before I read anything else.",
+          "A man I have never met did a wicked thing, and a bell I have never rung is still bolted to a rock.",
+          "I am eighty-one. I have earned the right to be simple about which of those I come here for."
+        ]
+      },
       {
         "lines": [
           "My husband drowned in the year forty-nine, off a shore with no bell on it.",
@@ -124,6 +188,16 @@
     ],
     "aur_hq_digger": [
       {
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Every licence we hold is suspended and I am glad, because every one of them was ours to write.",
+          "Eleven sites and no weapons in any of them, and we were the most dangerous thing that ever walked in.",
+          "When they let me back out there it will be under somebody else's paper. Good."
+        ]
+      },
+      {
         "lines": [
           "Eleven Aurelian sites and not one weapon in any of them. Think about that.",
           "They built rings, and floors that sing, and doors that open for the right voice.",
@@ -132,6 +206,16 @@
       }
     ],
     "aur_hq_porter": [
+      {
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Twenty years, and on Monday I carried a DEEP SURVEY crate UP the west stair.",
+          "Two clerks from the capital signed for it in front of me and one of them said thank you.",
+          "A whale's jaw, a piano, and that. I am going to be telling people about that one."
+        ]
+      },
       {
         "lines": [
           "Twenty years on this floor. I have carried out a whale's jaw and a piano.",

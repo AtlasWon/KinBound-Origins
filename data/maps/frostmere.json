@@ -299,6 +299,18 @@
       },
       "script": "tarin_town",
       "hiddenIfFlag": "tarin_frostmere_done"
+    },
+    {
+      "id": "fm_homegoer",
+      "sprite": "villager_f",
+      "x": 12,
+      "y": 24,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "fm_homegoer",
+      "requiresFlag": "act6_done"
     }
   ],
   "objects": [

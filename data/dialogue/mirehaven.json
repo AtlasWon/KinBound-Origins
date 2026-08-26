@@ -12,7 +12,8 @@
     "mh_child": "MIREHAVEN CHILD",
     "mh_stiltwright": "PILE CREW",
     "mh_rower": "ROWER",
-    "mh_gossip": "TOWNSWOMAN"
+    "mh_gossip": "TOWNSWOMAN",
+    "mh_lamphand": "LAMP GATHERER"
   },
   "entries": {
     "mh_harbourmaster": [
@@ -35,7 +36,29 @@
     ],
     "mh_ferrywoman": [
       {
-        "ifFlags": ["act4_done"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Ninety seconds. I did it in ninety seconds this morning and I have done it forty times since.",
+          "New pole. The old one is up on the boatyard wall with a card under it and I did not put it there.",
+          "Get in. It is still a beautiful walk and you are still not doing it."
+        ]
+      },
+      {
+        "ifFlags": [
+          "neravoss_restrained"
+        ],
+        "lines": [
+          "The long way is under. Both ways are under. There is nothing out of Mirehaven this morning that is not a boat.",
+          "So I am putting people across after all, one at a time, and I am roped to the post to do it.",
+          "Ninety seconds. It is nine minutes now, and I have made it forty times since it got light."
+        ]
+      },
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
         "lines": [
           "Walk it. I am not putting anybody across in this and I have never said that in my life.",
           "Ninety seconds, and yesterday the ninety seconds took me eleven minutes and a broken pole.",
@@ -52,7 +75,9 @@
     ],
     "mh_elder": [
       {
-        "ifFlags": ["crest_5_taken"],
+        "ifFlags": [
+          "crest_5_taken"
+        ],
         "lines": [
           "There was a Mirehaven before this one, and it was on the ground, and the ground went.",
           "My grandmother's grandmother watched the water come up over her doorstep and stay.",
@@ -69,7 +94,9 @@
     ],
     "mh_warden": [
       {
-        "ifFlags": ["crest_5_taken"],
+        "ifFlags": [
+          "crest_5_taken"
+        ],
         "lines": [
           "They went down four days ago with lamps and cases and a paper from somewhere.",
           "I am the warden of this rock and I could not tell them no. That is a new feeling.",
@@ -121,7 +148,19 @@
     ],
     "mh_child": [
       {
-        "ifFlags": ["act4_done"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "The green came back. Not all at once. Two on Monday, and then a lot.",
+          "I sat out there half the night again and it was for a completely different reason this time.",
+          "Mum said it is only Kin in her normal voice. I have decided to let her have that one."
+        ]
+      },
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
         "lines": [
           "The green has gone. All of it, all at once, and the water under the boards is just water.",
           "I sat out there half the night in case they came back.",
@@ -129,7 +168,9 @@
         ]
       },
       {
-        "ifFlags": ["crest_5_taken"],
+        "ifFlags": [
+          "crest_5_taken"
+        ],
         "lines": [
           "Everyone says do not go under the decks. I go under the decks.",
           "There are stone bits down there. Square ones. With lines cut in them.",
@@ -146,7 +187,29 @@
     ],
     "mh_stiltwright": [
       {
-        "ifFlags": ["act4_done"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Third row is in. Cut, lifted and driven, in the wet, with the whole town holding lamps.",
+          "It bought us nothing. The water went down before we had finished it.",
+          "I would start it again tomorrow. That is not brave, it is the arithmetic of a town built on sticks."
+        ]
+      },
+      {
+        "ifFlags": [
+          "neravoss_restrained"
+        ],
+        "lines": [
+          "Fourth row. We are not lifting it, we are propping it, and a prop is not a stilt and everyone here knows it.",
+          "I have run out of timber, so it is doors now. Somebody's door, under somebody else's floor.",
+          "Not one house has said no to me. I have asked forty."
+        ]
+      },
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
         "lines": [
           "I asked you if the foot was worth it. It was worth it. It is not enough.",
           "We are cutting and lifting the third row now, in the wet, with the whole town holding lamps.",
@@ -172,7 +235,9 @@
     ],
     "mh_gossip": [
       {
-        "ifFlags": ["crest_4_taken"],
+        "ifFlags": [
+          "crest_4_taken"
+        ],
         "lines": [
           "Your friend came through. Loud one. Beat two of the Hall crew before lunch.",
           "Then he went and sat on the Rock and looked at that cut in the stone for an hour.",
@@ -183,6 +248,15 @@
         "lines": [
           "Four thousand people and everybody knows everybody, which is not always a virtue.",
           "You are already the third thing anyone has talked about today. Congratulations."
+        ]
+      }
+    ],
+    "mh_lamphand": [
+      {
+        "lines": [
+          "Two hundred and six lamps out on the boards for four nights, and I am the one collecting them in.",
+          "Every single one has come back. Two hundred and six out and two hundred and six in.",
+          "I have counted them four times because I did not believe it either."
         ]
       }
     ]

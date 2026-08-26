@@ -1,0 +1,202 @@
+[
+  {
+    "id": "pf_arrive",
+    "_note": "STAGE 6, THE OPERATION, BEAT 4: THE OUTER DECK OF PROJECT ABYSS CROWN.\n\nThis is the last ground before the Temple and it belongs to the operation rather than to the dungeon. Two boxes and then the player is loose on it: what the deck IS gets said by the winch house board and the safety notice, both of which are objects on the map, because a thing the player chooses to read lands harder than a thing they are shown.",
+    "trigger": "enter",
+    "map": "eastreach_platform",
+    "onceFlag": "pf_arrive_done",
+    "actions": [
+      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "say",
+        "lines": [
+          "Grating, wet, and a long way up. Through it the sea is a grey mark that moves.",
+          "The whole deck is very slightly out of level and it is not out of level in one place."
+        ]
+      },
+      { "kind": "wait", "frames": 14 },
+      {
+        "kind": "say",
+        "lines": [
+          "Nobody challenges you. There are twenty-one boats in the water and every glass is on them.",
+          "Sorrell said you would be the one nobody was looking at, and he has turned out to be right."
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "pf_tower_1",
+    "_note": "TARIN'S FIRST TOWER, AND THE WHOLE METHOD OF THIS ACT IN ONE SCRIPT.\n\nCanon gives him the other half of the job -- he disables Meridian towers while the player moves on the central facility -- so he is not on this map and must not be. An off-screen character can only be felt through CONSEQUENCE, so what the player gets is: the deck lurching under their own boots, every lamp on it dipping, and a Foundation hand two tiles away saying something he was not going to say.\n\nThree of these fire across the three bays, one per bay, on bands the road cannot avoid. Each sets op_tower_1/2/3, and those flags are read in four places that this file does not own: the Meridian on this deck get worse dialogue, the signal hand on the beach counts them off with a glass, Annik Tallow reads the change in the water, and Sorrell feels it come up through the shingle. Nothing anywhere quotes Tarin. He is never on screen again until the aftermath.",
+    "trigger": "step",
+    "map": "eastreach_platform",
+    "onceFlag": "pf_tower_1_done",
+    "at": [
+      { "x": 17, "y": 19 },
+      { "x": 18, "y": 19 },
+      { "x": 23, "y": 19 },
+      { "x": 24, "y": 19 }
+    ],
+    "actions": [
+      { "kind": "wait", "frames": 14 },
+      { "kind": "sfx", "sound": "fx_quake" },
+      { "kind": "shake", "frames": 44, "power": 5 },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "lines": [
+          "Somewhere north-east of here something lets go, with a sound like a door closing in an empty house.",
+          "Every lamp on the deck dips, holds, and comes back up dimmer than it was."
+        ]
+      },
+      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "say",
+        "who": "FOUNDATION HAND",
+        "lines": [
+          "That was Tower One. That was not a fault. Faults do not do that.",
+          "Nobody move. Somebody is going to come and tell us what that was."
+        ]
+      },
+      { "kind": "setFlag", "flag": "op_tower_1" },
+      { "kind": "addVar", "var": "op_towers", "delta": 1 }
+    ]
+  },
+
+  {
+    "id": "pf_tower_2",
+    "_note": "ROW 11 IS THE FULL WIDTH OF THE WALKING SURFACE and every tile of it that a player can stand on is listed. The main bay is only crossable north through this row -- the two wells take columns 7 to 11 and 28 to 32 out of it -- so a band across the walkable middle cannot be gone round. The gaps in the list are the two wells' rails, the two generators on 25 and 26, and the two tiles the Foundation leads are standing on: all solid, none of them steppable, and every one of them checked against the finished map rather than assumed.",
+    "trigger": "step",
+    "map": "eastreach_platform",
+    "onceFlag": "pf_tower_2_done",
+    "when": { "kind": "flag", "flag": "op_tower_1" },
+    "at": [
+      { "x": 6, "y": 11 },
+      { "x": 12, "y": 11 },
+      { "x": 13, "y": 11 },
+      { "x": 14, "y": 11 },
+      { "x": 15, "y": 11 },
+      { "x": 17, "y": 11 },
+      { "x": 18, "y": 11 },
+      { "x": 19, "y": 11 },
+      { "x": 20, "y": 11 },
+      { "x": 21, "y": 11 },
+      { "x": 22, "y": 11 },
+      { "x": 23, "y": 11 },
+      { "x": 27, "y": 11 },
+      { "x": 33, "y": 11 }
+    ],
+    "actions": [
+      { "kind": "sfx", "sound": "fx_quake" },
+      { "kind": "shake", "frames": 50, "power": 6 },
+      { "kind": "wait", "frames": 22 },
+      {
+        "kind": "say",
+        "lines": [
+          "The second one is closer and the deck takes it in the knees.",
+          "A cable somewhere under the plate stops humming, and the quiet where it was is enormous."
+        ]
+      },
+      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "say",
+        "who": "FOUNDATION HAND",
+        "lines": [
+          "Two. Two towers on one afternoon.",
+          "I have been on this deck eight months and I have never heard anybody say the word evacuate."
+        ]
+      },
+      { "kind": "setFlag", "flag": "op_tower_2" },
+      { "kind": "addVar", "var": "op_towers", "delta": 1 }
+    ]
+  },
+
+  {
+    "id": "pf_tower_3",
+    "_note": "THE THIRD AND FOURTH TOGETHER, because by now the player has learned the rhythm and a fourth beat spaced like the first three would be arithmetic. It fires in the north bay, in sight of the door, and it is the last thing that happens on my half of the act: after it the deck is dark, the people on it have stopped working, and the only lit thing left on the map is the crest bolted over somebody else's doorway.",
+    "trigger": "step",
+    "map": "eastreach_platform",
+    "onceFlag": "pf_tower_3_done",
+    "when": { "kind": "flag", "flag": "op_tower_2" },
+    "at": [
+      { "x": 12, "y": 8 },
+      { "x": 13, "y": 8 },
+      { "x": 15, "y": 8 },
+      { "x": 16, "y": 8 },
+      { "x": 17, "y": 8 },
+      { "x": 18, "y": 8 },
+      { "x": 19, "y": 8 },
+      { "x": 20, "y": 8 },
+      { "x": 21, "y": 8 },
+      { "x": 22, "y": 8 },
+      { "x": 23, "y": 8 },
+      { "x": 24, "y": 8 },
+      { "x": 25, "y": 8 },
+      { "x": 26, "y": 8 },
+      { "x": 27, "y": 8 }
+    ],
+    "actions": [
+      { "kind": "sfx", "sound": "fx_quake" },
+      { "kind": "shake", "frames": 60, "power": 7 },
+      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "say",
+        "lines": [
+          "Three goes, and four goes eleven seconds after it, which was not the plan anybody agreed.",
+          "The deck lights fail from the north end southwards, one bay at a time, and stay failed."
+        ]
+      },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "lines": [
+          "Everybody on this deck has stopped working.",
+          "None of them is looking at you. All of them are looking at the sea, and the sea has gone quiet."
+        ]
+      },
+      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "say",
+        "who": "FOUNDATION HAND",
+        "lines": [
+          "The ring is off. All four.",
+          "Whatever is on the ends of those cables is holding itself down now, and nothing else is."
+        ]
+      },
+      { "kind": "setFlag", "flag": "op_tower_3" },
+      { "kind": "addVar", "var": "op_towers", "delta": 1 },
+      { "kind": "weather", "weather": "storm" }
+    ]
+  },
+
+  {
+    "id": "pf_door",
+    "_note": "THE LAST TILES I OWN. The warp on 19,4 and 20,4 goes to temple_deep and everything past it is somebody else's build; this fires one row south of it so that the door is a threshold rather than a corridor.\n\nIT DOES NOT LOCK ANYTHING. A player who has run straight up the deck without the towers going out can walk in, and should be able to: the towers are Tarin's story, not a key.",
+    "trigger": "step",
+    "map": "eastreach_platform",
+    "onceFlag": "pf_door_done",
+    "at": [
+      { "x": 19, "y": 5 },
+      { "x": 20, "y": 5 }
+    ],
+    "actions": [
+      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "say",
+        "lines": [
+          "The stone of the doorway is older than everything else on this island put together.",
+          "It has been cased in plate, and the bolts holding the plate on have gone through the carving."
+        ]
+      },
+      { "kind": "wait", "frames": 14 },
+      {
+        "kind": "say",
+        "lines": [
+          "Warm air comes up out of it. Eleven miles from anywhere and six days into a storm, warm air.",
+          "It smells of rain on hot stone, which is a smell you last met in a temple in the south."
+        ]
+      },
+      { "kind": "setFlag", "flag": "op_at_door" }
+    ]
+  }
+]

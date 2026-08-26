@@ -114,6 +114,18 @@
         "kind": "static"
       },
       "script": "mb_woman"
+    },
+    {
+      "id": "mb_drainhand",
+      "sprite": "porter",
+      "x": 20,
+      "y": 15,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mb_drainhand",
+      "requiresFlag": "act6_done"
     }
   ],
   "objects": [

@@ -25,7 +25,29 @@
   "entries": {
     "bb_bellwright": [
       {
-        "ifFlags": ["act4_done"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "They stopped. All six, at once, some time before dawn, and after that they were only bells.",
+          "I have been up that tree twice looking for what did it and there is nothing up there to find.",
+          "Briarbell slept. Nobody has said one word about that either."
+        ]
+      },
+      {
+        "ifFlags": [
+          "neravoss_restrained"
+        ],
+        "lines": [
+          "They have stopped. All six, at about two, and the wind is still doing everything it was doing.",
+          "A bell does not stop in a wind. There is no way for a bell to stop in a wind.",
+          "Half of Briarbell is stood under that tree in the dark waiting for one of them to go. Me as well."
+        ]
+      },
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
         "lines": [
           "All six. All night. I said tuned bells argue and these ones only talk.",
           "They are arguing. Six hundred times up that tree and I have never heard them do it.",
@@ -33,7 +55,9 @@
         ]
       },
       {
-        "ifFlags": ["crest_1_taken"],
+        "ifFlags": [
+          "crest_1_taken"
+        ],
         "lines": [
           "Heard the fourth bell go while you were in there. It only does that for a good one.",
           "That is superstition and I know it is superstition.",
@@ -50,7 +74,9 @@
     ],
     "bb_kid": [
       {
-        "ifFlags": ["crest_1_taken"],
+        "ifFlags": [
+          "crest_1_taken"
+        ],
         "lines": [
           "You BEAT her? Nobody beats her, she's ANCIENT.",
           "...that came out wrong and I'd like it back please."
@@ -85,7 +111,9 @@
     ],
     "bb_gardener": [
       {
-        "ifFlags": ["crest_1_taken"],
+        "ifFlags": [
+          "crest_1_taken"
+        ],
         "lines": [
           "So she gave you the Crest and the knife with it. Course she did.",
           "Mind where you cut. Half the thorn in this valley is holding a bank up."
@@ -101,14 +129,18 @@
     ],
     "bb_hallhand": [
       {
-        "ifFlags": ["crest_1_taken"],
+        "ifFlags": [
+          "crest_1_taken"
+        ],
         "lines": [
           "Word's out already. It always is.",
           "She'll have gone back to the hedge. She always does. Says it stops her getting proud."
         ]
       },
       {
-        "ifFlags": ["bbhall_gate_open"],
+        "ifFlags": [
+          "bbhall_gate_open"
+        ],
         "lines": [
           "Arch is open, then. That is the easy half.",
           "The hard half does not have a puzzle in it, I'm afraid."
@@ -124,7 +156,19 @@
     ],
     "bb_farmer": [
       {
-        "ifFlags": ["act4_done"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "They went back through the wood the way they came, and they took four days over it.",
+          "My barley is flat where they crossed and I am not putting in a claim for it.",
+          "They still went to the tree on the way out. Every last one of them."
+        ]
+      },
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
         "lines": [
           "They are not coming out of the wood. They are coming through it, from the far side, all day.",
           "Coast kin. Things with fins on, in my barley, forty miles from any water they belong in.",
@@ -177,7 +221,19 @@
     ],
     "bb_inn_guest": [
       {
-        "ifFlags": ["act4_done"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "I am going back down to the coast on Thursday. There is a boat with my name written against it.",
+          "I could feel it wrong through a hull and now I cannot, and I have been down to check twice.",
+          "I hated this room. I am going to be extremely sentimental about this room."
+        ]
+      },
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
         "lines": [
           "I came inland to stop thinking about the sea and the sea has followed me up a valley.",
           "I said you could feel it wrong through a hull. You can feel it through a floor now.",
@@ -221,7 +277,9 @@
     ],
     "bb_house_a": [
       {
-        "ifFlags": ["crest_1_taken"],
+        "ifFlags": [
+          "crest_1_taken"
+        ],
         "lines": [
           "Tove's Crest. Well now.",
           "I'll write to Sorrell tonight. He asked us to send word the moment it happened.",

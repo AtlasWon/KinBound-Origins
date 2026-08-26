@@ -200,6 +200,22 @@
       "x": 36,
       "y": 21,
       "kind": "spire"
+    },
+    {
+      "id": "eastreach_muster",
+      "name": "The East Quay",
+      "x": 33,
+      "y": 20,
+      "kind": "route",
+      "blurb": "Twenty-one boats and berths for six."
+    },
+    {
+      "id": "eastreach_shore",
+      "name": "The Drowned Shore",
+      "x": 35,
+      "y": 21,
+      "kind": "route",
+      "blurb": "One beach, and a street with the sea over it."
     }
   ]
 }

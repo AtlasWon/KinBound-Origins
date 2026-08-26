@@ -1,0 +1,53 @@
+{
+  "mapId": "temple_deep",
+  "$comment": "THE OPEN SEA ROUND THE RIG, and exactly one tile type on this map carries it: deep water. Everything a player\nwalks on out here is deck plate, planking or three-thousand-year-old stone, and none of it declares an\nencounter, so the platform itself is silent -- which is right, because a working industrial site is a place\nthe wildlife has already left.\n\nTHE TABLE IS OPTIONAL CONTENT TWICE OVER. It can only fire for a player who has Swim (granted below, in the\nlower temple) and who has chosen to go over the side, and the only thing out there is the drowned colonnade at\n4-6,28-29 with a Deep Vessel on it. Rate 90 rather than a route's 150 accordingly: nobody should be dragged\nthrough four fights to cross forty tiles of open water for one item.\n\nMEASURED against the level tests/helpers/simulate.mjs puts the player at leaving Crownspire -- 45 raising a\nteam, 60 solo. One kin, novice play, no items, mean band then worst-of-band, sprigling / cinderpaw / rilltail:\n   L44  100/58/95  worst 99/50/92      L46  100/70/97  worst 100/61/95\nThe Flame column is the one that matters and it is the reason these levels are 36-39 rather than the low\nforties they started at. Tide is double into Flame and Flame is half into Tide, so an ocean is to a Cinderpaw\nplayer what Embercoil was to a Bramblehusk one; at the levels this table was first cut to, the same column read\nFORTY-THREE percent. Dropping the band two levels bought fifteen points in the weakest column and cost nothing\nanywhere else, and this is water nobody is required to enter.\n\nNothing is above its own evolution level -- Currentail evolves at 20, Tidewrack at 29, Clatterclaw at 27, and\nGullswift, Anchorling, Brinewisp and Bladderwrack do not evolve at all. Weights total 100.",
+  "methods": {
+    "tallGrass": {
+      "rate": 90,
+      "slots": [
+        {
+          "species": "gullswift",
+          "minLevel": 36,
+          "maxLevel": 38,
+          "weight": 20
+        },
+        {
+          "species": "currentail",
+          "minLevel": 36,
+          "maxLevel": 39,
+          "weight": 20
+        },
+        {
+          "species": "clatterclaw",
+          "minLevel": 37,
+          "maxLevel": 39,
+          "weight": 16
+        },
+        {
+          "species": "tidewrack",
+          "minLevel": 37,
+          "maxLevel": 39,
+          "weight": 14
+        },
+        {
+          "species": "anchorling",
+          "minLevel": 37,
+          "maxLevel": 39,
+          "weight": 12
+        },
+        {
+          "species": "brinewisp",
+          "minLevel": 37,
+          "maxLevel": 39,
+          "weight": 10
+        },
+        {
+          "species": "bladderwrack",
+          "minLevel": 36,
+          "maxLevel": 38,
+          "weight": 8
+        }
+      ]
+    }
+  }
+}

@@ -758,6 +758,118 @@
       "script": "tarin_town",
       "requiresFlag": "lyra_doubt",
       "hiddenIfFlag": "tarin_tideglass_done"
+    },
+    {
+      "id": "af_tarin",
+      "sprite": "rival",
+      "x": 73,
+      "y": 58,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "requiresFlag": "af_quay_cast"
+    },
+    {
+      "id": "af_officer_a",
+      "sprite": "harbourmaster",
+      "x": 76,
+      "y": 57,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "requiresFlag": "af_quay_cast"
+    },
+    {
+      "id": "af_kell",
+      "sprite": "meridian_commander",
+      "x": 77,
+      "y": 57,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "requiresFlag": "af_quay_cast"
+    },
+    {
+      "id": "af_officer_b",
+      "sprite": "harbourmaster",
+      "x": 78,
+      "y": 57,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "requiresFlag": "af_quay_cast"
+    },
+    {
+      "id": "af_veyl",
+      "sprite": "veyl",
+      "x": 70,
+      "y": 57,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "requiresFlag": "af_quay_cast"
+    },
+    {
+      "id": "af_lyra",
+      "sprite": "lyra",
+      "x": 74,
+      "y": 57,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "requiresFlag": "af_quay_cast"
+    },
+    {
+      "id": "tg_mason",
+      "sprite": "dockhand",
+      "x": 14,
+      "y": 55,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_mason",
+      "requiresFlag": "act6_done"
+    },
+    {
+      "id": "tg_notice_reader",
+      "sprite": "townsfolk_f",
+      "x": 70,
+      "y": 13,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tg_notice_reader",
+      "requiresFlag": "act6_done"
+    },
+    {
+      "id": "tg_wall_woman",
+      "sprite": "villager_f",
+      "x": 19,
+      "y": 46,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "coast_word_veyl"
+    },
+    {
+      "id": "tg_hauler",
+      "sprite": "porter",
+      "x": 61,
+      "y": 46,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "foundation_word_hauler"
     }
   ],
   "objects": [

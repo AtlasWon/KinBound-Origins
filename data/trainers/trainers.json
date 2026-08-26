@@ -4896,5 +4896,499 @@
       "The Keeper in there does not fight with one type. She fights with all of them.",
       "Whatever you have been leaning on for eight Halls, she has the answer to it."
     ]
+  },
+  {
+    "id": "td_kell",
+    "$comment": "STAGE 6, THE CLIMAX. COMMANDER KELL ON THE CONTROL PLATFORM -- canon's 'one of the strongest villain battles in the game', and the last fight before the Summit. Driven from data/events/temple_deep_power.json/tdp_fight, never from a `trainer` field on an NPC: she must not challenge on sight, because the scene that reaches her has to have run first.\n\nWHO SHE IS, AND WHY THE BENCH LOOKS LIKE THIS. She is the woman from the Mirehaven Sanctum: courteous, exact, certain, and not a poseur. So there is no trick on this bench and there is nothing here to be angry about. No paralysis (earthing_wire is on Voltwick's learnset and is deliberately not taken), no confusion (muddle is on Maelstrix's and is deliberately not taken), no screens, no self-heal, and NO HELD ITEMS AND NO TRAINER ITEMS -- Battle.doItem never consumes a foe-side item, so one Potion in that list is an unlimited heal and a twelve-minute stalemate, which is the exact complaint this project has had four times. She fights the way she talks: straight at you, five times, harder than anybody has yet.\n\nAnd no `downpour` on Tidewrack, though it is on its learnset at 42 and it is the single most in-character move on this page. In-battle rain is 1.5x on her four Tide moves and 0.5x on Flame, and it costs the Cinderpaw column twenty-six points on its own. Measured, not guessed -- see THE WEATHER TRAP below.\n\nFIVE KIN, EIGHT TYPES, NO COLUMN WALLED. iron/tide, spark, frost/beast, tide/stone, tide/psyche. Tide is her element and appears three times, so a Spark or Verdant answer is genuinely rewarded, but never in a slot where it is the whole fight: the Voltwick punishes a Tide answer, the Rimehound punishes a Verdant one, and the Anchorling's 104 Defence punishes a lone physical attacker. Every moveset is drawn from the species' own learnset at or below that kin's level, so nothing on this bench is a kin the player could not have raised themselves. Thunderhead (Voltwick, 41) and Glacier Fall (Rimehound, 45) are the two that hurt, and both are the low-accuracy end of their learnsets, which is the player's margin.\n\nFLAT-ZERO IVs ON ALL FIVE, the lever Vane and Ord both used. It is what lets the ladder read honestly on screen -- 40, 41, 41, 42 behind a 44 ace, three over the eighth Hall -- instead of cutting the levels into the thirties to hit the same win rates against the last fight in the story.\n\nTHE LADDER. Hall 8 (cs_keeper_ord) tops out at 41 and the Crown Road (r10_*) at 40. Kell's ace is 44. If Stage 6 is re-cut, MOVE ALL FIVE LEVELS TOGETHER -- that is the only lever, and it is the one that keeps the three starter columns level with each other.\n\nMEASURED, and this is the fight the difficulty note is about. Novice play, no bag items, matched party of four (she has five), 400 runs, sprigling / cinderpaw / rilltail:\n    L44  54/55/53    L45  69/67/64    L46  79/80/78    L47  83/86/85    L48  90/90/91\nVeteran play, matched party: L45 71/89/78, L46 87/93/88.\nWHERE THE PLAYER ACTUALLY IS: tests/helpers/simulate.mjs/progression() ends at Crownspire, where the team-raiser leaves on 45 and the solo lead on 60. Stage 6's own road -- the operation, the temple and the underwater section -- is not in that table yet, so every number above is PESSIMISTIC by however much those rows pay: the floor column (L45, 64-69%) is a player who arrived at the island having gained nothing at all on the way, and the honest expectation is the L47-48 row. WHOEVER ADDS THE STAGE 6 ROWS TO simulate.mjs MUST RE-READ THIS ROW AFTERWARDS.\n\nThe scene gives a free healParty immediately before the fight and another one on every loss, and re-arms the fight on her own NPC rather than whiting the player out, so a first-try loss costs a page of text and not a walk back through the temple. That is the concession to the four requests for an easier game; the bench itself is not softened past the numbers above.\n\nTHE WEATHER TRAP, and it is a join somebody else can spring by accident. Battle weather comes from map.weather (OverworldScene passes this.map.weather straight into BattleScene). If data/maps/temple_deep_power.json declares `weather: \"storm\"`, `\"rain\"` or `\"heavyRain\"` -- and it is very tempting, because the storm IS the scene -- this fight silently becomes 1.5x for her Tide half and 0.5x for a Flame player. Measured at storm, L46 novice matched: 82/54/73, against 79/80/78 in clear. That is the Cinderpaw column losing a quarter of its win rate to a line in a map file nobody would think to check. THAT MAP MUST NOT DECLARE WEATHER.\n\nai `keeper` rather than `elite`: measured, they are within noise of each other here (elite differs only in how readily it switches, and she has no bad matchup worth switching out of), and `keeper` is also what gives this fight battle_hall rather than battle_trainer -- see BattleScene.battleTrack. The last villain in the story should not be scored like a road trainer.",
+    "name": "Kell",
+    "className": "Commander",
+    "sprite": "meridian_commander",
+    "ai": "keeper",
+    "payout": 320,
+    "party": [
+      {
+        "species": "anchorling",
+        "level": 40,
+        "moves": [
+          "girder_slam",
+          "hullcrack",
+          "rivet_punch"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      },
+      {
+        "species": "voltwick",
+        "level": 41,
+        "moves": [
+          "thunderhead",
+          "arcjolt",
+          "static_nip"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      },
+      {
+        "species": "rimehound",
+        "level": 41,
+        "moves": [
+          "glacier_fall",
+          "throatgrip",
+          "chillbite"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      },
+      {
+        "species": "tidewrack",
+        "level": 42,
+        "moves": [
+          "quarryfall",
+          "hullcrack",
+          "shale_edge"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      },
+      {
+        "species": "maelstrix",
+        "level": 44,
+        "moves": [
+          "breakwater",
+          "thoughtwave",
+          "undertow"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      }
+    ],
+    "intro": [
+      "I have run this operation for eleven years without once having to do this.",
+      "I am not going to pretend I like finding out that I do."
+    ],
+    "defeat": [
+      "...I had a figure for every part of this evening.",
+      "I did not have one for you."
+    ],
+    "victory": [
+      "Sit down before you fall down.",
+      "I am not going to be quick. You have time to be sensible about it."
+    ]
+  },
+  {
+    "id": "td_yard_ostrey",
+    "$comment": "THE FIRST MERIDIAN ON THE ISLAND, met walking up off the pontoon, and deliberately the gentlest of the seven. Anchorling is the site kin -- iron/tide, an anchor that decided to be alive -- and the Galecrest is his own, off the boats. MEASURED, NOT GUESSED, with the harness in tests/helpers/simulate.mjs (same buildParty, same TrainerAI, same seeds; run out of scratch because these parties were being searched before they were in this file). Novice play, NO BAG ITEMS, party matched to the trainer size, 150-200 runs, sprigling / cinderpaw / rilltail. The player leaves Crownspire on 45 raising a team and 60 solo, so L44 below is the FLOOR -- a player who gained nothing crossing the ocean -- and L46 is the honest expectation once this island has paid out. L44 81/82/93, L46 92/89/97. THE LADDER THIS SITS IN. Hall 8 (cs_keeper_ord) tops out at 41 and the Crown Road (r10_*) at 40; Commander Kell, at the bottom of this temple, aces at 44. The seven Meridian on the island therefore run 40 to 43 and nothing here out-levels the villain. If Stage 6 is re-cut, move the whole set together.",
+    "name": "Ostrey",
+    "className": "Foundation Rigger",
+    "sprite": "meridian",
+    "ai": "trained",
+    "payout": 172,
+    "party": [
+      {
+        "species": "anchorling",
+        "level": 40
+      },
+      {
+        "species": "galecrest",
+        "level": 41
+      }
+    ],
+    "intro": [
+      "Nine days I have been making things fast out here.",
+      "You are the first thing that came ashore that was not on a list."
+    ],
+    "defeat": [
+      "Fine. I am a rigger. I was never going to stop you."
+    ],
+    "victory": [
+      "Back down the plank, then. Mind your footing, it is greasy."
+    ],
+    "afterward": [
+      "The wind was nothing on the first day.",
+      "I have retied that pontoon four times since breakfast."
+    ]
+  },
+  {
+    "id": "td_plant_vasse",
+    "$comment": "OPTIONAL, on the plant module across the west gantry, and she is spark because she runs the generators. MEASURED, NOT GUESSED, with the harness in tests/helpers/simulate.mjs (same buildParty, same TrainerAI, same seeds; run out of scratch because these parties were being searched before they were in this file). Novice play, NO BAG ITEMS, party matched to the trainer size, 150-200 runs, sprigling / cinderpaw / rilltail. The player leaves Crownspire on 45 raising a team and 60 solo, so L44 below is the FLOOR -- a player who gained nothing crossing the ocean -- and L46 is the honest expectation once this island has paid out. L44 100/83/60, L46 99/89/75. The 100 in the Sprigling column is the type chart working as designed rather than a hole -- verdant is quadruple into a Tidewrack -- and this is a side fight nobody has to take. THE LADDER THIS SITS IN. Hall 8 (cs_keeper_ord) tops out at 41 and the Crown Road (r10_*) at 40; Commander Kell, at the bottom of this temple, aces at 44. The seven Meridian on the island therefore run 40 to 43 and nothing here out-levels the villain. If Stage 6 is re-cut, move the whole set together.",
+    "name": "Vasse",
+    "className": "Foundation Engineer",
+    "sprite": "meridian_sci_f",
+    "ai": "trained",
+    "payout": 176,
+    "party": [
+      {
+        "species": "voltwick",
+        "level": 41
+      },
+      {
+        "species": "tidewrack",
+        "level": 42
+      }
+    ],
+    "intro": [
+      "Do not touch anything on this deck.",
+      "No -- fight me first, and then do not touch anything on this deck."
+    ],
+    "defeat": [
+      "Fine. Fine. Just stay off the trunk lines."
+    ],
+    "victory": [
+      "Good. Now go and be somewhere else."
+    ],
+    "afterward": [
+      "Three sets at nine tenths of rating, six days running.",
+      "That is not a survey load. I have run surveys."
+    ]
+  },
+  {
+    "id": "td_tower_hale",
+    "$comment": "OPTIONAL, on the tower deck across the east gantry, and the only three-kin fight on this island a player can skip entirely. Spark and stone/gale: the masts and the guys that hold them up. MEASURED, NOT GUESSED, with the harness in tests/helpers/simulate.mjs (same buildParty, same TrainerAI, same seeds; run out of scratch because these parties were being searched before they were in this file). Novice play, NO BAG ITEMS, party matched to the trainer size, 150-200 runs, sprigling / cinderpaw / rilltail. The player leaves Crownspire on 45 raising a team and 60 solo, so L44 below is the FLOOR -- a player who gained nothing crossing the ocean -- and L46 is the honest expectation once this island has paid out. L44 87/84/69, L46 96/98/85. THE LADDER THIS SITS IN. Hall 8 (cs_keeper_ord) tops out at 41 and the Crown Road (r10_*) at 40; Commander Kell, at the bottom of this temple, aces at 44. The seven Meridian on the island therefore run 40 to 43 and nothing here out-levels the villain. If Stage 6 is re-cut, move the whole set together.",
+    "name": "Hale",
+    "className": "Resonance Technician",
+    "sprite": "meridian_sci",
+    "ai": "trained",
+    "payout": 264,
+    "party": [
+      {
+        "species": "lantric",
+        "level": 40
+      },
+      {
+        "species": "voltwick",
+        "level": 41
+      },
+      {
+        "species": "craglide",
+        "level": 42
+      }
+    ],
+    "intro": [
+      "You are standing underneath four hundred kilowatts of question.",
+      "I would very much rather you were standing somewhere else."
+    ],
+    "defeat": [
+      "...Go on, then. It was never me you had to get past."
+    ],
+    "victory": [
+      "Off the tower deck. The guys are not rated for people leaning on them."
+    ],
+    "afterward": [
+      "We ask, and something answers, and every day the answer is louder.",
+      "At some point that stops being data and starts being a conversation."
+    ]
+  },
+  {
+    "id": "td_deck_marrow",
+    "$comment": "THE ONE UNAVOIDABLE FIGHT ON THE PLATFORM. He stands in the middle of the three-tile gate at 19-21,15 and the two open tiles either side of him carry the step script (td_checkpoint, data/events/temple_deep.json) that starts this battle -- there is no way north up the map that does not cross one of them. onLoss is CONTINUE, not whiteout: losing costs the player a page of text and Marrow standing aside anyway, because throwing somebody off the island for losing one fight in the middle of the climax is the wall this project has been asked four times not to build. MEASURED, NOT GUESSED, with the harness in tests/helpers/simulate.mjs (same buildParty, same TrainerAI, same seeds; run out of scratch because these parties were being searched before they were in this file). Novice play, NO BAG ITEMS, party matched to the trainer size, 150-200 runs, sprigling / cinderpaw / rilltail. The player leaves Crownspire on 45 raising a team and 60 solo, so L44 below is the FLOOR -- a player who gained nothing crossing the ocean -- and L46 is the honest expectation once this island has paid out. L44 76/65/64, L46 95/85/85 -- the most even row of the seven, which is what a compulsory fight has to be. THE LADDER THIS SITS IN. Hall 8 (cs_keeper_ord) tops out at 41 and the Crown Road (r10_*) at 40; Commander Kell, at the bottom of this temple, aces at 44. The seven Meridian on the island therefore run 40 to 43 and nothing here out-levels the villain. If Stage 6 is re-cut, move the whole set together. AND THE REASON NONE OF THESE SEVEN IS ALL-TIDE. Meridian are an ocean order and the obvious bench for every one of them is four Tide kin. Measured, that is a trap aimed at exactly one player: tide hits flame for double and flame hits tide for half, so the first cut of this set -- Marrow on gullswift/anchorling/currentail -- read 91 percent for a Sprigling player and FIVE percent for a Cinderpaw one at the same level, and Orren on brinewisp/anchorling read a flat ZERO. That is the Embercoil lesson (a volcano is hostile to two of three starter lines) with the sign flipped, and it is worse here because it lands on the last road before the climax. Every party now carries at least one kin the Flame line can actually hit -- iron, gale/spark, stone/gale -- and no column on any of the seven is under 55 at the floor level.",
+    "name": "Marrow",
+    "className": "Foundation Warden",
+    "sprite": "meridian_lead",
+    "ai": "veteran",
+    "payout": 272,
+    "party": [
+      {
+        "species": "anchorling",
+        "level": 41
+      },
+      {
+        "species": "galecrest",
+        "level": 42
+      },
+      {
+        "species": "currentail",
+        "level": 42
+      }
+    ],
+    "intro": [
+      "Nobody comes through this fence. That is the whole of my orders and I like them.",
+      "Do not take the next part personally."
+    ],
+    "defeat": [
+      "Then I am the wrong man to have put on a fence."
+    ],
+    "victory": [
+      "Sit down. Get your breath back. The gate is still shut."
+    ],
+    "afterward": [
+      "Down the stair, then, and I hope you know what is under it.",
+      "I have stood over it for nine days and nobody has told me."
+    ]
+  },
+  {
+    "id": "tdr_gate_syl",
+    "$comment": "ONE OF A PAIR. Syl and Orren stand shoulder to shoulder in the doorway of the flooded vestibule at 19,8 and 20,8, both facing back up the stair, and their sight ranges are four so a player coming down the middle takes both. They are cut as one fight in two halves: Syl is chitin and gale and is hardest on a Flame player, Orren is iron and umbral and is hardest on nobody in particular, so the pair together never walls a column. MEASURED, NOT GUESSED, with the harness in tests/helpers/simulate.mjs (same buildParty, same TrainerAI, same seeds; run out of scratch because these parties were being searched before they were in this file). Novice play, NO BAG ITEMS, party matched to the trainer size, 150-200 runs, sprigling / cinderpaw / rilltail. The player leaves Crownspire on 45 raising a team and 60 solo, so L44 below is the FLOOR -- a player who gained nothing crossing the ocean -- and L46 is the honest expectation once this island has paid out. L44 88/56/89, L46 94/73/93. THE LADDER THIS SITS IN. Hall 8 (cs_keeper_ord) tops out at 41 and the Crown Road (r10_*) at 40; Commander Kell, at the bottom of this temple, aces at 44. The seven Meridian on the island therefore run 40 to 43 and nothing here out-levels the villain. If Stage 6 is re-cut, move the whole set together.",
+    "name": "Syl",
+    "className": "Foundation Diver",
+    "sprite": "meridian",
+    "ai": "trained",
+    "payout": 180,
+    "party": [
+      {
+        "species": "clatterclaw",
+        "level": 41
+      },
+      {
+        "species": "galecrest",
+        "level": 42
+      }
+    ],
+    "intro": [
+      "We were told two people might come down that stair.",
+      "We were not told which two, and I have decided I would rather not know."
+    ],
+    "defeat": [
+      "Orren. Your turn."
+    ],
+    "victory": [
+      "Back up the stair. It is a long way down and it gets worse."
+    ],
+    "afterward": [
+      "Fourteen dives in nine days.",
+      "I have not found the bottom of this building once."
+    ]
+  },
+  {
+    "id": "tdr_gate_orren",
+    "$comment": "THE OTHER HALF OF THE DOORWAY. See td_gate_syl. His first cut was brinewisp/anchorling and it measured THIRTY / ZERO / SIX -- two special Tide attackers back to back is the single most lethal thing this roster can be pointed at a party, and it was pointed at all three columns at once. Anchorling and Deeplum instead. MEASURED, NOT GUESSED, with the harness in tests/helpers/simulate.mjs (same buildParty, same TrainerAI, same seeds; run out of scratch because these parties were being searched before they were in this file). Novice play, NO BAG ITEMS, party matched to the trainer size, 150-200 runs, sprigling / cinderpaw / rilltail. The player leaves Crownspire on 45 raising a team and 60 solo, so L44 below is the FLOOR -- a player who gained nothing crossing the ocean -- and L46 is the honest expectation once this island has paid out. L44 79/80/96, L46 89/87/99. THE LADDER THIS SITS IN. Hall 8 (cs_keeper_ord) tops out at 41 and the Crown Road (r10_*) at 40; Commander Kell, at the bottom of this temple, aces at 44. The seven Meridian on the island therefore run 40 to 43 and nothing here out-levels the villain. If Stage 6 is re-cut, move the whole set together.",
+    "name": "Orren",
+    "className": "Foundation Diver",
+    "sprite": "meridian",
+    "ai": "trained",
+    "payout": 180,
+    "party": [
+      {
+        "species": "anchorling",
+        "level": 41
+      },
+      {
+        "species": "deeplum",
+        "level": 42
+      }
+    ],
+    "intro": [
+      "I saw all of that. I have been standing here the whole time."
+    ],
+    "defeat": [
+      "That is the pair of us, then. Go on down."
+    ],
+    "victory": [
+      "That is the pair of us. Back up you go."
+    ],
+    "afterward": [
+      "The water below the ring floor is warm.",
+      "It is under a mile of cold sea and it is warm. Nobody will write that down."
+    ]
+  },
+  {
+    "id": "tdr_ruin_bern",
+    "$comment": "THE LAST FIGHT BEFORE THE DESCENT, standing on the south lip of the drowned nave with his back to the ring floor and the twelfth ring behind him. Hardest of my seven and still under Kell by a clear step: three kin, ace 43, veteran. MEASURED, NOT GUESSED, with the harness in tests/helpers/simulate.mjs (same buildParty, same TrainerAI, same seeds; run out of scratch because these parties were being searched before they were in this file). Novice play, NO BAG ITEMS, party matched to the trainer size, 150-200 runs, sprigling / cinderpaw / rilltail. The player leaves Crownspire on 45 raising a team and 60 solo, so L44 below is the FLOOR -- a player who gained nothing crossing the ocean -- and L46 is the honest expectation once this island has paid out. L44 74/63/66, L46 91/86/87, against Kell's 54/55/53 and 79/80/78 at the same two levels. THE LADDER THIS SITS IN. Hall 8 (cs_keeper_ord) tops out at 41 and the Crown Road (r10_*) at 40; Commander Kell, at the bottom of this temple, aces at 44. The seven Meridian on the island therefore run 40 to 43 and nothing here out-levels the villain. If Stage 6 is re-cut, move the whole set together. AND THE REASON NONE OF THESE SEVEN IS ALL-TIDE. Meridian are an ocean order and the obvious bench for every one of them is four Tide kin. Measured, that is a trap aimed at exactly one player: tide hits flame for double and flame hits tide for half, so the first cut of this set -- Marrow on gullswift/anchorling/currentail -- read 91 percent for a Sprigling player and FIVE percent for a Cinderpaw one at the same level, and Orren on brinewisp/anchorling read a flat ZERO. That is the Embercoil lesson (a volcano is hostile to two of three starter lines) with the sign flipped, and it is worse here because it lands on the last road before the climax. Every party now carries at least one kin the Flame line can actually hit -- iron, gale/spark, stone/gale -- and no column on any of the seven is under 55 at the floor level.",
+    "name": "Bern",
+    "className": "Site Overseer",
+    "sprite": "meridian_lead",
+    "ai": "veteran",
+    "payout": 284,
+    "party": [
+      {
+        "species": "anchorling",
+        "level": 42
+      },
+      {
+        "species": "deeplum",
+        "level": 42
+      },
+      {
+        "species": "currentail",
+        "level": 43
+      }
+    ],
+    "intro": [
+      "That is the twelfth ring and it took nine days to set.",
+      "You are not going to lay a hand on it."
+    ],
+    "defeat": [
+      "...I only ever put it where I was told to put it."
+    ],
+    "victory": [
+      "The Commander is below. She will want to hear you got this far."
+    ],
+    "afterward": [
+      "They put rings on it once before. I have read the same report you have.",
+      "I set mine anyway. Say that back to me and hear how it sounds."
+    ]
+  },
+  {
+    "id": "op_shore_watch",
+    "$comment": "The lookout on the stairhead over the drowned street, and the first Meridian the operation actually meets. Two kin and the lowest ace in the act on purpose: she is a lookout with a glass, not a guard, and the fight is here to teach the player that the deck above is defended at all rather than to cost them anything.",
+    "name": "Pell",
+    "className": "Foundation Lookout",
+    "sprite": "meridian",
+    "ai": "trained",
+    "payout": 168,
+    "party": [
+      {
+        "species": "anchorling",
+        "level": 38
+      },
+      {
+        "species": "brinewisp",
+        "level": 39
+      }
+    ],
+    "intro": [
+      "Twenty-one boats and one of you comes up my stair. That is not a landing, that is a burglary.",
+      "I have signalled. Nobody has answered. So it is going to be me."
+    ],
+    "defeat": [
+      "Right. Right.",
+      "I am going to sit down and I am going to keep signalling."
+    ],
+    "victory": [
+      "Down. All the way down and back into your boat."
+    ],
+    "afterward": [
+      "The glass is no use. There is nothing to see through it but our own legs.",
+      "Whoever built that street down there had the sense to put it on land."
+    ]
+  },
+  {
+    "id": "op_deck_hand",
+    "$comment": "The south bay, at the foot of the two catwalks. He is not a soldier and does not pretend to be; his whole part is canon's line that most of the Foundation are doing good work and have no idea.",
+    "name": "Corry",
+    "className": "Foundation Deckhand",
+    "sprite": "meridian",
+    "ai": "trained",
+    "payout": 184,
+    "party": [
+      {
+        "species": "clatterclaw",
+        "level": 39
+      },
+      {
+        "species": "voltwick",
+        "level": 40
+      }
+    ],
+    "intro": [
+      "You are not on the boat list and there is not a boat list any more.",
+      "I load things. I am going to have a go anyway, because there is nobody else on this bay."
+    ],
+    "defeat": [
+      "Fine. That is fine.",
+      "I have loaded that winch every day for eight months and nobody has ever told me what it is for."
+    ],
+    "victory": [
+      "Off the deck. There is a stair and it goes down. Use it."
+    ],
+    "afterward": [
+      "Six drums. Six things on the ends of them, two hundred and forty metres down.",
+      "You are going to go and look, are you not. I would quite like you to tell me."
+    ]
+  },
+  {
+    "id": "op_deck_tech",
+    "$comment": "The east catwalk. One of two fights that cannot be avoided -- both north catwalks are a single tile wide and both are watched -- and she is the more technical of the pair: she knows what the ring is for and has decided that knowing is the same as being right.",
+    "name": "Nils",
+    "className": "Resonance Hand",
+    "sprite": "meridian_sci_f",
+    "ai": "trained",
+    "payout": 236,
+    "party": [
+      {
+        "species": "lantric",
+        "level": 40
+      },
+      {
+        "species": "fizzlet",
+        "level": 40
+      },
+      {
+        "species": "voltwick",
+        "level": 41
+      }
+    ],
+    "intro": [
+      "The ring is tuned. It took four hundred people eleven years and it is tuned.",
+      "I am not going to let a child walk over the top of it on the day."
+    ],
+    "defeat": [
+      "It is still tuned.",
+      "It is tuned and I have just lost, and I cannot make those two facts sit next to each other."
+    ],
+    "victory": [
+      "Go and be sixteen somewhere else."
+    ],
+    "afterward": [
+      "Every reading off the ring has been stable for six days. Every single one.",
+      "That is what I would expect if it were working. It is also what I would expect if it were waiting."
+    ]
+  },
+  {
+    "id": "op_deck_lead",
+    "$comment": "The west catwalk, and the last fight before the Temple door. Three kin and an ace of 42, which is the top of my band and one under Commander Kell's. He is the only person on this deck who has been told what is on the ends of the drums, and the reason he fights is that he was told and stayed.",
+    "name": "Dass",
+    "className": "Foundation Deck Lead",
+    "sprite": "meridian_lead",
+    "ai": "trained",
+    "payout": 272,
+    "party": [
+      {
+        "species": "anchorling",
+        "level": 39
+      },
+      {
+        "species": "voltwick",
+        "level": 40
+      },
+      {
+        "species": "craglide",
+        "level": 41
+      }
+    ],
+    "intro": [
+      "I know what is under this deck. I am one of nine people on it who does.",
+      "I was told, and I stayed, and that is worth exactly as much as you think it is."
+    ],
+    "defeat": [
+      "Yes.",
+      "I have been waiting eight months for somebody to come up that stair and make me say it out loud."
+    ],
+    "victory": [
+      "Down the stair. I will not report it. I will not do anything else either."
+    ],
+    "afterward": [
+      "North bay is Veyl's. He has been in there since Tuesday and he has not eaten.",
+      "Go on then. I have run out of ways to be a person who did not."
+    ]
   }
 ]

@@ -1,0 +1,130 @@
+{
+  "id": "temple_deep_heart",
+  "name": "Temple of the Deep",
+  "displayName": "THE LISTENING FLOOR",
+  "music": "station",
+  "battleBackdrop": "cave",
+  "indoor": true,
+  "_plan": "THE CHAMBER. The biggest room in the game, and it is an argument.\n\nForty by thirty-six. The camera is fifteen tiles tall at its most generous\nand ten at its least, so this room CANNOT be seen at once from anywhere in\nit. That is the whole trick and it is the only way this engine can say\nenormous: the player walks in at the bottom and the room keeps going.\n\nA ROOM FOR LISTENING, NOT A ROOM FOR HOLDING, AND THE DIFFERENCE IS VISIBLE.\nThere is no gate on this chamber, no chain in it, and no Aurelian mechanism\nanywhere in it -- no rings, no plates, no shutters, nothing that shuts.\nWhat there is: three concentric arcs of cut stone seating, every seat facing\nIN, and eight grooves running from the back of the seating down to the rim\nof a well of open sea. People sat here. A great many people sat here at once,\nquietly, and the only thing this building does is carry sound to the middle\nand carry the answer back. Canon says the Aurelians built it to TALK to\nsomething. This is what that looks like in tiles.\n\nTHE ONE RESTRAINT IN THE ROOM IS NOT AURELIAN. A hole has been cut through\nthe north wall at 19-20,0-2 and a cable laid from it straight down the\nmiddle of the floor to the rim of the well -- walkable decking on the west\nside at x19, the armoured trunk on the east at x20, over the top of every\ngroove and every seat that was in the way. It does not curve. It does not go\nround anything. Read the two halves of the room off each other and the whole\nof BOND VS CONTROL is on the screen without a word of dialogue.\n\nTHE WELL IS OPEN SEA AND IT IS SWIMMABLE, AND THAT IS THE PAYOFF OF THE ART\nGRANTED TWO ROOMS SOUTH. Canon gives the climax four phases and the last of\nthem is REACH IT. The player can only reach it because they learned to swim\nin the drowned approach, from the Hallkeeper who taught them to wade. Do not\nfloor the well over. It is 180 tiles of collision 8, bounded by 12-27 and\n10-23, and it is the stage.\n\nSTAGING FOR WHOEVER RUNS THE ENCOUNTER HERE, since this room is built for\nsomebody else to use. All of it is walked and proved by\ntools/shots/tdlower.js; the generator refuses to write the map at all if\nanything on it has become unreachable.\n  - THE PLAYER ARRIVES AT 19,34 / 20,34, coming up from the control ring,\n    and walks a four-tile passage north into the chamber at 18-21,30.\n  - THE APPROACH AISLE, 16-23 by 24-31, is clear floor: the benches are cut\n    out of it on purpose and the only thing crossing it is the south groove\n    at x20. Eight wide by eight deep, which is room for six people to stand\n    and be told apart at 1x, with the rim at the top of it.\n  - THE RIM GALLERY is a continuous ring of glyph floor round the water and\n    can be walked the whole way round -- proved, not assumed. The cable head\n    at 18-20,9 is the only thing standing on it, and there is a gap at 19,9\n    so the ring is not cut.\n  - THE WELL is water. Anything that has to be enormous goes there, and the\n    player can swim out into the middle of it: 19,16 is reachable.\n  - THE SEATING AND THE WALL ARE SOLID, so nobody can be walked off the map\n    or pushed through the furniture.\n\nNOTHING IN THIS FILE STAGES THE ENCOUNTER, spawns anybody, or sets a story\nflag. Six signs, and every one of them is written to be read BEFORE anybody\narrives -- they describe a room, not a situation, so they are still true\nafterwards.",
+  "rows": [
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ:÷ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ:÷ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΘΘΘΘ:÷ΞΘΘΘΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΘΞΞΞΞΞΘ:÷ΞΞΞΞΞΘΘΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΘΘΘΞΘΘΘΘΘ:÷ΘΘΘΘΘΘΘΘΘΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΘΞΘΘΘΘΘΘΘΘΞ::ΞΞΘΘΘΘΘΞΞΞΘΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩ≈≈≈ΘΘΘΞΞΘΘΘΘ:÷ΘΘΘΘΘΞΘΘΘΞ≈≈ΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΘΞ≈≈≈ΞΞΞΘΘΘΞΞ:÷≈≈ΘΘΘΞΞΞΘ≈≈≈ΘΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΘΘΞΘ≈≈≈ΘΘ≈≈≈θ╫:¶θθ≈ΞΞΘΘΞ≈≈≈ΘΘΘΩΩΩΩΩ",
+    "ΩΩΩΩΩΘΘΘΘΘΘ≈≈≈θθθWWWWWWθθθΞ≈≈≈ΘΘΘΘΞΩΩΩΩΩ",
+    "ΩΩΩΩΘΘΘΘΞΞΘΘ≈θθWWWWWWWWWWθθ≈≈ΘΘΞΘΘΞΘΩΩΩΩ",
+    "ΩΩΩΘΞΘΘΞΞΘΘ≈θθWWWWWWWWWWWWθθ≈ΞΘΞΞΘΘΞΘΩΩΩ",
+    "ΩΩΩΘΞΘΘΞΘΘ≈θθWWWWWWWWWWWWWWθθΞΘΘΞΘΘΞΘΩΩΩ",
+    "ΩΩΩΞΞΘΘΘΘΞΞθWWWWWWWWWWWWWWWWθΞΞΘΞΘΘΞΞΩΩΩ",
+    "ΩΩΩΞΘΘΘΘΘΞ≈θWWWWWWWWWWWWWWWWθ≈ΘΘΘΘΘΘΘΩΩΩ",
+    "ΩΩΘΞΘΘΘΘΘΞθθWWWWWWWWWWWWWWWWθθ≈ΘΘΘΘΘΘΘΩΩ",
+    "ΩΩ≈≈≈≈≈≈≈≈θθWWWWWWWWWWWWWWWWθθ≈≈≈≈≈≈≈≈ΩΩ",
+    "ΩΩΘΘΘΘΞΘΘΘ≈θWWWWWWWWWWWWWWWWθ≈ΞΘΘΞΘΘΞΘΩΩ",
+    "ΩΩΩΘΘΘΞΘΘΘ≈θWWWWWWWWWWWWWWWWθ≈ΞΘΘΞΘΘΞΩΩΩ",
+    "ΩΩΩΘΞΘΞΞΘΘΞθθWWWWWWWWWWWWWWθθ≈ΞΘΞΞΘΞΞΩΩΩ",
+    "ΩΩΩΘΞΘΘΘΘΘΞ≈θθWWWWWWWWWWWWθθ≈ΘΘΘΘΘΘΞΘΩΩΩ",
+    "ΩΩΩΘΞΘΘΘΘΘΞΞ≈θθWWWWWWWWWWθθ≈ΘΘΘΘΘΘΘΘΘΩΩΩ",
+    "ΩΩΩΩΘΞΘΘΘΞΘΘ≈≈θθθWWWWWWθθθ≈≈≈ΘΞΘΘΘΘΘΩΩΩΩ",
+    "ΩΩΩΩΩΞΞΘΘΞΞ≈≈≈Ξ≈≈θθθθθθ≈≈≈Ξ≈≈≈ΞΘΘΘΘΩΩΩΩΩ",
+    "ΩΩΩΩΩΘΘΘΘ≈≈≈ΘΘΞΞΘ≈≈≈≈≈ΘΘΘΘΘΘΞ≈≈≈ΞΞΘΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΘΘ≈≈≈ΘΘΘΘΘΘΘΘΘ≈ΘΘΘΘΘΘΘΘΘ≈≈≈ΘΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩ≈≈≈ΘΘΘΘΞΞΘΘΘΘ≈ΘΘΘΞΞΘΘΘΘΞ≈≈ΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΘΞΞΞΘΘΘΞΘΘΘΘ≈ΘΘΘΞΘΘΘΘΘΘΘΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΘΞΘΘΘΘΘΘΘΘ≈ΘΘΘΘΘΞΞΘΘΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΘΘΘΞΘΘΘ≡≡ΘΘΘΞΞΞΘΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΘΘΘΘ≡≡ΘΘΘΘΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΘ≡≡ΘΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΘ≡≡ΘΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΘΘΘΘΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩSSΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ"
+  ],
+  "warps": [
+    {
+      "x": 19,
+      "y": 35,
+      "toMap": "temple_deep_power",
+      "toX": 11,
+      "toY": 1,
+      "facing": "down",
+      "style": "stairs"
+    },
+    {
+      "x": 20,
+      "y": 35,
+      "toMap": "temple_deep_power",
+      "toX": 12,
+      "toY": 1,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 15,
+      "y": 25,
+      "text": [
+        "A seat, worn hollow. The one beside it is worn hollow. So is the next.",
+        "There is no rail in front of them and no rail behind them.",
+        "Nobody who sat here was being kept anywhere."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 20,
+      "text": [
+        "Eight grooves come down out of the seating and stop at the rim.",
+        "They do not cross it. They do not go into the water.",
+        "They stop, the way a person stops talking."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 20,
+      "y": 9,
+      "text": [
+        "The cable comes through a hole in the wall and runs straight to the edge.",
+        "It crosses four grooves and six benches and it does not step round one.",
+        "It was laid by people who could not read what they were walking on."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 29,
+      "y": 14,
+      "text": [
+        "The rim goes all the way round, and there is no wall on it.",
+        "No lip, no rail, no gate, and nothing anywhere in this room that shuts.",
+        "Three thousand years of people sat down at the edge of that."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 13,
+      "text": [
+        "You cannot see the far side of this room from here.",
+        "You cannot hear yourself walk, either.",
+        "Every sound you make goes out to the middle and comes back changed."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 17,
+      "y": 33,
+      "text": [
+        "The passage floor carries two grooves and they run in ahead of you.",
+        "Every groove in this building runs the same way.",
+        "Nothing here was ever built to send anything out."
+      ]
+    }
+  ]
+}

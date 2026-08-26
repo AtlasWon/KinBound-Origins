@@ -110,6 +110,18 @@
         "kind": "lookAround"
       },
       "script": "aur_sum_trainer"
+    },
+    {
+      "id": "aur_sum_tarin",
+      "sprite": "rival",
+      "x": 14,
+      "y": 2,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "aur_sum_tarin",
+      "requiresFlag": "summit_open"
     }
   ],
   "objects": [

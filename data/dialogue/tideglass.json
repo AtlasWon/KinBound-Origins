@@ -30,7 +30,9 @@
     "tg_watchman": "SIGNAL WATCH",
     "tg_listener_a": "WOMAN ON THE WHARF",
     "tg_listener_b": "SAILOR",
-    "tg_listener_c": "DOCK HAND"
+    "tg_listener_c": "DOCK HAND",
+    "tg_mason": "MOLE MASON",
+    "tg_notice_reader": "READING THE NOTICE"
   },
   "entries": {
     "tg_gatewarden": [
@@ -294,6 +296,26 @@
     "tg_harbourmaster": [
       {
         "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Harbour opened at six on Thursday and four hundred boats went out in eleven minutes.",
+          "Thirty-one years and I have never seen anything like it, and I stood on the sea gate and cried.",
+          "Two did not go. Both are in the yard being made good and both of them will."
+        ]
+      },
+      {
+        "ifFlags": [
+          "neravoss_restrained"
+        ],
+        "lines": [
+          "I have stopped counting boats. Since Thursday I have been counting people, out through the north gate, in fifties.",
+          "Four hundred and eleven fifties. There is no page in my book ruled for that, so I have ruled one.",
+          "Do not stand about on my mole. Whatever you are here for, be quick and be off it."
+        ]
+      },
+      {
+        "ifFlags": [
           "act4_done"
         ],
         "lines": [
@@ -323,6 +345,16 @@
     "tg_netter": [
       {
         "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Flats are filling. Not heaving. Filling, an inch a day, and the small stuff came first.",
+          "Everything that ran up the creeks is coming back down them and taking its time about it.",
+          "I said things run from something. I am going to have to find something else to say now."
+        ]
+      },
+      {
+        "ifFlags": [
           "act4_done"
         ],
         "lines": [
@@ -345,6 +377,26 @@
       "Somebody has to be here when it comes back. That is a job too."
     ],
     "tg_child": [
+      {
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Dad came home on Wednesday and slept for a day and a half with his boots on.",
+          "He has gone back down the mole. Not for sandbags. They are taking the sandbags up.",
+          "I asked him a question and he answered it. That is the whole of what I wanted to tell you."
+        ]
+      },
+      {
+        "ifFlags": [
+          "neravoss_restrained"
+        ],
+        "lines": [
+          "We are going to my aunt at Stonewake on the four o'clock. Mum has packed the wrong things and I have not said.",
+          "Dad is staying. He said somebody has to be at the mole, and I said I know, because I do know.",
+          "I have left my door open so it cannot bang. That is the only useful thing I could think of."
+        ]
+      },
       {
         "ifFlags": [
           "act4_done"
@@ -403,6 +455,16 @@
       "This spring is the first time anybody upstairs has asked us to hold a result back."
     ],
     "tg_gaugeman": [
+      {
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "The pen is back on the paper and it has drawn a very boring line for six days.",
+          "Forty people have been in here to look at a boring line. I have let every one of them.",
+          "The sheet with the mark off the frame is in a frame. Somebody from the capital has offered me money for it."
+        ]
+      },
       {
         "ifFlags": [
           "act4_done"
@@ -482,6 +544,26 @@
     "tg_lampkeeper": [
       {
         "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Nine hundred and six paces, and last night it took me nine hundred and six paces.",
+          "There is a bite out of the mole at the four hundredth and the masons start on Monday.",
+          "The light was lit. It will be lit tonight. That part was never going to change."
+        ]
+      },
+      {
+        "ifFlags": [
+          "neravoss_restrained"
+        ],
+        "lines": [
+          "It is not lit.",
+          "I got two hundred paces and it came over the wall sideways at me, and I turned round.",
+          "Nine hundred and six paces, forty-one years, and last night I turned round. Write that down somewhere as well."
+        ]
+      },
+      {
+        "ifFlags": [
           "act4_done"
         ],
         "lines": [
@@ -515,6 +597,24 @@
     "tg_listener_c": [
       "Two hundred and six boats. He says that number every time and it is a true number.",
       "You can check it. People have checked it. That is the trouble with him."
+    ],
+    "tg_mason": [
+      {
+        "lines": [
+          "Four hundred paces out there is a bite out of the parapet the size of a cart.",
+          "The sea took it in one go on the Tuesday and put half of it back down on the walkway in a tidy heap.",
+          "Six weeks. This mole stood before there was a harbour office and it will stand after there is not."
+        ]
+      }
+    ],
+    "tg_notice_reader": [
+      {
+        "lines": [
+          "New sheet in the window, and they have not put it behind the glass. It is pinned to the door.",
+          "Nine crews off this coast in the spring down one side of it. What went on the water down the other.",
+          "Same sheet. I have read it three times and I do not know what my face is doing."
+        ]
+      }
     ]
   },
   "_note": "LYRA: her standing lines said \"I have asked my father four questions this week\", which tells the player in Act 2 whose daughter she is. CANON puts that in Act 4 and the Stage 2 brief forbids it here, so the same lines are kept with the relationship taken out -- the four true answers are the good part and they still land. Her one scripted scene is tg_lyra in data/events/common.json and it runs once, after which these take over. TARIN: the ledger in src/systems/tarin.ts publishes tarin_at_<beat> as a flag, and these variants are how the town talks about him between the times he is on screen. They are copies of the shared voices in data/dialogue/common.json (tarin_word_street, _hall, _clinic, _shop) because nothing on any map points an NPC at those ids yet -- if you would rather have the shared ones, set an NPC script to tarin_word_street and delete the copy here. First match wins, so they sit at the top and the ungated line still ends every list."

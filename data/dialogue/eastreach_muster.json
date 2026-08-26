@@ -1,0 +1,65 @@
+{
+  "_note": "THE EAST QUAY, the people who do not need a scene. Everybody here with something to DO -- Sorrell, the four Hallkeepers, the clinic hand, Lyra, Tarin -- is an event script in data/events/eastreach_muster.json. Everybody in this file is somebody the player walks past, and their whole job is to make the quay sound like a hundred and fifty people rather than a cast list.\n\nTHE CLERK CARRIES THE ABSENCES. Canon says CERTAIN Hallkeepers, not all of them, and who did not come is worth as much as who did. Four are standing on the mole; the other four sent word, and the three reasons in his second block are each true to the person -- Alder is eighty-one and six days' walk inland, Brand will not leave the instruments that are measuring the thing, and Ord sent forty people instead of one. That last line is also where the regional Trainers on this quay came from, said once and never explained again.\n\nTHE ANGLER'S LINE IS THE ONLY FORESHADOWING ON THE MAP. There is nothing in the water. Not a poor day: nothing, all the way down. Neravoss is stirring and the fish left days ago, and no character in the act ever connects those two facts out loud.",
+  "speakers": {
+    "op_clerk": "HARBOUR CLERK",
+    "op_dockhand": "DOCKHAND",
+    "op_trainer_a": "SAILOR",
+    "op_trainer_b": "TRAINER",
+    "op_trainer_c": "ANGLER"
+  },
+  "entries": {
+    "op_clerk": [
+      {
+        "ifFlags": ["op_tarin_gone"],
+        "lines": [
+          "Second boat has gone. North-east, up the coast, which is not where the cross is.",
+          "I have written it in the book as ORDERS RECEIVED because I could not think what else to put."
+        ]
+      },
+      {
+        "lines": [
+          "Three Keepers sent word instead of coming, and I have all three notes here.",
+          "Alder is eighty-one and it is six days' walk from Briarbell. She sent a bell rope.",
+          "Brand would not leave her instruments. Somebody has to write down what this actually was.",
+          "And Ord said he would be no use whatever in a boat, and sent forty people who would."
+        ]
+      }
+    ],
+    "op_dockhand": [
+      {
+        "ifFlags": ["op_sailed"],
+        "lines": ["Mind your feet on that plank. It is wetter than it was an hour ago."]
+      },
+      {
+        "lines": [
+          "Four days of loading and not one shilling of freight in any of it.",
+          "My father would have called that a wasted week. My father never saw the sky do this."
+        ]
+      }
+    ],
+    "op_trainer_a": [
+      {
+        "lines": [
+          "Off the Crown Road with the rest of Ord's lot. Two days, most of it at a jog.",
+          "Nobody asked what for. He said east and forty people went east."
+        ]
+      }
+    ],
+    "op_trainer_b": [
+      {
+        "lines": [
+          "I have never been further out than the Basin wall in my life.",
+          "I am going eleven miles. I have told my kin. They took it better than I did."
+        ]
+      }
+    ],
+    "op_trainer_c": [
+      {
+        "lines": [
+          "I have fished this water forty years. There is nothing in it.",
+          "Not a poor week. Nothing. All the way down, and they all went the same way at once."
+        ]
+      }
+    ]
+  }
+}

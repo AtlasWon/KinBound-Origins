@@ -1,0 +1,827 @@
+[
+  {
+    "id": "aftermath_quay",
+    "_note": "STAGE 6, THE AFTERMATH, BEAT 1: THE MORNING AFTER, ON THE EAST MOLE.\n\nWHY THIS FILE IS CALLED tideglass.json AND NOT aftermath_quay.json. The engine only ever loads data/events/<mapId>.json and data/events/common.json (see Registry.loadScriptsFor). A file named after a scene rather than a map is never fetched by anything, so the aftermath scenes live in the event files of the maps they play on and are named aftermath_* by SCRIPT ID instead. data/events/tideglass.json did not exist before this stage. If another Stage 6 build needs Tideglass scripts -- the operation sails from this mole -- APPEND to this array. Do not replace the file.\n\nTHE JOIN THIS SCENE DEPENDS ON. One flag: act6_done, set at the end of temple_deep_heart_neravoss in data/events/temple_deep_heart.json, the moment Neravoss calms and goes. Everything after the climax reads it -- sixty-odd storm dialogue variants, the Foundation offices, the Summit registry, the rebuilding crews, Tarin's last ledger row. The `when` below also accepts neravoss_calm, which the same script sets one action earlier, and then sets act6_done itself; that is insurance against a rename, not the contract.\n\nTHE PLAYER ARRIVES HERE ON THEIR OWN FEET. eastreach_muster warps back into Tideglass at 71,58 and 72,58 -- the head of the east mole -- so walking home off the East Quay lands the player on the exact tile this scene stages from and fires the enter trigger. The warp below is only for a climax that puts them somewhere else in the city.\n\nWHERE IT PLAYS. The east mole, x66-79, y48-58, with the berth jetty running out at x71-72, y59-61. That is the deep-water slip a boat big enough to reach the Temple would use, and it is the only piece of Tideglass that has open sea at the end of it. The scene warps the player there itself rather than trusting the climax to land them on a particular tile: any arrival anywhere in Tideglass gets the same staging.\n\nWHAT CANON REQUIRES OF IT, in order: Meridian's secret activities become public; the commander is arrested for what she did to Elias' vessel; Cassian accepts responsibility and is neither redeemed nor forgiven. Kell's arrest is written off the evidence the player actually read in Aureline -- the CORVANE, the yard book for the night of the thirteenth, the fitter's statement about the sea-cock linkage -- because an arrest for a crime the player watched somebody discover is worth four of an arrest announced by a clerk.\n\nSHE DOES NOT REPENT. The Sanctum fixed her: a commander who has to fight a sixteen-year-old is a commander who is worried, and she is not. So she is not sorry on the mole either. She is still doing the arithmetic, out loud, and the horror of her is that she has never once been unable to say what she was weighing.\n\nCASSIAN IS NOT FORGIVEN AND IS NOT ASKED TO BE. He does the only thing he has never done, which is write it down with his name at the bottom, and canon's word for it is that he stops pretending. He asks the player for nothing, including absolution, and the scene refuses him the chance to be thanked.\n\nTHE TIDEHEART. Canon gives it back partway through this act, which is somebody else's scene. This one ASKS -- hasItem, never tideheart_given, never an assumption -- and if the object is somehow still gone it is handed back here, giveItem plus setFlag tideheart_taken false, exactly as src/systems/tideheart.ts says to. A player who reaches the aftermath with an empty key pocket is a player whose bag row never comes back, and that is not a state the game should be able to end in.",
+    "trigger": "enter",
+    "map": "tideglass",
+    "onceFlag": "aftermath_quay_done",
+    "when": {
+      "kind": "any",
+      "of": [
+        {
+          "kind": "flag",
+          "flag": "act6_done"
+        },
+        {
+          "kind": "flag",
+          "flag": "neravoss_calm"
+        }
+      ]
+    },
+    "actions": [
+      {
+        "kind": "setFlag",
+        "flag": "act6_done"
+      },
+      {
+        "kind": "wait",
+        "frames": 26
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Somebody has to be the last one off the quay.",
+          "It takes you a while to work out that it is going to be you."
+        ]
+      },
+      {
+        "kind": "warp",
+        "map": "tideglass",
+        "x": 72,
+        "y": 58,
+        "facing": "up"
+      },
+      {
+        "kind": "music",
+        "track": "stop"
+      },
+      {
+        "kind": "wait",
+        "frames": 130
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The bay is flat.",
+          "It has been flat since some time in the night and nobody on this mole has stopped watching it."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Every boat that went out is tied up.",
+          "Somebody has counted them four times and it keeps coming out right."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
+      {
+        "kind": "setFlag",
+        "flag": "af_quay_cast"
+      },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "af_tarin",
+          "sprite": "rival",
+          "x": 73,
+          "y": 58,
+          "facing": "left",
+          "movement": {
+            "kind": "static"
+          }
+        }
+      },
+      {
+        "kind": "wait",
+        "frames": 14
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Thirty hours awake and I have checked the sky eleven times.",
+          "It keeps being a sky. I do not know what I want it to do instead."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Sorrell sat down on a bollard an hour ago and has not got up again.",
+          "Nothing wrong. Sixty years old and a night on a boat, that is the whole of it."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 18
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "There is a knot of people at the head of the mole that has been standing very still for some time.",
+          "It starts to come down towards the water."
+        ]
+      },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "af_officer_a",
+          "sprite": "harbourmaster",
+          "x": 76,
+          "y": 57,
+          "facing": "left",
+          "movement": {
+            "kind": "static"
+          }
+        }
+      },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "af_kell",
+          "sprite": "meridian_commander",
+          "x": 77,
+          "y": 57,
+          "facing": "left",
+          "movement": {
+            "kind": "static"
+          }
+        }
+      },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "af_officer_b",
+          "sprite": "harbourmaster",
+          "x": 78,
+          "y": 57,
+          "facing": "left",
+          "movement": {
+            "kind": "static"
+          }
+        }
+      },
+      {
+        "kind": "move",
+        "who": "af_officer_a",
+        "steps": [
+          "left",
+          "left"
+        ]
+      },
+      {
+        "kind": "move",
+        "who": "af_kell",
+        "steps": [
+          "left",
+          "left"
+        ]
+      },
+      {
+        "kind": "move",
+        "who": "af_officer_b",
+        "steps": [
+          "left",
+          "left"
+        ]
+      },
+      {
+        "kind": "move",
+        "who": "af_officer_a",
+        "steps": [
+          "left",
+          "left"
+        ]
+      },
+      {
+        "kind": "move",
+        "who": "af_kell",
+        "steps": [
+          "left",
+          "left"
+        ]
+      },
+      {
+        "kind": "move",
+        "who": "af_officer_b",
+        "steps": [
+          "left",
+          "left"
+        ]
+      },
+      {
+        "kind": "face",
+        "who": "player",
+        "dir": "up"
+      },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The Foundation cloth is gone. Somebody has put a blanket round her shoulders",
+          "and she is wearing it the way she wore the coat."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "WARRANT OFFICER",
+        "lines": [
+          "Warrant out of Aureline. The CORVANE, the night of the thirteenth.",
+          "A yard book with one name on the line and a fitter who has been waiting eleven years to be asked."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The nine she counted off the platform are standing further up the mole.",
+          "Every one of them has come down to watch her go past and not one of them is saying anything."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 18
+      },
+      {
+        "kind": "face",
+        "who": "af_kell",
+        "dir": "down"
+      },
+      {
+        "kind": "sfx",
+        "sound": "denied"
+      },
+      {
+        "kind": "wait",
+        "frames": 22
+      },
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "Eleven years, and the first person to go and read the book was a girl doing her father a favour.",
+          "I have thought about that all night and I still cannot make it interesting."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "Your father was going to publish.",
+          "I did the arithmetic that everybody in that building was too well brought up to do."
+        ]
+      },
+      {
+        "kind": "choice",
+        "lines": [
+          "She is looking at you the way she looked at a drowned country and filed a finding about the diameter."
+        ],
+        "options": [
+          {
+            "label": "He was my father.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "COMMANDER KELL",
+                "lines": [
+                  "Yes. He was one.",
+                  "I have the other number and I have never once been able to put it down."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "(Say nothing.)",
+            "then": [
+              {
+                "kind": "say",
+                "lines": [
+                  "You say nothing.",
+                  "She waits for it, works out that it is not coming, and something in her face gives up a fraction."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 18
+      },
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "It went back down on its own and it took nothing with it.",
+          "I have been wrong for eleven years in a way that a child settled in one afternoon. Take that. It is yours."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
+      {
+        "kind": "face",
+        "who": "af_kell",
+        "dir": "left"
+      },
+      {
+        "kind": "move",
+        "who": "af_officer_a",
+        "steps": [
+          "left",
+          "left",
+          "left",
+          "left",
+          "left",
+          "left"
+        ]
+      },
+      {
+        "kind": "move",
+        "who": "af_kell",
+        "steps": [
+          "left",
+          "left",
+          "left",
+          "left",
+          "left",
+          "left"
+        ]
+      },
+      {
+        "kind": "move",
+        "who": "af_officer_b",
+        "steps": [
+          "left",
+          "left",
+          "left",
+          "left",
+          "left",
+          "left"
+        ]
+      },
+      {
+        "kind": "removeNpc",
+        "who": "af_officer_a"
+      },
+      {
+        "kind": "removeNpc",
+        "who": "af_kell"
+      },
+      {
+        "kind": "removeNpc",
+        "who": "af_officer_b"
+      },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "I wanted to hit her and I have wanted to since the Sanctum.",
+          "She is smaller than she was. That is worse and I would like it on the record that it is worse."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "af_veyl",
+          "sprite": "veyl",
+          "x": 70,
+          "y": 57,
+          "facing": "right",
+          "movement": {
+            "kind": "static"
+          }
+        }
+      },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "af_lyra",
+          "sprite": "lyra",
+          "x": 74,
+          "y": 57,
+          "facing": "left",
+          "movement": {
+            "kind": "static"
+          }
+        }
+      },
+      {
+        "kind": "wait",
+        "frames": 18
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Veyl is at the rail with three sheets of paper held down against the wind by one hand.",
+          "Two people from the capital are waiting a polite distance behind him and have been all morning."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "The research. The sleeve I filed eleven years ago. What I did to this coast on Tuesday.",
+          "Three sheets, and my name at the bottom of each of them."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "It goes to the capital tonight.",
+          "That is not courage. It is eleven years late and I would rather nobody called it anything."
+        ]
+      },
+      {
+        "kind": "choice",
+        "lines": [
+          "He has not tried once to stand where you would have to look at him."
+        ],
+        "options": [
+          {
+            "label": "Why now?",
+            "then": [
+              {
+                "kind": "say",
+                "who": "DR. VEYL",
+                "lines": [
+                  "Because I have run out of arithmetic.",
+                  "It was not you and it was not your father. It was the sea going flat while I watched."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "You could have stopped.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "DR. VEYL",
+                "lines": [
+                  "Ninety-two days after the CORVANE. And every single day after that one.",
+                  "I know the number. I have always known the number. That is the whole of it."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Meridian saved people.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "DR. VEYL",
+                "lines": [
+                  "Yes. Nine crews off Tideglass in the spring, and a sea wall, and forty thousand grants.",
+                  "Do not let anyone take that off the sheet. It is not a defence. It is just also true."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 18
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "I am not going to ask you for anything.",
+          "Not that. Not even to have heard it."
+        ]
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "not",
+          "of": {
+            "kind": "hasItem",
+            "item": "tideheart"
+          }
+        },
+        "then": [
+          {
+            "kind": "say",
+            "lines": [
+              "He puts something down on the bollard beside you rather than into your hand,",
+              "which is the last decision he makes about it."
+            ]
+          },
+          {
+            "kind": "sfx",
+            "sound": "obtain_art"
+          },
+          {
+            "kind": "giveItem",
+            "item": "tideheart"
+          },
+          {
+            "kind": "setFlag",
+            "flag": "tideheart_taken",
+            "value": false
+          },
+          {
+            "kind": "say",
+            "who": "DR. VEYL",
+            "lines": [
+              "It was never ours and it was never a key.",
+              "Your father wrote that down in a room I was standing in and I heard him say it."
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
+      {
+        "kind": "move",
+        "who": "af_veyl",
+        "steps": [
+          "left",
+          "left",
+          "left",
+          "left"
+        ]
+      },
+      {
+        "kind": "removeNpc",
+        "who": "af_veyl"
+      },
+      {
+        "kind": "wait",
+        "frames": 24
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Lyra does not watch him go.",
+          "She has been looking at the water since he started reading and she has not moved once."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "I am not going with him. I said it to his face an hour ago and he agreed with me.",
+          "I would have liked an argument. I have wanted one since I was fifteen."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "There are eleven hundred people on Foundation wages who have not done one wrong thing.",
+          "Somebody is going to be in that building on Monday. Come and find me in the atrium."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
+      {
+        "kind": "move",
+        "who": "af_lyra",
+        "steps": [
+          "left",
+          "up",
+          "up",
+          "up"
+        ]
+      },
+      {
+        "kind": "removeNpc",
+        "who": "af_lyra"
+      },
+      {
+        "kind": "wait",
+        "frames": 24
+      },
+      {
+        "kind": "music",
+        "track": "resume"
+      },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Right. Everybody who was going to arrest somebody has arrested somebody."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "I have eight Crests in a tin at the bottom of my bag.",
+          "I have not thought about them once since Crownspire and that is the strangest thing that has happened to me."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Summit registry. Aureline. Whenever you like.",
+          "I am not going up without you and I am not going to say that a second time."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 14
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "He goes before you can answer.",
+          "It is how he has done every difficult thing since the pair of you were nine."
+        ]
+      },
+      {
+        "kind": "move",
+        "who": "af_tarin",
+        "steps": [
+          "up",
+          "up",
+          "up",
+          "up"
+        ]
+      },
+      {
+        "kind": "removeNpc",
+        "who": "af_tarin"
+      },
+      {
+        "kind": "setFlag",
+        "flag": "af_quay_cast",
+        "value": false
+      },
+      {
+        "kind": "wait",
+        "frames": 26
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The mole is yours. The water past the end of it does nothing at all.",
+          "Somewhere under it there is a great deal of room and one thing in it that is not frightened any more."
+        ]
+      },
+      {
+        "kind": "setFlag",
+        "flag": "aftermath_seen"
+      }
+    ]
+  },
+  {
+    "id": "op_summons",
+    "_note": "STAGE 6, THE OPERATION, BEAT 0: HOW THE PLAYER FINDS OUT WHERE TO GO.\n\nAct 5 ends with the eighth Crest and Merrin Ord telling the player to go and do whatever it is they have been carrying about with them. This is where that lands, and it lands in Tideglass because Tideglass is the harbour: the only city on the region map with open sea east of it, the city Veyl spoke in, the city they tried to take the Tideheart in, and the one whose Hallkeeper is already on the quay.\n\nWHY IT IS AN ENTER SCRIPT IN THIS FILE AND NOT AN NPC ON THE MAP. Registry.loadScriptsFor only ever fetches data/events/<mapId>.json, so a summons that lives anywhere else is never loaded until the player has already been where it was sending them. Nothing here touches data/maps/tideglass.json, which is a Stage 2 file nobody in this stage owns: the whole join is one enter script and one step script, both of them here.\n\nIT IS GATED AGAINST THE AFTERMATH. `not act6_done` on both scripts, so once Neravoss has gone the quay is a quay again and aftermath_quay above -- which fires on the same map and the same trigger -- is the only thing that runs. The two conditions cannot both be true.",
+    "trigger": "enter",
+    "map": "tideglass",
+    "onceFlag": "op_summons_seen",
+    "when": {
+      "kind": "all",
+      "of": [
+        {
+          "kind": "flag",
+          "flag": "crest_8_taken"
+        },
+        {
+          "kind": "not",
+          "of": {
+            "kind": "flag",
+            "flag": "act6_done"
+          }
+        }
+      ]
+    },
+    "actions": [
+      {
+        "kind": "wait",
+        "frames": 24
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Tideglass has its shutters up at two in the afternoon and nobody is selling anything.",
+          "There is a bell going somewhere east of the Basin and it is not the hour."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 14
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "A runner comes down the street at a flat sprint, sees you, and turns round without stopping."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "DOCK RUNNER",
+        "lines": [
+          "You are the one Sorrell has been waiting on. Four days he has had the East Quay shut.",
+          "Past the ropewalk and right out to the end of the mole. He has been saying go now since Tuesday."
+        ]
+      },
+      {
+        "kind": "setFlag",
+        "flag": "op_called"
+      }
+    ]
+  },
+  {
+    "id": "op_to_quay",
+    "_note": "THE EAST JETTY, x71-72, y59-61 -- the only piece of Tideglass with open water at the end of it, and the tile the aftermath scene stages from as well. The trigger is the outer four tiles of it, so the mole reads as somewhere you walk to rather than somewhere you are put.\n\nTHE RETURN IS OUT OF THE TRIGGER BAND ON PURPOSE. eastreach_muster warps back to 71,58 and 72,58, which are the stone at the ROOT of the jetty, two rows north of the first trigger tile. A player coming home walks into town; a player who wants to go back out walks south again and the band fires. It cannot bounce.",
+    "trigger": "step",
+    "map": "tideglass",
+    "when": {
+      "kind": "all",
+      "of": [
+        {
+          "kind": "flag",
+          "flag": "crest_8_taken"
+        },
+        {
+          "kind": "not",
+          "of": {
+            "kind": "flag",
+            "flag": "act6_done"
+          }
+        }
+      ]
+    },
+    "at": [
+      {
+        "x": 71,
+        "y": 60
+      },
+      {
+        "x": 72,
+        "y": 60
+      },
+      {
+        "x": 71,
+        "y": 61
+      },
+      {
+        "x": 72,
+        "y": 61
+      }
+    ],
+    "actions": [
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "not",
+          "of": {
+            "kind": "flag",
+            "flag": "op_quay_seen"
+          }
+        },
+        "then": [
+          {
+            "kind": "say",
+            "lines": [
+              "The mole runs on east past the head of the jetty, and every foot of it has a boat against it.",
+              "Somebody down there is shouting numbers, and the numbers keep being the same one."
+            ]
+          },
+          {
+            "kind": "setFlag",
+            "flag": "op_quay_seen"
+          }
+        ]
+      },
+      {
+        "kind": "sfx",
+        "sound": "warp"
+      },
+      {
+        "kind": "fade",
+        "to": "black",
+        "frames": 24
+      },
+      {
+        "kind": "warp",
+        "map": "eastreach_muster",
+        "x": 2,
+        "y": 7,
+        "facing": "right"
+      }
+    ]
+  }
+]

@@ -16,7 +16,10 @@
     "hm_clinic_local": "WICK",
     "r1_madden": "HIKER MADDEN",
     "r1_cale": "WATCHER ILSE",
-    "hm_tarin": "TARIN"
+    "hm_tarin": "TARIN",
+    "tg_wall_woman": "SEA WALL CREW",
+    "tg_hauler": "CONTRACT HAULER",
+    "tgh_gossip": "HALL REGULAR"
   },
   "entries": {
     "hm_mother": [
@@ -49,6 +52,26 @@
       }
     ],
     "hm_villager": [
+      {
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Wellhead is down to a hand's depth again and it has stopped humming.",
+          "Nell says she misses it. Nell heard it for four days out of eighty-one years.",
+          "We have had the cover off since Tuesday and there is nothing down there but water."
+        ]
+      },
+      {
+        "ifFlags": [
+          "neravoss_restrained"
+        ],
+        "lines": [
+          "It has stopped. The wellhead. In the middle of the night, all at once, and the whole street woke up for it.",
+          "Not gone down. Stopped. The water is dead still and there is not a sound in it.",
+          "Somebody has admitted it means something. That is worse, {name}. Nobody warned me that would be worse."
+        ]
+      },
       {
         "ifFlags": [
           "act4_done"
@@ -98,6 +121,26 @@
       }
     ],
     "hm_kid": [
+      {
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "They went back. All the new ones, down the road, the way they came, in about two days.",
+          "Four on Route 1 again and I can name all four, same four as always.",
+          "I have kept the page with no names on it. It is still the best page and now it is finished."
+        ]
+      },
+      {
+        "ifFlags": [
+          "neravoss_restrained"
+        ],
+        "lines": [
+          "Twenty-six. I stopped at twenty-six because I ran out of page and I did not start a new one.",
+          "They are not going anywhere now. They are sat out in the lane in the rain, all of them, facing the same way.",
+          "I have not asked anybody what that means. I asked about the eleven and nobody answered that one either."
+        ]
+      },
       {
         "ifFlags": [
           "act4_done"
@@ -313,6 +356,26 @@
     "hm_trader": [
       {
         "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "My cousin has gone back to Tideglass. Early cart, no fuss, would not let anybody see her off.",
+          "She says the Parade is three inches of sand and the whole city is sweeping it back into the sea.",
+          "So there is one less stall in this square this Tuesday. That is all it looks like from here."
+        ]
+      },
+      {
+        "ifFlags": [
+          "neravoss_restrained"
+        ],
+        "lines": [
+          "Forty of them on the green, eleven in my back room, and my cousin is running the kettle for the lot.",
+          "Nobody sent them here. They walked up the road until the road stopped going up, and this is where it stops.",
+          "I have sold nothing since Monday and I have never been busier in my life."
+        ]
+      },
+      {
+        "ifFlags": [
           "act4_done"
         ],
         "lines": [
@@ -368,6 +431,16 @@
       }
     ],
     "hm_fisher": [
+      {
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "The mere is back off the staithe and there is a line of weed across Hallow's field to show where it got to.",
+          "Fish came back on Thursday. All of them, all at once, same as they went.",
+          "One river, one man, my whole life. I was right and I would rather have been wrong. I have said that enough now."
+        ]
+      },
       {
         "ifFlags": [
           "act4_done"
@@ -451,6 +524,16 @@
       }
     ],
     "tarin_word_street": [
+      {
+        "ifFlags": [
+          "tarin_at_aftermath"
+        ],
+        "lines": [
+          "Your friend has been sat in the Summit registry in Aureline for two days reading a list.",
+          "Word is he came off a boat at Tideglass and walked the whole way without stopping anywhere.",
+          "Eight Crests in a tin at the bottom of a bag. I have heard that from four people and they all said tin."
+        ]
+      },
       {
         "ifFlags": [
           "tarin_at_sanctum_after"
@@ -576,6 +659,15 @@
     "tarin_word_hall": [
       {
         "ifFlags": [
+          "tarin_at_aftermath"
+        ],
+        "lines": [
+          "Eight, and he has not been in a Hall since. He has been in a registry.",
+          "Keeper says that is the right way round and would not say another word about it."
+        ]
+      },
+      {
+        "ifFlags": [
           "tarin_at_nightafter"
         ],
         "lines": [
@@ -654,6 +746,15 @@
     "tarin_word_clinic": [
       {
         "ifFlags": [
+          "tarin_at_aftermath"
+        ],
+        "lines": [
+          "Your friend came through here on his way west with everything he owns on his back and nothing wrong with him.",
+          "Would not sit down. Asked us how we were, all six of us, by name, and then went."
+        ]
+      },
+      {
+        "ifFlags": [
           "tarin_at_nightafter"
         ],
         "lines": [
@@ -713,6 +814,15 @@
       }
     ],
     "tarin_word_shop": [
+      {
+        "ifFlags": [
+          "tarin_at_aftermath"
+        ],
+        "lines": [
+          "Bought a coat. A proper one, for a proper winter, four sizes past what he needs.",
+          "Said he was tired of being cold in front of people. Then he laughed at himself and paid."
+        ]
+      },
       {
         "ifFlags": [
           "tarin_at_nightafter"
@@ -783,6 +893,16 @@
     "foundation_word_hauler": [
       {
         "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Same crates, other way. Eleven loads off that coast this week and every one of them empty going out.",
+          "They pay the same. New girl signs the dockets and she reads them before she signs, which is new.",
+          "I am not brave and I am not clever. I am still hauling for them. Make of that what you like."
+        ]
+      },
+      {
+        "ifFlags": [
           "ridge_convoy_seen_2"
         ],
         "lines": [
@@ -798,6 +918,16 @@
       }
     ],
     "foundation_word_liaison": [
+      {
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Coastal survey. Soundings. And everything on this table goes to the Press on Friday whether anyone wants it or not.",
+          "That is the rule now. It came down from a seventeen-year-old and nobody has argued with it yet.",
+          "Storm cards in the crate. Take two. They are still free and I am told they always will be."
+        ]
+      },
       {
         "ifFlags": [
           "lyra_doubt"
@@ -824,6 +954,16 @@
       }
     ],
     "coast_word_veyl": [
+      {
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Three sheets of paper on the wharf with his own name at the bottom of every one, and he read them out himself.",
+          "He did not do it. He found out, and he wrote down that he was doing nothing about it, and he filed the paper.",
+          "Half this coast owes that man a roof. I have not worked out where to put that and I have stopped trying."
+        ]
+      },
       {
         "ifFlags": [
           "act4_done"
@@ -860,5 +1000,6 @@
       }
     ]
   },
+  "_storm_peak": "STAGE 6, THE CATASTROPHE. The second and worse tier of the same weather, gated on the flag neravoss_restrained -- set the moment the restraints go onto Neravoss, by data/events/common.json/storm_peak_begin, which exists so the agent who owns that moment can fire the whole region off one line without knowing this file. Built exactly the way _storm below says a later tier should be built: a block ABOVE the act4_done block on its own flag, nothing underneath touched, and an unset flag falls straight through to the Act 5 tier, so it degrades safely if that moment is never wired.\n\nNINETEEN ENTRIES, across nine places, against Act 5's thirty-seven. FEWER ON PURPOSE. A region where everybody is shouting about the storm is melodrama, and the frightening version is quiet: a harbourmaster counting people out of a city in fifties instead of boats, a child leaving a bedroom door open so it cannot bang, a village passing the last foot of water up a bank in buckets. Every one of them steps an entry that already stepped once in Act 5, so the escalation is a callback -- the same person, the same number, one turn worse -- and NOTHING that already ends well was touched. The Tideglass gaugeman keeping his sheet for somebody, the Mirehaven child's going-to-cry voice, the Aureline sitter wanting it to go back to being a history lesson, the Marlbeck elder finding out what he worries about: all left alone, because those are already the last word.\n\nOnly one entry names the sea as a cause and none of them names Meridian. The world notices weather. The coast is being emptied, the inland towns are receiving it, and Hearthmere -- furthest from the sea, still safe -- has forty people on the green who walked until the road stopped going up.\n\nTHE AFTERMATH IS A THIRD TIER AND IS NOT THIS. Once Neravoss is calmed these lines are wrong: they are written in the present tense of a region still in it. THAT TIER NOW EXISTS AND IS GATED ON act6_done -- added above these blocks, in all nineteen entries, by the agent who owns the aftermath, exactly the way this tier sits above Act 5 and with nothing below it edited. The ladder in every one of the nineteen now reads act6_done > neravoss_restrained > act4_done > the original, first match wins, and a fifth tier would go on top the same way. THIS FILE MADE NO MAP EDITS AND NO VISIBLE FLOODING. MapData has no flag-gated tiles or collision -- only NPCs carry requiresFlag/hiddenIfFlag -- so a flooded tile would be flooded in Act 1 as well, and a flooded collision tile could shut a road a player still needs. If Stage 6 wants water on a coastal map it has to be a second map or a flag-gated NPC, not a tile.",
   "_storm": "ACT 5, THE WEATHER. Canon: once Meridian begin waking the ancient systems the weather turns across the whole region and NPC dialogue changes with it. The gate for every one of those variants, in this file and in the ten settlement files, is the flag act4_done -- the one the theft sets as the player walks out of the Aureline square, which is exactly the moment Meridian have the Tideheart and start. No new flag was invented and no engine change was needed: registry.lines already resolves ifFlags, first match wins, so each storm block sits at the TOP of its entry's variant list and the pre-storm lines stay underneath untouched. If a later beat wants a second, worse tier, add a block above the act4_done one on its own flag -- an unset flag simply falls through to this tier, so it degrades safely. RESTRAINT IS THE POINT: roughly two or three people per settlement changed, never a whole town, and several of the strongest lines (Maben's law in Hearthmere, the Tideglass old hand's \"busy is what a city looks like just before something happens to it\", the Mirehaven harbourmaster telling you not to lean on anything you did not test) were deliberately LEFT ALONE, because they land harder unchanged. Ordering is carried by content rather than by flags: the coast is frightened, the inland towns are puzzled, and Hearthmere hears it from somebody's cousin. Nobody anywhere blames Meridian -- the world notices weather, not a cause."
 }

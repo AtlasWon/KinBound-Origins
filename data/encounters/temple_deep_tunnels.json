@@ -1,0 +1,59 @@
+{
+  "mapId": "temple_deep_tunnels",
+  "$comment": "THE DROWNED APPROACH. Eight slots, and this table was RETUNED TWICE after it\nwas measured, because the first cut of it was quietly the hardest patch of\nwild Kin in the game.\n\nWHERE IT FIRES, AND WHY THAT IS THE DESIGN. The engine rolls an encounter on\nany tile whose terrain declares one, and on this map exactly one character\ndoes: W. Aurelian floor does not, shallow water does not, the quay does not.\nSo the player decides their own exposure by deciding whether to be in the\nwater -- the landing hall, the quay lip, the dais in the middle of the nave\nand all four rock pockets are safe ground, and the swim between them is not.\nThat matters more here than on any route in the game, because the hardest\nbattle in the story is two floors north of this room, and a player who arrives\nat it worn down has been robbed by a corridor rather than beaten by a\ncommander.\n\nRATE 80 RATHER THAN THE USUAL 150, FOR THE SAME REASON. The nave is about\ntwenty rows of open water and the pockets are a detour off it; at the standard\nrate a player going for all four rewards fights nine or ten times to get them,\nwhich turns the payoff of a brand new field art into a toll. Eighty makes the\ncrossing roughly a coin flip and the full circuit about four fights.\n\nMEASURED, AND THE FIRST CUT FAILED. tests/helpers/simulate.mjs, novice tier,\nlone lead, 400 runs per row, worst case in brackets is the top of every band.\n\n  first cut: six Kin, every one of them Tide-typed, at levels 41-45\n    L45   flame 45% [39%]   verdant 94% [87%]   tide 74% [67%]\n  route_10, the last road before the eighth Hall, for the same player\n    L45   flame 86%         verdant  94%        tide 84%\n\nA Flame player would have arrived at the climax having lost one wild fight in\ntwo on the way in, on a map whose entire job is to hand them a new field art\nand let them enjoy using it -- and the player has asked four times for an\neasier game. Half the reference is not a difficulty choice, it is a bug with\na plausible excuse.\n\nTWO THINGS FIXED IT. The band came down to 38-42, at or just under route_10s,\nbecause this is where the player arrives rather than somewhere they grind to.\nAnd the Tide monoculture was broken, which was the real fault: every Kin in\nthe first cut carried Tide, Tide is 2x into Flame, and no amount of reweighting\nsix Tide Kin against each other changes what all six of them hit a Flame lead\nwith. tidewrack -- which resists Flame four ways to one and was the HEAVIEST\nslot at twenty per cent -- is down to five, and two Kin a Flame lead can\nactually hit went in at twenty and fourteen.\n\n  silthopper  terra/chitin, a tidal-flats native, and a thing that crosses open\n              mud without walking belongs on a drowned floor.\n  lantric     spark/iron, and it does not live in the sea at all. It is here\n              for a reason written on the wall of the east arm: there is a new\n              armoured sixty-conductor trunk running through this ruin carrying\n              more current than Aureline draws on a winter night, and lantric is\n              the Kin that hangs itself on things and burns steady for eleven\n              hours. It is the only encounter slot in this game placed by an\n              electrical fault.\n\nAFTER, same method:\n    L44   flame 70% [61%]   verdant 96% [90%]   tide 93% [85%]\n    L45   flame 74% [66%]   verdant 97% [95%]   tide 95% [89%]\n    L46   flame 75% [69%]   verdant 98% [97%]   tide 95% [91%]\n\nFlame still sits about twelve points under the reference road and that is left\nalone deliberately: this is the ocean act, Tide is 2x into Flame, and a type\nchart that stops applying at the climax is not a type chart. Twelve points off\nis the chart working. Half is the table being badly built.\n\nEIGHT SLOTS, SEVEN TYPE PAIRS, and no two of the top four sharing a weakness.\nmaelstrix is the rare one at five per cent and the only fully evolved head of a\nline down here; meeting one should be an event.",
+  "methods": {
+    "tallGrass": {
+      "rate": 80,
+      "slots": [
+        {
+          "species": "brinewisp",
+          "minLevel": 38,
+          "maxLevel": 41,
+          "weight": 14
+        },
+        {
+          "species": "anchorling",
+          "minLevel": 38,
+          "maxLevel": 41,
+          "weight": 20
+        },
+        {
+          "species": "silthopper",
+          "minLevel": 38,
+          "maxLevel": 41,
+          "weight": 20
+        },
+        {
+          "species": "clatterclaw",
+          "minLevel": 38,
+          "maxLevel": 41,
+          "weight": 14
+        },
+        {
+          "species": "lantric",
+          "minLevel": 39,
+          "maxLevel": 42,
+          "weight": 14
+        },
+        {
+          "species": "deeplum",
+          "minLevel": 39,
+          "maxLevel": 42,
+          "weight": 8
+        },
+        {
+          "species": "tidewrack",
+          "minLevel": 38,
+          "maxLevel": 41,
+          "weight": 5
+        },
+        {
+          "species": "maelstrix",
+          "minLevel": 40,
+          "maxLevel": 42,
+          "weight": 5
+        }
+      ]
+    }
+  }
+}

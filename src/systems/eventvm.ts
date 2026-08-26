@@ -42,6 +42,8 @@ export interface EventHost {
   openStorage(): void;
   giveKin(species: string, level: number, nickname: string | undefined, done: () => void): void;
   starterChoice(options: string[], done: (chosen: string | null) => void): void;
+  /** Run a bespoke set-piece scene by name and call back when it is over. */
+  setPiece(id: string, done: () => void): void;
   say(lines: string[], who: string | undefined, done: () => void): void;
   ask(lines: string[], done: (yes: boolean) => void): void;
   choice(lines: string[], labels: string[], done: (index: number) => void): void;
@@ -171,6 +173,11 @@ export class EventRunner {
       case 'starterChoice': {
         const done = this.block();
         this.host.starterChoice(a.options, () => done());
+        break;
+      }
+      case 'setPiece': {
+        const done = this.block();
+        this.host.setPiece(a.id, done);
         break;
       }
 

@@ -1,0 +1,222 @@
+{
+  "id": "temple_deep_tunnels",
+  "name": "Temple of the Deep",
+  "displayName": "THE DROWNED APPROACH",
+  "music": "station",
+  "battleBackdrop": "cave",
+  "indoor": true,
+  "encounterTable": "temple_deep_tunnels",
+  "_plan": "THE SWIM GATE, AND THE ONLY PLACE IN THE GAME THAT GRANTS IT.\n\nThe engine has had deep water (collision 8) since the first stage, three\nterrain characters use it, and eight earlier maps have a reward sitting on\nan islet behind it -- and until this room nothing anywhere granted `swim`.\nThis is the ocean act, so this is where it belongs, and it is granted here\nrather than in the power station or the chamber because this is the first\nroom of the lower temple and a player cannot reach either of the others\nwithout crossing it.\n\nTHE SHAPE IS A NAVE. Dry hall from the landing at the bottom, a quay lip at\ny25, ONE row of shallow water at y24, and then twenty rows of open sea with\ntwo files of drowned columns standing in it. The single band of shallow is\nload-bearing: Wade -- which the player has had since the Tide Crest -- takes\nthem to the edge of the drop and not one tile further, so they stand in the\nwater they have and look at the water they have not got. Nothing else in the\nroom has to explain the gate.\n\nMARIT VANE GRANTS IT AND THE SCENE IS UNMISSABLE. She is the Tide\nHallkeeper: she gave the player Wade in Tideglass in Act 2 and Hallkeepers\nare on this island because canon puts them on the operation. The grant is a\nSTEP script (tdt_swim, data/events/temple_deep_tunnels.json) on the whole\nwidth of the quay lip at y25, not an interact -- an art nobody can walk past\nis an art nobody can miss, and the quay is the only way north.\n\nTHE FOUR POCKETS ARE OFF THE SWIM ON PURPOSE. West chapel (3-4,15-17), east\nchapel (25-26,20-22) and the two transept arm ends are cut out of solid rock\nwith nothing but water touching them, so the first thing the player does\nwith the new art is use it to reach something. The dais at 13-16,17-18 is\nthe resting stone in the middle of the nave.\n\nENCOUNTERS ARE IN THE WATER AND NOWHERE ELSE. Deep water declares an\nencounter and Aurelian floor does not, so the player controls their own\nexposure by choosing whether to be swimming -- which matters more here than\nanywhere, because the hardest battle in the game is two rooms north. The\nrate is 80/1000 rather than the usual 150 for the same reason.\n\nTHE JOINS, BOTH ENDS, SO NOBODY HAS TO GUESS:\n  IN   temple_deep_ruins 19,34 and 20,34 land the player on 14,34 / 15,34\n       of this map, which is dry Aurelian floor in the middle of the landing\n       hall. That is the ruins author's warp and it already exists.\n  BACK 14,35 and 15,35 here go up to temple_deep_ruins 19,33 / 20,33, the\n       two floor tiles directly above their own stair head.\n  ON   14,1 and 15,1 here go to temple_deep_power_stage 16,24 / 17,24.\nChain in full: temple_deep -> temple_deep_ruins -> HERE ->\ntemple_deep_power_stage -> temple_deep_power (the climax) ->\ntemple_deep_heart (Neravoss).",
+  "rows": [
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΘΘΩΩΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩ≈≈ΩΩΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩ~~~~ΩΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩWWWWWWWWΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩWWWWWWWWΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩWWWWWWWWΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩWWWWWWWWΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩWWWWWWWWWWWWWWWWΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩWWWWWWWWWWWWWWWWΩΩΩΩΩΩΩ",
+    "ΩΩΩWWWWWWWWWWWWWWWWWWWWWWWWΩΩΩ",
+    "ΩΘΘWWWΩWWWΩWWWWWWWWΩWWWΩWWWΘΘΩ",
+    "ΩΘΘWWWWWWWWWWWWWWWWWWWWWWWWΘΘΩ",
+    "ΩΩΩWWWWWWWWWWWWWWWWWWWWWWWWΩΩΩ",
+    "ΩΩΩΩΩWWWWWWWWWWWWWWWWWWWWΩΩΩΩΩ",
+    "ΩΩΩΘΘWWWWWWWWWWWWWWWWWWWWΩΩΩΩΩ",
+    "ΩΩΩΘΘWWWΩWWWWWWWWWWWWΩWWWΩΩΩΩΩ",
+    "ΩΩΩΘΘWWWWWWWWθΘΘΘWWWWWWWWΩΩΩΩΩ",
+    "ΩΩΩΩΩWWWWWWWΩΘΘΘθWWWWWWWWΩΩΩΩΩ",
+    "ΩΩΩΩΩWWWΩWWWWWWWWWWWWΩWWWΩΩΩΩΩ",
+    "ΩΩΩΩΩWWWWWWWWWWWWWWWWWWWWΘΘΩΩΩ",
+    "ΩΩΩΩΩWWWWWWWWWWWWWWWWWWWWΘΘΩΩΩ",
+    "ΩΩΩΩΩWWWΩWWWWWWWWWWWWΩWWWΘΘΩΩΩ",
+    "ΩΩΩΩΩWWWWWWWWWWWWWWWWWWWWΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩ~~~~~~~~~~~~~~ΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΘΘΘΘΘΘΘΘΘΘΘΘΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΘΦΘΘΘΘΘΘΘΘΘΘΘΘΘΘΦΘΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΘΘΘΘ≡ΘΘ≡ΘΘ≡ΘΘ≡ΘΘΘΘΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΞΘΘΘ≡ΘΘ≡ΘΘ≡ΘΘ≡ΘΘΘΞΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΞΘΘΘ≡ΘΘ≡ΘΘ≡ΘΘ≡ΘΘΘΞΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΘΘΘΘ≡ΘΘ≡ΘΘ≡ΘΘ≡$ΘΘΘΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΞΘΘΘ≡ΘΘ≡ΘΘ≡ΘΘ≡EΘΘΞΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΞΘΘΘ≡ΘΘ≡ΘΘ≡ΘΘ≡Θ¾ΘΞΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΘΘ¾¾≡ΘΘ≡ΘΘ≡ΘΘ≡Θ¾ΘΘΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΘΘ¾Θ≡ΘΘ≡ΘΘ≡ΘΘ≡ΘΘΘΘΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩSSΩΩΩΩΩΩΩΩΩΩΩΩΩΩ"
+  ],
+  "warps": [
+    {
+      "x": 14,
+      "y": 35,
+      "toMap": "temple_deep_ruins",
+      "toX": 19,
+      "toY": 33,
+      "facing": "up",
+      "style": "stairs"
+    },
+    {
+      "x": 15,
+      "y": 35,
+      "toMap": "temple_deep_ruins",
+      "toX": 20,
+      "toY": 33,
+      "facing": "up",
+      "style": "stairs"
+    },
+    {
+      "x": 14,
+      "y": 1,
+      "toMap": "temple_deep_power_stage",
+      "toX": 16,
+      "toY": 24,
+      "facing": "up",
+      "style": "stairs"
+    },
+    {
+      "x": 15,
+      "y": 1,
+      "toMap": "temple_deep_power_stage",
+      "toX": 17,
+      "toY": 24,
+      "facing": "up",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tdt_marit",
+      "sprite": "elder",
+      "x": 11,
+      "y": 26,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tdt_marit"
+    },
+    {
+      "id": "tdt_hand",
+      "sprite": "sailor",
+      "x": 19,
+      "y": 28,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tdt_hand"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 35,
+      "text": [
+        "Chalk on the wall of the stair, put there this morning by somebody quick.",
+        "FOUR DOWN. WATER AT THE BOTTOM. NOBODY PAST THE LIP.",
+        "Under it, in a different hand and a worse temper: THEY WENT PAST THE LIP."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 5,
+      "y": 30,
+      "text": [
+        "The wall is cut floor to ceiling with the same three marks, over and over.",
+        "You have seen this row twice: under a volcano, and under a marsh.",
+        "It is the same hand. It went a very long way."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 24,
+      "y": 30,
+      "text": [
+        "A tide line across the columns at the height of your shoulder.",
+        "Above it the stone is cut and perfect. Below it, three thousand years.",
+        "The line is level the whole length of the hall. The sea took its time."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 25,
+      "text": [
+        "The floor stops here in a clean cut edge, and the sea starts.",
+        "This is not the ruin of a quay. It is a quay. They built it to stop here.",
+        "Whatever the rest of this hall is, it was always meant to be wet."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 18,
+      "text": [
+        "The stump of a column, and a platform beside it a hand under the water.",
+        "The middle of the platform is worn hollow, the way a doorstep wears.",
+        "People stood out here often enough to dish the stone."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 0,
+      "y": 11,
+      "text": [
+        "The west arm ends in a room the sea has been in for a very long time.",
+        "No silt. No weed. Something keeps the current running through it.",
+        "Three thousand years, and this building is still doing its job."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 29,
+      "y": 11,
+      "text": [
+        "A cable comes down through the roof of the east arm and turns north.",
+        "It is new, it is armoured, and it is thicker than your arm.",
+        "It does not belong to the people who cut this hall."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 3,
+      "y": 16,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_tdt_west_chapel"
+    },
+    {
+      "kind": "item",
+      "x": 26,
+      "y": 21,
+      "item": "deep_vessel",
+      "quantity": 3,
+      "flag": "item_tdt_east_chapel"
+    },
+    {
+      "kind": "item",
+      "x": 1,
+      "y": 11,
+      "item": "full_rouse",
+      "quantity": 1,
+      "flag": "item_tdt_west_arm"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 28,
+      "y": 12,
+      "item": "full_heal",
+      "quantity": 2,
+      "flag": "item_tdt_east_arm"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 15,
+      "y": 18,
+      "item": "great_potion",
+      "quantity": 2,
+      "flag": "item_tdt_dais"
+    }
+  ]
+}

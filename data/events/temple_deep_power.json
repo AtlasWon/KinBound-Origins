@@ -1,0 +1,1767 @@
+[
+  {
+    "id": "tdp_enter",
+    "_note": "STAGE 6, THE CLIMAX OF THE STORY, ON THE CONTROL RING. This file is the whole of it: Cassian waking Neravoss, the nine collars, the storm, Commander Kell overriding him, the hardest battle in the game, and the Tideheart coming back.\n\nTHIS SCRIPT ONLY PUTS THE CAST ON THE PLATE, and it does it on map load rather than at the scene, so that a player coming up the gangway sees four people standing out on the deck before they set foot on it. It has no onceFlag, because runtime-spawned NPCs do not survive a map change and the player can still go back down to the stage room; it branches instead, so the deck is correct at every stage of the act.",
+    "trigger": "enter",
+    "map": "temple_deep_power",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
+          "flag": "tdp_seen"
+        },
+        "then": [
+          {
+            "kind": "call",
+            "script": "tdp_cast_after"
+          },
+          {
+            "kind": "end"
+          }
+        ]
+      },
+      {
+        "kind": "call",
+        "script": "tdp_cast"
+      }
+    ]
+  },
+  {
+    "id": "tdp_start",
+    "_note": "WHERE THE ACT BEGINS: THE ONE BAND OF PLATE NOBODY CAN GET NORTH OF WITHOUT CROSSING.\n\nRow 9 is open from x3 to x19 apart from two stanchions, and movement is four-directional, so a player who ends up anywhere north of it -- including at the way out in the north wall -- has stepped on one of these fifteen tiles. Every one of them is checked against the map: 5,9 and 17,9 are solid and are not listed.\n\nWHY ROW 9 AND NOT THE GANGWAY HEAD. The plate is fifteen rows deep and the camera is ten, so nowhere on it shows the whole cast at 1x. Row 9 is the band where Veyl at 10,7 is two tiles away, Lyra at 12,10 is one, Tarin at 11,13 is four -- and KELL AT 17,3 IS OFF THE SIDE OF THE SCREEN, which is exactly right, because 'at the far end of the plate, nobody moves' is said about her before she has ever been seen and beat 7 is the first time in the game she crosses a room. Firing at the gangway head instead would have put the player seven rows south of Veyl with nobody in frame; the first draft solved that by walking the player north five tiles and THAT DOES NOT WORK -- see the note on tdp_fight about moving the player from a script.\n\nA player who comes up the west or east rim crosses row 9 out at x3 or x19 and gets the scene with the cast at the edge of frame. That is the price of a mandatory band on an open deck, it is only reachable by deliberately walking the rail, and it costs framing rather than correctness.\n\nIt sets tdp_seen itself rather than using onceFlag, because tdp_gate reads that flag to tell 'has not started' from 'started and lost'.",
+    "trigger": "step",
+    "map": "temple_deep_power",
+    "at": [
+      {
+        "x": 3,
+        "y": 9
+      },
+      {
+        "x": 4,
+        "y": 9
+      },
+      {
+        "x": 6,
+        "y": 9
+      },
+      {
+        "x": 7,
+        "y": 9
+      },
+      {
+        "x": 8,
+        "y": 9
+      },
+      {
+        "x": 9,
+        "y": 9
+      },
+      {
+        "x": 10,
+        "y": 9
+      },
+      {
+        "x": 11,
+        "y": 9
+      },
+      {
+        "x": 12,
+        "y": 9
+      },
+      {
+        "x": 13,
+        "y": 9
+      },
+      {
+        "x": 14,
+        "y": 9
+      },
+      {
+        "x": 15,
+        "y": 9
+      },
+      {
+        "x": 16,
+        "y": 9
+      },
+      {
+        "x": 18,
+        "y": 9
+      },
+      {
+        "x": 19,
+        "y": 9
+      }
+    ],
+    "actions": [
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
+          "flag": "tdp_seen"
+        },
+        "then": [
+          {
+            "kind": "end"
+          }
+        ]
+      },
+      {
+        "kind": "setFlag",
+        "flag": "tdp_seen"
+      },
+      {
+        "kind": "call",
+        "script": "tdp_open"
+      }
+    ]
+  },
+  {
+    "id": "tdp_gate",
+    "_note": "THE DOOR GUARD, AND IT IS LOAD-BEARING. READ THIS BEFORE MOVING ANYTHING.\n\nWHERE IT FIRES. 11,1 and 12,1 are the only two tiles on this map from which the hole cut through the north wall of the shaft -- the warp at 11,0 / 12,0 into temple_deep_heart -- can be reached. Row 1 is rail and open sea either side of them.\n\nAND IT HAS NO onceFlag, WHICH IS DELIBERATE AND IS HALF THE FIX FOR A REAL HOLE. OverworldScene.onEnterTile takes the warp and returns BEFORE it ever looks at step scripts, so a warp cannot be guarded by a script standing on it, and MapWarp has no flag condition -- a warp cannot be locked from data at all. If this burned a once flag, a player who lost the fight could walk one tile north with tideheart_taken still set and the whole act unresolved, and temple_deep_heart's encounter would fire on its hasCrest alternative and run as though none of this had happened.\n\nSO THERE IS NO WAY TO DECLINE HERE. Walk at the way out with the act unfinished and the fight starts, full heal and all. The voluntary version of the offer, with a yes and a no, is tdp_retry on Kell's own NPC, four tiles south; this is the involuntary one, because Kell is standing on the only way off this plate and she is not a woman who steps aside. THE OTHER HALF OF THE FIX is in tdp_fight: a loss puts the player back down the deck rather than leaving them on this tile, because nothing here can move them off it -- see that note.\n\nThe first branch also starts the act if it somehow has not started. tdp_start makes that unreachable, since row 9 cannot be crossed without firing it; it is here because the cost of being wrong about that is the climax of the game not happening.",
+    "trigger": "step",
+    "map": "temple_deep_power",
+    "at": [
+      {
+        "x": 11,
+        "y": 1
+      },
+      {
+        "x": 12,
+        "y": 1
+      }
+    ],
+    "actions": [
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
+          "flag": "td_power_done"
+        },
+        "then": [
+          {
+            "kind": "end"
+          }
+        ]
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
+          "flag": "tdp_seen",
+          "value": false
+        },
+        "then": [
+          {
+            "kind": "setFlag",
+            "flag": "tdp_seen"
+          },
+          {
+            "kind": "call",
+            "script": "tdp_open"
+          },
+          {
+            "kind": "end"
+          }
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Kell is standing on the only way off this plate, and she has not moved since you fell.",
+          "She does not say anything. She does not have to."
+        ]
+      },
+      {
+        "kind": "call",
+        "script": "tdp_fight"
+      }
+    ]
+  },
+  {
+    "id": "tdp_open",
+    "_note": "CANON SECTIONS 53 TO 56, AND THE ORDER IS THE WHOLE THING. Every beat is in the sequence canon gives and none may be swapped:\n  1. Cassian uses the Tideheart. IT WORKS. The ocean goes unnaturally calm.\n  2. Neravoss wakes. It is enormous. Meridian close the energy restraints round it.\n  3. It panics, and storms start forming immediately -- and THE PLAYER RECOGNISES THIS,\n     because they watched it happen once already in the Mirehaven Sanctum.\n  4. Cassian believes the system can still work. HE IS WRONG AND HE IS NOT LYING.\n  5. The storm grows. Tarin evacuates Meridian's own workers. Lyra goes for her father.\n  6. Cassian realises he has rebuilt the Great Deluge. This is the moment he breaks.\n  7. The commander refuses to stop and overrides him. The player fights her.\nBeats 8 and 9 are tdp_aftermath.\n\nTHE FIVE STEPS AT THE TOP ARE NOT DECORATION. The plate is fifteen rows deep and the camera is ten, so no position on it shows the whole cast. The player is walked from the gangway head to row 9, which is the one band where Veyl at 10,7, Lyra at 12,10 and Tarin at 11,13 are all in frame at 1x and KELL AT 17,3 IS NOT -- which is exactly right, because 'at the far end of the deck, nobody moves' is said about her before she is ever seen, and beat 7 is the first time in the whole game she crosses a room. Columns 9 and 10 are clear of plate furniture and of every actor for all five tiles; the two entry tiles are the only two the gangway reaches, so those are the only two columns the walk ever uses.\n\nTHE ROOM DOES THE WORK, AND SOMEBODY ELSE BUILT IT. A steel disc dropped down a three thousand year old shaft, open sea round the lip of it, and a very long way underneath. So beats 1 to 3 are played entirely through that water: it goes flat, something crosses the shaft below the plate, and then it comes up over the deck. AND NERAVOSS IS NEVER SEEN WHOLE HERE -- a piece of it goes under a steel floor for eleven seconds, which is worse than a full picture and leaves the reveal where it belongs, one room north, in the chamber built to be too big to see at once.\n\nTHE THING THIS SCENE HAS TO EARN IS BEAT 3, and it does it by refusing to explain. The player has already seen this picture -- rings on a sea floor, a shape made not to move, the lights going blue to white, then nothing in the frame but water -- in a dry room under a marsh, with Kell beside them writing that the circle was too tight. So nobody narrates the parallel. The pictures are repeated and Tarin says two words. The rest is the player's.\n\nAND BEAT 6 PAYS IT BACK IN CASSIAN'S OWN MOUTH. What breaks him is not the storm; it is remembering that he read Kell's finding from the Sanctum and INITIALLED it. 'The circle was too tight' is her sentence, word for word, from mirehaven_sanctum_heart.json/msh_record, and he says it out loud three acts later standing inside the answer.\n\nCASSIAN IS NOT A VILLAIN IN THIS SCENE. CANON.md is explicit and the capital scene fixed his register: he denies nothing, never raises his voice, concedes what is conceded, and is genuinely, decently WRONG. When he says the ring will hold, he believes it -- he is reading instruments and the instruments say four minutes. Which is why the moment he stops is the moment he looks at the water instead of at them.\n\nKELL IS NOT A RAVING VILLAIN EITHER. She is the woman from the marsh: courteous, exact, certain. From where she stands a man has lost his nerve four minutes from the end of eleven years, which happens to people, and handling it is what a commander is for. Every word she says is defensible, and that is what makes it frightening.\n\nJOINS. What this act needs from other people, and what it publishes:\n  NEEDS  data/maps/temple_deep_power.json must never declare `weather`. Its own plan says\n         so and it currently does not. Battle weather is read straight off map.weather,\n         and rain / storm / heavyRain is 1.5x on Kell's Tide half and 0.5x on a Flame\n         player -- measured at 26 points off the Cinderpaw column. Every eastreach map\n         declares storm, so this is a live trap and not a hypothetical one.\n  NEEDS  temple_deep_heart's encounter to fire only AFTER this act. Its `when` is\n         `any [neravoss_freed, hasCrest 8]`; the crest half would let a player who never\n         met Kell walk into the chamber. tdp_gate closes that from this side, but the\n         belt-and-braces fix is one clause in that file: gate on `neravoss_freed` alone.\n  GIVES  neravoss_restrained, at beat 2, by calling common.json/storm_peak_begin -- which\n         exists for exactly this and steps nineteen conversations across nine settlements.\n  GIVES  neravoss_freed, at beat 8, when the ring is destroyed.\n  GIVES  td_kell_beaten and td_power_done, last, after the object is in the bag.\n  GIVES  the Tideheart itself: giveItem plus setFlag tideheart_taken false, exactly as\n         src/systems/tideheart.ts specifies. The next agent may ask hasItem and be right.\n\nWHY THE STAGING SCRIPTS ARE IN common.json. Two engine facts leave one legal place to stand. (1) Registry.loadScriptsFor only ever loads data/events/<mapId>.json and data/events/common.json, so a second file named after this map with a suffix would never load and every call into it would silently do nothing. (2) tests/content.test.js requires a script in a file NAMED AFTER A MAP to move and remove only NPCs the MAP lists -- and this act spawns its own cast rather than borrowing the ring's people. So everything that MOVES or REMOVES an actor is in common.json as tdp_stage_storm, tdp_stage_override and tdp_stage_handback, which is exactly where and why Act 4 put act4_veyl_exit.",
+    "trigger": "call",
+    "actions": [
+      {
+        "kind": "face",
+        "who": "player",
+        "dir": "up"
+      },
+      {
+        "kind": "face",
+        "who": "player",
+        "dir": "up"
+      },
+      {
+        "kind": "wait",
+        "frames": 18
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "A steel plate the size of a market square, hung in a shaft cut three thousand years ago.",
+          "There is no floor past the rail. There is sea, and it goes down a very long way."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Cassian Veyl is at the console in the middle of the plate with his back to you."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "{name}. His hand.",
+          "He has it out of the case."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 12
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "I have known you were on this island since the boat.",
+          "Nobody is going to stop you and nobody is going to move you back."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "Stand where you can see it properly. You have earned that much off me."
+        ]
+      },
+      {
+        "_note": "ASK hasItem, NEVER ASSUME -- src/systems/tideheart.ts says so twice and Act 4's own note says it again. Meridian took the object in the capital and should still have it, but seven authors are building this stage at once and exactly one of them handing it back early would otherwise leave Veyl holding a thing that is in the player's bag. If that happens the theft is done here instead, in four boxes, and everything downstream is unchanged. In the normal game this branch never runs.",
+        "kind": "if",
+        "cond": {
+          "kind": "hasItem",
+          "item": "tideheart"
+        },
+        "then": [
+          {
+            "kind": "say",
+            "lines": [
+              "He turns round. What is in his hand is a case with a shaped hollow in it, and it is empty."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "DR. VEYL",
+            "lines": [
+              "Ah.",
+              "Then we do the worst two minutes of this evening first rather than last."
+            ]
+          },
+          {
+            "kind": "sfx",
+            "sound": "denied"
+          },
+          {
+            "kind": "takeItem",
+            "item": "tideheart",
+            "count": 1
+          },
+          {
+            "kind": "setFlag",
+            "flag": "tideheart_taken"
+          },
+          {
+            "kind": "say",
+            "lines": [
+              "Kell crosses the plate, takes your wrist the way a nurse takes a wrist,",
+              "and is not rough about any part of it."
+            ]
+          },
+          {
+            "kind": "wait",
+            "frames": 14
+          }
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 12
+      },
+      {
+        "kind": "choice",
+        "lines": [
+          "He is not enjoying this. He has never once enjoyed any part of this."
+        ],
+        "options": [
+          {
+            "label": "Put it down.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "DR. VEYL",
+                "lines": [
+                  "No.",
+                  "I have been eleven years arriving here. There is nothing left in me to think with."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "You do not know what it does.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "DR. VEYL",
+                "lines": [
+                  "No. Neither did he, and he still carried it home inside a coat.",
+                  "One of us was always going to be the one who found out."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Say nothing.",
+            "then": [
+              {
+                "kind": "say",
+                "lines": [
+                  "You do not give him anything.",
+                  "He waits for it, and when it does not come he looks briefly, genuinely sorry."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "_note": "BEAT 1. IT WORKS, AND THE PROOF IS SILENCE. Music off, no light, no noise -- and then the sea round the whole lip of the plate stops. Canon is emphatic that the Tideheart is not a key and not a weapon, so what it does here is the least dramatic possible thing and the most frightening: it talks, and something answers by going quiet.",
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "music",
+        "track": "stop"
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "He closes his hand round it.",
+          "There is no light and no sound and nothing happens at all."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 24
+      },
+      {
+        "kind": "sfx",
+        "sound": "fx_water"
+      },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "And then the sea round the plate stops."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 18
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Not calms. Stops.",
+          "Flat as the deck you are standing on, all the way round, out to the wall of the shaft."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "...Dad."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "It works.",
+          "Eleven years, and the first thing it does is go quiet for us."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "{name}, water does not do that.",
+          "I have lived next to water my whole life. It does not do that."
+        ]
+      },
+      {
+        "_note": "BEAT 2. IT WAKES, AND THE RESTRAINTS GO ON. It is never seen whole: eleven seconds of something crossing the shaft under a steel floor. The size is delivered by refusing to give a number and by the fact that it does not end.\n\nAND THIS IS WHERE THE REGION CHANGES. common.json/storm_peak_begin sets neravoss_restrained and steps nineteen conversations across nine settlements up a tier; that script exists precisely so this scene does not have to know which files. Called on the collars closing and not a box earlier, because the flag is named for the restraints and the whole point of the act is that the restraints are the cause.",
+        "kind": "wait",
+        "frames": 24
+      },
+      {
+        "kind": "sfx",
+        "sound": "fx_heavy"
+      },
+      {
+        "kind": "shake",
+        "frames": 40,
+        "power": 3
+      },
+      {
+        "kind": "wait",
+        "frames": 26
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Something goes under the plate."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "You do not see the front of it and you do not see the back of it.",
+          "It takes eleven seconds to cross a shaft you can throw a stone across."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "You have seen it cut into a wall in a marsh.",
+          "The wall was wrong about the size. Everything anybody has said was wrong about the size."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 22
+      },
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "Rings one to nine.",
+          "In sequence, please. There is no prize for doing it quickly."
+        ]
+      },
+      {
+        "kind": "sfx",
+        "sound": "fx_spark"
+      },
+      {
+        "kind": "shake",
+        "frames": 34,
+        "power": 4
+      },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The water under the grating goes white, and then goes on going white, nine times.",
+          "Nine collars close round it down there the way a hand closes."
+        ]
+      },
+      {
+        "kind": "call",
+        "script": "storm_peak_begin"
+      },
+      {
+        "_note": "BEAT 3. IT PANICS, AND THE PLAYER IS THE ONE WHO WORKS IT OUT. Nobody explains the parallel to the Great Deluge -- the pictures from the Sanctum record are put back on the screen in the same order and Tarin says two words. The `else` branch is for a save that somehow skipped the record: the recognition lands without the specific callback, so nothing references a scene the player never saw.",
+        "kind": "wait",
+        "frames": 24
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Every needle on the console goes over at once, and all of them the wrong way."
+        ]
+      },
+      {
+        "kind": "sfx",
+        "sound": "fx_wind"
+      },
+      {
+        "kind": "shake",
+        "frames": 30,
+        "power": 3
+      },
+      {
+        "kind": "wait",
+        "frames": 18
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The flat sea comes apart from underneath and comes up over the lip of the plate.",
+          "Meridian's own people go off the rail into the middle without being told to."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
+          "flag": "msh_record_played"
+        },
+        "then": [
+          {
+            "kind": "say",
+            "lines": [
+              "Rings on a sea floor.",
+              "A shape that has been made not to move. Blue going to white."
+            ]
+          },
+          {
+            "kind": "wait",
+            "frames": 14
+          },
+          {
+            "kind": "say",
+            "lines": [
+              "You watched all of it in a dry room under a marsh.",
+              "The last picture in it was water and nothing else."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "The Sanctum.",
+              "{name}. This is the Sanctum. We are standing in the picture."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "lines": [
+              "Rings. A shape made not to move. Blue going to white.",
+              "Something you read in a ruin stands up behind your eyes and starts shouting."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "This has happened before.",
+              "{name}, this has happened before and we know how it finished."
+            ]
+          }
+        ]
+      },
+      {
+        "_note": "BEAT 4. HE IS WRONG AND HE IS NOT LYING, and the scene says so in narration, because that distinction is the whole of his character and the player must not be able to file him as a liar. 'The sky is the thing the instruments are for' is the best sentence he has and the worst thing about him.",
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "It is frightened. That is expected, it is in the model, and it is on page four."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "Hold the ring steady and it settles inside four minutes.",
+          "It has to settle. There is nowhere in the ring for it to go."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 14
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "Dad. Go to the north wall and look up the shaft at the sky."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "I am looking at the instruments.",
+          "The sky is the thing the instruments are for."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "He is not lying to her.",
+          "That is the part you cannot get your hands round. He is not lying to her at all."
+        ]
+      },
+      {
+        "_note": "BEAT 5. THE STORM GROWS AND THE PLATE EMPTIES. Canon gives both halves and they run at once: Tarin goes down the gangway to move MERIDIAN'S people -- his whole arc in one decision, strong means protecting people, including theirs -- and Lyra crosses the deck to her father. He does not make a joke on the way out and the narration says so, because in eight years he never has not.",
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "sfx",
+        "sound": "rain"
+      },
+      {
+        "kind": "shake",
+        "frames": 24,
+        "power": 2
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Rain comes down the shaft in sheets, sideways, sixty feet under the sea floor."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 14
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Down on the stage below, Meridian's people have stopped working and started running."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Right. Their people.",
+          "Somebody has to be down there moving their people and it is not going to be them."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "{name}. I am not asking you.",
+          "I am no use to you up here and I am some use down there. Do not follow me."
+        ]
+      },
+      {
+        "kind": "call",
+        "script": "tdp_stage_storm"
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "He goes down the gangway three at a time and does not make a joke on the way.",
+          "In eight years you have never known him leave a room without making a joke."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 18
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "Dad.",
+          "Look at me. Not the board. Me."
+        ]
+      },
+      {
+        "_note": "BEAT 6. HE REALISES, AND IT IS KELL'S OWN SENTENCE THAT DOES IT. 'The circle was too tight' is word for word her finding from the Sanctum, and the horror of that scene was that being right was worth nothing. Three acts later the man who initialled it is standing inside the answer. He does not confess and he does not apologise; he corrects a technical error, out loud, and on him that is what breaking looks like.",
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "He does look at her. He genuinely does.",
+          "And because she is standing in front of the board, he ends up looking past her at the water."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 26
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Whatever is in it, he stops.",
+          "Not stops talking. Stops."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 24
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "...The circle was too tight."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 18
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "That was her finding. Out of the marsh, on one sheet, after the record.",
+          "The circle was too tight. I read it. I initialled it. I remember the pen."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "It is not the diameter.",
+          "It was never once, in three thousand years, going to be the diameter."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 22
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Nobody on this plate has ever heard him stop in the middle of a sentence before.",
+          "You can watch the certainty of four hundred people go out of a man from six feet away."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "I have built the Deluge.",
+          "I have built it out of better steel with better arithmetic and it is the same thing."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "Shut the ring down. All nine. Now, please."
+        ]
+      },
+      {
+        "_note": "BEAT 7. THE OVERRIDE. She is not seizing power and she is not enjoying herself: from where she stands a man has lost his nerve four minutes from the end of eleven years, and handling that is what a commander is for. Every word here is defensible, which is what makes it frightening. The two ring hands who look at Veyl and touch nothing are the only sign that the deck knows.\n\nThe middle option is the one the whole game has been walking towards, and she does not flinch from it, minimise it, or apologise. 'He is in the figure' is the same arithmetic Veyl used in the capital when he weighed one dead man against forty thousand -- said by the person who did the weighing, without the eleven years of not sleeping.",
+        "kind": "wait",
+        "frames": 26
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "At the far end of the plate, nobody moves."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 22
+      },
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "No."
+        ]
+      },
+      {
+        "kind": "call",
+        "script": "tdp_stage_override"
+      },
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "Doctor. You are four minutes from the end of eleven years and you have lost your nerve."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "That is not a moral failure. It is extremely common.",
+          "It is the entire reason somebody like me is standing on this deck."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "Commander, I am telling you what the record says happened to the people who---"
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "You are telling me what you feel. In a storm. At night. Having watched something enormous.",
+          "I would feel it too. I am not going to act on it and neither are you."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 18
+      },
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "Rings one to nine to full.",
+          "Anybody who reaches for a shutdown answers to me tonight and not to him."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Two of the nine ring hands look at Veyl.",
+          "Neither of them touches anything, and that is its own kind of answer."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 18
+      },
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "And you.",
+          "You have been walking at me since the marsh. Do not stand there working out how to start."
+        ]
+      },
+      {
+        "kind": "choice",
+        "lines": [
+          "She takes her coat off and folds it over the rail. She is not in a hurry about that either."
+        ],
+        "options": [
+          {
+            "label": "Stop this.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "COMMANDER KELL",
+                "lines": [
+                  "I am the only person on this plate who has not changed their mind tonight.",
+                  "That is not stubbornness. That is what the job actually is."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "You killed my father.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "COMMANDER KELL",
+                "lines": [
+                  "Yes. On my own judgement, without being asked.",
+                  "Nobody has ever made me say that out loud and I find it changes nothing."
+                ]
+              },
+              {
+                "kind": "wait",
+                "frames": 16
+              },
+              {
+                "kind": "say",
+                "who": "COMMANDER KELL",
+                "lines": [
+                  "He is in the figure. He has been in the figure every day for eleven years.",
+                  "That is not remorse. It is arithmetic, and it is the only honest thing I have for you."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Look at the water.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "COMMANDER KELL",
+                "lines": [
+                  "I have been looking at it the whole time.",
+                  "I am the only one out here who did not need to be told what it was."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "COMMANDER KELL",
+                "lines": [
+                  "It is a frightened animal in a pen, and pens hold.",
+                  "That is the whole of my case. I am aware of how it sounds from where you are."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "{name}. Do not lose."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 14
+      },
+      {
+        "kind": "call",
+        "script": "tdp_fight"
+      }
+    ]
+  },
+  {
+    "id": "tdp_cast",
+    "_note": "THE CAST, BEFORE THE SCENE. SPAWNED RATHER THAN PLACED, for the reason Act 4 gives in aureline_meridian_deep.json/ad_cast: the ring hands belong to whoever built the map and this act owns nobody else's people. spawnNpc dedupes by id, so if these four are ever placed under these ids the map's coordinates win and nothing doubles up.\n\nEVERY TILE IS THE ONE THE MAP RESERVED, EXCEPT ONE, AND THAT ONE IS FLAGGED. data/maps/temple_deep_power.json's own plan lists five tiles it keeps clear of rail, furniture and signs for this scene: 9,15 and 10,15 for the player, 10,7 Veyl, 17,3 Kell, 12,10 Lyra, 9,13 Tarin. Four of the five are used exactly as reserved.\n\n  TARIN IS AT 11,13 AND NOT AT 9,13, and that is the only disagreement in the act.\n  The player enters the plate on 9,14 or 10,14 -- the only two tiles the gangway\n  reaches -- and tdp_open then walks them five tiles north up whichever of columns 9\n  and 10 they arrived in, so that the cast is framed at 1x. 9,13 sits in the middle\n  of column 9, so a player who came up the west side of the gangway would walk\n  straight through him. 11,13 is open plate, is still at the head of the gangway,\n  and is clear of both columns. IF THAT TILE IS WANTED BACK, the fix is to move the\n  walk, not the tile: see the note on tdp_open.\n\n  VEYL   10,7, at the console in the centre, FACING UP -- back to the player, who ends\n         two tiles south of him. The player watches him work before he says a word:\n         the capital's rule, kept.\n  KELL   17,3, at the master board, seven tiles east and six north of where the player\n         stands, which at 1x means OFF SCREEN. That is deliberate. 'At the far end of\n         the plate, nobody moves' is said about her before she has ever been seen, and\n         beat 7 is the first time in the whole game she crosses a room.\n  LYRA   12,10, between the two of them and nearer her father, which is the whole of\n         her arc in a floor plan.",
+    "trigger": "call",
+    "actions": [
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "tdp_veyl",
+          "sprite": "veyl",
+          "x": 10,
+          "y": 7,
+          "facing": "up",
+          "movement": {
+            "kind": "static"
+          },
+          "script": "tdp_veyl_talk"
+        }
+      },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "tdp_kell",
+          "sprite": "meridian_commander",
+          "x": 17,
+          "y": 3,
+          "facing": "down",
+          "movement": {
+            "kind": "static"
+          },
+          "script": "tdp_kell_talk"
+        }
+      },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "tdp_lyra",
+          "sprite": "lyra",
+          "x": 12,
+          "y": 10,
+          "facing": "up",
+          "movement": {
+            "kind": "static"
+          },
+          "script": "tdp_lyra_talk"
+        }
+      },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "tdp_tarin",
+          "sprite": "rival",
+          "x": 11,
+          "y": 13,
+          "facing": "up",
+          "movement": {
+            "kind": "static"
+          },
+          "script": "tdp_tarin_talk"
+        }
+      }
+    ]
+  },
+  {
+    "id": "tdp_cast_after",
+    "_note": "THE CAST ONCE THE ACT HAS STARTED, for a player who went back down the gangway and came up again -- runtime-spawned NPCs do not survive a map change, so they have to be put back where the staging scripts left them. Three of them, and no Tarin, because he went down to the stage in beat 5 and does not come back. Kell stands at 13,9 whether she has been beaten or not: canon has her arrested in the aftermath, which is somebody else's beat, and until then she is a woman on a steel plate on an island with no way off it.",
+    "trigger": "call",
+    "actions": [
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "tdp_veyl",
+          "sprite": "veyl",
+          "x": 10,
+          "y": 7,
+          "facing": "down",
+          "movement": {
+            "kind": "static"
+          },
+          "script": "tdp_veyl_talk"
+        }
+      },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "tdp_kell",
+          "sprite": "meridian_commander",
+          "x": 13,
+          "y": 9,
+          "facing": "left",
+          "movement": {
+            "kind": "static"
+          },
+          "script": "tdp_kell_talk"
+        }
+      },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "tdp_lyra",
+          "sprite": "lyra",
+          "x": 11,
+          "y": 7,
+          "facing": "left",
+          "movement": {
+            "kind": "static"
+          },
+          "script": "tdp_lyra_talk"
+        }
+      }
+    ]
+  },
+  {
+    "id": "tdp_fight",
+    "_note": "THE FIGHT, AND EVERY WAY OUT OF IT.\n\nCALLED FROM THREE PLACES: tdp_open the first time, and tdp_retry and tdp_kell_talk every time after a loss. That is the retry mechanism and it is why this is a `call` script rather than a run of actions inside the scene.\n\nWHY NOT `whiteout`. A whiteout ends the scene and puts the player back at their respawn point, and the act cannot simply replay -- so a first loss would leave the climax of the game unreachable. `continue` plus a branch on last_battle_won is what the eighth Hall does (crownspire_hall_crown.json) and it is what the climax has to do.\n\nTHE FREE HEAL IS THE DIFFICULTY LEVER AND IT IS DELIBERATE. The player has asked four times for an easier game and this is the hardest fight in the story. So: healParty immediately before, healParty again on every loss, the fight re-armed one tile away rather than at the bottom of the temple, and the stage room one warp south for anybody who wants to prepare properly. A first-try loss costs a page of text. The bench itself is not softened past the measured numbers -- see the $comment on td_kell in data/trainers/trainers.json, which carries the win rates and the one lever for changing them.\n\nLyra's field case is the fiction for the heal and it is the right one: she came out here with three of everything because she had already worked out what tonight was going to be.\n\nTHE LOSS ENDS WITH A WARP, AND IT IS NOT DECORATION. A move action naming the player DOES NOT WORK IN THIS ENGINE: OverworldScene.update returns early while an event is running and never calls updatePlayer, so the path set by walkTo is never advanced and the script waits on a done() that can never fire -- a hard hang, measured in the running game. (data/events/eastreach_muster.json/op_board has the same line in it and will hang on the same bug.) That matters here because tdp_gate can start this fight while the player is standing on 11,1, one step from the way out, and losing has to not leave them there. A same-map warp does what the move cannot: it puts them at 11,11, mid-deck, and loadMap re-fires tdp_enter, which sees tdp_seen and puts the cast back through tdp_cast_after. It is the LAST action in the branch for that reason -- EventRunner.start replaces the stack, so anything after it would be discarded.\n\nTHE LOSS TEXT DOES NOT LET HER GLOAT. Kell's `victory` lines in trainers.json are 'sit down before you fall down / I am not going to be quick', which is in character AND a plain instruction to try again. The retry is diegetic and the player is told about it twice: by her, and by Tarin shouting up from the stage.",
+    "trigger": "call",
+    "actions": [
+      {
+        "kind": "say",
+        "lines": [
+          "Lyra puts a Foundation field case down on the grating and opens it with her foot."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "All of it. I came out here with three of everything because I already knew.",
+          "Do not be careful with it."
+        ]
+      },
+      {
+        "kind": "sfx",
+        "sound": "item_heal"
+      },
+      {
+        "kind": "healParty"
+      },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "Nine minutes of reserve on the ring. That is what this is worth to me.",
+          "Do not make me spend all of it."
+        ]
+      },
+      {
+        "kind": "music",
+        "track": "stop"
+      },
+      {
+        "kind": "battleTrainer",
+        "trainer": "td_kell",
+        "onLoss": "continue"
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "var",
+          "var": "last_battle_won",
+          "op": "==",
+          "value": 1
+        },
+        "then": [
+          {
+            "kind": "setFlag",
+            "flag": "tdp_fight_pending",
+            "value": false
+          },
+          {
+            "kind": "call",
+            "script": "tdp_aftermath"
+          }
+        ],
+        "else": [
+          {
+            "kind": "setFlag",
+            "flag": "tdp_fight_pending"
+          },
+          {
+            "kind": "wait",
+            "frames": 12
+          },
+          {
+            "kind": "say",
+            "lines": [
+              "You end up on one knee on the wet grating, and the ring does not stop for it."
+            ]
+          },
+          {
+            "kind": "wait",
+            "frames": 10
+          },
+          {
+            "kind": "say",
+            "lines": [
+              "She has already gone back to the board.",
+              "She has not looked at you once since you went down."
+            ]
+          },
+          {
+            "kind": "sfx",
+            "sound": "item_heal"
+          },
+          {
+            "kind": "healParty"
+          },
+          {
+            "kind": "say",
+            "who": "LYRA",
+            "lines": [
+              "Up. Get up.",
+              "I told you. Three of everything."
+            ]
+          },
+          {
+            "kind": "wait",
+            "frames": 12
+          },
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "{name}! I can hear you from the stage!",
+              "Go again. She is not better than you. She is only earlier."
+            ]
+          },
+          {
+            "kind": "say",
+            "lines": [
+              "Your kin are on their feet.",
+              "Kell is three steps away with her back to you, and none of that is an accident."
+            ]
+          },
+          {
+            "kind": "music",
+            "track": "resume"
+          },
+          {
+            "kind": "wait",
+            "frames": 14
+          },
+          {
+            "kind": "say",
+            "lines": [
+              "Two of her ring hands take you under the arms, walk you back down the plate,",
+              "and go straight back to their stations without a word."
+            ]
+          },
+          {
+            "kind": "warp",
+            "map": "temple_deep_power",
+            "x": 11,
+            "y": 11,
+            "facing": "up"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tdp_retry",
+    "_note": "BETWEEN ATTEMPTS. Reached from tdp_gate when the player walks at the way out, and from tdp_kell_talk when they walk up and speak to her. She does not gloat and she does not sneer -- she is doing a job with somebody bleeding on her deck, and she says the same flat thing every time, because Kell says the same flat thing every time. Declining costs nothing; the gate simply will not let anybody past her, so the only two ways off this plate are north through her or back down the gangway.",
+    "trigger": "call",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "You are back up. I did assume you would be.",
+          "Nothing about the ring has changed and nothing about me has changed."
+        ]
+      },
+      {
+        "kind": "ask",
+        "lines": [
+          "Rain is coming down the shaft sideways and neither of you has moved off this spot.",
+          "Go again?"
+        ],
+        "yes": [
+          {
+            "kind": "say",
+            "who": "COMMANDER KELL",
+            "lines": [
+              "Then stand up properly. I am not fighting somebody who is leaning."
+            ]
+          },
+          {
+            "kind": "call",
+            "script": "tdp_fight"
+          }
+        ],
+        "no": [
+          {
+            "kind": "say",
+            "who": "COMMANDER KELL",
+            "lines": [
+              "Take the minute. It costs me nine and I have nine.",
+              "There is a Foundation kit down on the stage. It does not ask who you are."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tdp_aftermath",
+    "_note": "BEATS 8 AND 9, AND THE MECHANICAL HANDOFF OUT OF THIS ACT.\n\nCANON, IN ORDER, AND THE ORDER IS THE POINT:\n  8. Beaten, the control system is destroyed -- and NOT by the player and NOT by Kell.\n     Neravoss does it, in about four seconds, and the text says it is not even trying.\n     BOND VS CONTROL in one stage direction: the thing was never the danger, the ring\n     was, and the ring was never actually holding anything.\n  9. Cassian gives the Tideheart back, says Elias understood it better than he did, and\n     helps shut the equipment down. HE IS NOT FORGIVEN. Canon is explicit that this only\n     means he has finally understood he was wrong, so nothing here absolves him: the\n     player is never offered a line that lets them say it is all right, and the last\n     thing he says is a request NOT to be comforted, because he knows he would keep it.\n\nKELL IS NOT A RAVING VILLAIN AT THE END EITHER. The first thing she does having lost is clear her own ring hands off the plate, and she counts them out loud and gets to nine. She overrode Veyl because from where she stood he had lost his nerve; she has never once been careless with people who work for her, and the end of the act must not retcon that. Canon has her arrested AFTERWARDS -- the aftermath author's beat, not this one -- so she is left standing at a dead board and nothing removes her.\n\nGIVING IT BACK IS MECHANICAL AND IT IS THE JOIN THE NEXT AGENT DEPENDS ON. src/systems/tideheart.ts documents exactly this, and it is two actions in this order:\n      giveItem tideheart          -- the object, not a flag\n      setFlag tideheart_taken false\nThe echo flags (tideheart_echo_*) are never touched, so everything the player heard in Acts 1 to 3 is still in it when it comes back. The giveItem is guarded on `not hasItem`, so a save that somehow already holds one cannot finish with two.\n\nTHE THREE FLAGS OUT, in the order they are set:\n      neravoss_freed    the ring is gone; this is the gate on temple_deep_heart's scene\n      td_kell_beaten    for anything that wants to know she has been fought\n      td_power_done     the act is over and the player is holding the Tideheart\nNothing here warps and nothing here opens a door. The way on is the hole in the north wall of the shaft that has been there all along, and the chamber past it belongs to whoever owns the climax.",
+    "trigger": "call",
+    "actions": [
+      {
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "She does not argue with it.",
+          "She puts one hand flat on the board, looks at it a moment, and takes the hand off."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 12
+      },
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "Ring hands. Off the plate. All nine of you, down the gangway, now."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "It is going to come apart and I am not having you standing on it when it does."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 14
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Nine people go past you at a run and not one of them looks over the rail.",
+          "She counts them out. She actually counts them, out loud, and gets to nine."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Nobody destroys the ring."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 14
+      },
+      {
+        "kind": "sfx",
+        "sound": "fx_quake"
+      },
+      {
+        "kind": "shake",
+        "frames": 46,
+        "power": 5
+      },
+      {
+        "kind": "wait",
+        "frames": 24
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The thing in the water does it, in about four seconds.",
+          "From the sound of it, it is not trying."
+        ]
+      },
+      {
+        "kind": "sfx",
+        "sound": "fx_spark"
+      },
+      {
+        "kind": "shake",
+        "frames": 30,
+        "power": 3
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Nine collars of white light go out one after another.",
+          "The cable comes back up the shaft in pieces and lies on the plate steaming."
+        ]
+      },
+      {
+        "kind": "setFlag",
+        "flag": "neravoss_freed"
+      },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "And then it is only weather.",
+          "Enormous, wrong, rising weather, with nothing anywhere holding it."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 18
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Cassian Veyl is down on the grating at the console doing something careful to a row of switches.",
+          "Cross-feed, then the pumps, then the mains. He is not hurrying and he is not stopping."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "This does not help what is out there.",
+          "It stops us adding to it. That is the only useful thing left on this island."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
+      {
+        "kind": "call",
+        "script": "tdp_stage_handback"
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "{name}."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "He holds it out on a flat palm, from where he is, exactly the way he asked for it.",
+          "He does not come any closer this time either."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "It was never going to work for me.",
+          "Not because I am wicked. Because in eleven years I never once asked it anything."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 12
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "Your father understood this better than I did.",
+          "He understood it in about a year. I have had eleven and I never understood it at all."
+        ]
+      },
+      {
+        "kind": "choice",
+        "lines": [
+          "Rain is coming off the back of his hand in a stream and he has not noticed."
+        ],
+        "options": [
+          {
+            "label": "This does not fix anything.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "DR. VEYL",
+                "lines": [
+                  "No. It does not.",
+                  "I am not asking you for anything. I have run out of things I could stand to ask for."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Why now?",
+            "then": [
+              {
+                "kind": "say",
+                "who": "DR. VEYL",
+                "lines": [
+                  "Because I can see it. That is the whole answer and it is not to my credit.",
+                  "I could have listened at any point in eleven years. I had to be shown."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Use it yourself, then.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "DR. VEYL",
+                "lines": [
+                  "I cannot. I have tried, in a locked room, more times than I am going to tell you.",
+                  "It is not a lock. That was always the mistake and it was always mine."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 14
+      },
+      {
+        "kind": "sfx",
+        "sound": "key_item"
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "not",
+          "of": {
+            "kind": "hasItem",
+            "item": "tideheart"
+          }
+        },
+        "then": [
+          {
+            "kind": "giveItem",
+            "item": "tideheart",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "kind": "setFlag",
+        "flag": "tideheart_taken",
+        "value": false
+      },
+      {
+        "kind": "setFlag",
+        "flag": "tideheart_returned"
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "You have the TIDEHEART back."
+        ]
+      },
+      {
+        "kind": "sfx",
+        "sound": "warp"
+      },
+      {
+        "kind": "shake",
+        "frames": 20,
+        "power": 2
+      },
+      {
+        "kind": "wait",
+        "frames": 14
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "It is warmer than his hand was, and it is turning,",
+          "and it is not turning towards anything on this plate."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "You do not tell him it is all right.",
+          "He does not stand there waiting to be told, which is the first sign all night that he knows."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "Do not say anything kind to me.",
+          "I would keep it."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 18
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "I will do the mains. I know the order. He taught me the order when I was nine."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "Go up. Whatever it is you are going to do up there, it has to be you and it has to be now."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 12
+      },
+      {
+        "kind": "setFlag",
+        "flag": "td_kell_beaten"
+      },
+      {
+        "kind": "setFlag",
+        "flag": "td_power_done"
+      },
+      {
+        "kind": "music",
+        "track": "resume"
+      }
+    ]
+  },
+  {
+    "id": "tdp_kell_talk",
+    "_note": "Kell's NPC. Three states: not yet, between attempts, and beaten. The middle one is the same offer tdp_gate makes, so a player who works out that they can simply go and speak to her gets the retry without walking at the way out for it.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
+          "flag": "td_kell_beaten"
+        },
+        "then": [
+          {
+            "kind": "say",
+            "who": "COMMANDER KELL",
+            "lines": [
+              "I am not going anywhere and there is nowhere on this island to go.",
+              "Somebody will come for me. I would rather it was somebody with the paperwork."
+            ]
+          },
+          {
+            "kind": "end"
+          }
+        ]
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
+          "flag": "tdp_fight_pending"
+        },
+        "then": [
+          {
+            "kind": "call",
+            "script": "tdp_retry"
+          },
+          {
+            "kind": "end"
+          }
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "COMMANDER KELL",
+        "lines": [
+          "Not now.",
+          "Stand where you are and watch it, if you are going to be out here at all."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tdp_veyl_talk",
+    "_note": "Cassian, before and after. Two states and no third: the man who is certain, and the man who has just found out. He is never sarcastic and never self-pitying, and afterwards he asks the player for nothing -- the one thing he does ask for is NOT to be comforted, because he knows he would take it.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
+          "flag": "td_power_done"
+        },
+        "then": [
+          {
+            "kind": "say",
+            "who": "DR. VEYL",
+            "lines": [
+              "Cross-feed down. Pumps down. The mains take longer and Lyra is faster at them than I am."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "DR. VEYL",
+            "lines": [
+              "Go and do the thing I spent eleven years proving could not be done.",
+              "I would like to be here when you come back, and I do not expect to be forgiven for it."
+            ]
+          },
+          {
+            "kind": "end"
+          }
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "DR. VEYL",
+        "lines": [
+          "There is nothing for you to do out here and I am not going to invent something.",
+          "Stand still. It will be over in four minutes."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tdp_lyra_talk",
+    "_note": "Lyra. Her arc closes here and it closes quietly: she already chose, in the capital, and what she does tonight is work. Before the fight she is the only person out here who is frightened out loud. Afterwards she is the one holding the shutdown order in her head, and canon has her rebuilding Meridian later, which starts exactly here: she knows the order because he taught her the order.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
+          "flag": "td_power_done"
+        },
+        "then": [
+          {
+            "kind": "say",
+            "who": "LYRA",
+            "lines": [
+              "Mains in reverse, top of the board down. Then the batteries. Then nothing.",
+              "He taught me it when I was nine so I could show off at a dinner."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "LYRA",
+            "lines": [
+              "Go on. I am all right.",
+              "I am not, but I am all right for twenty minutes, and twenty is what you need."
+            ]
+          },
+          {
+            "kind": "end"
+          }
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "I have read every page of this project and none of them looked like this.",
+          "Not one of them had a picture of it in."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tdp_tarin_talk",
+    "_note": "Only reachable in the window before he goes down the gangway; after that his NPC is removed by common.json/tdp_stage_storm. Two boxes and neither is a joke -- canon's rule is that he goes quiet when it is serious, and this is the most serious thing either of them has ever stood in front of.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "I have been trying to think of the funny thing to say since the boat.",
+          "There is not one. I have looked."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Whatever happens out here, you were right about him and I was right about you.",
+          "That is the last time I am ever saying that, so."
+        ]
+      }
+    ]
+  }
+]

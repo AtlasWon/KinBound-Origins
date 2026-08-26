@@ -1,9 +1,23 @@
 {
-  "speakers": { "fmb_watcher": "WEATHER KEEPER" },
+  "speakers": {
+    "fmb_watcher": "WEATHER KEEPER"
+  },
   "entries": {
     "fmb_watcher": [
       {
-        "ifFlags": ["act4_done"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Forty-one years, and the entry for Thursday is four words long. WIND OFF PASS. NORMAL.",
+          "I handed the pen over twice this month and I am not sorry that I did.",
+          "It has gone in the book the same as everything else. That is what a book is for."
+        ]
+      },
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
         "lines": [
           "Forty-one years in that book and I have never once handed the pen to anybody else.",
           "I did, this month. Twice. I wanted a second hand on it in case mine was wrong.",

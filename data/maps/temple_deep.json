@@ -1,0 +1,376 @@
+{
+  "id": "temple_deep",
+  "name": "The Temple of the Deep",
+  "displayName": "TEMPLE OF THE DEEP",
+  "music": "station",
+  "battleBackdrop": "coast",
+  "indoor": false,
+  "fog": 0.3,
+  "encounterTable": "temple_deep",
+  "_plan": "THE OCEAN PLATFORM. Nine days of steel standing on three thousand years of stone, and the whole map is that one sentence. Meridian have built a working industrial site out here -- deck plate, generators, resonance masts, a submersible cradle, a control shelter, cable runs, crates lashed down because the wind has got up -- and every module of it is bolted to, cut round, or laid on top of something they did not make and cannot break.\n\nTHE SEAM IS WALKED, NOT DESCRIBED. The stair-head at the top of the map is the temple's own north wall standing out of the sea, and the player reaches it by walking north up Meridian's deck until the deck simply stops being deck. Row 9 is the join: five tiles of laid plate, then six tiles of planking bolted straight down over cut Aurelian floor, then five more of plate. There is no transition tile and there is not meant to be one -- the two materials meet edge to edge, which is exactly what it looks like when somebody has run out of time. Inside the stone, Meridian's floodlamps stand beside the Aurelians' own resonance rings, and the ring is older than the lamp by a factor of a hundred.\n\nTHREE MODULES AND TWO GANTRIES, because a rig is not a room. The spine (x13-27) carries the shaft head, the checkpoint, the control shelter and the yard. THE PLANT hangs off it to the west across two tiles of open water, reached only by the gantry at 11-12,17-18: generators, fuel, a cable trunk going somewhere the crews are not told about. THE TOWER DECK hangs off it to the east across the gantry at 28-29,13-14: four resonance masts and the trunk that feeds them. Both are optional and both are visibly separate pieces of steel with the sea underneath them -- but they sit on opposite sides of the checkpoint, and that is worth knowing: the west gantry lands at row 17, south of the fence, so the plant is walkable the moment the player arrives; the east gantry lands at row 13, NORTH of it, so the tower deck can only be reached after Marrow. The order that falls out of the geometry is the right one -- boat, yard, shelter, plant, fence, towers, aid post, stair -- and it was checked by walking it in tools/shots/templedeep.js rather than by looking at the file. That separation is the point: this is not a building, it is a set of things somebody bolted together in a hurry, over water, in weather.\n\nTHE CHECKPOINT AT ROW 15 IS THE ONE UNAVOIDABLE FIGHT. Mesh fence runs the full width of the spine with a three-tile gate at x19-21, Warden Marrow stands in the middle of it, and the two tiles either side of him carry the step script that starts the battle. There is no way north up this map that does not cross one of those tiles. Every other Meridian on the platform can be walked past by a player who does not want the fight, which is the shape this game uses everywhere else and the shape the difficulty notes ask for; one fight is forced, because canon says the platform is where the fighting is and a climax the player strolls through is not a climax either.\n\nTHE AID POST AT 15,12 IS A DIFFICULTY VALVE AND IT IS DELIBERATE. Onwen came off the boats with the operation and has moved her post up the deck behind the player as the deck was taken. She heals for nothing and she sets the respawn to the tile she is standing on, so a player who faints anywhere in this temple wakes up on the platform rather than being thrown back to the mainland. Standing her at the top of the deck rather than at the landing is the kind version: it is the last thing before the stair down and the first thing on the way back up.\n\nFOG AT 0.3 AND NOT MORE. It is spray and low cloud, it closes the middle distance, and Meridian's own floodlamps push it back -- so the rig reads from the landing stage as a line of orange holes in the grey going away north, which is the only navigation this map needs to offer. Anything heavier would be a broken control scheme on a deck this size.\n\nTHE COLONNADE IN THE WATER, x3-8 y25-31, IS SWIM ONLY. Four column tops and a drowned plinth off the west side of the yard, with a Deep Vessel on it. The player cannot reach it on the way in. They can on the way back up, once the lower temple has handed Swim over, and it is the only thing on the platform worth climbing back up for.\n\nNO BATTLE WEATHER IS DECLARED, ON PURPOSE. Setting `weather: storm` here would multiply every Tide move by 1.5 and halve every Flame one, and Meridian fight almost entirely with Tide kin. That is a large, invisible difficulty spike aimed squarely at a player who chose Cinderpaw, on the map before the hardest fight in the game. The storm belongs to the chamber below and to whoever writes it. Up here the weather is carried by fog, by the lashings and by what people say about it.",
+  "rows": [
+    "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+    "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+    "WWWWWWWWWWWWWΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩWWWWWWWWWWWWWW",
+    "WWWWWWWWWWWWWΩΘΘΘΘΘΘΘΘΘΘΘΘΘΩWWWWWWWWWWWWWW",
+    "WWWWWWWWWWWWWΩΘΘΘΘΘSSΘΘΘΘΘΘΩWWWWWWWWWWWWWW",
+    "WWWWWWWWWWWWWΩΘΘΘΘΘθθΘΘΘΘΘΘΩWWWWWWWWWWWWWW",
+    "WWWWWWWWWWWWWΩΘΦΘΘ≡≡≡≡ΘΘΦΘΘΩWWWWWWWWWWWWWW",
+    "WWWWWWWWWWWWWΩΘµΘΘ≡≡≡≡ΘΘµΘΘΩWWWWWWWWWWWWWW",
+    "WWWWWWWWWWWWWΩΘΘΘΘBBBBBΘΘΘΘΩWWWWWWWWWWWWWW",
+    "WWWWWWWWWWWWW▤▤▤▤▤BBBBB▤▤▤▤▤WWWWWWWWWWWWWW",
+    "WWWWWWWWWWWWWµ▤▤¾▤▤▤▤▤▤▤¾▤▤µWWµ▤▤▤▤▤▤▤▤WWW",
+    "WWWWWWWWWWWWW▤▤$▤▤▤▤▤▤▤▤▤?▤▤WW▤²▤▤▤▤²▤▤WWW",
+    "WWWWWWWWWWWWW▤¾▤▤▤▤▤▤▤▤▤▤²¾▤WW▤▤▤÷▤▤▤▤▤WWW",
+    "WWWWWWWWWWWWW▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤BB▤▤▤÷▤▤▤▤▤WWW",
+    "WWW▤¯¯¯¯¯▤▤WW▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤BB▤▤▤▤▤▤▤▤▤WWW",
+    "WWW▤▤▤▤▤▤▤▤WW¯¯¯¯¯¯▤▤▤¯¯¯¯¯¯WW▤▤▤?▤▤▤▤▤WWW",
+    "WWW▤³▤³▤³▤µWW▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤WW▤▤▤÷▤▤▤▤▤WWW",
+    "WWW▤▤▤▤▤▤▤▤BB▤▤▤▤╔╗╗╦╦╗╗╗╔▤▤WW▤²▤÷▤▤²▤▤WWW",
+    "WWW¾▤▤▤▤▤▤▤BB▤▤▤▤╔:::::::╔▤▤WW▤▤▤¶▤▤▤▤³WWW",
+    "WWW▤▤▤▤▤▤▤▤WW▤▤▤▤╔+::?::@╔▤▤WW▥¾▥▥▥▥▥▥µWWW",
+    "WWWµ▤÷▤▤▤¾▤WW▤▤▤▤╔╗::::╗╗╔▤▤WWWWWWWWWWWWWW",
+    "WWW▤▤÷▤▤▤▤▤WW▤▤¾▤▤▤▤▤▤▤▤▤¾▤▤WWWWWWWWWWWWWW",
+    "WWW▥▥¶▥▥▥¾▥WW▤¶▤¹@@¹▤▤▤$▤▤¶▤WWWWWWWWWWWWWW",
+    "WWWWWWWWWWWWW▤▤▤¹@@¹▤▤¾▤▤▤▤▤WWWWWWWWWWWWWW",
+    "WWWWWWWWWWWWWµ▤¾▤▤▤▤▤▤▤▤¾▤▤µWWWWWWWWWWWWWW",
+    "WWWΩWWWΩWWWWW▤╫▤▤▤▤▤▤▤▤▤▤▤╫▤WWWWWWWWWWWWWW",
+    "WWWWWWWWWWWWW▤╫▤▤▤▤▤▤▤▤▤▤▤╫▤WWWWWWWWWWWWWW",
+    "WWWWΩWWWΩWWWW▤¾¾▤▤▤▤▤▤▤▤▤¾¾▤WWWWWWWWWWWWWW",
+    "WWWWΘΘΘWWWWWW▤▤▤▤¾▤▤▤▤▤¾▤▤▤▤WWWWWWWWWWWWWW",
+    "WWWWΘΘΘWWWWWW▥µ▥▥▥BBBBB▥µ▥▥▥WWWWWWWWWWWWWW",
+    "WWWWWΩWWWWWWWWWWББBBBBBББWWWWWWWWWWWWWWWWW",
+    "WWWWWWWWΩWWWWWWWWББBBBББWWWWWWWWWWWWWWWWWW",
+    "WWWWWWWWWWWWWWWWWWWBBWWWWWWWWWWWWWWWWWWWWW",
+    "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+  ],
+  "_handover": "THREE SEAMS, AND ONLY ONE OF THEM IS MINE AT BOTH ENDS.\n\nDOWN, MINE AT BOTH ENDS. The stair in the old stone at 19,4 and 20,4 goes to `temple_deep_ruins` 19,3 and 20,3, facing down. The ruins come back at 19,2 and 20,2 to `temple_deep` 19,5 and 20,5 -- the glyph row one tile inside the stair rather than the stair tile itself, because every shipped door in this game lands one tile in.\n\nIN, AND IT IS WIRED. `eastreach_platform` -- the staging deck at the end of the operation -- warps at 19,4 and 20,4 into `temple_deep` 19,32 and 20,32, which is the foot of the pontoon. It pointed at a map called `temple_of_the_deep` for part of this build; that map never existed and the id of the ocean platform is `temple_deep`, which is what the file now says. One thing is worth one line if the operation is ever revisited: their landing tiles ARE my two outbound door tiles, so the player arrives standing on the way out. It is safe (loadMap seeds lastTile, and the tile south of it is sea, so nothing fires and nothing traps), but landing at 19,31 and 20,31 -- the plank one step up -- is the shape every other door in the game uses.\n\nOUT, AND I HAVE ALREADY MADE IT. 19,32 and 20,32 -- two more planks at the very foot of the pontoon -- warp back to `eastreach_platform` 19,5 and 20,5, style door. That is deliberate and it does two jobs. It gives the player a way to leave, heal, level and come back, which is the difference between a climax and a wall for the player who has asked four times for an easier game; and it satisfies the test that says a door warp must have a door back, which their side needs the moment they retarget. The arrival tile (20,31) and the departure tiles (19-20,32) are deliberately different planks so that arriving does not put the player on a warp out.\n\nNO OTHER WAY OFF THE ISLAND, and the boat crew say why: the sea has got up and nothing bigger than the shuttle run to the staging deck is launching today. The aid post at 15,12 is the other half of that promise -- Onwen heals for nothing and calls setRespawn on her own tile, so a whiteout anywhere in this temple puts the player back on this deck instead of throwing them across the region to the last clinic they used.\n\nFLAGS THIS MAP SETS: `td_arrived`, `td_checkpoint_done`, `td_medic_met`, `td_crew_met`. It READS `tideheart` (by hasItem, expecting NOT to find it) and `swim` (by hasArt). It sets no flag any other agent needs and it assumes nothing about where Tarin, Lyra, Sorrell or any Hallkeeper is standing.",
+  "warps": [
+    {
+      "x": 19,
+      "y": 4,
+      "toMap": "temple_deep_ruins",
+      "toX": 19,
+      "toY": 3,
+      "facing": "down",
+      "style": "stairs"
+    },
+    {
+      "x": 20,
+      "y": 4,
+      "toMap": "temple_deep_ruins",
+      "toX": 20,
+      "toY": 3,
+      "facing": "down",
+      "style": "stairs"
+    },
+    {
+      "x": 19,
+      "y": 32,
+      "toMap": "eastreach_platform",
+      "toX": 19,
+      "toY": 5,
+      "facing": "down",
+      "style": "door"
+    },
+    {
+      "x": 20,
+      "y": 32,
+      "toMap": "eastreach_platform",
+      "toX": 20,
+      "toY": 5,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "td_boat_crew",
+      "sprite": "sailor",
+      "x": 19,
+      "y": 30,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "td_boat_crew"
+    },
+    {
+      "id": "td_yard_ostrey",
+      "sprite": "meridian",
+      "x": 24,
+      "y": 26,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "td_yard_ostrey",
+      "sightRange": 4
+    },
+    {
+      "id": "td_quartermaster",
+      "sprite": "porter",
+      "x": 16,
+      "y": 24,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "td_quartermaster"
+    },
+    {
+      "id": "td_marrow",
+      "sprite": "meridian_lead",
+      "x": 20,
+      "y": 15,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "td_marrow"
+    },
+    {
+      "id": "td_medic",
+      "sprite": "healer",
+      "x": 15,
+      "y": 12,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "td_medic"
+    },
+    {
+      "id": "td_shelter_control",
+      "sprite": "meridian_sci",
+      "x": 20,
+      "y": 19,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "td_shelter_control"
+    },
+    {
+      "id": "td_shelter_tech",
+      "sprite": "meridian_sci_f",
+      "x": 22,
+      "y": 18,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "td_shelter_tech"
+    },
+    {
+      "id": "td_plant_vasse",
+      "sprite": "meridian_sci_f",
+      "x": 6,
+      "y": 18,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "td_plant_vasse",
+      "sightRange": 4
+    },
+    {
+      "id": "td_engineer_ordy",
+      "sprite": "meridian_sci",
+      "x": 8,
+      "y": 21,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "td_engineer_ordy"
+    },
+    {
+      "id": "td_tower_hale",
+      "sprite": "meridian_sci",
+      "x": 35,
+      "y": 14,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "td_tower_hale",
+      "sightRange": 5
+    },
+    {
+      "id": "td_tower_clerk",
+      "sprite": "clerk",
+      "x": 32,
+      "y": 19,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "td_tower_clerk"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 18,
+      "y": 31,
+      "text": [
+        "Four boats, and every one of them tied fore, aft and across.",
+        "The lashings are new rope over old rope over newer rope again.",
+        "Somebody has been retying these all morning."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 17,
+      "y": 28,
+      "text": [
+        "Crates, stencilled and stacked, and roped down to rings in the deck.",
+        "MERIDIAN FOUNDATION - SITE 3 - ABYSS CROWN.",
+        "AUTH: V. KELL, COMMANDER. Same hand as the marsh. Same three words."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 23,
+      "y": 22,
+      "text": [
+        "A lashing bench, and a chalked list of what has been made fast today.",
+        "Every line is crossed off. Then a line nobody has crossed off:",
+        "THE MASTS. And under it, in the same hand, WITH WHAT."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 17,
+      "y": 22,
+      "text": [
+        "A cradle, and a submersible sitting in it with the hatch open.",
+        "The paint down one flank has been scoured back to bare metal.",
+        "Whatever did that, it did it below and not up here."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 14,
+      "y": 10,
+      "text": [
+        "A crate on its own, opened, repacked and opened again.",
+        "The packing list inside says RINGS, CONTROL, MODIFIED. 12 OF 12.",
+        "Eleven of the spaces are empty."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 25,
+      "y": 12,
+      "text": [
+        "The derrick over the shaft, and the drum under it wound out almost to the end.",
+        "A depth board hangs off the frame with the day's readings chalked on.",
+        "The numbers stop nine days ago. Under them: NO BOTTOM FOUND."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 4,
+      "text": [
+        "The deck stops here. The wall does not.",
+        "Where they tried to cut through it the blade went in the width of a finger.",
+        "So they went round. Every plate on this rig is a shape drawn by that wall."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 15,
+      "y": 6,
+      "text": [
+        "A ring of cut stone standing on a stem, and a floodlamp bolted beside it.",
+        "One of them was made to be listened to. The other was made in a factory.",
+        "They are the same height. Nobody planned that."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 21,
+      "y": 17,
+      "text": [
+        "The Foundation's own board, screwed to the shelter wall.",
+        "OCEAN RESEARCH STATION 3. WEATHER AND CURRENT SURVEY.",
+        "PUBLIC ENQUIRIES: THE AURELINE OFFICE. It gives an address and a clerk's name."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 4,
+      "y": 16,
+      "text": [
+        "Three sets, running, and rated for a town of two thousand.",
+        "The load board says they are at nine tenths and have been for six days.",
+        "Nothing on this deck needs that. Whatever needs it is under the deck."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 5,
+      "y": 20,
+      "text": [
+        "The cable trunk leaves the plant here and goes down through the plate.",
+        "It is thicker than a man's arm and there are four of it.",
+        "None of the four is labelled. Everything else on this rig is labelled."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 31,
+      "y": 11,
+      "text": [
+        "A resonance mast, guyed on all four corners and humming.",
+        "You can feel it in the plate through your boots.",
+        "It is not a note. It is somebody asking the same question over and over."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 33,
+      "y": 15,
+      "text": [
+        "A survey console, and the trace running across it in slow green sweeps.",
+        "The chart underneath is of this sea and it is nine days old.",
+        "The island is not on the older chart pinned beside it. Nothing is."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 7,
+      "y": 20,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_td_plant"
+    },
+    {
+      "kind": "item",
+      "x": 34,
+      "y": 19,
+      "item": "great_potion",
+      "quantity": 2,
+      "flag": "item_td_tower"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 16,
+      "y": 27,
+      "item": "rouse",
+      "quantity": 2,
+      "flag": "item_td_yard"
+    },
+    {
+      "kind": "item",
+      "x": 5,
+      "y": 29,
+      "item": "deep_vessel",
+      "quantity": 3,
+      "flag": "item_td_colonnade"
+    }
+  ]
+}

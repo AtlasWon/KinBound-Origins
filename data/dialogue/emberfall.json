@@ -27,7 +27,8 @@
     "ef_meridian_hand": "FOUNDATION HAND",
     "ef_east_road_hand": "EAST ROAD GUIDE",
     "ef_inn_barker": "INN BARKER",
-    "ef_offduty_smith": "OFF-SHIFT SMITH"
+    "ef_offduty_smith": "OFF-SHIFT SMITH",
+    "ef_slabman": "SLAB CREW"
   },
   "entries": {
     "ef_gatewarden": [
@@ -75,6 +76,16 @@
       }
     ],
     "ef_pan_walker": [
+      {
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Pans are down to their own water and the rock is filling them again, slowly, the way rock does.",
+          "I bailed out a geothermal pan with a bucket. My mother would not have believed one word of it.",
+          "They are not for weather. There is not going to be any. That is Emberfall's whole luck and we have it back."
+        ]
+      },
       {
         "ifFlags": [
           "act4_done"
@@ -149,6 +160,16 @@
     "ef_ash_sweeper": [
       {
         "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Set like cement, and I have taken it up in slabs, street by street, for nine days.",
+          "Underneath it the ash is ash again and it sweeps.",
+          "Nineteen years and I have never once been glad to be holding a broom. I was glad on Tuesday."
+        ]
+      },
+      {
+        "ifFlags": [
           "act4_done"
         ],
         "lines": [
@@ -190,6 +211,16 @@
       "So copper is dear and heat is free. Backwards, is it not."
     ],
     "ef_slag_child": [
+      {
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "You can sit on it again. I checked first and I want it known that I checked first.",
+          "The steam came off it in a night and now it is only the normal warm.",
+          "I told the same grown-up and she said that is interesting, and then she came and sat on it with me."
+        ]
+      },
       {
         "ifFlags": [
           "act4_done"
@@ -263,6 +294,15 @@
     "ef_offduty_smith": [
       "Off shift. Do not ask me to look at anything.",
       "...go on, then. What is it."
+    ],
+    "ef_slabman": [
+      {
+        "lines": [
+          "Set ash comes up in slabs if you get a bar under it, and there are forty of us out here with bars.",
+          "Ninth day. Two streets left, and one of them is mine, so I know exactly how hard I am working.",
+          "Nobody has been paid for this and nobody has asked. Somebody will, and it will be a bad afternoon."
+        ]
+      }
     ]
   }
 }

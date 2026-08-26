@@ -4,12 +4,35 @@
     "mb_elder": "OLD MARLBECK",
     "mb_child": "CHILD",
     "mb_carter": "CARTER",
-    "mb_woman": "VILLAGER"
+    "mb_woman": "VILLAGER",
+    "mb_drainhand": "DRAIN CREW"
   },
   "entries": {
     "mb_engineman": [
       {
-        "ifFlags": ["act4_done"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "She has stopped. Sunday to Sunday, eleven feet, and then the drain came off her at four on Sunday morning.",
+          "I put my hand flat on the casing and it was cool, and I sat down on the floor of my own engine house.",
+          "There is a number in the book for it now. Nine days. I wrote it in myself and my hand was not steady."
+        ]
+      },
+      {
+        "ifFlags": [
+          "neravoss_restrained"
+        ],
+        "lines": [
+          "Eleven feet is what she lifts. It wants twelve.",
+          "So the last foot is going up the bank in buckets. The whole village, in a line, all night, and again tonight.",
+          "And it is holding. That is the mad part. Sixty people with a bucket each, and it is holding."
+        ]
+      },
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
         "lines": [
           "She lifts eleven feet and she has been lifting eleven feet since Sunday without stopping.",
           "I have never run her past a day. There is no number in the book for what I am doing.",
@@ -26,7 +49,19 @@
     ],
     "mb_elder": [
       {
-        "ifFlags": ["act4_done"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Sixty-one years I have said you worry about the man and not the bank.",
+          "He came out of that engine house and slept two days, and this street took turns walking past his window.",
+          "I was right, and I have never in my life been less pleased about being right."
+        ]
+      },
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
         "lines": [
           "Sixty-one years I said you worry about the man, not the bank.",
           "The man is in that engine house and he has not slept in four days and he is doing everything right.",
@@ -43,7 +78,29 @@
     ],
     "mb_child": [
       {
-        "ifFlags": ["act4_done"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Everybody is asleep. It is the middle of the day and everybody in this street is asleep.",
+          "Mum has put the good chair back where the good chair goes.",
+          "I am allowed to ask why now. I have not asked. I know why and I would rather she did not have to say it."
+        ]
+      },
+      {
+        "ifFlags": [
+          "neravoss_restrained"
+        ],
+        "lines": [
+          "I am in the line. I am the second smallest and I still get a bucket.",
+          "Mum did not want me in it. Gran said let her, so I am in it.",
+          "You go up the bank, you tip it, you come back. I have done ninety. I am counting."
+        ]
+      },
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
         "lines": [
           "Nobody is waking up because nobody is going to sleep.",
           "Mum has put the good chair by the window so she can see the drain from it.",
@@ -68,7 +125,9 @@
     ],
     "mb_woman": [
       {
-        "ifFlags": ["crest_5_taken"],
+        "ifFlags": [
+          "crest_5_taken"
+        ],
         "lines": [
           "You came up the road from the mire? Then you have seen what we used to be.",
           "My great-grandmother was born in a reed house and died in a brick one, half a mile apart.",
@@ -79,6 +138,15 @@
         "lines": [
           "The clinic is at the end of the row. It is small and it is open.",
           "It is open because the road goes past and the road does not keep hours."
+        ]
+      }
+    ],
+    "mb_drainhand": [
+      {
+        "lines": [
+          "We are up on the launder scraping eleven days of the fen off the inside of it.",
+          "A foot deep, and it smells like the end of the world, and every one of us put our hand up for it.",
+          "The engine man is asleep. Nobody is going to wake him and nobody is going to say why."
         ]
       }
     ]

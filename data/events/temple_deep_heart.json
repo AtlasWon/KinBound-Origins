@@ -1,0 +1,313 @@
+[
+  {
+    "_note": "STAGE 6, THE CLIMAX. THE LISTENING FLOOR, AND THE FOUR PHASES OF NERAVOSS.\n\nWHAT THIS FILE IS. Almost nothing. The encounter itself is a bespoke screen -- src/scenes/neravoss.ts -- because canon's central instruction for this beat is that it must NOT be 'reduce HP, throw Vessel', and four different verbs cannot be built out of the battle engine without lying about what the battle engine is. This file is the two ends of that: the walk-in, and the world afterwards.\n\nTHE FOUR PHASES, and each one is a different thing the player DOES:\n  1. SURVIVE      -- you move. There is no attack button anywhere in the encounter.\n  2. RESTRAINTS   -- you time. Meridian's clamps are still bolted through it, and a\n                     mistimed press makes the animal cry out rather than making a number\n                     go down. That is the entire feedback loop of the phase.\n  3. THE TIDEHEART-- you hold, and you steer, and the Aurelians' own record answers.\n  4. REACH IT     -- you close the distance on ITS terms. Move while it is watching and\n                     it recoils. The starter walks the last of the stone alone, and there\n                     is no line of dialogue on that beat and there must never be one.\nIt cannot be caught here. There is no Vessel in the scene and no bag.\n\nNOBODY CAN LOSE THIS. There is no fail state, no whiteout and no party damage; a player who plays badly takes longer, makes the storm visibly worse and scores lower in the var `neravoss_grace` (0-100, set at the end for the aftermath to read if it wants -- nothing requires it). Every phase widens its own timing window silently as the player struggles. That is deliberate: the design brief has asked four times for an easier game, and a climax about trust cannot be a climax you fail.\n\nMEASURED, with tools/shots/neravoss.js, which plays the whole encounter twice -- once with a bot that reads every telegraph and once with a bot that is deliberately bad. Both finish. The numbers are in that driver's output.\n\nTHE JOINS THIS FILE RELIES ON SOMEBODY ELSE MAKING:\n  - `td_power_done`, set at the end of tdp_aftermath in temple_deep_power_cast.json. It is\n    the only gate below and it is the flag that file says to test.\n  - THE TIDEHEART BACK IN THE BAG. Canon 56: Cassian returns it before this. The scene\n    ASKS -- hasItem, never assumes -- and if it is somehow gone the phase still plays with\n    the player reaching out empty-handed, because a soft-locked climax is not an\n    acceptable way to enforce a story flag.\n  - data/maps/temple_deep_heart.json and the stairs up from temple_deep_power at 16-17,1.\n    Both exist. This is an `enter` script, so it needs no tile of its own.\n\nWHAT THIS FILE PROVIDES TO EVERYBODY ELSE:\n  - `neravoss_calm`, then `act6_done`. data/events/tideglass.json names both.\n  - THE FIELD ART `swim`, guarded on `not hasArt`. Nothing else in the game granted it,\n    three terrain characters need it and several earlier maps have rewards sitting behind\n    it. This is the ocean act and the pool on this floor is deep water, so it is earned\n    here, in the one room every player certainly reaches. If the underwater approach to\n    the temple grants it first, the guard makes this a no-op and that is the better order.\n  - The player is left STANDING ON THIS FLOOR. There is no warp out and no stub past it:\n    Stage 6 does not touch the Ascent or the Summit.\n\nWHERE IT FIRES, AND WHY IT IS NOT AN `enter` SCRIPT. The `at` list below is every walkable tile on this floor that touches the water -- all forty-one of them, generated from the map's own rows rather than typed. An `enter` trigger fired the climax on the stairs, in the dark, at the bottom of a thirty-six-row room, and the player never saw the chamber they were standing in. Standing at the edge of the pool is the moment, and it is the moment however they walk to it: down the middle aisle, or the long way round either side.\n\nIf this map is ever rebuilt, REGENERATE THIS LIST. The rule is one line: every walkable tile orthogonally adjacent to a 'W'.",
+    "id": "temple_deep_heart_neravoss",
+    "trigger": "step",
+    "map": "temple_deep_heart",
+    "onceFlag": "neravoss_encounter_seen",
+    "when": {
+      "kind": "flag",
+      "flag": "td_power_done"
+    },
+    "actions": [
+      {
+        "kind": "music",
+        "track": "stop"
+      },
+      {
+        "kind": "weather",
+        "weather": "storm"
+      },
+      {
+        "kind": "shake",
+        "frames": 40,
+        "power": 3
+      },
+      {
+        "kind": "sfx",
+        "sound": "thunder"
+      },
+      {
+        "kind": "wait",
+        "frames": 40
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The water goes out from the rim, all at once, the way it does before a wave."
+        ]
+      },
+      {
+        "kind": "fade",
+        "to": "black",
+        "frames": 26
+      },
+      {
+        "kind": "wait",
+        "frames": 24
+      },
+      {
+        "kind": "setPiece",
+        "id": "neravoss"
+      },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "weather",
+        "weather": "rain"
+      },
+      {
+        "kind": "fade",
+        "to": "clear",
+        "frames": 34
+      },
+      {
+        "kind": "wait",
+        "frames": 24
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The rain is only rain now.",
+          "Nobody on the floor says anything for a long while."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 30
+      },
+      {
+        "kind": "weather",
+        "weather": "clear"
+      },
+      {
+        "kind": "sfx",
+        "sound": "heal_done"
+      },
+      {
+        "kind": "wait",
+        "frames": 40
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "not",
+          "of": {
+            "kind": "hasArt",
+            "art": "swim"
+          }
+        },
+        "then": [
+          {
+            "kind": "say",
+            "lines": [
+              "The sea has stopped pushing back.",
+              "Water that would have drowned you this morning lies flat and lets you past."
+            ]
+          },
+          {
+            "kind": "giveArt",
+            "art": "swim"
+          },
+          {
+            "kind": "sfx",
+            "sound": "obtain_art"
+          },
+          {
+            "kind": "say",
+            "lines": [
+              "You learned the field art SWIM.",
+              "Deep water out in the world can be crossed now."
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "setFlag",
+        "flag": "neravoss_calm"
+      },
+      {
+        "kind": "setFlag",
+        "flag": "act6_done"
+      },
+      {
+        "kind": "setRespawn"
+      },
+      {
+        "kind": "healParty"
+      },
+      {
+        "kind": "wait",
+        "frames": 16
+      }
+    ],
+    "at": [
+      {
+        "x": 17,
+        "y": 9
+      },
+      {
+        "x": 21,
+        "y": 9
+      },
+      {
+        "x": 22,
+        "y": 9
+      },
+      {
+        "x": 15,
+        "y": 10
+      },
+      {
+        "x": 16,
+        "y": 10
+      },
+      {
+        "x": 23,
+        "y": 10
+      },
+      {
+        "x": 24,
+        "y": 10
+      },
+      {
+        "x": 14,
+        "y": 11
+      },
+      {
+        "x": 25,
+        "y": 11
+      },
+      {
+        "x": 13,
+        "y": 12
+      },
+      {
+        "x": 26,
+        "y": 12
+      },
+      {
+        "x": 12,
+        "y": 13
+      },
+      {
+        "x": 27,
+        "y": 13
+      },
+      {
+        "x": 11,
+        "y": 14
+      },
+      {
+        "x": 28,
+        "y": 14
+      },
+      {
+        "x": 11,
+        "y": 15
+      },
+      {
+        "x": 28,
+        "y": 15
+      },
+      {
+        "x": 11,
+        "y": 16
+      },
+      {
+        "x": 28,
+        "y": 16
+      },
+      {
+        "x": 11,
+        "y": 17
+      },
+      {
+        "x": 28,
+        "y": 17
+      },
+      {
+        "x": 11,
+        "y": 18
+      },
+      {
+        "x": 28,
+        "y": 18
+      },
+      {
+        "x": 11,
+        "y": 19
+      },
+      {
+        "x": 28,
+        "y": 19
+      },
+      {
+        "x": 12,
+        "y": 20
+      },
+      {
+        "x": 27,
+        "y": 20
+      },
+      {
+        "x": 13,
+        "y": 21
+      },
+      {
+        "x": 26,
+        "y": 21
+      },
+      {
+        "x": 14,
+        "y": 22
+      },
+      {
+        "x": 25,
+        "y": 22
+      },
+      {
+        "x": 15,
+        "y": 23
+      },
+      {
+        "x": 16,
+        "y": 23
+      },
+      {
+        "x": 23,
+        "y": 23
+      },
+      {
+        "x": 24,
+        "y": 23
+      },
+      {
+        "x": 17,
+        "y": 24
+      },
+      {
+        "x": 18,
+        "y": 24
+      },
+      {
+        "x": 19,
+        "y": 24
+      },
+      {
+        "x": 20,
+        "y": 24
+      },
+      {
+        "x": 21,
+        "y": 24
+      },
+      {
+        "x": 22,
+        "y": 24
+      }
+    ]
+  }
+]

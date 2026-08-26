@@ -1,0 +1,71 @@
+{
+  "_note": "THE RING HANDS, AND WHY THEY SPEAK THROUGH DIALOGUE RATHER THAN THROUGH AN EVENT.\n\nThe climax of the story is staged on this deck by another author in data/events/temple_deep_power.json. That file is theirs. These four are mine -- they are placed on data/maps/temple_deep_power.json and they are the 'two of the nine ring hands look at Veyl, and neither of them touches anything' that the scene narrates. An NPC whose `script` matches no event script falls through to the dialogue table (OverworldScene.handleInteract), so four people can stand on somebody else's stage without a single line being added to somebody else's file.\n\nEvery one of them has an `ifFlags: [td_power_done]` variant first, because a person who watched that happen does not say the same thing afterwards. The variant list is read in order and the first one whose flags hold wins, so the unconditional entry must always be last.\n\nNone of them is a trainer. There is no fight on this deck except the one the scene starts.",
+  "speakers": {
+    "tdp_ring_a": "RING STATION 2",
+    "tdp_ring_b": "RING STATION 5",
+    "tdp_ring_c": "RING STATION 7",
+    "tdp_ring_d": "RING STATION 9"
+  },
+  "entries": {
+    "tdp_ring_a": [
+      {
+        "ifFlags": ["td_power_done"],
+        "lines": [
+          "My station is dead and I am still sitting at it. I do not know what else to do.",
+          "Eleven years of my life were on that board about four minutes ago."
+        ]
+      },
+      {
+        "lines": [
+          "Station two, holding. Every column on my board is inside tolerance.",
+          "That is what I am for. I am not for having a view."
+        ]
+      }
+    ],
+    "tdp_ring_b": [
+      {
+        "ifFlags": ["td_power_done"],
+        "lines": [
+          "I had my hand on the release. I want that written down somewhere by somebody.",
+          "I had my hand on it and I did not turn it, and that is mine now."
+        ]
+      },
+      {
+        "lines": [
+          "Sixty rings on the floor and nine collars on the subject, and it is holding.",
+          "Ask me in an hour whether it is holding. Do not ask me now."
+        ]
+      }
+    ],
+    "tdp_ring_c": [
+      {
+        "ifFlags": ["td_power_done"],
+        "lines": [
+          "Somebody is going to ask all of us what we thought was going to happen.",
+          "I have been trying for four minutes to think of an answer that is not 'this'."
+        ]
+      },
+      {
+        "lines": [
+          "You are not crew and nobody has told me to stop you, so I am not going to.",
+          "Mind the lip. There is no floor past the plate. There is nothing past the plate."
+        ]
+      }
+    ],
+    "tdp_ring_d": [
+      {
+        "ifFlags": ["td_power_done"],
+        "lines": [
+          "Doctor Veyl asked us to shut it down and the Commander told us not to.",
+          "Two of us looked at him. That was the whole of what we did. Two of us looked."
+        ]
+      },
+      {
+        "lines": [
+          "Station nine. Furthest from the board and the first one that would go.",
+          "They gave me nine because I am the calm one. It has been a long evening for that."
+        ]
+      }
+    ]
+  }
+}

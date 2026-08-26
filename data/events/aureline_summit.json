@@ -1,0 +1,195 @@
+[
+  {
+    "id": "aftermath_summit",
+    "_note": "STAGE 6, THE AFTERMATH, BEAT 3 AND THE END OF THIS STAGE: THE ROAD OPENS AND NOBODY WALKS IT YET.\n\nCANON PUTS THE ASCENT, THE MASTERS AND THE CHAMPION IN THE NEXT STAGE, DELIBERATELY, so that the game has two endings -- the story one and the personal one. This scene is the hinge between them and it must not become the second one. So: the doors come off their shut, they are looked through, and they are not gone through. There is no warp in this file and there is no warp behind those doors on the map. The pair of doors is the map's row 0, which is solid wall; a player who walks at them walks into a wall, which is the correct amount of nothing.\n\nWHY IT IS A STEP TRIGGER AND NOT AN ENTER TRIGGER. The player has to walk the length of this room to the desk themselves. The whole registry was built as a wall of other people's ambition -- eighty-one Champions, more gaps than names, three hundred and eleven names on the standing list and you are not high up -- and walking past all of it to stand at the counter is the scene doing its own work. x9 and x10 are the only unbroken aisle from the doors to the desk; the trigger is the two tiles of it that touch the counter.\n\nTARIN. Canon: 'Tarin returns to his original goal, and so does the player. The story is finished; the childhood dream is not.' He has been in here two days, which Lyra says in the atrium. His arc landed at Skyreach and on the mole -- a boy who will drop the count to hold a rope -- so the thing he wants from this room is not to win it. He wants the pair of you on the road at the same time, and he says the quiet version of that out loud, once, and then covers it, which is the whole of him.\n\nTHE COUNT IS DELIBERATELY NOT A CONTEST. Eight and eight. The ledger in src/systems/tarin.ts has held him level since Crownspire on purpose and this is the beat that was for.\n\nWHAT IT SETS. summit_open, which is the flag Stage 7 should hang the Ascent on, and which the registrar's own dialogue and the standing list read from here. Nothing else in the shipped game reads it, so a stage that never lands leaves this room ending on two people agreeing to come back, which is a fine place for a stage to stop.\n\nGATE: act6_done. See data/events/tideglass.json for the contract with the climax.",
+    "trigger": "step",
+    "map": "aureline_summit",
+    "onceFlag": "aftermath_summit_done",
+    "when": { "kind": "flag", "flag": "act6_done" },
+    "at": [
+      { "x": 9, "y": 2 },
+      { "x": 10, "y": 2 }
+    ],
+    "actions": [
+      { "kind": "face", "who": "player", "dir": "up" },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "lines": [
+          "The standing list has been taken down and redone twice this week.",
+          "Everybody in Caelora has had a week and everybody in Caelora has spent it on something else."
+        ]
+      },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "aur_sum_tarin",
+          "sprite": "rival",
+          "x": 14,
+          "y": 2,
+          "facing": "up",
+          "movement": { "kind": "static" },
+          "script": "aur_sum_tarin"
+        }
+      },
+      { "kind": "wait", "frames": 18 },
+      {
+        "kind": "say",
+        "lines": [
+          "Somebody has been standing in front of the standing list for a while,",
+          "with his hands behind his back, reading it like a man who cannot read."
+        ]
+      },
+      { "kind": "face", "who": "aur_sum_tarin", "dir": "left" },
+      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Two days. I have read three hundred and eleven names and I am eighty-ninth.",
+          "You are not on it at all, which I have decided is funnier."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "I keep waiting to feel something about that.",
+          "I keep feeling something about a mole in Tideglass instead."
+        ]
+      },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "who": "SUMMIT REGISTRAR",
+        "lines": [
+          "Both of you. On the counter. Now, please, before somebody says something."
+        ]
+      },
+      { "kind": "sfx", "sound": "badge" },
+      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "say",
+        "lines": [
+          "Sixteen Bond Crests go down on the brass in two rows of eight,",
+          "and every conversation in the registry stops at about the fifth one."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "SUMMIT REGISTRAR",
+        "lines": [
+          "Briarbell. Stonewake. Tideglass. Emberfall. Mirehaven. Frostmere. Skyreach. Crownspire.",
+          "Twice. In the same week. In this year."
+        ]
+      },
+      { "kind": "wait", "frames": 18 },
+      {
+        "kind": "say",
+        "who": "SUMMIT REGISTRAR",
+        "lines": [
+          "I said I would open the doors myself and not for anyone.",
+          "Stand back off the counter."
+        ]
+      },
+      { "kind": "wait", "frames": 22 },
+      { "kind": "sfx", "sound": "fx_heavy" },
+      { "kind": "shake", "frames": 20, "power": 2 },
+      { "kind": "wait", "frames": 26 },
+      {
+        "kind": "say",
+        "lines": [
+          "The doors have been shut for four years and they do not want to know.",
+          "They come off their shut with a sound like a boat working against a quay."
+        ]
+      },
+      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "say",
+        "lines": [
+          "Behind them there is a road going up, out of the city, into weather that is only weather.",
+          "It is a long way and it is very plain and it does not look like anything."
+        ]
+      },
+      { "kind": "wait", "frames": 22 },
+      {
+        "kind": "say",
+        "who": "SUMMIT REGISTRAR",
+        "lines": [
+          "The Ascent stays open now. There is no day and there is no list.",
+          "You come back when you have decided you are coming back."
+        ]
+      },
+      { "kind": "setFlag", "flag": "summit_open" },
+      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "choice",
+        "lines": [
+          "Tarin has not looked at the doors once. He has been looking at you the whole time."
+        ],
+        "options": [
+          {
+            "label": "Not today.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "Thank you. I have been trying to work out how to say that since Tuesday.",
+                  "I got as far as reading a list eleven times."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "Together, then.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "Obviously together. I was never going to do it any other way and you know it.",
+                  "You could have let me be brave about it for one more minute."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "I wanted to be the strongest Trainer in Caelora since I was seven.",
+          "I have not stopped wanting it. It has just stopped being the whole list."
+        ]
+      },
+      { "kind": "wait", "frames": 18 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Go home first. Hearthmere, your mother, the well, all of it.",
+          "Then come and find me and we will go and lose to four people we have never met."
+        ]
+      },
+      { "kind": "wait", "frames": 22 },
+      {
+        "kind": "say",
+        "lines": [
+          "Somewhere behind you a boy of nine is signing the register of intent for the second time.",
+          "It commits you to nothing. It says so."
+        ]
+      },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "lines": [
+          "The road up is still there when you look back at it.",
+          "It is going to be there tomorrow as well, which is the first thing this year that has been."
+        ]
+      }
+    ]
+  }
+]

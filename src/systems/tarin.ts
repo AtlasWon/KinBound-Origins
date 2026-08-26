@@ -399,6 +399,100 @@ export const TARIN_LEDGER: TarinBeat[] = [
     where: 'Crownspire',
     doing: 'Eight. Both of you have eight. Neither of you has said the word Summit out loud yet.',
   },
+
+  /*
+   * Stage 6. Act 6, the climax -- and specifically the OPERATION, which is
+   * everything from the East Quay to the Temple's front door.
+   *
+   * THE COLUMN IS FINISHED AND THE LEDGER IS NOT, and that is the shape of the
+   * act. Eight is all there is; there is no ninth Crest and there is never
+   * going to be one, so for the first time since Hearthmere the number cannot
+   * say anything about him at all. Every act so far has used it: Act 1
+   * alternated ahead and behind, Act 2 held level to show that what was
+   * changing was him, Act 3 moved twice and stopped, Act 4 was flat on purpose,
+   * Act 5 stalled in the middle at the one scene where the count was beneath
+   * everybody. Act 6 has nothing left to move. That is correct, because what
+   * this act says about him was never going to be a score.
+   *
+   * IT IS THE `where` COLUMN THAT DOES THE WORK NOW, AND IT DOES IT BY BEING
+   * SOMEWHERE ELSE. Canon is explicit: he disables Meridian towers while the
+   * player moves toward the central facility. So the last two rows put him on
+   * the far side of an island the player cannot see across, and the design of
+   * the whole act is that they never meet him there. He is HEARD instead -- the
+   * deck lurches, every lamp on it dips, a Foundation hand says something he
+   * was not going to say, and a signalman on the beach with a glass counts them
+   * off one at a time. Nothing anywhere quotes him. See the tower beats in
+   * data/events/eastreach_platform.json and the sh_signal variants in
+   * data/dialogue/eastreach_shore.json.
+   *
+   * THREE ROWS AND NOT ONE OF THEM NEEDS A common.json VARIANT, which is the
+   * first time that has been true since the ledger was written. The gossip
+   * voices are townspeople and this act has no towns in it: the player is on a
+   * mole, a boat, a beach and a rig, and everybody on all four is IN the
+   * operation and says so in their own file. A player who walks back to
+   * Tideglass mid-act falls through to the ungated fallback at the bottom of
+   * each voice, which is survivable, dull, and also the correct answer --
+   * nobody in that city knows anything yet.
+   *
+   * `muster` and `crossing` open on maps as well as flags because both maps are
+   * mine and both certainly exist. `towers` opens FIRST on op_landed, set by
+   * the landing scene in data/events/eastreach_shore.json, because the beat
+   * where he is off taking the ring apart has to begin when the player is
+   * standing on the island without him -- which is when the boats come up the
+   * shingle, not when somebody walks onto a particular tile.
+   *
+   * THE TEMPLE'S OWN ROWS, IF IT WANTS ANY, GO BETWEEN `towers` AND THE
+   * AFTERMATH BLOCK BELOW. The ledger is read top to bottom and the last opened
+   * beat wins, so a Crown Works row appended under `towers` correctly pulls him
+   * out of the fog and into the room; one inserted above `muster` would strand
+   * him on a quay he has already left.
+   */
+  {
+    id: 'muster',
+    opens: { any: [{ visited: 'eastreach_muster' }, { flag: 'op_called' }] },
+    crests: 8,
+    where: 'the East Quay',
+    doing: 'At the far end of the mole with nineteen people he met on Tuesday, being the one who is not frightened.',
+  },
+  {
+    id: 'crossing',
+    opens: { any: [{ visited: 'eastreach_launch' }, { flag: 'op_sailed' }] },
+    crests: 8,
+    where: 'the second boat',
+    doing: 'Went north-east up the coast while you went east. Did not wave, and did not look back either.',
+  },
+  {
+    id: 'towers',
+    opens: { any: [{ flag: 'op_landed' }, { visited: 'eastreach_shore' }] },
+    crests: 8,
+    where: 'the Meridian towers',
+    doing: 'Somewhere on the far side of the island, taking the ring apart four relays at a time, out of sight.',
+  },
+
+  /*
+   * Stage 6. The aftermath.
+   *
+   * THE LAST ROW, AND IT MUST STAY LAST. tarinBeat returns the last opened
+   * beat, so anything appended below this one takes precedence over it for the
+   * whole of the endgame. A Stage 6 row for the operation or the Temple belongs
+   * ABOVE this one, keyed on its own flag; this row is keyed on act6_done,
+   * which is the moment Neravoss leaves and nothing in the story is pending.
+   *
+   * THE COUNT DOES NOT MOVE. He has held eight since Crownspire and he holds
+   * eight here, because the whole point of the ending canon describes is that
+   * the story finished and the childhood thing did not, and a column that
+   * ticked over at the climax would say the opposite. What changes is `where`:
+   * off the boat, across the region, and into a room full of other people's
+   * ambition, waiting. He does not go up without the player and the world is
+   * allowed to know it before the player does.
+   */
+  {
+    id: 'aftermath',
+    opens: { flag: 'act6_done' },
+    crests: 8,
+    where: 'the Summit registry in Aureline',
+    doing: 'Off a boat at Tideglass and straight across the region. Has been reading a list for two days.',
+  },
 ];
 
 /* ------------------------------------------------------------------ derived */

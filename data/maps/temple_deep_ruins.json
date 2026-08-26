@@ -1,0 +1,311 @@
+{
+  "id": "temple_deep_ruins",
+  "name": "The Flooded Ruins",
+  "displayName": "THE DROWNED HALLS",
+  "music": "station",
+  "battleBackdrop": "cave",
+  "indoor": true,
+  "fog": 0.32,
+  "encounterTable": "temple_deep_ruins",
+  "_plan": "THE FLOODED RUINS, and the player has been here twice before without ever having been here. Embercoil was a listening room wound round a shaft. The Mirehaven Sanctum was one hall with the water in it. This is neither: it is a PLAN, laid out the way a city is laid out, and it is the site the other two were pointing at. Same eight characters, same masonry, same spiral in the floor -- and four times the room. The recognition has to be instant and the scale has to be the thing that is new, which is why the map is 40x36 and why the processional alone is wider than the whole of the Sanctum's drowned gallery.\n\nFOUR BANDS, NORTH TO SOUTH, AND THE PLAYER READS THEM IN ORDER.\n\n1. THE VESTIBULE (y3-8). Twenty tiles of dry Aurelian floor with Meridian's camp squatting in it -- crates, a bench, a console, two floodlamps clipped to a three-thousand-year-old wall, cable risers punched through the floor. The seam again, seen from underneath, and this time the steel is the small thing in the room. The two Divers stand in the doorway at 19,8 and 20,8 looking back up the stair, because the only people in this building who expect company are the ones who were told to.\n\n2. THE PROCESSIONAL (y10-16). The hall, and it is half drowned. A six-tile causeway of dry stone runs the length of it and everything either side is shin-deep water the player has been able to cross since the third Crest. Two ranks of piers, four rings standing in the flood, fallen drum tops proud of the surface. The centre line carries the Aurelians' own conduit, and for five tiles of it the conduit is LIT -- because Meridian have put current into it. Nothing else in this stage says what these people are as economically as a live wire in a dead groove.\n\n3. THE NAVE (y20-25). The floor is gone. Thirty-two tiles wide, six deep, wall to wall, with the tops of eight columns standing out of it and open water either side of you for fifteen tiles. It is crossed on the WRECKAGE: six pairs of fallen drum tops, staggered so the line drifts west as it goes, running from the lip at 19,20 to the south side at 17,25. That is a deliberate late change and the reason is written out in the handover -- this nave was a hard Swim gate until the map below turned out to have one too, and two gates with one key between them, the key on the wrong side of the first gate, is a game nobody can finish. So the crossing needs no art, the deep water either side still does, and the two islets out in it hold the loot for the player who comes back with it.\n\nTHE STEP SCRIPT ON ROW 19 IS STILL THERE and it still runs the full width of the lip, because whichever of the three arches the player takes they arrive at the same water and the same held breath. It no longer hands anything over. It looks at the nave, and it says the one true thing about it: the way on from here is down, and down is water all the way.\n\n4. THE RING FLOOR (y27-33). The grandest room in the game and the argument of the whole story drawn in one picture: an eighteen-tile ring of Aurelian resonance rings standing in a circle on a spiral floor, and in the exact centre of it, on a steel cradle bolted through the glyph, one of Meridian's twelve modified rings. Theirs is smaller. Theirs is newer. Theirs is in the middle. The player does not need to be told what happened to the last people who did this, because they were told at Mirehaven and the room is now showing them.\n\nENCOUNTERS ARE IN THE DEEP WATER AND NOWHERE ELSE. The engine rolls on tiles that declare an encounter and only the deep water does here, so a sealed hall of cut stone is empty exactly as the Embercoil note argues, and the causeway across the nave is dry stone -- a player crossing on the drums is never interrupted. The table is what the nave holds for anybody who goes INTO it, which is a choice on the way down and a return trip once the lower temple has handed over Swim. The rate is 85 rather than the 120 a route carries, because everything in this water is a fully grown sea kin and the fight before the chamber is the one that matters.\n\nTHE TIDEHEART IS NOT IN THE PLAYER'S BAG ON THIS MAP AND NOTHING HERE PRETENDS OTHERWISE. Meridian took it in Act 4 and Cassian gives it back below, in somebody else's chamber. Two lines on this map would be wrong if the player were holding it, and both of them ask hasItem before they open their mouths.",
+  "rows": [
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΘΘSSΘΘΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΘΞΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΞΘΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΘΘ¾¾ΘΘΘΘΘΘΘΘΘΘΘΘ$ΘΘΘΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΘµΘΘΘΘΘΘΘ≡≡ΘΘΘΘΘΘ?µΘΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΘΞΘΘΘΘ¶ΘΘ≡≡ΘΘ¶Θ¾ΘΘΞΘΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΘΘΘΘΘΘΘΘΘ≡≡ΘΘΘΘΘΘΘΘΘΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΘΘΘΘΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩ~~~~~~~~~~~¶~ΘΘΘΘΘΘ~¶Θ~~~~~~~~~~ΩΩΩΩ",
+    "ΩΩΩΩ~~ΩΩ~Θ~ΩΩ~~~~ΘΘ≡≡ΘΘ~~~~ΩΩ~~~ΩΩΩ~ΩΩΩΩ",
+    "ΩΩΩΩ~~ΩΩ~~~ΩΩ~~~~ΘΘ≈≈ΘΘ~~~~ΩΩ~~~ΩΩ~~ΩΩΩΩ",
+    "ΩΩΩΩ~~~~~Φ~~~~Φ~~ΘΘ≈≈ΘΘ~~Φ~~~~Φ~~~~~ΩΩΩΩ",
+    "ΩΩΩΩ~~ΩΩ~~~ΩΩ~~~~ΘΘ≈≈ΘΘ~~~~ΩΩ~~~ΩΩ~~ΩΩΩΩ",
+    "ΩΩΩΩ~~ΩΩ~~~ΩΩ~~~~ΘΘ≡≡ΘΘ~~~~ΩΩ~Θ~ΩΩ~~ΩΩΩΩ",
+    "ΩΩΩΩ~Ω~~~~~~~~Θ~~ΘΘΘΘΘΘ~~~~~~~~~~~~~ΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΘΘΩΩΩΩΩΩΩΩΘΘΘΘΩΩΩΩΩΩΩΩΘΘΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΘΞΘΘΘΘΘΘµ¾ΘΘΘΘΘΘΘΘΘΘ?Θ¾µΘΘΘΘΘΘΞΘΩΩΩΩ",
+    "ΩΩΩΩΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΩΩΩΩ",
+    "ΩΩΩΩWWWWWWWWWWWWWWWΘΘWWWWWWWWWWWWWWWΩΩΩΩ",
+    "ΩΩΩΩWWWWΩWWWWWΩWWWWΘΘWWWWΩWWWWWΩWWWWΩΩΩΩ",
+    "ΩΩΩΩWWWWWWWWWWWWWWWΘΘWWWWWWWWWWWWWWWΩΩΩΩ",
+    "ΩΩΩΩWWWWWWWΘWWWWWWΘΘWWWWWWWWΘWWWWWWWΩΩΩΩ",
+    "ΩΩΩΩWWWWΩWWWWWΩWWΘΘWWWWWWΩWWWWWΩWWWWΩΩΩΩ",
+    "ΩΩΩΩWWWWWWWWWWWWWΘΘWWWWWWWWWWWWWWWWWΩΩΩΩ",
+    "ΩΩΩΩΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΩΩΩΩ",
+    "ΩΩΩΩΘΘΘΘΘΘΘΘΘΘΘΘΦΦΦΘΘΦΦΦΘΘΘΘΘΘΘΘΘΘΘΘΩΩΩΩ",
+    "ΩΩΩΩΘΘΘΘΘΘΘθθΦΦθθθθθθθθθθΦΦθθΘΘΘΘΘΘΘΩΩΩΩ",
+    "ΩΩΩΩΘΘΘΘΘΘΘΦθθθθθθθ≈≈θθθθθθθΦΘΘΘΘΘΘΘΩΩΩΩ",
+    "ΩΩΩΩΘΘΘΘΘΘΦθθθθθθ¶@++@¶θθθθθθΦΘΘΘΘΘΘΩΩΩΩ",
+    "ΩΩΩΩΘΘΘΘΘΘΘΦθθθθθθθ≈≈θ?θθθθθΦΘΘΘΘΘΘΘΩΩΩΩ",
+    "ΩΩΩΩΘΘΘΘΘΘΘθθΦΦθθθθθθθθθθΦΦθθΘΘΘΘΘΘΘΩΩΩΩ",
+    "ΩΩΩΩΘΘΘΘΘΘΘΘΘΘΘΘΦΦΦΘΘΦΦΦΘΘΘΘΘΘΘΘΘΘΘΘΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΘSSΘΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ",
+    "ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ"
+  ],
+  "_handover": "THE THREE SEAMS ON THIS MAP, AND WHO OWNS EACH.\n\nUP: 19,2 and 20,2 go to `temple_deep` 19,5 and 20,5. Both ends are mine. Done.\n\nDOWN: 19,34 and 20,34 go to `temple_deep_tunnels` 14,34 and 15,34, which is the row immediately inside that map's own up-stair at 14,35 and 15,35. I read those coordinates off the file rather than guessing them, and I land the player one tile in rather than on their exit warp, which is the wart the Mirehaven Sanctum handover complains about. CHECKED AGAINST THE LIVE FILE AND MATCHED AT BOTH ENDS: temple_deep_tunnels warps back at 14,35 and 15,35 to temple_deep_ruins 19,33 and 20,33, which is the ring floor one tile inside my own stair. Nothing here is guessed and nothing here is waiting on anybody.\n\nSWIM: NOT GRANTED HERE, AND THAT IS A CHANGE I MADE AFTER READING THE MAP BELOW. This nave was built as the game's Swim gate. The tunnels map underneath is ALSO built as the game's Swim gate -- its own plan says so in capitals, its quay at y25 is a hard wall of deep water, and Marit Vane hands the art over there. Hers is the better scene: she is the Tide Hallkeeper, she gave the player Wade in Act 2, and canon puts the Hallkeepers on this operation. But her quay is BELOW my nave, so two gates with one key between them and the key on the far side of the first gate is a game nobody can finish. Rather than add a second grant and give the act a duplicated ceremony, I opened my nave with a causeway of fallen drums. `swim` therefore has exactly one source in the whole game and it is `tdt_swim` on `temple_deep_tunnels`.\n\nTHAT MAKES ONE THING SOMEBODY ELSE'S TO NOT BREAK. If the tunnels agent removes or gates Marit Vane's grant, nothing in the game grants Swim, their own quay becomes impassable, and the fix on my side is to put the grant back on script `tdr_nave` (step trigger, the whole of row 19) where it was written to go. If they keep it, everything works and the deep water on both of my maps -- the nave islets at 11,23 and 28,23, and the drowned colonnade on the platform at 4-6,28-29 -- becomes the reward for coming back up with it.\n\nFLAGS THIS MAP SETS: `tdr_entered`, `tdr_nave_seen`, `tdr_ring_seen`. It READS `tideheart` (by hasItem, twice, both times expecting NOT to find it) and `swim` (by hasArt, to change two lines once the player has it). It touches no cast member other than the player's own party, on purpose -- Tarin, Lyra, Sorrell and the Hallkeepers belong to whoever is running the operation, and nothing on either of my maps assumes where any of them is standing.",
+  "warps": [
+    {
+      "x": 19,
+      "y": 2,
+      "toMap": "temple_deep",
+      "toX": 19,
+      "toY": 5,
+      "facing": "down",
+      "style": "stairs"
+    },
+    {
+      "x": 20,
+      "y": 2,
+      "toMap": "temple_deep",
+      "toX": 20,
+      "toY": 5,
+      "facing": "down",
+      "style": "stairs"
+    },
+    {
+      "x": 19,
+      "y": 34,
+      "toMap": "temple_deep_tunnels",
+      "toX": 14,
+      "toY": 34,
+      "facing": "down",
+      "style": "stairs"
+    },
+    {
+      "x": 20,
+      "y": 34,
+      "toMap": "temple_deep_tunnels",
+      "toX": 15,
+      "toY": 34,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "tdr_gate_syl",
+      "sprite": "meridian",
+      "x": 19,
+      "y": 8,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "tdr_gate_syl",
+      "sightRange": 4
+    },
+    {
+      "id": "tdr_gate_orren",
+      "sprite": "meridian",
+      "x": 20,
+      "y": 8,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "tdr_gate_orren",
+      "sightRange": 4
+    },
+    {
+      "id": "tdr_camp_wren",
+      "sprite": "meridian_sci_f",
+      "x": 25,
+      "y": 6,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tdr_camp_wren"
+    },
+    {
+      "id": "tdr_camp_hand",
+      "sprite": "porter",
+      "x": 13,
+      "y": 6,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tdr_camp_hand"
+    },
+    {
+      "id": "tdr_lip_diver",
+      "sprite": "meridian",
+      "x": 25,
+      "y": 19,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tdr_lip_diver"
+    },
+    {
+      "id": "tdr_ruin_bern",
+      "sprite": "meridian_lead",
+      "x": 15,
+      "y": 26,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "tdr_ruin_bern",
+      "sightRange": 4
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 5,
+      "text": [
+        "Crates, numbered, and a catalogue board leaning on them.",
+        "SITE 3, LEVEL 1: 214 ITEMS LIFTED. LEVEL 2: 61. LEVEL 3: -",
+        "Beside LEVEL 3 somebody has written NOT RECOMMENDED and initialled it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 26,
+      "y": 5,
+      "text": [
+        "A bench, a lamp, and a rubbing of a wall carving pinned above it.",
+        "People, kin, a sea, and something under the sea the size of the sea.",
+        "You have seen this picture twice. It was smaller both times."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 27,
+      "y": 6,
+      "text": [
+        "A console wired into the floor, and a log running down the screen.",
+        "FEED 1 LIVE. FEED 2 LIVE. FEED 3 LIVE. FEED 4 REFUSING.",
+        "REFUSING is not a word an instrument uses. Somebody typed it in by hand."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 6,
+      "y": 11,
+      "text": [
+        "A pier, cut in one piece, standing in water up to your knees.",
+        "There is work carved round it at the height of a person's shoulder.",
+        "It goes on under the water. It was not meant to be under the water."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 13,
+      "text": [
+        "A ring of stone on a stem, standing in the flood with the water at its foot.",
+        "There are four in this hall and they all face the same way.",
+        "They are not facing the door. They are facing whatever is south of it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 17,
+      "y": 17,
+      "text": [
+        "Three arches, cut for a great many people to come through at once.",
+        "The floor under them is worn into hollows the shape of feet.",
+        "Whatever these people did in the room ahead, they did it often."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 18,
+      "text": [
+        "A floodlamp on a bracket, and the bracket bolted into the carving.",
+        "Four holes, drilled through a face somebody spent a season cutting.",
+        "The bit is still bright in the last hole. This was done this week."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 24,
+      "y": 18,
+      "text": [
+        "A survey console at the water's edge, screen dark, cable trailing in.",
+        "The last entry on the paper roll beside it is a depth.",
+        "It is not a depth a room has. It is a depth a sea has."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 21,
+      "text": [
+        "The top of a column, and you are level with the capital.",
+        "There is a mark cut round it, a hand's width above the water.",
+        "It is a water line. Somebody cut it here to say: this is where the sea should stop."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 30,
+      "text": [
+        "A ring twice your height, and there are eighteen of them in this circle.",
+        "The stone is cold and the spiral in the floor runs into its foot.",
+        "It has been quiet for three thousand years and it is still pointing at the middle."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 19,
+      "y": 30,
+      "text": [
+        "A ring of steel and glass on a cradle, bolted through the spiral.",
+        "It is a quarter the size of the ones around it and it hums.",
+        "RING 12 OF 12. MODIFIED. DO NOT ENERGISE ABOVE THE CHAMBER."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 14,
+      "y": 5,
+      "item": "rouse",
+      "quantity": 2,
+      "flag": "item_tdr_camp"
+    },
+    {
+      "kind": "item",
+      "x": 8,
+      "y": 15,
+      "item": "great_potion",
+      "quantity": 2,
+      "flag": "item_tdr_aisle"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 33,
+      "y": 18,
+      "item": "full_heal",
+      "quantity": 1,
+      "flag": "item_tdr_lip"
+    },
+    {
+      "kind": "item",
+      "x": 28,
+      "y": 23,
+      "item": "deep_vessel",
+      "quantity": 3,
+      "flag": "item_tdr_drum"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 11,
+      "y": 23,
+      "item": "full_rouse",
+      "quantity": 1,
+      "flag": "item_tdr_nave"
+    }
+  ]
+}

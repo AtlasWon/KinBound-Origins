@@ -1,0 +1,154 @@
+[
+  {
+    "id": "tds_officer",
+    "_note": "THE DIFFICULTY VALVE ON THIS FLOOR, AND THE ONE PERSON ON IT WHO STAYS.\n\nThe player has asked four times for an easier game and the hardest battle in the story is one stair up from this room. Sennhal heals the party, for nothing, as often as asked, and she is a Meridian officer in a Meridian coat -- which is not a contrivance, it is CANON.md: 'most employees are genuinely doing good work and have no idea'. She is a conservation vet. Her job is hurt Kin. She has hurt Kin in front of her. She does not need to know whose they are and it does not occur to her to ask.\n\nSHE IS THE ONLY ONE WITHOUT hiddenIfFlag td_power_done. When the scene upstairs runs, Tarin comes down and moves Meridian's people off this floor and the other three go; she does not, because what she is looking after cannot walk out on its own. Her post-flag line is four words about that and no more.\n\nNOTHING IN THIS FILE TOUCHES THE CLIMAX. No flag here is read by data/events/temple_deep_power.json and no flag there is set here; the only shared flag is td_power_done, which that scene sets and this floor only reads.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "td_power_done" },
+        "then": [
+          {
+            "kind": "say",
+            "who": "OFFICER SENNHAL",
+            "lines": [
+              "Everyone went up the stair or out along the trench. I have nine here that cannot.",
+              "So. No."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "who": "OFFICER SENNHAL",
+            "lines": [
+              "Conservation. Nine of ours came off the array this week with their ears ringing.",
+              "I have the bay, the kit and the afternoon, and nobody has told me to stop."
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "ask",
+        "lines": [
+          "Sit them down. I am not going to ask you anything.",
+          "Rest your kin here?"
+        ],
+        "yes": [
+          { "kind": "sfx", "sound": "item_heal" },
+          { "kind": "healParty" },
+          { "kind": "wait", "frames": 30 },
+          {
+            "kind": "say",
+            "lines": [
+              "She works down the line without hurrying and without saying anything at all.",
+              "Every one of your kin is on its feet by the time she reaches the end of it."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "OFFICER SENNHAL",
+            "lines": [
+              "There. Whoever you are.",
+              "If somebody upstairs has a view about that they can come down and have it at me."
+            ]
+          }
+        ],
+        "no": [
+          {
+            "kind": "say",
+            "who": "OFFICER SENNHAL",
+            "lines": [
+              "Fine. The bay is here and it is here all night."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "tds_fitter",
+    "_note": "The fitter from the Aureline basement, three acts and one sailing later. He is not named there either -- the capital author gave him the plate FOUNDATION FITTER and a line about cutting the rings down himself and not enjoying a day of it. This is the same man standing in front of the nine cradles he was nine short of, and the whole of his part is that he finished.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "FOUNDATION FITTER",
+        "lines": [
+          "Nine cradles short, I said. Nine to go and no more of the metal anywhere in Averra.",
+          "Well. There was some. It was in a floor in the east and now it is on a sea bed."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "FOUNDATION FITTER",
+        "lines": [
+          "Sixty for sixty. Every one of them cut down, re-wound and set true by hand.",
+          "It is the best work I will ever do and I would like somebody to take it off me."
+        ]
+      },
+      {
+        "kind": "if",
+        "cond": { "kind": "hasArt", "art": "swim" },
+        "then": [
+          {
+            "kind": "say",
+            "who": "FOUNDATION FITTER",
+            "lines": [
+              "You came up out of the water. Nobody comes up out of the water.",
+              "Go on then. I am a fitter. I am not a gate."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "tds_hand",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "WORKS HAND",
+        "lines": [
+          "Sixty generators on the mainland and eight down here, and they all pull the same trunk.",
+          "Do not stand on the trench rail. It is a rail. It is not a floor."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "WORKS HAND",
+        "lines": [
+          "Cable goes out that wall and down. Two miles of it, they say, and then it spreads.",
+          "I have loaded it, spliced it and paid it out and I have never seen the far end."
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "tds_young",
+    "_note": "The Aureline basement had a junior surveyor whose mother lost her village to a hurricane and who had never seen the sea, and who said that everything they had told her was true, and that she checked. This is the same argument standing on the other side of it: somebody who has now seen the sea. Nothing here draws the comparison.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "JUNIOR SURVEYOR",
+        "lines": [
+          "First time on a boat. First time out of sight of a road. I was sick for two days.",
+          "It was worth it. I have wanted to see this since I was eleven."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "JUNIOR SURVEYOR",
+        "lines": [
+          "Everything on this floor is a weather programme. Everything I have been told is true.",
+          "I keep checking, and it keeps being true, and I keep checking anyway."
+        ]
+      }
+    ]
+  }
+]

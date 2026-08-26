@@ -8,6 +8,64 @@ Add a new `## vX.Y.Z` heading above the others before running `npm run ship`.
 
 ---
 
+## v0.18.0
+
+### They all came
+
+Eight Crests, and then a summons to a mole east of Tideglass. Six boats made off
+along the north side with their gangways already down before anyone says a word.
+
+Four Hallkeepers came and four sent word instead, and which did which is not
+random. Marit Vane is there because she told you once to go and ask Cassian what
+he does the first time the sea says no, and you never got the chance. Roxen
+Quill has never in her life been out of sight of land. Alder is eighty-one and
+six days' walk away. Ord sent forty people instead of himself.
+
+Tarin says goodbye at the head of the mole and walks up the gangway of a
+different boat. You do not see him again out there — you only feel it, three
+times, when the deck jumps and every lamp goes out and somewhere a tower stops
+transmitting.
+
+### The Temple of the Deep
+
+A drowned Aurelian city with grey legs going up out of it, and a deck on top you
+cannot see the end of. Meridian's scaffolding is bolted through a wall somebody
+carved, and you walk through that seam rather than being told about it.
+
+Below the waterline the plan you read about in a laboratory in the capital has
+stopped being a document. The nine empty cradles were dated for the end of the
+month. It is the end of the month.
+
+**You learn to swim down here**, which opens water you have been walking past
+since Tideglass.
+
+### Neravoss
+
+It is not a boss fight and it does not have a health bar. Neither do you.
+
+Four parts, and each is a different thing to do: stay alive while it thrashes;
+get the machine off it, timed against its own breathing, where a miss makes it
+cry out and the storm worse rather than reducing a number; use your father's
+keepsake for what it was actually built for; and then close the distance on its
+terms — move while it watches and you lose ground, move when it settles and you
+gain.
+
+There is no Vessel in the scene and no bag to open one from.
+
+The last of the stone, your starter walks alone.
+
+### Afterwards
+
+Meridian is opened up. The commander is arrested for a vessel that did not come
+back eleven years ago. Cassian accepts what he did, which is not the same as
+being forgiven for it, and he does not ask to be.
+
+Lyra keeps the Foundation and turns it into what it always claimed to be.
+
+Then the weather stops, and Caelora starts putting its roofs back on, and there
+is a road out of Crownspire that you and Tarin have been talking about since you
+were children.
+
 ## v0.17.0
 
 ### The climb

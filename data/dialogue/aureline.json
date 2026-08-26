@@ -67,7 +67,8 @@
     "au_high_builder": "BUILDER",
     "au_high_teacher": "SCHOOLTEACHER",
     "au_summit_gate": "REGISTRY CLERK",
-    "au_summit_hopeful": "HOPEFUL"
+    "au_summit_hopeful": "HOPEFUL",
+    "au_notice_reader": "CIVIL SERVANT"
   },
   "entries": {
     "au_gatewarden": [
@@ -137,6 +138,16 @@
       }
     ],
     "au_market_fishwife": [
+      {
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Slab is full and it is the wrong fish entirely and I do not care in the slightest.",
+          "Rail came back Monday and the boats came back Tuesday and I got both in the same week.",
+          "I have written to the woman in Tideglass. I still have not met her. I put four pages."
+        ]
+      },
       {
         "ifFlags": [
           "act4_done"
@@ -341,6 +352,26 @@
     "au_park_keeper": [
       {
         "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "A hundred and ninety came in and about sixty have gone. The rest of them have decided.",
+          "They are on the plain side now, off the paths, and the grass will not stand a winter of it.",
+          "Four times they asked me to fence it. Now they are asking me to fence them in. Same answer."
+        ]
+      },
+      {
+        "ifFlags": [
+          "neravoss_restrained"
+        ],
+        "lines": [
+          "I have stopped counting. There is no path and there is no lawn, there is only what they are lying on.",
+          "People have come up here as well now, with bags, and sat down in among them. Nothing happened.",
+          "Forty years I have kept the two of them apart on this grass. Neither of them ever needed me to."
+        ]
+      },
+      {
+        "ifFlags": [
           "act4_done"
         ],
         "lines": [
@@ -414,6 +445,16 @@
       }
     ],
     "au_spires_broker": [
+      {
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Weather cover is being written again, at a price that has made two very calm men shout.",
+          "Four houses opened their books on Thursday. One of them has not and I do not think it will.",
+          "I was right and I have made nothing whatever out of it, and I have decided that is fine. It is not fine."
+        ]
+      },
       {
         "ifFlags": [
           "act4_done"
@@ -531,6 +572,16 @@
     "au_square_sitter": [
       {
         "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "The flowers are still round the basin and somebody keeps replacing them. Nobody organised that either.",
+          "There is a card wedged under the inscription now. It says THIS YEAR AS WELL and nobody has taken it down.",
+          "It is a history lesson again. That is the whole of what I asked for and I would like it noted that I got it."
+        ]
+      },
+      {
+        "ifFlags": [
           "act4_done"
         ],
         "lines": [
@@ -565,6 +616,26 @@
     "au_station_clerk": [
       {
         "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Frostmere, Skyreach, the coast line, the Eastern Halt. Running, all four, since Monday.",
+          "The Eastern Halt is single line while they make the cutting good, so it runs late. Late is a luxury.",
+          "I have started saying weather again. It has gone back to meaning weather."
+        ]
+      },
+      {
+        "ifFlags": [
+          "neravoss_restrained"
+        ],
+        "lines": [
+          "All of them. There is no line out of this city today, and I am still stood at this window.",
+          "They have stopped asking me for tickets. They ask me where the ground is high, and I am from here, so I know.",
+          "Bell Hill, the Terraces, the park above the basin. I have said it four hundred times and I will keep saying it."
+        ]
+      },
+      {
+        "ifFlags": [
           "act4_done"
         ],
         "lines": [
@@ -581,6 +652,16 @@
       }
     ],
     "au_station_frostmere": [
+      {
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "I got there. Nine days on a bag and four on a coach, and she had been fine the entire time.",
+          "She had written. Three letters, in a sack, in a shed at the eight-mile, under four feet of water.",
+          "I am going back for her at the end of the month. On a train. Sitting down, like a person."
+        ]
+      },
       {
         "ifFlags": [
           "act4_done"
@@ -668,6 +749,15 @@
         "lines": [
           "Seven. I have seven. I have had seven for four months.",
           "Crownspire will not have me and I cannot make myself go anywhere else. Do not be me."
+        ]
+      }
+    ],
+    "au_notice_reader": [
+      {
+        "lines": [
+          "The whole floor plan of that building is pinned up outside it. Room by room. Including the ones under.",
+          "Nineteen years in the capital and I have never once seen a building do that to itself.",
+          "A seventeen-year-old had it printed on Thursday and nobody has taken it down."
         ]
       }
     ]

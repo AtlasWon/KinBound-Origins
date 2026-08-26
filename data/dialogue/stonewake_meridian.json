@@ -8,6 +8,16 @@
     "sw_mer_desk": [
       {
         "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Come in, look at anything, ask anything. This week I mean that in a way I did not before.",
+          "There is a notice in the window with four names on it and a date against each one. Read it going past.",
+          "We are a Foundation. People gave us money. They are owed a great deal more than a look at it."
+        ]
+      },
+      {
+        "ifFlags": [
           "crest_2_taken"
         ],
         "lines": [
@@ -24,6 +34,16 @@
     ],
     "sw_mer_tech": [
       {
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Eleven stations, on a bicycle, and every reading I take now goes to the Press on the Friday.",
+          "They asked me whether I minded. Nobody in eleven years has asked me whether I minded anything.",
+          "Ask me about April. Go on. This time actually ask me about April."
+        ]
+      },
+      {
         "lines": [
           "Forty weather stations and I service eleven of them, on a bicycle.",
           "You would not believe what it does to a person, reading rain for a living.",
@@ -32,6 +52,16 @@
       }
     ],
     "sw_mer_visitor": [
+      {
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "My brother is still on the coast. He has written four pages, which he has never once done.",
+          "He did not know. Nobody on his floor knew. He read it in a paper the same as the rest of us.",
+          "He is staying. He says somebody down there ought to be a person who is only good at instruments."
+        ]
+      },
       {
         "lines": [
           "My brother went to them in the spring. Better wage than the sheds,",

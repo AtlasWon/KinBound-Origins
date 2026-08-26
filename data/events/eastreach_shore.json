@@ -1,0 +1,172 @@
+[
+  {
+    "id": "sh_landing",
+    "_note": "STAGE 6, THE OPERATION, BEAT 3: THE LANDING, AND THE FIRST SIGHT OF WHAT MERIDIAN HAVE BUILT ON TOP OF A DROWNED RUIN.\n\nTHE PICTURE IS ON THE MAP AND THIS SCENE ONLY POINTS AT IT. Black cliff, a shingle beach with the boats up on it, an Aurelian avenue standing in the sea with its roofs in two rows, and four grey legs going up out of it to a deck nobody can see the top of. Three boxes, and none of them says 'graveyard'.\n\nIT SETS RESPAWN. The player has asked four times for an easier game and the hardest battle in the story is two maps north. A whiteout on the platform should put them back on this beach beside a clinic hand, not in Tideglass eleven miles away, and setRespawn with explicit coordinates is the whole of that.\n\nIT SETS op_landed. That is the flag the Tarin ledger's `towers` row opens on -- see src/systems/tarin.ts -- which is how the world starts describing him as being somewhere else the moment the player is standing on the island without him.",
+    "trigger": "enter",
+    "map": "eastreach_shore",
+    "onceFlag": "sh_landing_done",
+    "actions": [
+      { "kind": "wait", "frames": 26 },
+      {
+        "kind": "say",
+        "lines": [
+          "Shingle, black and loose and steep, and the boats are up it on their bellies.",
+          "There is no other landing anywhere. The rest of the island is a wall."
+        ]
+      },
+      { "kind": "wait", "frames": 16 },
+      { "kind": "sfx", "sound": "thunder" },
+      { "kind": "shake", "frames": 26, "power": 3 },
+      {
+        "kind": "say",
+        "lines": [
+          "The legs come down into the water east of the beach and go up out of sight.",
+          "They are so far above you that the rain coming off the deck arrives late."
+        ]
+      },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "who": "PROFESSOR SORRELL",
+        "lines": [
+          "There is no room on this rock for a hut. That is why it is all still down there.",
+          "Nobody ever built over the top of it. Until somebody did."
+        ]
+      },
+      { "kind": "wait", "frames": 14 },
+      { "kind": "healParty" },
+      { "kind": "sfx", "sound": "heal_done" },
+      {
+        "kind": "setRespawn",
+        "map": "eastreach_shore",
+        "x": 9,
+        "y": 21
+      },
+      { "kind": "setFlag", "flag": "op_landed" }
+    ]
+  },
+
+  {
+    "id": "sh_vane",
+    "_note": "MARIT VANE ON THE BEACH, AND THE ONE THING SHE MUST NOT DO HERE IS TEACH SWIM.\n\nSwim is hers, and she gives it -- two maps north, on the last dry step inside the temple, in data/events/temple_deep_tunnels.json. That build owns it. What is left for her on this beach is the reason the plank exists, which is a better line anyway: Meridian bolted a walkway down the middle of a street because they could not get a hull over the roofs, and the operation is walking in on their own pontoon.\n\nHer second block is the come-back-later pointer, said once, in her voice, and not laboured: there is a roof off the plank with something on it and no way to reach it today.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "sh_vane_met" },
+        "then": [
+          {
+            "kind": "say",
+            "who": "MARIT VANE",
+            "lines": [
+              "Down the middle of the plank and do not look over the side of it.",
+              "There is a doorway under you. You will stop, and stopping is how people go in."
+            ]
+          },
+          { "kind": "end" }
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "MARIT VANE",
+        "lines": [
+          "No boat gets past this line. There is a roof four feet under that water,",
+          "and it will take the bottom out of anything you care to try it with."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "MARIT VANE",
+        "lines": [
+          "So they bolted a walkway down the middle of the street instead.",
+          "Straight along what used to be the road, on the ridge of what used to be the houses."
+        ]
+      },
+      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "say",
+        "who": "MARIT VANE",
+        "lines": [
+          "Everything either side of that plank is over your head and stays over your head.",
+          "One day you will be able to go and look. Today you walk down the middle."
+        ]
+      },
+      { "kind": "setFlag", "flag": "sh_vane_met" }
+    ]
+  },
+
+  {
+    "id": "sh_healer",
+    "_note": "THE LAST HEAL BEFORE THE TEMPLE, and it is unlimited and says so. Respawn is set on this beach by the landing scene, so the clinic hand is also what a player who loses on the platform wakes up next to.",
+    "trigger": "interact",
+    "actions": [
+      { "kind": "healParty" },
+      { "kind": "sfx", "sound": "heal_done" },
+      {
+        "kind": "say",
+        "who": "CLINIC HAND",
+        "lines": [
+          "Everyone, every time, as often as you like.",
+          "I have four crates of bandage and nothing whatsoever to do with them yet."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "CLINIC HAND",
+        "lines": [
+          "If it goes badly up there, come down. That is not advice, it is the plan.",
+          "Down is a beach with a kettle on it. Up is not."
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "sh_lyra",
+    "_note": "LYRA'S LAST WORD BEFORE THE TEMPLE, and the reason she is inside it when the player gets there.\n\nSHE DOES NOT COME UP THE STAIR WITH THE PLAYER, and that is deliberate on two counts. In the story it is the only honest thing for her to do -- she is the one person here who can walk into a Meridian works and be waved through, so she goes in the way she has always gone in. Mechanically it hands her to whoever staged the Crown Works without either build having to own her twice.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "sh_lyra_shore" },
+        "then": [
+          {
+            "kind": "say",
+            "who": "LYRA",
+            "lines": [
+              "Front door. Do not knock, do not run, and do not look up at the crest.",
+              "Everyone who works there stopped looking up at it in their first week."
+            ]
+          },
+          { "kind": "end" }
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "There is a pump shaft on the west leg and it goes all the way down.",
+          "Fenn's people can rig it in twenty minutes. I am going in that way."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "Not because it is clever. Because I can walk into a Foundation works and be waved through,",
+          "and today that is the only thing I am actually for."
+        ]
+      },
+      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "say",
+        "who": "LYRA",
+        "lines": [
+          "You go up the stair and in at the front.",
+          "He will be looking at the sea. He has been looking at the sea for eleven years."
+        ]
+      },
+      { "kind": "setFlag", "flag": "sh_lyra_shore" }
+    ]
+  }
+]

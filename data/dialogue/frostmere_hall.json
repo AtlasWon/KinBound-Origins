@@ -10,7 +10,9 @@
   "entries": {
     "fmhall_clerk": [
       {
-        "ifFlags": ["crest_6_taken"],
+        "ifFlags": [
+          "crest_6_taken"
+        ],
         "lines": [
           "Marked you back up. Both columns match and the book is straight.",
           "Eira sent word that she is staying down a while. She always does, after one."
@@ -35,7 +37,19 @@
     ],
     "fmhall_offshift": [
       {
-        "ifFlags": ["act4_done"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Pots on the ice: four. Four is a normal night. I have never been so glad of a number in my life.",
+          "Nineteen fires and not one hole stayed open. Four fires and all four of them do.",
+          "Do not ask me to explain it. I asked the Keeper and the Keeper said the same word I would have."
+        ]
+      },
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
         "lines": [
           "Pots on the ice: nineteen. We have never had more than eleven out at once.",
           "Nineteen fires holding nineteen holes open, and the holes keep closing anyway,",
@@ -60,7 +74,19 @@
     ],
     "fmhall_lodger": [
       {
-        "ifFlags": ["act4_done"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "I am going home tomorrow. Our chimney is fine, our fuel is fine, and the house is going to be very quiet.",
+          "Sixteen bunks with somebody breathing in every one, for a fortnight. I am going to miss it and I know it.",
+          "I offered the Keeper money and was laughed at, so I have left it under a pot."
+        ]
+      },
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
         "lines": [
           "Our chimney is fine and our fuel is fine. I am here because the house is very quiet.",
           "Sixteen bunks with somebody breathing in every one. It turns out that is the thing."

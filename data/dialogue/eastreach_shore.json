@@ -1,0 +1,69 @@
+{
+  "_note": "THE DROWNED SHORE, the voices that are not scenes.\n\nTHE SIGNALMAN IS HOW TARIN IS FELT. Canon gives him the other half of the operation -- he is taking Meridian's towers off the ring while the player walks in at the front -- and the whole problem of writing that is that he is eleven miles of nothing away and can never be on screen. So there is a man on this beach with a glass on the north tower, and his line changes three times, on op_tower_1, op_tower_2 and op_tower_3, which are set by the three step beats up on the platform in data/events/eastreach_platform.json.\n\nThe player therefore hears about Tarin's work TWICE and from two directions: the deck lurching under their own feet as each relay goes, and then, if they walk back down for a heal, a man on a beach telling them the count. Neither of those is Tarin saying anything, and that is the point of the whole arrangement.\n\nTALLOW READS THE WATER because that is her entire character -- she reads piles for a living and Mirehaven is agreed rather than built -- and she is the only person in the act who says out loud that the sea is behaving like something is under it.",
+  "speakers": {
+    "sh_signal": "SIGNAL HAND",
+    "sh_tallow": "ANNIK TALLOW",
+    "sh_sorrell": "PROFESSOR SORRELL"
+  },
+  "entries": {
+    "sh_signal": [
+      {
+        "ifFlags": ["op_tower_3"],
+        "lines": [
+          "Three. All three, and the fourth went before I had the glass back up.",
+          "Whatever else happens on this island today, that boy did his part of it."
+        ]
+      },
+      {
+        "ifFlags": ["op_tower_2"],
+        "lines": [
+          "Two. Two towers dark, and the second one came a quarter of an hour early.",
+          "He is going faster than he told anybody he would, which is very like him."
+        ]
+      },
+      {
+        "ifFlags": ["op_tower_1"],
+        "lines": [
+          "One. The north tower has gone out and it has stayed out.",
+          "He said he would do them in order and he has started in order."
+        ]
+      },
+      {
+        "lines": [
+          "I have a glass on the north tower and nothing on it yet.",
+          "Three flashes when a relay goes. That was his idea and I told him it was showing off."
+        ]
+      }
+    ],
+    "sh_tallow": [
+      {
+        "ifFlags": ["op_tower_1"],
+        "lines": [
+          "The set of it changed when that tower went dark. Within the minute.",
+          "I have read piles for thirty years. Water does not answer machinery. It is answering something else."
+        ]
+      },
+      {
+        "lines": [
+          "This shingle is a week old. Two, at the outside.",
+          "The sea threw all of this up here recently and in a hurry, and I would like to know what for."
+        ]
+      }
+    ],
+    "sh_sorrell": [
+      {
+        "ifFlags": ["op_tower_1"],
+        "lines": [
+          "One of the anchor towers has stopped. I felt the legs take it up through the shingle.",
+          "That is nineteen people and a boy from Hearthmere doing something I could not have planned."
+        ]
+      },
+      {
+        "lines": [
+          "Every doorway down there faces the same way. Inland, away from the sea.",
+          "They knew. Three thousand years ago they built this town knowing which way to face."
+        ]
+      }
+    ]
+  }
+}

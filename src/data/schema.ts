@@ -455,6 +455,17 @@ export type EventAction =
   | { kind: 'openStorage' }
   | { kind: 'setRespawn'; map?: string; x?: number; y?: number }
   | { kind: 'starterChoice'; options: string[] }
+  /**
+   * Hand the screen to a bespoke set piece by name, and block until it is
+   * finished. The named scene is built by `setPieceScene` in
+   * src/scenes/neravoss.ts, which is the registry of these.
+   *
+   * This exists so that a beat which genuinely needs its own screen -- the
+   * Neravoss encounter is the first -- is still reached the way every other
+   * beat in this game is reached: a line of JSON on a map. An unknown id is a
+   * no-op, so a script can name a set piece the build does not carry yet.
+   */
+  | { kind: 'setPiece'; id: string }
   | { kind: 'if'; cond: EventCondition; then: EventAction[]; else?: EventAction[] }
   | { kind: 'call'; script: string }
   | { kind: 'end' };

@@ -1,9 +1,24 @@
 {
-  "speakers": { "fmcc_cutter": "SIX GENERATIONS", "fmcc_son": "HIS SON" },
+  "speakers": {
+    "fmcc_cutter": "SIX GENERATIONS",
+    "fmcc_son": "HIS SON"
+  },
   "entries": {
     "fmcc_cutter": [
       {
-        "ifFlags": ["act4_done"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Saws are off the wall and in the ice, and I have not looked at the wall once since.",
+          "Three times this month they came down and went back up. It was the fourth time that counted.",
+          "My hands have stopped doing that thing. I never told anybody they were doing it."
+        ]
+      },
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
         "lines": [
           "The saws are down off the wall, oiled, and back up on the wall again.",
           "Third time this month. There is nothing else to do with my hands and they know it."
@@ -19,7 +34,19 @@
     ],
     "fmcc_son": [
       {
-        "ifFlags": ["act4_done"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "I filed my name in on Tuesday. You do it the winter you first cut, and I cut.",
+          "Six generations, and mine is the shortest name on the beam and the deepest one in it.",
+          "My father did not say anything. He went and stood outside for a while."
+        ]
+      },
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
         "lines": [
           "I have not filed my name in yet. You do it the winter you first cut.",
           "Nobody has said anything about that. Everybody in this house has thought about it."

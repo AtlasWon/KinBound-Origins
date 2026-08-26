@@ -552,6 +552,18 @@
         "kind": "lookAround"
       },
       "script": "ef_offduty_smith"
+    },
+    {
+      "id": "ef_slabman",
+      "sprite": "dockhand",
+      "x": 19,
+      "y": 29,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ef_slabman",
+      "requiresFlag": "act6_done"
     }
   ],
   "objects": [

@@ -331,6 +331,18 @@
         "kind": "lookAround"
       },
       "script": "mh_gossip"
+    },
+    {
+      "id": "mh_lamphand",
+      "sprite": "netmender",
+      "x": 25,
+      "y": 24,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "mh_lamphand",
+      "requiresFlag": "act6_done"
     }
   ],
   "objects": [

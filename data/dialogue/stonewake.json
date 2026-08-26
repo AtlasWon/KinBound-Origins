@@ -14,12 +14,15 @@
     "sw_carter": "CARTER",
     "sw_lamplighter": "LAMPLIGHTER",
     "sw_clinic_queue": "WOMAN WITH A BASKET",
-    "town_tarin": "TARIN"
+    "town_tarin": "TARIN",
+    "sw_notice_reader": "QUARRYMAN'S MOTHER"
   },
   "entries": {
     "sw_foreman": [
       {
-        "ifFlags": ["crest_2_taken"],
+        "ifFlags": [
+          "crest_2_taken"
+        ],
         "lines": [
           "She gave you the Crest? Roxen doesn't hand those out, she loses them on purpose.",
           "So you made her work. Good. Somebody should.",
@@ -46,7 +49,9 @@
     ],
     "sw_banksman": [
       {
-        "ifFlags": ["crest_2_taken"],
+        "ifFlags": [
+          "crest_2_taken"
+        ],
         "lines": [
           "You came up out of her hole with a Crest on you. That's a first this year.",
           "There's a stopped working at the west end, if you're feeling strong.",
@@ -68,7 +73,9 @@
     ],
     "sw_hall_crier": [
       {
-        "ifFlags": ["crest_2_taken"],
+        "ifFlags": [
+          "crest_2_taken"
+        ],
         "lines": [
           "Four down this month. One up. You.",
           "The board goes up on the Hall door at noon and the whole terrace comes to read it.",
@@ -76,7 +83,9 @@
         ]
       },
       {
-        "ifFlags": ["tarin_at_stonewake"],
+        "ifFlags": [
+          "tarin_at_stonewake"
+        ],
         "lines": [
           "You want the Hall? Sign here, and then go down. Down, not in.",
           "There was a lad through here yesterday with the same look on his face.",
@@ -93,7 +102,29 @@
     ],
     "sw_warden": [
       {
-        "ifFlags": ["act4_done"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Ramp road opened on Tuesday. I stood at the second bend for an hour before I would say it out loud.",
+          "The wind is doing what wind on a ridge does, which is what it likes, which is correct.",
+          "Go the short way. Eat something first anyway. That advice has never once been about the weather."
+        ]
+      },
+      {
+        "ifFlags": [
+          "neravoss_restrained"
+        ],
+        "lines": [
+          "Ramp road is open. I opened it myself, in that wind, against every rule I have got.",
+          "There are people coming up it out of the low country, and they are not stopping in Stonewake either.",
+          "So it stays open. I will stand at the top of it and count them and I will not shut it again."
+        ]
+      },
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
         "lines": [
           "I told you the weather on the ridge does as it pleases. I would like that back, please.",
           "Ramp road is shut above the second bend. Not the stone. The wind. I have never shut it for wind.",
@@ -101,7 +132,9 @@
         ]
       },
       {
-        "ifFlags": ["crest_2_taken"],
+        "ifFlags": [
+          "crest_2_taken"
+        ],
         "lines": [
           "Two Crests. Kerb Street east, then, and the coast road after that.",
           "It is a long walk and the weather on the ridge does as it pleases.",
@@ -109,7 +142,9 @@
         ]
       },
       {
-        "ifFlags": ["crest_1_taken"],
+        "ifFlags": [
+          "crest_1_taken"
+        ],
         "lines": [
           "Ramp road behind me, up to the terrace: quarry works and the Stone Hall.",
           "Down there: Kerb Street, the market, the clinic on the corner.",
@@ -151,7 +186,9 @@
     ],
     "sw_curator_out": [
       {
-        "ifFlags": ["met_lyra"],
+        "ifFlags": [
+          "met_lyra"
+        ],
         "lines": [
           "Have you been in? Good. Go back. There's a case at the far end",
           "with eleven things in it I have not been able to explain in thirty years,",
@@ -168,7 +205,9 @@
     ],
     "sw_meridian_greeter": [
       {
-        "ifFlags": ["crest_2_taken"],
+        "ifFlags": [
+          "crest_2_taken"
+        ],
         "lines": [
           "Congratulations on the Crest. Genuinely - the whole office heard about it.",
           "If you're going east, do call in at our Tideglass rooms.",
@@ -185,7 +224,19 @@
     ],
     "sw_carter": [
       {
-        "ifFlags": ["act4_done"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "The cistern has gone back under its lip and there is a tidemark on Kerb Street four feet up.",
+          "Half the market is scrubbing it off and the other half is arguing to leave it there.",
+          "Four inches down in the spring. It is a question with an answer now and I do not like the answer better."
+        ]
+      },
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
         "lines": [
           "The cistern went over the lip on Tuesday and it has not stopped going over since.",
           "Down Kerb Street, into the market, and the market is on a slope so you can watch it choose.",
@@ -203,7 +254,19 @@
     ],
     "sw_lamplighter": [
       {
-        "ifFlags": ["act4_done"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Lit every one of them going up last night and every one of them was still lit coming back down.",
+          "Eleven minutes. It has taken me eleven minutes for nineteen years.",
+          "Come out at dusk anyway. There is a great deal to see and all of it is exactly where it was."
+        ]
+      },
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
         "lines": [
           "I light them going up and the wind has them out again before I am four lamps on.",
           "So I have stopped. Nobody has ever seen this city dark and nobody is thanking me for it.",
@@ -234,6 +297,15 @@
           "There you are! Right. Two things.",
           "One: the Foundation office has thrown me out twice and I have questions.",
           "Two: Roxen Quill put me on the floor of her own mine. Twice. In one day."
+        ]
+      }
+    ],
+    "sw_notice_reader": [
+      {
+        "lines": [
+          "Four names and a date against each one. That is the notice now, where the storm cards used to go.",
+          "My son works for them down on the coast. His name is not on it. I checked twice before I breathed.",
+          "Free tour still runs on the hour. Nobody has taken it since Monday. I might go on Thursday."
         ]
       }
     ]

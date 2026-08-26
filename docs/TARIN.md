@@ -380,3 +380,51 @@ Shots land in `build/shots/t5-*`. It stages the scenes through the event runner
 on `tideglass_warehouse` rather than walking to them, because the three
 settlements were still being built when it was written — none of the scenes
 moves an actor, so none of them needs him standing there to run.
+
+---
+
+## Stage 6: Act 6, the operation
+
+Three beats, **none of them in person**, no battle, and the Crest column does
+not move because there is nothing left for it to move to. This is the only
+stretch of the game where he is written as an absence on purpose.
+
+| # | Beat | Opens on | Crests | In person? |
+|---|---|---|---|---|
+| 1 | `muster` | `eastreach_muster` visited / `op_called` | 8 | yes, once, at the far end of the quay |
+| 2 | `crossing` | `eastreach_launch` visited / `op_sailed` | 8 | no — he is on the other boat |
+| 3 | `towers` | `op_landed` / `eastreach_shore` visited | 8 | no, and he must not be |
+
+Canon gives him the other half of the operation: he disables Meridian's towers
+while the player moves on the central facility. So he says goodbye on the mole,
+walks up the gangway of a different boat, and is not seen again until the
+aftermath. **The parting is the only scene** — `op_tarin` in
+`data/events/eastreach_muster.json` — and after it the map's own
+`hiddenIfFlag: op_tarin_gone` keeps him gone across a reload.
+
+**He is heard rather than reported, and from two directions.** Three step beats
+on the outer deck (`pf_tower_1/2/3` in `data/events/eastreach_platform.json`)
+shake the deck, drop every lamp on it and set `op_tower_1`, `_2` and `_3`. Those
+three flags are then read by four voices that are nothing to do with him: the
+two Meridian on the deck get progressively worse dialogue, the signalman on the
+beach counts the towers off through a glass, Annik Tallow reads the change in
+the water, and Sorrell feels it come up through the shingle. **Nothing anywhere
+quotes him.** Each tower band is the full width of the only row the road can
+cross, so none of the three can be walked round.
+
+**These are the first ledger rows in the game that need no `common.json`
+variant.** The gossip voices are townspeople and this act has no towns in it —
+a mole, a boat, a beach and a rig, and everybody on all four is in the
+operation and speaks in their own map's file. A player who walks back to
+Tideglass mid-act falls through to the ungated fallback, which is the correct
+answer: nobody in that city knows anything yet.
+
+### Files added
+
+```
+src/systems/tarin.ts                    three Act 6 rows, above the aftermath row
+data/events/eastreach_muster.json       op_tarin, the parting, and the gate on boarding
+data/events/eastreach_platform.json     the three tower beats
+data/dialogue/eastreach_shore.json      sh_signal, who counts them off
+tools/shots/opbeats.js                  walks the whole act and prints the ledger at the end
+```

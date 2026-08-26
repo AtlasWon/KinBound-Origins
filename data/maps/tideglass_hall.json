@@ -85,6 +85,17 @@
         "kind": "static"
       },
       "script": "tg_hall_stairhand"
+    },
+    {
+      "id": "tgh_gossip",
+      "sprite": "villager_m",
+      "x": 13,
+      "y": 10,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tarin_word_hall"
     }
   ],
   "objects": [

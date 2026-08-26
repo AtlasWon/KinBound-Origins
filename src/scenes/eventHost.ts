@@ -18,6 +18,7 @@ import { createKin } from '../systems/kin.js';
 import { StarterScene } from './starter.js';
 import { ShopScene } from './shop.js';
 import { RoostScene } from './roost.js';
+import { setPieceScene } from './neravoss.js';
 import { audio, sfxNotes, type SfxOptions } from '../audio/audio.js';
 import { DETAIL, SCREEN_W, SCREEN_H, type Renderer } from '../engine/renderer.js';
 import { iconSprite } from '../gfx/kinsprite.js';
@@ -319,6 +320,23 @@ export class OverworldEventHost implements EventHost {
     this.game.scenes.push(new StarterScene(this.state, options, (chosen) => {
       done(chosen);
     }));
+  }
+
+  /**
+   * Hand the screen to a bespoke set piece and block the script until it ends.
+   *
+   * An unknown id releases the script immediately rather than stranding it,
+   * because a story file naming a set piece this build does not carry must
+   * degrade to "nothing happened", never to a locked player.
+   */
+  setPiece(id: string, done: () => void): void {
+    const scene = setPieceScene(id, { game: this.game, state: this.state, done });
+    if (!scene) {
+      console.warn(`event: unknown set piece "${id}"`);
+      done();
+      return;
+    }
+    this.game.scenes.push(scene);
   }
 
   /* ----------------------------------------------------------- dialogue */

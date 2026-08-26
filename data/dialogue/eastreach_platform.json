@@ -1,0 +1,67 @@
+{
+  "_note": "ABYSS CROWN, THE OUTER DECK. Two people who are not trainers, and both of them are here to make the same point canon insists on: most of the Foundation are doing good work and have no idea. Neither of these two is a villain, neither is stupid, and neither will lift a finger against a sixteen-year-old walking past them in a storm.\n\nBOTH READ THE TOWER FLAGS. op_tower_1, _2 and _3 are set by the three step beats in data/events/eastreach_platform.json as Tarin takes the ring apart, and the whole reason the variants are stacked newest-first is that the SAME PERSON should be a different person the third time the player walks past. The scientist goes from proud to unsure to frightened. The clerk goes from bored to evasive to honest, and his last variant is the only line on the deck that says out loud what the drums are holding.\n\nThey are also the record of what Meridian told their own people, which is: a survey. Four hundred of them, eleven years, and a survey is what is on the paperwork.",
+  "speakers": {
+    "pf_sci": "FOUNDATION SURVEYOR",
+    "pf_clerk": "DECK CLERK"
+  },
+  "entries": {
+    "pf_sci": [
+      {
+        "ifFlags": ["op_tower_3"],
+        "lines": [
+          "I have been logging pressure off that ring for two years and I have never seen it go negative.",
+          "Something down there is pulling. I would like somebody senior to come and tell me it is not."
+        ]
+      },
+      {
+        "ifFlags": ["op_tower_2"],
+        "lines": [
+          "Two relays. They are meant to be redundant, which is a word I have used a great deal this year.",
+          "I am now not sure I know what it was redundant against."
+        ]
+      },
+      {
+        "ifFlags": ["op_tower_1"],
+        "lines": [
+          "That was not weather. I have four years of weather on this deck in a book.",
+          "Excuse me. I need to go and read my own book."
+        ]
+      },
+      {
+        "lines": [
+          "Deepest continuously occupied survey site in Averra. Two hundred and forty metres of water.",
+          "My name is going to be on the paper. I have been telling my mother for eleven months."
+        ]
+      }
+    ],
+    "pf_clerk": [
+      {
+        "ifFlags": ["op_tower_3"],
+        "lines": [
+          "There is nothing on the ends of those drums. That is what I have been signing for eight months.",
+          "Six ring elements, at two hundred and forty metres, going round something. I can do that arithmetic too."
+        ]
+      },
+      {
+        "ifFlags": ["op_tower_2"],
+        "lines": [
+          "I am not authorised to discuss the ring elements and I have never once been told what they are.",
+          "Those are two separate sentences and I would like both of them written down."
+        ]
+      },
+      {
+        "ifFlags": ["op_tower_1"],
+        "lines": [
+          "Do not go north. The north bay is Dr. Veyl's and it has been Dr. Veyl's since Tuesday.",
+          "He has not come out. Not once, and there is no bed in there."
+        ]
+      },
+      {
+        "lines": [
+          "Survey site. Big one. Everything goes down and nothing comes up, which is normal for a survey.",
+          "You are not on my list and I have stopped keeping the list. It is that sort of week."
+        ]
+      }
+    ]
+  }
+}

@@ -11,12 +11,25 @@
     "fm_shorewatch": "SHORE WATCH",
     "fm_sledger": "SLEDGE HAND",
     "fm_trailhand": "TRAIL HAND",
-    "fm_metcrew": "FOUNDATION OBSERVER"
+    "fm_metcrew": "FOUNDATION OBSERVER",
+    "fm_homegoer": "GOING HOME"
   },
   "entries": {
     "fm_warden": [
       {
-        "ifFlags": ["act4_done"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "In today: nineteen. Out today: four. You can see how much I like that better.",
+          "Both the Foundation ones came down off the trail and one of them shook my hand, which we do not do here.",
+          "I have started the column again. It is a stupid thing to be pleased about and I am pleased about it."
+        ]
+      },
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
         "lines": [
           "In today: nine. Out today: eleven. You can see the problem with that.",
           "Two of them are Foundation and they went up the trail, so I have stopped counting them.",
@@ -33,7 +46,19 @@
     ],
     "fm_ropekeeper": [
       {
-        "ifFlags": ["act4_done"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "The wind came off the pass on Thursday and it has not come back down.",
+          "I have trimmed every lamp twice this week. Once because they needed it and once out of pure habit.",
+          "Ropes stay up until the thaw. I still do not care how that looks."
+        ]
+      },
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
         "lines": [
           "I have trimmed every lamp on this street twice this week and I will do it again tonight.",
           "The wind is coming down the pass in a way it does in March. It is not March.",
@@ -50,7 +75,9 @@
     ],
     "fm_hall_queue": [
       {
-        "ifFlags": ["crest_6_taken"],
+        "ifFlags": [
+          "crest_6_taken"
+        ],
         "lines": [
           "You went down and came back up and Eira let you have it. Good.",
           "She would not have, if you had gone across it the way people do the first time."
@@ -66,7 +93,19 @@
     ],
     "fm_child": [
       {
-        "ifFlags": ["act4_done"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Dad says we can go on the lake. Not the middle bit.",
+          "He said the middle bit. He said it exactly the way he says it every year.",
+          "I have never been so pleased to be told off about the middle bit."
+        ]
+      },
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
         "lines": [
           "Dad says we are not to go on the lake. Not the middle bit, ANY of it.",
           "He has never said any of it before. He says the middle bit every year."
@@ -81,7 +120,19 @@
     ],
     "fm_woodward": [
       {
-        "ifFlags": ["act4_done"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Four households were on nothing. Three are cutting again and the fourth is at the saw tomorrow.",
+          "The Hall has not asked for the fuel back and is not going to be allowed to.",
+          "They came out of the inn one at a time over four days. Nobody stood and watched them go."
+        ]
+      },
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
         "lines": [
           "Four households on nothing and it is not the middle of the season yet.",
           "They are all ice families. No cut, no wage, no fuel. It runs downhill like that.",
@@ -98,7 +149,19 @@
     ],
     "fm_icemaster": [
       {
-        "ifFlags": ["act4_done"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Nine inches this morning. Nine, up from five, in eleven days, and it is still making.",
+          "Twelve is a floor and I will have twelve before the month is out.",
+          "I have ruled the rain column out. I have left it in the book. I am not going to pretend it did not happen."
+        ]
+      },
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
         "lines": [
           "Twelve inches is a floor. Five is a lid. I have five, and I have had five for eleven days.",
           "Rain. In this valley, at this height, in the deep of the year. Twice.",
@@ -115,7 +178,18 @@
     ],
     "fm_icecutter": [
       {
-        "ifFlags": ["act4_done"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "The saw is in the ice.",
+          "That is all I have to say and I have said it about forty times today and I am going to say it again."
+        ]
+      },
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
         "lines": [
           "Saw is oiled. Sled is greased. Team is fed. Ice is five inches.",
           "So I stand here, and I look at it, and at noon I go and look at it again."
@@ -131,7 +205,19 @@
     ],
     "fm_shorewatch": [
       {
-        "ifFlags": ["act4_done"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "They went back up the mountain. Four of them, the same four, in the dark, the other way.",
+          "They did not stop on the way out either.",
+          "I liked it a great deal better this time and I could not give you one reason why."
+        ]
+      },
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
         "lines": [
           "Something came in off the mountain last night and went along the shore in the dark.",
           "Four of them. Big. Not ours -- ours would not come down to the water.",
@@ -156,7 +242,19 @@
     ],
     "fm_trailhand": [
       {
-        "ifFlags": ["act4_done"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "The weather came off the shoulder on Thursday and went somewhere else, the way weather does.",
+          "I took a party up on Sunday. Four hours. Exactly four hours, the way it has always been.",
+          "There is ice on the second cairn that has not been there in ten years. It will go. Everything else has."
+        ]
+      },
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
         "lines": [
           "Four hours up, and I would not, not this week, not for anybody.",
           "There is weather sitting on the shoulder that has not moved in nine days.",
@@ -173,7 +271,29 @@
     ],
     "fm_metcrew": [
       {
-        "ifFlags": ["act4_done"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Eleven identical days and then a twelfth that was not, and I have sent that one down the wire eight times.",
+          "They have recalled me. There is a different name at the bottom of the letter and it says come home.",
+          "I am staying to the end of the month. Somebody should be here to watch the ice go past twelve."
+        ]
+      },
+      {
+        "ifFlags": [
+          "neravoss_restrained"
+        ],
+        "lines": [
+          "The wire went at four. I have been sending into nothing since four.",
+          "Pressure, wind, cloud base. Three times a day, down a wire with the far end lying in a field past Skyreach.",
+          "I am writing it in the book as well. Somebody is going to want eleven days of this, afterwards."
+        ]
+      },
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
         "lines": [
           "Pressure, wind, cloud base, three times a day, and I send it down the wire at six.",
           "I have sent the same reading eleven days running and it is not an instrument fault.",
@@ -185,6 +305,15 @@
           "Upper Caelora Station. Foundation work, and honest work: somebody has to measure it.",
           "The cable? It goes on up the mountain to another set. Not mine, not my department.",
           "I have never been asked what that set is for and I have stopped noticing that."
+        ]
+      }
+    ],
+    "fm_homegoer": [
+      {
+        "lines": [
+          "A fortnight in the Hall with fifteen other people, and now I have to carry my own bedding up the hill.",
+          "There is a fire in my house tonight because four people I never asked went up and lit it.",
+          "I have not worked out what to say to any of them. I have until the thaw to think of something."
         ]
       }
     ]

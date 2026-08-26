@@ -345,6 +345,27 @@ export const STAGES = [
   // once, because a trainer already defeated pays nothing the second time.
   { name: 'Crownspire', grass: null, wilds: 0,
     trainers: ['cs_steward_hollis', 'cs_steward_derrin', 'cs_steward_mabe', 'cs_keeper_ord'] },
+  /*
+   * Stage 6, the operation: the East Quay, the crossing, the drowned shore and
+   * Meridian's outer deck. Four trainers and no grass at all -- there is no
+   * wild allowance anywhere in this act, because a wild encounter in the middle
+   * of a rescue would be a different game.
+   *
+   * ALL FOUR ARE LISTED AND ONLY TWO CAN BE FORCED, so this row is the CEILING
+   * of what the operation pays, exactly as the Hall rows above it are. The
+   * lookout on the stairhead watches the only tile that reaches the platform
+   * stair and the two north catwalks are one tile wide with somebody on each,
+   * so a player who takes the west road meets the lookout, the deck lead and
+   * nobody else; the deckhand in the south bay and the technician on the east
+   * catwalk are both avoidable.
+   *
+   * THE ROW UNDER THIS ONE IS THE TEMPLE'S AND IT IS NOT MINE TO WRITE. The
+   * td_* and tdr_* trainers are already in trainers.json with Commander Kell's
+   * ace at 44; append them here in road order, below this line, and the table
+   * will report the climax against a player who has walked this deck first.
+   */
+  { name: 'The Operation', grass: null, wilds: 0,
+    trainers: ['op_shore_watch', 'op_deck_hand', 'op_deck_tech', 'op_deck_lead'] },
 ];
 
 /**

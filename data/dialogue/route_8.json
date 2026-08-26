@@ -18,7 +18,19 @@
     ],
     "r8_coachman": [
       {
-        "ifFlags": ["act4_done"],
+        "ifFlags": [
+          "act6_done"
+        ],
+        "lines": [
+          "Same boy came back down on Tuesday in the same coat with somebody else's blanket over it.",
+          "Gave me another message, and this time he told me who it was for.",
+          "I am not repeating it. Go and find him and make him say it to your face."
+        ]
+      },
+      {
+        "ifFlags": [
+          "act4_done"
+        ],
         "lines": [
           "Boy your age went up Tuesday in a coat for a different month entirely.",
           "Would not turn round. Gave me a message for somebody and would not say who.",
@@ -43,7 +55,9 @@
     ],
     "r8_hydro": [
       {
-        "ifFlags": ["act4_theft"],
+        "ifFlags": [
+          "act4_theft"
+        ],
         "lines": [
           "Honestly? I do not know. Pressure is dropping and the wind is backing and neither should be.",
           "I have written to Aureline four times. They send back a form saying the data is noted.",

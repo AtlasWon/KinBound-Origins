@@ -390,6 +390,18 @@
         "kind": "lookAround"
       },
       "script": "sw_clinic_queue"
+    },
+    {
+      "id": "sw_notice_reader",
+      "sprite": "villager_f",
+      "x": 13,
+      "y": 28,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sw_notice_reader",
+      "requiresFlag": "act6_done"
     }
   ],
   "objects": [

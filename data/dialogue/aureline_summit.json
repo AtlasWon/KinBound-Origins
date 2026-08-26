@@ -5,10 +5,34 @@
     "aur_sum_hopeful": "SIX-CREST TRAINER",
     "aur_sum_veteran": "OLD ASCENDER",
     "aur_sum_child": "SMALL BOY",
-    "aur_sum_trainer": "CITY TRAINER"
+    "aur_sum_trainer": "CITY TRAINER",
+    "aur_sum_tarin": "TARIN"
   },
   "entries": {
     "aur_sum_registrar": [
+      {
+        "ifFlags": ["summit_open"],
+        "lines": [
+          "Open. Four years shut and open, and I have not sat down since I did it.",
+          "No day, no list, no ceremony. You walk in through them when you have decided to.",
+          "Go home first. Everybody who has ever done well up there went home first."
+        ]
+      },
+      {
+        "ifFlags": ["act6_done"],
+        "lines": [
+          "Eight. Let me see them. Yes. All eight, and I have read what you did with the week after.",
+          "Stand at the counter and let me do this properly. I have been waiting four years to do it properly."
+        ]
+      },
+      {
+        "ifFlags": ["crest_8_taken"],
+        "lines": [
+          "Eight, and I am not going to open anything today, and you know why.",
+          "There is a sea out there behaving in a way no Master has an answer for.",
+          "The Ascent will keep. It has kept for four years. Go and do the other thing."
+        ]
+      },
       {
         "ifFlags": ["crest_5_taken"],
         "lines": [
@@ -25,7 +49,29 @@
         ]
       }
     ],
+    "aur_sum_tarin": [
+      {
+        "ifFlags": ["summit_open"],
+        "lines": [
+          "I am going to stand here until somebody makes me leave. It is a very good door.",
+          "Do not rush. I have waited eighty-nine places on a list, I can wait for you."
+        ]
+      },
+      {
+        "lines": [
+          "Eighty-ninth. Eighty-ninth of three hundred and eleven and I have checked it twice."
+        ]
+      }
+    ],
     "aur_sum_steward": [
+      {
+        "ifFlags": ["summit_open"],
+        "lines": [
+          "Eighty-one names and more gaps than names, and today the gaps stopped being the sad part.",
+          "Four of those years were people who were not quite ready. This one was a year with weather in it.",
+          "I have written that in the margin. Somebody will rub it out and I will write it again."
+        ]
+      },
       {
         "lines": [
           "Eighty-one Champions and more gaps than names. People find that grim.",
@@ -36,6 +82,14 @@
     ],
     "aur_sum_hopeful": [
       {
+        "ifFlags": ["act6_done"],
+        "lines": [
+          "The northern road opened on Thursday. Frostmere and Skyreach and I am going tonight.",
+          "Six months I have been in this room getting worse at everything.",
+          "I am going to be extremely bad at it out there instead. That is an improvement."
+        ]
+      },
+      {
         "lines": [
           "Six. Frostmere and Skyreach left and the northern road has been shut for eleven days.",
           "So I am sitting in the registry looking at a wall of gold names",
@@ -44,6 +98,14 @@
       }
     ],
     "aur_sum_veteran": [
+      {
+        "ifFlags": ["summit_open"],
+        "lines": [
+          "Sixty-one years and I have never heard those doors. I did not know they made a noise.",
+          "I have put my name back on the wall of failures in pencil, on the back, as usual.",
+          "Somebody will rub it off. I would like a turn at rubbing off somebody else's."
+        ]
+      },
       {
         "lines": [
           "Got through two Masters, in the year sixty. Lost to the third and never went back.",
@@ -54,6 +116,13 @@
     ],
     "aur_sum_child": [
       {
+        "ifFlags": ["summit_open"],
+        "lines": [
+          "I signed it again. You are allowed to sign it twice, I asked.",
+          "I am nine and the doors are open and that is two things now."
+        ]
+      },
+      {
         "lines": [
           "I signed the register of intent. You are allowed. It says anyone.",
           "I am nine. It commits you to nothing. It says so."
@@ -61,6 +130,14 @@
       }
     ],
     "aur_sum_trainer": [
+      {
+        "ifFlags": ["summit_open"],
+        "lines": [
+          "The one through the window has not stopped. Doors opened and she did not look up.",
+          "Same switch. Slightly better each time. Six in the morning until eleven at night.",
+          "That is what is behind those doors. Not a road. Her."
+        ]
+      },
       {
         "lines": [
           "Watch the one through the window doing the same switch over and over.",
