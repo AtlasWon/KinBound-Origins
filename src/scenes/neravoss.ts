@@ -54,6 +54,14 @@ import { backSprite } from '../gfx/kinsprite.js';
 import { getAppearanceSheet, CHAR_W, CHAR_H, type CharDir } from '../gfx/charsprite.js';
 import type { GameState } from '../systems/state.js';
 import { TIDEHEART } from '../systems/tideheart.js';
+// The post-credits film. This import and the one in postcredits.ts form a
+// cycle, and it is a safe one: neither module reads anything of the other's at
+// evaluation time -- the reference here is inside setPieceScene, the references
+// there are inside draw calls, and `postCreditsScene` is a hoisted function
+// declaration. Keep it that way if either file grows a top-level constant.
+import { postCreditsScene } from './postcredits.js';
+// The ending's chart of Averra. No cycle: averra.ts imports nothing from here.
+import { AverraScene } from './averra.js';
 
 /* ===================================================================== *
  *  THE SET-PIECE REGISTRY
@@ -72,6 +80,13 @@ export interface SetPieceContext {
 /** Builds the scene for a set-piece id, or null if the id is unknown. */
 export function setPieceScene(id: string, ctx: SetPieceContext): Scene | null {
   if (id === 'neravoss') return new NeravossScene(ctx.state, ctx.done);
+  // The post-credits cinematic. It lives in its own file and is registered here
+  // rather than there so that every bespoke screen in the game is reached the
+  // same way -- through one line of JSON in an event script.
+  if (id === 'postcredits') return postCreditsScene(ctx.state, ctx.done);
+  // Stage 7's ending: the chart of Averra unrolling on the player's own desk,
+  // called from data/events/hearthmere_house_up.json. See src/scenes/averra.ts.
+  if (id === 'averra') return new AverraScene(ctx.done);
   return null;
 }
 
@@ -102,8 +117,14 @@ const CLEAR = {
   foam: '#cfeaf0',
 } as const;
 
-/** The animal. Dark ocean colours, lit from above and from its own markings. */
-const BODY = {
+/**
+ * The animal. Dark ocean colours, lit from above and from its own markings.
+ *
+ * Exported because the post-credits cinematic draws this creature a second
+ * time, in a different pose, in a different place. It has to be the same
+ * animal: if these ever change, the one on the wall changes with them.
+ */
+export const BODY = {
   back: '#081420',
   mid: '#173950',
   belly: '#215a6d',
@@ -117,7 +138,7 @@ const BODY = {
  * Monotonic: every band is darker than the one above it. See the comment at
  * the draw site for why that is not a detail.
  */
-const BODY_BANDS = [
+export const BODY_BANDS = [
   { share: 0.13, color: '#6cc4da' },
   { share: 0.16, color: '#3f8da6' },
   { share: 0.24, color: '#255c72' },
@@ -126,7 +147,7 @@ const BODY_BANDS = [
 ];
 
 const GLOW_HURT = '#7fe2ff';
-const GLOW_CALM = '#9ff0d6';
+export const GLOW_CALM = '#9ff0d6';
 
 /**
  * What the confirm key is called in a prompt. Bindings are remappable, so every

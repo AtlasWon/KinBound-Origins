@@ -1,0 +1,52 @@
+[
+  {
+    "id": "sm_windstep_enter",
+    "$comment": "THE RESPAWN, AND IT IS THE MOST VALUABLE LINE IN THIS BUILD. Until something calls setRespawn the player is pinned to whatever clinic they last slept in, which for most players is Crownspire -- four miles and a mountain below the four Summit Masters and a Champion at level 52. A loss up there would throw them off the mountain and make them walk the whole Ascent again. This tile is one door below the first Master, so a whiteout anywhere in the climb wakes here, with the party healed, looking at the door they lost behind.\n\nTHE PLAYER HAS ASKED FOUR TIMES FOR AN EASIER GAME and this is the cheapest honest way to answer that at the top of the game: it does not touch a single trainer's bench, it does not make any of the five fights easier, and it removes the only thing about an endgame gauntlet that is genuinely unfair, which is the walk back.\n\nAn `enter` trigger with no onceFlag, because it has to fire again on the load that follows a whiteout. The long box is gated on a flag so every pass after the first is one line.\n\nTARIN'S LAST BATTLE BELONGS IN THIS FILE AND IS NOT IN IT. See _join on data/maps/summit_ascent.json: his tile is 9,6, facing down, sight range 6, with the one-tile Narrows at 9,7 below him. Whoever owns that fight should ADD scripts to this file rather than replace it -- this enter script is the respawn for the entire top of the game.",
+    "trigger": "enter",
+    "map": "summit_ascent",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "not", "of": { "kind": "flag", "flag": "sm_windstep_seen" } },
+        "then": [
+          {
+            "kind": "say",
+            "lines": [
+              "The stair does not go up inside the mountain. It comes out.",
+              "A notch cut clean through the ridge, open at both ends, with the sky in it."
+            ]
+          },
+          {
+            "kind": "say",
+            "lines": [
+              "Caelora is underneath you and there is a great deal of it.",
+              "Across the shelf, on the far side, there is a grey door in a grey wall with a number over it."
+            ]
+          },
+          {
+            "kind": "say",
+            "lines": [
+              "That is the last of the weather. Everything past that door is lamps.",
+              "Nine hundred years of people have stood on this shelf for a minute longer than they needed to."
+            ]
+          },
+          { "kind": "setFlag", "flag": "sm_windstep_seen" }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "lines": [
+              "The Wind Step, and the fire at the stair mouth has been kept in.",
+              "Somebody came up four hundred steps to do that and did not wait to be thanked."
+            ]
+          }
+        ]
+      },
+      { "kind": "setRespawn", "map": "summit_ascent", "x": 9, "y": 16 },
+      { "kind": "healParty" },
+      { "kind": "wait", "frames": 22 },
+      { "kind": "sfx", "sound": "heal_done" },
+      { "kind": "say", "lines": ["Your kin were put back together."] }
+    ]
+  }
+]

@@ -350,6 +350,22 @@
         "kind": "if",
         "cond": {
           "kind": "flag",
+          "flag": "tarin_at_summit_gate"
+        },
+        "then": [
+          {
+            "kind": "call",
+            "script": "tarin_summit"
+          },
+          {
+            "kind": "end"
+          }
+        ]
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
           "flag": "tarin_at_ridge"
         },
         "then": [
@@ -3681,6 +3697,657 @@
       {
         "kind": "wait",
         "frames": 14
+      }
+    ]
+  },
+  {
+    "_note": "STAGE 7, THE ENDING: THE ONE-LINE HANDOFF FROM THE SUMMIT.\n\nWHOEVER OWNS THE CHAMPION CALLS THIS AND NOTHING ELSE:\n\n    { \"kind\": \"call\", \"script\": \"ending_go_home\" }\n\nIt sets `champion`, fades, and puts the player at the top of the Hearthmere road at (14,1) -- the tile the road out of the village comes back in on. Everything after that is data/events/hearthmere.json, hearthmere_house_player.json and hearthmere_house_up.json, and none of it needs the Summit to know anything.\n\nIT LIVES IN common.json BECAUSE `call` SCRIPTS ARE LOOKED UP GLOBALLY AND EVENT FILES ARE LOADED PER MAP -- registry.loadScriptsFor only ever reads data/events/<current map>.json, so a script the Summit needs to reach from aureline_summit (or from wherever the Hall of Champions ends up) cannot live in a Hearthmere file. Same reason tideheart_gift is in here.\n\nIF NOBODY EVER CALLS IT the ending is not lost: every Hearthmere scene gates on the flag `champion` (hm_end_road also accepts `act7_done`), so a Summit that only sets the flag and leaves the player standing in the registry still gets the whole ending the moment they walk home. That is the fallback, not the plan -- canon's ending is the road, and a player who has just been made Champion of Caelora should not have to work out that the game wants them to go and see their mother.\n\nIT IS SAFE TO CALL TWICE. The guard is `not ending_seen`, so a script that fires it again after the credits does nothing at all.",
+    "id": "ending_go_home",
+    "trigger": "call",
+    "when": {
+      "kind": "not",
+      "of": {
+        "kind": "flag",
+        "flag": "ending_seen"
+      }
+    },
+    "actions": [
+      {
+        "kind": "setFlag",
+        "flag": "champion"
+      },
+      {
+        "kind": "fade",
+        "to": "black",
+        "frames": 40
+      },
+      {
+        "kind": "wait",
+        "frames": 30
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "It is a long way back down the region.",
+          "You do not remember much of it afterwards."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 24
+      },
+      {
+        "kind": "warp",
+        "map": "hearthmere",
+        "x": 14,
+        "y": 1,
+        "facing": "down"
+      },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "fade",
+        "to": "clear",
+        "frames": 40
+      },
+      {
+        "kind": "wait",
+        "frames": 20
+      }
+    ]
+  },
+  {
+    "id": "tarin_summit_gate",
+    "_note": "THE LAST RIVAL BATTLE IS DELIVERED BY THIS STEP TRIGGER AND BY NOTHING ELSE, WHICH IS THE WHOLE POINT OF IT. docs/TARIN.md records that the Frostmere battle shipped unreachable because it needed somebody else to stand a town_tarin on a map they owned and nobody did. This one needs nobody: the script, the actor and the scene are all in common.json, which is loaded on every map, and the trigger is filtered to summit_approach by the `map` field the way tarin_route1 is filtered to route_1.\n\nTHE TWO TILES CANNOT BE WALKED ROUND. data/maps/summit_approach.json row 4 is solid granite except for the door at 12,4 and 13,4, so 12,5 and 13,5 are the only tiles in Caelora from which that door can be entered. The band is therefore the full width of the way in, exactly like the three tower beats on the Eastreach platform, and there is no version of reaching the Summit that misses it.\n\nIT DOES NOT USE onceFlag, ON PURPOSE. EventRunner.start sets onceFlag the moment it starts, and the player is allowed to answer no to the ask -- so a once-only trigger would burn the whole battle on somebody who walked up to the door, said not yet, and went back down for a Full Restore. `when` does the gating instead, and it gates on tarin_summit_won rather than on tarin_summit_done so that a player who LOST still meets him on the step and can still ask for it again. That rematch is a difficulty valve and it must not be behind an actor nobody placed.\n\nAFTER A WIN IT GOES QUIET COMPLETELY -- no spawn, no box, nothing between the player and the door. A player who has beaten him and is walking back up to the Summit for the fourth time should not be stopped by a scene.\n\nTHE ACTOR IS SPAWNED RATHER THAN PLACED, which is the opposite of what docs/TARIN.md advises, and the reason the advice does not apply is that the warning there is about ENTER scripts: overworld.loadMap starts the first matching enter script and stops, so an enter-spawn loses to whatever else claimed the map. checkStepScripts has no such rule -- it walks every registered script every step -- and addNpcRuntime is idempotent by id, so crossing the tile twice cannot produce two Tarins. He is spawned at 15,5 on the swept platform, two tiles right of the door, which is empty terrain (CITY_PAVE, collision 0), carries no object, and is not on the walk to any sign.\n\nIF THE SUMMIT BUILD WOULD RATHER PLACE HIM, place a permanent NPC id \"town_tarin\", sprite \"rival\", script \"tarin_summit\", requiresFlag \"tarin_summit_won\" -- that is the window this script leaves empty, so the two cannot collide, and it buys the post-victory line back.",
+    "trigger": "step",
+    "map": "summit_approach",
+    "when": {
+      "kind": "all",
+      "of": [
+        {
+          "kind": "flag",
+          "flag": "tarin_at_summit_gate"
+        },
+        {
+          "kind": "not",
+          "of": {
+            "kind": "flag",
+            "flag": "tarin_summit_won"
+          }
+        }
+      ]
+    },
+    "at": [
+      {
+        "x": 12,
+        "y": 5
+      },
+      {
+        "x": 13,
+        "y": 5
+      }
+    ],
+    "actions": [
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "town_tarin",
+          "sprite": "rival",
+          "x": 15,
+          "y": 5,
+          "facing": "left",
+          "movement": {
+            "kind": "static"
+          },
+          "script": "tarin_summit"
+        }
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
+          "flag": "tarin_summit_done"
+        },
+        "then": [
+          {
+            "kind": "end"
+          }
+        ]
+      },
+      {
+        "kind": "call",
+        "script": "tarin_summit"
+      }
+    ]
+  },
+  {
+    "id": "tarin_summit",
+    "_note": "TARIN AT THE SUMMIT DOOR -- THE LAST RIVAL BATTLE. Canon: he challenges the player before they enter the highest level of the Summit, with six Kin, a fully evolved starter, a strong strategic team and high-level AI, and it should be one of the most memorable battles in the game. The team, the reasoning and every measured number are in the $comment on tarin_summit_sprigling in data/trainers/trainers.json.\n\nREACHED TWO WAYS AND IT NEEDS NEITHER OF THEM TO BE BUILT BY ANYBODY ELSE. `tarin_summit_gate` above is a step trigger on the two tiles below the Summit door and delivers the whole thing on its own; the tarin_at_summit_gate branch at the top of tarin_town calls this as well, so a generic town_tarin standing anywhere while the beat is open also works.\n\nWHOEVER OPENS THE HIGHEST LEVEL SHOULD GATE IT ON tarin_summit_done, which this scene sets on EITHER outcome. tarin_summit_won and tarin_summit_lost say which way it went, and canon asks for exactly that to decide who enters the championship challenge first -- so the Masters' door can read the pair of them and put the two of you through in the right order with nothing else agreed in advance.\n\nLOSING IS A BRANCH AND NOT A WALL, AND THAT IS THE DIFFICULTY VALVE. onLoss is \"continue\" on all three battle rows. The player has asked four times for an easier game and this is the hardest fight they will have won: so the party is healed on the way in, two Full Restores are handed over before the ask, the ask can be answered no and asked again as many times as you like, and after a loss the rematch stands every time he is spoken to. A player who never takes it STILL goes through the door, second, which is what canon says happens. The bench is not softened past the measured numbers -- see the trainers.json $comment for the one lever that moves them.\n\nCANON'S LINE FOR THE WHOLE RIVALRY IS \"I want to beat you because I respect you\", AND NEITHER OF THEM EVER SAYS IT. The nearest it comes is a boy admitting he sat on a step for four hours because he did not want his first look at the door to be one he had on his own, and, having lost, getting up and holding it. His `afterward` lines in trainers.json are the other half, and he denies them in the same breath.\n\nTHE SIX ARE INTRODUCED BEFORE THE FIGHT ON PURPOSE. The player has been hearing about Tarin's journey from strangers since Act 1 -- what he caught, where he got to first, what he lost to. Four of the six on the field came out of those reports. He says so once, badly, and refuses to call it a plan.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
+          "flag": "tarin_summit_won"
+        },
+        "then": [
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "They have put your name on the board above mine",
+              "and they have spelled it wrong."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "I have decided not to tell them."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "Go up. I will be on this step",
+              "when you come back down,",
+              "whichever way it goes."
+            ]
+          },
+          {
+            "kind": "end"
+          }
+        ]
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
+          "flag": "tarin_summit_done"
+        },
+        "then": [
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "I go through tonight.",
+              "You go through tomorrow.",
+              "Neither of us had to say it."
+            ]
+          },
+          {
+            "kind": "ask",
+            "lines": [
+              "Unless you want it again.",
+              "I have all night and no dignity left to protect."
+            ],
+            "yes": [
+              {
+                "kind": "healParty"
+              },
+              {
+                "kind": "wait",
+                "frames": 10
+              },
+              {
+                "kind": "if",
+                "cond": {
+                  "kind": "flag",
+                  "flag": "starter_sprigling"
+                },
+                "then": [
+                  {
+                    "kind": "battleTrainer",
+                    "trainer": "tarin_summit_rilltail",
+                    "onLoss": "continue"
+                  }
+                ],
+                "else": [
+                  {
+                    "kind": "if",
+                    "cond": {
+                      "kind": "flag",
+                      "flag": "starter_cinderpaw"
+                    },
+                    "then": [
+                      {
+                        "kind": "battleTrainer",
+                        "trainer": "tarin_summit_sprigling",
+                        "onLoss": "continue"
+                      }
+                    ],
+                    "else": [
+                      {
+                        "kind": "battleTrainer",
+                        "trainer": "tarin_summit_cinderpaw",
+                        "onLoss": "continue"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "if",
+                "cond": {
+                  "kind": "var",
+                  "var": "last_battle_won",
+                  "op": "==",
+                  "value": 1
+                },
+                "then": [
+                  {
+                    "kind": "say",
+                    "who": "TARIN",
+                    "lines": [
+                      "...Right. Then it is tomorrow for me",
+                      "and tonight for you, and I do not mind."
+                    ]
+                  },
+                  {
+                    "kind": "say",
+                    "who": "TARIN",
+                    "lines": [
+                      "Go on. I want to say I watched you do it."
+                    ]
+                  },
+                  {
+                    "kind": "setFlag",
+                    "flag": "tarin_summit_won"
+                  },
+                  {
+                    "kind": "setFlag",
+                    "flag": "tarin_summit_lost",
+                    "value": false
+                  }
+                ],
+                "else": [
+                  {
+                    "kind": "say",
+                    "who": "TARIN",
+                    "lines": [
+                      "Twice. Ask me again in an hour.",
+                      "I will still be here, being unbearable."
+                    ]
+                  }
+                ]
+              }
+            ],
+            "no": [
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "Then get some sleep.",
+                  "Neither of us is going to. Get some anyway."
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "end"
+          }
+        ]
+      },
+      {
+        "kind": "sfx",
+        "sound": "spotted"
+      },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The platform is swept and empty,",
+          "except for one person sitting on the step."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 10
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "His back is against the mountain,",
+          "and he is facing the way you came up."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 12
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Four hours I have been up here.",
+          "I have not turned round once."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "I did not want my first proper look",
+          "at it to be one I had on my own."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 12
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Do you remember the lawn?",
+          "One Kin each, six levels, your mother at the window."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "I have thought about that morning",
+          "every day of this year and never once said so."
+        ]
+      },
+      {
+        "kind": "choice",
+        "lines": [
+          "He gets up. He is not joking,",
+          "which from him is the loudest",
+          "thing in the world."
+        ],
+        "options": [
+          {
+            "label": "Neither have I.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "Good. Then we are both idiots",
+                  "about it, and neither of us",
+                  "has to explain."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "You just did.",
+            "then": [
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "I did. Do not get used to it.",
+                  "It is the altitude. That is the official reason."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 12
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Six of them. You will know four."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "That is not a strategy.",
+          "That is just who came with me."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 10
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "He sends the first one out early,",
+          "so it is standing there while he talks."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "It is the Tuftail off Route 1.",
+          "It is enormous now, and it still",
+          "stands on his left."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 14
+      },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Here. I bought these in Crownspire",
+          "and carried them up a mountain. Work it out."
+        ]
+      },
+      {
+        "kind": "giveItem",
+        "item": "full_restore",
+        "count": 2
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Tarin handed over 2 Full Restores."
+        ]
+      },
+      {
+        "kind": "sfx",
+        "sound": "item"
+      },
+      {
+        "kind": "healParty"
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "He waits while you patch them up,",
+          "and has the manners not to watch."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 12
+      },
+      {
+        "kind": "ask",
+        "lines": [
+          "One of us goes through tonight.",
+          "One of us goes through tomorrow.",
+          "I would like to know which."
+        ],
+        "yes": [
+          {
+            "kind": "wait",
+            "frames": 10
+          },
+          {
+            "kind": "if",
+            "cond": {
+              "kind": "flag",
+              "flag": "starter_sprigling"
+            },
+            "then": [
+              {
+                "kind": "battleTrainer",
+                "trainer": "tarin_summit_rilltail",
+                "onLoss": "continue"
+              }
+            ],
+            "else": [
+              {
+                "kind": "if",
+                "cond": {
+                  "kind": "flag",
+                  "flag": "starter_cinderpaw"
+                },
+                "then": [
+                  {
+                    "kind": "battleTrainer",
+                    "trainer": "tarin_summit_sprigling",
+                    "onLoss": "continue"
+                  }
+                ],
+                "else": [
+                  {
+                    "kind": "battleTrainer",
+                    "trainer": "tarin_summit_cinderpaw",
+                    "onLoss": "continue"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "if",
+            "cond": {
+              "kind": "var",
+              "var": "last_battle_won",
+              "op": "==",
+              "value": 1
+            },
+            "then": [
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "...Right.",
+                  "That is the best I have ever been,",
+                  "and it is still behind you."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "Do not be kind about it.",
+                  "I want to be furious later and enjoy it properly."
+                ]
+              },
+              {
+                "kind": "wait",
+                "frames": 14
+              },
+              {
+                "kind": "say",
+                "lines": [
+                  "He gets the door, and leans on it,",
+                  "and holds it open with both hands."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "Tonight is yours. Go on.",
+                  "I want to say I watched you do it."
+                ]
+              },
+              {
+                "kind": "setFlag",
+                "flag": "tarin_summit_won"
+              },
+              {
+                "kind": "setFlag",
+                "flag": "tarin_summit_done"
+              }
+            ],
+            "else": [
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "I won. I have wanted that since",
+                  "I was nine, and it lasted",
+                  "about four seconds."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "Get them seen to.",
+                  "I go tonight. You go tomorrow."
+                ]
+              },
+              {
+                "kind": "wait",
+                "frames": 12
+              },
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "And I will be insufferable about it.",
+                  "Eat something first."
+                ]
+              },
+              {
+                "kind": "setFlag",
+                "flag": "tarin_summit_lost"
+              },
+              {
+                "kind": "setFlag",
+                "flag": "tarin_summit_done"
+              }
+            ]
+          },
+          {
+            "kind": "wait",
+            "frames": 16
+          },
+          {
+            "kind": "say",
+            "lines": [
+              "Behind the door there is more stair.",
+              "It is not decorated. It never needed to be."
+            ]
+          }
+        ],
+        "no": [
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "Then it keeps.",
+              "It has kept nine years.",
+              "It will keep an afternoon."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "TARIN",
+            "lines": [
+              "I am not going through without you,",
+              "and I am not saying that a second time."
+            ]
+          }
+        ]
       }
     ]
   }

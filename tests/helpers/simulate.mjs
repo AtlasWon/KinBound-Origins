@@ -366,6 +366,79 @@ export const STAGES = [
    */
   { name: 'The Operation', grass: null, wilds: 0,
     trainers: ['op_shore_watch', 'op_deck_hand', 'op_deck_tech', 'op_deck_lead'] },
+  /*
+   * The Temple, appended exactly as the note above this line asks. The two gate
+   * fights and the ruin, then the yard, the plant, the tower and the deck, then
+   * Commander Kell. `temple_deep` is the only grass in the act and eight fights
+   * is a generous allowance for a dungeon a player is crossing on business, so
+   * this row is if anything still under-counting.
+   *
+   * IT IS HERE BECAUSE THE ASCENT BELOW IT CANNOT BE MEASURED WITHOUT IT. Every
+   * win rate on the mountain is relative to the level a player arrives with, and
+   * with this row missing that number was three levels low.
+   */
+  { name: 'The Temple', grass: 'temple_deep', wilds: 8,
+    trainers: ['tdr_gate_syl', 'tdr_gate_orren', 'tdr_ruin_bern', 'td_yard_ostrey',
+      'td_plant_vasse', 'td_tower_hale', 'td_deck_marrow', 'td_kell'] },
+  /*
+   * STAGE 7, THE ASCENT: the road from Crownspire's north gate to the Summit
+   * door. Six maps and eighteen Trainers, in the order the road runs.
+   *
+   * TWO OF THESE FIVE ROWS ARE OPTIONAL AND ARE LISTED ANYWAY, because this
+   * table is the CEILING of what the road pays. The terrace keeper is behind a
+   * thorn wall (Clear) and the two at the High Waystation are up a side spur
+   * across a meltwater cut, so a player who takes neither arrives at the Summit
+   * about a level and a half under the numbers below -- which is the margin the
+   * encounter tables were cut against.
+   *
+   * THE CEILING ABOVE THIS BLOCK IS SOMEBODY ELSE'S. The Summit's four Masters
+   * top out at 49 and its Champion at 52, and Tarin's last battle is a 49. The
+   * Ascent therefore runs 43 to 48 and never touches 49. If the Summit re-cuts
+   * its levels, this road should move with it and not the other way about:
+   * canon says the Champion is the hardest normal Trainer battle in the game.
+   *
+   * THE SUMMIT'S OWN ROWS BELONG UNDER THIS LINE and are not mine to write --
+   * summit_master_power, _control, _adapt, _bonds and summit_champion are all
+   * already in trainers.json, and the last rival battle is one of the three
+   * tarin_summit_* ids keyed on the player's starter.
+   */
+  { name: 'Ascent Road', grass: 'ascent_road', wilds: 14,
+    trainers: ['asr_pilgrim', 'asr_carrier', 'asr_ford', 'asr_terrace', 'asr_falls'] },
+  { name: 'The Throat', grass: 'ascent_deep', wilds: 10,
+    trainers: ['asd_delver', 'asd_sump', 'asd_stonecrew'] },
+  { name: 'West Shoulder', grass: 'ascent_shelf', wilds: 14,
+    trainers: ['ass_warden', 'ass_ropewalk', 'ass_cairn', 'ass_notch'] },
+  { name: 'Waystation', grass: 'ascent_ruin', wilds: 8,
+    trainers: ['asu_pilgrim', 'asu_scholar'] },
+  { name: 'The Crown', grass: 'ascent_crown', wilds: 12,
+    trainers: ['asc_snowline', 'asc_tarn', 'asc_cornice', 'asc_lastwarden'] },
+  /*
+   * THE SUMMIT, filled into the slot the Ascent left open above. Tarin's last
+   * battle, the four Masters and the Champion, in the order the doors open.
+   * No grass anywhere: nothing lives on this mountain above the Waystation,
+   * and a wild encounter between two Masters would be a different game.
+   *
+   * `tarin_summit` is the rival and is resolved through RIVAL below, exactly
+   * as `tarin_first` and `tarin_town` are, because he mirrors the starter --
+   * six kin either way and the ace is the final form of whichever starter the
+   * player did NOT pick. Writing one of the three ids here directly would
+   * measure a fight two players in three never have.
+   *
+   * THE ROW UNDER THIS ONE IS THE POSTGAME'S AND IS STAGE 8's TO WRITE.
+   *
+   * WHY THIS ROW MATTERS MORE THAN ITS OWN CONTENTS. Everything above it pays
+   * out before the last fight, so the Champion's difficulty is a function of
+   * this whole table and not of his own levels. The first cut of that bench
+   * aced at 52 against a table that stopped at The Operation; when the Temple
+   * and the Ascent arrived the same six kin measured 93/84/98 for a novice
+   * and were softer than the eighth Hall. It aces at 55 now. ANYBODY WHO
+   * CHANGES WHAT THE ASCENT OR THE MASTERS PAY MUST RE-READ THE MEASURED
+   * TABLE IN THE $comment ON summit_champion IN data/trainers/trainers.json:
+   * every level this road adds is a level that bench owes.
+   */
+  { name: 'The Summit', grass: null, wilds: 0,
+    trainers: ['tarin_summit', 'summit_master_power', 'summit_master_control',
+      'summit_master_adapt', 'summit_master_bonds', 'summit_champion'] },
 ];
 
 /**
@@ -379,6 +452,7 @@ export const STAGES = [
 const RIVAL = {
   tarin_first: { sprigling: 'tarin_first_rilltail', cinderpaw: 'tarin_first_sprigling', rilltail: 'tarin_first_cinderpaw' },
   tarin_town: { sprigling: 'tarin_stonewake_rilltail', cinderpaw: 'tarin_stonewake_sprigling', rilltail: 'tarin_stonewake_cinderpaw' },
+  tarin_summit: { sprigling: 'tarin_summit_rilltail', cinderpaw: 'tarin_summit_sprigling', rilltail: 'tarin_summit_cinderpaw' },
 };
 export const trainerFor = (id, starter) => RIVAL[id]?.[starter] ?? id;
 

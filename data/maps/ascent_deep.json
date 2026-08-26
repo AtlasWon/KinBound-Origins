@@ -1,0 +1,265 @@
+{
+  "id": "ascent_deep",
+  "name": "The Throat",
+  "displayName": "THE ASCENT - THE THROAT",
+  "music": "station",
+  "battleBackdrop": "cave",
+  "indoor": false,
+  "dark": true,
+  "fog": 0.18,
+  "regionPos": {
+    "x": 25,
+    "y": 6
+  },
+  "encounterTable": "ascent_deep",
+  "warps": [
+    {
+      "x": 9,
+      "y": 41,
+      "toMap": "ascent_road",
+      "toX": 9,
+      "toY": 5,
+      "facing": "down",
+      "style": "cave"
+    },
+    {
+      "x": 10,
+      "y": 41,
+      "toMap": "ascent_road",
+      "toX": 10,
+      "toY": 5,
+      "facing": "down",
+      "style": "cave"
+    },
+    {
+      "x": 44,
+      "y": 2,
+      "toMap": "ascent_shelf",
+      "toX": 7,
+      "toY": 48,
+      "facing": "up",
+      "style": "cave"
+    },
+    {
+      "x": 45,
+      "y": 2,
+      "toMap": "ascent_shelf",
+      "toX": 8,
+      "toY": 48,
+      "facing": "up",
+      "style": "cave"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "asd_delver",
+      "sprite": "hiker",
+      "x": 15,
+      "y": 37,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "asd_delver",
+      "sightRange": 4
+    },
+    {
+      "id": "asd_sump",
+      "sprite": "villager_m",
+      "x": 20,
+      "y": 32,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "asd_sump",
+      "sightRange": 3
+    },
+    {
+      "id": "asd_lampwright",
+      "sprite": "elder",
+      "x": 24,
+      "y": 23,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "asd_lampwright"
+    },
+    {
+      "id": "asd_stonecrew",
+      "sprite": "porter",
+      "x": 33,
+      "y": 19,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "asd_stonecrew",
+      "sightRange": 4
+    }
+  ],
+  "objects": [
+    {
+      "kind": "script",
+      "x": 12,
+      "y": 40,
+      "text": [
+        "The road stops. The mountain does not.",
+        "Somebody has cut a hand and an arrow into the rock, pointing in. That is the whole sign."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 14,
+      "y": 24,
+      "text": [
+        "The lake. There is no shore on three sides of it and nobody knows how deep it goes.",
+        "A rope is made off on the ledge and runs down into it. The end has never come back up."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 27,
+      "y": 14,
+      "text": [
+        "Three sockets cut into the floor, and three stones lying where the roof dropped them.",
+        "The sockets are a great deal older than the rockfall. Somebody meant this to be a door."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 41,
+      "y": 13,
+      "text": [
+        "The foot of a stair, cut in one flight, going up further than the light reaches.",
+        "There are lamps down both walls the whole way. Not one of them is lit."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 43,
+      "y": 7,
+      "text": [
+        "The head of the stair, and the flight below it burning all the way down.",
+        "Nine hundred years of soot on the lamp hoods, and every one of them still draws."
+      ]
+    },
+    {
+      "kind": "switch",
+      "x": 26,
+      "y": 16
+    },
+    {
+      "kind": "switch",
+      "x": 30,
+      "y": 16
+    },
+    {
+      "kind": "switch",
+      "x": 34,
+      "y": 16
+    },
+    {
+      "kind": "pushable",
+      "x": 26,
+      "y": 20
+    },
+    {
+      "kind": "pushable",
+      "x": 30,
+      "y": 20
+    },
+    {
+      "kind": "pushable",
+      "x": 34,
+      "y": 20
+    },
+    {
+      "kind": "item",
+      "x": 20,
+      "y": 41,
+      "item": "great_potion",
+      "quantity": 3,
+      "flag": "item_asd_entry"
+    },
+    {
+      "kind": "item",
+      "x": 29,
+      "y": 12,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_asd_gallery"
+    },
+    {
+      "kind": "item",
+      "x": 9,
+      "y": 27,
+      "item": "deep_vessel",
+      "quantity": 5,
+      "flag": "item_asd_shoal"
+    },
+    {
+      "kind": "item",
+      "x": 46,
+      "y": 5,
+      "item": "full_rouse",
+      "quantity": 2,
+      "flag": "item_asd_head"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 6,
+      "y": 34,
+      "item": "ward_incense",
+      "quantity": 2,
+      "flag": "item_asd_hidden"
+    }
+  ],
+  "rows": [
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC====CCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCΩΩΘΘΘΩΩCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCΩΘΘ≡ΘΘΩCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCΦΘΘΘΘΘΦCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCΩΘΘ≡ΘΘΩCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCΩΩΩΩΩΩΩCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCΩΩΩΩΩΩΩCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCΩΩΩΩΩΩΩCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCìììì∇∇∇∇∇∇∇∇∇∇∇ΩΘΘ≡ΘΘΩCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCìììì∇∇∇ìììì∇∇∇∇ΦΘΘΘΘΘΦCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCC∇ìììì∇ììììì∇∇∇∇ΘΘΘΘΘΘΩCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCC∇ìììììììììì∇∇∇´ΩΘΘ≡ΘΘΩCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCC´ììììììì∇∇∇∇∇∇∇ΩΩΩΩΩΩΩCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCC===x===x===x======CCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCC==================CCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCC==================CCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCC==================CCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCC==================CCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCC==================CCCCCCCCCCC",
+    "CCCCCCììììì∇∇∇∇∇∇∇∇∇∇∇∇==================CCCCCCCCCCC",
+    "CCCCCC∇=====================∇∇∇CCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCC∇∇WWWWWWWWWWWWWWWWW∇∇∇∇∇∇CCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCC∇ìWWWWWWWWWWWWWWWWW∇∇∇∇∇∇CCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCììWWWWWWWWWWWWWWWWW∇∇∇∇∇∇CCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCììW∇∇WWWWWWWWWWWWWW∇∇∇∇∇∇CCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCììWWWWWWWWWWWWWWWWW∇∇∇∇∇∇CCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCììWWWWWWWWWWWWWWWWW∇∇∇∇∇∇CCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCììWWWWWWWWWWWWWWWWW∇∇∇∇∇ìCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCC∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇ìCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCC∇∇∇∇∇∇∇∇∇∇∇∆∇∇∇∇∇∇∇∇∇∇∇∇ìCCCCCCCCCCCCCCCCCCCCC",
+    "CCCC∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇CCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCC∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇CCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCC∇∇∇∇∇∇∇ììì∇∇∇∇∇∇ìì∇∇∇∇∇∇∇CCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCC∇∇∇∇∇∇∇ììì∇∇∇∇∇ììì∇∇∇∇∇∇∇CCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCC∇∇∇∇∇∇∇ììì∇∇∇∇∇ììì∇∇∇∇∇∇∇CCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCC∇∇∇∇∇∇∇ìììììììììììììì∇∇∇∇CCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCC∇∇∇∇∇∇∇∇ìììììììììììììì∇∇∇CCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCC∇∇∇∇====´ììììììì∇ìììììì∇∇CCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCC∇∇∇∇====∇ìììììì∇∇∇ììììì∇∇CCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCìì∇∇∇∇∇∇∇∇∇ììì∇∇∇∇∇ììììììCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"
+  ]
+}

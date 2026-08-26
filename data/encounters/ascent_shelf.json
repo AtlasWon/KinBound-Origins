@@ -1,0 +1,29 @@
+{
+  "mapId": "ascent_shelf",
+  "$comment": "THE WEST SHOULDER, and it is Frostmere's table and Skyreach's table stood on top of each other -- which is what the shoulder is: the snow line and the wind line in the same three hundred yards. Ten slots, and the whole top half of it is Kin the player last met four acts and two mountains ago.\n\nRIMEHOUND LEADS AT SIXTEEN. A Frost/Beast at 490 has been in the game since Route 8 and every previous table put it at levels the player has grown past; this is the band where it is worth the slot in a party. Galecrest at twelve is the second of the four best non-starter Kin the Ascent puts within reach and it is the highest weight it has anywhere in Caelora.\n\nMEASURED against a team-raiser at about 48-49 by the time they are on this map.",
+  "methods": {
+    "tallGrass": {
+      "rate": 150,
+      "slots": [
+        { "species": "rimehound", "minLevel": 45, "maxLevel": 47, "weight": 16 },
+        { "species": "craglide", "minLevel": 45, "maxLevel": 47, "weight": 14 },
+        { "species": "kestrelle", "minLevel": 44, "maxLevel": 46, "weight": 12 },
+        { "species": "galecrest", "minLevel": 46, "maxLevel": 48, "weight": 12 },
+        { "species": "frostnip", "minLevel": 44, "maxLevel": 46, "weight": 10 },
+        { "species": "chalkmar", "minLevel": 45, "maxLevel": 47, "weight": 10 },
+        { "species": "menhir", "minLevel": 46, "maxLevel": 48, "weight": 8 },
+        { "species": "bristlebuck", "minLevel": 44, "maxLevel": 46, "weight": 8 },
+        { "species": "voltwick", "minLevel": 45, "maxLevel": 47, "weight": 6 },
+        { "species": "tallowmoth", "minLevel": 44, "maxLevel": 46, "weight": 4 }
+      ]
+    },
+    "water": {
+      "rate": 110,
+      "slots": [
+        { "species": "currentail", "minLevel": 45, "maxLevel": 48, "weight": 45 },
+        { "species": "brinewisp", "minLevel": 45, "maxLevel": 48, "weight": 30 },
+        { "species": "rillfry", "minLevel": 44, "maxLevel": 47, "weight": 25 }
+      ]
+    }
+  }
+}

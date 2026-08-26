@@ -1,0 +1,37 @@
+{
+  "mapId": "ascent_road",
+  "$comment": "THE PILGRIM ROAD, and the widest table on the mountain on purpose. The Ascent is the region walked backwards -- oak and river at the bottom, rock in the middle, snow on top -- so this map's table is the SOUTH-WEST one last time: the beast, verdant and stone Kin the player met on Routes 1 to 4, grown up. Eleven slots, eight types, nothing over twelve per cent.\n\nMEASURED. Levels are 41-45 against a team-raising player who arrives from the climax at about 46-47. Craglide and Galecrest carry the top of the band; Galecrest at four per cent is the first of the four best non-starter Kin in the game that this act puts within reach, and every one of the other three is further up.",
+  "methods": {
+    "tallGrass": {
+      "rate": 155,
+      "slots": [
+        { "species": "bristlebuck", "minLevel": 42, "maxLevel": 44, "weight": 12 },
+        { "species": "mossback", "minLevel": 42, "maxLevel": 44, "weight": 12 },
+        { "species": "burrowen", "minLevel": 41, "maxLevel": 43, "weight": 11 },
+        { "species": "weaverjaw", "minLevel": 42, "maxLevel": 44, "weight": 10 },
+        { "species": "kestrelle", "minLevel": 41, "maxLevel": 43, "weight": 10 },
+        { "species": "craglide", "minLevel": 43, "maxLevel": 45, "weight": 9 },
+        { "species": "tallowmoth", "minLevel": 42, "maxLevel": 44, "weight": 9 },
+        { "species": "chalkmar", "minLevel": 42, "maxLevel": 44, "weight": 9 },
+        { "species": "voltwick", "minLevel": 42, "maxLevel": 44, "weight": 8 },
+        { "species": "bladderwrack", "minLevel": 41, "maxLevel": 43, "weight": 6 },
+        { "species": "galecrest", "minLevel": 44, "maxLevel": 45, "weight": 4 }
+      ]
+    },
+    "water": {
+      "rate": 120,
+      "slots": [
+        { "species": "currentail", "minLevel": 43, "maxLevel": 46, "weight": 40 },
+        { "species": "bladderwrack", "minLevel": 42, "maxLevel": 45, "weight": 30 },
+        { "species": "rillfry", "minLevel": 42, "maxLevel": 45, "weight": 30 }
+      ]
+    },
+    "fishGood": {
+      "slots": [
+        { "species": "currentail", "minLevel": 43, "maxLevel": 46, "weight": 45 },
+        { "species": "anchorling", "minLevel": 43, "maxLevel": 46, "weight": 30 },
+        { "species": "clatterclaw", "minLevel": 43, "maxLevel": 46, "weight": 25 }
+      ]
+    }
+  }
+}

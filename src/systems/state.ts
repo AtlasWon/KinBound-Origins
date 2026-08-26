@@ -28,7 +28,26 @@ export interface SaveHeader {
   vellumCaught: number;
   savedAt: number;
   mapName: string;
+  /** Whether this save holds the title. See CHAMPION_FLAG. */
+  champion: boolean;
 }
+
+/**
+ * The flag that means the player is Champion of Caelora.
+ *
+ * ONE STRING, AND IT IS A CONTRACT BETWEEN FIVE PLACES THAT CANNOT SEE EACH
+ * OTHER. data/events/summit_champion.json sets it the moment Selwyn Rook is
+ * beaten; data/events/hearthmere.json gates the whole ending on it in three
+ * places, including the `requiresFlag` on the NPC standing in the player's own
+ * doorway; the postgame reads it; and `champion` below turns it into a field
+ * so that code does not have to know the spelling.
+ *
+ * It is exported rather than inlined because the Summit does not write the
+ * title down anywhere else. The Threshold's own ledger says so -- "nine
+ * hundred years and it has never recorded who won" -- so the save file is
+ * genuinely the only thing in Caelora that knows.
+ */
+export const CHAMPION_FLAG = 'champion';
 
 export class GameState {
   private name = 'AVEN';
@@ -99,6 +118,24 @@ export class GameState {
 
   playTime = 0;
 
+  /**
+   * Play time, in seconds, at the moment the title was taken. -1 until then.
+   *
+   * Stamped by `setFlag` rather than by the scene, for the reason the
+   * Tideheart's refresh is stamped there: a script can only set flags, and a
+   * fact this important should not depend on a second action in a data file
+   * being remembered. It is a *field* and not a second flag because it is a
+   * number and because the ending, the Roll and the postgame all want to be
+   * able to say how long ago, and there is nowhere else in the game that
+   * knows -- the Summit deliberately keeps no record of who won.
+   */
+  championWonAt = -1;
+
+  /** Whether the player holds the Champion of Caelora. */
+  get champion(): boolean {
+    return this.hasFlag(CHAMPION_FLAG);
+  }
+
   constructor() {
     // A fresh state has a default name, and dialogue has to know it before the
     // player has picked one -- a {name} that resolves to nothing looks like a
@@ -162,6 +199,12 @@ export class GameState {
     // the game and most of what goes through it is nothing to do with the
     // object.
     if (flag.startsWith('tideheart')) refreshTideheart(this);
+    // The title, once, and never again on a re-set: a save that already holds
+    // it must keep the hour it was taken, not the hour some later script
+    // happened to touch the flag.
+    if (flag === CHAMPION_FLAG && value && this.championWonAt < 0) {
+      this.championWonAt = this.playTime;
+    }
     this.syncTarin();
   }
 
@@ -342,6 +385,7 @@ export class GameState {
       seen: [...this.seen],
       caught: [...this.caught],
       playTime: this.playTime,
+      championWonAt: this.championWonAt,
     };
   }
 
@@ -377,6 +421,12 @@ export class GameState {
     s.seen = new Set(data.seen ?? []);
     s.caught = new Set(data.caught ?? []);
     s.playTime = data.playTime ?? 0;
+    // A save written before the Summit existed has no stamp. If it somehow
+    // carries the flag anyway, it gets its own play time rather than -1, so
+    // "how long ago" is wrong by at most the length of that save rather than
+    // reading as "never".
+    s.championWonAt = data.championWonAt
+      ?? (s.flags.has(CHAMPION_FLAG) ? s.playTime : -1);
     // The object's name and description are derived from flags and from where
     // the player is standing, and a load restores both at once.
     refreshTideheart(s);
@@ -396,6 +446,7 @@ export class GameState {
       vellumCaught: this.caught.size,
       savedAt: Date.now(),
       mapName,
+      champion: this.champion,
     };
   }
 }

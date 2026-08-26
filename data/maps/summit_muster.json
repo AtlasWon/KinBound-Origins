@@ -1,0 +1,166 @@
+{
+  "id": "summit_muster",
+  "name": "The Last Room",
+  "displayName": "THE LAST ROOM",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪",
+    "▪▫▫ffffffffff▫▫▪",
+    "▪ffffffffffffff▪",
+    "▪beffffĘfffffbe▪",
+    "▪ffffffffffffff▪",
+    "▪beffffffffffbe▪",
+    "▪ffffffffffffff▪",
+    "▪beffAAAAffffbe▪",
+    "▪ffffEEEEffffff▪",
+    "▪ffffffffffffff▪",
+    "▪kkffffffffffKK▪",
+    "▪ffffffffffffff▪",
+    "◘ffffffffffffff▪",
+    "▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪"
+  ],
+  "warps": [
+    {
+      "x": 0,
+      "y": 12,
+      "toMap": "summit_hall",
+      "toX": 16,
+      "toY": 4,
+      "facing": "left",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "sm_muster_keeper",
+      "sprite": "healer",
+      "x": 6,
+      "y": 9,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sm_muster_keeper"
+    },
+    {
+      "id": "sm_muster_case",
+      "sprite": "clerk",
+      "x": 13,
+      "y": 11,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sm_muster_case"
+    },
+    {
+      "id": "sm_muster_steward",
+      "sprite": "elder",
+      "x": 2,
+      "y": 9,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sm_muster_steward"
+    },
+    {
+      "id": "sm_muster_climber",
+      "sprite": "hiker",
+      "x": 11,
+      "y": 6,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "sm_muster_climber"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 3,
+      "text": [
+        "The only fire in the building that is kept in all year, and the only warm room.",
+        "Everything above this floor is mountain, and mountain is the temperature it is."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 0,
+      "y": 4,
+      "text": [
+        "Six beds, made up, in a room that has never had six people in it at once.",
+        "The Summit keeps six because it kept six in 1140 and nobody has proposed a change."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 15,
+      "y": 4,
+      "text": [
+        "THE WALL. Everybody who has gone up from this room has written one line on it first.",
+        "Nine hundred years of one lines, in eleven layers of whitewash, going up to the roof."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 15,
+      "y": 6,
+      "text": [
+        "Three of them, at eye height, where somebody has scraped the whitewash back:",
+        "I AM ONLY DOING THIS ONCE.   MY MOTHER SAID NOT TO.   TELL HER I ATE SOMETHING."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 0,
+      "y": 9,
+      "text": [
+        "Lower down, near the skirting, where you would have to kneel to write it:",
+        "I DID NOT COME HERE TO WIN. I CAME HERE TO SEE HOW FAR IT WAS.",
+        "Nobody has ever painted over that one and the whitewash goes round it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 10,
+      "text": [
+        "THE STANDING ORDER, framed, in the first Masters' own hand and nine hundred years old.",
+        "NOBODY GOES UP THE NEXT STAIR WORSE OFF THAN THEY CAME UP THE LAST ONE.",
+        "AND A CHALLENGER WHO GOES DOWN IS CARRIED TO THE LAST LANDING THEY PASSED."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 15,
+      "y": 11,
+      "text": [
+        "THE CASE. Nine hundred years of people changing their minds at the last minute.",
+        "The clerk has seen every one of those changes of mind and has never once had an opinion."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 15,
+      "y": 2,
+      "text": [
+        "A boot scraper, a coat hook, and a card over the hook.",
+        "YOU WILL WANT YOUR COAT. IT IS COLDER UP THERE THAN IT IS OUTSIDE."
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 4,
+      "y": 4,
+      "item": "rouse",
+      "quantity": 1,
+      "flag": "item_summit_muster"
+    }
+  ],
+  "_plan": "THE ONLY WARM ROOM, AND THE LAST ONE. Everything above this floor is cut into a mountain and is the temperature a mountain is; this room has a fire, six beds, a kettle, a case to swap kin out of and a keeper who will put a party back together for nothing. It is a Kin Clinic that has been in the same room since 1140 and has never called itself one.\n\nIT IS ALSO THE DIFFICULTY VALVE, AND THAT IS DELIBERATE. The player has asked four times for an easier game and the five hardest Trainer battles in the game are through the door at the other end of the hall. So the Last Room heals, sets the respawn, holds the box and hands over a small kit the first time; the Wind Step above it does the same and moves the respawn up to the first Master's own door; and every chamber above THAT restores the party as well, which is the Masters' build and not this one. Three separate hands arrived at the same answer without conferring. The Summit's standing order is framed on the wall in here so that the mechanic and the fiction are one sentence.\n\nTHE WALL IS THE ROOM. Nine hundred years of people writing one line before they go up, in eleven layers of whitewash. Three signs quote six of them and none of the six is brave. That is the whole characterisation this room needs and it costs nothing."
+}

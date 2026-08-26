@@ -1,14 +1,42 @@
 {
+  "$comment": "Hearthmere's own dialogue. The seven villagers, the mother and the Ashes all live in data/dialogue/common.json because they were written before this file existed and because loadDialogueFor MERGES BY KEY -- a map file that repeats a key replaces the whole chain for it, storm variants and all -- so nothing in here may share a name with an entry in there. What is here is the two people who only exist for one scene each, and the roofer.",
   "speakers": {
-    "hm_roofer": "UP A LADDER"
+    "hm_roofer": "UP A LADDER",
+    "hm_mira_door": "MIRA",
+    "hm_tarin_home": "TARIN"
   },
   "entries": {
     "hm_roofer": [
+      {
+        "ifFlags": [
+          "champion"
+        ],
+        "lines": [
+          "I am not coming down. I have been up here since six and I am not coming down for anybody.",
+          "...So that is me shouting it off a roof, which is the best you are getting out of me.",
+          "Go on. She has been out on that step since four and she thinks nobody noticed."
+        ]
+      },
       {
         "lines": [
           "Twenty-one slates off in one night and eleven of them came down in Nell's garden unbroken.",
           "Which is this village all over. I have been up here since six and had four cups of tea sent up.",
           "Mind your head. I have dropped two things this morning and neither of them was on purpose."
+        ]
+      }
+    ],
+    "hm_mira_door": [
+      {
+        "lines": [
+          "In. Now. Before I start that again."
+        ]
+      }
+    ],
+    "hm_tarin_home": [
+      {
+        "lines": [
+          "No, after you. It is your gate.",
+          "I have been waiting on it for ten minutes and I can wait another ten. Watch me."
         ]
       }
     ]

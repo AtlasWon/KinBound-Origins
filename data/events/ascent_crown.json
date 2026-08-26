@@ -1,0 +1,63 @@
+[
+  {
+    "id": "asc_arrive",
+    "$comment": "One box, once. The Crown is the last outdoor map in the main game and the first thing on it should be the size of the sky, not a person talking. Nothing about the Summit is said here -- the gate is four hundred yards away and the player can see it.",
+    "trigger": "enter",
+    "onceFlag": "asc_seen",
+    "map": "ascent_crown",
+    "actions": [
+      { "kind": "sfx", "sound": "fx_wind" },
+      {
+        "kind": "say",
+        "lines": [
+          "Over the last of the climb, and the ground stops going up.",
+          "Snow, a heap of stones the size of a house, and a wall with a gate in it."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "asc_updraft",
+    "$comment": "THE VIEWPOINT. The second Updraft gate on the Ascent and the last piece of optional ground in the main game: a crag over the road at 40-46, 8-12, walled on all four sides, with the best haul on the mountain on it. The note at 45,13 says what is up there without promising it.\n\nCANON, and this is the only reason the crag exists: 'the player looks at a map of Averra and sees how small Caelora is.' That beat belongs to the ending in Hearthmere and this is not it -- but standing on the last rock before the Summit and being able to see the sea is the same idea arriving early and without a word said about it.",
+    "when": { "kind": "hasArt", "art": "updraft" },
+    "trigger": "step",
+    "map": "ascent_crown",
+    "at": [
+      { "x": 43, "y": 14 }
+    ],
+    "actions": [
+      { "kind": "sfx", "sound": "fx_wind" },
+      {
+        "kind": "say",
+        "lines": ["The wind comes up this face all day and it is going the way you want to go."]
+      },
+      { "kind": "warp", "map": "ascent_crown", "x": 43, "y": 11, "facing": "up", "style": "warp" },
+      {
+        "kind": "say",
+        "lines": [
+          "Cloud below, in every direction, with mountains standing up out of it.",
+          "And east of all of it, a very long way off, a line that is not cloud."
+        ]
+      }
+    ],
+    "$comment2": "NO EXPLICIT FADES. EventHost.warp does its own fade out, load and fade in."
+  },
+  {
+    "id": "asc_updraft_back",
+    "$comment": "The way off the crag: the whole south row of it, and clear of the arrival cell.",
+    "trigger": "step",
+    "map": "ascent_crown",
+    "at": [
+      { "x": 40, "y": 12 },
+      { "x": 41, "y": 12 },
+      { "x": 42, "y": 12 },
+      { "x": 43, "y": 12 },
+      { "x": 44, "y": 12 },
+      { "x": 45, "y": 12 },
+      { "x": 46, "y": 12 }
+    ],
+    "actions": [
+      { "kind": "warp", "map": "ascent_crown", "x": 43, "y": 14, "facing": "down", "style": "warp" }
+    ]
+  }
+]

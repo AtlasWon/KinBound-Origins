@@ -516,5 +516,357 @@
         ]
       }
     ]
+  },
+  {
+    "_note": "STAGE 7, THE ENDING, BEAT 1: COMING DOWN THE ROAD.\n\nTHE WHOLE ENDING IS THE OPENING WALK, BACKWARDS. data/maps/hearthmere.json says so in its own _plan -- 'out of the front door, west along the lane, north up the street past everyone who knows you, over the water, to the station. Coming home reverses it.' So nothing here warps the player through the village. They arrive at the top of the road and they walk the length of it, past seven people whose lines have all changed, to somebody standing on their doorstep.\n\nWHY IT IS A STEP TRIGGER ON THE ROAD AND NOT AN `enter` ON THE MAP. An enter script fires however the player got here, including out of their own front door, and 'you have never come down this road before' is a lie the second time. The `at` list is the six tiles of the road between the wood and the mill field, so it can only fire on somebody walking in from Route 1 -- or on somebody the Summit put down at (14,1), whose first step is (14,2).\n\nTHE MUSIC. Stopped for two boxes and then put back. town_hearth has not been heard since Act 1 for most players and it is the only thing in the ending that does not need writing.\n\nGATE: `champion`. See the handover at the top of hm_end_mira.",
+    "id": "hm_end_road",
+    "trigger": "step",
+    "map": "hearthmere",
+    "onceFlag": "ending_road",
+    "when": {
+      "kind": "all",
+      "of": [
+        {
+          "kind": "any",
+          "of": [
+            { "kind": "flag", "flag": "champion" },
+            { "kind": "flag", "flag": "act7_done" }
+          ]
+        },
+        { "kind": "not", "of": { "kind": "flag", "flag": "ending_seen" } }
+      ]
+    },
+    "at": [
+      { "x": 14, "y": 1 },
+      { "x": 15, "y": 1 },
+      { "x": 14, "y": 2 },
+      { "x": 15, "y": 2 },
+      { "x": 14, "y": 3 },
+      { "x": 15, "y": 3 }
+    ],
+    "actions": [
+      { "kind": "music", "track": "stop" },
+      { "kind": "face", "who": "player", "dir": "down" },
+      { "kind": "wait", "frames": 40 },
+      {
+        "kind": "say",
+        "lines": [
+          "Four hundred souls, one bridge, one road.",
+          "You have been up it once. This is the first time you have come down it."
+        ]
+      },
+      { "kind": "wait", "frames": 30 },
+      { "kind": "music", "track": "town_hearth" },
+      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "say",
+        "lines": [
+          "Somebody down by the mere has already seen you and is running, badly, in clogs."
+        ]
+      }
+    ]
+  },
+  {
+    "_note": "STAGE 7, THE ENDING, BEAT 2: MIRA.\n\nCANON 64: 'The player returns to Hearthmere. Mira is waiting.' She is waiting on the tile the player stepped onto leaving this house in Act 1, so she is standing in the doorway of the scene as well as the house. The trigger tiles are the three that touch (18,24) from the lane and the meadow, which is every way in; she occupies the door tile itself, so there is no route past her.\n\nSHE HAS SPENT THE WHOLE GAME BEING AFRAID AND NOT LETTING IT SHOW. This is the one scene where she does not have to, and the writing rule for it is that she is allowed to fail at being brisk rather than allowed to make a speech. Four boxes, a choice that mirrors the three-option choice she opens the game with, and she goes back inside first -- because Act 1 ends this lane with somebody else running off up the street and leaving the player standing on it.\n\nTHE THREE OPTIONS ARE ALL CORRECT. The middle one is the region map she handed over in Act 1 ('Here. Your father's.'), which the player has been carrying for the entire game.\n\nWHAT THIS RELIES ON SOMEBODY ELSE PROVIDING:\n  - THE FLAG `champion`, set the moment the Champion of Caelora is beaten. `act7_done` is\n    accepted as an alias by hm_end_road; this scene and the NPC's own requiresFlag can only\n    read one, so `champion` is the contract. It is also set by the shared script\n    `ending_go_home` in data/events/common.json, which is the one-line handoff the Summit\n    should use: it fades, sets the flag and puts the player at the top of the Hearthmere road.\n  - NOTHING ELSE. If the Summit never calls that script, the player walks home themselves and\n    every scene in the ending still fires in order.\n\nWHAT IT PROVIDES: `ending_home`, which hides hm_mira_door and opens the interior scene in data/events/hearthmere_house_player.json.",
+    "id": "hm_end_mira",
+    "trigger": "step",
+    "map": "hearthmere",
+    "onceFlag": "ending_home",
+    "when": {
+      "kind": "all",
+      "of": [
+        { "kind": "flag", "flag": "champion" },
+        { "kind": "not", "of": { "kind": "flag", "flag": "ending_home" } }
+      ]
+    },
+    "at": [
+      { "x": 17, "y": 24 },
+      { "x": 19, "y": 24 },
+      { "x": 18, "y": 25 }
+    ],
+    "actions": [
+      { "kind": "wait", "frames": 30 },
+      {
+        "kind": "say",
+        "lines": [
+          "She is on the doorstep with a tea towel in her hand and she has not moved for a while."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "MIRA",
+        "lines": [
+          "Do not stand in the lane, {name}. The whole street is at their windows."
+        ]
+      },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "who": "MIRA",
+        "lines": [
+          "...No. Stand there. Let me look at you first."
+        ]
+      },
+      { "kind": "wait", "frames": 30 },
+      {
+        "kind": "say",
+        "who": "MIRA",
+        "lines": [
+          "Sixteen years at that window. I have got very good at that road.",
+          "It has never once had you on it coming this way."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "MIRA",
+        "lines": [
+          "I am not going to manage this quietly. I have been trying since four o'clock."
+        ]
+      },
+      {
+        "kind": "choice",
+        "lines": [
+          "Well? Say something. You have had a whole region to think of something."
+        ],
+        "options": [
+          {
+            "label": "I'm home",
+            "then": [
+              {
+                "kind": "say",
+                "who": "MIRA",
+                "lines": [
+                  "Yes.",
+                  "Yes. All right. Yes."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "I brought your map back",
+            "then": [
+              {
+                "kind": "say",
+                "who": "MIRA",
+                "lines": [
+                  "It was your father's and then it was yours and I am not having it back.",
+                  "Look at the state of it. Look at the state of you."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "...",
+            "then": [
+              {
+                "kind": "say",
+                "lines": [
+                  "Neither of you says anything for a while. The tea towel is in a knot."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "MIRA",
+                "lines": [
+                  "Right. Right."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "say",
+        "who": "MIRA",
+        "lines": [
+          "Come in. The kettle has been on since four and it has been off twice."
+        ]
+      },
+      { "kind": "wait", "frames": 14 },
+      { "kind": "face", "who": "hm_mira_door", "dir": "up" },
+      { "kind": "wait", "frames": 10 },
+      {
+        "kind": "move",
+        "who": "hm_mira_door",
+        "steps": [
+          "up"
+        ],
+        "speed": "walk"
+      },
+      { "kind": "sfx", "sound": "door" },
+      { "kind": "removeNpc", "who": "hm_mira_door" },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "lines": [
+          "She leaves the door open behind her."
+        ]
+      }
+    ]
+  },
+  {
+    "_note": "STAGE 7, THE ENDING, BEAT 5: TARIN COMES BACK.\n\nCANON 64: 'Tarin comes back too, eventually.' Eventually is the operative word and it is why he is gated on `tideheart_home` rather than on the homecoming -- the study is a room the player goes into alone, and he must not be standing in the lane while they do it.\n\nIT IS THE SAME SCENE AS hm_tarin_meet, DELIBERATELY, DOWN TO THE TILES. Same three trigger tiles, same doorstep at (13,24), the same three-step run east to (16,24), the same opening word, the same tic about wanting things on record, the same three-option choice, and the same '...Unbelievable.' if the player says nothing. The one thing that is different is where he goes at the end of it: in Act 1 he runs north up the road and off the top of the screen, and here he walks west along the lane and in through his own front door at (10,23), which he has not done in the whole game.\n\nHE DOES NOT ASK FOR A BATTLE. The last rival battle is the Ascent's and it has already happened by the time this fires; canon has him go quiet when it is serious, and the quiet version of the thing he wants is the last two boxes.\n\nWHAT IT PROVIDES: `ending_tarin`, which hides him and opens the last scene in data/events/hearthmere_house_up.json.",
+    "id": "hm_end_tarin",
+    "trigger": "step",
+    "map": "hearthmere",
+    "onceFlag": "ending_tarin",
+    "when": {
+      "kind": "all",
+      "of": [
+        { "kind": "flag", "flag": "tideheart_home" },
+        { "kind": "not", "of": { "kind": "flag", "flag": "ending_tarin" } }
+      ]
+    },
+    "at": [
+      { "x": 17, "y": 24 },
+      { "x": 19, "y": 24 },
+      { "x": 18, "y": 25 }
+    ],
+    "actions": [
+      { "kind": "sfx", "sound": "spotted" },
+      { "kind": "wait", "frames": 18 },
+      { "kind": "face", "who": "player", "dir": "left" },
+      {
+        "kind": "move",
+        "who": "hm_tarin_home",
+        "steps": [
+          "right",
+          "right",
+          "right"
+        ],
+        "speed": "run"
+      },
+      { "kind": "face", "who": "hm_tarin_home", "dir": "right" },
+      { "kind": "wait", "frames": 12 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "FINALLY."
+        ]
+      },
+      { "kind": "wait", "frames": 14 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "Do you have any idea how far that is on foot when the wireless has already told everybody?",
+          "I have been on your gate about ninety seconds and I want that on record."
+        ]
+      },
+      {
+        "kind": "choice",
+        "lines": [
+          "So. Champion of Caelora."
+        ],
+        "options": [
+          {
+            "label": "It was close",
+            "then": [
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "It was not close. I have had it described to me four times on the way here.",
+                  "It got less close every single time."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "You next",
+            "then": [
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "Yes.",
+                  "...Yes. That is the plan and I have said it out loud now, so that is that."
+                ]
+              }
+            ]
+          },
+          {
+            "label": "...",
+            "then": [
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "No, go on. I have walked eleven miles for this. Say something insufferable."
+                ]
+              },
+              {
+                "kind": "say",
+                "lines": [
+                  "You do not."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "TARIN",
+                "lines": [
+                  "...Unbelievable."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "I am not going to ask you for a battle."
+        ]
+      },
+      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "say",
+        "who": "TARIN",
+        "lines": [
+          "I have thought about it the whole way here and I am not going to ask. Not tonight.",
+          "Tomorrow. Up the road. Same as we did it the first time."
+        ]
+      },
+      { "kind": "wait", "frames": 16 },
+      { "kind": "face", "who": "hm_tarin_home", "dir": "left" },
+      { "kind": "wait", "frames": 12 },
+      {
+        "kind": "move",
+        "who": "hm_tarin_home",
+        "_note": "Down onto the meadow verge for three tiles and back up, because the roofer stands at (12,24) once act6_done is set and scripted movers ignore collision -- a straight run west would walk Tarin through a man on a ladder.",
+        "steps": [
+          "left",
+          "left",
+          "left",
+          "down",
+          "left",
+          "left",
+          "left",
+          "up",
+          "up"
+        ],
+        "speed": "walk"
+      },
+      { "kind": "sfx", "sound": "door_close" },
+      { "kind": "removeNpc", "who": "hm_tarin_home" },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "lines": [
+          "The Ashes' front door bangs. It has banged like that since you were four."
+        ]
+      },
+      { "kind": "wait", "frames": 24 },
+      {
+        "kind": "say",
+        "lines": [
+          "It is nearly dark. Somebody has put the upstairs light on."
+        ]
+      }
+    ]
   }
 ]

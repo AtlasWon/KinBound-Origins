@@ -428,3 +428,117 @@ data/events/eastreach_platform.json     the three tower beats
 data/dialogue/eastreach_shore.json      sh_signal, who counts them off
 tools/shots/opbeats.js                  walks the whole act and prints the ledger at the end
 ```
+
+---
+
+## Stage 7: Act 7, the dream — and the last rival battle
+
+Six beats, one battle, and the Crest column finally has nothing to say. Eight
+and eight since Crownspire, held there on purpose. Canon puts the Summit after
+Neravoss so the game has two endings; the second one was never going to be a
+number, and the thing that separates these two now is one fight on a step.
+
+| # | Beat | Opens on | Crests | In person? |
+|---|---|---|---|---|
+| 1 | `summit_road` | `summit_open` (the registry scene) | 8 | no |
+| 2 | `ascent` | any `ascent_*` map visited | 8 | no |
+| 3 | `summit_gate` | `summit_approach` / `_hall` / `_muster` visited | 8 | yes, **battle** |
+| 4 | `gate_lost` | `tarin_summit_lost` | 8 | yes |
+| 5 | `gate_won` | `tarin_summit_won` | 8 | yes |
+| 6 | `crowned` → `home` | `champion` → `ending_seen` | 8 | no |
+
+Rows 4 and 5 are the only place in the whole ledger where the **player's own
+result** decides the beat, and canon asks for exactly that: the battle decides
+who enters the championship challenge first. `gate_lost` is listed above
+`gate_won` so that a rematch win correctly overrides an earlier loss under the
+last-beat-wins rule.
+
+Like Act 6, **none of these rows needs a `common.json` gossip variant** — the
+four voices are townspeople and there are no towns above Crownspire.
+
+### The Summit gate battle
+
+**It does not depend on anybody else placing an actor**, which is the one thing
+this document already records going wrong: the Frostmere battle shipped
+unreachable because it needed a `town_tarin` on a map somebody else owned.
+`tarin_summit_gate` is a **step trigger** in `common.json`, filtered to
+`summit_approach` by the `map` field the way `tarin_route1` is filtered to
+`route_1`, firing on **12,5 and 13,5** — the only two tiles the Summit door can
+be entered from, because row 4 of that map is solid granite either side of it.
+It spawns the actor itself. No `onceFlag`: the player is allowed to say *not
+yet* and come back, and `when` gates on `tarin_summit_won` rather than on
+`tarin_summit_done` so that a player who **lost** still meets him and can still
+ask again.
+
+Six Kin, and the team is his whole journey rather than a power curve — one per
+act, and nothing at all from Act 4:
+
+| | | |
+|---|---|---|
+| Bristlebuck | 44, flat-zero IVs | the Tuftail off Route 1. It leads, as it always has |
+| Mossback | 43, flat-zero IVs | the rare catch in the ruin wood, Act 1 |
+| Tidewrack | 45, flat-zero IVs | the Shalefin from the Tideglass deep lane, Act 2 |
+| Blazelynx | 45, flat-zero IVs | Emberfall, Act 3 |
+| Galecrest | 46, flat-zero IVs | the Windward Headland, Act 5 |
+| his starter, fully evolved | 49 | what Sorrell gave him |
+
+**Nothing from Act 4, on purpose.** The ledger holds his Crest count flat for
+that whole act because he spent it in a records office in Aureline while a
+Summit qualifier ran round him. A team with an Aureline Kin on it would say the
+opposite. **Voltwick is the casualty of that and it was also the balance fix**:
+Spark at 104 Speed with Thunderhead is two-times into Tide, and it alone
+dragged the Rilltail branch to 47% while the other two read in the eighties.
+
+**AI is `keeper`**, the tier the Hall Keepers and Commander Kell use. `elite`
+is still unused anywhere in the game and should stay that way until the
+Champion.
+
+**Measured**, novice play, no bag items, six on six against an ordinary road
+bench two levels down, 400 runs per cell (sprigling / cinderpaw / rilltail):
+
+| Player level | Win rate | HP the winner keeps | Kin still up |
+|---|---|---|---|
+| 46 | 55 / 52 / 50% | 22–29% | 1.8–2.2 of 6 |
+| 47 | 72 / 73 / 58% | 27–38% | 2.0–2.7 |
+| **48** | **80 / 78 / 70%** | **26–43%** | **2.0–3.0** |
+| 49 | 84 / 86 / 71% | 29–46% | 2.2–3.2 |
+| 50 | 92 / 95 / 81% | 38–50% | 2.7–3.4 |
+
+Through the same harness the Frostmere rival reads **79 / 85 / 88%** and
+Commander Kell reads **95 / 93 / 94%**, so this is the hardest fight in the
+game so far on every axis. **The Champion must read below it** — 60–70% novice
+on the same measurement, with the four Masters in between.
+
+**Losing is a branch, not a wall.** The party is healed on the way in, two Full
+Restores are handed over before the ask, the ask can be answered no as often as
+you like, and a loss offers a rematch every time he is spoken to. A player who
+never takes it still goes through the door — second, which is what canon says
+happens.
+
+**The band is the assumption most likely to go stale.** `simulate.mjs` stops at
+The Operation, where the team-raiser leaves at 46; the Ascent is assumed to pay
+about what Route 10 pays. If it lands heavier or lighter, **move all six levels
+together**.
+
+### Files added
+
+```
+src/systems/tarin.ts             six Act 7 rows, below the aftermath row
+data/trainers/trainers.json      tarin_summit_sprigling / _cinderpaw / _rilltail
+data/events/common.json          tarin_summit, tarin_summit_gate, and the tarin_town branch
+tools/shots/tarinsummit.js       walks the ledger, then walks the lane and plays the fight
+```
+
+`tools/shots/tarinsummit.js` is the Stage 7 smoke test. It walks the ledger beat
+by beat, then enters `summit_approach` at the head of the lane and **walks** up
+it, so the proof that the trigger band cannot be missed is the walk itself:
+
+```
+node tools/serve.js                                  # if nothing is on 5173
+npx electron tools/capture.cjs tools/shots/tarinsummit.js
+```
+
+Shots land in `build/shots/t7-*`. It loses the first fight on purpose — holding
+Enter is worse play than the novice tier — which is how the loss branch gets
+looked at, and then takes the rematch with a party that cannot lose to reach the
+won branch. Edit `STARTER` at the top to walk the other two.

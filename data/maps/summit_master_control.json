@@ -1,0 +1,142 @@
+{
+  "id": "summit_master_control",
+  "name": "The Ruled Floor",
+  "displayName": "THE RULED FLOOR",
+  "music": "station",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "ĦĦĦĦĦĦĦĦĦĎĦĦĦĦĦĦĦĦĦ",
+    "ĦkkkkFFFFFFFFFkkkkĦ",
+    "ĦFFFFFFFF=FFFFFFFFĦ",
+    "ĦFFFFFFFF=FFFFFFFFĦ",
+    "Ħ=================Ħ",
+    "ĦFFFFFFFF=FFFFFFFFĦ",
+    "ĦkFFFFFFF=FFFFFFFkĦ",
+    "ĤFFFFFFFF=FFFFFFFFĤ",
+    "ĦkFFFFFFF=FFFFFFFkĦ",
+    "ĦFFFFFFFF=FFFFFFFFĦ",
+    "Ħ=================Ħ",
+    "ĦFFFFFFFF=FFFFFFFFĦ",
+    "ĦAEFFFFFF=FFFFFFEAĦ",
+    "ĦkkkkFFFFFFFFFkkkkĦ",
+    "ĦĦĦĦĦĦĦĦĦĎĦĦĦĦĦĦĦĦĦ"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 14,
+      "toMap": "summit_master_power",
+      "toX": 9,
+      "toY": 0,
+      "facing": "down",
+      "style": "door"
+    },
+    {
+      "x": 9,
+      "y": 0,
+      "toMap": "summit_master_adapt",
+      "toX": 9,
+      "toY": 16,
+      "facing": "up",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "sm_lowe",
+      "sprite": "harbourmaster",
+      "x": 9,
+      "y": 1,
+      "facing": "down",
+      "movement": { "kind": "static" },
+      "script": "sm_lowe",
+      "hiddenIfFlag": "master_control_beaten"
+    },
+    {
+      "id": "sm_lowe_after",
+      "sprite": "harbourmaster",
+      "x": 15,
+      "y": 12,
+      "facing": "left",
+      "movement": { "kind": "static" },
+      "script": "sm_lowe_after",
+      "requiresFlag": "master_control_beaten"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "Ledgers, by year, going back further than the shelf is wide.",
+        "Not results. Openings. Every first move anybody has ever made in this room."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 17,
+      "y": 1,
+      "text": [
+        "The same shelf again, on the other side, holding the same years.",
+        "One set is the copy. Nobody has ever been told which."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 6,
+      "text": [
+        "A volume is open at a page ruled into nine squares, with a single mark in the middle one.",
+        "The note beside it says: THIRD TIME. STILL DOES NOT KNOW WHY."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 17,
+      "y": 8,
+      "text": [
+        "A shelf of eleven volumes with their spines turned in, so the years cannot be read.",
+        "Eleven is the number of people who have beaten her on this floor."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 0,
+      "y": 7,
+      "text": [
+        "The west light. The lines cut into this floor run out of the window and down the mountain,",
+        "which is a trick of the eye, and it is a trick she has never had any interest in fixing."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18,
+      "y": 7,
+      "text": [
+        "The east light, and a brass rule screwed to the sill under it.",
+        "The floor was laid to it. So was the doorway. So, apparently, was the window."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 12,
+      "text": [
+        "A small table, a chair, a pot of tea, and one cup, exactly in the corner of the ruling.",
+        "The other table is identical and it is exactly in the other corner."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 17,
+      "y": 12,
+      "text": [
+        "Two chairs at this one, and the second is at an angle.",
+        "It is the only thing in the room that is not square, and she put it there on purpose."
+      ]
+    }
+  ],
+  "_plan": "THE SECOND CHAMBER, AND THE FLOOR IS THE FIGHT. Serra Lowe's case is that a battle is settled before the first hit, so the room is ruled into quarters with a cross of stone laid through civic tile -- lines that are hers rather than physical, because every square of it is walkable. There is no wall in this room. There is a plan in it, drawn on the ground, and the player is standing in the middle of it.\n\nTHE VERTICAL RULE RUNS THROUGH BOTH DOORS at x9, so the centre line is the aisle, and walking the length of it to reach her is the room doing its own work exactly as the Crown Floor's does. Bookshelves on all four corners are the record: openings, not results, which is the one detail that says what she thinks a fight is made of.\n\nSHE STANDS IN HER OWN DOORWAY AT 9,1 and the top door has exactly one walkable neighbour, so she is the gate; master_control_beaten hides her and puts sm_lowe_after at the east table. She heals the party herself before the fight, as all four Masters do -- see the _plan on summit_master_power and the shared note in data/trainers/trainers.json for the measurement that decision came out of.\n\nELEVEN. The shelf with its spines turned in, her defeat line and her afterward line all carry the same number, and it is the same eleven Merrin Ord uses on the Crown Floor for the Long Floor. That is deliberate: it is the number this mountain uses for 'almost nobody'."
+}

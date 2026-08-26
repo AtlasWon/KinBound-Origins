@@ -472,11 +472,13 @@ export const TARIN_LEDGER: TarinBeat[] = [
   /*
    * Stage 6. The aftermath.
    *
-   * THE LAST ROW, AND IT MUST STAY LAST. tarinBeat returns the last opened
-   * beat, so anything appended below this one takes precedence over it for the
-   * whole of the endgame. A Stage 6 row for the operation or the Temple belongs
-   * ABOVE this one, keyed on its own flag; this row is keyed on act6_done,
-   * which is the moment Neravoss leaves and nothing in the story is pending.
+   * THE LAST ROW OF THE STORY, AND IT MUST STAY LAST OF THE STORY. tarinBeat
+   * returns the last opened beat, so anything below this one takes precedence
+   * over it. A Stage 6 row for the operation or the Temple belongs ABOVE this
+   * one, keyed on its own flag; this row is keyed on act6_done, which is the
+   * moment Neravoss leaves and nothing in the story is pending. Stage 7's rows
+   * DO belong below it -- they open on summit_open and later, which is after
+   * this one in the only order that matters, the player's.
    *
    * THE COUNT DOES NOT MOVE. He has held eight since Crownspire and he holds
    * eight here, because the whole point of the ending canon describes is that
@@ -492,6 +494,173 @@ export const TARIN_LEDGER: TarinBeat[] = [
     crests: 8,
     where: 'the Summit registry in Aureline',
     doing: 'Off a boat at Tideglass and straight across the region. Has been reading a list for two days.',
+  },
+
+  /*
+   * Stage 7. The dream -- the Ascent, the last rival battle, the Masters and
+   * the Champion.
+   *
+   * THE COLUMN HAS NOTHING LEFT TO SAY, AND FOR THE FIRST TIME THAT IS NOT A
+   * DEVICE. Eight and eight since Crownspire. Every act before this one used
+   * the Crest count to say something the dialogue was not allowed to: Act 1
+   * alternated ahead and behind, Act 2 held level to show that what was
+   * changing was him and not the score, Act 3 moved twice and stopped, Act 4
+   * was flat in the largest city in Caelora with a qualifier running round
+   * him, Act 5 stalled in the middle at the one scene where the count was
+   * beneath everybody, Act 6 had run out of Crests to move. Act 7 has run out
+   * as well -- and here the two of them genuinely ARE level, and the only
+   * thing left that can separate them is one battle on a step, which is
+   * precisely what both of them wanted when they were nine. Canon puts the
+   * Summit after Neravoss so the game has two endings; the second one was
+   * never going to be a number.
+   *
+   * IT IS `where` THAT CARRIES THE ACT, AND IT CARRIES IT BY COMING BACK.
+   * Act 6 put him on the far side of an island the player could not see
+   * across, on purpose, so that he could only be heard. This act puts him on
+   * the same road, above, going up at his own pace -- and then sitting on the
+   * top step with six Kin and nothing to say, which is the only place in the
+   * whole ledger he has ever waited where the player could see him do it.
+   *
+   * NOT ONE OF THESE ROWS NEEDS A common.json GOSSIP VARIANT, which was also
+   * true of Act 6 and for the same reason: the four gossip voices are
+   * townspeople and there are no towns above Crownspire. A player who walks
+   * back down to a city mid-act falls through to the ungated fallback at the
+   * bottom of each voice, which is survivable, dull, and correct -- nobody
+   * down there knows what is happening up here yet.
+   *
+   * FOUR OF THESE SIX OPEN ON MAPS AND FLAGS SOMEBODY ELSE IS BUILDING THIS
+   * WEEK, which is exactly the case `any` and the last-beat-wins rule in
+   * tarinBeat were put there for. Each lists every plausible id for its place;
+   * a row keyed to something that never lands is stepped over rather than
+   * stranding him in it, and the worst case is that he stays at the beat
+   * below, which reads as dull rather than broken.
+   */
+  {
+    /*
+     * Opens on the flag the registry scene sets when the doors come off their
+     * shut (aftermath_summit, data/events/aureline_summit.json). That scene is
+     * where he says go home to Hearthmere first and then come and find me, so
+     * this is the beat where he is doing the waiting he just asked for.
+     */
+    id: 'summit_road',
+    opens: { flag: 'summit_open' },
+    crests: 8,
+    where: 'the foot of the Ascent',
+    doing: 'Went home for one night, same as you, and was back on the road before you had finished breakfast.',
+  },
+  {
+    id: 'ascent',
+    opens: {
+      any: [
+        { visited: 'ascent_road' },
+        { visited: 'ascent_deep' },
+        { visited: 'ascent_shelf' },
+        { visited: 'ascent_bothy' },
+        { visited: 'ascent_ruin' },
+        { visited: 'ascent_crown' },
+        /* Fallbacks, in case the road is renamed under this row. */
+        { visited: 'the_ascent' },
+        { visited: 'ascent' },
+        { flag: 'ascent_entered' },
+      ],
+    },
+    crests: 8,
+    where: 'the Ascent',
+    doing: 'Somewhere above you on the same road, going up at his own pace and not once looking back down it.',
+  },
+  {
+    /*
+     * The platform outside the Summit door, and the beat the last rival battle
+     * lives in. THIS FLAG IS LOAD-BEARING: `tarin_summit_gate` in
+     * data/events/common.json is a step trigger on the two tiles below that
+     * door and it will not fire without it, so the whole of the last rival
+     * battle hangs off this row opening. It opens on the Summit maps rather
+     * than on the top of the Ascent so that it opens where the actor is;
+     * `ascent_crown` is deliberately in the row ABOVE this one for the same
+     * reason.
+     */
+    id: 'summit_gate',
+    opens: {
+      any: [
+        { visited: 'summit_approach' },
+        { visited: 'summit_hall' },
+        { visited: 'summit_muster' },
+        /* Fallbacks, in case the door is renamed under this row. */
+        { visited: 'summit_gate' },
+        { flag: 'summit_gate_reached' },
+      ],
+    },
+    crests: 8,
+    where: 'the Summit door',
+    doing: 'On the platform with six Kin and nothing clever to say, waiting for you to come up out of the field.',
+  },
+  {
+    /*
+     * THE TWO ROWS BELOW ARE THE ONLY PLACE IN THE LEDGER WHERE THE PLAYER'S
+     * OWN RESULT DECIDES THE BEAT, and canon asks for exactly that: whether
+     * the player wins or loses they both go on, and the battle decides who
+     * enters the championship challenge first. `tarin_summit` sets one flag or
+     * the other.
+     *
+     * LOST IS LISTED FIRST ON PURPOSE. The scene offers a rematch, so a player
+     * can hold tarin_summit_lost and then win; the last opened beat wins, so
+     * putting the won row underneath means the rematch correctly overrides the
+     * loss. (The scene also clears the loser flag, so this is a belt as well
+     * as braces -- but the ordering is the belt that does not depend on
+     * anybody remembering to clear anything.)
+     */
+    id: 'gate_lost',
+    opens: { flag: 'tarin_summit_lost' },
+    crests: 8,
+    where: 'the highest level of the Summit',
+    doing: 'Beat you on the step and went up first, and is enjoying the order a great deal less than he said he would.',
+  },
+  {
+    id: 'gate_won',
+    opens: { flag: 'tarin_summit_won' },
+    crests: 8,
+    where: 'the Summit gate',
+    doing: 'Lost the one thing he has been walking towards since he was nine, and held the door open with both hands.',
+  },
+
+  /*
+   * THE MASTERS' AND THE CHAMPION'S OWN ROWS, IF THEY WANT ANY, GO BETWEEN
+   * `gate_won` AND `crowned`. The ledger is read top to bottom and the last
+   * opened beat wins, so a row appended under `crowned` would drag him back
+   * out of Hearthmere and into a building he has already left.
+   *
+   * THE TWO ROWS BELOW ARE KEYED ON FLAGS THIS FILE DOES NOT OWN. `champion`
+   * and `ending_seen` are both read out of the `ending_go_home` handoff in
+   * data/events/common.json rather than agreed in advance -- that script is
+   * what the Champion calls, and its own note names both. `act7_done` is
+   * listed beside them because that note says the Hearthmere road accepts it
+   * as well. Neither row has a map fallback, because both are about something
+   * having HAPPENED to the player rather than about where they are standing:
+   * a row keyed to the Champion's room would put him in the aftermath of a
+   * fight the player has not had yet. If none of the listed names lands, both
+   * rows are stepped over and he stays at `gate_won` or `gate_lost` for the
+   * rest of the game, which is dull and not wrong.
+   *
+   * `home` IS LAST AND THAT IS THE ORDER THAT MATTERS. ending_go_home sets
+   * `champion` and `ending_seen` within a few frames of each other, so both
+   * rows open at once and the lower one wins -- which is correct, because by
+   * then the player is standing on the road above the village and so is he.
+   * `crowned` exists for the case where the Champion sets its own flag and
+   * never calls the handoff.
+   */
+  {
+    id: 'crowned',
+    opens: { any: [{ flag: 'champion' }, { flag: 'champion_beaten' }, { flag: 'act7_done' }] },
+    crests: 8,
+    where: 'the Summit floor',
+    doing: 'Watched the whole of it from the rail with his arms folded and did not make one sound until it was over.',
+  },
+  {
+    id: 'home',
+    opens: { any: [{ flag: 'ending_seen' }, { flag: 'ending_home' }, { flag: 'game_complete' }] },
+    crests: 8,
+    where: 'Hearthmere',
+    doing: 'Home, in a village of four hundred, telling all of them the same story with rather more of himself in it.',
   },
 ];
 

@@ -4,6 +4,81 @@
     "trigger": "interact",
     "actions": [
       {
+        "_note": "STAGE 7. The ending, while it is running. It sits above everything else and ends the script, so for the length of the homecoming she says the thing the player needs next -- and only for that length: the guard is `not ending_seen`, so once the game is finished she falls back through to her ordinary branch below and can still put the party back together, which is what this house is for.",
+        "kind": "if",
+        "cond": {
+          "kind": "all",
+          "of": [
+            {
+              "kind": "flag",
+              "flag": "ending_home"
+            },
+            {
+              "kind": "not",
+              "of": {
+                "kind": "flag",
+                "flag": "ending_seen"
+              }
+            }
+          ]
+        },
+        "then": [
+          {
+            "kind": "if",
+            "cond": {
+              "kind": "not",
+              "of": {
+                "kind": "flag",
+                "flag": "tideheart_home"
+              }
+            },
+            "then": [
+              {
+                "kind": "say",
+                "who": "MIRA",
+                "lines": [
+                  "Through there first. The tea is not going anywhere and neither am I."
+                ]
+              }
+            ],
+            "else": [
+              {
+                "kind": "if",
+                "cond": {
+                  "kind": "not",
+                  "of": {
+                    "kind": "flag",
+                    "flag": "ending_tarin"
+                  }
+                },
+                "then": [
+                  {
+                    "kind": "say",
+                    "who": "MIRA",
+                    "lines": [
+                      "Out. He has been on that gate ten minutes and I can hear him breathing from here."
+                    ]
+                  }
+                ],
+                "else": [
+                  {
+                    "kind": "say",
+                    "who": "MIRA",
+                    "lines": [
+                      "Bed, {name}. You are asleep on your feet and pretending very hard that you are not.",
+                      "Go up. I made it this morning, same as every morning. Go on."
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "end"
+          }
+        ]
+      },
+      {
         "kind": "if",
         "cond": {
           "kind": "flag",
@@ -205,6 +280,278 @@
               "And Tarin has been stood on the Ashes' doorstep since dawn pretending not to wait for you."
             ]
           }
+        ]
+      }
+    ]
+  },
+  {
+    "_note": "STAGE 7, THE ENDING, BEAT 3: THE KITCHEN.\n\nTWO BOXES AND A CHAIR. The sign on (2,2) of this map has read the same thing since Stage 1 -- 'The table. Two chairs, and a third against the wall that nobody moved and nobody talks about moving.' Tonight there are three at the table. That is the entire beat, it is delivered in eleven words, and nobody in the scene remarks on it, because the moment anybody does it stops working.\n\nMIRA DOES NOT WALK. She stands where she has stood since Act 1, at (5,4), and the player lands at (6,9) coming in the door -- this map is eleven rows tall against a ten-row view, so the camera barely scrolls and the pair of them are on screen together without anybody taking a step. She sends the player through to the study and stays in the kitchen, which is the point: that room is somewhere they go alone.\n\nGATE: `ending_home`, set by hm_end_mira in data/events/hearthmere.json when she goes back in through this door.",
+    "id": "hm_house_end_arrive",
+    "trigger": "enter",
+    "map": "hearthmere_house_player",
+    "onceFlag": "ending_indoors",
+    "when": {
+      "kind": "flag",
+      "flag": "ending_home"
+    },
+    "actions": [
+      {
+        "kind": "wait",
+        "frames": 34
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "There are three chairs at the table."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 34
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Nobody says anything about it."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 24
+      },
+      {
+        "kind": "say",
+        "who": "MIRA",
+        "lines": [
+          "Go through first. Before the tea, before anything."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "MIRA",
+        "lines": [
+          "I have not moved one thing in that room in sixteen years and I want that said out loud."
+        ]
+      }
+    ]
+  },
+  {
+    "_note": "STAGE 7, THE ENDING, BEAT 4: THE TIDEHEART GOES BACK.\n\nCANON 64, AND THE EMOTIONAL BEAT OF THE WHOLE ENDING. It is not a sad one. It is the player deciding they do not need it any more, and it is written so that nobody says that -- there is no line in this scene about legacy, about the father, or about what any of it meant. There is a room, an object, and a choice of three shelves.\n\nTHE ROOM WAS BUILT FOR THIS IN STAGE 1. data/maps/hearthmere_house_player.json's own _plan says so: 'It is also where the Tideheart came from and where it goes back at the end of the game, so leave the far corner (17,5) clear.' The `at` list is that corner and the aisle up to it, twelve tiles, so a player who walks into the study at all walks into the scene; the study is a dead end with nothing in it but eight things to read, so they will.\n\nTHE THREE OPTIONS ARE ALL CORRECT AND ALL FINAL. Each one is a thing the room's own signs already describe -- the shelf of notebooks at (15,1), the half-packed field case at (16,2), the jar of sea glass at (18,3) with one blue piece in it 'from a coast that is not on any of his maps'. The choice mirrors the three-option choice Mira opens the game with; it is the last one the game asks.\n\nTHE LAST LINE MIRRORS THE GIFT. data/events/common.json/tideheart_gift: 'The core turns over once, hard, and goes warm in your hand.' Here: once, slowly, and cool. That is the goodbye and it is the only stage direction the beat gets.\n\nTHE EMPTY-POCKET BRANCH. Canon 56 has Cassian give the object back before the climax and the shipped Stage 6 assumes it, but this scene ASKS rather than assuming -- a save that somehow arrives here without it still plays, still sets tideheart_home, and the ending still finishes. A soft-locked ending is not an acceptable way to enforce a story flag.\n\nWHAT IT PROVIDES: `tideheart_home` (the object is back among Elias' things; Stage 8's postgame should read this rather than assuming the bag still has it, and can send the player to this room to collect it), and `ending_chart`, the rolled chart carried upstairs for the last beat.",
+    "id": "hm_house_end_study",
+    "trigger": "step",
+    "map": "hearthmere_house_player",
+    "onceFlag": "tideheart_home",
+    "when": {
+      "kind": "all",
+      "of": [
+        {
+          "kind": "flag",
+          "flag": "ending_indoors"
+        },
+        {
+          "kind": "not",
+          "of": {
+            "kind": "flag",
+            "flag": "tideheart_home"
+          }
+        }
+      ]
+    },
+    "at": [
+      { "x": 15, "y": 7 },
+      { "x": 15, "y": 6 },
+      { "x": 16, "y": 6 },
+      { "x": 17, "y": 6 },
+      { "x": 18, "y": 6 },
+      { "x": 16, "y": 5 },
+      { "x": 17, "y": 5 },
+      { "x": 18, "y": 5 },
+      { "x": 14, "y": 4 },
+      { "x": 15, "y": 4 },
+      { "x": 16, "y": 4 },
+      { "x": 17, "y": 4 }
+    ],
+    "actions": [
+      {
+        "kind": "wait",
+        "frames": 30
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The rubbings are still on the wall. The chart on the desk still has the same bay circled."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 24
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "You had read every word in this room before you were twelve.",
+          "You could correct a good deal of it now."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 24
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "hasItem",
+          "item": "tideheart"
+        },
+        "then": [
+          {
+            "kind": "say",
+            "lines": [
+              "It has been quiet since the temple. Not asleep. Quiet."
+            ]
+          },
+          {
+            "kind": "choice",
+            "lines": [
+              "It does not need to go any further than this room.",
+              "Where?"
+            ],
+            "options": [
+              {
+                "label": "The shelf",
+                "then": [
+                  {
+                    "kind": "say",
+                    "lines": [
+                      "It goes on the shelf, at the end of the row of notebooks.",
+                      "Where one more of his would have gone."
+                    ]
+                  }
+                ]
+              },
+              {
+                "label": "The field case",
+                "then": [
+                  {
+                    "kind": "say",
+                    "lines": [
+                      "It goes in the case, on the folded oilskin, next to the rule.",
+                      "Where a small heavy thing goes."
+                    ]
+                  }
+                ]
+              },
+              {
+                "label": "The sill",
+                "then": [
+                  {
+                    "kind": "say",
+                    "lines": [
+                      "It goes on the sill beside the jar.",
+                      "Green, brown, one blue, and one that is not glass."
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "takeItem",
+            "item": "tideheart",
+            "count": 1
+          },
+          {
+            "kind": "wait",
+            "frames": 40
+          },
+          {
+            "kind": "sfx",
+            "sound": "sign"
+          },
+          {
+            "kind": "say",
+            "lines": [
+              "The core turns over once, slowly, and goes cool."
+            ]
+          },
+          {
+            "kind": "wait",
+            "frames": 40
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "lines": [
+              "You reach for your pocket out of habit.",
+              "It is not there, and you find that you do not mind."
+            ]
+          },
+          {
+            "kind": "wait",
+            "frames": 30
+          }
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The rolled charts are still standing in the bin by the door like umbrellas."
+        ]
+      },
+      {
+        "kind": "sfx",
+        "sound": "page_turn"
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "You take one out. You do not open it in here."
+        ]
+      },
+      {
+        "kind": "setFlag",
+        "flag": "ending_chart"
+      }
+    ]
+  },
+  {
+    "_note": "STAGE 7, THE ENDING: ON THE WAY BACK OUT OF THE STUDY.\n\nOne line, and it is the whole of her. She dusts that room every week and has never moved anything in it; now somebody else has put something in it, and she is not going to move that either. The second box is the handoff to Tarin -- the trigger tiles are the study doorway at (12,8) and the two beside it, which is the only way back to the front door, and the camera at x=12 on this map still has her at (5,4) on screen.",
+    "id": "hm_house_end_out",
+    "trigger": "step",
+    "map": "hearthmere_house_player",
+    "onceFlag": "ending_mother_after",
+    "when": {
+      "kind": "flag",
+      "flag": "tideheart_home"
+    },
+    "at": [
+      { "x": 12, "y": 8 },
+      { "x": 11, "y": 8 },
+      { "x": 11, "y": 9 }
+    ],
+    "actions": [
+      {
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "say",
+        "who": "MIRA",
+        "lines": [
+          "I will leave it where you put it."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 24
+      },
+      {
+        "kind": "say",
+        "who": "MIRA",
+        "lines": [
+          "Now go out and let him in off that gate. He has been there ten minutes.",
+          "He is doing the thing with his heel that he has done since he was six."
         ]
       }
     ]

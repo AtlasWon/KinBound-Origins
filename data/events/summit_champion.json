@@ -1,0 +1,651 @@
+[
+  {
+    "id": "sc_arrive",
+    "_note": "THE LAST SCENE OF THE MAIN GAME, BEAT 1: THE TOP.\n\nWHERE IT FIRES. Row 7 is a band that runs the full width of the room. Every tile from x1 to x14 is snow, drift or swept cobble and every one of them is walkable, so a player anywhere north of it has stepped on one of these fourteen -- whichever side of the floor they came up, and the drift down the west wall is exactly the way somebody would try. ROW 7 AND NOT ROW 8, AND THE REASON IS THE MESSAGE BOX. It covers the bottom three rows of the screen; fired a tile lower, the player spends the last conversation in the game underneath it. At row 7 they are the last thing above the box, Rook is three tiles up in the clear, and the cairn and the rail are above him.\n\nWHY A STEP BAND AND NOT AN `enter`. An enter script fires however the player got here, including coming back up after a loss, and 'you have never seen this room before' is a lie the second time. onceFlag does the rest.\n\nWHAT HE SAYS AND WHY. The brief on this character says a gracious Champion is a cliche and a bitter one is worse, and that he must somewhere know what the player did out at sea. Both are solved by the same thing, which is PROPORTION. He opens with a measurement -- every pressure gauge in the Crownspire Archive going flat in four seconds, a fortnight ago, which is Neravoss being calmed, read off an instrument by somebody who was nowhere near it -- and then says exactly what he was doing at the time, which was handing slates to a stranger on a roof. He is not being modest and he is not fishing. He is establishing the size of the two things and then telling the player he is going to fight for the smaller one as hard as he owns. That is the third thing.\n\nAND HE NAMES THE BENCH. 'Four of the six behind me were raised to beat the four people you have just walked past' is the literal truth of data/trainers/trainers.json -- the Craglide is Carrick's species and the Weaverjaw is Lowe's -- and it is also the only line in the game that explains what a Champion does with eleven years. The last clause is the one that matters: none of them was raised for the player.",
+    "trigger": "step",
+    "map": "summit_champion",
+    "onceFlag": "sc_seen",
+    "at": [
+      {
+        "x": 1,
+        "y": 7
+      },
+      {
+        "x": 2,
+        "y": 7
+      },
+      {
+        "x": 3,
+        "y": 7
+      },
+      {
+        "x": 4,
+        "y": 7
+      },
+      {
+        "x": 5,
+        "y": 7
+      },
+      {
+        "x": 6,
+        "y": 7
+      },
+      {
+        "x": 7,
+        "y": 7
+      },
+      {
+        "x": 8,
+        "y": 7
+      },
+      {
+        "x": 9,
+        "y": 7
+      },
+      {
+        "x": 10,
+        "y": 7
+      },
+      {
+        "x": 11,
+        "y": 7
+      },
+      {
+        "x": 12,
+        "y": 7
+      },
+      {
+        "x": 13,
+        "y": 7
+      },
+      {
+        "x": 14,
+        "y": 7
+      }
+    ],
+    "actions": [
+      {
+        "kind": "face",
+        "who": "player",
+        "dir": "up"
+      },
+      {
+        "kind": "wait",
+        "frames": 30
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The door shuts behind you on somebody's kitchen, and there is no roof.",
+          "Granite on three sides. On the fourth a brass rail, and then a very long way down."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 24
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "A man at the rail with his back to you, and enough snow on his shoulders",
+          "that he has been standing there a while."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 30
+      },
+      {
+        "kind": "face",
+        "who": "sc_rook",
+        "dir": "down"
+      },
+      {
+        "kind": "sfx",
+        "sound": "fx_wind"
+      },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "say",
+        "who": "THE CHAMPION",
+        "lines": [
+          "Fourteen days ago every pressure gauge in the Crownspire Archive went flat.",
+          "All of them. In about four seconds, in the middle of the afternoon."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "THE CHAMPION",
+        "lines": [
+          "I was on a roof in the lower city at the time, handing slates to a woman I had never met.",
+          "That was my entire contribution to the largest thing that has happened here in nine hundred years."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "He says it the way somebody reads out a measurement."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "THE CHAMPION",
+        "lines": [
+          "So I will not pretend I am not impressed, and I will not pretend this is bigger than that.",
+          "It is a job at the top of a hill and you have come to take it off me."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "SELWYN ROOK",
+        "lines": [
+          "Selwyn Rook. Eleven years.",
+          "Four of the six behind me were raised to beat the four people you have just walked past."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "SELWYN ROOK",
+        "lines": [
+          "Not one of them was raised for you.",
+          "That is the only advantage you have, and I want you to know it is a real one."
+        ]
+      },
+      {
+        "kind": "call",
+        "script": "sc_offer"
+      }
+    ]
+  },
+  {
+    "id": "sc_offer",
+    "_note": "THE OFFER, and it is an offer rather than a gate. Ord's floor asks 'how do you want it' and Kell's plate does not ask at all, and the difference is that Kell was standing on the only way out of a burning temple. Rook is standing at the top of a mountain with a kitchen underneath it and nothing behind him at all -- there is nowhere he could be blocking. So declining costs nothing and the door is open the whole time, which is also the only mercy this room needs to offer that the four chambers below have not already offered.",
+    "trigger": "call",
+    "actions": [
+      {
+        "kind": "ask",
+        "lines": [
+          "The wind has taken the snow off his shoulders while he was talking.",
+          "Begin?"
+        ],
+        "yes": [
+          {
+            "kind": "say",
+            "who": "SELWYN ROOK",
+            "lines": [
+              "Right."
+            ]
+          },
+          {
+            "kind": "call",
+            "script": "sc_fight"
+          }
+        ],
+        "no": [
+          {
+            "kind": "say",
+            "who": "SELWYN ROOK",
+            "lines": [
+              "Then go down and come back up.",
+              "I have nothing else on. I have not had anything else on for eleven years."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sc_fight",
+    "_note": "THE FIGHT, AND EVERY WAY OUT OF IT. Called from sc_offer the first time and from sc_retry every time after, which is why it is a `call` script and not a run of actions inside the scene.\n\nWHY NOT `whiteout`. A whiteout ends the scene and puts the player at their respawn point, which is somewhere at the bottom of a mountain behind four Masters. `continue` plus a branch on last_battle_won is what the eighth Hall does (crownspire_hall_crown.json) and what the climax does (temple_deep_power.json), and it is what the last fight in the game has to do.\n\nTHE FREE HEAL IS THE DIFFICULTY LEVER AND IT IS DELIBERATE. The player has asked four times for an easier game and the bench up here is the hardest in it -- measured, see the $comment on summit_champion in data/trainers/trainers.json. So: healParty immediately before, healParty again on every loss, three Full Restores handed over once on the first attempt, and the fight re-armed on his own NPC one tile away rather than at the bottom of the climb. A first-try loss costs a page of text.\n\nTHE THREE FULL RESTORES ARE THE ONE LEVER THAT DOES NOT SHOW UP IN THE MEASUREMENT, and that is deliberate. tests/helpers/simulate.mjs uses NO bag items on the player side, so every win rate in the  on this trainer is a floor that assumes the player fights him with nothing. Three Full Restores against six kin is worth a great deal more than a level, and the published numbers stay honest anyway because the harness has never heard of them. It is gated on sc_kit_given so the retry cannot farm it.\n\nAND THE FICTION FOR IT IS NOT KINDNESS, WHICH MATTERS FOR THIS CHARACTER. He is not putting the player's Kin right to be nice; he is doing it because a win against somebody who was short does not count and he has had to live with several of those. That is the same man who says the fight is smaller than the storm and then fights it as hard as he owns.\n\nNO WARP ON THE LOSS BRANCH, unlike Kell's. Nothing on this map can trap the player: sc_arrive fires at row 7, three tiles inside a room with an open door in it, and there is no gate script on the arch. They stand up where they fell, one tile from the man, and they can walk out past him whenever they like.",
+    "trigger": "call",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "SELWYN ROOK",
+        "lines": [
+          "One thing before anything else. Put them right."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "SELWYN ROOK",
+        "lines": [
+          "I have won up here against people who were short, and it does not count,",
+          "and I have had to live with every one of them. Take the kit. It is by the fire."
+        ]
+      },
+      {
+        "kind": "sfx",
+        "sound": "item_heal"
+      },
+      {
+        "kind": "healParty"
+      },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
+          "flag": "sc_kit_given",
+          "value": false
+        },
+        "then": [
+          {
+            "kind": "setFlag",
+            "flag": "sc_kit_given"
+          },
+          {
+            "kind": "giveItem",
+            "item": "full_restore",
+            "count": 3
+          },
+          {
+            "kind": "sfx",
+            "sound": "badge"
+          },
+          {
+            "kind": "say",
+            "lines": [
+              "Selwyn Rook handed over 3 Full Restores."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "SELWYN ROOK",
+            "lines": [
+              "And the rest of it goes in your bag. No, I am not being generous.",
+              "I want to beat you on a full board or not at all, and I have been very clear about that."
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 16
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "There is nothing on this floor for him to lean on, and he does not look like a man",
+          "who has ever wanted one."
+        ]
+      },
+      {
+        "kind": "music",
+        "track": "stop"
+      },
+      {
+        "kind": "wait",
+        "frames": 14
+      },
+      {
+        "kind": "battleTrainer",
+        "trainer": "summit_champion",
+        "onLoss": "continue"
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "var",
+          "var": "last_battle_won",
+          "op": "==",
+          "value": 1
+        },
+        "then": [
+          {
+            "kind": "setFlag",
+            "flag": "sc_fight_pending",
+            "value": false
+          },
+          {
+            "kind": "call",
+            "script": "sc_crowned"
+          }
+        ],
+        "else": [
+          {
+            "kind": "setFlag",
+            "flag": "sc_fight_pending"
+          },
+          {
+            "kind": "wait",
+            "frames": 14
+          },
+          {
+            "kind": "say",
+            "lines": [
+              "You end up on one knee on wet cobbles, and the snow starts settling on your sleeve",
+              "before you have got your breath back."
+            ]
+          },
+          {
+            "kind": "wait",
+            "frames": 12
+          },
+          {
+            "kind": "say",
+            "who": "SELWYN ROOK",
+            "lines": [
+              "Stay down a moment. Everybody stands up too early up here",
+              "and then has to sit down again in front of me, which is worse."
+            ]
+          },
+          {
+            "kind": "sfx",
+            "sound": "item_heal"
+          },
+          {
+            "kind": "healParty"
+          },
+          {
+            "kind": "say",
+            "who": "SELWYN ROOK",
+            "lines": [
+              "There. That is them put right, and I will do that as often as you want it done."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "SELWYN ROOK",
+            "lines": [
+              "I am not going anywhere. I have not been anywhere for eleven years.",
+              "Go down, have a think, come back up. The door does not lock."
+            ]
+          },
+          {
+            "kind": "music",
+            "track": "resume"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sc_crowned",
+    "_note": "CHAMPION OF CAELORA, AND IT IS THE LAST BEAT OF THE MAIN GAME.\n\nWHAT IT SETS: `champion`, and that is the contract. data/events/hearthmere.json already reads it in three places -- hm_end_road, hm_end_mira and the requiresFlag on the hm_mira_door NPC -- and its own note says 'THE FLAG `champion`, set the moment the Champion of Caelora is beaten... `champion` is the contract'. src/systems/state.ts mirrors it into a real field and stamps the play time on it, so the ending, the Roll, the postgame and the save screen can all read the title without reading a scene.\n\nAND THEN IT CALLS `ending_go_home`, which data/events/hearthmere.json says the ending owns: 'it fades, sets the flag and puts the player at the top of the Hearthmere road'. EventRunner.execute ignores a `call` to a script that does not exist, so if that handoff has not landed yet this scene simply ends with the player standing up here as Champion and free to walk down, and every scene in the ending still fires in order when they get home on their own feet. It is the last action for the same reason tdp_fight's warp is: EventRunner.start replaces the stack, so anything after a handoff that fades and warps would be discarded.\n\nTHE SUMMIT DOES NOT WRITE IT DOWN, AND THAT IS TAKEN STRAIGHT FROM THE THRESHOLD'S OWN SIGN: 'THE LEDGER... It does not record who won. Nine hundred years and it has never recorded that.' So there is no wall, no scroll, no plaque and no ceremony -- there is a heap of stones on the east side of the apron at 9,3, and the player puts one on it, and it takes four seconds. Sixty-one of the stones on that cairn were set from where the player is standing. Theirs is the sixty-second.\n\nTHE LAST THING HE SAYS IS THE ENDING'S SET-UP AND IT IS DELIBERATE. Canon closes the game on the player looking at a map of Averra and seeing how small Caelora is. The Roll Archive in Crownspire already carries 'a shelf of foreign records -- Averra beyond Caelora. Six other leagues... Somebody has been reading them recently. There is a marker in three.' Those are his. He cannot leave while he holds the title, he has minded that for a year, and he still minds it now that he does not -- and he says both, in one breath, and refuses to sort them out. That is the whole character in two boxes, and it is why he is neither gracious nor bitter.",
+    "trigger": "call",
+    "actions": [
+      {
+        "kind": "wait",
+        "frames": 30
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "He does not sit down. He goes back to the rail, which is where he was when you came up."
+        ]
+      },
+      {
+        "kind": "removeNpc",
+        "who": "sc_rook"
+      },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "sc_rook_after",
+          "sprite": "townsfolk_m",
+          "x": 2,
+          "y": 2,
+          "facing": "up",
+          "movement": {
+            "kind": "static"
+          },
+          "script": "sc_rook_after"
+        }
+      },
+      {
+        "kind": "wait",
+        "frames": 36
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The wind takes the last of the snow off the flags.",
+          "Under the rail there is a great deal of Caelora and none of it knows yet."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 24
+      },
+      {
+        "kind": "sfx",
+        "sound": "badge"
+      },
+      {
+        "kind": "setFlag",
+        "flag": "champion"
+      },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "{name} is the Champion of Caelora."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 30
+      },
+      {
+        "kind": "music",
+        "track": "station"
+      },
+      {
+        "kind": "wait",
+        "frames": 40
+      },
+      {
+        "kind": "say",
+        "who": "SELWYN ROOK",
+        "lines": [
+          "Sixty-second. And they will not write it down -- nine hundred years",
+          "and that ledger downstairs has never once recorded who won."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "SELWYN ROOK",
+        "lines": [
+          "Everybody will know and nothing will say so.",
+          "You get used to it in about four years."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "He picks a stone up off the cobbles, turns it over twice, and holds it out."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "SELWYN ROOK",
+        "lines": [
+          "The cairn. Everybody who walks that road sets one.",
+          "Sixty-one of the stones on that heap were set from exactly where you are standing."
+        ]
+      },
+      {
+        "kind": "sfx",
+        "sound": "fx_heavy"
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "You put it on the top. It is not a ceremony.",
+          "It takes four seconds and then it is a slightly bigger heap of stones."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 30
+      },
+      {
+        "kind": "say",
+        "who": "SELWYN ROOK",
+        "lines": [
+          "One more thing and then I am out of your way."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "SELWYN ROOK",
+        "lines": [
+          "There are six other leagues in Averra. I have had a marker in three of the Archive's",
+          "foreign volumes for about a year, and I could not go while I held this."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "SELWYN ROOK",
+        "lines": [
+          "I minded that a great deal until about four minutes ago. I still mind.",
+          "Both of those are true and I am not going to sort them out on your afternoon."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 24
+      },
+      {
+        "kind": "say",
+        "who": "SELWYN ROOK",
+        "lines": [
+          "Go home, {name}. That is not advice.",
+          "It is what every one of the sixty-one did next, and none of them was told to."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 30
+      },
+      {
+        "kind": "call",
+        "script": "ending_go_home"
+      }
+    ]
+  },
+  {
+    "id": "sc_retry",
+    "_note": "BETWEEN ATTEMPTS. Reached from sc_rook when the player walks up and speaks to him with sc_fight_pending set. He does not gloat, he does not soften the bench, and he says almost the same flat thing every time, because that is who he is. The one line that carries the mercy is the kettle: Nell Oakley's last words downstairs were 'I will put the kettle on and I will still be putting it on when you come back down', and this is the game telling a stuck player, in character, that there is a room one door away with a fire in it.",
+    "trigger": "call",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "SELWYN ROOK",
+        "lines": [
+          "You are back up. I did assume you would be.",
+          "Nothing about me has changed since you went down that stair and nothing is going to."
+        ]
+      },
+      {
+        "kind": "ask",
+        "lines": [
+          "Again?"
+        ],
+        "yes": [
+          {
+            "kind": "say",
+            "who": "SELWYN ROOK",
+            "lines": [
+              "Then stand up straight. I am not fighting somebody who is leaning."
+            ]
+          },
+          {
+            "kind": "call",
+            "script": "sc_fight"
+          }
+        ],
+        "no": [
+          {
+            "kind": "say",
+            "who": "SELWYN ROOK",
+            "lines": [
+              "Nell will have the kettle on. She always has the kettle on.",
+              "It is not a hint. She has not stopped since the day they gave her that room."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sc_rook",
+    "_note": "HIS OWN NPC, before the title changes hands. Three branches and no way to get it wrong: mid-attempt goes to sc_retry, arrived-but-declined goes back to sc_offer, and the third is unreachable because sc_arrive's band cuts the room in half -- it is here because the cost of being wrong about that is the last fight in the game being unstartable.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
+          "flag": "sc_fight_pending"
+        },
+        "then": [
+          {
+            "kind": "call",
+            "script": "sc_retry"
+          },
+          {
+            "kind": "end"
+          }
+        ]
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
+          "flag": "sc_seen"
+        },
+        "then": [
+          {
+            "kind": "call",
+            "script": "sc_offer"
+          },
+          {
+            "kind": "end"
+          }
+        ]
+      },
+      {
+        "kind": "call",
+        "script": "sc_arrive"
+      }
+    ]
+  },
+  {
+    "id": "sc_rook_after",
+    "_note": "The man at the west rail once it is over. He is not gone: handing over something with no keys, no office and no paperwork takes longer than handing over something that has all three, and he is stuck up here for a fortnight doing it. Two boxes, and they are the last two lines the player will ever get from him. The second one is the one the ending picks up.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "SELWYN ROOK",
+        "lines": [
+          "Still here. There is a fortnight of handing over a thing that has no keys, no desk",
+          "and nobody to sign for it. Nobody warns you about that either."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "SELWYN ROOK",
+        "lines": [
+          "Eleven years and I never once found out what I would do with a clear month.",
+          "Go and see your mother. I am going to go and find out."
+        ]
+      }
+    ]
+  }
+]

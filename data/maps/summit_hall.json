@@ -1,0 +1,279 @@
+{
+  "id": "summit_hall",
+  "name": "The Threshold",
+  "displayName": "THE THRESHOLD",
+  "music": "station",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪",
+    "▪▪▪▪▪▪▪█ÅÅ█▪▪▪▪▪S▪",
+    "▪════════════════▪",
+    "▪k═══════════════▪",
+    "▪k═══════════════◘",
+    "▪k═══════════════▪",
+    "▪════════════════▪",
+    "▪════AA════AA════▪",
+    "▪════EE════EE════▪",
+    "▪═══KKK═KK═══════▪",
+    "▪════════════════▪",
+    "▪╫╫╫╫╫╫╫╫══╫╫╫╫╫╫▪",
+    "▪════════════════▪",
+    "▪▫▫══♦♦════♦♦══▫▫▪",
+    "▪════════════════▪",
+    "▪═══♦♦══════♦♦═══▪",
+    "▪════════════════▪",
+    "▪P══════════════P▪",
+    "▪════════════════▪",
+    "▪═══♦♦══════♦♦═══▪",
+    "▪════════════════▪",
+    "▪▪▪▪▪▪▪▪◘◘▪▪▪▪▪▪▪▪"
+  ],
+  "warps": [
+    {
+      "x": 8,
+      "y": 21,
+      "toMap": "summit_approach",
+      "toX": 12,
+      "toY": 5,
+      "facing": "down",
+      "style": "door"
+    },
+    {
+      "x": 9,
+      "y": 21,
+      "toMap": "summit_approach",
+      "toX": 13,
+      "toY": 5,
+      "facing": "down",
+      "style": "door"
+    },
+    {
+      "x": 17,
+      "y": 4,
+      "toMap": "summit_muster",
+      "toX": 1,
+      "toY": 12,
+      "facing": "right",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "sm_registrar",
+      "sprite": "concord",
+      "x": 7,
+      "y": 9,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sm_registrar"
+    },
+    {
+      "id": "sm_seal_keeper",
+      "sprite": "elder",
+      "x": 8,
+      "y": 2,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sm_seal_keeper"
+    },
+    {
+      "id": "sm_hall_usher",
+      "sprite": "clerk",
+      "x": 3,
+      "y": 6,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sm_hall_usher"
+    },
+    {
+      "id": "sm_hall_steward",
+      "sprite": "porter",
+      "x": 16,
+      "y": 1,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sm_hall_steward"
+    },
+    {
+      "id": "sm_hall_gallery_old",
+      "sprite": "elder",
+      "x": 4,
+      "y": 12,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sm_hall_gallery_old"
+    },
+    {
+      "id": "sm_hall_gallery_kid",
+      "sprite": "kid",
+      "x": 12,
+      "y": 12,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "sm_hall_gallery_kid"
+    },
+    {
+      "id": "sm_hall_gallery_pair",
+      "sprite": "villager_f",
+      "x": 6,
+      "y": 16,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sm_hall_gallery_pair"
+    },
+    {
+      "id": "sm_hall_mason",
+      "sprite": "villager_m",
+      "x": 14,
+      "y": 18,
+      "facing": "left",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "sm_hall_mason"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 1,
+      "text": [
+        "The west jamb of the Seal. Four recesses cut into it, in a column, sized to a Crest.",
+        "BRIARBELL. STONEWAKE. TIDEGLASS. EMBERFALL."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 1,
+      "text": [
+        "The east jamb. Four more, and the top one has frost on it that never comes off.",
+        "MIREHAVEN. FROSTMERE. SKYREACH. CROWNSPIRE.",
+        "The eight recesses ARE the lock. There is nothing else holding this door."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 0,
+      "y": 2,
+      "text": [
+        "THE SEAL. A slab of the mountain, hung so well that one person moves it.",
+        "Cut across it, in letters a hand deep:",
+        "IT SHUTS SO THAT NOBODY BEHIND YOU HAS TO WATCH."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 3,
+      "text": [
+        "THE LEDGER. One line a climb, since the year the road was cut.",
+        "Name, date, weather, and the number of the last door you opened.",
+        "It does not record who won. Nine hundred years and it has never recorded that."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 5,
+      "text": [
+        "The two numbers the Summit keeps, painted on a board and repainted every spring.",
+        "FOUR THOUSAND ONE HUNDRED AND NINE HAVE STOOD IN THIS HALL.",
+        "ONE HUNDRED AND NINE HAVE OPENED THE FOURTH DOOR."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 17,
+      "y": 1,
+      "text": [
+        "THE STEWARDS' STAIR. It runs the whole height of the building outside the chambers.",
+        "It is how the water goes up and how the firewood goes up.",
+        "It is also how people come down, and it is wide enough for two to carry a third."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 11,
+      "text": [
+        "THE RAIL. Brass, waist high, with a gap in it a yard wide and no gate in the gap.",
+        "In nine hundred and six years nobody has put one there and nobody has needed to."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 14,
+      "y": 11,
+      "text": [
+        "The gallery ends at the rail and the building goes quiet on the other side of it.",
+        "Whatever happens up those stairs, it happens where the people who love you cannot see.",
+        "The Summit decided that early and has never once been talked out of it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 13,
+      "text": [
+        "The two south lights, and the only windows in the building that face down the road.",
+        "People at this end of the hall spend the whole day looking out of them",
+        "and the whole day pretending they are not."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 16,
+      "y": 13,
+      "text": [
+        "A bench with nine hundred years of initials in the underside of it.",
+        "The Summit has scraped it twice. Both times it filled up again inside a year.",
+        "It has not been scraped since 1804."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 17,
+      "text": [
+        "THE DAY BOARD. Chalk, wiped at dusk, and the only thing in this hall anybody looks at.",
+        "A runner comes down the stewards' stair when a door opens and writes it up.",
+        "Today: four names, three of them already crossed through."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 16,
+      "y": 17,
+      "text": [
+        "A card nailed to the wall in a hand nobody has ever identified.",
+        "THE PEOPLE ON THAT BOARD ARE NOT LOSING. THEY ARE STILL UP THERE."
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 2,
+      "y": 20,
+      "item": "full_heal",
+      "quantity": 2,
+      "flag": "item_summit_hall"
+    }
+  ],
+  "_plan": "THE RAIL IS THE BUILDING'S WHOLE ARGUMENT AND IT IS ONE ROW OF TILES. Waist-high brass across the full width at y11, with a two-tile gap in it and nothing standing in the gap. Everything south of it is public: benches, windows down the road, families, a day board, a child. Everything north of it is the climb: the ledger, the registrar's desk, the Seal. Nine hundred years of an institution that lets anybody in as far as the rail and then takes the challenger somewhere nobody can watch them fail. A player walks the length of that floor before they ever reach the desk, which is the point -- the gallery is the last crowd they will see.\n\nTHE SEAL HAS EIGHT RECESSES CUT INTO ITS JAMBS AND THEY ARE THE LOCK. Four Halls a side, in the order the player met them, and the check-in scene actually puts the Crests in them. It is a mechanism rather than a ceremony: the door needs to SEE eight, once, and then it gives them back.\n\nTHERE IS NOT A LOCK IN THIS BUILDING AND THERE HAS NEVER NEEDED TO BE ONE. Every door in the Summit has a person standing in front of it instead, and the first of them is the Seal Keeper at 8,2. The slab at 8,1 and 9,1 is solid terrain with no warp on it, so talking to her IS the door; she cannot be walked round because there is nothing to walk round. The four Master chambers above arrived at the same answer independently -- see the _plan on summit_master_power -- which is a good sign that it is the right one for this building.\n\nEIGHTEEN WIDE, LIKE THE EIGHTH HALL BELOW IT. The screen is fifteen tiles across, so eighteen puts both side walls within sight of the middle of the floor and keeps the rail readable end to end."
+}

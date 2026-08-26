@@ -1,0 +1,36 @@
+{
+  "$comment": "THE HIGH BOTHY. Three voices in the last warm room in the game. One is going down, one is a clerk from the Summit who walks down twice a week to be somewhere with people in it, and one is a child who is not going anywhere and has already decided she is.\n\nNOBODY IN HERE ASKS THE PLAYER ANYTHING. A room that exists to be a rest should not have a job in it.",
+  "speakers": {
+    "asb_hiker": "HIKER",
+    "asb_hand": "SUMMIT CLERK",
+    "asb_child": "CHILD"
+  },
+  "entries": {
+    "asb_hiker": [
+      {
+        "lines": [
+          "Going down. Third time going down. It is not the Kin and it is not the cold.",
+          "It is that I keep getting to the bothy and being pleased I am at the bothy.",
+          "You are pleased you are at the bothy. Notice whether you want to stay."
+        ]
+      }
+    ],
+    "asb_hand": [
+      {
+        "lines": [
+          "I keep the standing list at the Summit. Three hundred and eleven names on it.",
+          "I walk down here twice a week for the noise. There is no noise up there at all.",
+          "You are on that list, by the way. Near the bottom. Everybody is near the bottom."
+        ]
+      }
+    ],
+    "asb_child": [
+      {
+        "lines": [
+          "Mum says I can go up when I am sixteen. I am eleven.",
+          "I have already picked which ones. They do not know yet."
+        ]
+      }
+    ]
+  }
+}

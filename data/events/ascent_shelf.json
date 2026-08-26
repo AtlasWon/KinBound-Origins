@@ -1,0 +1,46 @@
+[
+  {
+    "id": "ass_updraft",
+    "$comment": "THE PINNACLE, and the Ascent's Updraft gate. The bench at 64-69, 17-21 is walled with rock on all four sides and there is no way onto it on foot -- tools/gen/ascent.mjs proves that on every build, and it fails the build if the flood from the entrance ever reaches it. The board at 67,23 is the only thing that tells a player without Gale a story about why nothing happened, and it is written as two hands: the wardens saying nobody has been up there, and somebody else saying they have.\n\nSAME PATTERN AS r8_updraft_shelf AND r9_updraft_gap. Gated on `when` rather than on a flag, so without the art the launch cell is an ordinary piece of snowfield.",
+    "when": { "kind": "hasArt", "art": "updraft" },
+    "trigger": "step",
+    "map": "ascent_shelf",
+    "at": [
+      { "x": 66, "y": 23 }
+    ],
+    "actions": [
+      { "kind": "sfx", "sound": "fx_wind" },
+      {
+        "kind": "say",
+        "lines": [
+          "The whole face of the crag is pushing air upward and it does not stop at the top of it."
+        ]
+      },
+      { "kind": "warp", "map": "ascent_shelf", "x": 66, "y": 19, "facing": "up", "style": "warp" },
+      {
+        "kind": "say",
+        "lines": [
+          "A bench of scree with a standing stone on it, and a view of every mile you have walked today."
+        ]
+      }
+    ],
+    "$comment2": "NO EXPLICIT FADES. EventHost.warp does its own fade out, load and fade in; a fade either side of it is a second fade fighting the first."
+  },
+  {
+    "id": "ass_updraft_back",
+    "$comment": "The way off. The whole south row of the bench, so a player who wants to leave does not have to hunt for a tile, and clear of 66,19 -- loadMap marks the arrival cell as already-entered, so a trigger there never fires.",
+    "trigger": "step",
+    "map": "ascent_shelf",
+    "at": [
+      { "x": 64, "y": 21 },
+      { "x": 65, "y": 21 },
+      { "x": 66, "y": 21 },
+      { "x": 67, "y": 21 },
+      { "x": 68, "y": 21 },
+      { "x": 69, "y": 21 }
+    ],
+    "actions": [
+      { "kind": "warp", "map": "ascent_shelf", "x": 66, "y": 23, "facing": "down", "style": "warp" }
+    ]
+  }
+]

@@ -176,6 +176,42 @@
       "toY": 14,
       "facing": "left",
       "style": "edge"
+    },
+    {
+      "x": 46,
+      "y": 4,
+      "toMap": "ascent_road",
+      "toX": 34,
+      "toY": 54,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 47,
+      "y": 4,
+      "toMap": "ascent_road",
+      "toX": 34,
+      "toY": 54,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 48,
+      "y": 4,
+      "toMap": "ascent_road",
+      "toX": 34,
+      "toY": 54,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 49,
+      "y": 4,
+      "toMap": "ascent_road",
+      "toX": 35,
+      "toY": 54,
+      "facing": "up",
+      "style": "edge"
     }
   ],
   "npcs": [
@@ -820,5 +856,6 @@
     }
   ],
   "_plan": "THE CITY IS A LEDGER YOU CAN WALK THROUGH. Crownspire has been cutting the \nname of everybody who reached the Summit into its terrace walls for nine \nhundred and six years, and that one fact decides the whole plan: the map \nclimbs from the gate to the Roll, every plaza is furnished with monuments \nrather than with lawn, and the last thing between the player and the \nmountain is a wall with four thousand names on it and room for forty more.\n\nIT IS BUILT OUT OF AURELINE'S OLD KIT AND NOTHING ELSE, ON PURPOSE. The \ncapital is glass and steel over three surviving streets of granite; \nCrownspire is those three streets, all the way to the walls, and the \nargument only lands if the material is literally the same one. So there is \nno new terrain character in this build and no new art: granite, sash, \narch, cobble, three roof families and the city furniture. What makes it \nread as a different place is proportion. The modern kit stacks and this \none does not, so height here is not a tower -- it is that EVERY range is \nfive rows, in the poorest street as well as the best, and the eye reads a \ncity with no cheap quarter in it.\n\nTHE STORM, WITHOUT SETTING map.weather. Map weather is invisible on the \noverworld -- nothing draws it -- and it is NOT invisible in battle: it is \npassed straight into Battle, where rain is tide x1.5 and flame x0.5. \nSetting rain over a city with a Kin Hall in it would quietly nerf every \nCinderpaw player through the eighth Crest. The storm is carried instead by \nstanding water on the stone (the p tiles, thirty-eight of them, in a city \nwhere it does not rain in summer), by the river four feet over the mark \nthat says NEVER, by mountain Kin sitting in the plaza and the muster yard, \nand by every one of thirty-six people talking about the same six days.\n\nNOBODY IS FIGHTING IN CROWNSPIRE AND THAT IS THE POINT. The Ascent gate is \nshut for the first time in living memory, so the city is full of Trainers \nwith eight Crests and nowhere to take them: the muster yard is a queue for \na gate that will not open, the Muster inn has been full for a week, and \nthe date board has been wiped four times and left blank. Every battle in \nthis settlement is inside the Hall, which is also why the streets can be \nwalked end to end without a sight line firing.\n\nTHE THREE BRIDGES ARE THE CITY'S SPINE AND THE STREET GRID IS CUT TO THEM. \nThe ravine runs the full width at y33-35 and there are exactly three ways \nover it; every north-south street in the old city is held open at a bridge \nhead (x13-16, x44-51, x77-80), so a player who crosses at any bridge walks \nstraight through both terraces to the West Road without meeting a wall. \nThe first pass had the middle bridge landing in the side of a market and \nthat is exactly the fault this layout is built to make impossible.",
-  "_join": "THE SKYREACH ROAD IS THE ONE JOIN THIS MAP DOES NOT OWN.\nCrownspire warps out at x0, y58 and y59 (the west gate arch) to a map called\n\"route_10\", landing at 53,13 and 53,14. The road owes two warps back at its\nx54, y13 and y14 -> crownspire 1,58 and 1,59, facing right, style \"edge\".\nIf the Skyreach-to-Crownspire road is named anything other than route_10,\nthe only change needed here is that string, twice."
+  "_join": "THE SKYREACH ROAD IS THE ONE JOIN THIS MAP DOES NOT OWN.\nCrownspire warps out at x0, y58 and y59 (the west gate arch) to a map called\n\"route_10\", landing at 53,13 and 53,14. The road owes two warps back at its\nx54, y13 and y14 -> crownspire 1,58 and 1,59, facing right, style \"edge\".\nIf the Skyreach-to-Crownspire road is named anything other than route_10,\nthe only change needed here is that string, twice.",
+  "_joinAscent": "THE ASCENT GATE, WIRED UP BY THE SUMMIT BUILD BECAUSE THE ROAD LANDED WITHOUT IT. The four granite arch tiles at 46..49,4 warp onto ascent_road 34,54 / 35,54, and ascent_road 34,55 / 35,55 already warps back to 48,5 / 49,5. Whoever owns the Ascent should keep these four or write their own; without them the Pilgrim Road, the Throat, the West Shoulder, the Waystation, the Crown and all eleven summit_* maps are unreachable from Hearthmere. Nothing else in Crownspire was touched."
 }

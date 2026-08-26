@@ -1,0 +1,267 @@
+{
+  "id": "ascent_crown",
+  "name": "The Crown",
+  "displayName": "THE ASCENT - THE CROWN",
+  "music": "route_west",
+  "battleBackdrop": "highland",
+  "indoor": false,
+  "weather": "snow",
+  "fog": 0.3,
+  "regionPos": {
+    "x": 25,
+    "y": 6
+  },
+  "encounterTable": "ascent_crown",
+  "warps": [
+    {
+      "x": 28,
+      "y": 43,
+      "toMap": "ascent_shelf",
+      "toX": 55,
+      "toY": 2,
+      "facing": "down",
+      "style": "edge"
+    },
+    {
+      "x": 29,
+      "y": 43,
+      "toMap": "ascent_shelf",
+      "toX": 56,
+      "toY": 2,
+      "facing": "down",
+      "style": "edge"
+    },
+    {
+      "x": 28,
+      "y": 2,
+      "toMap": "summit_approach",
+      "toX": 13,
+      "toY": 22,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 29,
+      "y": 2,
+      "toMap": "summit_approach",
+      "toX": 14,
+      "toY": 22,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 30,
+      "y": 2,
+      "toMap": "summit_approach",
+      "toX": 14,
+      "toY": 22,
+      "facing": "up",
+      "style": "edge"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "asc_snowline",
+      "sprite": "hiker",
+      "x": 27,
+      "y": 38,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "asc_snowline",
+      "sightRange": 4
+    },
+    {
+      "id": "asc_tarn",
+      "sprite": "villager_m",
+      "x": 22,
+      "y": 31,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "asc_tarn",
+      "sightRange": 3
+    },
+    {
+      "id": "asc_cairnkeep",
+      "sprite": "elder",
+      "x": 29,
+      "y": 23,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "asc_cairnkeep"
+    },
+    {
+      "id": "asc_cornice",
+      "sprite": "porter",
+      "x": 38,
+      "y": 21,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "asc_cornice",
+      "sightRange": 4
+    },
+    {
+      "id": "asc_lastwarden",
+      "sprite": "townsfolk_f",
+      "x": 29,
+      "y": 8,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "asc_lastwarden",
+      "sightRange": 4
+    }
+  ],
+  "objects": [
+    {
+      "kind": "script",
+      "x": 29,
+      "y": 39,
+      "text": [
+        "A milestone with nothing left of the number but the bottom of it.",
+        "SUMMIT I. There is no nought cut anywhere on this road. There never was one."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 20,
+      "y": 28,
+      "text": [
+        "A tarn, frozen at the rim and open in the middle, on the top of a mountain.",
+        "The chalk marks round the edge are this year's. Somebody still comes up and measures it."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 29,
+      "y": 21,
+      "text": [
+        "The Great Cairn. Thirty feet across at the bottom and the height of a house.",
+        "Every stone in it was carried up from the gate by somebody on their way to the Summit.",
+        "Nine hundred years of them. Nobody has ever counted it and nobody ever will."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 35,
+      "y": 5,
+      "text": [
+        "The Summit gate. The same granite as the city gate four miles below, cut by the same hands.",
+        "There is no bar on it and no lock. There has never once needed to be one."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 45,
+      "y": 13,
+      "text": [
+        "A crag standing over the last of the road, with the wind coming straight up the face.",
+        "From the top of that you would be able to see the sea."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 24,
+      "y": 35,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_asc_tarn_shore"
+    },
+    {
+      "kind": "item",
+      "x": 15,
+      "y": 31,
+      "item": "full_restore",
+      "quantity": 2,
+      "flag": "item_asc_tarn"
+    },
+    {
+      "kind": "item",
+      "x": 39,
+      "y": 29,
+      "item": "great_potion",
+      "quantity": 3,
+      "flag": "item_asc_cornice"
+    },
+    {
+      "kind": "item",
+      "x": 43,
+      "y": 10,
+      "item": "warden_vessel",
+      "quantity": 5,
+      "flag": "item_asc_view"
+    },
+    {
+      "kind": "item",
+      "x": 33,
+      "y": 12,
+      "item": "full_heal",
+      "quantity": 3,
+      "flag": "item_asc_road"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 12,
+      "y": 15,
+      "item": "escape_line",
+      "quantity": 2,
+      "flag": "item_asc_hidden"
+    }
+  ],
+  "rows": [
+    "CC▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪CC",
+    "CC▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪CC",
+    "CC∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴▪▪▪▪▪▪▪▪◘◘◘▪▪▪▪▪▪▪▪∀∀∴≋≋≋≋≋∴∴∴∴∴≋≋≋≋≋∴CC",
+    "CC∀∀∀∀∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴≋≋∴═══════════∴∴∴∴∴∴∴≋≋≋≋≋∀∀∀∀∴≋≋≋≋≋∴CC",
+    "CC∀∀∀∀∀∴∴≋≋∴∴∴∴∴≋≋∴∴∴∀∀∀═══════════∇∇∇∴∴∴∴∴∴∴≋∀∀∀∀∀∀∴∴≋≋≋∴CC",
+    "CC∀∀∀∀∀∴∴≋≋∴∴∴∴∴≋≋≋∴∴∀∀∀═══════════´∇∇∇≋∴∴∴∴∴≋∀∀∀∀∀∀∴∴≋≋≋∴CC",
+    "CC∀∀∀∀∴≋≋∴∴∴∴∴∴∴∴≋≋≋∴∴∴∴═══════════∇∇∇∇≋≋≋≋≋≋∴∴∀∀∇⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC∴∴∴∴≋≋≋∴∴≋≋≋≋∴∴∴≋≋≋∴∴∴∴∀∀∀∫∫∫∫∴∴∇∇∇∇∇CCCCCCCCC∴∇⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC∴∴∴∴∴≋≋∴∴≋≋≋≋≋∴∴≋≋≋∴∴∴∴∀∀∀∀∫∫∫∴∴∀∇∇∇∴C∇∇∇∇∇∇∇C∴∇⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC∴∴∴∴∴∴∴∴∴≋≋≋≋≋≋≋≋≋≋≋≋≋≋∀∀∀∀∫∫∫∫∴∀∀∴∴∴C∇∇∇∇∇∇∇C∴∇⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC∴∴∴∴∴∴∴∴∴≋≋≋≋≋≋≋≋∴≋≋≋≋≋∀∀∀∀∫∫∫∫∴∴∴∴∴∴C∇∇∇∇∇∇∇C∴∇⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC∴∴∴∇∇∇∇≋≋≋≋≋≋≋∴∀∀∀∴∴∴∴∴∀∀∀∀∀∫∫∫≋≋∴∴∴∴C∇∇∇∇∇∇∇C∆∇⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC∴∴∴∇∇∇∇≋≋≋≋≋≋≋∀∀∀∀∀∴∆∆∆∆∆∆∀∀∫∫∫∫≋≋≋∴∴C∇∇∇∇∇∇∇C∆∇⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC∴∴∴∇∇∇∇≋≋≋≋≋≋≋∀∀∀∀∀∀∴∴∀∀∀∀∀∀∫∫∫∫≋≋∴∴∀CCCCCCCCC∇⊗⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC≋≋∴∇∇∇≋≋≋∴∴≋≋≋∀∀∀∀∀≋≋≋∴≋∀∀∀∀∀∫∫∫≋∴∴∴∀∀∀∀≋≋≋∴∴∴∇⊗⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC≋≋∴∴∇∇≋≋∴∴∴∴≋∴∀∀∀∀∀≋≋≋∴≋≋≋∀∀∀∫∫∫∫∴∴∴∴≋≋≋≋≋≋∴∴∴∇⊗⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC∴∴∀∀∴≋≋∴∴∴∴∴∴∴∀∀∀∀∴∴∴∴∴∴∴∴∴∀∀∫∫∫∫∴∴∴≋≋≋≋∴∴∴∴∴∇⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC∴∀∀∀∀∴∴∴∴∴∴∴∴∴∀∀∀∀∴∴∴∴∴∴∴∴∴∇∇∇∫∫∫∇∇∇≋≋≋≋∴∴∴∴∴∇⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC∴∀∀∀∀∴∴∴≋∴∴∴∴∴∀∀∀∀∴∴∴∴∴∴∴∴∇∇∇∇∫∫∫∫∇∇≋≋≋≋∴∴∴∴∇⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC∴∀∀∀∀∴∴≋≋≋≋∴∴∴∀∀∇∇∇∇∇∇∇∇∇∇∇∇∇∇∫∫∫∫∇∇≋≋≋≋∴∴∴∴∇⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC∴∀∀∀∀∴∴≋≋≋∴∀∀∀∀∀∇√√√√√√√√√∇∴∴∴∫∫∫∫∇∴∴≋≋≋∴∴∴∴∇⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC∴∴∀∇∇∇≋≋≋∴∀∀∀∀∀∀∇√√√√√√√√√∇´∴∫∫∫∫∫∴∴∴∀∀∀≋∴∴∇⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC∇∇∇∇∇∇≋≋≋∴∀∀∀∀∀∀∇√√√√√√√√√∇∴∴∫∫∫∫∫≋∴∀∀∀∀≋∴∴∇⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC∇∇∇∇∇∇⌐⌐⌐⌐⌐⌐⌐⌐∀∀∇√√√√√√√√√∇∴∫∫∫∫∫≋≋∴∀∀∀∀∴∴∴∇⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC∇∇∇∇∇∇∇≋≋∴∴∴∴∀∀∀∇√√√√√√√√√∇∫∫∫∫∫∴≋≋≋∀∀∀∀∴∴∴∇⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC∇∇∇∇∇∇≋≋≋∴∴∴∴∴∴∀∇√√√√√√√√√∇∫∫∫∫∴∴∴∴∴∀∀∀∀∴∴∴∇⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC∇∇∇∇∇∇∴≋≋∴∴∴∴∴∴∴∇√√√√√√√√√∇∫∫∫∴∴∴∴∴∴≋∀∀∀∀≋≋∇⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC∇∇∴∴∴∴∴≋≋∴∴∴∴∴∴∴∇√√√√√√√√√∇∫∫∫∴∴∴∴∴∴≋∀∀∀∀≋≋∇⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC∴∴∴∴∴∴≅≅≅≅≅≅≅≅≅≅∇∇´∇∇∇∇∇∇∇∇∫∫∫≋∴∴∴∴∴∴∀∀∀∴∴∴∇⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC∴∴∴∴∴∀≅≅≅≅≠≅≅≅≅≅≅≠≅≅≅∴∴∴∴∴∴∫∫∫∀∴∴∴∴∴∴∴∆∆∆∴∴∴∇⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC∴∴∴∴∀∀≅≅≅≅≠WWWWWW≠≅≅≅∴≋∴∴∴∫∫∫∫∀∴∴∴∴∴∴∆∆∆∆∆∴∴∇⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC∴∴≋∀∀∀≅≅≅≅≠WWWWWW≠≅≅≅≋≋≋≋≋∫∫∫∫∀∴≋∴∴∴∴∆∆∆∆∆∴∴∇⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC∴∴≋≋∴∀≅≅≅≅≠WWWWWW≠≅≅≅≋≋≋≋∫∫∫∫∫∀∴∴∴∴∴∴∴∆∆∆∆∴∴∴∇⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC∴∴≋≋≋∴≅≅≅≅≠WWWWWW≠≅≅≅∴∴∴∫∫∫∫∫∴∴∴∴∴⌐⌐⌐⌐⌐⌐⌐⌐⌐∴∴∇⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC∴∴≋≋≋≋≅≅≅≅≠≅≅≅≅≅≅≠≅≅≅∴∴∴∫∫∫∫∴∴∴∴∴∴∴≋≋≋∴∆∆∆∴∴∴∇⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC∴∴∴∴≋≋≅≅≅≅≅≅≅≅≅≅≅≅≅≅≅∴≋∫∫∫∫∫∴∴∴∴∴∴∴∴≋∴∴∆∆∆∴∴∴∴∇⊗⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC∴∴∴∴∴≋≋≋≋≋≋∴∴∴∴∀∀∴∴∴∴≋≋∫∫∫∫∴∇∴∴∴∴∴∴∴∴∴∴∆∆∆∴∴≋∴∇⊗⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC≋≋∴∴∴∴∴∴∴∴≋∴∴∴∴∴∴∴∴∴≋≋≋∫∫∫∫∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∇⊗⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC≋≋∴∴∴∴∴∴∴∴∴∴≋≋≋≋≋≋∀∀∀∀∴∫∫∫∫∴∴∴∴∴∴∴∴∴∴∴∴∴∴≋≋∴∴∴∀∇⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC∀≋∴∴∴∴∴∴∴∴∴∴∴≋≋≋≋∀∀∀∀∀∀∀∫∫∫´∴∴∴∴∴∴∴∴∴∴∴∴∴≋≋∴∴∀∀∇⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC∀∴∴∴∴∴∴∀∀∴∴∴∴∴∴∴∴∀∀∀∀∀∀∀∫∫∫∫∴≋≋∴∴∴≋∴∴∴∴∴∴∴≋≋≋∀∀∇⊗⊗⊗⊗⊗⊗⊗⊗CC",
+    "CC∴∴∴≋∴∴∀∀∀∀∀∀∀∀∀∀∀∀∀∀∀∀∀∴∫∫∫∫∫∫≋∴∴∴≋∴∴∴∴∴∴∴∴≋≋∀∀∀∀∀∀∀∀≋≋∴CC",
+    "CC∴∴∴∴∴∴∀∀∀∀∀∀∀∀∀∀∀∀∀∀∴∴∴∴∫∫∫∫∫∫≋∴∴≋≋≋∴∴∴∇∇∇∇∴∴∴∴∴∀∀∀∀∀∀≋∴CC",
+    "CC∴∴∴∴∴≋∀∀∀∀∀∀∀∀∀∀∀∀≋≋≋≋∴∴∫∫∫∫∫∫∀≋≋≋∴≋≋≋∴∴∇∇∀∀∴∴∴∴∴∀∀∀∀∀≋∴CC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"
+  ]
+}

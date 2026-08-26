@@ -1,0 +1,115 @@
+[
+  {
+    "id": "sm_muster_keeper",
+    "$comment": "THE LAST ROOM'S KEEPER, AND SHE IS THE DIFFICULTY VALVE STANDING UP. Heal, respawn, and a kit handed over once. The player has asked four times for an easier game and the five hardest Trainer battles in the game are through the Seal; the Summit's answer is nine hundred years old and framed on the wall behind her, which is the only reason this is not a concession bolted on. setRespawn points at 7,4 in this room -- the tile in front of the fire -- so that a loss before the first landing wakes here rather than in Crownspire, four miles down a mountain.\n\nSHE IS NOT A HALLKEEPER AND NOT ONE OF THE CAST. The Masters, Tarin and the Champion belong to other builds. She is a woman who has run this room for a long time and thinks the whole thing upstairs is somebody else's business.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "not", "of": { "kind": "flag", "flag": "sm_muster_met" } },
+        "then": [
+          {
+            "kind": "say",
+            "who": "ISBET RANN",
+            "lines": [
+              "Sit down. No, properly - the chairs are for sitting on and the beds are for lying on.",
+              "This is the last warm room. Everything above us is a mountain and behaves like one."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "ISBET RANN",
+            "lines": [
+              "I put kin back together and I do not charge for it, same as any clinic.",
+              "The difference is that up here I do it four times and you never see me do three of them."
+            ]
+          },
+          { "kind": "setFlag", "flag": "sm_muster_met" },
+          {
+            "kind": "say",
+            "who": "ISBET RANN",
+            "lines": [
+              "The order on that wall is older than the road. Nobody goes up the next stair worse off.",
+              "So there is a fire on every landing, and a jar, and somebody has already been up to light them."
+            ]
+          },
+          { "kind": "giveItem", "item": "full_restore", "count": 2 },
+          { "kind": "giveItem", "item": "full_rouse", "count": 1 },
+          {
+            "kind": "say",
+            "lines": [
+              "Isbet Rann handed over 2 Full Restores and a Full Rouse.",
+              "It is the Summit's, not hers, and everybody who goes up gets the same three things."
+            ]
+          },
+          {
+            "kind": "say",
+            "who": "ISBET RANN",
+            "lines": [
+              "Now. Shall I have a look at them?"
+            ]
+          },
+          { "kind": "setRespawn", "map": "summit_muster", "x": 7, "y": 4 },
+          { "kind": "healParty" },
+          { "kind": "wait", "frames": 20 },
+          { "kind": "sfx", "sound": "heal_done" },
+          {
+            "kind": "say",
+            "who": "ISBET RANN",
+            "lines": [
+              "There. Come back and ask me again as often as you like - I have got nothing else on."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "ask",
+            "who": "ISBET RANN",
+            "lines": [
+              "Back down, or not gone up yet. Either way I do the same thing.",
+              "Shall I have a look at them?"
+            ],
+            "yes": [
+              { "kind": "setRespawn", "map": "summit_muster", "x": 7, "y": 4 },
+              { "kind": "healParty" },
+              { "kind": "wait", "frames": 20 },
+              { "kind": "sfx", "sound": "heal_done" },
+              {
+                "kind": "say",
+                "who": "ISBET RANN",
+                "lines": [
+                  "Right as rain, the lot of them. Write your line on the wall before you go."
+                ]
+              }
+            ],
+            "no": [
+              {
+                "kind": "say",
+                "who": "ISBET RANN",
+                "lines": [
+                  "Suit yourself. The kettle is on and it is on all year."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sm_muster_case",
+    "$comment": "THE CASE. openStorage, and the fiction is that the Summit has kept one since the road was cut because nine hundred years of people change their minds in this room. The clerk has no opinion about any of it, which is the joke and also the kindness.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "CASE CLERK",
+        "lines": [
+          "The case. Yes, you can. Yes, now. Yes, as many times as you want.",
+          "I have watched four thousand people do this and I have never once had a view about it."
+        ]
+      },
+      { "kind": "openStorage" }
+    ]
+  }
+]

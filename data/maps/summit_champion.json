@@ -1,0 +1,122 @@
+{
+  "id": "summit_champion",
+  "name": "The Top",
+  "displayName": "THE TOP",
+  "music": "station",
+  "battleBackdrop": "quarry",
+  "indoor": false,
+  "snow": 0.26,
+  "_join": "IN: the arch at 6,10 receives summit_master_bonds 6,0 and warps back to it. THAT JOIN WAS ALREADY MADE BY THE MASTERS BEFORE THIS ROOM EXISTED -- data/maps/summit_master_bonds.json warps its top door to summit_champion 6,10 -- so this map is shaped to it and the width, the door column and the row count all come from that file rather than from me. Nell Oakley's last line is 'the door at the top of my kitchen, and there is nothing above it but weather', which is what this room is.\n\nOUT: winning sets the flag `champion` and then calls the script `ending_go_home`. data/events/hearthmere.json names both as the ending's contract; `call` on a script that does not exist is a silent no-op in EventRunner, so if the ending has not landed yet the player is simply left standing up here as Champion and can walk down. There is no other join and the Champion gates on no flag: the four doors below are the gate.",
+  "_plan": "THE LAST ROOM IN THE MAIN GAME, AND IT IS SIXTEEN BY ELEVEN.\n\nThe fourth chamber below is a kitchen with a stove in it, a rug, a kettle and a Gravelet asleep in the good chair, and its top door opens onto this: eleven rows of snow with no roof on them. Nothing says that. The door does.\n\nONE SCREEN, ON PURPOSE. The authored camera is fifteen tiles by ten (240x160 at TILE_SIZE 16). SIXTEEN WIDE IS THE NUMBER THAT FILLS IT, and it is the house interior width -- every Hall floor in the game is sixteen. The first cut of this room was thirteen, because the kitchen below it is, and at 1x that framed a column of void down either side of the last picture in the game. Eleven rows means the camera clamps to rows 1-10 for the whole southern half of the map, so from the moment the player steps off the door the rail, the cairn, both fires, Rook and the player are all in frame together and stay there. sc_arrive fires on the band at row 7. THAT ROW IS CHOSEN OFF THE MESSAGE BOX AND NOT OFF THE FLOOR PLAN: the box covers the bottom three rows of the screen, and a scene fired one tile lower put the player underneath it for the whole of the last conversation in the game. At row 7 the player is the last thing above the box and Rook, three tiles up at 6,4, is in the clear with the cairn above him. Walk up to the rail and the camera reaches row 0 and the drop comes into frame -- the only camera move in the scene, and it is the player and not the script that makes it.\n\nTHE NORTH SIDE IS NOT A WALL. Row 0 is '⊗', the gorge -- src/world/terrain.ts calls it 'the only solid tile in the game a player is meant to walk up to the edge of and look into' -- with the city's brass railing along row 1. Granite on three sides and nine hundred feet of air on the fourth, and Rook is standing with his back to it when the player comes up.\n\nTHE CAIRN AT 9,3 IS THE ONLY RECORD THERE IS, AND THAT IS LOAD-BEARING. The Threshold at the bottom of the building says it in its own objects: 'THE LEDGER. One line a climb, since the year the road was cut. Name, date, weather, and the number of the last door you opened. It does not record who won. Nine hundred years and it has never recorded that.' So there is no Champions' wall up here and there must never be one. What there is is the last stone of the cairn field on the approach -- everybody who walks that road sets a stone -- and sixty-one of the stones on this one were set by people who won. The crowning in data/events/summit_champion.json is the player putting the sixty-second on it. Nothing is written down anywhere; the only thing in the game that knows is the save file, which is why state.ts had to learn the word Champion.\n\nSNOW, WITH A SWEPT APRON IN THE MIDDLE OF IT, AND THE FIRST CUT HAD THAT BACKWARDS. The floor was all cobble to begin with and at 1x the top of the mountain came out as a dark stone yard at night -- which is exactly the mistake src/world/terrain.ts warns about in the mountain block: up here the GROUND is the brightest thing on the screen and everything the player has to read is darker than it. So the floor is snow, the apron people actually stand on is Crownspire cobble swept clear of it, and the drift piles up in the corners and along the west wall where nobody walks. That inversion is the whole picture: a dark platform in a white field, black granite round three sides, two fires, and one man.\n\nAND THE APRON IS CROWNSPIRE'S OWN PAVING. It is the same cobble the capital is built out of all the way to its walls (see the _plan on data/maps/crownspire.json), carried up a mountain to put a floor on the top of it, and nobody ever mentions it. The drift is walkable, because a top that has been swept everywhere has a caretaker and this one has been shut for six days.\n\nNO WEATHER FIELD, AND IT IS LOAD-BEARING. OverworldScene passes map.weather straight into BattleScene, and rain or storm is 1.5x on tide and 0.5x on flame -- which would silently change the shape of the hardest fight in the game. See THE WEATHER TRAP in the $comment on summit_champion in data/trainers/trainers.json. The snowfall here is the separate numeric `snow` key, which src/gfx/snowfall.ts draws on the overworld and which Battle has never heard of. 0.26 is a thin steady fall: the squall model in that file lifts a map's own weight, and anything above about 0.4 would take the far side of this room away in the middle of the last conversation in the game.\n\nNOBODY ELSE IS UP HERE. No steward, no registrar, no gallery, no Tarin. The Threshold made the argument for me in its own sign -- 'whatever happens up those stairs, it happens where the people who love you cannot see' -- and the story climax already had nine people on a plate. This one is two.",
+  "rows": [
+    "⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗",
+    "▪╫╫╫╫╫╫╫╫╫╫╫╫╫╫▪",
+    "▪∴∴∴░░░░░░░∴∴∴∴▪",
+    "▪∴∴░░░░░░√░░∴∴∴▪",
+    "▪∴∴░░░░░░░░░∴∴∴▪",
+    "▪≋∴░Ę░░░Ę░░░∴∴≋▪",
+    "▪≋∴░░░░░░░░░∴∴≋▪",
+    "▪≋∴∴░░░░░░░∴∴∴≋▪",
+    "▪≋≋∴∴░░░░░∴∴≋≋≋▪",
+    "▪≋≋∴∴∴░░░∴∴∴≋≋≋▪",
+    "▪▪▪▪▪▪◘▪▪▪▪▪▪▪▪▪"
+  ],
+  "warps": [
+    {
+      "_note": "Back down into the fourth chamber. The reciprocal of summit_master_bonds 6,0 -> summit_champion 6,10, which was written before this file existed. Landing on a warp tile is the pattern every stair in the game uses (crownspire_hall 7,2 <-> crownspire_hall_crown 7,13), so arriving here and standing on the arch is correct and does not bounce.",
+      "x": 6,
+      "y": 10,
+      "toMap": "summit_master_bonds",
+      "toX": 6,
+      "toY": 1,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "_note": "Selwyn Rook, Champion of Caelora. Facing UP at 6,4, at the head of the swept apron with his back to the stair, so the first thing the player ever sees of the last person in the story is a man looking at a rail and some weather.\n\nHE IS NOT ON TOP OF THE CAIRN, AND THAT COST A REVISION. The cairn was at 6,3, one tile above him, and at 1x the two silhouettes stacked into one column and the heap of stones read as a hat. It is at 9,3 now, off the aisle on the east side of the apron, which is also where the crowning wants it: the player walks up the middle to the man and across to the stones afterwards. sc_arrive turns him round.\n\nHE IS A PLAIN NPC WITH A SCRIPT AND NO `trainer` FIELD, because a Champion who challenges on sight would fire before the scene that reaches him has run. sc_rook is the offer, the retry and the afterward, all branched on flags.\n\nSPRITE: townsfolk_m, and it is a HOLDING CHOICE that is also a deliberate one -- it is the plainest body in the game and all four Masters downstairs are better dressed than he is. src/gfx/charsprite.ts is not this build's file. If whoever owns it adds a `champion` palette, this one string is the only change needed here.",
+      "id": "sc_rook",
+      "sprite": "townsfolk_m",
+      "x": 6,
+      "y": 4,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sc_rook",
+      "hiddenIfFlag": "champion"
+    },
+    {
+      "_note": "The same man, four tiles west and hard against the rail, after he has lost. A second NPC rather than a moved one, for the reason hm_mira_door in data/maps/hearthmere.json gives: runtime spawnNpc does not survive a map change, and npcVisible is read on load, so the requiresFlag/hiddenIfFlag pair is what makes 'he is standing somewhere else now' still true when the player comes back up. sc_crowned removes the first and spawns this one so that the change happens inside the scene as well.\n\nHE IS AT 2,2 AND NOT ON THE MIDDLE LINE ON PURPOSE. The cairn is at 6,3 and the player has to be able to walk to it without going round anybody.",
+      "id": "sc_rook_after",
+      "sprite": "townsfolk_m",
+      "x": 2,
+      "y": 2,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sc_rook_after",
+      "requiresFlag": "champion"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 9,
+      "y": 3,
+      "text": [
+        "The last cairn on the road, and the highest thing in Caelora that people made.",
+        "Everybody who walks up the Ascent sets a stone. Almost nobody gets to set one here.",
+        "It is a heap of grey rock about chest high and it is the only record the Summit keeps."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 4,
+      "y": 5,
+      "text": [
+        "A firepot, lit, standing in a ring of its own melt.",
+        "Somebody carries oil up four flights before dawn and goes down again without speaking to him."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 5,
+      "text": [
+        "The second firepot, and a folded coat beside it that is not his size.",
+        "It has been folded a long time."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 6,
+      "y": 1,
+      "text": [
+        "The rail, and then nothing at all for a very long way.",
+        "Crownspire is a grey smudge with three bridges in it, the plain past that, the sea past that,",
+        "and about a third of everywhere you have ever been."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 1,
+      "text": [
+        "The rail is bolted into the granite at every second post and the bolts are all different ages.",
+        "Nine hundred years of somebody deciding this was still worth doing."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 13,
+      "y": 1,
+      "text": [
+        "The east end of the rail, where the stone falls away and the wind comes up it.",
+        "The snow at this corner does not fall. It arrives from underneath."
+      ]
+    }
+  ]
+}

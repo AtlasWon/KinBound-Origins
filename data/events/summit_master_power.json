@@ -1,0 +1,194 @@
+[
+  {
+    "id": "sm_power_arrive",
+    "$comment": "One box, once, on first entry. The Ascent's own scenes are somebody else's and this must not become one of them: all it does is say that the mountain has stopped being a road and started being a building, and that the building is empty.",
+    "trigger": "enter",
+    "map": "summit_master_power",
+    "onceFlag": "sm_power_arrived",
+    "actions": [
+      {
+        "kind": "say",
+        "lines": [
+          "The stair ends and the wind stops, both at once, and the quiet is the loudest thing in it.",
+          "Nineteen paces of swept stone, four fires, six windows, and one man standing in the far door."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sm_carrick",
+    "$comment": "THE MASTER OF POWER. He stands on 9,1, which is the only walkable neighbour of the door out, so the room cannot be crossed without him and there is no warden anywhere in the four chambers doing that job for their Master.\n\nHE HEALS THE PARTY BEFORE THE FIGHT AND HE DOES IT HIMSELF. Measured, four back to back with nothing put back in between is a zero per cent clear for a novice at every level from 48 to 51 -- see the shared note on summit_master_control in data/trainers/trainers.json. Every chamber therefore restores, every time, for nothing, and a loss re-arms this same conversation rather than sending anybody down the mountain: onLoss is `continue` and the script ends politely, exactly as Merrin Ord's Long Floor does on the Crown Floor. That is the concession the four separate requests for an easier game have earned.\n\nAND THE HEAL IS CHARACTERISATION RATHER THAN PLUMBING. Four Masters offering the same courtesy in four different voices is four characterisations for nothing. Carrick's is a bucket by the wall and the flat statement that beating a tired person would not prove his point, which is the same sentence as his whole philosophy from the other end.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "ABEL CARRICK",
+        "lines": [
+          "Abel Carrick. You will have been told there are four of us and that we get harder.",
+          "We do not. We get different. I am the one who is in a hurry."
+        ]
+      },
+      { "kind": "healParty" },
+      { "kind": "sfx", "sound": "heal" },
+      {
+        "kind": "say",
+        "lines": [
+          "He walks to the east wall, picks up the bucket and the cloth, and puts them down in front of you.",
+          "Your party was restored."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "ABEL CARRICK",
+        "lines": [
+          "All of it. I want you whole. There is no argument in beating a tired person,",
+          "and an argument is the only thing I have ever wanted out of this room."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "ABEL CARRICK",
+        "lines": [
+          "Everything I own is faster than everything you own and hits harder than it has any business hitting.",
+          "It will be over in four minutes. That is not the cruelty. The long version is the cruelty."
+        ]
+      },
+      {
+        "kind": "ask",
+        "lines": ["Ready when you are."],
+        "yes": [
+          {
+            "kind": "say",
+            "who": "ABEL CARRICK",
+            "lines": ["Good. Stand anywhere. It genuinely does not matter."]
+          },
+          { "kind": "battleTrainer", "trainer": "summit_master_power", "onLoss": "continue" },
+          {
+            "kind": "if",
+            "cond": { "kind": "var", "var": "last_battle_won", "op": "==", "value": 1 },
+            "then": [{ "kind": "call", "script": "sm_carrick_win" }],
+            "else": [{ "kind": "call", "script": "sm_carrick_loss" }]
+          }
+        ],
+        "no": [
+          {
+            "kind": "say",
+            "who": "ABEL CARRICK",
+            "lines": [
+              "Then go down and stand about in the Ascent for a bit. It is a good view.",
+              "I will be here. I am always here. That is rather the trouble with the job."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sm_carrick_win",
+    "trigger": "call",
+    "actions": [
+      { "kind": "wait", "frames": 30 },
+      {
+        "kind": "say",
+        "lines": [
+          "He does not sit down. He walks the whole length of his empty floor once and comes back.",
+          "It is the only thing anybody has ever seen him do slowly."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "ABEL CARRICK",
+        "lines": [
+          "You stood still. I hit you as hard as I own and you stood still, and then you hit me back.",
+          "That is the entire answer to me and I tell it to people at the door and nobody believes it."
+        ]
+      },
+      { "kind": "giveItem", "item": "full_restore", "count": 2 },
+      { "kind": "sfx", "sound": "badge" },
+      { "kind": "say", "lines": ["Abel Carrick handed over 2 Full Restores."] },
+      {
+        "kind": "say",
+        "who": "ABEL CARRICK",
+        "lines": [
+          "Take them up with you. I have never used one in my life.",
+          "That is not advice. That is a boast, and it is the only one I have."
+        ]
+      },
+      { "kind": "setFlag", "flag": "master_power_beaten" },
+      {
+        "kind": "say",
+        "who": "ABEL CARRICK",
+        "lines": [
+          "Serra is next. She will not swing at you once and you will lose anyway.",
+          "Go up and find out how. I have been trying to for nineteen years."
+        ]
+      },
+      { "kind": "removeNpc", "who": "sm_carrick" },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "sm_carrick_after",
+          "sprite": "dockhand",
+          "x": 15,
+          "y": 12,
+          "facing": "left",
+          "movement": { "kind": "static" },
+          "script": "sm_carrick_after"
+        }
+      },
+      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "say",
+        "lines": [
+          "He steps out of his own doorway and goes and stands at the east light, where the mended pane is.",
+          "The door behind him is a plain door and it has been open the whole time."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sm_carrick_loss",
+    "$comment": "Gentle and repeatable. The chamber is its own checkpoint: the same conversation is available immediately, with the heal in it, from the same tile.",
+    "trigger": "call",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "ABEL CARRICK",
+        "lines": [
+          "Right. Down you go and put them right. The door is not going anywhere and neither am I.",
+          "Bucket is where it was."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "ABEL CARRICK",
+        "lines": [
+          "And I do not think less of anybody for a second go.",
+          "I think less of a long first one, and that was not a long one."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sm_carrick_after",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "ABEL CARRICK",
+        "lines": [
+          "Everybody who beats me does it the same way. They bring something that does not fall over.",
+          "It is not clever, it works every single time, and I have never once been able to stop it."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "ABEL CARRICK",
+        "lines": [
+          "I could put a wall on my own bench tomorrow. I have thought about it for nineteen years.",
+          "Then it would take eleven minutes and I would have stopped believing the thing I believe."
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,185 @@
+{
+  "id": "ascent_ruin",
+  "name": "The High Waystation",
+  "displayName": "THE ASCENT - THE HIGH WAYSTATION",
+  "music": "station",
+  "battleBackdrop": "cave",
+  "indoor": false,
+  "fog": 0.14,
+  "regionPos": {
+    "x": 25,
+    "y": 6
+  },
+  "encounterTable": "ascent_ruin",
+  "warps": [
+    {
+      "x": 18,
+      "y": 32,
+      "toMap": "ascent_shelf",
+      "toX": 62,
+      "toY": 15,
+      "facing": "down",
+      "style": "cave"
+    },
+    {
+      "x": 19,
+      "y": 32,
+      "toMap": "ascent_shelf",
+      "toX": 63,
+      "toY": 15,
+      "facing": "down",
+      "style": "cave"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "asu_scholar",
+      "sprite": "professor",
+      "x": 25,
+      "y": 26,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "asu_scholar",
+      "sightRange": 4
+    },
+    {
+      "id": "asu_pilgrim",
+      "sprite": "villager_f",
+      "x": 12,
+      "y": 23,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "asu_pilgrim",
+      "sightRange": 3
+    },
+    {
+      "id": "asu_namewall",
+      "sprite": "elder",
+      "x": 19,
+      "y": 6,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "asu_namewall"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "script",
+      "x": 17,
+      "y": 4,
+      "text": [
+        "The wall behind the hearth, and it has been cut into twice.",
+        "Underneath: spirals, and a line of marks nobody has ever been able to read.",
+        "Over the top of them: names. Nine hundred years of them, in Caeloran, cut with knives."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 19,
+      "y": 20,
+      "text": [
+        "The cistern. Cut square, filled by the mountain, and never once dry.",
+        "The water is so still it takes a moment to see that it is water at all."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 19,
+      "y": 23,
+      "text": [
+        "A hearth with a ring of cut stone round it and nine centuries of soot up the flue.",
+        "The people who built this room and the people who use it have never met.",
+        "They have all sat on the same bench."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 29,
+      "y": 27,
+      "text": [
+        "A thorn brake, in the one corner of this mountain that is out of the wind.",
+        "It is the highest living thing for two miles in any direction and it is furious about it."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 8,
+      "y": 28,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_asu_hall"
+    },
+    {
+      "kind": "item",
+      "x": 19,
+      "y": 13,
+      "item": "deep_vessel",
+      "quantity": 5,
+      "flag": "item_asu_cistern"
+    },
+    {
+      "kind": "item",
+      "x": 33,
+      "y": 27,
+      "item": "full_rouse",
+      "quantity": 2,
+      "flag": "item_asu_thorn"
+    },
+    {
+      "kind": "cuttable",
+      "x": 29,
+      "y": 25,
+      "flag": "asu_thorn_corner"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 32,
+      "y": 8,
+      "item": "ward_incense",
+      "quantity": 2,
+      "flag": "item_asu_hidden"
+    }
+  ],
+  "rows": [
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩCCCC",
+    "CCCCΩΘΣΣΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΘΘΘΩCCCC",
+    "CCCCΩΘΘΣΣΣΣΣθθθθθθθθθθθθθθθΣΘΘΘΘΘΘΘΩCCCC",
+    "CCCCΩΘΘΣΣΣΣΣΣΘΘΘ∴∴∴ΘΘΘΘ∴∴∴ΘΘΘΘΘΘΘΘΘΩCCCC",
+    "CCCCΩΘΘΣΣΣΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΩCCCC",
+    "CCCCΩΘΘΘΘΘΘ~~~~~~~~~~~~~~~~~ΘΘΘΘΘΘΘΩCCCC",
+    "CCCCΩ∴∴∴∴∴Θ~WWWWWWWWWWWWWWW~ΘΘΣΣΣΣΣΩCCCC",
+    "CCCCΩ∴∴∴∴∴Θ~WWWWWWWWWWWWWWW~ΘΣΣΣΣΣΣΩCCCC",
+    "CCCCΩ∴∴∴∴∴Θ~WWWWWWWWWWWWWWW~ΘΘΣΣΣΣΣΩCCCC",
+    "CCCCΩΘΘΘΘ∴Θ~WWWWWWWWWWWWWWW~ΘΘΘΘΘΘΘΩCCCC",
+    "CCCCΩΘΘΣΘ∴Θ~WWWWWWWΘWWWWWWW~ΘΘΘ∴∴∴∴ΩCCCC",
+    "CCCCΩΘΘΣΘ∴Θ~WWWWWWWWWWWWWWW~ΘΘ∴∴∴∴∴ΩCCCC",
+    "CCCCΩΘΘΘΘΘΘ~WWWWWWWWWWWWWWW~ΘΘ∴∴∴ΘΘΩCCCC",
+    "CCCCΩ∴∴∴ΘΘΘ~WWWWWWWWWWWWWWW~Θ∴∴∴ΘΣΣΩCCCC",
+    "CCCCΩ∴∴∴∴ΘΘ~WWWWWWWWWWWWWWW~Θ∴∴∴ΘΣΣΩCCCC",
+    "CCCCΩ∴∴∴ΘΘΘ~~~~~~~~~~~~~~~~~Θ∴ΘΘΘΣΣΩCCCC",
+    "CCCCΩΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΩCCCC",
+    "CCCCΩΘΘΘΘΘΘΘΘ∴∴ΘΘΣΣΦΣΣΘΘΘΘΘΘΘΩΩΩΩΩΩΩCCCC",
+    "CCCCΩΣΘΘΘΘΘΘΘ∴∴ΘΘΣΣΣΣΣΘΘΘΘΘΘΘΩ∴∴∴∴∴ΩCCCC",
+    "CCCCΩΣΣΣΣΘΘΘΘ∴∴ΘΘΣΘΘΘΘΘ∴∴ΘΘΣΣΩ∴∴∴∴∴ΩCCCC",
+    "CCCCΩΣΣΣΣΘΘΘΘ∴∴ΘΘΣΘΦ∴∴∴∴∴ΘΣΣΣΩ∴∴\"\"∴ΩCCCC",
+    "CCCCΩΣΣΣΣΘΘΘΘ∴∴ΘΘ≡≡≡≡≡∴∴∴ΘΣΣΣΩ∴∴\"\"∴ΩCCCC",
+    "CCCCΩΣΣΣΣΣΘΘΘ∴∴ΞΘΘΘΘ∴∴∴Ξ∴ΘΘΣΣX∴∴∴∴∴ΩCCCC",
+    "CCCCΩΘΣΣΣΣΘΘΘΘΘΘΘΘΘΘΘΘΘ∴∴ΘΘΘΘΩ∴∴∴∴∴ΩCCCC",
+    "CCCCΩΘΣΣΣΣΘΘΘΘΘΞΘΘΘΘΘΘΘΞΘΘ∴∴∴Ω∴\"\"∴∴ΩCCCC",
+    "CCCCΩΘΣΣΣΣΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΩ∴∴∴∴∴ΩCCCC",
+    "CCCCΩΣΣΣΣΣΣΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΘΩ∴∴∴∴∴ΩCCCC",
+    "CCCCΩΣΣΣΣΣΣΘΘ∴∴ΘΘΘΘΘΘΘΘΘΘΘΣΣΣΩΩΩΩΩΩΩCCCC",
+    "CCCCΩΩΩΩΩΩΩΩΩΩΩΩΘΘΘΘΘΘΘΩΩΩΩΩΩΩΩΩΩΩΩΩCCCC",
+    "CCCCCCCCCCCCCCCCΘΘΘΘΘΘΘCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCΘΘΘΘΘΘΘCCCCCCCCCCCCCCCCC"
+  ]
+}

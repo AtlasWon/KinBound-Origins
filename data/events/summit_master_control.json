@@ -1,0 +1,192 @@
+[
+  {
+    "id": "sm_control_arrive",
+    "trigger": "enter",
+    "map": "summit_master_control",
+    "onceFlag": "sm_control_arrived",
+    "actions": [
+      {
+        "kind": "say",
+        "lines": [
+          "The floor of this one has been ruled into four squares with a cross of laid stone.",
+          "There is no wall in it anywhere. There is a plan on the ground, and you are standing in it."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sm_lowe",
+    "$comment": "THE MASTER OF CONTROL. Same shape as all four: she stands on the one walkable neighbour of the door out, she heals the party herself before the fight, a loss is `continue` and re-arms this conversation from the same tile, and beating her removes the blocker live rather than waiting for a map reload -- NPC visibility flags are only read in loadMap, so a script that sets the flag and stops leaves the player shut in with a man who is no longer there.\n\nHER HEAL IS THE OPPOSITE OF CARRICK'S IN THE SAME WORDS. He does it so the argument is honest; she does it so nobody can say afterwards that anything was arranged. Same courtesy, two philosophies, and it costs one box each.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "SERRA LOWE",
+        "lines": [
+          "Serra Lowe. There is a chair. Nobody has ever sat in it and I have stopped moving it out.",
+          "You are standing on the middle square, by the way. Everybody does. It is the worst one."
+        ]
+      },
+      { "kind": "healParty" },
+      { "kind": "sfx", "sound": "heal" },
+      {
+        "kind": "say",
+        "lines": [
+          "She fills a bowl at the sill and sets it down on the ruled line without being asked.",
+          "Your party was restored."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "SERRA LOWE",
+        "lines": [
+          "Whole, please. I would rather nobody was ever able to say they were tired.",
+          "It would spoil the only interesting thing about losing to me."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "SERRA LOWE",
+        "lines": [
+          "Nothing I do in the next few minutes is going to look like an attack.",
+          "You will lose anyway, and you will not be able to say afterwards precisely when."
+        ]
+      },
+      {
+        "kind": "ask",
+        "lines": ["Whenever you are ready."],
+        "yes": [
+          {
+            "kind": "say",
+            "who": "SERRA LOWE",
+            "lines": ["Thank you. Stand wherever you like; I have already decided where you will be."]
+          },
+          { "kind": "battleTrainer", "trainer": "summit_master_control", "onLoss": "continue" },
+          {
+            "kind": "if",
+            "cond": { "kind": "var", "var": "last_battle_won", "op": "==", "value": 1 },
+            "then": [{ "kind": "call", "script": "sm_lowe_win" }],
+            "else": [{ "kind": "call", "script": "sm_lowe_loss" }]
+          }
+        ],
+        "no": [
+          {
+            "kind": "say",
+            "who": "SERRA LOWE",
+            "lines": [
+              "Sensible. Go and look at the shelves on your way out - the left-hand ones.",
+              "They are openings, not results. It is the same information and it is much more useful."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sm_lowe_win",
+    "trigger": "call",
+    "actions": [
+      { "kind": "wait", "frames": 30 },
+      {
+        "kind": "say",
+        "lines": [
+          "She takes a pencil out of her coat, writes for about four seconds, and puts it away again.",
+          "She does not look at the page while she is doing it."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "SERRA LOWE",
+        "lines": [
+          "There. That was the moment. You went faster than I could get things into place.",
+          "Eleven people. Eleven times, the same way, and I keep writing it down as though it will change."
+        ]
+      },
+      { "kind": "giveItem", "item": "full_heal", "count": 2 },
+      { "kind": "sfx", "sound": "badge" },
+      { "kind": "say", "lines": ["Serra Lowe handed over 2 Full Heals."] },
+      {
+        "kind": "say",
+        "who": "SERRA LOWE",
+        "lines": [
+          "Two Full Heals. I have just spent ten minutes showing you what they are for.",
+          "Do not save them for the Champion. Save them for the turn you notice."
+        ]
+      },
+      { "kind": "setFlag", "flag": "master_control_beaten" },
+      {
+        "kind": "say",
+        "who": "SERRA LOWE",
+        "lines": [
+          "Moss is above me. Do not try to out-think him - he does not think, he moves.",
+          "That is not a criticism. I have never been able to do it and I have watched him for thirty years."
+        ]
+      },
+      { "kind": "removeNpc", "who": "sm_lowe" },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "sm_lowe_after",
+          "sprite": "harbourmaster",
+          "x": 15,
+          "y": 12,
+          "facing": "left",
+          "movement": { "kind": "static" },
+          "script": "sm_lowe_after"
+        }
+      },
+      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "say",
+        "lines": [
+          "She goes and sits at the east table, at the chair that is not square with anything.",
+          "It is the only place in the room she has ever put anything crooked, and it is where she sits."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sm_lowe_loss",
+    "trigger": "call",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "SERRA LOWE",
+        "lines": [
+          "About turn nine. It was finished then and neither of us said anything about it.",
+          "That is not a criticism either. Almost nobody notices at the time."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "SERRA LOWE",
+        "lines": [
+          "Go down, put them right, and come back and do it in three.",
+          "The bowl will be on the sill. It is always on the sill."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sm_lowe_after",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "SERRA LOWE",
+        "lines": [
+          "Abel swings. I set the table. He has decided that makes me the unkind one.",
+          "He has never once considered that I finish faster than he does."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "SERRA LOWE",
+        "lines": [
+          "I have written down every first move anybody has made in this room for thirty years.",
+          "Yours is on the eleventh shelf now, with the spines turned in. You will never see it."
+        ]
+      }
+    ]
+  }
+]

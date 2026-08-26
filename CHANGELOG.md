@@ -8,6 +8,54 @@ Add a new `## vX.Y.Z` heading above the others before running `npm run ship`.
 
 ---
 
+## v0.19.0 — the main story is finished
+
+### The Ascent
+
+One mountain, walked round four times, and it is the whole region in miniature
+and in reverse: oak, a pine band, a gorge with three waterfalls, an underground
+lake, a shoulder above the cloud, an Aurelian shelter that is not a fourth site,
+and then bare snow.
+
+**Every field art you have earned is used, two or three times each.** The ford
+above the second fall is the main line because the bridge is out. Three stones
+into three Aurelian sockets is the main line. A stair of lamps is the main line,
+and it is the only place in Caelora that Kindle is ever used outside a battle.
+
+On one wall of the high waystation there are nine hundred years of Caeloran
+names cut on top of Aurelian marks.
+
+### The Summit
+
+Four Masters, and they are four arguments rather than four difficulty steps —
+power, control, adaptation, and one who wins with creatures nobody rates. Then
+Tarin, one last time, before the top.
+
+Then Selwyn Rook, eleven years Champion, who opens by telling you exactly where
+he was standing when every pressure gauge in the Crownspire Archive went flat —
+handing slates to a stranger on a roof — and knows precisely how small a job at
+the top of a hill is next to what you did. He says so without flinching, and
+then fights you for it as hard as he owns it.
+
+Beat him and your name goes on the wall at Crownspire. There was room for forty
+more.
+
+### Home
+
+You walk back down the road you walked up, past seven people who have all
+changed what they say, to a house with the light on.
+
+The keepsake goes back among his things. Nobody explains why.
+
+Then a map of the world, and how little of it Caelora is.
+
+### And then, deep under the sea
+
+No dialogue. Four shots. Something moving through Aurelian ruins at a scale that
+makes it small, which this game has never once done to it.
+
+It passes a wall.
+
 ## v0.18.0
 
 ### They all came

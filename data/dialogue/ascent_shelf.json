@@ -1,0 +1,27 @@
+{
+  "$comment": "THE WEST SHOULDER. Two voices: the bothy keeper on her own step, and the old man on the spur who is the only person on the mountain who will tell the player there is something up the side road worth walking to. He does not say what. He says who kept it.",
+  "speakers": {
+    "ass_bothy_step": "BOTHY KEEPER",
+    "ass_spur": "SPUR WALKER"
+  },
+  "entries": {
+    "ass_bothy_step": [
+      {
+        "lines": [
+          "In. Now. You have been in a mountain all morning and you look it.",
+          "There is a fire, there is a bed, there is soup and none of it costs anything.",
+          "If somebody has told you it does, tell me their name and I will have a word."
+        ]
+      }
+    ],
+    "ass_spur": [
+      {
+        "lines": [
+          "Cut across the water and keep going. There is a room up there older than Crownspire.",
+          "No door on it. No roof to speak of. Fire is laid and somebody laid it.",
+          "Nobody knows who does that. We have all decided not to find out."
+        ]
+      }
+    ]
+  }
+}

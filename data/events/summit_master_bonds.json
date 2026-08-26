@@ -1,0 +1,213 @@
+[
+  {
+    "id": "sm_bonds_arrive",
+    "trigger": "enter",
+    "map": "summit_master_bonds",
+    "onceFlag": "sm_bonds_arrived",
+    "actions": [
+      {
+        "kind": "say",
+        "lines": [
+          "The music changes at the door. There is a stove going, and a kettle, and a smell of something warm.",
+          "It is thirteen paces across. It is the smallest room on the mountain and the only warm one."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sm_oakley",
+    "$comment": "THE MASTER OF BONDS, AND THE ONE THE GAME IS NAMED AFTER. Same machinery as the other three -- doorway blocker at 6,1, heal before the fight, `continue` on a loss, live removeNpc on the win -- and a completely different person running it.\n\nHER HEAL IS NOT A COURTESY, IT IS THE ARGUMENT. Carrick heals you so the argument is honest and Lowe heals you so nothing can be said afterwards; Nell feeds everything you are carrying before she says a word to you, and does not frame it as anything at all. That is the fourth voice, and it is the one that does not know it is making a point.\n\nTHE GRAVELET IN THE GOOD CHAIR is a `kin` object on the map at 8,4 and it is the ace. She picks it up before the fight, in one line, and the whole chamber is built so that the player has read the six bowls and the list of what six creatures will not eat before that line lands.\n\nSUMMIT_MASTERS_DONE is set here, guarded by all four flags rather than by this one, so a hub layout above the Ascent works exactly as well as the chain below it does. That flag is the Champion's gate and it is not read anywhere in my files -- see forOthers.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "NELL OAKLEY",
+        "lines": [
+          "Oh - come in, come in. Mind the chair. She is in the chair. She is always in the chair.",
+          "Nell Oakley. Sit down, you have come up four flights and most of a mountain."
+        ]
+      },
+      { "kind": "healParty" },
+      { "kind": "sfx", "sound": "heal" },
+      {
+        "kind": "say",
+        "lines": [
+          "She feeds every single thing you are carrying before she offers you anything at all.",
+          "Your party was restored."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "NELL OAKLEY",
+        "lines": [
+          "There. Now. You will not have heard of a single one of mine, and that is rather the point.",
+          "They are not good. We have been together fourteen years, and that turned out to be better."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "NELL OAKLEY",
+        "lines": [
+          "Abel will have told you to be sturdy. Serra will have told you to be quick. Both true.",
+          "Neither of them has ever once worked in here, and they both know why, and neither will say it."
+        ]
+      },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "lines": [
+          "She reaches down into the good chair and picks the Gravelet up with both hands.",
+          "It does not wake up. She holds it the way you hold something you have carried a long way."
+        ]
+      },
+      {
+        "kind": "ask",
+        "lines": ["Are you all right for a bit? Only she takes a moment."],
+        "yes": [
+          {
+            "kind": "say",
+            "who": "NELL OAKLEY",
+            "lines": ["Right you are. Pip goes last. She has gone last for fourteen years."]
+          },
+          { "kind": "battleTrainer", "trainer": "summit_master_bonds", "onLoss": "continue" },
+          {
+            "kind": "if",
+            "cond": { "kind": "var", "var": "last_battle_won", "op": "==", "value": 1 },
+            "then": [{ "kind": "call", "script": "sm_oakley_win" }],
+            "else": [{ "kind": "call", "script": "sm_oakley_loss" }]
+          }
+        ],
+        "no": [
+          {
+            "kind": "say",
+            "who": "NELL OAKLEY",
+            "lines": [
+              "Of course. Go down and do whatever it is, and come back when you want to.",
+              "There is no queue. There has not been a queue up here in nine hundred years."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sm_oakley_win",
+    "trigger": "call",
+    "actions": [
+      { "kind": "wait", "frames": 30 },
+      {
+        "kind": "say",
+        "lines": [
+          "She catches Pip before she is properly down, and holds on to her a moment longer than she needs to.",
+          "Then she puts her back in the chair, which is where she was going anyway."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "NELL OAKLEY",
+        "lines": [
+          "Well. She is going to sulk about that for a week and I am the one who has to hear about it.",
+          "Everybody gets to the last one and relaxes. You did not. Thank you for that."
+        ]
+      },
+      { "kind": "giveItem", "item": "full_rouse", "count": 1 },
+      { "kind": "sfx", "sound": "badge" },
+      { "kind": "say", "lines": ["Nell Oakley handed over a Full Rouse."] },
+      {
+        "kind": "say",
+        "who": "NELL OAKLEY",
+        "lines": [
+          "Take that. Not for you. For whichever of them you have been hardest on getting up here.",
+          "You will know which one. You always know which one."
+        ]
+      },
+      { "kind": "setFlag", "flag": "master_bonds_beaten" },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "all",
+          "of": [
+            { "kind": "flag", "flag": "master_power_beaten" },
+            { "kind": "flag", "flag": "master_control_beaten" },
+            { "kind": "flag", "flag": "master_adapt_beaten" },
+            { "kind": "flag", "flag": "master_bonds_beaten" }
+          ]
+        },
+        "then": [{ "kind": "setFlag", "flag": "summit_masters_done" }]
+      },
+      { "kind": "removeNpc", "who": "sm_oakley" },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "sm_oakley_after",
+          "sprite": "netmender",
+          "x": 1,
+          "y": 2,
+          "facing": "up",
+          "movement": { "kind": "static" },
+          "script": "sm_oakley_after"
+        }
+      },
+      { "kind": "wait", "frames": 20 },
+      {
+        "kind": "say",
+        "who": "NELL OAKLEY",
+        "lines": [
+          "The door at the top of my kitchen. That is all it is, and there is nothing above it but weather.",
+          "Go on. I will put the kettle on and I will still be putting it on when you come back down."
+        ]
+      },
+      { "kind": "sfx", "sound": "door" },
+      {
+        "kind": "say",
+        "lines": [
+          "She turns to the stove, and the door at the top of the small room is standing open."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sm_oakley_loss",
+    "trigger": "call",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "NELL OAKLEY",
+        "lines": [
+          "Oh, don't. Come here. Sit down a minute, there is tea, and there is no hurry at all.",
+          "Nobody has ever taken this room first time. Nobody. Not one person in nine years."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "NELL OAKLEY",
+        "lines": [
+          "Go down and put yours right, and come back up, and we will do it again.",
+          "And feed them properly on the way. I shall know."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sm_oakley_after",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "NELL OAKLEY",
+        "lines": [
+          "People come up here with the strongest Kin in Caelora and lose to a Gravelet.",
+          "They always want to know what I did to her."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "NELL OAKLEY",
+        "lines": [
+          "I did not do anything to her. I stayed.",
+          "That is the whole of it, and it is a very disappointing answer, and it is the true one."
+        ]
+      }
+    ]
+  }
+]

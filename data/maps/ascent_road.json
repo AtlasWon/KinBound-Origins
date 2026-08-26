@@ -1,0 +1,358 @@
+{
+  "id": "ascent_road",
+  "name": "The Pilgrim Road",
+  "displayName": "THE ASCENT - THE PILGRIM ROAD",
+  "music": "route_west",
+  "battleBackdrop": "forest",
+  "indoor": false,
+  "fog": 0.1,
+  "regionPos": {
+    "x": 25,
+    "y": 6
+  },
+  "encounterTable": "ascent_road",
+  "warps": [
+    {
+      "x": 34,
+      "y": 55,
+      "toMap": "crownspire",
+      "toX": 48,
+      "toY": 5,
+      "facing": "down",
+      "style": "edge"
+    },
+    {
+      "x": 35,
+      "y": 55,
+      "toMap": "crownspire",
+      "toX": 49,
+      "toY": 5,
+      "facing": "down",
+      "style": "edge"
+    },
+    {
+      "x": 9,
+      "y": 4,
+      "toMap": "ascent_deep",
+      "toX": 9,
+      "toY": 41,
+      "facing": "up",
+      "style": "cave"
+    },
+    {
+      "x": 10,
+      "y": 4,
+      "toMap": "ascent_deep",
+      "toX": 10,
+      "toY": 41,
+      "facing": "up",
+      "style": "cave"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "asr_gatehand",
+      "sprite": "townsfolk_m",
+      "x": 33,
+      "y": 52,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "asr_gatehand"
+    },
+    {
+      "id": "asr_pilgrim",
+      "sprite": "hiker",
+      "x": 39,
+      "y": 46,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "asr_pilgrim",
+      "sightRange": 3
+    },
+    {
+      "id": "asr_carrier",
+      "sprite": "porter",
+      "x": 41,
+      "y": 37,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "asr_carrier",
+      "sightRange": 4
+    },
+    {
+      "id": "asr_bridge",
+      "sprite": "elder",
+      "x": 28,
+      "y": 30,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "asr_bridge"
+    },
+    {
+      "id": "asr_ford",
+      "sprite": "villager_f",
+      "x": 26,
+      "y": 24,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "asr_ford",
+      "sightRange": 3
+    },
+    {
+      "id": "asr_terrace",
+      "sprite": "villager_m",
+      "x": 54,
+      "y": 42,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "asr_terrace",
+      "sightRange": 4
+    },
+    {
+      "id": "asr_falls",
+      "sprite": "hiker",
+      "x": 11,
+      "y": 14,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "asr_falls",
+      "sightRange": 4
+    },
+    {
+      "id": "asr_pool",
+      "sprite": "fisher",
+      "x": 26,
+      "y": 44,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "asr_pool"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 34,
+      "y": 50,
+      "text": [
+        "A board inside the gate, cut in the same lettering as the milestones below it.",
+        "THE ASCENT. FOUR MILES. THERE IS NO OTHER WAY UP AND THERE NEVER WAS."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 40,
+      "y": 50,
+      "text": [
+        "A milestone facing the wrong way: it is cut for people walking away from the city.",
+        "SUMMIT IV. Under it, worn nearly out, one word. STILL."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 38,
+      "y": 44,
+      "text": [
+        "A cairn beside the road, waist high, built of stones the size of a fist.",
+        "Everyone walking up puts one on. There is no rule about it written anywhere."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 29,
+      "y": 31,
+      "text": [
+        "A board nailed across the bridge head, and the bridge behind it has no deck.",
+        "CROSSING OUT. FORD HALF A MILE UP. IT IS SHALLOW. IT IS NOT SLOW."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 26,
+      "y": 20,
+      "text": [
+        "The ford. Ankle deep, forty feet across, and going over the fall below it.",
+        "Somebody has driven a line of stakes down the upstream side. They are new."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 44,
+      "y": 42,
+      "text": [
+        "A gate in a wall of thorn, with terraces behind it going all the way up the spur.",
+        "NO GRAZING, NO CUTTING, NO BUILDING. The board is nine hundred years old.",
+        "The thorn has been doing all three for two hundred of them."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 12,
+      "y": 11,
+      "text": [
+        "A milestone above the second fall. SUMMIT II.",
+        "The face of it is polished smooth at hand height. Everybody touches it."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 25,
+      "y": 45,
+      "text": [
+        "The plunge pool. Black, still, and going down further than the light does.",
+        "The fall comes into it off sixty feet and the surface hardly moves."
+      ]
+    },
+    {
+      "kind": "item",
+      "x": 38,
+      "y": 48,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_asr_oakwood"
+    },
+    {
+      "kind": "item",
+      "x": 58,
+      "y": 44,
+      "item": "warden_vessel",
+      "quantity": 5,
+      "flag": "item_asr_terrace"
+    },
+    {
+      "kind": "item",
+      "x": 61,
+      "y": 38,
+      "item": "great_potion",
+      "quantity": 3,
+      "flag": "item_asr_terrace_top"
+    },
+    {
+      "kind": "item",
+      "x": 28,
+      "y": 26,
+      "item": "full_heal",
+      "quantity": 3,
+      "flag": "item_asr_ford"
+    },
+    {
+      "kind": "item",
+      "x": 11,
+      "y": 7,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_asr_falls"
+    },
+    {
+      "kind": "item",
+      "x": 8,
+      "y": 36,
+      "item": "deep_vessel",
+      "quantity": 5,
+      "flag": "item_asr_westbank"
+    },
+    {
+      "kind": "item",
+      "x": 17,
+      "y": 46,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_asr_islet"
+    },
+    {
+      "kind": "cuttable",
+      "x": 46,
+      "y": 41,
+      "flag": "asr_thorn_terrace"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 43,
+      "y": 33,
+      "item": "ward_incense",
+      "quantity": 2,
+      "flag": "item_asr_hidden_spur"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 31,
+      "y": 47,
+      "item": "escape_line",
+      "quantity": 2,
+      "flag": "item_asr_hidden_wood"
+    }
+  ],
+  "rows": [
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCWWWWWCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCWWWWWCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCC===CCCCCCCCCWWWWWCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CC∇∇∇∇∇∇===∇∇∇∧∧∧∇∇⊗WWWWW⊗CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CC∇∇∇∇∇∇---∇∇∇∧∧∧∧⊗WWWWW⊗CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CC∇∇∇∇∇∇---∇∇∇∧∧∧∧⊗WWWWW⊗CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CC∇∇∇∧∇∇---∇∇∇,,,.⊗⇓⇓⇓⇓⇓⊗CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CC,,,,..----,**,.,⊗⇓⇓⇓⇓⇓⊗CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CC,,,,...---.,*,,,⊗⇓⇓⇓⇓⇓⊗CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CC,,,,,,,---´,,,,*⊗⇓⇓⇓⇓⇓⊗CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CC,,,∧,,,----,,,,*⊗WWWWW⊗CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CC,,∧∧∧,,----,∆,,⊗WWWWW⊗CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CC∆,∧∧∧,,----∆∆,∧⊗WWWWW⊗CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CC∆,∧∧∧∧,,---,∧∧∧⊗WWWWW⊗CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CC,,∧∧∧***---,∧∧∧⊗WWWWW⊗CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CC,,**,∇,,---,,∧⊗WWWWW⊗CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CC,,**∇∇∇∇----,,⊗WWWWW⊗CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CC,,*∇∇∇∇∇----∇,∇∇∇∇∇∇∇CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CC**,∇∇∇∇∇----∇∇∇∇∇∇∇∇∇∆∧∧´∧,,.,∏∏∏∏∆∆...*∧∧∧∧∧∧∧....∧∧∧∧,,....∧∧∧∧∧,,CC",
+    "CC**,∇∇∇∇∇∇---~~~~~~~~~-----,,.,∏∏∏∏∆∆...*∧∧∧∧∧∧∧.....∧∧.,,....∧∧∧∧∧,,CC",
+    "CC**,∇∇∇∇∇∇---~~~~~~~~~-----*,....∏∏∏∏.....∧∧∧∧∧.........,,...∏∧∧∧∧∧∧.CC",
+    "CC****∇∇∇∇∇---~~~~~~~~~-----*∧∧....∏∏∏∏.....∧∧∧....∏.......∏∏∏∏∧∧\"\"\"\"\"CC",
+    "CC,,,,,,,,,,,,,∇∇∇∇∇∇∇∆.,----∧∧∧....,,,......∧....∏∏∏....∏∏∏∏∏∏\"\"\"\"\"\"\"CC",
+    "CC∧∧....,∧∧,,,,∇∇∇∇∇∇∇∆..----∧∧∧,,.,**..........,,,,∏∏∏..∏∏∏∏∏.\"\"\"\"\"\"\"CC",
+    "CC.....,,,,..,,∇⇓⇓⇓⇓⇓∇....----∧∧,,..,,..........,,,,∏∏∏..∏∏∏∏∏.\"\"\"\"\"\"\"TT",
+    "CC....,*,,,...,∇⇓⇓⇓⇓⇓∇∏..,-----,,.....,,,...........∏∏∏.∆∆.∏∏..\"\"\"\"\"\"\"TT",
+    "CC....,*,,....∧∇WWWWW∇∏..,------,.....,*,...........∏∏∏∆∆∆∆\"\"\"\"\"\"\"...,TT",
+    "CC,...,,,....∧∇∇WWWWW∇∇....-------,,,,,\"\"..,,...,,\",,∏∏∏∏∆∆\"\"\"\"\",TT,,,TT",
+    "CC,,,,,,,....∧∇∋WWWWW∋∇,....--------***\"\"\".,,,.,,\"\"\",,∏∏∏∆\"\"\"\"\",TTT,,,TT",
+    "CC....,,,,,,,∧∇∇WWWWW∇∇......´--------,\"\"\",,,,....\"\"..∏∏∏.\"\"\"\"\",TTT,,,TT",
+    "CC....,,*****,,∇WWWWW∇....,,,,,--------.,**∏∏∏∏.......∏∏∏...\",*,......TT",
+    "CC....,,,,,,,,,∇WWWWW∇,....,,....-------.,,,,,,.......∏∏....TTTTTT...,TT",
+    "CC,,..,*,..,,..∇WWWWW∇,*,..........------..\"\"\"\".....∏∏........TTTT..,*TT",
+    "CC,,\"\",*,......∇WWWWW∇,*,...........------.\"\"\"●●●●●●●●●●●●●●●●●●●●..,*TT",
+    "CC..,,,,.......∇WWWWW∇.....∏TT.......-----..\"\"●,,,...,,,,\"\",,,,,.●.,,,TT",
+    "CC..**,,.......∇WWWWW∇....TTTT........-----...●,,,....,,\"\"\"\"\",,,.●,,,,TT",
+    "CC..,,,,\"\"\"\"..∇WWWWW∇\"....TTT...TT.....-----TT●,,,.....,,\"\"\"\"\"\",.●....TT",
+    "CC..,,,\"\"\"\"\"\",∇⇓⇓⇓⇓⇓∇\",,,.TTT..TTTT,...,----TT●●●●●●●●●●●●●●●●\"\",●....TT",
+    "CC..,,,\"\"\"\"\"\",∇⇓⇓⇓⇓⇓∇\",,...TT..TTTT...,,----TT●\"\",.......,,\"\"\"\"\",●....TT",
+    "CC..,,,\"\"\"\"\"\",∇⇓⇓⇓⇓⇓∇......TTTTTT....,,*------X\"\"\",.,,,..,,...,,\"●TTT,TT",
+    "CC..,,,,\"\"∇WWWWWWWWWWWWW∇..TTT..,.\"\"\"\"\"\"----´T●\"\"\",.,,,..,,....,\"●TTTTTT",
+    "CC....,,\"\"∇WWWWWWWWWWWWW∇..TT..\"\"\"\"\"\"\"\"\"---.,,●\"\"\"....,\"\",,......●TTTTTT",
+    "CC....T,,*∇WWWWWWWWWWWWW∇..TT\"\"\"\"\"\"\"\"\"´----\"\"\"●\"\"\"....,\"\",,,.....●TTTTTT",
+    "CC...,T,,,∇WWWWWW∇WWWWWW∇TTTT\"\"\"\"\"\"\"\"\"\"----\"\"\"●\",,,●●●●●●●●●●●●●●●TT,,TT",
+    "CC..,,,*,,∇WWWWWW∇WWWWWW∇TTTT\"\"\"\"\"\"\"\"\"----\"\"\"\"●\".,\"\",.,,\"\"\"\"\"\"\"\",●..,,TT",
+    "CC..\"\"\",T.∇WWWWWWWWWWWWW∇TTTT,\"\"\"\"\"\"\"\"----\"\"\"\"●\",,\"\",,,,,,,\"\"\"\"\",●T...TT",
+    "CC,\"\"\"\"...∇WWWWWWWWWWWWW∇..TTT*,\"\"\"\"\"-----\"...●\"\"\",,\"\"\",...\"\"\",\"\"●,...TT",
+    "CC,\"\"\"\"\"..∇WWWWWWWWWWWWW∇..TTTT,\"\"\"\"-----\"\"...●●●●●●●●●●●●●●●●●●●●,,.\"TT",
+    "CC*\"\"\"\"\"..∇WWWWWWWWWWWWW∇....TT..\"´-----´\"\",,,,,\"\"\"\"\"....T,\"\",TTTT,,\"\"TT",
+    "CC*\"\"\"\"\"...TT.∇WWWWW∇\"...T....T═════════\"\"\",,,,,\"\"\"\"\"....,,\"\",TTTT,,\"\"TT",
+    "CC*\"\"\"\"\"..TTTT∇WWWWW∇\",,TTT..,,═════════\"\",,,,,,.\"\"\"\".....\"\"\"\"TTTT..\"\"TT",
+    "CC\"\"\"\"\"\"..TTTTT∇WWWWW∇,TTTT..\"\"═════════.,*,,,*,.........\"\"\"\"\",TT,..\"\"TT",
+    "CCCCCCCCCCCCCC▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪══▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪",
+    "CCCCCCCCCCCCCC▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪◘◘▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪"
+  ]
+}

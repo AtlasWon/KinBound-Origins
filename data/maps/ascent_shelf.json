@@ -1,0 +1,332 @@
+{
+  "id": "ascent_shelf",
+  "name": "The West Shoulder",
+  "displayName": "THE ASCENT - THE WEST SHOULDER",
+  "music": "route_west",
+  "battleBackdrop": "highland",
+  "indoor": false,
+  "fog": 0.26,
+  "regionPos": {
+    "x": 25,
+    "y": 6
+  },
+  "encounterTable": "ascent_shelf",
+  "warps": [
+    {
+      "x": 7,
+      "y": 48,
+      "toMap": "ascent_deep",
+      "toX": 44,
+      "toY": 3,
+      "facing": "down",
+      "style": "cave"
+    },
+    {
+      "x": 8,
+      "y": 48,
+      "toMap": "ascent_deep",
+      "toX": 45,
+      "toY": 3,
+      "facing": "down",
+      "style": "cave"
+    },
+    {
+      "x": 15,
+      "y": 40,
+      "toMap": "ascent_bothy",
+      "toX": 8,
+      "toY": 10,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 61,
+      "y": 7,
+      "toMap": "ascent_ruin",
+      "toX": 18,
+      "toY": 32,
+      "facing": "up",
+      "style": "cave"
+    },
+    {
+      "x": 62,
+      "y": 7,
+      "toMap": "ascent_ruin",
+      "toX": 19,
+      "toY": 32,
+      "facing": "up",
+      "style": "cave"
+    },
+    {
+      "x": 55,
+      "y": 1,
+      "toMap": "ascent_crown",
+      "toX": 28,
+      "toY": 43,
+      "facing": "up",
+      "style": "edge"
+    },
+    {
+      "x": 56,
+      "y": 1,
+      "toMap": "ascent_crown",
+      "toX": 29,
+      "toY": 43,
+      "facing": "up",
+      "style": "edge"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "ass_warden",
+      "sprite": "hiker",
+      "x": 10,
+      "y": 45,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "ass_warden",
+      "sightRange": 4
+    },
+    {
+      "id": "ass_bothy_step",
+      "sprite": "villager_f",
+      "x": 18,
+      "y": 41,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ass_bothy_step"
+    },
+    {
+      "id": "ass_ropewalk",
+      "sprite": "porter",
+      "x": 45,
+      "y": 26,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "ass_ropewalk",
+      "sightRange": 4
+    },
+    {
+      "id": "ass_cairn",
+      "sprite": "villager_m",
+      "x": 49,
+      "y": 18,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "ass_cairn",
+      "sightRange": 4
+    },
+    {
+      "id": "ass_notch",
+      "sprite": "townsfolk_f",
+      "x": 41,
+      "y": 42,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "trainer": "ass_notch",
+      "sightRange": 3
+    },
+    {
+      "id": "ass_spur",
+      "sprite": "elder",
+      "x": 61,
+      "y": 14,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "ass_spur"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "script",
+      "x": 8,
+      "y": 46,
+      "text": [
+        "Out of the mountain, and the first thing is the light.",
+        "Cloud below, snow above, and a road going up through the middle of the two."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 20,
+      "y": 40,
+      "text": [
+        "A board at the bothy door, painted over so often the letters stand proud of it.",
+        "OPEN. ALWAYS. NO CHARGE, NO QUESTIONS, NO EXCEPTIONS."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 34,
+      "y": 26,
+      "text": [
+        "A board at the bridge head. WEIGHT: TWO AT A TIME. WIND: USE YOUR JUDGEMENT.",
+        "Somebody has scratched under it: I USED MINE AND I AM STILL HERE."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 32,
+      "y": 44,
+      "text": [
+        "A notch in the gorge wall with a boulder sitting square in the middle of it.",
+        "It came off the crag above in the spring. Somebody could put a shoulder into that."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 67,
+      "y": 23,
+      "text": [
+        "A board under a crag with nothing above it but more crag.",
+        "THE STANDING STONE IS UP THERE. WE HAVE NOT BEEN UP THERE.",
+        "Under it, in another hand: THE AIR OFF THIS FACE WILL CARRY YOU. IT CARRIED ME."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 60,
+      "y": 18,
+      "text": [
+        "A meltwater cut, ankle deep, running clean across the way to the old station.",
+        "It was not here in June. A good deal more of this mountain is running than used to."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 52,
+      "y": 6,
+      "text": [
+        "A cairn the height of a person, and the last one before the crown.",
+        "The stones at the bottom are worn round. The ones on top are still sharp."
+      ]
+    },
+    {
+      "kind": "pushable",
+      "x": 35,
+      "y": 42
+    },
+    {
+      "kind": "item",
+      "x": 24,
+      "y": 45,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_ass_pines"
+    },
+    {
+      "kind": "item",
+      "x": 48,
+      "y": 30,
+      "item": "great_potion",
+      "quantity": 3,
+      "flag": "item_ass_east"
+    },
+    {
+      "kind": "item",
+      "x": 51,
+      "y": 5,
+      "item": "warden_vessel",
+      "quantity": 5,
+      "flag": "item_ass_road"
+    },
+    {
+      "kind": "item",
+      "x": 67,
+      "y": 19,
+      "item": "full_restore",
+      "quantity": 2,
+      "flag": "item_ass_pinnacle"
+    },
+    {
+      "kind": "item",
+      "x": 9,
+      "y": 30,
+      "item": "full_heal",
+      "quantity": 3,
+      "flag": "item_ass_west"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 26,
+      "y": 12,
+      "item": "escape_line",
+      "quantity": 2,
+      "flag": "item_ass_hidden_high"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 66,
+      "y": 32,
+      "item": "thawcloth",
+      "quantity": 3,
+      "flag": "item_ass_hidden_east"
+    }
+  ],
+  "rows": [
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC∫∫CCCCCCCCCCCCCCC",
+    "CC∴∴∴∴∆∆∀∀∀≋∴∴∴∴∴∴∀∀∀∀∀∀∴∴∴∴∴∴∴∀∀∀∀∇∇∇∇∇∇∇⊗⊗⊗⊗⊗∇∀∀∀∀∀∀∫∫∫∫∫CCCCCCCCCCCCC",
+    "CC∴∀∀∀∀∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∀∀∀∀∀∇∇∇∇∇∇⊗⊗⊗⊗⊗∇∀∀∀∀∀∴∫∫∫∫∫CCCCCCCCCCCCC",
+    "CC∀∀∀∀∀∴∴∴∴∴∴∴∴≋≋∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∀∀∀∀∀∀∀∇∇⊗⊗⊗⊗⊗∇∴∀∀∀∀∀∴∫∫∫∫∫CCCCCCCCCCCCC",
+    "CC∀∀∀∀∀∴∴∴∴∴∴∴∴≋≋∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∀∀∀∀∀∀∀∀∇⊗⊗⊗⊗⊗∇∴∀∀∀∀∀∴∫∫∇∫∇CCCCCCCCCCCCC",
+    "CC∀∀∀∀∀∴∴∴∴≋∴∴∴≋≋≋≋∴∴∴∴∴∴∴∴∴∴∴∴≋∀∀∀∀∀∀∀∀∇⊗⊗⊗⊗⊗⊗∇∀∀∀∀´∫∫∫∇~~CCCCCCCCCCCCC",
+    "CC∀∀∀∀∀∴∴∴∴≋∴∴∴≋≋≋≋∴∴∴∴∴∴∴≋≋∴∴∴≋∀∀∀∀∀∀∀∀∇⊗⊗⊗⊗⊗⊗∇∀∀∀∀∀∫∫∫∇~~CC==CCCCCCCCC",
+    "CC∴∀∀∀∀∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴≋≋∴∴∴∴∀∀∀∀∀∴∴∴∇⊗⊗⊗⊗⊗⊗∇∀∀∀∀∫∫∫∫∇~~~∴==∇∀∴∴∴∴∴CC",
+    "CC∴∀∀∀∀≋∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴≋≋≋≋∴∴∴∴∀∀∴≋∴∴∴∴∇⊗⊗⊗⊗⊗⊗∇∀∀∀∀∫∫∫∫∇~~~∴∇∇∇∀∴∴∴∴∴CC",
+    "CC∴∀∀∀∀≋∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴≋≋∴∴∴∴∴∴∀∀∴≋∴∴∴∴∇⊗⊗⊗⊗⊗∇∀∀∀∀∀∫∫∫∫∇~~~∴∇∇∇∀∴∴∴∴∴CC",
+    "CC∴∴∀∀∀≋∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴≋∴∴∴∴∴∴∴∴∴∴≋∴∴∴∇⊗⊗⊗⊗⊗∇∴∴∀∀∀∫∫∫∫∴∇~~~∴∇∇∇∀∴∴∴∴∴CC",
+    "CC∴∴≋≋≋∴∴∀∀∀∀∀∀∴∴∴∴∴∴∴∴∴≋∴∴∴∴∴∴∴∴∴∴∴∴∴∴∇⊗⊗⊗⊗⊗∇∴∴∴∀∀∫∫∫∫∇∇~~~∴∇∇∇∀∀∴∴∴∴CC",
+    "CC∴∴≋≋∴∴∀∀∀∀∀∀∀∀≋≋≋∴∴∴∀∀∀∴∴∴∴∴∴≋∴∴∴∴∴∴∴∇⊗⊗⊗⊗⊗∇∴∴∴∴∫∫∫∫∫∇∇~~~∫∇∇∇∀∀∀∀∴∴CC",
+    "CC∴∴≋≋≋∴∀∀∀∀∀∀∀∀≋∴∴∴∴∴∀∀∀∴∴∴∴∴∴≋∴∴∴∴∴∴∴∇⊗⊗⊗⊗∇∴∴∴∴∴∫∫∫∫∫∇∇~~~∫∫∫∫∀∀∀∴∴∴CC",
+    "CC≋≋≋≋≋≋∀∀∀∀∀∀∀∀∴∴∴∴∴∴∀∀∀≋∴∴∴∴∴≋≋≋≋∴∴∴∴∇⊗⊗⊗⊗∇∴∴∴∴∫∫∫∫∫∫∇∇~~~∀∴∴∴∴∴∴∴∴∴CC",
+    "CC≋≋≋≋≋≋∀∀∀∀∀∀∀∴∴∴∴∴∴∀∀∀∀≋∴∴∴∴∴∴∴≋≋≋∴∴∇⊗⊗⊗⊗∇∴∴∴∴∫∫∫∫∫∫∫∫∇~~~∀∴∴CCCCCCCCC",
+    "CC≋∴∴∴≋∧∀∀∀∴∴∴∴∴∴∀∀∀∀∀∀∀∀∴∴∴∴∴∴∴∴∴∴∴∴∴∇⊗⊗⊗∇∧∧∧∧∧∫∫∫∫∫∫∫∫∇~~~∀∀∀C∇∇∇∇∇∇CC",
+    "CC≋∴∧∧∧∧∧∧∧∴∴∴∴∴∧∧∧∧∧∧∧∧∧∧∴∴∴∴∴∴∧∴∴∴∴∴∇⊗⊗⊗∇∧∧∧∧∫∫∫∫∫∫∫∫≋∇~~~´∀∀C∇∇∇∇∇∇CC",
+    "CC∴∴∴∧∧∧∧∧∧∴∴≋≋∴∴∧∧∧∧∧∧∧∧∧∴∴∴∴∴∆∆∆∴∴∴≋∇⊗⊗⊗∇∧∧∧∫∫∫∫∫∫∫∫∆∴∇~~~∀∀∀C∇∇∇∇∇∇CC",
+    "CC∴∴∴∴≋≋∧∧∧∴∴≋≋≋≋∧∧∧∧∧∧∧∧∧∴∴∴∴∴∆∆∆∴∴∴∇⊗⊗⊗∇∧∧∧∧∫∫∫∫∫∫∫∫∆∆∇~~~∀∀∀C∇∇∇∇∇∇CC",
+    "CC∴∴∴∴≋≋∧∧∧∴∴≋≋≋≋∴∴∴∴≋∧∧∧∧∧∧∧∧∧∴∴∴∴∴∴∇⊗⊗∇∧∧∧∧∫∫∫∫∫∫∫∫∆∆∴∇~~~∀∀∀C∇∇∇∇∇∇CC",
+    "CC∴∴≋≋≋≋∧∧∧∧∴∴∴≋≋∴∴∴∴≋≋≋∧∧∧∧∧∧∧≋∴∴∴∴∧∇⊗⊗∇∧∧∴∴∫∫∫∫∫∫∫∆∆∆∴∇~~~∀∀∀CCCCCCCCC",
+    "CC∴∴∴∴∆∆∧∧∧∧∴∴∴∴∴∴∴∴∴∴∴∴∴∧∧∧∧∧∧∧∴∴∧∧∇⊗⊗∇∧∧∧∴∫∫∫∫∫∫∫∫∆∆∆∧∇~~~∴∀∀∴∴∴∀´∴∴CC",
+    "CC∴∴∴∆∆∆∧∧∧∧≋≋∴∴∴∴∴∴∴∴∴∴∴∧∧∧∧∧∧∴∴∴∴∧∇⊗⊗∇∴∴∴∴∫∫∫∫∫∫∫∆∆∆∆∧∇~~~∴∀∀∴∴∴∀∀∴∴CC",
+    "CC∴∴∴∆∆∆∆∧∧∧∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴≋∫∫∫∇∇⊗⊗⊗∇∴∴∇∫∫∫∫∫∫∆∆∆∆∆∧∇~~~∴∀∀∴∴∀∀∀∀∴CC",
+    "CC∴∴∆∆∆∆∆∧∧∧∧∧∧∧≋≋≋≋≋∴∴∧≋≋≋∴∴∴∫∫∫∫´∋∈∈∈∈∈∈∈∋∇∫∫∫∫∆∆∆∆∆∆∧∇~~~∴∀∀∀∀∀∀∀∀∀CC",
+    "CC∴∴∆∆∆∆∆∧∧∧∧∧∧∧∧≋≋≋≋∴∧∧≋≋≋∴∫∫∫∫∫∫∫∇⊗⊗⊗∇∴∴∴∇∫∫∫∆∆∆∆∆∆∆∧∧∇~~~∴∀∀∀∀∀∀∀∀∀CC",
+    "CC∴∴∆∆∆∆∆∧∧∧∧∧∧∧∧∴∴∴∴≋∧∧∴∫∫∫∫∫∫∫∫∫∫∇⊗⊗⊗∇≋∴∴∴∴∧∧∧∧∧∧∧∧∧∧∧∇~~~∀∴∴∴∀∴∴∴∴∴CC",
+    "CC∴∧∆∆∆∆∆∧∧∧∧∧∧∧∧∴∴∴∴≋≋∫∫∫∫∫∫∫∫∫∴∴∴∇⊗⊗⊗⊗∇∴∴∴∴∧∧∧∧∧∧∧∧∧∴≋∇~~~∀∴∴∴∀∴∴∴∴∴CC",
+    "CC∧∧∆∆∆∆∧∧∧∧∧∧∧∧∧∴∴∴≋∫∫∫∫∫∫∫∫∫∴∴∴≋∴∇⊗⊗⊗⊗∇∴∴∴∴∧∧∧∧∧∧∧∧∴∴≋∇~~~∴∴∴∀∀∴∴∴∴∴CC",
+    "CC∧∧∆∆∆∆∧∧∧∧∧∧∧∧∴∴∴≋∫∫∫∫∫∫∫∫∴≋∴∴≋≋∧∇⊗⊗⊗⊗∇∴∴∴∴∴∴∧∧∧∧∧∧∴∴≋∇∴∴∴∴∴∀∀∀∴∴∴∴∴CC",
+    "CC∧∧∆∆∆∆∧∧∧∧∧∧∧∧∴∴∴∫∫∫∫∫∫∴∴∴∴∴∴∴∧∧∇⊗⊗⊗⊗⊗∇∧∧∴∴∴∴∴∧∧∧∧∧∴∴∴∴≋≋∴∴∴∴∴∴∴∴∴∴∴CC",
+    "CC∧∧∆∆∆∆∧∴∴∧∧∧∧∧∴∩∫∫∫∫∫∫∴∴∴∴∴∴∴∴∴∴∇⊗⊗⊗⊗⊗∇∧∧∴∴∴∴∴∧∧∧∧∧∴∴∴∴≋≋∴∴∴∴∴∴∴∴∴∴∴CC",
+    "CC∧∧∧∆∆∆∴∴∴∴∴∴∴∴∴∫∫∫∫∫∫∴∴∴∴∴∴∴∴∴∴∴∇⊗⊗⊗⊗⊗∇∧∧∧∴∴∴∴∴∧∧∧∴∴∴∴∴≋∴∧∴∴∴∴∴∴∴∴∴∴CC",
+    "CC∧≋∴∴∴∴∴∴∴≋∴∴∴∴∫∫∫∫∫∫∪∩∴∴≋≋≋∪∴∴∴∩∇⊗⊗⊗⊗⊗∇∧∧∧∴∴≋∴∴∴∴∴∴∴∴∴∴∩∧∧∧∧∧∧∧∧∴∩≋≋CC",
+    "CC∧∴∩∴∴∴∴∴∩≋∴∴∴∴∫∫∫∫∫∴≋∴∴∩∩∪∪∪∴∴∴∴∇⊗⊗⊗⊗⊗⊗∇∧∧∴∴≋∴∴∴∴∴∴≋∴∴∴∴∧∧∧∧∧∧∧∧∴∩≋∴CC",
+    "CC∴∴∴∩∩∩∴∴∩∩∴∴∴∫∫∫∫∫∴∴∴∴∩∩∩∩∪∪≋≋≋≋∇⊗⊗⊗⊗⊗⊗∇∧∧∴∩∩≋∴∴∴∴∴≋∩∴∩≋∧∧∧∧∧∧∧∧≋∩∴∴CC",
+    "CC∴∴≋≋≋≋∩∴∩∩∩∴∴Ĵ∫∫∫∴∴∴≋∴∩∩∩∩∩∩≋≋≋∇⊗⊗⊗⊗⊗⊗∇∧∧∧∴∩∩∴≋∴∴∴∴∩∩∩∩≋∧∧∧∧∧∧∆∆∴∩∴∴CC",
+    "CC≋≋≋≋≋≋∴∩∩∩ŘŖŖŖŖŖŔ∴≋≋≋∴∴∴∩∩∴∴∴≋≋∇⊗⊗⊗⊗⊗⊗∇∧∧∧∩∩∴∩∪∴∴∴∴∴∴≋∴∴∧∧∧∧∧∧∆∆∧∩≋∴CC",
+    "CC≋≋≋≋≋≋∴∧∧ŁĦĤĦĎĦĤĦŴ´≋≋∴∴∴∩∩∴∴∴∧∧∇⊗⊗⊗⊗⊗∇∧∧∧∧∩∩∴∩∩∴∧∧∧∧∧≋∴∴∴∴∴∴∧∧∆∆∧∴≋∴CC",
+    "CC∴≋≋≋∴∴∧∧∫∫∫∫∫∫∫∫∫∫∫∴∴∴∴∴∪∪∩∴∴∧∧⊗⊗⊗⊗⊗⊗∇∧∧∧∧∩∩∩∩∩∧∧∧∧∧∧∧∧∴∴∴∴∴∧∧∧∧∧∴∴∴CC",
+    "CC∴≋≋≋∴∴∧∧∫∫∫∫∫∫∫∫∫∫∫∴∴∴∴∩∪∪∪∴∧∧∇∇∇∇∇∇∇∇∧∧∧∧∩∩∩∩∴∧∧∧∧∧∧∧∧∴∴∴∴∴∧∧∧∧∧∴∴∴CC",
+    "CC≋≋≋∴∴∴∧∧∧∫∫∫∫∫∴∴∴∴∴∴∴∴∴∴∩∪∴∴∧∧∧⊗⊗⊗⊗⊗⊗∇∧∧∧∧∪∩∩∩∩∴∧∧∧∧∴∴∴∴∴∴∴∴∧∧∧∧∧∧∴∩CC",
+    "CC≋≋∴∴∴∴∧∫∫∫∫∫∫∴∴∴∧∧∴∴∴∴∴∴∴∴∴∧∧∧´∇⊗⊗⊗⊗∇∴∧∧∧∧∪∩∴∴∩∴∧∧∧≋∴∴∴∴∴∴∴∴∧∧∧∧∧∧∧∧CC",
+    "CC≋∴∴∴∴∫∫∫∫∫∫∫∴∴∴∴∧∧∧∴∴∴∴∴∧∧∧∧∧∧∧∇⊗⊗⊗⊗∇∴∧∧∧∧∪∪∴∩∩∴∴∴∴∴∴∴∴∴∴∧∧∧∧∧∧∧∧∧∧∧CC",
+    "CC∴∴∴∇∇∇´∇∇∫∫∴∴∴∴∴∧∧∧∴∴∴≋∧∧∧∧∧∧∧∇⇓⇓⇓⇓∇∴∧∧∧∧∧∪∪∴∩∪∪∴∴∴∴∴∴∴∴∴∧∧∧∧∴∴∴∧∧∧∧CC",
+    "CC∴∴∴∇====∇∫∴∴∴∴∴∴∧∧∧∴∴∴≋≋∧∧∧∧∧∧∇⇓⇓⇓⇓∩∩∴∧∧∧≋∪∩∴∩∩∴∴∴∴∴∴∴∴∴∴∧∧∧∧∧∧∧∧∧∧∧CC",
+    "CC∴∴∴∇====∇∴∴∴∴∴∴≋≋≋≋≋≋∴∴∴∴∧∧∧∧∧∇⇓⇓⇓⇓∴∴∴∴∴∴∴∩∩∴∴∴∴∧∧∴∴∴∴∴∴∴∧∧∧∧∧∧∧∧∧∧∧CC",
+    "CC∴∴∴∇∇∇∇∇∇∧∧∴∴∴∴≋≋≋≋≋≋∴∴∴∴∧∧∧∧∧∇⇓⇓⇓⇓∴∴∴∴∴∴∴∴∴∧∧∧∧∧∧∴∴∴∴∴∴∴∴∧∧∧∧∧∧∧∧∴∴CC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"
+  ]
+}

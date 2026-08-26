@@ -1,0 +1,23 @@
+{
+  "$comment": "THE HIGH WAYSTATION. One voice at the name wall, and she is the only person in this room and possibly the only person in the game who says the thing the room is about -- and she says it as a complaint about her handwriting. That is deliberate. Canon: the lore lives in ruins and pictures and short lines, never in a speech.",
+  "speakers": {
+    "asu_namewall": "NAME CUTTER"
+  },
+  "entries": {
+    "asu_namewall": [
+      {
+        "lines": [
+          "Everybody cuts their name and everybody cuts it too big. Look at mine. Enormous.",
+          "The old marks underneath are a quarter of the size and twice as deep.",
+          "Whoever they were, they were not in a hurry, and we always are."
+        ]
+      },
+      {
+        "lines": [
+          "Hearth is laid. It is always laid. I have never once come up here and had to lay it.",
+          "I lay it again before I go. That is the arrangement. Nobody wrote it down."
+        ]
+      }
+    ]
+  }
+}

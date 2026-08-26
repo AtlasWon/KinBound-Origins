@@ -1,0 +1,19 @@
+[
+  {
+    "id": "asr_arrive",
+    "$comment": "One box, once, on the first step through Crownspire's north gate.\n\nIT SETS `ascent_entered`. src/systems/tarin.ts keys its `ascent` ledger row on having visited any of the six ascent_* maps and lists that flag as a fallback in case the road were renamed under it. Setting it costs nothing and it is the difference between Tarin being on the mountain with the player and Tarin being stuck at the beat below.",
+    "trigger": "enter",
+    "onceFlag": "asr_seen",
+    "map": "ascent_road",
+    "actions": [
+      { "kind": "setFlag", "flag": "ascent_entered" },
+      {
+        "kind": "say",
+        "lines": [
+          "Through the gate, and the city noise stops as if somebody had turned it off.",
+          "Oak, a river going the other way, and a road with four miles of milestones on it."
+        ]
+      }
+    ]
+  }
+]

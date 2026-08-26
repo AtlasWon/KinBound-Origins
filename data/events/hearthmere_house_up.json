@@ -24,5 +24,197 @@
         ]
       }
     ]
+  },
+  {
+    "_note": "STAGE 7, THE ENDING, BEAT 6: THE LAST SCENE OF THE MAIN GAME.\n\nIT IS IN THIS FILE ON PURPOSE. The first thing the game ever says is four rows up from here -- 'You are awake before the light is' -- and the last thing it says is in the same room, on the same desk, at the other end of the same day. Canon 64 asks for an ending that mirrors the beginning; this is the mirror closing.\n\nWHY IT IS A STEP TRIGGER AND NOT AN `enter`. The stair lands the player at (12,2), on the landing, two rooms away. An enter script would play the whole scene with the wrong room on screen. The `at` list is the west room -- the player's own -- and the threshold along row 8 that is the only way into it, so it fires as they come through their own door and not before.\n\nTHE CROSSED-OFF LINE. The desk sign on this map has said the same thing since Stage 1: 'A list, in your own writing, headed THINGS TO TAKE. Nine items. Four are crossed out. One says JOURNAL - ASK MUM. You have not asked.' Nobody in the ending mentions that she answered it. It is one box and it is not explained.\n\nTHE MAP OF AVERRA. Canon 64: 'Then the player looks at a map of the whole world, and Caelora is one small part of Averra.' The picture is the set piece `averra` (src/scenes/averra.ts, registered in setPieceScene). It carries no dialogue at all -- the only words on it are the ones a chart has -- because the boxes on either side of it are already doing the talking, and because an unknown set-piece id is a silent no-op, so this scene has to read correctly with the picture missing. It does.\n\nTHE CHART IS ELIAS'. It came out of the bin in his study four boxes ago; the player took one thing out of that room and put one thing into it. Nobody says so.\n\nSET PIECES THIS SCENE CALLS AND DOES NOT OWN: `credits` and `post_credits`. Both degrade to nothing. See the handover.\n\nWHAT IT PROVIDES: `ending_seen` (the main game is finished -- this is the flag Stage 8's postgame should gate on), `act7_done` as the alias the rest of the codebase's actN_done naming will expect, and a respawn point back at the house, which is where the game put it on the morning of the first day.",
+    "id": "hm_end_room",
+    "trigger": "step",
+    "map": "hearthmere_house_up",
+    "onceFlag": "ending_seen",
+    "when": {
+      "kind": "all",
+      "of": [
+        {
+          "kind": "flag",
+          "flag": "ending_tarin"
+        },
+        {
+          "kind": "not",
+          "of": {
+            "kind": "flag",
+            "flag": "ending_seen"
+          }
+        }
+      ]
+    },
+    "at": [
+      { "x": 1, "y": 8 },
+      { "x": 2, "y": 8 },
+      { "x": 3, "y": 8 },
+      { "x": 4, "y": 8 },
+      { "x": 5, "y": 8 },
+      { "x": 2, "y": 7 },
+      { "x": 3, "y": 7 },
+      { "x": 4, "y": 7 },
+      { "x": 5, "y": 7 },
+      { "x": 1, "y": 6 },
+      { "x": 2, "y": 6 },
+      { "x": 3, "y": 6 },
+      { "x": 4, "y": 6 },
+      { "x": 5, "y": 6 },
+      { "x": 1, "y": 5 },
+      { "x": 3, "y": 5 },
+      { "x": 4, "y": 5 },
+      { "x": 5, "y": 5 },
+      { "x": 3, "y": 4 },
+      { "x": 4, "y": 4 },
+      { "x": 1, "y": 3 },
+      { "x": 2, "y": 3 },
+      { "x": 3, "y": 3 },
+      { "x": 4, "y": 3 },
+      { "x": 5, "y": 3 }
+    ],
+    "actions": [
+      {
+        "kind": "wait",
+        "frames": 34
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Your room. The bed is made."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 34
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "It has been made every morning since you left, by somebody with no reason to."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 30
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "The list is still on the desk. THINGS TO TAKE. Nine items, four crossed out."
+        ]
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "One of them said JOURNAL - ASK MUM.",
+          "It has been crossed off. Not in your writing."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 34
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "There is a seventh journal on the desk with a cup standing on it, holding it flat."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 40
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "You put your father's chart down beside it and unroll it."
+        ]
+      },
+      {
+        "kind": "sfx",
+        "sound": "page_turn"
+      },
+      {
+        "kind": "music",
+        "track": "opening_theme"
+      },
+      {
+        "kind": "fade",
+        "to": "black",
+        "frames": 34
+      },
+      {
+        "kind": "wait",
+        "frames": 24
+      },
+      {
+        "kind": "setPiece",
+        "id": "averra"
+      },
+      {
+        "_note": "Put back deliberately. Popping a set piece calls resume() on the overworld underneath, and overworld.resume puts the MAP's music back on -- which for this room is town_indoor. Without this line the last two boxes of the game play under the wrong track.",
+        "kind": "music",
+        "track": "opening_theme"
+      },
+      {
+        "kind": "wait",
+        "frames": 20
+      },
+      {
+        "kind": "fade",
+        "to": "clear",
+        "frames": 34
+      },
+      {
+        "kind": "wait",
+        "frames": 24
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "Caelora is in the bottom corner. You can put your thumb on it."
+        ]
+      },
+      {
+        "kind": "wait",
+        "frames": 40
+      },
+      {
+        "kind": "say",
+        "lines": [
+          "It is late. You are not tired."
+        ]
+      },
+      {
+        "kind": "setRespawn",
+        "map": "hearthmere_house_player",
+        "x": 6,
+        "y": 5
+      },
+      {
+        "kind": "setFlag",
+        "flag": "act7_done"
+      },
+      {
+        "kind": "wait",
+        "frames": 30
+      },
+      {
+        "kind": "setPiece",
+        "id": "credits"
+      },
+      {
+        "_note": "src/scenes/postcredits.ts, registered in setPieceScene. That file's own handover says the ending owns where it is reached from and what happens after it, which is this: the player is left standing in their own bedroom with the game finished and the postgame open.",
+        "kind": "setPiece",
+        "id": "postcredits"
+      },
+      {
+        "kind": "fade",
+        "to": "clear",
+        "frames": 24
+      }
+    ]
   }
 ]

@@ -1,0 +1,57 @@
+{
+  "$comment": "THE HEAD OF THE ASCENT. Four voices on a snowfield in front of a grey wall, and between them they say the one thing this map exists to say: almost nobody who starts this finishes, and the people up here have made their peace with that and are not sad about it. Nobody warns the player off and nobody wishes them luck -- the Summit's manner throughout is that this is a normal thing that happens on most days, and that manner is what makes the field of stones land. Lines gated on summit_admitted change once the player has been through the check-in; lines gated on summit_stone_set change once they have put a stone down.",
+  "speakers": {
+    "sm_road_ward": "WIND WARDEN",
+    "sm_turned_back": "MAN BY A NEW STONE",
+    "sm_waiting_sister": "WOMAN ON THE PLATFORM",
+    "sm_porter": "SUMMIT PORTER"
+  },
+  "entries": {
+    "sm_road_ward": [
+      {
+        "ifFlags": ["summit_admitted"],
+        "lines": [
+          "In, then. I will be here when you come down, whichever way that goes.",
+          "I am always here. It is a job about waiting and I am extremely good at it."
+        ]
+      },
+      {
+        "lines": [
+          "Last quarter mile. Hold the rope on your left if the wind gets under you, and it will.",
+          "The door is dead ahead and it is the only door. People still manage to miss it."
+        ]
+      }
+    ],
+    "sm_turned_back": [
+      {
+        "lines": [
+          "Walked four miles up, stood on that platform, and turned round. This morning.",
+          "I am not upset. I am eating a pie. Ask me again in a fortnight and I might be upset."
+        ]
+      }
+    ],
+    "sm_waiting_sister": [
+      {
+        "lines": [
+          "My sister went in at six. You cannot see anything and you cannot hear anything.",
+          "They built it that way on purpose and I have decided I approve of it, mostly."
+        ]
+      }
+    ],
+    "sm_porter": [
+      {
+        "ifFlags": ["summit_stone_set"],
+        "lines": [
+          "Saw you put one down. Nobody up here will ever mention it again, so I am mentioning it now.",
+          "Firewood next trip. Four hundred steps of firewood. Do not go in on my account."
+        ]
+      },
+      {
+        "lines": [
+          "Water, wood, lamp oil, and a sack of something the cook will not tell me about.",
+          "Twice a week for eleven years. I have been through that door nine hundred times and never past the rail."
+        ]
+      }
+    ]
+  }
+}

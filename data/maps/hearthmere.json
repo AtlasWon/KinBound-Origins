@@ -214,6 +214,34 @@
       },
       "script": "hm_roofer",
       "requiresFlag": "act6_done"
+    },
+    {
+      "_note": "STAGE 7, THE ENDING. Mira, on the doorstep, standing on the tile the player lands on when they come OUT of that door in Act 1 -- so she is physically in the way of their own front door and the scene cannot be walked past. She is a second Mira rather than a moved one: the `mother` NPC in hearthmere_house_player is where she lives, and this is the four hours she spent outside it. Visible from the top of the street the moment the player is Champion, which is the point -- the walk down is twenty tiles with somebody standing at the end of it. hm_end_mira in data/events/hearthmere.json walks her back through the door and sets ending_home, which hides her for good; that is the same requiresFlag/hiddenIfFlag pair hm_tarin uses in Act 1 and it is safe because npcVisible is only read on map load.",
+      "id": "hm_mira_door",
+      "sprite": "villager_f",
+      "x": 18,
+      "y": 24,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "hm_mira_door",
+      "requiresFlag": "champion",
+      "hiddenIfFlag": "ending_home"
+    },
+    {
+      "_note": "STAGE 7, THE ENDING. Tarin, back on his own doorstep at (13,24) -- the exact tile he waited on in Act 1, so that hm_end_tarin can run the identical three-step sprint east to (16,24). He appears only once the Tideheart is back among Elias' things, so the order of the ending cannot be got wrong: mother, room, friend. He leaves west along the lane and in through his own front door at (10,23) instead of running north up the road, which is the whole difference between the two scenes.",
+      "id": "hm_tarin_home",
+      "sprite": "rival",
+      "x": 13,
+      "y": 24,
+      "facing": "right",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "hm_tarin_home",
+      "requiresFlag": "tideheart_home",
+      "hiddenIfFlag": "ending_tarin"
     }
   ],
   "objects": [

@@ -1,0 +1,34 @@
+{
+  "mapId": "ascent_deep",
+  "$comment": "THE THROAT, and it is Stonewake's table one last time and four times stronger. Stone and iron all the way through, with the spark that lives in wet rock and the umbral that lives in a lake nobody has seen the bottom of.\n\nMENHIR AT TEN PER CENT IS THE POINT OF THE ROOM. A Stone/Iron with a base total of 510 is one of the four best non-starter Kin in Caelora, and until this act the only place to meet one was Route 10 and the Wintergate at six and eight per cent, at levels a player has long since outgrown. This is where somebody who wants a wall finds one they can actually use.\n\nWHERE THE ENCOUNTERS ARE. The loose grit on the floor and the sump; the cut stone of the gate chamber and the Aurelian stair carry none at all, which is right -- a swept floor is a swept floor.",
+  "methods": {
+    "tallGrass": {
+      "rate": 145,
+      "slots": [
+        { "species": "chalkmar", "minLevel": 44, "maxLevel": 46, "weight": 18 },
+        { "species": "craglide", "minLevel": 44, "maxLevel": 46, "weight": 16 },
+        { "species": "cairnling", "minLevel": 43, "maxLevel": 45, "weight": 14 },
+        { "species": "burrowen", "minLevel": 43, "maxLevel": 45, "weight": 12 },
+        { "species": "lantric", "minLevel": 44, "maxLevel": 46, "weight": 12 },
+        { "species": "menhir", "minLevel": 45, "maxLevel": 47, "weight": 10 },
+        { "species": "deeplum", "minLevel": 44, "maxLevel": 46, "weight": 10 },
+        { "species": "voltwick", "minLevel": 44, "maxLevel": 46, "weight": 8 }
+      ]
+    },
+    "water": {
+      "rate": 120,
+      "slots": [
+        { "species": "deeplum", "minLevel": 45, "maxLevel": 47, "weight": 40 },
+        { "species": "brinewisp", "minLevel": 45, "maxLevel": 47, "weight": 30 },
+        { "species": "currentail", "minLevel": 44, "maxLevel": 47, "weight": 30 }
+      ]
+    },
+    "fishGood": {
+      "slots": [
+        { "species": "deeplum", "minLevel": 45, "maxLevel": 48, "weight": 40 },
+        { "species": "anchorling", "minLevel": 45, "maxLevel": 48, "weight": 35 },
+        { "species": "clatterclaw", "minLevel": 44, "maxLevel": 47, "weight": 25 }
+      ]
+    }
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "id": "summit_master_adapt",
+  "name": "The Changing Floor",
+  "displayName": "THE CHANGING FLOOR",
+  "music": "station",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "ĦĦĦĦĦĦĦĦĦĎĦĦĦĦĦĦĦĦĦ",
+    "Ħ∇∇∇∇===========ĪĪĦ",
+    "Ħ∇∇∇∇===========ĪĪĦ",
+    "Ħ∇∇∇============ĪĪĦ",
+    "Ĥ∇∇=============ĪĪĤ",
+    "Ħ∇===========ĪĪĪĪĪĦ",
+    "Ħ============ĪĪĪĪĪĦ",
+    "Ħ=========ĪĪĪĪĪĪ==Ħ",
+    "Ħffff=====ĪĪĪĪ====Ħ",
+    "Ħfffff=========∆==Ħ",
+    "Ħffffff===========Ħ",
+    "Ĥfffff============Ĥ",
+    "Ħffff=======∇∇∇∇∇∇Ħ",
+    "Ħff========∇∇∇∇∇∇∇Ħ",
+    "Ħf=========∇∇∇∇∇∇∇Ħ",
+    "Ħ==========∇∇∇∇∇∇∇Ħ",
+    "ĦĦĦĦĦĦĦĦĦĎĦĦĦĦĦĦĦĦĦ"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 16,
+      "toMap": "summit_master_control",
+      "toX": 9,
+      "toY": 0,
+      "facing": "down",
+      "style": "door"
+    },
+    {
+      "x": 9,
+      "y": 0,
+      "toMap": "summit_master_bonds",
+      "toX": 6,
+      "toY": 10,
+      "facing": "up",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "sm_farrow",
+      "sprite": "hiker",
+      "x": 9,
+      "y": 1,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sm_farrow",
+      "hiddenIfFlag": "master_adapt_beaten"
+    },
+    {
+      "id": "sm_farrow_after",
+      "sprite": "hiker",
+      "x": 2,
+      "y": 13,
+      "facing": "right",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "sm_farrow_after",
+      "requiresFlag": "master_adapt_beaten"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 15,
+      "y": 9,
+      "text": [
+        "A block of basalt sitting in the middle of a stone floor for no reason at all.",
+        "It has been dragged. You can see where from, and it is not where it was last winter."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 0,
+      "y": 4,
+      "text": [
+        "The west light. Below it, four buckets of scree, four of sand, and a saw.",
+        "The floor of this room is a job somebody does, over and over, on purpose."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18,
+      "y": 4,
+      "text": [
+        "The east light, and under it ice cut off the tarn and hauled up the stair,, laid in a sheet across a fifth of the room.",
+        "It lasts about a fortnight. He has been doing this for forty years."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 0,
+      "y": 11,
+      "text": [
+        "The lower west light, and under it a map of Caelora with no pins and no lines drawn on it.",
+        "Somebody has written across the whole of it, corner to corner: NOWHERE IS BEST."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18,
+      "y": 11,
+      "text": [
+        "Boards, laid over the stone, worn to a shine down the middle.",
+        "The scree beside them has been walked across just as much and does not show it, which is the point."
+      ]
+    }
+  ],
+  "_plan": "THE THIRD CHAMBER, AND THE ROOM WILL NOT GIVE YOU THE SAME FOOTING TWICE. Moss Farrow's case is that nothing is good, that things are only good against other things, so the floor of his chamber is four materials in four irregular patches -- cut stone, laid boards, hauled lake ice and loose scree -- with the boundaries running at angles so that no part of it repeats. He relays it. That is what the buckets and the saw under the west light are for, and it is why the block of basalt is not where it was last winter.\n\nNINETEEN BY SEVENTEEN, the tallest of the four, because the whole point is that you cross a lot of different ground getting to him.\n\nHE STANDS IN HIS OWN DOORWAY AT 9,1 like the other three, and master_adapt_beaten hides him and puts sm_farrow_after down on the boards at the bottom of the room, where he is usually working. He heals the party himself first -- see the _plan on summit_master_power.\n\nEVERY FLOOR CHARACTER HERE IS ALREADY IN THE GAME and no new art is involved: '=' is the stone floor every civic building uses, 'f' is the boards, 'Ī' is the Frost Hall's sound ice and '∇' is the scree off the mountain roads. '∆' is the loose boulder from the same family, floorless, so it stands on whatever the map put under it.\n\nTHE MAP UNDER THE LOWER WEST LIGHT is the one piece of environmental storytelling that states his whole argument, and it does it in three words so that he does not have to.",
+  "_join": "OUT: 9,0 -> summit_master_bonds 6,10. IN: 9,16 <- summit_master_control 9,0."
+}

@@ -1,0 +1,82 @@
+{
+  "$comment": "THE THRESHOLD'S VOICES, AND THEY ARE SORTED BY WHICH SIDE OF THE RAIL THEY STAND ON. North of it: an usher and a steward, both of whom talk about the building as a job. South of it: the gallery -- an old woman, a child, somebody's family, a letter-cutter down from Crownspire -- all of whom talk about the people who are up there now. That split is the map's whole argument said out loud, and no line on either side is impressed with the other. Lines gated on summit_admitted change once the registrar has read the eight; lines gated on summit_climb_begun change once the player has actually gone through the Seal.",
+  "speakers": {
+    "sm_hall_usher": "HALL USHER",
+    "sm_hall_steward": "STEWARD",
+    "sm_hall_gallery_old": "WOMAN AT THE RAIL",
+    "sm_hall_gallery_kid": "BOY AT THE RAIL",
+    "sm_hall_gallery_pair": "SOMEBODY'S MOTHER",
+    "sm_hall_mason": "LETTER-CUTTER"
+  },
+  "entries": {
+    "sm_hall_usher": [
+      {
+        "ifFlags": ["summit_admitted"],
+        "lines": [
+          "Line four on today's board, which is you. The three above it are crossed through already.",
+          "That is not a comment. It is a Tuesday."
+        ]
+      },
+      {
+        "lines": [
+          "Day board is on the wall behind you. Four names, and a runner comes down when a door opens.",
+          "The last name on it that went all the way up was in the spring."
+        ]
+      }
+    ],
+    "sm_hall_steward": [
+      {
+        "ifFlags": ["summit_climb_begun"],
+        "lines": [
+          "You have been up. That means I have already been up behind you with a bucket and you never saw me.",
+          "Good. That is the job done properly."
+        ]
+      },
+      {
+        "lines": [
+          "Stewards' stair. Water up, wood up, and people down.",
+          "Four hundred and eleven steps and I do it in the dark because there is no light in it."
+        ]
+      }
+    ],
+    "sm_hall_gallery_old": [
+      {
+        "lines": [
+          "Sixty-one years I have come and stood at this rail, and I have never once been past it.",
+          "There is no gate in the gap. There has never needed to be one. Work out why and you have got the place."
+        ]
+      }
+    ],
+    "sm_hall_gallery_kid": [
+      {
+        "lines": [
+          "You go through there and then nobody sees you again until you come out of the little door.",
+          "My uncle says that is the best bit. I think it is the worst bit."
+        ]
+      }
+    ],
+    "sm_hall_gallery_pair": [
+      {
+        "ifFlags": ["summit_climb_begun"],
+        "lines": [
+          "You went up. I watched the slab go back and then I watched it come forward again.",
+          "That is all anybody in this hall ever gets to watch. Go on."
+        ]
+      },
+      {
+        "lines": [
+          "Mine is up there now. Has been since six and the board has not changed since eight.",
+          "They will not tell me anything, and I would not want them to, and I would like them to."
+        ]
+      }
+    ],
+    "sm_hall_mason": [
+      {
+        "lines": [
+          "Crownspire, letter-cutter. I come up to see them go in, when I can get the morning off.",
+          "Down there I cut the name. Up here I get to see whose it is. Those are not the same job."
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,200 @@
+[
+  {
+    "id": "sm_adapt_arrive",
+    "trigger": "enter",
+    "map": "summit_master_adapt",
+    "onceFlag": "sm_adapt_arrived",
+    "actions": [
+      {
+        "kind": "say",
+        "lines": [
+          "Cut stone under the door, and then boards, and then a sheet of lake ice, and then loose scree.",
+          "Somebody has taken a room apart and put four different floors back into it at angles."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sm_farrow",
+    "$comment": "THE MASTER OF ADAPTATION. Same shape as the other three -- doorway blocker at 9,1, heal before the fight, `continue` on a loss, live removeNpc on the win because NPC flags are only read in loadMap.\n\nHIS ANSWER IS THE ONLY ONE OF THE FOUR THAT IS A DECISION RATHER THAN A TEAM, and the fight measures it: on a bench of four at L48 the novice model, which never switches, beats him more often than the veteran model, which does. His victory line says so out loud, because he knows exactly what beats him and saying it has never once helped anybody do it.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "MOSS FARROW",
+        "lines": [
+          "Moss Farrow. Do not ask me what my type is. Forty years up here and I have never had one.",
+          "Mind the ice on your left. Nine days old. Four to go, then I cut a new sheet."
+        ]
+      },
+      { "kind": "healParty" },
+      { "kind": "sfx", "sound": "heal" },
+      {
+        "kind": "say",
+        "lines": [
+          "He shoves a bucket across the boards towards you with his foot, without looking up from the floor.",
+          "Your party was restored."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "MOSS FARROW",
+        "lines": [
+          "All of them, mind. Not just the one you like. I want your best answer at full.",
+          "It is no good to me tired. I need it working so I can watch it stop working."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "MOSS FARROW",
+        "lines": [
+          "Because I am going to send out the thing it is bad against. And then the thing THAT is bad against.",
+          "Round and round. It is not clever. It is just extremely difficult to make it stop."
+        ]
+      },
+      {
+        "kind": "ask",
+        "lines": ["Go on then. Show me the good one."],
+        "yes": [
+          {
+            "kind": "say",
+            "who": "MOSS FARROW",
+            "lines": ["Right. Six of them and none of them agree with each other. Off we go."]
+          },
+          { "kind": "battleTrainer", "trainer": "summit_master_adapt", "onLoss": "continue" },
+          {
+            "kind": "if",
+            "cond": { "kind": "var", "var": "last_battle_won", "op": "==", "value": 1 },
+            "then": [{ "kind": "call", "script": "sm_farrow_win" }],
+            "else": [{ "kind": "call", "script": "sm_farrow_loss" }]
+          }
+        ],
+        "no": [
+          {
+            "kind": "say",
+            "who": "MOSS FARROW",
+            "lines": [
+              "Fair. Go and look at the map under the lower west window while you are deciding.",
+              "It took me thirty years to be able to write that on it and about four seconds to write it."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sm_farrow_win",
+    "trigger": "call",
+    "actions": [
+      { "kind": "wait", "frames": 30 },
+      {
+        "kind": "say",
+        "lines": [
+          "He is already halfway across the room, looking at the floor, counting something under his breath.",
+          "He has not congratulated anybody yet and he is not going to start with the floor."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "MOSS FARROW",
+        "lines": [
+          "You picked one and you stayed in. The whole way through. Against me.",
+          "That is either the stupidest thing I have watched on this floor or the only thing that works."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "MOSS FARROW",
+        "lines": [
+          "Nothing on this mountain is good. There are only things that are good against other things.",
+          "Except that. That is just good, and I have never in my life been able to do it."
+        ]
+      },
+      { "kind": "giveItem", "item": "rouse", "count": 2 },
+      { "kind": "sfx", "sound": "badge" },
+      { "kind": "say", "lines": ["Moss Farrow handed over 2 Rouses."] },
+      {
+        "kind": "say",
+        "who": "MOSS FARROW",
+        "lines": [
+          "Two Rouses. You will lose one of them somewhere above me and want it back straight away.",
+          "Everybody does. I have a drawer of the ones people leave on the stair."
+        ]
+      },
+      { "kind": "setFlag", "flag": "master_adapt_beaten" },
+      {
+        "kind": "say",
+        "who": "MOSS FARROW",
+        "lines": [
+          "Nell is next. She keeps a Gravelet.",
+          "Do not laugh at it. Not because she would mind. Because it is the last mistake you will make today."
+        ]
+      },
+      { "kind": "removeNpc", "who": "sm_farrow" },
+      {
+        "kind": "spawnNpc",
+        "npc": {
+          "id": "sm_farrow_after",
+          "sprite": "hiker",
+          "x": 2,
+          "y": 13,
+          "facing": "right",
+          "movement": { "kind": "lookAround" },
+          "script": "sm_farrow_after"
+        }
+      },
+      { "kind": "wait", "frames": 16 },
+      {
+        "kind": "say",
+        "lines": [
+          "He walks off the stone, onto the boards, and crouches down at the edge where they meet the scree.",
+          "He has already forgotten there is anybody else in the room."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sm_farrow_loss",
+    "trigger": "call",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "MOSS FARROW",
+        "lines": [
+          "You swapped to beat what was in front of you, and I swapped to beat what you swapped to.",
+          "One turn ahead, the whole way down. It is the easiest thing in the world from this side."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "MOSS FARROW",
+        "lines": [
+          "Go down, put them right, come back up. Bucket stays where it is.",
+          "And have a think about whether the swapping was the problem."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sm_farrow_after",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "say",
+        "who": "MOSS FARROW",
+        "lines": [
+          "There is nothing on this mountain that is good. There are only things that are good against other things.",
+          "Which is a miserable way to live and an excellent way to battle."
+        ]
+      },
+      {
+        "kind": "say",
+        "who": "MOSS FARROW",
+        "lines": [
+          "Nell has had the same six for fourteen years and every one of them is rubbish.",
+          "I have had two hundred and I could not tell you the name of the one I had last spring."
+        ]
+      }
+    ]
+  }
+]

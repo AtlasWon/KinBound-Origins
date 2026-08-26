@@ -54,6 +54,16 @@
     "hm_villager": [
       {
         "ifFlags": [
+          "champion"
+        ],
+        "lines": [
+          "I saw you first, coming down past the mill, and I have told nine people since.",
+          "Your mother is on the step. She has been on the step since the wireless said it.",
+          "Go on, do not dawdle with me. I will be here Tuesday, and so will the well, and so will Nell."
+        ]
+      },
+      {
+        "ifFlags": [
           "act6_done"
         ],
         "lines": [
@@ -123,6 +133,16 @@
     "hm_kid": [
       {
         "ifFlags": [
+          "champion"
+        ],
+        "lines": [
+          "I have started a new page. It has got one name on it and I have spelled it how I like.",
+          "Nell says nobody has one of every kin. Nell has been up that road four times ever.",
+          "I am going to have one of every kin. I am eight. I have got ages."
+        ]
+      },
+      {
+        "ifFlags": [
           "act6_done"
         ],
         "lines": [
@@ -169,6 +189,16 @@
       }
     ],
     "hm_hiker": [
+      {
+        "ifFlags": [
+          "champion"
+        ],
+        "lines": [
+          "Walked down from Briarbell this morning. Twelve miles, and every mile of it was about you.",
+          "I gave you one piece of advice in my life and it was about your feet. I stand by it.",
+          "Deep grass, deep water, deep anything. You still cannot see your feet. Nothing has changed."
+        ]
+      },
       {
         "ifFlags": [
           "got_starter"
@@ -356,6 +386,16 @@
     "hm_trader": [
       {
         "ifFlags": [
+          "champion"
+        ],
+        "lines": [
+          "My cousin sent word up from the Parade before the wireless had it. She is being insufferable.",
+          "Four stalls on a Tuesday, two of them mine, and now one has your name chalked on the board.",
+          "I have known you since you were a fortnight old. Take a loaf. No. Take it."
+        ]
+      },
+      {
+        "ifFlags": [
           "act6_done"
         ],
         "lines": [
@@ -405,6 +445,16 @@
     "hm_elder": [
       {
         "ifFlags": [
+          "champion"
+        ],
+        "lines": [
+          "Eighty-two years now. Four times up that road, and I have not changed my mind about any of them.",
+          "I told you to come back. It is the only instruction I have ever given that anybody followed.",
+          "Come here. Nearer. — No, I have nothing to say. I only wanted a proper look at you again."
+        ]
+      },
+      {
+        "ifFlags": [
           "crest_1_taken"
         ],
         "lines": [
@@ -431,6 +481,16 @@
       }
     ],
     "hm_fisher": [
+      {
+        "ifFlags": [
+          "champion"
+        ],
+        "lines": [
+          "The mere has been ordinary for a fortnight. Ordinary. I had forgotten what that looked like.",
+          "One river, one man, my whole life. And somebody off this river went and did that.",
+          "I am not making a speech about it. I am going to stand here and be unbearable quietly."
+        ]
+      },
       {
         "ifFlags": [
           "act6_done"
@@ -472,6 +532,16 @@
     "hm_farmer": [
       {
         "ifFlags": [
+          "champion"
+        ],
+        "lines": [
+          "Off my field. ...No. Stop on it a minute. It is the good end and you have earned the view.",
+          "Maben's law. When the ground is early, something is coming that the ground knows about first.",
+          "The ground was right and I was not listening properly. Take some beans. Take a lot of beans."
+        ]
+      },
+      {
+        "ifFlags": [
           "got_starter"
         ],
         "lines": [
@@ -489,6 +559,17 @@
       }
     ],
     "hm_ashe_gran": [
+      {
+        "_comment": "STAGE 7. Gated on ending_tarin -- the moment he walks back in through his own front door at the end of hm_end_tarin -- rather than on `champion`, so that a line about Tarin being home cannot fire while he is still out on the road.",
+        "ifFlags": [
+          "ending_tarin"
+        ],
+        "lines": [
+          "He came in, ate everything in this house, and talked about you for forty minutes solid.",
+          "Not one word about his own year. I have stopped expecting one and I have stopped minding.",
+          "He has gone up with his boots on. I am not fighting him about boots tonight."
+        ]
+      },
       {
         "ifFlags": [
           "got_starter"

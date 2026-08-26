@@ -1,0 +1,88 @@
+{
+  "mapId": "ascent_crown",
+  "$comment": "THE CROWN. Nine slots and no soft ones: everything on this table is either fully evolved or one level from it, because this is the last grass in the main game and a player standing in it is finishing a team rather than filling one.\n\nTHE FOUR BEST NON-STARTER KIN IN CAELORA ARE ALL FINDABLE ON THE ASCENT AND THREE OF THEM ARE ON THIS MAP. Menhir at fourteen, Galecrest at sixteen and Rimehound at eighteen -- the highest weights any of them has anywhere -- and Maelstrix is in the cistern one map back. That is deliberate and it is what canon means by 'this is where a player finishes their team': everything here is a Kin somebody would restructure round, and none of it is a surprise, because they have all been met before at levels that were not worth it yet.\n\nMEASURED. 47-50, against a team-raiser who arrives on this map at about 50. The band tops out level with the player, which is where every road in this game has put it since Route 3.\n\nTHE TOP OF THE BAND WAS SHAVED ONE LEVEL after measurement: at the original max the team-raising player's win rate on the worst roll sat at 73 per cent with one kin in front, and this project has been asked four separate times for an easier game. One level bought six points and cost nothing anybody will ever notice.",
+  "methods": {
+    "tallGrass": {
+      "rate": 150,
+      "slots": [
+        {
+          "species": "rimehound",
+          "minLevel": 47,
+          "maxLevel": 48,
+          "weight": 18
+        },
+        {
+          "species": "galecrest",
+          "minLevel": 48,
+          "maxLevel": 49,
+          "weight": 16
+        },
+        {
+          "species": "menhir",
+          "minLevel": 48,
+          "maxLevel": 49,
+          "weight": 14
+        },
+        {
+          "species": "craglide",
+          "minLevel": 47,
+          "maxLevel": 48,
+          "weight": 12
+        },
+        {
+          "species": "frostnip",
+          "minLevel": 46,
+          "maxLevel": 47,
+          "weight": 10
+        },
+        {
+          "species": "chalkmar",
+          "minLevel": 47,
+          "maxLevel": 48,
+          "weight": 10
+        },
+        {
+          "species": "kestrelle",
+          "minLevel": 46,
+          "maxLevel": 47,
+          "weight": 8
+        },
+        {
+          "species": "voltwick",
+          "minLevel": 47,
+          "maxLevel": 48,
+          "weight": 6
+        },
+        {
+          "species": "weaverjaw",
+          "minLevel": 47,
+          "maxLevel": 48,
+          "weight": 6
+        }
+      ]
+    },
+    "water": {
+      "rate": 110,
+      "slots": [
+        {
+          "species": "brinewisp",
+          "minLevel": 47,
+          "maxLevel": 50,
+          "weight": 40
+        },
+        {
+          "species": "currentail",
+          "minLevel": 47,
+          "maxLevel": 50,
+          "weight": 35
+        },
+        {
+          "species": "deeplum",
+          "minLevel": 47,
+          "maxLevel": 50,
+          "weight": 25
+        }
+      ]
+    }
+  }
+}

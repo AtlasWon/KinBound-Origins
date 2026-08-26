@@ -1,0 +1,26 @@
+{
+  "$comment": "THE CROWN. One voice at the Great Cairn, and it is the payoff of every waist-high heap of stones the player has walked past since the gate four miles below. He does not tell them to add one. Being told to would ruin it.",
+  "speakers": {
+    "asc_cairnkeep": "CAIRN KEEPER"
+  },
+  "entries": {
+    "asc_cairnkeep": [
+      {
+        "ifFlags": [
+          "tarin_summit_won"
+        ],
+        "lines": [
+          "Your friend put one on. Went round the whole thing twice first, looking for a gap.",
+          "There is no gap. He found that funny. He was not laughing at it, mind."
+        ]
+      },
+      {
+        "lines": [
+          "Nine hundred and six years, one stone at a time, carried up from the gate.",
+          "People ask me how many. I tell them nobody knows and they always look disappointed.",
+          "It is better that nobody knows. Work it out."
+        ]
+      }
+    ]
+  }
+}

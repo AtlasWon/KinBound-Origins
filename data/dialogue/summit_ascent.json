@@ -1,0 +1,23 @@
+{
+  "$comment": "THE ONLY PERSON ON THE WIND STEP WHO IS NOT THERE FOR THE FIGHT. He is a steward at the mouth of the stewards' stair, and he is the whole staff of the middle of this building: he lights the fires above, he carries people down, and he thinks none of it is remarkable. He is what makes the Summit's standing order -- framed in the Last Room, cut into every lintel above -- read as an institution rather than as a mechanic. Nobody in the Summit is solemn. That is the Summit.",
+  "speakers": {
+    "sm_stair_steward": "STEWARD AT THE STAIR"
+  },
+  "entries": {
+    "sm_stair_steward": [
+      {
+        "ifFlags": ["sm_windstep_seen"],
+        "lines": [
+          "Still here. Somebody has to be, and the fire will not keep itself in.",
+          "Whichever way it goes up there, you come down this stair and not through that slab."
+        ]
+      },
+      {
+        "lines": [
+          "Stewards' stair, and that door behind me is never locked. Nobody has ever locked it.",
+          "Four hundred and eleven steps down to the hall, and it comes out behind the rail."
+        ]
+      }
+    ]
+  }
+}

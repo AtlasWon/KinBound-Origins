@@ -1,0 +1,77 @@
+[
+  {
+    "id": "sm_stone_keeper",
+    "$comment": "THE FIELD, AND THE ONE THING THE PLAYER GETS TO DO ON THIS MAP. The approach says the odds in stone -- everybody who comes up this road sets one, the density rises the nearer the door, and most of the field turned round -- and the only honest way to finish that sentence is to let the player add theirs. She does not ask whether they are going in. That is the point of the custom and she says so.\n\nIT GRANTS NOTHING. No item, no flag anybody else reads, no progress. summit_stone_set exists so her second line can change and so that a later build can notice it if it wants to; the ending is somebody else's and this is deliberately not load-bearing for it.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "summit_stone_set" },
+        "then": [
+          {
+            "kind": "say",
+            "who": "ORLA MEEN",
+            "lines": [
+              "Yours is the one by my left boot and it will be under six others by Thursday.",
+              "That is not me being unkind. That is what the field is."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "who": "ORLA MEEN",
+            "lines": [
+              "Take a stone off the heap. Everybody who comes up this road puts one down.",
+              "I have been handing them out for forty-one years and I have never asked anybody why they came."
+            ]
+          },
+          {
+            "kind": "ask",
+            "who": "ORLA MEEN",
+            "lines": [
+              "It is not a promise and it is not a grave. It is a stone.",
+              "Do you want one?"
+            ],
+            "yes": [
+              {
+                "kind": "say",
+                "lines": [
+                  "You set it down in the snow at the edge of the lane, where there is still room.",
+                  "There is still room for about four more and then this bit of the field is finished."
+                ]
+              },
+              { "kind": "setFlag", "flag": "summit_stone_set" },
+              {
+                "kind": "say",
+                "who": "ORLA MEEN",
+                "lines": [
+                  "Right. Now you are in it whatever happens, same as the rest of them.",
+                  "Some of these went in and came down again the same afternoon. You cannot tell which."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "ORLA MEEN",
+                "lines": [
+                  "That is the whole design, {name}. Nobody has ever been able to look at this field",
+                  "and work out who did well. Nine hundred years and it is still one heap of stones."
+                ]
+              }
+            ],
+            "no": [
+              {
+                "kind": "say",
+                "who": "ORLA MEEN",
+                "lines": [
+                  "Fair enough. The heap will keep, and so will I.",
+                  "More people say no than you would think, and about half of them come back for one."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

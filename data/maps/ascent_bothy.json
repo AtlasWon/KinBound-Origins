@@ -1,0 +1,119 @@
+{
+  "id": "ascent_bothy",
+  "name": "Interior",
+  "displayName": "THE HIGH BOTHY",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "_design": "The Waystation of the Ascent, and the only warm room between Crownspire and the Summit. Canon keeps the name Waystation for the roadside clinics only, and this is the last one in the game. IT IS NOT GATED BY AN ART AND IT NEVER WILL BE: a five-map climb with no bed halfway up is a five-map climb nobody finishes, and the brief has asked four separate times for an easier game. It is also the respawn point for the whole upper Ascent, which is what stops a whiteout on the Crown costing forty minutes of walking.",
+  "warps": [
+    {
+      "x": 8,
+      "y": 10,
+      "toMap": "ascent_shelf",
+      "toX": 19,
+      "toY": 19,
+      "facing": "down",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "asb_keeper",
+      "sprite": "healer",
+      "x": 3,
+      "y": 1,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "clinic_heal"
+    },
+    {
+      "id": "asb_roost",
+      "sprite": "professor",
+      "x": 12,
+      "y": 1,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "roost_terminal"
+    },
+    {
+      "id": "asb_hiker",
+      "sprite": "hiker",
+      "x": 2,
+      "y": 7,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "asb_hiker"
+    },
+    {
+      "id": "asb_hand",
+      "sprite": "clerk",
+      "x": 13,
+      "y": 4,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "asb_hand"
+    },
+    {
+      "id": "asb_child",
+      "sprite": "kid",
+      "x": 8,
+      "y": 8,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "asb_child"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 11,
+      "y": 1,
+      "text": [
+        "A brass terminal with somebody's scarf tied round the base of it.",
+        "THE ROOST. Kin you cannot carry wait here."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 5,
+      "y": 1,
+      "text": [
+        "A slate by the counter, wiped every morning and written up again.",
+        "ON THE HILL TODAY: NINE UP, FOUR DOWN. ALL ACCOUNTED FOR."
+      ]
+    },
+    {
+      "kind": "script",
+      "x": 12,
+      "y": 8,
+      "text": [
+        "A shelf of boots by the stove. All of them too small, all of them mended.",
+        "A card above it: LEFT BY PEOPLE WHO CAME BACK DOWN. TAKE A PAIR IF YOU NEED THEM."
+      ]
+    }
+  ],
+  "rows": [
+    "IIIIIUIIIIIUIIIII",
+    "IQNfKKKKKKffkkffI",
+    "IffffffffffffffkI",
+    "IkffAAffffffAAffI",
+    "IffEEffffffffEEfI",
+    "IffffffffffffffPI",
+    "IbefffbefffbefffI",
+    "IffffffffffffffPI",
+    "Ik/rrffffff;;fffI",
+    "IffrrffffffffffkI",
+    "IIIIIIIIDIIIIIIII"
+  ]
+}

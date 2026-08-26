@@ -1,0 +1,32 @@
+{
+  "$comment": "THE LAST ROOM. Two voices with lines rather than scripts: the old steward who has been carrying people down this building for a very long time and does not think it is remarkable, and a climber who has just come back down and is fine, thank you. Between them they say the standing order in ordinary language so that the framed version on the wall reads as a fact about the place rather than as flavour text. Nobody in this room is solemn. That is the room.",
+  "speakers": {
+    "sm_muster_steward": "OLD STEWARD",
+    "sm_muster_climber": "CLIMBER"
+  },
+  "entries": {
+    "sm_muster_steward": [
+      {
+        "ifFlags": ["summit_climb_begun"],
+        "lines": [
+          "Been up, then. Did you find the fires lit? Course you did. That is the whole trick of it.",
+          "Forty years of going up four hundred steps so that a stranger finds a warm room. Best job there is."
+        ]
+      },
+      {
+        "lines": [
+          "Second half of the order is the half nobody quotes, and it is the half I do.",
+          "If you come down, you come down to the last landing you passed. Not to the bottom."
+        ]
+      }
+    ],
+    "sm_muster_climber": [
+      {
+        "lines": [
+          "Third door. Got through two and stopped at three, and I am telling you straight away",
+          "because up here nobody makes you say it twice and I have decided I like that."
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "$comment": "THE THROAT. ONE VOICE, and it is the one the room needs: somebody who has been coming into this mountain for thirty years and is completely unbothered by it. The Ascent must not turn the Aurelians back into a mystery -- that story finished at the Temple -- so the lampwright treats the cut stone as what it is to her, which is old work by good people, and nobody says the word Aurelian anywhere on this mountain.",
+  "speakers": {
+    "asd_lampwright": "LAMPWRIGHT"
+  },
+  "entries": {
+    "asd_lampwright": [
+      {
+        "ifFlags": [
+          "asd_lamps_lit"
+        ],
+        "lines": [
+          "You lit them.",
+          "Thirty-one years I have carried oil up that flight for lamps that were never going to take oil.",
+          "They were never out. They were waiting. There is a difference and I am going to sit down."
+        ]
+      },
+      {
+        "lines": [
+          "There is a stair at the back with lamps down both walls and no way to light them.",
+          "No wick, no oil hole, no nothing. Just a cup of stone with a mark in it.",
+          "I bring oil up anyway. Thirty-one years. My husband thinks I am ridiculous."
+        ]
+      }
+    ]
+  }
+}

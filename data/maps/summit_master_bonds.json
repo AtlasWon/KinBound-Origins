@@ -1,0 +1,176 @@
+{
+  "id": "summit_master_bonds",
+  "name": "The Small Room",
+  "displayName": "THE SMALL ROOM",
+  "music": "town_indoor",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "_join": "OUT: the door at 6,0 goes to summit_champion 6,10, and that owner has shaped their room to this file -- thirteen wide, arch at column 6, eleven rows -- and says so in their own _join. THIS GEOMETRY IS THEREFORE FROZEN. Do not widen this room, do not move the door off column 6 and do not double it: the Champion's arch, width and row count all come from these numbers. IN: 6,10 receives summit_master_adapt 9,0.",
+  "rows": [
+    "ĦĦĦĦĦĦĎĦĦĦĦĦĦ",
+    "ĦQNfffffffkkĦ",
+    "ĦfffffffffffĦ",
+    "ĤfffrrrrfffŴĤ",
+    "ĦffErAArEfffĦ",
+    "ĦfffrEErffffĦ",
+    "ĦfffrrrrfffĘĦ",
+    "ĦfffffffffffĦ",
+    "ĤkfffffffffPĤ",
+    "ĦfffffffffffĦ",
+    "ĦĦĦĦĦĦĎĦĦĦĦĦĦ"
+  ],
+  "warps": [
+    {
+      "x": 6,
+      "y": 10,
+      "toMap": "summit_master_adapt",
+      "toX": 9,
+      "toY": 0,
+      "facing": "down",
+      "style": "door"
+    },
+    {
+      "x": 6,
+      "y": 0,
+      "toMap": "summit_champion",
+      "toX": 6,
+      "toY": 10,
+      "facing": "up",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "sm_oakley",
+      "sprite": "netmender",
+      "x": 6,
+      "y": 1,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sm_oakley",
+      "hiddenIfFlag": "master_bonds_beaten"
+    },
+    {
+      "id": "sm_oakley_after",
+      "sprite": "netmender",
+      "x": 1,
+      "y": 2,
+      "facing": "up",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sm_oakley_after",
+      "requiresFlag": "master_bonds_beaten"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "kin",
+      "x": 8,
+      "y": 4,
+      "species": "gravelet"
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 1,
+      "text": [
+        "A stove, lit, with a kettle on it and a second, smaller pan beside the kettle.",
+        "The pan has gravel in it. It is being warmed."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 1,
+      "text": [
+        "A sink, and above it a shelf of six bowls, all different, all worn on one side.",
+        "Each of them is worn on the side that one of them eats from."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 1,
+      "text": [
+        "Not ledgers. Notebooks, with years on the spines and nothing else on them.",
+        "The one from fourteen years ago is the fattest and has been mended with net twine."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 11,
+      "y": 3,
+      "text": [
+        "Cordwood, stacked, with a hollow worn into the top of it about the size of a small Kin.",
+        "Something sleeps here when the chair is taken."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 11,
+      "y": 6,
+      "text": [
+        "A firepot on the floor with four different sets of scratches worked into the stone around it,",
+        "at four different heights, and none of them made by a person."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 8,
+      "text": [
+        "A shelf of Vellum volumes, well used, left open at the page for the Gravelet.",
+        "The entry is four lines long. Somebody has written another two hundred underneath it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 11,
+      "y": 8,
+      "text": [
+        "A plant, enormous, in a cracked pot, leaning at the window because that is where the light is.",
+        "It has been repotted at least twice and it has never once been thrown away."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 0,
+      "y": 3,
+      "text": [
+        "The west light, low and small and glazed twice over.",
+        "This is the only warm room on the mountain and it is by a long way the smallest."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 3,
+      "text": [
+        "A list on the wall, in pencil: six names, and what each of them will not eat.",
+        "It is a long list and it has been added to recently."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 0,
+      "y": 8,
+      "text": [
+        "A blanket folded on the sill, exactly the size of the sill.",
+        "There is one on every ledge in this room and they are all different sizes."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 12,
+      "y": 8,
+      "text": [
+        "The wall beside the fire is scuffed to bare stone at about knee height.",
+        "Something has stood in exactly that spot, waiting to be picked up, for a very long time."
+      ]
+    }
+  ],
+  "_plan": "THE FOURTH CHAMBER, AND IT IS A KITCHEN. Every other room on this mountain is a hall and this one is thirteen by eleven with a stove in it, a table, four chairs, a rug, a woodpile, a fire, a plant that should have been thrown out years ago, and a Gravelet asleep in the good chair. The music changes at the door -- town_indoor, not station -- and that is the joke and the argument at once. Nell Oakley's whole case is that the Kin nobody rates win because somebody stayed with them, and putting her at the top of the Ascent in a room that looks like the inside of a house is that case made before she opens her mouth. It is by a distance the smallest room in the Summit: the two chambers below are 19x15, Farrow's is 19x17, the Threshold is 18x22 and the top itself is 13x11.\n\nTHE GRAVELET IN THE CHAIR IS HER ACE. It is a `kin` object at 8,4, drawn at icon size on a chair tile so it cannot be walked through, and it is Pip, who is fought at level 49 about forty seconds later. Her row in data/trainers/trainers.json is the only bench in the game that does not use the flat-zero IV lever, because the entire point of her is that the individual beat the species.\n\nSHE STANDS IN HER OWN DOORWAY AT 6,1 like the other three Masters, and 6,1 is the only walkable neighbour of the door out, so the room cannot be crossed without her. master_bonds_beaten hides her and puts sm_oakley_after at the stove, making tea, which is where she was going anyway. The Champion's own map lands the player back on 6,1 coming down, which is free by then and only reachable once she has been beaten anyway.\n\nEVERY OBJECT IN THIS ROOM IS ABOUT ONE OF THE SIX AND NONE OF THEM IS ABOUT HER. Six bowls worn on six different sides, a list of what six creatures will not eat, four sets of scratches at four heights round the fire, a hollow in the woodpile the size of a small Kin, a Vellum entry four lines long with two hundred lines written under it, and a patch of wall scuffed to the stone at knee height where something has stood waiting to be picked up. A player who reads three of these knows how the fight ends before it starts.\n\nTHE DOOR COLUMN IS FROZEN -- see _join above. It is a single door rather than a pair because a Master standing in a two-tile doorway leaves the other tile open and the gate stops being a gate, and it is at column 6 because the Champion's room was built to that number."
+}

@@ -1,0 +1,129 @@
+{
+  "id": "summit_master_power",
+  "name": "The Open Floor",
+  "displayName": "THE OPEN FLOOR",
+  "music": "station",
+  "battleBackdrop": "indoor",
+  "indoor": true,
+  "rows": [
+    "ĦĦĦĦĦĦĦĦĦĎĦĦĦĦĦĦĦĦĦ",
+    "ĦĤ░░░░░░░░░░░░░░░ĤĦ",
+    "Ħ░░░░░░░═══░░░░░░░Ħ",
+    "Ħ░Ę░░░░░═══░░░░░Ę░Ħ",
+    "Ħ░░░░░░░═══░░░░░░░Ħ",
+    "Ħ░░░░░░░░░░░░░░░░░Ħ",
+    "Ħ░░░░░░░░░░░░░░░░░Ħ",
+    "Ĥ░░░░░░░░░░░░░░░░░Ĥ",
+    "Ħ░░░░░░░░░░░░░░░░░Ħ",
+    "Ħ░░░░░░░░░░░░░░░░░Ħ",
+    "Ħ░░░░░░░═══░░░░░░░Ħ",
+    "Ħ░Ę░░░░░═══░░░░░Ę░Ħ",
+    "Ħ░░░░░░░═══░░░░░░░Ħ",
+    "ĦĤ░░░░░░░░░░░░░░░ĤĦ",
+    "ĦĦĦĦĦĦĦĦĦĎĦĦĦĦĦĦĦĦĦ"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 14,
+      "toMap": "summit_ascent",
+      "toX": 9,
+      "toY": 1,
+      "facing": "down",
+      "style": "door"
+    },
+    {
+      "x": 9,
+      "y": 0,
+      "toMap": "summit_master_control",
+      "toX": 9,
+      "toY": 14,
+      "facing": "up",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "sm_carrick",
+      "sprite": "dockhand",
+      "x": 9,
+      "y": 1,
+      "facing": "down",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sm_carrick",
+      "hiddenIfFlag": "master_power_beaten"
+    },
+    {
+      "id": "sm_carrick_after",
+      "sprite": "dockhand",
+      "x": 15,
+      "y": 12,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sm_carrick_after",
+      "requiresFlag": "master_power_beaten"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 3,
+      "text": [
+        "A firepot, lit, at the near end of an empty floor.",
+        "There is nothing else in this room. There has never been anything else in this room."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 16,
+      "y": 3,
+      "text": [
+        "Chalk on the granite beside the pot. A date, a name, and a number.",
+        "Four. Three. Four. Four. Six, and the six is circled, and somebody has written HER under it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 0,
+      "y": 7,
+      "text": [
+        "The west light. Nine hundred metres of nothing, then Crownspire, then the plain,",
+        "then the sea, and it is all in one window and none of it is very big."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18,
+      "y": 7,
+      "text": [
+        "The east light, and the only thing in this room that has ever been mended.",
+        "Twice. Both times from the inside."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 2,
+      "y": 11,
+      "text": [
+        "A second firepot, the same as the first, exactly as far from the wall.",
+        "Somebody has measured this room and then taken everything out of it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 16,
+      "y": 11,
+      "text": [
+        "A bucket of water and a folded cloth, set down where a person coming up the stair would find them.",
+        "It is the only kindness in the room and it is put where you cannot miss it."
+      ]
+    }
+  ],
+  "_plan": "THE FIRST OF FOUR SUMMIT CHAMBERS, AND THE ROOM IS THE ARGUMENT. Abel Carrick's case is that a long fight is a cruelty you are doing to your own Kin, so there is nothing in here to hide behind, nothing to stand on, no cover, no furniture and no corner that is safer than the middle. Nineteen by fifteen, four firepots, six windows and a bucket. A player who walks in and looks round learns the whole man before he says a word.\n\nTHE FLOOR IS CROWNSPIRE'S OWN COBBLE AND THAT WAS THE SECOND ATTEMPT. The first laid it in '=', the ordinary stone floor, and at 1x the room was one unbroken field of the same grey brick the walls are made of -- an empty nineteen-wide room whose walls are off-screen has nothing in it for the eye to hold and reads as texture rather than as a room. See build/shots/masters-1a-power-room.png. The fix is not decoration, which he would not have: it is '░', the capital's cobble, the material Crownspire is paved with to its walls and the material the top of this mountain is paved with -- so his floor is the first sight of the ground the Champion stands on -- with two three-by-three pads of '═' flagstone let into it, one at each end, worn pale where two people have stood in exactly the same place for nineteen years. Two marks in an empty room, and both of them are somebody's feet.\n\nHE STANDS IN HIS OWN DOORWAY AT 9,1 AND HE IS THE GATE. There is no warden anywhere in the four chambers: the exit door in the top wall has exactly one walkable neighbour and the Master is standing on it, so the only way up the mountain is through the person whose room it is. That is the same answer the Threshold below reached independently for the Seal -- see the _plan on summit_hall. Beaten, sm_carrick is removed AT RUNTIME by the win script and sm_carrick_after is spawned at the east light; the map's hiddenIfFlag / requiresFlag pair takes over from the next load. Doing only the flag leaves the player shut in with a man who is no longer there, because npcVisible is read in loadMap and nowhere else.\n\nAND HE HEALS YOU HIMSELF. Measured: four Masters back to back with nothing put back between them is a ZERO PER CENT clear for a novice at every level from 48 to 51 -- see the shared note on summit_master_control in data/trainers/trainers.json. So every chamber restores the party, and it is the Master who does it rather than a steward, because four people offering the same courtesy in four different voices is four characterisations for the price of nothing. Carrick's version is the bucket by the east wall and the flat statement that beating a tired person would not prove anything.",
+  "_join": "IN: 9,14 <-> summit_ascent 9,1. That owner warps their 9,0 to this map 9,13 and states in their own _plan that the Wind Step is nineteen wide to match this room, so THE WIDTH AND THE DOOR COLUMN ARE A JOIN, not a preference. OUT: 9,0 -> summit_master_control 9,14."
+}

@@ -1,0 +1,110 @@
+{
+  "mapId": "ascent_ruin",
+  "$comment": "THE HIGH WAYSTATION, AND THE RAREST CATCH ON THE ASCENT.\n\nMAELSTRIX, AT TEN PER CENT, IN THE CISTERN. A Tide/Psyche at 510 is one of the four best non-starter Kin in the game and until this act it existed in exactly two places -- data/encounters/temple_deep_ruins.json and temple_deep_tunnels.json, at six and five per cent, inside the dungeon the story climax runs through. A player crossing that dungeon on the way to save the region is not stopping to fish, so for most players the line simply never happened. This is the second chance, it is in the one room on the mountain nobody has to walk through, and it is behind Swim.\n\nWHY IT IS HERE AND NOT SOMEWHERE MORE OBVIOUS. Still, cut, ancient water at eleven thousand feet, filled by the mountain, never once dry, and the room round it is nine hundred years older than Crownspire. Something that has been in it the whole time is a better answer than a slot on a snowfield.\n\nENCOUNTERS ARE THE DRIFT AND THE WATER. The swept Aurelian floor carries none. THE WATER TABLE BELOW IS FOR THE RECORD ONLY -- OverworldScene.tryEncounter rolls the tallGrass table for every walkable encounter tile including deep water, so the cistern draws from the list above it. If the engine ever learns to pick a method by tile tag, this table is already correct.\n\nTHE TOP OF THE BAND WAS SHAVED ONE LEVEL after measurement: at the original max the team-raising player's win rate on the worst roll sat at 73 per cent with one kin in front, and this project has been asked four separate times for an easier game. One level bought six points and cost nothing anybody will ever notice.",
+  "methods": {
+    "tallGrass": {
+      "rate": 135,
+      "slots": [
+        {
+          "species": "deeplum",
+          "minLevel": 46,
+          "maxLevel": 47,
+          "weight": 16
+        },
+        {
+          "species": "brinewisp",
+          "minLevel": 46,
+          "maxLevel": 47,
+          "weight": 16
+        },
+        {
+          "species": "tidewrack",
+          "minLevel": 46,
+          "maxLevel": 47,
+          "weight": 14
+        },
+        {
+          "species": "lantric",
+          "minLevel": 46,
+          "maxLevel": 47,
+          "weight": 12
+        },
+        {
+          "species": "rimehound",
+          "minLevel": 46,
+          "maxLevel": 47,
+          "weight": 12
+        },
+        {
+          "species": "maelstrix",
+          "minLevel": 47,
+          "maxLevel": 48,
+          "weight": 10
+        },
+        {
+          "species": "tallowmoth",
+          "minLevel": 45,
+          "maxLevel": 46,
+          "weight": 10
+        },
+        {
+          "species": "menhir",
+          "minLevel": 47,
+          "maxLevel": 48,
+          "weight": 10
+        }
+      ]
+    },
+    "water": {
+      "rate": 130,
+      "slots": [
+        {
+          "species": "deeplum",
+          "minLevel": 46,
+          "maxLevel": 49,
+          "weight": 30
+        },
+        {
+          "species": "maelstrix",
+          "minLevel": 47,
+          "maxLevel": 49,
+          "weight": 26
+        },
+        {
+          "species": "brinewisp",
+          "minLevel": 46,
+          "maxLevel": 49,
+          "weight": 24
+        },
+        {
+          "species": "tidewrack",
+          "minLevel": 46,
+          "maxLevel": 49,
+          "weight": 20
+        }
+      ]
+    },
+    "fishSuper": {
+      "slots": [
+        {
+          "species": "maelstrix",
+          "minLevel": 47,
+          "maxLevel": 50,
+          "weight": 40
+        },
+        {
+          "species": "tidewrack",
+          "minLevel": 46,
+          "maxLevel": 49,
+          "weight": 35
+        },
+        {
+          "species": "anchorling",
+          "minLevel": 46,
+          "maxLevel": 49,
+          "weight": 25
+        }
+      ]
+    }
+  }
+}

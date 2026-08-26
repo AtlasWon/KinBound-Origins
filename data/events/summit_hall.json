@@ -1,0 +1,186 @@
+[
+  {
+    "id": "sm_registrar",
+    "$comment": "THE CHECK-IN, AND THE ONE PLACE IN THE GAME WHERE SOMEBODY ACTUALLY LOOKS AT THE EIGHT CRESTS. Every Hall handed one over and nothing has ever asked to see them since; the Summit asks, and it asks mechanically rather than ceremonially, because the eight recesses cut into the jambs of the Seal ARE the lock and the door has to see eight once. She takes the case, sets them, the door turns, she takes them out and hands them back. Nobody makes a speech and nobody says well done. It sets summit_admitted, which is the only flag the climb needs before the Seal Keeper will move.\n\nNO `move` ACTIONS IN THIS SCENE ON PURPOSE. She is at 7,9 and the Seal is at 8,1, and walking her there would be eight steps of animation with a chair on one of them. face + wait + a box that says what she did is the pattern the eighth Hall uses and it does not have a failure mode.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "summit_admitted" },
+        "then": [
+          {
+            "kind": "say",
+            "who": "REGISTRAR",
+            "lines": [
+              "You are in the book, {name}. Line four, and the weather column says the same as everybody's.",
+              "The stair is hers now, not mine. She is the one standing in front of it."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "if",
+            "cond": { "kind": "not", "of": { "kind": "hasCrest", "crest": 8 } },
+            "then": [
+              {
+                "kind": "say",
+                "who": "REGISTRAR",
+                "lines": [
+                  "Eight. Not seven and a good reason. The door counts and the door cannot hear reasons.",
+                  "Look at the gallery on your way out. Half of them came up here with seven."
+                ]
+              }
+            ],
+            "else": [
+              {
+                "kind": "say",
+                "who": "REGISTRAR",
+                "lines": [
+                  "Right. Case on the desk, and do not tell me what they are. I would rather find out.",
+                  "This takes about a minute and it is the least interesting minute of your life."
+                ]
+              },
+              { "kind": "face", "who": "sm_registrar", "dir": "up" },
+              { "kind": "wait", "frames": 40 },
+              {
+                "kind": "say",
+                "lines": [
+                  "She sets them into the jambs of the Seal, four a side, in the order they were given.",
+                  "Briarbell at the bottom on the left. Crownspire at the top on the right, and she has to stretch."
+                ]
+              },
+              { "kind": "sfx", "sound": "badge" },
+              { "kind": "wait", "frames": 30 },
+              {
+                "kind": "say",
+                "lines": [
+                  "Something a long way inside the mountain turns over twice and stops.",
+                  "It is not a nice sound. It has not been oiled since 1611 and the Summit likes it that way."
+                ]
+              },
+              { "kind": "face", "who": "sm_registrar", "dir": "down" },
+              {
+                "kind": "say",
+                "who": "REGISTRAR",
+                "lines": [
+                  "There. It has seen them. Take them back - it does not want them, it wanted to count them.",
+                  "That is the whole of it. Nine hundred years and nobody has thought of anything better."
+                ]
+              },
+              { "kind": "setFlag", "flag": "summit_admitted" },
+              { "kind": "setRespawn", "map": "summit_muster", "x": 7, "y": 4 },
+              {
+                "kind": "say",
+                "who": "REGISTRAR",
+                "lines": [
+                  "Name in the book. Date. Weather - I am putting CLEARING, which is optimistic of me.",
+                  "And a blank column at the end, which is the number of the last door you open."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "REGISTRAR",
+                "lines": [
+                  "The Last Room is through the east door and the fire in it is on all year.",
+                  "Eat something. Change your mind about your party twice. Everybody does both."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sm_seal_keeper",
+    "$comment": "THE SEAL, AND THE ONLY WAY UP. There is not a lock in this building: every door in it has a person standing in front of it instead, and she is the first of the six. The slab at 8,1 and 9,1 is solid terrain with no warp on it, so this script IS the door -- and that means the one-way rule needs no flag anywhere. The stair beyond it comes out on the Wind Step, and the Seal on that side is flush rock with no handle: the way back down is the stewards' stair at summit_ascent 2,17, which comes out behind the gallery rail rather than through the Seal. Nothing is flagged and nothing can desync.\n\nTHE ASK IS NOT A FORMALITY. It is the last chance to walk away and the building takes it seriously, so the wording is plain and the 'no' branch is warm rather than disappointed. The warp is the LAST action in the branch: EventRunner.start replaces the stack, so anything after it is discarded.",
+    "trigger": "interact",
+    "actions": [
+      {
+        "kind": "if",
+        "cond": { "kind": "not", "of": { "kind": "flag", "flag": "summit_admitted" } },
+        "then": [
+          {
+            "kind": "say",
+            "who": "SEAL KEEPER",
+            "lines": [
+              "The desk first. I know what you have got - I can see it from here - and the desk first.",
+              "I have stood on this tile for nineteen years and I have never once opened it out of order."
+            ]
+          }
+        ],
+        "else": [
+          {
+            "kind": "if",
+            "cond": { "kind": "not", "of": { "kind": "flag", "flag": "summit_climb_begun" } },
+            "then": [
+              {
+                "kind": "say",
+                "who": "SEAL KEEPER",
+                "lines": [
+                  "Read the slab before you answer me. Everybody thinks it says KEEP OUT and it does not.",
+                  "IT SHUTS SO THAT NOBODY BEHIND YOU HAS TO WATCH."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "SEAL KEEPER",
+                "lines": [
+                  "Your people are on the wrong side of that rail and they are going to stay there.",
+                  "Nobody up those stairs will ever tell them how you looked doing it. That is what it is for."
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "ask",
+            "who": "SEAL KEEPER",
+            "lines": [
+              "Five doors. Every one of them puts your kin back together before it lets you at them -",
+              "they insisted on that centuries ago. It does not open again from that side. Shall I move it?"
+            ],
+            "yes": [
+              {
+                "kind": "say",
+                "who": "SEAL KEEPER",
+                "lines": [
+                  "Right you are."
+                ]
+              },
+              { "kind": "wait", "frames": 20 },
+              {
+                "kind": "say",
+                "lines": [
+                  "She puts one hand flat on a slab of mountain and it goes back into the wall like a drawer.",
+                  "It is hung so well that one person moves it. That is the only clever thing in the building."
+                ]
+              },
+              { "kind": "setFlag", "flag": "summit_climb_begun" },
+              { "kind": "setRespawn", "map": "summit_muster", "x": 7, "y": 4 },
+              { "kind": "sfx", "sound": "door" },
+              { "kind": "fade", "to": "black", "frames": 24 },
+              {
+                "kind": "warp",
+                "map": "summit_ascent",
+                "x": 9,
+                "y": 16,
+                "facing": "up",
+                "style": "stairs"
+              }
+            ],
+            "no": [
+              {
+                "kind": "say",
+                "who": "SEAL KEEPER",
+                "lines": [
+                  "Good. It will be here. It has been here nine hundred years and it is not in a hurry.",
+                  "Go and sit in the Last Room. The kettle is the best thing in this building."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

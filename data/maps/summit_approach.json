@@ -1,0 +1,261 @@
+{
+  "id": "summit_approach",
+  "name": "The Summit Door",
+  "displayName": "THE CAELORA SUMMIT",
+  "music": "route_west",
+  "battleBackdrop": "highland",
+  "indoor": false,
+  "regionPos": {
+    "x": 25,
+    "y": 5
+  },
+  "rows": [
+    "cccccccccccccccccccccccccc",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCĤĦĦĦĦĦĦĦĦĦĦĤCCCCCCC",
+    "CCCCCCCĦĦĦĦĦĎĎĦĦĦĦĦCCCCCCC",
+    "∆∇∇∇∇════════════════∇∇∇∇∆",
+    "∆∇∇∇∇═════Ł════Ł═════∇∇∇∇∆",
+    "⊗∋∇∇√∴══♦════════♦══√∴∇∇∇∇",
+    "⊗∋∇∇∴∴√════════════√∴∴∇∇∇∇",
+    "⊗∋∇√∴∴∴√══Ł════Ł══√∴√√√∇∇∇",
+    "⊗∋∇∴∴√∴∴∴════════√√∴∴∴∴∇∇∇",
+    "⊗∋∴√√∴√√∴════════√√∴√∴∴∴√∇",
+    "⊗∋∴√∴√∴√∴∴═Ł∫∫∫∫Ł∴√√√∴∴∴∴∇",
+    "⊗∋∴∴∴∴∴∴√∴∴∫∫∫∫∫∴√∴√√∴∴∴∴∇",
+    "⊗∋∴∴∴∴∴√√∴√∴∫∫∫∫∴√∴√∴∴∴∴∴∇",
+    "⊗∋∴∴∴∴∴∴∴∴∴Ł∫∫∫∫Ł∴∴∴∴√∴√∴∇",
+    "⊗∋∴∴∴∴∴∴∴Ę∴∴∫∫∫∫∴∴∴∴∴∴∴∴∴∇",
+    "⊗∋∴∴∴∴∴∴∴∴∴∴∫∫∫∫∴∴∴∴∴∴∴√∴∇",
+    "⊗∋∴∴∴∴∴∴∴∴∴Ł∫∫∫∫Ł∴∴∴∴∴∴√∴∇",
+    "⊗∋∴∴√∴∴∴∴∴∴∴∫∫∫∫∴∴∴∴∴∴√∴∴∇",
+    "⊗∋∴∴∴∴∴∴∴∴∴∴∫∫∫∫∴∴∴∴∴∴∴∴∴∇",
+    "⊗∋∴∴∴∴∴∴∴∴∴∴∫∫∫∫∴∴∴∴∴∴∴∴∴∇",
+    "⊗∋∴∴∴∴∴∴∴∴∴∴∫∫∫∫∴∴∴∴∴∴∴∴∴∇",
+    "⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗∫∫∫∫⊗⊗⊗⊗⊗⊗⊗⊗⊗⊗"
+  ],
+  "warps": [
+    {
+      "x": 12,
+      "y": 23,
+      "toMap": "ascent_crown",
+      "toX": 28,
+      "toY": 3,
+      "facing": "down",
+      "style": "edge"
+    },
+    {
+      "x": 13,
+      "y": 23,
+      "toMap": "ascent_crown",
+      "toX": 29,
+      "toY": 3,
+      "facing": "down",
+      "style": "edge"
+    },
+    {
+      "x": 14,
+      "y": 23,
+      "toMap": "ascent_crown",
+      "toX": 29,
+      "toY": 3,
+      "facing": "down",
+      "style": "edge"
+    },
+    {
+      "x": 15,
+      "y": 23,
+      "toMap": "ascent_crown",
+      "toX": 30,
+      "toY": 3,
+      "facing": "down",
+      "style": "edge"
+    },
+    {
+      "x": 12,
+      "y": 4,
+      "toMap": "summit_hall",
+      "toX": 8,
+      "toY": 20,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 13,
+      "y": 4,
+      "toMap": "summit_hall",
+      "toX": 9,
+      "toY": 20,
+      "facing": "up",
+      "style": "door"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "sm_road_ward",
+      "sprite": "hiker",
+      "x": 11,
+      "y": 17,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sm_road_ward"
+    },
+    {
+      "id": "sm_stone_keeper",
+      "sprite": "elder",
+      "x": 10,
+      "y": 13,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sm_stone_keeper"
+    },
+    {
+      "id": "sm_turned_back",
+      "sprite": "villager_m",
+      "x": 18,
+      "y": 14,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sm_turned_back"
+    },
+    {
+      "id": "sm_waiting_sister",
+      "sprite": "villager_f",
+      "x": 17,
+      "y": 8,
+      "facing": "up",
+      "movement": {
+        "kind": "lookAround"
+      },
+      "script": "sm_waiting_sister"
+    },
+    {
+      "id": "sm_porter",
+      "sprite": "porter",
+      "x": 8,
+      "y": 8,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sm_porter"
+    },
+    {
+      "id": "town_tarin",
+      "sprite": "rival",
+      "x": 15,
+      "y": 5,
+      "facing": "left",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "tarin_summit",
+      "requiresFlag": "tarin_summit_won"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 11,
+      "y": 4,
+      "text": [
+        "Cut into the jamb, and it is the only thing written on the outside of this building:",
+        "THIS IS THE DOOR. THERE IS NOT ANOTHER ONE."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 14,
+      "y": 4,
+      "text": [
+        "A slate beside the door, wiped every morning by whoever is on the platform.",
+        "UP TODAY: 3.   DOWN TODAY: 2.",
+        "Nobody rubs out the second number until the day is over."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 6,
+      "y": 4,
+      "text": [
+        "The platform. Swept twice a day in weather that fills it in twice a day.",
+        "Under the snow it is dressed Crownspire granite, and it was carried up this road",
+        "one block at a time by people who were never going to be allowed through the door."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 18,
+      "y": 4,
+      "text": [
+        "There is no tower here, and no banner, and nothing above the lintel but mountain.",
+        "The city put four hundred spires up to be looked at.",
+        "The thing the spires are about has no front at all."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 11,
+      "text": [
+        "THE FIELD, and it is not the Great Cairn. The Cairn is at the gate four miles below,",
+        "and every stone in it was carried up by somebody who was going in.",
+        "This is the other kind. Nobody up here has ever confused the two."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 17,
+      "y": 11,
+      "text": [
+        "Nine hundred years of people who walked four miles up a mountain with somebody",
+        "and then stood on this platform and watched a door shut.",
+        "There are more stones in this field than there are names on the wall in Crownspire."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 11,
+      "y": 18,
+      "text": [
+        "THE HEAD OF THE ASCENT. Four miles up from the Crownspire gate, and the last",
+        "quarter mile of it is this. The rope on your left is not decoration."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 1,
+      "y": 12,
+      "text": [
+        "The rope line, made off on posts sunk into the rock every four yards.",
+        "It goes down the whole four miles. In ninety years it has been replaced eleven times",
+        "and moved not once."
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 20,
+      "y": 19,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_summit_field"
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 4,
+      "y": 9,
+      "item": "full_rouse",
+      "quantity": 1,
+      "flag": "item_summit_scree"
+    }
+  ],
+  "_plan": "THE BUILDING HAS NO FRONT, WHICH IS THE WHOLE PICTURE. There is nowhere on this ridge to stand a house up -- the wind takes it -- so nine hundred years ago they went into the rock instead, and everything the Summit is happens behind twelve tiles of mountain granite with one door in the middle of it. Crownspire below is four hundred spires built to be looked at; the thing the spires are about is a grey wall you could walk past. That inversion is the reason the approach is a wide-open outdoor map with almost nothing built on it: the eye has nothing to land on except the field, the lamps and the door.\n\nTHE CAIRN FIELD SAYS THE ODDS SO THAT NOBODY HAS TO SAY THEM. Everybody who comes up this road sets a stone. The field is painted by a rule rather than laid by hand -- density rises the closer you get to the door -- so the screen at the road head is a scatter and the screen at the platform is a crowd, and a player reads \"most people stop here\" off the ground before a single NPC opens their mouth. A five-column lane is cleared through it from the road to the platform so that the walk is never a maze.\n\nTHE TWO TILES IN FRONT OF THE DOOR ARE THE LAST RIVAL BATTLE, AND NOTHING HERE HAD TO CHANGE FOR IT. Row 4 is solid granite except for the door at 12,4 and 13,4, so 12,5 and 13,5 are the only tiles in Caelora from which the Summit can be entered -- and the rival build put tarin_summit_gate on exactly those two while this map was being drawn. The map was already shaped so that the way in is a doorstep somebody can sit on, and his spawn tile at 15,5 is swept platform with nothing on it.\n\nTHE LAMPS ARE THE ONE UNBROKEN LINE. Frostmere's blue lanterns, in pairs either side of the road, from the head of the Ascent to the platform. A run of them reads as one line rather than as ten lamps, and it is the only thing on this map that is trying to be seen.",
+  "_join": "THE SEAM WITH THE ASCENT, AND THE HALF OF IT THAT IS NOT IN THIS FILE.\nDOWN: summit_approach 12..15,23 -> ascent_crown 28..30,3, the swept stone inside the Summit gate.\nUP, AND I PUT THIS INTO ascent_crown.json MYSELF BECAUSE NOBODY OWNED IT: ascent_crown 28,2 / 29,2 / 30,2 -- the three granite arch tiles in that map's north wall -- warp to summit_approach 13,22 / 14,22 / 14,22, facing up, style edge. IF ascent_crown.json IS REGENERATED THOSE THREE WARPS ARE LOST AND EVERY SUMMIT MAP BECOMES UNREACHABLE. Put them back. They are three lines and they are the whole of what the two builds owe each other.\nTHE STONES ARE DIVIDED ON PURPOSE. The Great Cairn at the gate below belongs to the challengers and is somebody else's map; the field on THIS map belongs to the people who walked four miles up with one of them and stopped at the door. Neither says the same thing as the other."
+}

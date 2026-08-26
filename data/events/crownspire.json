@@ -1,58 +1,97 @@
 [
   {
     "id": "cs_warden",
-    "$comment": "THE ASCENT GATE, AND THE STUB THE PLAYER MUST NOT WALK INTO. Stages 6 to 8 are not built, and the honest way to say so is not an invisible wall: it is a gate that has been open every day for nine hundred years, shut this week, with a warden in front of it who will tell you exactly why and exactly what would change it. Everything he says is true inside Act 5 and stays true when Stage 7 opens the road -- nothing here has to be retracted later.",
+    "$comment": "THE ASCENT GATE, AND THE STUB THE PLAYER MUST NOT WALK INTO. Stages 6 to 8 are not built, and the honest way to say so is not an invisible wall: it is a gate that has been open every day for nine hundred years, shut this week, with a warden in front of it who will tell you exactly why and exactly what would change it. Everything he says is true inside Act 5 and stays true when Stage 7 opens the road -- nothing here has to be retracted later.\n\nWRAPPED BY THE ASCENT BUILD, ADDITIVELY. Everything below the else is the original scene, unchanged: this man is the stub that told the player why Stages 6 to 8 were not there yet, and inside Act 5 he still is. The new branch is what he says once `summit_open` is set and the gate behind him is standing open -- he is a sixth-generation gatekeeper who has just had to shut it for the first time in his family's history, and the beat is him getting to open it again. He does not congratulate the player on saving the region. Nobody on this road does.",
     "trigger": "interact",
     "actions": [
       {
         "kind": "if",
-        "cond": { "kind": "hasCrest", "crest": 8 },
+        "cond": {
+          "kind": "flag",
+          "flag": "summit_open"
+        },
         "then": [
           {
             "kind": "say",
             "who": "GATE WARDEN",
             "lines": [
-              "Eight. Right. I am going to write your name in the book and then I am going to shut it again.",
-              "Not you. The gate. It has been shut for six days and it is going to stay shut."
+              "Six days. Six days shut, and my mother never shut it once in forty years.",
+              "It went back on the hook this morning and I have not stopped looking at it."
             ]
           },
           {
             "kind": "say",
             "who": "GATE WARDEN",
             "lines": [
-              "Four miles of road and half of it is above the snow line. Wind on it like a hand.",
-              "I have put people up that road in bad weather before. I am not doing it in this."
+              "Four miles. Ford at the second fall, and the bridge is still out, so wade it.",
+              "There is a bothy above the cloud. Stop at it. Everyone thinks they will not need to."
             ]
           },
           {
             "kind": "say",
             "who": "GATE WARDEN",
             "lines": [
-              "When it turns, we post it in the yard and the whole city knows in an hour.",
-              "Go and do whatever it is you are actually here for, {name}. This will keep."
+              "My cousin has the gate at the top. Tell her I said the road is clear.",
+              "On you go, {name}. Nobody has ever hurried on this road either."
             ]
           }
         ],
         "else": [
           {
-            "kind": "say",
-            "who": "GATE WARDEN",
-            "lines": [
-              "Shut. Weather. No exceptions, and I have said that eleven hundred times this week.",
-              "Come back with eight and I will still say it, so do not hurry on my account."
-            ]
-          },
-          {
-            "kind": "say",
-            "who": "GATE WARDEN",
-            "lines": [
-              "My mother had this post. Her father had it. Neither of them ever shut it.",
-              "There is a tally board behind you with a nought on it. I had to chalk over the nought."
+            "kind": "if",
+            "cond": {
+              "kind": "hasCrest",
+              "crest": 8
+            },
+            "then": [
+              {
+                "kind": "say",
+                "who": "GATE WARDEN",
+                "lines": [
+                  "Eight. Right. I am going to write your name in the book and then I am going to shut it again.",
+                  "Not you. The gate. It has been shut for six days and it is going to stay shut."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "GATE WARDEN",
+                "lines": [
+                  "Four miles of road and half of it is above the snow line. Wind on it like a hand.",
+                  "I have put people up that road in bad weather before. I am not doing it in this."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "GATE WARDEN",
+                "lines": [
+                  "When it turns, we post it in the yard and the whole city knows in an hour.",
+                  "Go and do whatever it is you are actually here for, {name}. This will keep."
+                ]
+              }
+            ],
+            "else": [
+              {
+                "kind": "say",
+                "who": "GATE WARDEN",
+                "lines": [
+                  "Shut. Weather. No exceptions, and I have said that eleven hundred times this week.",
+                  "Come back with eight and I will still say it, so do not hurry on my account."
+                ]
+              },
+              {
+                "kind": "say",
+                "who": "GATE WARDEN",
+                "lines": [
+                  "My mother had this post. Her father had it. Neither of them ever shut it.",
+                  "There is a tally board behind you with a nought on it. I had to chalk over the nought."
+                ]
+              }
             ]
           }
         ]
       }
-    ]
+    ],
+    "_ascentWrapped": true
   },
   {
     "id": "cs_tarin",
@@ -61,7 +100,10 @@
     "actions": [
       {
         "kind": "if",
-        "cond": { "kind": "flag", "flag": "cs_summit_pact" },
+        "cond": {
+          "kind": "flag",
+          "flag": "cs_summit_pact"
+        },
         "then": [
           {
             "kind": "say",
@@ -75,9 +117,16 @@
         "else": [
           {
             "kind": "if",
-            "cond": { "kind": "hasCrest", "crest": 8 },
+            "cond": {
+              "kind": "hasCrest",
+              "crest": 8
+            },
             "then": [
-              { "kind": "face", "who": "cs_tarin", "dir": "down" },
+              {
+                "kind": "face",
+                "who": "cs_tarin",
+                "dir": "down"
+              },
               {
                 "kind": "say",
                 "who": "TARIN",
@@ -88,7 +137,10 @@
               },
               {
                 "kind": "if",
-                "cond": { "kind": "flag", "flag": "tarin_holds_8" },
+                "cond": {
+                  "kind": "flag",
+                  "flag": "tarin_holds_8"
+                },
                 "then": [
                   {
                     "kind": "say",
@@ -102,7 +154,10 @@
                 "else": [
                   {
                     "kind": "if",
-                    "cond": { "kind": "flag", "flag": "tarin_holds_7" },
+                    "cond": {
+                      "kind": "flag",
+                      "flag": "tarin_holds_7"
+                    },
                     "then": [
                       {
                         "kind": "say",
@@ -126,8 +181,15 @@
                   }
                 ]
               },
-              { "kind": "face", "who": "cs_tarin", "dir": "up" },
-              { "kind": "wait", "frames": 50 },
+              {
+                "kind": "face",
+                "who": "cs_tarin",
+                "dir": "up"
+              },
+              {
+                "kind": "wait",
+                "frames": 50
+              },
               {
                 "kind": "say",
                 "lines": [
@@ -135,7 +197,11 @@
                   "Somewhere above all of it there is a mountain, and today there is only weather where it should be."
                 ]
               },
-              { "kind": "face", "who": "cs_tarin", "dir": "down" },
+              {
+                "kind": "face",
+                "who": "cs_tarin",
+                "dir": "down"
+              },
               {
                 "kind": "say",
                 "who": "TARIN",
@@ -153,7 +219,9 @@
               },
               {
                 "kind": "ask",
-                "lines": ["The same morning. Both of you."],
+                "lines": [
+                  "The same morning. Both of you."
+                ],
                 "yes": [
                   {
                     "kind": "say",
@@ -174,7 +242,10 @@
                   }
                 ]
               },
-              { "kind": "setFlag", "flag": "cs_summit_pact" },
+              {
+                "kind": "setFlag",
+                "flag": "cs_summit_pact"
+              },
               {
                 "kind": "say",
                 "who": "TARIN",
@@ -185,7 +256,10 @@
               },
               {
                 "kind": "if",
-                "cond": { "kind": "flag", "flag": "cs_roll_name" },
+                "cond": {
+                  "kind": "flag",
+                  "flag": "cs_roll_name"
+                },
                 "then": [
                   {
                     "kind": "say",
@@ -201,7 +275,10 @@
             "else": [
               {
                 "kind": "if",
-                "cond": { "kind": "flag", "flag": "cs_tarin_met" },
+                "cond": {
+                  "kind": "flag",
+                  "flag": "cs_tarin_met"
+                },
                 "then": [
                   {
                     "kind": "say",
@@ -213,7 +290,10 @@
                   }
                 ],
                 "else": [
-                  { "kind": "setFlag", "flag": "cs_tarin_met" },
+                  {
+                    "kind": "setFlag",
+                    "flag": "cs_tarin_met"
+                  },
                   {
                     "kind": "say",
                     "who": "TARIN",
@@ -252,5 +332,65 @@
         ]
       }
     ]
+  },
+  {
+    "id": "cs_ascent_gate",
+    "$comment": "THE FOOT OF THE ASCENT, and the join the Ascent build could not make from its own side: Registry.loadScriptsFor only fetches data/events/<mapId>.json, so a trigger on Crownspire's paving has to live in Crownspire's array. Nothing above this line is touched and data/maps/crownspire.json is not touched at all.\n\nWHERE. The four cells of the gate arch at 46-49,4, which are GRANITE_ARCH and already walkable, with solid wall above them -- so before this script the arch was an alcove a player could stand in and nothing else. The warden stands at 47,5 and blocks one of the four approaches, which is correct and does not need changing.\n\nTHE GATE. `summit_open`, set by aftermath_summit in data/events/aureline_summit.json, whose own note says it is the flag Stage 7 should hang the Ascent on. A step script whose `when` fails does nothing at all (EventRunner.start), so through the whole of Act 5 these four cells stay exactly what they were and the warden's tally board keeps its number.\n\nWHERE IT LANDS. data/maps/ascent_road.json, 34-35,54 -- the paved apron on the far side of the same gate, drawn out of Crownspire's own granite and its own arch so that the seam is one gate seen from two sides. The road warps back at its own 34-35,55 to crownspire 48,5 and 49,5, which are open paving; 47,5 is deliberately not used because the warden is standing on it.",
+    "when": {
+      "kind": "flag",
+      "flag": "summit_open"
+    },
+    "trigger": "step",
+    "map": "crownspire",
+    "at": [
+      {
+        "x": 46,
+        "y": 4
+      },
+      {
+        "x": 47,
+        "y": 4
+      },
+      {
+        "x": 48,
+        "y": 4
+      },
+      {
+        "x": 49,
+        "y": 4
+      }
+    ],
+    "actions": [
+      {
+        "kind": "sfx",
+        "sound": "door"
+      },
+      {
+        "kind": "if",
+        "cond": {
+          "kind": "flag",
+          "flag": "ascent_entered"
+        },
+        "then": [],
+        "else": [
+          {
+            "kind": "say",
+            "lines": [
+              "Two leaves of oak in an iron frame, standing open for the first time in six days.",
+              "The plank that was nailed across them is leaning against the wall with the nails still in it."
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "warp",
+        "map": "ascent_road",
+        "x": 34,
+        "y": 54,
+        "facing": "up",
+        "style": "edge"
+      }
+    ],
+    "$comment2": "NO EXPLICIT FADES. EventHost.warp does its own eighteen-frame fade out, load and fade in, and a fade action either side of it is a second fade fighting the first."
   }
 ]

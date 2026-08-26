@@ -1,0 +1,151 @@
+{
+  "id": "summit_ascent",
+  "name": "The Wind Step",
+  "displayName": "THE WIND STEP",
+  "music": "route_west",
+  "battleBackdrop": "highland",
+  "indoor": false,
+  "rows": [
+    "ĦĤĦĦĦĦĦĦĦĎĦĦĦĦĦĦĦĤĦ",
+    "CCCCC═════════CCCCC",
+    "CCCC═══════════CCCC",
+    "CCCC═Ł═══════Ł═CCCC",
+    "CCC∴∴∴∴∴∴∴∴∴∴∴∴∴∋⊗⊗",
+    "CCC∴√∴∴∴∴∴∴∴∴∴∴∴∋⊗⊗",
+    "CCCC∴∴∴∴∴∴∴∴∴∴√C∋⊗⊗",
+    "CCCCCCCC∆∴∆CCCCC∋⊗⊗",
+    "CCCC∴∴∴∴∴∴∴∴∴∴∴C∋⊗⊗",
+    "CCC∴∴√∴∴∴∴∴∴∴∴∴∴∋⊗⊗",
+    "CCC∴∴∴∴∴∴∴∴∴∴√∴∴∋⊗⊗",
+    "CCC∴∴∴√∴∴∴∴∴∴∴∴∴∋⊗⊗",
+    "CCCC∴∴∴∴∴∴∴∴√∴∴C∋⊗⊗",
+    "CCCCCC═══════CCCCCC",
+    "CCCCCC═══════CCCCCC",
+    "CCCCĘC═══════CCCCCC",
+    "CC═══════════CCCCCC",
+    "ĦĦĎĦĦĦĦ█ÅÅ█ĦĦĦĦĦĦĦĦ",
+    "CCCCCCCCCCCCCCCCCCC",
+    "CCCCCCCCCCCCCCCCCCC"
+  ],
+  "warps": [
+    {
+      "x": 9,
+      "y": 0,
+      "toMap": "summit_master_power",
+      "toX": 9,
+      "toY": 13,
+      "facing": "up",
+      "style": "door"
+    },
+    {
+      "x": 2,
+      "y": 17,
+      "toMap": "summit_hall",
+      "toX": 16,
+      "toY": 2,
+      "facing": "down",
+      "style": "stairs"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "sm_stair_steward",
+      "sprite": "porter",
+      "x": 4,
+      "y": 16,
+      "facing": "right",
+      "movement": {
+        "kind": "static"
+      },
+      "script": "sm_stair_steward"
+    }
+  ],
+  "objects": [
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 0,
+      "text": [
+        "The first of the five doors, and the lintel over it has a number cut into it.",
+        "FIVE. They count down as you go up, so that the last one you open says ONE."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 10,
+      "y": 0,
+      "text": [
+        "A bucket of grit by the jamb, a bootscraper, and a card wired over both of them.",
+        "GO IN CLEAN. SOMEBODY LIVES IN THERE."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 7,
+      "y": 17,
+      "text": [
+        "The Seal, from this side. It is flush with the rock and there is no handle on it.",
+        "The sentence cut across the front of it is on the front of it.",
+        "Nobody up here has ever been able to read it and that is not an accident."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 3,
+      "y": 17,
+      "text": [
+        "A low door beside the Seal, with a card wired to the frame in a steward's hand.",
+        "THE STEWARDS' STAIR. NOT LOCKED. NEVER HAS BEEN.",
+        "It comes out behind the rail in the Threshold, which is the whole point of it."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 8,
+      "y": 7,
+      "text": [
+        "THE NARROWS. The notch pinches to one person wide and the rock is polished",
+        "to a shine on both sides at shoulder height.",
+        "Nine hundred years of people going through sideways, and not one of them alone."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 16,
+      "y": 9,
+      "text": [
+        "Caelora, under you, in one look. Sea on three sides of it and cloud on the fourth.",
+        "Hearthmere is in there somewhere and is far too small to find."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 16,
+      "y": 11,
+      "text": [
+        "The rope line ends at this post. It has come four and a half miles up from the city gate.",
+        "There is nothing past it to hold and the wardens have never pretended otherwise."
+      ]
+    },
+    {
+      "kind": "sign",
+      "x": 5,
+      "y": 9,
+      "text": [
+        "Stones on the shelf, a few dozen, and they are the third heap on this mountain.",
+        "The Great Cairn at the gate is everybody who set out. The field at the platform",
+        "is the people who came up with them. These were set here, in the last of the open air."
+      ]
+    },
+    {
+      "kind": "hiddenItem",
+      "x": 14,
+      "y": 4,
+      "item": "full_restore",
+      "quantity": 1,
+      "flag": "item_summit_windstep"
+    }
+  ],
+  "_plan": "THE STAIR OUT OF THE SEAL DOES NOT GO UP INSIDE THE ROCK. It comes out on a notch cut clean through the ridge, in the open, with the whole region under it, and the first Master's door is on the far side of it. That gives the Summit its shape: a cold hall, a warm room, a slab that shuts, one minute of sky, and then five doors and no more weather. Nineteen wide to match the Masters' rooms above it, so the granite front at the top of this map and the granite wall of the room behind it are the same wall.\n\nTHE NARROWS AT 9,7 IS THE WHOLE GEOMETRY. One walkable tile with rock either side, and every player who goes up crosses it. Anything standing in column 9 above it meets every player without exception, without a script and without a gate -- which is how this build has handled every door in the Summit, because there is not a lock anywhere in the place.\n\nIT HEALS AND IT SETS THE RESPAWN -- see data/events/summit_ascent.json. The player has asked four times for an easier game and this is the last tile before four Summit Masters and a Champion. A loss up there wakes here, one door below the first of them, rather than four miles down a mountain.\n\nTHE STONES ARE THE THIRD HEAP AND THE SMALLEST. The Great Cairn at the city gate is everybody who ever set out; the field at the Summit platform belongs to the people who walked four miles up with one of them and stopped at the door; these two dozen were set by challengers up here, in the last minute of open air. Three heaps, three meanings, and nobody in Caelora has ever mixed them up.",
+  "_join": "THIS MAP EXISTS BECAUSE summit_master_power.json WARPS DOWN TO \"summit_ascent\" 9,1 AND NOTHING WAS PROVIDING IT.\nUP: summit_ascent 9,0 -> summit_master_power 9,13, style door. DOWN, from their side: summit_master_power 9,14 -> summit_ascent 9,1, already written, and 9,1 here is swept stone.\nOUT OF THE CLIMB: summit_ascent 2,17 -> summit_hall 16,2, the head of the stewards' stair behind the gallery rail, style stairs so it needs no return warp. The Seal at 8,17 and 9,17 is solid, carries no warp, and is not the way back. That is deliberate and the whole Threshold is built around it.\nIN, FROM THE THRESHOLD: there is no map warp at all. The Seal Keeper at summit_hall 8,2 warps the player to 9,16 -- see sm_seal_keeper in data/events/summit_hall.json. She is the door, the same way every Master is the door of their own room.\nTHE NARROWS AT 9,7 IS EMPTY AND IS OFFERED. Tarin's last battle went to the two tiles below the Summit door on summit_approach -- tarin_summit_gate in data/events/common.json -- which is a better place for it than this one and needed nothing from this build. What 9,7 is still good for is a single person standing in column 9 above it: one walkable tile with rock either side, so a downward sight range from 9,6 or 9,5 meets every player who ever goes up, with no flag and no script. If nobody wants it, it is a nice place to be alone in for eight tiles, which is also what it is for."
+}

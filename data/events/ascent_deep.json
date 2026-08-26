@@ -1,0 +1,147 @@
+[
+  {
+    "id": "asd_arrive",
+    "$comment": "One box, once, on the first entry. The Throat is the only map on the Ascent a player can walk into without understanding why they are in it -- the road outside simply stops -- so this says the one thing the map needs and then never says anything again.",
+    "trigger": "enter",
+    "onceFlag": "asd_seen",
+    "map": "ascent_deep",
+    "actions": [
+      { "kind": "sfx", "sound": "fx_wind" },
+      {
+        "kind": "say",
+        "lines": [
+          "The wind stops at the entrance, all at once, like a door shutting.",
+          "Somewhere a long way in, water is moving."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "asd_gate_open",
+    "$comment": "THE SHOULDER GATE, AND IT IS THE MAIN LINE. Three Aurelian sockets in the floor at 26,16 / 30,16 / 34,16 and three fallen stones in the chamber below them; OverworldScene.updatePlates publishes the count as the story variable `ascent_deep_plates`, which is what this reads. Same pattern as msd_plate / msd_shutter in data/events/mirehaven_sanctum_deep.json, and it is the pattern because the engine has no flag-gated terrain -- a door that opens is a step trigger on the tiles in front of it and a warp past the wall.\n\nWHY A HARD GATE IS HONEST HERE. Shoulder is earned at the second Hall. Every art in the game is in the player's hands by the time the Ascent opens, and canon asks for a mountain that genuinely cannot be climbed by somebody who skipped things. This and the lamp stair are the two places that is true, and they are both on this map.\n\nRETURNING is asd_gate_back below, on the two cells on the far side. The plates hold -- boulders are rebuilt at their start positions on every map load (rebuildObstacles), so the count resets, and the door is shut again next time. That is deliberate: it is a puzzle, not a switch, and it takes about forty seconds the second time.",
+    "when": { "kind": "var", "var": "ascent_deep_plates", "op": ">=", "value": 3 },
+    "trigger": "step",
+    "map": "ascent_deep",
+    "at": [
+      { "x": 31, "y": 16 },
+      { "x": 32, "y": 16 }
+    ],
+    "actions": [
+      { "kind": "sfx", "sound": "badge" },
+      { "kind": "shake", "frames": 20, "power": 2 },
+      {
+        "kind": "say",
+        "lines": [
+          "The three stones settle into the three sockets and something very large gives way.",
+          "Nine hundred years of dust comes off the wall in one sheet."
+        ]
+      },
+      { "kind": "warp", "map": "ascent_deep", "x": 31, "y": 13, "facing": "up", "style": "warp" }
+    ],
+    "$comment2": "NO EXPLICIT FADES. EventHost.warp does its own eighteen-frame fade out, load and fade in; a fade action either side of it is a second fade fighting the first."
+  },
+  {
+    "id": "asd_gate_shut",
+    "$comment": "The same two tiles with the sockets empty. Listed AFTER the open version, because checkStepScripts walks the registry in insertion order and runs the first script whose `when` passes -- so the order of these two in this array is load-bearing.",
+    "when": { "kind": "var", "var": "ascent_deep_plates", "op": "<", "value": 3 },
+    "trigger": "step",
+    "map": "ascent_deep",
+    "at": [
+      { "x": 31, "y": 16 },
+      { "x": 32, "y": 16 }
+    ],
+    "actions": [
+      {
+        "kind": "say",
+        "lines": [
+          "A wall of cut stone, and three empty sockets in the floor behind you.",
+          "The stones that belong in them are lying where the roof dropped them."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "asd_gate_back",
+    "$comment": "The way back down through the door. It is on the row BELOW the cell the gate sets you down on: loadMap marks the arrival cell as already-entered, so a trigger placed there never fires at all.",
+    "trigger": "step",
+    "map": "ascent_deep",
+    "at": [
+      { "x": 31, "y": 14 },
+      { "x": 32, "y": 14 }
+    ],
+    "actions": [
+      { "kind": "warp", "map": "ascent_deep", "x": 31, "y": 17, "facing": "down", "style": "warp" }
+    ]
+  },
+  {
+    "id": "asd_lamps",
+    "$comment": "THE STAIR OF LAMPS, AND THE ONLY USE KINDLE HAS ANYWHERE IN CAELORA. The art is granted at the fourth Hall (data/events/emberfall_hall_flues.json) and until this cell nothing in the game had ever asked for it in the field. It gets its one and only field gate on the last climb, in the dark, in the middle of the mountain, which is worth more than four small ones would have been.\n\nWHY IT IS A WARP AND NOT A DOOR. The flight is cut through a thousand feet of rock: it is drawn as a landing at the bottom and a head at the top with the mountain between them, because that is what a stair through rock looks like from above. Route 8 and Route 9 do the same thing with Updraft. The `when` is the whole gate -- a script whose `when` fails does nothing at all, so without Kindle these tiles are ordinary floor and asd_lamps_dark below is what the player gets.",
+    "when": { "kind": "hasArt", "art": "kindle" },
+    "trigger": "step",
+    "map": "ascent_deep",
+    "at": [
+      { "x": 44, "y": 10 },
+      { "x": 45, "y": 10 },
+      { "x": 46, "y": 10 }
+    ],
+    "actions": [
+      { "kind": "sfx", "sound": "fx_fire" },
+      {
+        "kind": "if",
+        "cond": { "kind": "flag", "flag": "asd_lamps_lit" },
+        "then": [
+          {
+            "kind": "say",
+            "lines": ["The flight is still burning. Nobody has been up it since you were."]
+          }
+        ],
+        "else": [
+          {
+            "kind": "say",
+            "lines": [
+              "The first lamp takes. So does the second, from the first, without being asked.",
+              "It goes all the way up the flight ahead of you, faster than anybody could climb it."
+            ]
+          },
+          { "kind": "setFlag", "flag": "asd_lamps_lit" }
+        ]
+      },
+      { "kind": "warp", "map": "ascent_deep", "x": 45, "y": 5, "facing": "up", "style": "warp" }
+    ]
+  },
+  {
+    "id": "asd_lamps_dark",
+    "$comment": "The same three cells without the art. It has to be listed after asd_lamps, and it has to say what would fix it without naming a Hall -- the player has had Kindle since Emberfall and this is a reminder, not a tutorial.",
+    "when": { "kind": "not", "of": { "kind": "hasArt", "art": "kindle" } },
+    "trigger": "step",
+    "map": "ascent_deep",
+    "at": [
+      { "x": 44, "y": 10 },
+      { "x": 45, "y": 10 },
+      { "x": 46, "y": 10 }
+    ],
+    "actions": [
+      {
+        "kind": "say",
+        "lines": [
+          "Four steps up, the flight stops being a flight and becomes a black shape going away.",
+          "There are lamps on both walls. Something could light one."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "asd_lamps_down",
+    "$comment": "The head of the flight. Placed on the whole bottom row of the head chamber rather than on one cell, because a player standing at the top who wants to go back down should not have to find a tile.",
+    "trigger": "step",
+    "map": "ascent_deep",
+    "at": [
+      { "x": 44, "y": 6 },
+      { "x": 45, "y": 6 },
+      { "x": 46, "y": 6 }
+    ],
+    "actions": [
+      { "kind": "warp", "map": "ascent_deep", "x": 45, "y": 11, "facing": "down", "style": "warp" }
+    ]
+  }
+]

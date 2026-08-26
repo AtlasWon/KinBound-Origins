@@ -1756,6 +1756,369 @@
     ]
   },
   {
+    "id": "tarin_summit_sprigling",
+    "$comment": "THE LAST RIVAL BATTLE. Canon: he challenges the player before they enter the highest level of the Summit, with six Kin, a fully evolved starter, a strong strategic team and high-level AI, and it should be one of the most memorable battles in the game. The scene is `tarin_summit` in data/events/common.json and it is reached by the step trigger `tarin_summit_gate` on summit_approach 12,5 and 13,5, which are the only two tiles that door can be entered from.\n\nIT IS NOT OPTIONAL AND LOSING IS NOT A FAILURE. Canon: whether the player wins or loses both go on supporting each other, and the battle decides who enters the championship challenge FIRST. So onLoss is \"continue\" and the scene branches on last_battle_won into two versions of the same ending -- you go through the door tonight, or he does and holds it for you tomorrow. That is the difficulty valve and it is why this fight can be cut harder than any gate in the game: a player who loses still goes up, second, with a rematch standing on the step for as long as they want it.\n\nTHE SIX ARE HIS JOURNEY AND THE PLAYER HAS BEEN HEARING ABOUT THEM SINCE ACT 1. Bristlebuck is the Tuftail off Route 1, the first thing he ever caught, and it leads, as it has since the day he caught it. Mossback is the rare catch out of the ruin wood on Route 2 -- the one the ledger has had strangers gossiping about since the `ruinwood` beat -- and it is the weakest Kin on the field at the last fight of his life and he brought it anyway. Tidewrack is the Shalefin he went down the Tideglass deep lane for in Act 2. Blazelynx is Emberfall, Act 3. Galecrest is the four-percent slot on the Windward Headland, which is what three days on the dock bridges in the wind got him. The ace is the starter Sorrell gave him, fully evolved. Keyed by the species HE leads with, per docs/TARIN.md, never by the player's -- so tarin_summit_sprigling fields a Thornmarch and is the team a CINDERPAW player meets.\n\nTHERE IS NOTHING FROM ACT 4 ON THIS TEAM AND THAT IS THE POINT. The ledger in src/systems/tarin.ts holds his Crest count flat for the whole of Act 4 on purpose: he was in a records office in the largest city in Caelora while a Summit qualifier ran round him. A team with an Aureline Kin on it would say the opposite. VOLTWICK IS THE CASUALTY OF THAT AND IT WAS ALSO THE BALANCE FIX. It was the Fizzlet off the central road in the Frostmere team, and measured, Spark at 104 Speed with Thunderhead is two-times into Tide: it alone dragged the Rilltail branch to 47 percent while the other two read in the eighties. Dropping it closed the three branches to within ten points. A strong strategic team would not run two Spark Kin side by side anyway.\n\nFLAT-ZERO IVs ON ALL FIVE BENCH KIN. Vane's lever, used exactly as the Frostmere team uses it: the team can then READ as a real one on screen -- 43, 44, 45, 45, 46 behind a 49 ace -- instead of being cut four levels lower to hit the same numbers. The ace keeps rolled IVs.\n\nHAND-WRITTEN MOVESETS ON ALL SIX, AND ONE RULE DECIDED THEM. Bristlebuck learns Recover at 30, Mossback at 41 and Thornmarch at 46, and a self-healing wall in front of a novice player is a stall and not a fight -- the Frostmere finding, three Kin worse. Left on defaults, every one of these six would also field two status moves out of four. The three aces are given deliberately symmetrical sets, a 90 and a 75-80 and a 65-70, all STAB or near it, so the branches are not separated by whose starter happened to learn a 120 at 48; Volcatrix specifically does not get Pyre Dive for that reason.\n\nMEASURED at the level the road is assumed to deliver, novice play, no bag items, six on six against an ordinary road bench two levels down (Rimehound, Craglide, Tidewrack, Currentail, Chalkmar), 400 runs per cell (sprigling / cinderpaw / rilltail): L46 55/52/50, L47 72/73/58, L48 80/78/70, L49 84/86/71, L50 92/95/81. The winner keeps 26-43 percent of their party HP and finishes with two or three of six standing, which is where the difficulty actually lives. Veteran play at L48: 95/92/69. Four Kin instead of six at L48: 62/21/36 -- this fight punishes a short party harder than anything before it, which is what the free heal and the two Full Restores in the scene are for. Lone starter at the solo-lead level: L60 59/33/81, L62 73/36/90.\n\nTHE PARTY MATTERS MORE HERE THAN THE LEVEL DOES, and that is a feature reported rather than tuned away. On a party carrying no Tide Kin at all the same fight at L48 reads 55/64/35, because Blazelynx walls a dry party and Mossback is Stone. A player who has caught anything out of the sea in a game about the sea does not meet that number; it is the floor, and it is the floor the rematch exists for.\n\nIT IS HARDER THAN ANYTHING THE PLAYER HAS BEATEN. Through this same harness the Frostmere rival reads 79/85/88 and Commander Kell, the hardest villain battle in the story, reads 95/93/94. THE CHAMPION MUST STILL READ BELOW THIS ONE: canon puts the Champion at the top and this fight is the step under it, so whoever cuts the Champion should be aiming at roughly 60-70 percent novice on the same measurement, and the four Masters somewhere between.\n\nTHE BAND IS THE ASSUMPTION MOST LIKELY TO GO STALE AND IT IS SOMEBODY ELSE'S ROAD. simulate.mjs's progression table stops at The Operation, where the team-raiser leaves at 46; the Ascent is assumed to pay about what Route 10 pays and to put the player at the Summit door near 48. If it lands heavier or lighter, MOVE ALL SIX LEVELS TOGETHER -- that is the only lever, and it is the one that keeps the three branches level with each other.",
+    "name": "Tarin",
+    "className": "Rival",
+    "sprite": "rival",
+    "ai": "keeper",
+    "payout": 500,
+    "party": [
+      {
+        "species": "bristlebuck",
+        "level": 44,
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        },
+        "moves": [
+          "bull_rush",
+          "thornrake",
+          "batter"
+        ]
+      },
+      {
+        "species": "mossback",
+        "level": 43,
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        },
+        "moves": [
+          "quarryfall",
+          "thornrake",
+          "rootdrink"
+        ]
+      },
+      {
+        "species": "tidewrack",
+        "level": 45,
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        },
+        "moves": [
+          "quarryfall",
+          "breakwater",
+          "shale_edge"
+        ]
+      },
+      {
+        "species": "blazelynx",
+        "level": 45,
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        },
+        "moves": [
+          "pyre_dive",
+          "kilnburst",
+          "heat_haze"
+        ]
+      },
+      {
+        "species": "galecrest",
+        "level": 46,
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        },
+        "moves": [
+          "stoop",
+          "thunderhead",
+          "skylift"
+        ]
+      },
+      {
+        "species": "thornmarch",
+        "level": 49,
+        "moves": [
+          "bloomburst",
+          "shale_edge",
+          "thornrake"
+        ]
+      }
+    ],
+    "intro": [
+      "Four hundred people in Hearthmere and two of us are standing on this step.",
+      "So not politely. Not this one."
+    ],
+    "defeat": [
+      "Right. Right, then.",
+      "You go up first. I want to be able to say I watched you do it."
+    ],
+    "victory": [
+      "I won. I have wanted that since I was nine and it stopped mattering in about four seconds.",
+      "Get them seen to. I am going up first and I am going to be unbearable about the order."
+    ],
+    "afterward": [
+      "Everything I am, I got by chasing somebody out of my own village.",
+      "Repeat that and I will say you made it up, and people will believe me."
+    ]
+  },
+  {
+    "id": "tarin_summit_cinderpaw",
+    "$comment": "THE LAST RIVAL BATTLE. Canon: he challenges the player before they enter the highest level of the Summit, with six Kin, a fully evolved starter, a strong strategic team and high-level AI, and it should be one of the most memorable battles in the game. The scene is `tarin_summit` in data/events/common.json and it is reached by the step trigger `tarin_summit_gate` on summit_approach 12,5 and 13,5, which are the only two tiles that door can be entered from.\n\nIT IS NOT OPTIONAL AND LOSING IS NOT A FAILURE. Canon: whether the player wins or loses both go on supporting each other, and the battle decides who enters the championship challenge FIRST. So onLoss is \"continue\" and the scene branches on last_battle_won into two versions of the same ending -- you go through the door tonight, or he does and holds it for you tomorrow. That is the difficulty valve and it is why this fight can be cut harder than any gate in the game: a player who loses still goes up, second, with a rematch standing on the step for as long as they want it.\n\nTHE SIX ARE HIS JOURNEY AND THE PLAYER HAS BEEN HEARING ABOUT THEM SINCE ACT 1. Bristlebuck is the Tuftail off Route 1, the first thing he ever caught, and it leads, as it has since the day he caught it. Mossback is the rare catch out of the ruin wood on Route 2 -- the one the ledger has had strangers gossiping about since the `ruinwood` beat -- and it is the weakest Kin on the field at the last fight of his life and he brought it anyway. Tidewrack is the Shalefin he went down the Tideglass deep lane for in Act 2. Blazelynx is Emberfall, Act 3. Galecrest is the four-percent slot on the Windward Headland, which is what three days on the dock bridges in the wind got him. The ace is the starter Sorrell gave him, fully evolved. Keyed by the species HE leads with, per docs/TARIN.md, never by the player's -- so tarin_summit_sprigling fields a Thornmarch and is the team a CINDERPAW player meets.\n\nTHERE IS NOTHING FROM ACT 4 ON THIS TEAM AND THAT IS THE POINT. The ledger in src/systems/tarin.ts holds his Crest count flat for the whole of Act 4 on purpose: he was in a records office in the largest city in Caelora while a Summit qualifier ran round him. A team with an Aureline Kin on it would say the opposite. VOLTWICK IS THE CASUALTY OF THAT AND IT WAS ALSO THE BALANCE FIX. It was the Fizzlet off the central road in the Frostmere team, and measured, Spark at 104 Speed with Thunderhead is two-times into Tide: it alone dragged the Rilltail branch to 47 percent while the other two read in the eighties. Dropping it closed the three branches to within ten points. A strong strategic team would not run two Spark Kin side by side anyway.\n\nFLAT-ZERO IVs ON ALL FIVE BENCH KIN. Vane's lever, used exactly as the Frostmere team uses it: the team can then READ as a real one on screen -- 43, 44, 45, 45, 46 behind a 49 ace -- instead of being cut four levels lower to hit the same numbers. The ace keeps rolled IVs.\n\nHAND-WRITTEN MOVESETS ON ALL SIX, AND ONE RULE DECIDED THEM. Bristlebuck learns Recover at 30, Mossback at 41 and Thornmarch at 46, and a self-healing wall in front of a novice player is a stall and not a fight -- the Frostmere finding, three Kin worse. Left on defaults, every one of these six would also field two status moves out of four. The three aces are given deliberately symmetrical sets, a 90 and a 75-80 and a 65-70, all STAB or near it, so the branches are not separated by whose starter happened to learn a 120 at 48; Volcatrix specifically does not get Pyre Dive for that reason.\n\nMEASURED at the level the road is assumed to deliver, novice play, no bag items, six on six against an ordinary road bench two levels down (Rimehound, Craglide, Tidewrack, Currentail, Chalkmar), 400 runs per cell (sprigling / cinderpaw / rilltail): L46 55/52/50, L47 72/73/58, L48 80/78/70, L49 84/86/71, L50 92/95/81. The winner keeps 26-43 percent of their party HP and finishes with two or three of six standing, which is where the difficulty actually lives. Veteran play at L48: 95/92/69. Four Kin instead of six at L48: 62/21/36 -- this fight punishes a short party harder than anything before it, which is what the free heal and the two Full Restores in the scene are for. Lone starter at the solo-lead level: L60 59/33/81, L62 73/36/90.\n\nTHE PARTY MATTERS MORE HERE THAN THE LEVEL DOES, and that is a feature reported rather than tuned away. On a party carrying no Tide Kin at all the same fight at L48 reads 55/64/35, because Blazelynx walls a dry party and Mossback is Stone. A player who has caught anything out of the sea in a game about the sea does not meet that number; it is the floor, and it is the floor the rematch exists for.\n\nIT IS HARDER THAN ANYTHING THE PLAYER HAS BEATEN. Through this same harness the Frostmere rival reads 79/85/88 and Commander Kell, the hardest villain battle in the story, reads 95/93/94. THE CHAMPION MUST STILL READ BELOW THIS ONE: canon puts the Champion at the top and this fight is the step under it, so whoever cuts the Champion should be aiming at roughly 60-70 percent novice on the same measurement, and the four Masters somewhere between.\n\nTHE BAND IS THE ASSUMPTION MOST LIKELY TO GO STALE AND IT IS SOMEBODY ELSE'S ROAD. simulate.mjs's progression table stops at The Operation, where the team-raiser leaves at 46; the Ascent is assumed to pay about what Route 10 pays and to put the player at the Summit door near 48. If it lands heavier or lighter, MOVE ALL SIX LEVELS TOGETHER -- that is the only lever, and it is the one that keeps the three branches level with each other.",
+    "name": "Tarin",
+    "className": "Rival",
+    "sprite": "rival",
+    "ai": "keeper",
+    "payout": 500,
+    "party": [
+      {
+        "species": "bristlebuck",
+        "level": 44,
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        },
+        "moves": [
+          "bull_rush",
+          "thornrake",
+          "batter"
+        ]
+      },
+      {
+        "species": "mossback",
+        "level": 43,
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        },
+        "moves": [
+          "quarryfall",
+          "thornrake",
+          "rootdrink"
+        ]
+      },
+      {
+        "species": "tidewrack",
+        "level": 45,
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        },
+        "moves": [
+          "quarryfall",
+          "breakwater",
+          "shale_edge"
+        ]
+      },
+      {
+        "species": "blazelynx",
+        "level": 45,
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        },
+        "moves": [
+          "pyre_dive",
+          "kilnburst",
+          "heat_haze"
+        ]
+      },
+      {
+        "species": "galecrest",
+        "level": 46,
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        },
+        "moves": [
+          "stoop",
+          "thunderhead",
+          "skylift"
+        ]
+      },
+      {
+        "species": "volcatrix",
+        "level": 49,
+        "moves": [
+          "kilnburst",
+          "ribcracker",
+          "cinderlash"
+        ]
+      }
+    ],
+    "intro": [
+      "Four hundred people in Hearthmere and two of us are standing on this step.",
+      "So not politely. Not this one."
+    ],
+    "defeat": [
+      "Right. Right, then.",
+      "You go up first. I want to be able to say I watched you do it."
+    ],
+    "victory": [
+      "I won. I have wanted that since I was nine and it stopped mattering in about four seconds.",
+      "Get them seen to. I am going up first and I am going to be unbearable about the order."
+    ],
+    "afterward": [
+      "Everything I am, I got by chasing somebody out of my own village.",
+      "Repeat that and I will say you made it up, and people will believe me."
+    ]
+  },
+  {
+    "id": "tarin_summit_rilltail",
+    "$comment": "THE LAST RIVAL BATTLE. Canon: he challenges the player before they enter the highest level of the Summit, with six Kin, a fully evolved starter, a strong strategic team and high-level AI, and it should be one of the most memorable battles in the game. The scene is `tarin_summit` in data/events/common.json and it is reached by the step trigger `tarin_summit_gate` on summit_approach 12,5 and 13,5, which are the only two tiles that door can be entered from.\n\nIT IS NOT OPTIONAL AND LOSING IS NOT A FAILURE. Canon: whether the player wins or loses both go on supporting each other, and the battle decides who enters the championship challenge FIRST. So onLoss is \"continue\" and the scene branches on last_battle_won into two versions of the same ending -- you go through the door tonight, or he does and holds it for you tomorrow. That is the difficulty valve and it is why this fight can be cut harder than any gate in the game: a player who loses still goes up, second, with a rematch standing on the step for as long as they want it.\n\nTHE SIX ARE HIS JOURNEY AND THE PLAYER HAS BEEN HEARING ABOUT THEM SINCE ACT 1. Bristlebuck is the Tuftail off Route 1, the first thing he ever caught, and it leads, as it has since the day he caught it. Mossback is the rare catch out of the ruin wood on Route 2 -- the one the ledger has had strangers gossiping about since the `ruinwood` beat -- and it is the weakest Kin on the field at the last fight of his life and he brought it anyway. Tidewrack is the Shalefin he went down the Tideglass deep lane for in Act 2. Blazelynx is Emberfall, Act 3. Galecrest is the four-percent slot on the Windward Headland, which is what three days on the dock bridges in the wind got him. The ace is the starter Sorrell gave him, fully evolved. Keyed by the species HE leads with, per docs/TARIN.md, never by the player's -- so tarin_summit_sprigling fields a Thornmarch and is the team a CINDERPAW player meets.\n\nTHERE IS NOTHING FROM ACT 4 ON THIS TEAM AND THAT IS THE POINT. The ledger in src/systems/tarin.ts holds his Crest count flat for the whole of Act 4 on purpose: he was in a records office in the largest city in Caelora while a Summit qualifier ran round him. A team with an Aureline Kin on it would say the opposite. VOLTWICK IS THE CASUALTY OF THAT AND IT WAS ALSO THE BALANCE FIX. It was the Fizzlet off the central road in the Frostmere team, and measured, Spark at 104 Speed with Thunderhead is two-times into Tide: it alone dragged the Rilltail branch to 47 percent while the other two read in the eighties. Dropping it closed the three branches to within ten points. A strong strategic team would not run two Spark Kin side by side anyway.\n\nFLAT-ZERO IVs ON ALL FIVE BENCH KIN. Vane's lever, used exactly as the Frostmere team uses it: the team can then READ as a real one on screen -- 43, 44, 45, 45, 46 behind a 49 ace -- instead of being cut four levels lower to hit the same numbers. The ace keeps rolled IVs.\n\nHAND-WRITTEN MOVESETS ON ALL SIX, AND ONE RULE DECIDED THEM. Bristlebuck learns Recover at 30, Mossback at 41 and Thornmarch at 46, and a self-healing wall in front of a novice player is a stall and not a fight -- the Frostmere finding, three Kin worse. Left on defaults, every one of these six would also field two status moves out of four. The three aces are given deliberately symmetrical sets, a 90 and a 75-80 and a 65-70, all STAB or near it, so the branches are not separated by whose starter happened to learn a 120 at 48; Volcatrix specifically does not get Pyre Dive for that reason.\n\nMEASURED at the level the road is assumed to deliver, novice play, no bag items, six on six against an ordinary road bench two levels down (Rimehound, Craglide, Tidewrack, Currentail, Chalkmar), 400 runs per cell (sprigling / cinderpaw / rilltail): L46 55/52/50, L47 72/73/58, L48 80/78/70, L49 84/86/71, L50 92/95/81. The winner keeps 26-43 percent of their party HP and finishes with two or three of six standing, which is where the difficulty actually lives. Veteran play at L48: 95/92/69. Four Kin instead of six at L48: 62/21/36 -- this fight punishes a short party harder than anything before it, which is what the free heal and the two Full Restores in the scene are for. Lone starter at the solo-lead level: L60 59/33/81, L62 73/36/90.\n\nTHE PARTY MATTERS MORE HERE THAN THE LEVEL DOES, and that is a feature reported rather than tuned away. On a party carrying no Tide Kin at all the same fight at L48 reads 55/64/35, because Blazelynx walls a dry party and Mossback is Stone. A player who has caught anything out of the sea in a game about the sea does not meet that number; it is the floor, and it is the floor the rematch exists for.\n\nIT IS HARDER THAN ANYTHING THE PLAYER HAS BEATEN. Through this same harness the Frostmere rival reads 79/85/88 and Commander Kell, the hardest villain battle in the story, reads 95/93/94. THE CHAMPION MUST STILL READ BELOW THIS ONE: canon puts the Champion at the top and this fight is the step under it, so whoever cuts the Champion should be aiming at roughly 60-70 percent novice on the same measurement, and the four Masters somewhere between.\n\nTHE BAND IS THE ASSUMPTION MOST LIKELY TO GO STALE AND IT IS SOMEBODY ELSE'S ROAD. simulate.mjs's progression table stops at The Operation, where the team-raiser leaves at 46; the Ascent is assumed to pay about what Route 10 pays and to put the player at the Summit door near 48. If it lands heavier or lighter, MOVE ALL SIX LEVELS TOGETHER -- that is the only lever, and it is the one that keeps the three branches level with each other.",
+    "name": "Tarin",
+    "className": "Rival",
+    "sprite": "rival",
+    "ai": "keeper",
+    "payout": 500,
+    "party": [
+      {
+        "species": "bristlebuck",
+        "level": 44,
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        },
+        "moves": [
+          "bull_rush",
+          "thornrake",
+          "batter"
+        ]
+      },
+      {
+        "species": "mossback",
+        "level": 43,
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        },
+        "moves": [
+          "quarryfall",
+          "thornrake",
+          "rootdrink"
+        ]
+      },
+      {
+        "species": "tidewrack",
+        "level": 45,
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        },
+        "moves": [
+          "quarryfall",
+          "breakwater",
+          "shale_edge"
+        ]
+      },
+      {
+        "species": "blazelynx",
+        "level": 45,
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        },
+        "moves": [
+          "pyre_dive",
+          "kilnburst",
+          "heat_haze"
+        ]
+      },
+      {
+        "species": "galecrest",
+        "level": 46,
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        },
+        "moves": [
+          "stoop",
+          "thunderhead",
+          "skylift"
+        ]
+      },
+      {
+        "species": "maelstrix",
+        "level": 49,
+        "moves": [
+          "breakwater",
+          "thoughtwave",
+          "undertow"
+        ]
+      }
+    ],
+    "intro": [
+      "Four hundred people in Hearthmere and two of us are standing on this step.",
+      "So not politely. Not this one."
+    ],
+    "defeat": [
+      "Right. Right, then.",
+      "You go up first. I want to be able to say I watched you do it."
+    ],
+    "victory": [
+      "I won. I have wanted that since I was nine and it stopped mattering in about four seconds.",
+      "Get them seen to. I am going up first and I am going to be unbearable about the order."
+    ],
+    "afterward": [
+      "Everything I am, I got by chasing somebody out of my own village.",
+      "Repeat that and I will say you made it up, and people will believe me."
+    ]
+  },
+  {
     "id": "tg_hand_a",
     "$comment": "Hall 3, the apron: two small kin off the steps, the fight that exists to be won while the player is still dry. She stands at 13,19 watching row 19 across x9-12, and 9,19 and 10,19 are the only apron tiles that touch the south lane mouth, so she is unavoidable without standing in anybody's way. Measured, novice play, no items, 400 runs: lone starter at the solo-lead level 100/100/100, matched party at the team-raiser level 100/100/100.",
     "name": "Ollen",
@@ -5389,6 +5752,1322 @@
     "afterward": [
       "North bay is Veyl's. He has been in there since Tuesday and he has not eaten.",
       "Go on then. I have run out of ways to be a person who did not."
+    ]
+  },
+  {
+    "id": "summit_master_power",
+    "$comment": "SUMMIT MASTER 1 OF 4: THE MASTER OF POWER. Canon section 62: aggressive offence, hits first and hits hardest.\n\nABEL CARRICK IS NOT A BULLY AND THE BENCH HAS TO SAY SO. His argument is that a long fight is a cruelty you are doing to your own Kin, and everything here is that argument written as a party: four Kin, every one of them faster than 80 base Speed, every damaging move on the bench 65 power or over, and NOT ONE status move, screen, hazard, weather call or heal anywhere on it. He has nothing to say to you. He is trying to be finished.\n\nFOUR KIN, NOT FIVE, and that is character rather than a nerf. He has never needed a fifth and the room says so. It is also what took this row from 59/76/63 to 79/82/87 at L50 on a bench of four, which is the difference between the hardest fight on the mountain and the one it is supposed to be.\n\nTHE PLAYER'S ANSWER IS BULK, and it is the only one of the four answers that is a stat rather than a plan: bring something that survives the first hit, because everything on this bench dies to the second one. The defences here are 66, 90, 72 and 70 behind attacks of 82, 92, 92 and 104. HIS OWN COST IS BUILT IN. Bull Rush and Pyre Dive are both recoil and Pyre Dive is 120 at 90 accuracy, so the fastest, hardest bench in the game is also the only one that regularly kills itself, and the mean fight length is 14-15 turns against 19-28 for the other three. That is the whole man in one number.\n\nMEASURED. Novice play, no bag items, 400 runs, sprigling / cinderpaw / rilltail.\n  bench of four:  L48 58/66/74   L50 79/82/87   L51 86/90/94\n  bench of six:   L48 80/89/91   L50 93/95/97   L51 96/97/99\n  veteran, four:  L48 71/71/81   L50 86/89/94   L51 91/94/96\nSee the SHARED note in summit_master_control for the ladder, the harness and the healing decision.",
+    "name": "Abel Carrick",
+    "className": "Summit Master",
+    "sprite": "dockhand",
+    "ai": "elite",
+    "payout": 400,
+    "party": [
+      {
+        "species": "burrowen",
+        "level": 46,
+        "ability": "quickpaw",
+        "moves": [
+          "landslide",
+          "bull_rush",
+          "fissure_step"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      },
+      {
+        "species": "craglide",
+        "level": 47,
+        "ability": "keeneye",
+        "moves": [
+          "quarryfall",
+          "stoop",
+          "shale_edge"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      },
+      {
+        "species": "galecrest",
+        "level": 47,
+        "ability": "keeneye",
+        "moves": [
+          "thunderhead",
+          "stoop",
+          "arcjolt"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      },
+      {
+        "species": "volcatrix",
+        "level": 49,
+        "ability": "closequarters",
+        "moves": [
+          "pyre_dive",
+          "ribcracker",
+          "kilnburst",
+          "cinderlash"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      }
+    ],
+    "intro": [
+      "Abel Carrick. I am going to hit you first and I am going to hit you as hard as I own.",
+      "That is not rudeness. A long fight is something you are doing to your own Kin."
+    ],
+    "defeat": [
+      "Took it. Stood up. Hit me back harder than I hit you.",
+      "That is the whole answer and nobody believes me when I tell them at the door."
+    ],
+    "victory": [
+      "Four minutes. That is the kindest four minutes on this mountain and I mean it.",
+      "Come back up with something that can stand still for two of them."
+    ],
+    "afterward": [
+      "Everybody who beats me does it the same way. They bring something that does not fall over.",
+      "It is not clever, it works every time, and I have never once been able to stop it."
+    ]
+  },
+  {
+    "id": "summit_master_control",
+    "$comment": "SUMMIT MASTER 2 OF 4: THE MASTER OF CONTROL. Canon section 62: status moves and battlefield control, wins by making the fight happen on her terms.\n\nFIVE KIN AND FIVE DIFFERENT WAYS OF NOT ATTACKING YOU, in the order she sends them. Chalkmar opens and lays Grit Field, which is a hazard the player's whole bench walks into. Bladderwrack has Sporecloud. Voltwick has Earthing Wire, which is paralysis at 100 per cent and not a 15 per cent rider. Weaverjaw has Creeping Dose, which is toxic. Maelstrix opens on Second Sight and then calls Downpour, which is 1.5x on its own Breakwater. Nothing on this bench is fast -- 44, 30, 104, 58, 68 -- and only the Voltwick needs to be.\n\nTHESE FIVE STATUS MOVES AND NOT THE OTHER FIVE, and that is a tooling fact rather than a taste. TrainerAI.scoreStatusMove pays sleep 55, toxic 45, paralysis 42 and a screen 40 on the first two turns, all against a damaging move's lethality-times-100 -- so an elite trainer really does open with those. It scores a raw stat drop at 18 and anything it does not recognise, which includes Muddle, Silkbind, Grave Hold and every trapping move, at 10. Those never get chosen. Building her out of moves the AI will not use would have produced a Master of Control who just hits you, so Muddle is deliberately not taken off Maelstrix's learnset and Silkbind is deliberately not taken off Weaverjaw's.\n\nNO TRAP, and it was on the bench for one pass. Weaverjaw has Closing Hold at 39 and the gripjaw ability, which is implemented, and adds two turns to it -- a six or seven turn lock with toxic already on the clock is not control, it is the twelve-minute stalemate this project has complained about four times. Cut.\n\nTHE PLAYER'S ANSWER IS SPEED, and her own victory line gives it away: do it in three turns. Every piece of her apparatus is a turn she has to spend not attacking, and her bench cannot outrun anything. A player who kills the Chalkmar before the hazard lands and the Bladderwrack before it sleeps something has taken two thirds of her off the field. Mean fight length is 19-20 turns, which is the middle of the four -- she is slow, but she is not a wall, and the fight ends.\n\nMEASURED. Novice play, no bag items, 400 runs, sprigling / cinderpaw / rilltail.\n  bench of four:  L48 59/64/65   L50 81/83/83   L51 90/89/90\n  bench of six:   L48 83/89/88   L50 95/94/95   L51 99/99/96\n  veteran, four:  L48 79/58/91   L50 93/80/97   L51 97/92/98\nThis is the flattest row of the four across both the starter columns and the level sweep, which is what a Master whose plan does not care what you brought ought to measure like.\n\nSHARED NOTE FOR ALL FOUR MASTERS\nTHE FOUR MASTERS ARE ALL EXACTLY LEVEL WITH EACH OTHER. Every ace is 49 and every bench runs 45-47 behind it. That is the brief and it is not a rounding: canon section 62 gives each Master a PHILOSOPHY, not a rung, so the mountain does not get harder as you climb it, it gets DIFFERENT, and a player who walks the four in any order meets the same numbers four times. If the Ascent is re-cut, move all four sets together -- that is the only lever, and it is the one that keeps the four arguments level with each other and the three starter columns level with themselves.\n\nTHE LADDER. Hall 8 (cs_keeper_ord) aces at 41, the Crown Road (r10_*) at 40, Commander Kell at the bottom of the Temple at 44. Four Masters at 49 is five over the villain and eight over the last Hall. THE FOUR MASTERS TOGETHER PAY 34,185 raw experience, so a team-raiser who arrives at 50 leaves the fourth chamber on 51 and a solo lead on 54. THE CHAMPION SHOULD THEREFORE ACE AT 51-53, and is the only fight in the main game allowed above these four.\n\nNO HELD ITEMS AND NO TRAINER ITEMS ANYWHERE ON THESE FOUR BENCHES, for the reason Roxen, Vane, Ord and Kell all give in their own rows: Battle.doItem never consumes a foe-side item, so one Potion in that list is an unlimited heal and a twelve-minute stalemate, which is the exact complaint this project has had four times. No Recover either, on any of the twenty-one Kin here, though it is on the learnset of Mossback (41), Thornmarch (46) and Bladderwrack (44) and would be perfectly legal on all three.\n\nai \"elite\" on all four. It is the tier that switches out of a bad matchup at 90 per cent commitment, which is the whole of Farrow and half of Lowe, and it is also what gives these fights battle_hall rather than battle_trainer -- see BattleScene.battleTrack.\n\nEVERY MOVESET IS DRAWN FROM THE SPECIES' OWN LEARNSET AT OR BELOW THAT KIN'S LEVEL, so nothing on any of these four benches is a Kin the player could not have raised themselves. That matters most on the Bonds bench, where the entire argument is that they could have.\n\nHOW THESE WERE MEASURED. A harness built on tests/helpers/simulate.mjs's own primitives -- same buildParty, same TrainerAI, same Battle -- with two things that file cannot do: a LEVEL SWEEP, because the Ascent is another owner's map and is not in the STAGES table, so \"where the player arrives\" is not knowable from here; and a bench extended past level 18, because simulate.mjs's CATCHABLE list stops there and a level-50 player carrying four Route 4 catchables is a fight nobody has. Calibration against the published rows: cs_keeper_ord at L44 reads 100/98/98 here against 99/99/95 published, and td_kell at L48 reads 91/82/88 against 90/90/91. This harness runs the Cinderpaw column about ten points pessimistic; read it as a floor.\n\nBENCH OF FOUR AND BENCH OF SIX ARE BOTH REPORTED and they are not the same fight. simulate.mjs caps the matched party at four, which is right for a Hall and wrong at the top of the mountain -- a player who has reached the Summit has six. The bench-of-four row is the FLOOR and the bench-of-six row is the honest expectation.\n\nTHE FOUR IN A ROW, AND THE DECISION ABOUT HEALING. Measured, novice, no bag items, bench of four, all four back to back with health, status and PP carried forward: ZERO PER CENT, at every level sampled from 48 to 51, for all three starters. Not low -- zero. The second fight is taken by a party that came out of the first one at about a third, and it does not recover. So the chambers heal: each of the four has a Summit steward inside the door who restores the party, every time, for nothing, and each chamber is its own checkpoint -- a loss re-arms that Master rather than sending the player down the mountain. With that in place the four-in-a-row-without-a-single-loss rate is 51/30/39 at L50 and 69/45/51 at L51, and that number is a statistic rather than a gate. This is the concession the four separate requests for an easier game have earned; the benches themselves are not softened past the numbers in each row below.",
+    "name": "Serra Lowe",
+    "className": "Summit Master",
+    "sprite": "harbourmaster",
+    "ai": "elite",
+    "payout": 400,
+    "party": [
+      {
+        "species": "chalkmar",
+        "level": 46,
+        "ability": "oredense",
+        "moves": [
+          "grit_field",
+          "quarryfall",
+          "girder_slam"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      },
+      {
+        "species": "bladderwrack",
+        "level": 46,
+        "ability": "stillwater",
+        "moves": [
+          "sporecloud",
+          "bloomburst",
+          "wallshield"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      },
+      {
+        "species": "voltwick",
+        "level": 47,
+        "ability": "staticcling",
+        "moves": [
+          "earthing_wire",
+          "thunderhead",
+          "arcjolt"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      },
+      {
+        "species": "weaverjaw",
+        "level": 47,
+        "ability": "hardshell",
+        "moves": [
+          "creeping_dose",
+          "miasma",
+          "fang_venom"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      },
+      {
+        "species": "maelstrix",
+        "level": 49,
+        "ability": "deepmind",
+        "moves": [
+          "second_sight",
+          "breakwater",
+          "thoughtwave",
+          "downpour"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      }
+    ],
+    "intro": [
+      "Serra Lowe. Nothing I do in the next few minutes is going to look like an attack.",
+      "You will lose anyway, and you will not be able to say afterwards precisely when."
+    ],
+    "defeat": [
+      "There. That was the moment. You went faster than I could arrange things.",
+      "I have been beaten eleven times on this floor and it was that, eleven times."
+    ],
+    "victory": [
+      "You fought extremely well against a fight that had already finished.",
+      "Do it in three turns. It is the only answer there has ever been to me."
+    ],
+    "afterward": [
+      "Abel swings. I set the table. He has decided that makes me the unkind one.",
+      "He has never once considered that I finish faster than he does."
+    ]
+  },
+  {
+    "id": "summit_master_adapt",
+    "$comment": "SUMMIT MASTER 3 OF 4: THE MASTER OF ADAPTATION. Canon section 62: constant switching and diverse typing, never gives the player a favourable matchup for two turns running.\n\nSIX KIN, ELEVEN OF THE SEVENTEEN TYPES. flame/terra, chitin/radiant, stone/iron, verdant/stone, tide/umbral, frost/beast. Nothing on the player's side is good against more than two of them, and ai \"elite\" is the tier that switches out of a bad matchup at 90 per cent commitment, so the bench is not just broad on paper -- it is rearranged around the player every time they commit to something.\n\nTHE PLAYER'S ANSWER IS TO STOP COUNTER-PICKING, and it is the one answer of the four that is a decision rather than a team. Measured, and this is the finding worth keeping: on a bench of four at L48 the NOVICE model, which never switches, beats him more often than the VETERAN model, which does -- 46/26/49 against 43/76/43. A player who swaps to beat what is in front of them is swapping into what he swapped to, one turn late, for ever. Pick one broad neutral hitter, stay in, and the whole apparatus stops working. His own victory line says exactly this, because he knows it and it still does not help anybody.\n\nWHAT WAS CUT AND WHY. The first bench ran Anchorling (iron/tide) alongside Deeplum (tide/umbral) and the two of them walled the Flame column to 40 per cent between them; Anchorling became Menhir, which took the second Tide off the bench and gave him the defensive pivot he did not have. Emberbore's Landslide became Fissure Step for the same reason -- 100 power of Terra out of the lead slot, at 2x, is not a matchup, it is a wall -- and Thornmarch leads now instead, because a neutral opener is the honest version of what he is doing.\n\nTHE CINDERPAW COLUMN ON A BENCH OF FOUR IS A HARNESS ARTEFACT AND SHOULD BE READ AS ONE. createKin hands a level-50 Volcatrix square_up / ribcracker / heat_haze / pyre_dive, and the novice model presses the biggest number on the screen, which is a 120-power recoil move at 90 accuracy, every turn, into a six-Kin bench. The same cell reads 55 novice and 89 veteran, and 98 on a bench of six. Nobody plays the fight the way the 55 was measured.\n\nMEASURED. Novice play, no bag items, 400 runs, sprigling / cinderpaw / rilltail.\n  bench of four:  L48 46/26/49   L50 81/55/85   L51 91/68/90\n  bench of six:   L48 94/90/93   L50 100/98/98  L51 100/100/99\n  veteran, four:  L48 43/76/43   L50 80/89/71   L51 89/95/83\nSee the SHARED note in summit_master_control for the ladder, the harness and the healing decision.",
+    "name": "Moss Farrow",
+    "className": "Summit Master",
+    "sprite": "hiker",
+    "ai": "elite",
+    "payout": 400,
+    "party": [
+      {
+        "species": "thornmarch",
+        "level": 47,
+        "ability": "stonebound",
+        "moves": [
+          "bloomburst",
+          "shale_edge",
+          "thornrake"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      },
+      {
+        "species": "emberbore",
+        "level": 45,
+        "ability": "kindling",
+        "moves": [
+          "kilnburst",
+          "fissure_step",
+          "cinderlash"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      },
+      {
+        "species": "tallowmoth",
+        "level": 46,
+        "ability": "swarming",
+        "moves": [
+          "lantern_fall",
+          "sunspill",
+          "swarmcall"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      },
+      {
+        "species": "menhir",
+        "level": 46,
+        "ability": "oredense",
+        "moves": [
+          "quarryfall",
+          "girder_slam",
+          "shale_edge"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      },
+      {
+        "species": "deeplum",
+        "level": 47,
+        "ability": "stillwater",
+        "moves": [
+          "wake_dread",
+          "shadewrack",
+          "undertow"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      },
+      {
+        "species": "rimehound",
+        "level": 49,
+        "ability": "thickcoat",
+        "moves": [
+          "glacier_fall",
+          "throatgrip",
+          "rimewind",
+          "chillbite"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      }
+    ],
+    "intro": [
+      "Moss Farrow. Do not ask me what my type is. I have spent forty years not having one.",
+      "Bring your best. I will bring whatever your best is bad at."
+    ],
+    "defeat": [
+      "You picked one and you stayed with it. The whole way through. Against me.",
+      "That is either the stupidest thing I have seen up here or the only thing that works."
+    ],
+    "victory": [
+      "You kept swapping to beat whatever was in front of you. So did I, and I am quicker at it.",
+      "Pick one. Trust it. Come back up."
+    ],
+    "afterward": [
+      "There is nothing on this mountain that is good. There are only things that are good against other things.",
+      "Which is a miserable way to live and an excellent way to battle."
+    ]
+  },
+  {
+    "id": "summit_master_bonds",
+    "$comment": "SUMMIT MASTER 4 OF 4: THE MASTER OF BONDS, and the thematically loaded one. Canon section 62: unusual Kin with extremely strong team synergy -- creatures nobody rates, that work terrifyingly well together. The game is called KinBound and its whole argument is that bonds beat control, so the Master who wins with Kin nobody respects is the game agreeing with itself.\n\nTHE BENCH IS THE ARGUMENT. Mean base stat total 372, against 471 on Carrick's. Gravelet is 300 and is the weakest fully-grown Kin in Caelora; Sootmoth is 336, Silthopper 344, Lantric 382. Four of the six are Kin the player has walked past in the grass since Route 3.\n\nTHE ONE LEVER THAT IS NOT USED HERE IS THE FLAT-ZERO IV SPREAD. Vane, Ord and Kell all carry six zeroes so their levels can read honestly on screen. Nell Oakley's six carry THIRTY-ONE ACROSS THE BOARD and a chosen nature each, because that is the entire point of her: she did not pick better Kin, she raised these ones properly, for eleven years, and in this engine that is worth about a quarter of every stat. It is the one bench in the game where the individual beats the species, and the data file has to say so or the fight does not mean what she says it means.\n\nPIP. The Gravelet is nicknamed, is the ace, and is the only Kin on any of the four benches carrying a training spread as well -- 252 HP, 252 Attack, guarded nature. A 300-point Kin with perfect genes and a full spread at level 49 hits about as hard as a 510-point Kin with none, which is the sentence the whole chamber exists to say out loud.\n\nTHE ENGINE, AND IT IS LEGIBLE ON PURPOSE. Mossback opens with Bulwark, which is a physical screen over the whole side; Lantric follows with Wallshield, which is the special one; and Sootmoth's Heat Haze turns the sky dry, which is 1.5x on its own Kilnburst and HALVES EVERY TIDE MOVE ON THE FIELD. Tide is 2x on Gravelet and 2x on Silthopper, so the moth is not setting weather for itself. It is standing in front of the little one and turning off the water. The elite AI does use all three: a screen scores 40 on turns one and two and a weather call 25, against a fresh attack's lethality-times-100.\n\nTHE ORDER IS BY JOB, NOT BY LEVEL, and Sootmoth going in fifth at 46 behind two 47s is deliberate -- it goes in front of Pip because that is what it is for. IT IS ALSO THE SINGLE MOST SENSITIVE NUMBER ON THIS PAGE. Measured with Sootmoth second, the Cinderpaw column reads 33 per cent; fifth, it reads 77. The sun is 1.5x on the player's Flame moves too, and a novice pressing Pyre Dive is being handed a bigger recoil bill every turn. Early sun makes a Flame player kill itself. If this bench is ever reordered, RE-MEASURE THE CINDERPAW COLUMN FIRST.\n\nTHE PLAYER'S ANSWER IS TO PRESSURE THE SUPPORT. Mossback is 28 Speed and Lantric is 50; both are outrun by almost anything the player brings, and killing them before the screens land is the whole of it. The Rilltail column is the lowest here (66 on a bench of four) because Maelstrix's Breakwater is exactly what the sun is for -- and Maelstrix learns Downpour at 49, which puts the rain back and the answer in the player's own hands.\n\nMEASURED. Novice play, no bag items, 400 runs, sprigling / cinderpaw / rilltail.\n  bench of four:  L48 80/56/49   L50 93/74/66   L51 96/79/73\n  bench of six:   L48 91/64/73   L50 98/87/85   L51 99/92/90\n  veteran, four:  L48 96/84/89   L50 98/87/94   L51 99/89/95\nMean fight length 22-28 turns, the longest of the four, which is the two screens doing their job.\nSee the SHARED note in summit_master_control for the ladder, the harness and the healing decision.",
+    "name": "Nell Oakley",
+    "className": "Summit Master",
+    "sprite": "netmender",
+    "ai": "elite",
+    "payout": 400,
+    "party": [
+      {
+        "species": "mossback",
+        "level": 45,
+        "ability": "deeproot",
+        "moves": [
+          "bulwark",
+          "quarryfall",
+          "rootdrink"
+        ],
+        "ivs": {
+          "hp": 31,
+          "atk": 31,
+          "def": 31,
+          "spa": 31,
+          "spd": 31,
+          "spe": 31
+        },
+        "nature": "heavy"
+      },
+      {
+        "species": "lantric",
+        "level": 46,
+        "ability": "oredense",
+        "moves": [
+          "wallshield",
+          "thunderhead",
+          "arcjolt"
+        ],
+        "ivs": {
+          "hp": 31,
+          "atk": 31,
+          "def": 31,
+          "spa": 31,
+          "spd": 31,
+          "spe": 31
+        },
+        "nature": "dreamy"
+      },
+      {
+        "species": "silthopper",
+        "level": 47,
+        "ability": "gritskin",
+        "moves": [
+          "fissure_step",
+          "shellstrike",
+          "gravelspray"
+        ],
+        "ivs": {
+          "hp": 31,
+          "atk": 31,
+          "def": 31,
+          "spa": 31,
+          "spd": 31,
+          "spe": 31
+        },
+        "nature": "guarded"
+      },
+      {
+        "species": "brinewisp",
+        "level": 47,
+        "ability": "stillwater",
+        "moves": [
+          "wake_dread",
+          "breakwater",
+          "hollowing"
+        ],
+        "ivs": {
+          "hp": 31,
+          "atk": 31,
+          "def": 31,
+          "spa": 31,
+          "spd": 31,
+          "spe": 31
+        },
+        "nature": "distant"
+      },
+      {
+        "species": "sootmoth",
+        "level": 46,
+        "ability": "swarming",
+        "moves": [
+          "heat_haze",
+          "kilnburst",
+          "swarmcall"
+        ],
+        "ivs": {
+          "hp": 31,
+          "atk": 31,
+          "def": 31,
+          "spa": 31,
+          "spd": 31,
+          "spe": 31
+        },
+        "nature": "distant"
+      },
+      {
+        "species": "gravelet",
+        "level": 49,
+        "nickname": "Pip",
+        "ability": "gritskin",
+        "nature": "guarded",
+        "moves": [
+          "bull_rush",
+          "fissure_step",
+          "gravelspray",
+          "quickstep"
+        ],
+        "ivs": {
+          "hp": 31,
+          "atk": 31,
+          "def": 31,
+          "spa": 31,
+          "spd": 31,
+          "spe": 31
+        },
+        "evs": {
+          "hp": 252,
+          "atk": 252,
+          "spe": 6
+        }
+      }
+    ],
+    "intro": [
+      "Nell Oakley. You will not have heard of a single one of mine, and that is rather the point.",
+      "They are not good. They have been together eleven years, and that turned out to be better."
+    ],
+    "defeat": [
+      "Well. She is going to sulk about that for a week and I am going to hear about it.",
+      "Everyone gets to the last one and relaxes. You did not. Thank you."
+    ],
+    "victory": [
+      "Six Kin nobody in Caelora would trade a Nibbet for.",
+      "It is not the Kin. It has never once been the Kin."
+    ],
+    "afterward": [
+      "People come up here with the strongest things in the region and lose to a Gravelet.",
+      "They always want to know what I did to her. I did not do anything to her. I stayed."
+    ]
+  },
+  {
+    "id": "summit_champion",
+    "$comment": "THE CHAMPION OF CAELORA, AND THE LAST FIGHT IN THE MAIN GAME. Canon: six Kin, no single type theme, strong competitive strategy, high levels, and the hardest normal Trainer battle in the game. Driven from data/events/summit_champion.json/sc_fight, never from a `trainer` field on an NPC, because the scene that reaches him has to have run first.\n\nWHO HE IS. Selwyn Rook, 34, a courier's child out of Harrowgate. He took the Summit at twenty-three and has held it eleven years -- which is the number the Roll Archive in Crownspire already carries: \"the current shelf, which is thin, because it is only eleven years old\". The Archive starts a new shelf when the Champion changes, so that line and this bench are the same fact written twice.\n\nHE IS NOT GRACIOUS AND HE IS NOT BITTER, and the brief says find the third thing. The third thing is PROPORTION. He knows exactly how small a job at the top of a mountain is next to what the player did out at sea a fortnight ago -- he says so, in the intro, without flinching -- and he is going to fight for it as though it were the biggest thing in the world, because to him it is. He does not throw a single turn. What he has quietly worked out over eleven years is that a Champion is the one person on the ladder who cannot climb: the title is a room he is not allowed to leave. The foreign records in the Roll Archive with \"a marker in three\" are his. That is where the ending goes -- canon closes on the player looking at a map of Averra and seeing how small Caelora is, and Rook is the man who puts that idea in front of them.\n\nTHE BENCH IS BUILT AGAINST THE FOUR MASTERS, AND THAT IS THE COMPETITIVE STRATEGY CANON ASKS FOR. He has fought Carrick, Lowe, Farrow and Oakley twice a year for eleven years, so four of these six were raised for four particular people. The Craglide is Carrick's own species and the Weaverjaw is Lowe's, raised specifically to beat theirs -- which is why the only two overlaps with the Masters' rosters exist and why there are only two. The other four (Clatterclaw, Bristlebuck, Gullswift, Menhir) are the four evolved species no Master fields, so twenty-eight of the game's forty-eight kin stand on the five Summit benches and no species appears on two of them. The player is the one thing on this mountain he did not raise a kin for, and that is the line the whole fight is written round.\n\nSIX KIN, FIVE FAMILIES, EIGHT TYPES, NO COLUMN WALLED. stone/gale, chitin/venom, tide/chitin, beast/verdant, gale/tide, stone/iron. Each of the three starter columns has at least three two-times targets on this bench and meets at least two kin that hit it back for two: Thornmarch takes chitin from two of them and brawl from the Clatterclaw; Volcatrix takes gale from the Craglide and tide from the Clatterclaw and answers the Menhir at four times; Maelstrix takes chitin and venom pressure and answers the Craglide at two. Every moveset is drawn from the species' own learnset at or below that kin's level, so nothing here is a kin the player could not have raised themselves.\n\nTHE GULLSWIFT DOES NOT CARRY `stoop`, AND THAT IS A MEASURED DECISION AND NOT AN OVERSIGHT. It learns it at 24 and it is the obvious move for a bird. Two `stoop` users on one bench put two Gale two-times hits in front of a Volcatrix that has 70 Defence, and the Cinderpaw column measured six to eight points under the other two because of it. The Craglide is the Gale answer on this team and the Gullswift is the Tide one -- it is gale/TIDE, it was raised off a coast, and breakwater/undertow/wingbeat is a set the species really has. That single swap is worth more to the weakest column than a level is.\n\nWHAT IS DELIBERATELY NOT ON IT. No held items and no trainer items, for the reason Roxen, Vane, Cade, Tallow, Ord and Kell all give: Battle.doItem never consumes a foe-side item, so one Potion in that list is an unlimited heal. No `recover` on the Bristlebuck though it learns it at 30 -- a self-healing kin in front of a novice who presses the strongest move it owns is a twelve-minute stalemate, which is the exact complaint this project has had four times. No paralysis, no sleep, no confusion, no trapping: he is not a trick, he is a wall of good decisions. No two-turn move anywhere (no `skylift` on the Gullswift), because a charge turn against a novice is a free turn for the wrong side of the screen.\n\nONE HAZARD, ON THE LEAD, AND IT IS THE WHOLE COMPETITIVE SIGNAL. The Craglide opens with grit_field: the ground on the player's side is treacherous for the rest of the fight and every kin that walks on afterwards loses an eighth of its health. It is the only entry hazard any Trainer in the game sets, it measured at 2 to 5 points of win rate, and it says in one turn that this person is playing a different game from the eight Halls. It is on the fast kin on purpose -- a hazard set on turn one is a plan and a hazard set on turn nine is a shrug.\n\nFLAT-ZERO IVs ON ALL SIX, the lever Vane, Ord and Kell all used. It is what lets the ladder read honestly on screen -- 49, 50, 51, 53, 54 behind a 55 ace -- instead of cutting the levels into the forties to hit the same win rates against the last fight in the main game. Abilities are named rather than rolled, because a Champion chose them: stonebound on both stone kin, hardshell on the two shelled ones, thickcoat on the Bristlebuck, keeneye on the bird. None of them is a hidden difficulty spike -- the two damage abilities measured at about a point each. Natures are left to the roll, exactly as every other trainer in this file leaves them.\n\nTHE LADDER. Hall 8 (cs_keeper_ord) tops out at 41. Commander Kell, the villain, aces at 44. The Ascent runs 41 to 48, Tarin's last battle aces at 49, and the four Summit Masters ace at 49, 49, 49 and 50. Rook aces at 55 -- five over the last Master and fourteen over the last Hall, and the highest level any Trainer in the main game fields. IF STAGE 7 IS RE-CUT, MOVE ALL SIX LEVELS TOGETHER. That is the only lever, it is worth about eight to ten points of win rate per level, and it is the one that keeps the three starter columns level with each other.\n\nMEASURED, AND THIS IS THE ROW THE DIFFICULTY NOTE IS ABOUT. tests/helpers/simulate.mjs, novice play, NO BAG ITEMS, 500 runs, sprigling / cinderpaw / rilltail. He has six kin, so the honest row is a party of six; the four-kin row is under it and is a floor nobody at the top of this mountain is really on.\n    party of six    L53 47/29/38   L54 63/42/46   L55 72/50/57   L56 81/58/87   L57 86/63/92   L58 88/69/96\n    party of four   L53 47/29/20   L54 63/39/26   L55 69/40/38   L56 81/47/82   L57 84/56/89   L58 84/62/93\n    veteran, six    L54 97/77/82   L55 98/79/89   L56 99/85/97   L58 99/92/99\nZero draws in eighteen hundred sampled battles: nothing on this bench stalls.\n\nWHERE THE PLAYER ACTUALLY IS, AND THIS WAS RE-MEASURED AFTER THE ASCENT LANDED. simulate.mjs/progression() now carries the whole road including the Temple and the six Ascent maps, and it ends at The Crown. Add Tarin's last battle and the four Masters and the team-raiser reaches this room on L57 taking every optional Trainer and all the grass, and on L54 taking neither. THE BAND IS L54 TO L57 AND THE HONEST EXPECTATION IS L55-56. The harness's own report samples him a shade higher again -- levelAt spaces the six rows of The Summit across that stage's arrive-to-leave span and puts him last, at L58, where he reads 88/69/96 -- so the top of the band is covered too. The first cut of this bench aced at 52 and was measured against a table that stopped at The Operation; when the Ascent rows arrived the same bench read 93/84/98 and was softer than the eighth Hall. WHOEVER CHANGES THE ASCENT OR THE MASTERS MUST RE-READ THIS ROW: every level the road adds is a level this bench owes.\n\nWHAT IT SITS AGAINST. At the level each is really met, the four Masters measure 99 to 100 per cent and Merrin Ord's Crest measures 97/90/87. This is the only fight in the main game that is not a formality at the level the road delivers, which is what canon asks of it.\n\nTHE SPRIGLING COLUMN READS HIGH AND THE CINDERPAW COLUMN READS LOW, AND BOTH ARE PARTLY HARNESS ARTEFACTS. buildParty gives the starter its last four learnset moves. Thornmarch learns recover at 46 and bulwark at 40, so the measured Sprigling player is holding a self-healing, screen-setting wall; Volcatrix's last four at this level are heat_haze, pyre_dive, final_form and ribcracker, which is two drawback moves and a weather move in a novice's hands. A real player who kept four attacks on either lands between the two columns. The rilltail column steps up nine points between L55 and L56 for the same reason: Maelstrix learns unravel at 56.\n\nTHE CONCESSION TO THE FOUR REQUESTS FOR AN EASIER GAME IS DIEGETIC, AND IT IS THREE THINGS. The scene gives a free healParty immediately before the fight and another on every loss; Rook hands over three Full Restores, once, on the first attempt (gated on sc_kit_given so a retry cannot farm it); and the fight is re-armed on his own NPC one tile away rather than at the bottom of the mountain, so a first-try loss costs a page of text and not a walk back past four Masters. THE RESTORES DO NOT APPEAR IN THE TABLE ABOVE and that is the point: the harness uses no bag items at all, so every number in it is a floor that assumes the player fights six kin with nothing in the bag, and the real fight is materially easier than the numbers say. The bench itself is not softened past the numbers above.\n\nTHE WEATHER TRAP, AND IT IS THE ONE A NEIGHBOUR CAN SPRING BY ACCIDENT. Battle weather comes from map.weather -- OverworldScene passes this.map.weather straight into BattleScene -- and rain or storm is 1.5x on tide and 0.5x on flame. data/maps/summit_champion.json therefore declares NO weather field at all and carries its snowfall on the separate numeric `snow` key, which is drawn on the overworld and is invisible to Battle. If anybody adds `weather` to that map, this fight silently changes shape. It must not.\n\nai `elite` rather than `keeper`: measured, the two are within noise here, and elite is the tier that reads the type chart hardest and switches out of a losing matchup, which is the only honest way to write \"strong competitive strategy\" into a data file. Both tiers give this fight battle_hall rather than battle_trainer (BattleScene.battleTrack), which is the right track available -- the Champion has no theme of his own because data/audio/tracks.json is not this build's file.",
+    "name": "Selwyn Rook",
+    "className": "Champion",
+    "sprite": "townsfolk_m",
+    "ai": "elite",
+    "payout": 520,
+    "party": [
+      {
+        "species": "craglide",
+        "level": 49,
+        "ability": "stonebound",
+        "moves": [
+          "grit_field",
+          "stoop",
+          "shale_edge"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      },
+      {
+        "species": "weaverjaw",
+        "level": 50,
+        "ability": "hardshell",
+        "moves": [
+          "fang_venom",
+          "shellstrike",
+          "miasma"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      },
+      {
+        "species": "clatterclaw",
+        "level": 51,
+        "ability": "hardshell",
+        "moves": [
+          "hullcrack",
+          "ribcracker",
+          "shellstrike"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      },
+      {
+        "species": "bristlebuck",
+        "level": 53,
+        "ability": "thickcoat",
+        "moves": [
+          "bull_rush",
+          "thornrake",
+          "bloomburst"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      },
+      {
+        "species": "gullswift",
+        "level": 54,
+        "ability": "keeneye",
+        "moves": [
+          "breakwater",
+          "wingbeat",
+          "undertow"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      },
+      {
+        "species": "menhir",
+        "level": 55,
+        "ability": "stonebound",
+        "moves": [
+          "girder_slam",
+          "shale_edge",
+          "quarryfall"
+        ],
+        "ivs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        }
+      }
+    ],
+    "intro": [
+      "The Archive gauges went flat at four in the afternoon and I knew somebody out there had done it.",
+      "Selwyn Rook. Eleven years on this floor.",
+      "I am going to be very difficult about this, and I would like you to expect it."
+    ],
+    "defeat": [
+      "I had two more things I was going to try. I want that written down somewhere.",
+      "...No. I did not. Take it."
+    ],
+    "victory": [
+      "Good. None of that was politeness and none of it was ever going to be.",
+      "Go down, eat something that is not out of a tin, and come back up. I am always here."
+    ],
+    "afterward": [
+      "Eleven years, and I never once found out what I would do with a fortnight off.",
+      "I am going to go and find out. Somewhere with a different set of Kin in it."
+    ]
+  },
+  {
+    "id": "asr_pilgrim",
+    "$comment": "The first fight above Crownspire and deliberately the softest thing on the mountain: two-thirds of the way up somebody has to lose, and the road should not start by proving it. Ace 43, one under Commander Kell.",
+    "name": "Sesk",
+    "className": "Pilgrim",
+    "sprite": "hiker",
+    "ai": "trained",
+    "payout": 260,
+    "party": [
+      {
+        "species": "mossback",
+        "level": 41
+      },
+      {
+        "species": "kestrelle",
+        "level": 42
+      },
+      {
+        "species": "bristlebuck",
+        "level": 43
+      }
+    ],
+    "intro": [
+      "Fourth time up. I have never got past the second Master and I am going anyway.",
+      "You look like the first time. Come here."
+    ],
+    "defeat": [
+      "Right. Yes. That is what the first time looks like."
+    ],
+    "victory": [
+      "Fourth time up is worth something after all."
+    ],
+    "afterward": [
+      "The road does not get harder. You get more tired. Those are different problems.",
+      "Eat at the bothy. Everybody thinks they will not need to."
+    ]
+  },
+  {
+    "id": "asr_carrier",
+    "$comment": "The stone carrier. Every cairn on this road was built one fist at a time by people walking up, and she is the reason the player understands that before they reach the enormous one at the top.",
+    "name": "Wend",
+    "className": "Stone Carrier",
+    "sprite": "porter",
+    "ai": "trained",
+    "payout": 266,
+    "party": [
+      {
+        "species": "burrowen",
+        "level": 42
+      },
+      {
+        "species": "chalkmar",
+        "level": 43
+      },
+      {
+        "species": "craglide",
+        "level": 44
+      }
+    ],
+    "intro": [
+      "One stone. That is the whole of it. You pick one up at the gate and you put it down at the top.",
+      "Mine is heavier than it needs to be. That was a decision."
+    ],
+    "defeat": [
+      "Good. Now go and find yours before the treeline."
+    ],
+    "victory": [
+      "Take a lighter one. Nobody is counting."
+    ],
+    "afterward": [
+      "My father carried one up and never came back down. Not a tragedy. He stayed and kept the bothy.",
+      "This is his, actually. He asked. It has taken me eleven years to get round to it."
+    ]
+  },
+  {
+    "id": "asr_ford",
+    "$comment": "At the ford. Wade is the main line on this map and she is standing in the one place that makes it a decision rather than a tile: on the shingle, above the fall.",
+    "name": "Halle",
+    "className": "Ford Warden",
+    "sprite": "villager_f",
+    "ai": "trained",
+    "payout": 268,
+    "party": [
+      {
+        "species": "currentail",
+        "level": 42
+      },
+      {
+        "species": "weaverjaw",
+        "level": 43
+      },
+      {
+        "species": "bladderwrack",
+        "level": 44
+      }
+    ],
+    "intro": [
+      "The bridge went in March. The city will rebuild it the year after the year they say they will.",
+      "So I stand here instead. Cross where I am standing and nowhere else."
+    ],
+    "defeat": [
+      "Cross. Left of the stakes. Do not look at the fall, look at the far bank."
+    ],
+    "victory": [
+      "You can wait. The water is not going anywhere until October."
+    ],
+    "afterward": [
+      "Eleven people this month and I have not lost one.",
+      "The one I did lose was nine years ago and I could tell you the weather."
+    ]
+  },
+  {
+    "id": "asr_terrace",
+    "$comment": "BEHIND THE THORN, so optional, and a step above the road he is off. The terraces are nine hundred years of somebody else's work gone to brush, which is the Crown Road terrace walker's speech given by a man who actually farms it.",
+    "name": "Orim",
+    "className": "Terrace Keeper",
+    "sprite": "villager_m",
+    "ai": "veteran",
+    "payout": 276,
+    "party": [
+      {
+        "species": "mossback",
+        "level": 43
+      },
+      {
+        "species": "tallowmoth",
+        "level": 44
+      },
+      {
+        "species": "bristlebuck",
+        "level": 45
+      }
+    ],
+    "intro": [
+      "You cut the thorn. Good. I have been cutting it for thirty years and it wins.",
+      "Nobody owns these beds. I work four of them and they are not mine."
+    ],
+    "defeat": [
+      "There is a bed at the top with plums on it. Nobody planted those either."
+    ],
+    "victory": [
+      "Come back when the thorn has finished with you too."
+    ],
+    "afterward": [
+      "They fed Crownspire off these steps for six hundred years and then they stopped needing to.",
+      "That is all that happened. Nothing sad. Everybody just went and did something else."
+    ]
+  },
+  {
+    "id": "asr_falls",
+    "$comment": "Above the top fall, on the last of the road before the mountain. He is the one who tells the player, without being asked, that the way on is through the rock.",
+    "name": "Brede",
+    "className": "Fall Watcher",
+    "sprite": "hiker",
+    "ai": "veteran",
+    "payout": 280,
+    "party": [
+      {
+        "species": "voltwick",
+        "level": 43
+      },
+      {
+        "species": "kestrelle",
+        "level": 44
+      },
+      {
+        "species": "craglide",
+        "level": 45
+      }
+    ],
+    "intro": [
+      "Above the third fall the face goes vertical and stays vertical for a thousand feet.",
+      "So the road stops. Everybody stands here and works that out on their own. Fight me while you do."
+    ],
+    "defeat": [
+      "The hole in the rock. Left, and up. It is the road, it just has a roof on it."
+    ],
+    "victory": [
+      "Sit down. Look at the water. It is better than being cross about it."
+    ],
+    "afterward": [
+      "I have watched four hundred people work out that the road goes into the mountain.",
+      "Not one of them has ever guessed. Every single one of them looks up first."
+    ]
+  },
+  {
+    "id": "asd_delver",
+    "$comment": "The first fight inside the rock and the tone of the whole cave: nobody in here is grim about it. Stone and iron only, which is what the table under his feet is made of.",
+    "name": "Corr",
+    "className": "Delver",
+    "sprite": "hiker",
+    "ai": "trained",
+    "payout": 282,
+    "party": [
+      {
+        "species": "cairnling",
+        "level": 43
+      },
+      {
+        "species": "burrowen",
+        "level": 44
+      },
+      {
+        "species": "menhir",
+        "level": 45
+      }
+    ],
+    "intro": [
+      "Stonewake sends two of us up every autumn to look at the roof. It has not moved in four hundred years.",
+      "I go anyway. Best two weeks of the year and there is nobody in it but the Kin."
+    ],
+    "defeat": [
+      "Mind the water. Not the deep bit. The bit you think is floor."
+    ],
+    "victory": [
+      "Take the wall on your right and keep touching it."
+    ],
+    "afterward": [
+      "People think a mountain is quiet inside. It is the loudest place I have ever stood.",
+      "Water everywhere, all of it going somewhere, none of it in a hurry."
+    ]
+  },
+  {
+    "id": "asd_sump",
+    "$comment": "The rope on the ledge over the lake is his and he is not going to explain it. Tide and umbral, because that is what comes up out of an underground lake.",
+    "name": "Nain",
+    "className": "Rope Hand",
+    "sprite": "villager_m",
+    "ai": "trained",
+    "payout": 284,
+    "party": [
+      {
+        "species": "deeplum",
+        "level": 43
+      },
+      {
+        "species": "brinewisp",
+        "level": 44
+      },
+      {
+        "species": "currentail",
+        "level": 45
+      }
+    ],
+    "intro": [
+      "Four hundred feet of line off that ledge and it has never touched anything.",
+      "I keep buying more line. My wife has opinions. Battle me instead of having one of them."
+    ],
+    "defeat": [
+      "Fine. Fine! It is a hobby. I am allowed a hobby."
+    ],
+    "victory": [
+      "Six hundred feet next spring. I have already ordered it."
+    ],
+    "afterward": [
+      "There is a shoal in the middle you can stand on. I have never stood on it.",
+      "If you can swim it, go. Tell me what the bottom feels like and I will stop."
+    ]
+  },
+  {
+    "id": "asd_stonecrew",
+    "$comment": "Standing beside the three sockets. He is the fight the Shoulder puzzle is worth, and he has been trying to move those stones for two months with a crew of six.",
+    "name": "Vosk",
+    "className": "Stone Crew",
+    "sprite": "porter",
+    "ai": "veteran",
+    "payout": 290,
+    "party": [
+      {
+        "species": "gravelet",
+        "level": 43
+      },
+      {
+        "species": "burrowen",
+        "level": 44
+      },
+      {
+        "species": "chalkmar",
+        "level": 45
+      },
+      {
+        "species": "craglide",
+        "level": 45
+      }
+    ],
+    "intro": [
+      "Six of us and two months and those three stones have not moved a hand's breadth.",
+      "You are going to do it in ten minutes with a Kin, and I am going to be professional about that."
+    ],
+    "defeat": [
+      "Go on then. Put them in the holes. I will hold my tongue and I will hold my hat."
+    ],
+    "victory": [
+      "Ha! Right. Right. Now I feel better about the two months."
+    ],
+    "afterward": [
+      "They cut those sockets to a quarter of an inch. Whoever they were, they were better than us.",
+      "And they still could not stop the roof coming down on it. That is oddly comforting."
+    ]
+  },
+  {
+    "id": "ass_warden",
+    "$comment": "The bothy warden's daughter, out on the road below the hut. First fight above the cloud and the first frost on the road, which is what her lead is for.",
+    "name": "Illa",
+    "className": "Shoulder Warden",
+    "sprite": "hiker",
+    "ai": "veteran",
+    "payout": 292,
+    "party": [
+      {
+        "species": "frostnip",
+        "level": 44
+      },
+      {
+        "species": "bristlebuck",
+        "level": 45
+      },
+      {
+        "species": "rimehound",
+        "level": 46
+      }
+    ],
+    "intro": [
+      "You have come out of the mountain, so you are either very good or very lucky.",
+      "The bothy is up the road and it is warm. This first, though."
+    ],
+    "defeat": [
+      "Very good, then. Go and eat something anyway."
+    ],
+    "victory": [
+      "Bothy. Up the road. Go on."
+    ],
+    "afterward": [
+      "My mother keeps the hut and I keep the road, and neither of us has ever charged anybody for either.",
+      "People try. We take firewood. Firewood is not money."
+    ]
+  },
+  {
+    "id": "ass_ropewalk",
+    "$comment": "At the far end of the rope bridge, which is the only place he could stand: the deck is two cells wide and eleven long and there is nothing either side of it.",
+    "name": "Tobe",
+    "className": "Ropewalker",
+    "sprite": "porter",
+    "ai": "veteran",
+    "payout": 294,
+    "party": [
+      {
+        "species": "kestrelle",
+        "level": 44
+      },
+      {
+        "species": "voltwick",
+        "level": 45
+      },
+      {
+        "species": "galecrest",
+        "level": 46
+      }
+    ],
+    "intro": [
+      "You walked it without stopping in the middle. Most people stop in the middle.",
+      "That is a compliment and it is also the last nice thing I am going to say."
+    ],
+    "defeat": [
+      "Straight up from here. Do not take the low notch, it is blocked."
+    ],
+    "victory": [
+      "Walk back over it. Slowly. Think about it."
+    ],
+    "afterward": [
+      "I re-lay the cables every second spring. Four days, two of us, and nobody thanks us.",
+      "Nobody should. If they noticed the bridge, we did it wrong."
+    ]
+  },
+  {
+    "id": "ass_cairn",
+    "$comment": "The cairn setter, out on the east side above the gorge. He is the one who says what the Great Cairn on the Crown is, so that the player arrives at it already knowing.",
+    "name": "Serrel",
+    "className": "Cairn Setter",
+    "sprite": "villager_m",
+    "ai": "veteran",
+    "payout": 298,
+    "party": [
+      {
+        "species": "gravelet",
+        "level": 45
+      },
+      {
+        "species": "menhir",
+        "level": 46
+      },
+      {
+        "species": "cairnling",
+        "level": 47
+      }
+    ],
+    "intro": [
+      "From every one of these you can see the next one. That is nine hundred years of work and it is the whole trick.",
+      "I keep them upright. It is not a job, nobody pays for it. Come on."
+    ],
+    "defeat": [
+      "Up. Cairn to cairn. If you cannot see the next one, stop where you are."
+    ],
+    "victory": [
+      "Cairn to cairn. Say it out loud until it is boring."
+    ],
+    "afterward": [
+      "The one at the top is not navigation. That one is everybody who ever walked up here.",
+      "You will know it when you see it. It is the size of a house."
+    ]
+  },
+  {
+    "id": "ass_notch",
+    "$comment": "At the low crossing, and the toughest fight on this map. She is on the far side of the boulder in the notch, so a player who has not put a shoulder into it has come the long way round to reach her -- which is the point of a shortcut having somebody standing on it.",
+    "name": "Mabry",
+    "className": "Notch Hand",
+    "sprite": "townsfolk_f",
+    "ai": "veteran",
+    "payout": 300,
+    "party": [
+      {
+        "species": "bristlebuck",
+        "level": 45
+      },
+      {
+        "species": "weaverjaw",
+        "level": 46
+      },
+      {
+        "species": "rimehound",
+        "level": 47
+      }
+    ],
+    "intro": [
+      "This is the quick way down and there is a rock in it, so at the moment it is the slow way down.",
+      "You look like somebody who could do something about a rock. Convince me."
+    ],
+    "defeat": [
+      "Shift it and half the mountain gets an hour of their life back. Including me."
+    ],
+    "victory": [
+      "Then it stays where it is and we all keep walking round."
+    ],
+    "afterward": [
+      "Twelve minutes, that notch, against an hour and ten by the bridge.",
+      "I have done the hour and ten four hundred times. I would like very much to stop."
+    ]
+  },
+  {
+    "id": "asu_pilgrim",
+    "$comment": "She comes up to the ruin every year and does not go on to the Summit, and she is completely at peace about it. The only person on the mountain for whom the top is not the point.",
+    "name": "Onwen",
+    "className": "Highwalker",
+    "sprite": "villager_f",
+    "ai": "veteran",
+    "payout": 300,
+    "party": [
+      {
+        "species": "tallowmoth",
+        "level": 45
+      },
+      {
+        "species": "lantric",
+        "level": 46
+      },
+      {
+        "species": "deeplum",
+        "level": 47
+      }
+    ],
+    "intro": [
+      "I come up to this room. Not the Summit. This room. Every year for nineteen years.",
+      "You are going on, obviously. Everybody is going on. Battle me on the way past."
+    ],
+    "defeat": [
+      "Look at the wall behind the hearth before you go. Both halves of it."
+    ],
+    "victory": [
+      "Sit down for ten minutes. The mountain will still be there."
+    ],
+    "afterward": [
+      "My name is on that wall four times, once for every decade I have managed it.",
+      "It is under about nine hundred other people. That is exactly the correct amount of important."
+    ]
+  },
+  {
+    "id": "asu_scholar",
+    "$comment": "THE HARDEST OPTIONAL FIGHT ON THE ASCENT and the only four-kin bench on the road below the Crown. He is an antiquarian who has worked out what this room is and refuses to make a fuss about it, which is the only tone this room can survive.",
+    "name": "Verrick",
+    "className": "Antiquarian",
+    "sprite": "professor",
+    "ai": "veteran",
+    "payout": 312,
+    "party": [
+      {
+        "species": "tallowmoth",
+        "level": 46
+      },
+      {
+        "species": "lantric",
+        "level": 47
+      },
+      {
+        "species": "rimehound",
+        "level": 47
+      },
+      {
+        "species": "maelstrix",
+        "level": 48
+      }
+    ],
+    "intro": [
+      "Crownspire has been cutting names into walls for nine hundred years and thinks it invented it.",
+      "Look under the Caeloran. Go on. Then we will fight and I will not say another word about it."
+    ],
+    "defeat": [
+      "They sheltered here. That is all. It is a room with a fire in it and it always was."
+    ],
+    "victory": [
+      "Look under the Caeloran anyway."
+    ],
+    "afterward": [
+      "No mechanism. No door. No message. I have been over every stone in here twice.",
+      "They walked up a mountain, they got cold, and they built somewhere to sit. I find that enormous."
+    ]
+  },
+  {
+    "id": "asc_snowline",
+    "$comment": "At the top of the last climb, where the road comes over onto the plateau and the whole crown opens up at once.",
+    "name": "Grell",
+    "className": "Snowline Hand",
+    "sprite": "hiker",
+    "ai": "veteran",
+    "payout": 300,
+    "party": [
+      {
+        "species": "rimehound",
+        "level": 45
+      },
+      {
+        "species": "currentail",
+        "level": 46
+      },
+      {
+        "species": "bristlebuck",
+        "level": 47
+      }
+    ],
+    "intro": [
+      "That is it. No more climbing. Everything from here is flat and everything from here is worse.",
+      "Wind, mostly. Get used to it standing still, before you have to get used to it moving."
+    ],
+    "defeat": [
+      "Flat and cold and four miles up. Go and see the cairn."
+    ],
+    "victory": [
+      "Sit in the lee of something and come back at it."
+    ],
+    "afterward": [
+      "People say the last bit is the easy bit because it is flat.",
+      "The last bit is the bit where you find out whether you actually wanted this."
+    ]
+  },
+  {
+    "id": "asc_tarn",
+    "$comment": "The man who measures the tarn. Frost and tide, and he is the quiet piece of environmental storytelling on this map: the water is higher every year and he is the one who knows by how much.",
+    "name": "Peth",
+    "className": "Ice Measurer",
+    "sprite": "villager_m",
+    "ai": "veteran",
+    "payout": 302,
+    "party": [
+      {
+        "species": "brinewisp",
+        "level": 45
+      },
+      {
+        "species": "frostnip",
+        "level": 46
+      },
+      {
+        "species": "rimehound",
+        "level": 47
+      }
+    ],
+    "intro": [
+      "Chalk marks round the rim. One a year, sixty-one years, my grandmother started it.",
+      "Do not stand on the middle. Do battle me. Those are separate instructions."
+    ],
+    "defeat": [
+      "The open water in the middle used to be the size of a table."
+    ],
+    "victory": [
+      "Still. Do not stand on the middle."
+    ],
+    "afterward": [
+      "Frostmere would like the numbers and I have not sent them. I keep not sending them.",
+      "Sixty-one marks and the last eleven are all in the same direction."
+    ]
+  },
+  {
+    "id": "asc_cornice",
+    "$comment": "On the cornice above the eastern drop, which is the one piece of ground on the Crown a player can step off and not step back onto.",
+    "name": "Dray",
+    "className": "Cornice Walker",
+    "sprite": "porter",
+    "ai": "veteran",
+    "payout": 306,
+    "party": [
+      {
+        "species": "weaverjaw",
+        "level": 46
+      },
+      {
+        "species": "currentail",
+        "level": 47
+      },
+      {
+        "species": "galecrest",
+        "level": 48
+      }
+    ],
+    "intro": [
+      "You are standing on a shelf of snow with nothing underneath it. Everybody does. It holds.",
+      "It holds because I walk it every morning and cut off the bit that would not have."
+    ],
+    "defeat": [
+      "Down that way is down. It is only down the once, mind."
+    ],
+    "victory": [
+      "Back the way you came and take the long side."
+    ],
+    "afterward": [
+      "Cut a cornice properly and it looks like nothing happened. That is the whole craft.",
+      "Nobody has ever noticed my work. I have been doing it for twenty-two years."
+    ]
+  },
+  {
+    "id": "asc_lastwarden",
+    "$comment": "THE LAST TRAINER ON THE ROAD, at the Summit gate, and the last fight before the Masters. Four kin, ace 48, one under Tarin and the first Master and four under the Champion -- so she is the top of my ladder and the bottom of somebody else's, exactly as she should be. She is the warden at the Crownspire gate's opposite number and she says so.",
+    "name": "Aleth",
+    "className": "Gate Warden",
+    "sprite": "townsfolk_f",
+    "ai": "veteran",
+    "payout": 316,
+    "party": [
+      {
+        "species": "currentail",
+        "level": 46
+      },
+      {
+        "species": "burrowen",
+        "level": 47
+      },
+      {
+        "species": "rimehound",
+        "level": 47
+      },
+      {
+        "species": "craglide",
+        "level": 48
+      }
+    ],
+    "intro": [
+      "There is a warden at the bottom of this road and a warden at the top and we are cousins.",
+      "He decides who starts. I do not decide anything. I just make sure nobody arrives at that door untested."
+    ],
+    "defeat": [
+      "Tested. Go on through. Nobody up there is going to be kind to you and none of them will be unkind either."
+    ],
+    "victory": [
+      "Then come back at it. The gate does not shut and I am not going anywhere."
+    ],
+    "afterward": [
+      "Eighty-one Champions in nine hundred and six years. I have watched four people go through that door.",
+      "Not one of them came back the same shape. Better, usually. Never the same."
     ]
   }
 ]

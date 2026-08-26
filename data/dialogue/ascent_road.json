@@ -1,0 +1,43 @@
+{
+  "$comment": "THE PILGRIM ROAD. THREE VOICES, AND NOT ONE OF THEM MENTIONS NERAVOSS. That is the whole tonal rule of the Ascent and it is canon's: the story climax has happened, this is the personal one, and the region has gone back to being a region. These are three people who have jobs on a mountain. The player has just saved Caelora and nobody up here is going to bring it up, which is a far better way of saying it is over than having somebody say it is over.\n\nThe road warden at the gate is the exception that proves it -- he has heard, obviously everyone has heard, and what he actually wants to talk about is the road being open again.",
+  "speakers": {
+    "asr_gatehand": "ROAD HAND",
+    "asr_bridge": "BRIDGE KEEPER",
+    "asr_pool": "POOL ANGLER"
+  },
+  "entries": {
+    "asr_gatehand": [
+      {
+        "ifFlags": ["ascent_entered"],
+        "lines": [
+          "Four miles. Twenty-two on the road today and you are the twenty-third.",
+          "That is a normal number. It has not been a normal number since the summer."
+        ]
+      },
+      {
+        "lines": [
+          "The gate is open, the road is dry and there is a full moon on Thursday.",
+          "I have been sweeping this apron for nine days with nobody to sweep it for."
+        ]
+      }
+    ],
+    "asr_bridge": [
+      {
+        "lines": [
+          "It went in March. Both posts still standing and forty feet of deck in the pool.",
+          "The city voted the money in April. They will vote it again next April.",
+          "Ford is up there. It has been the ford since before there was a bridge."
+        ]
+      }
+    ],
+    "asr_pool": [
+      {
+        "lines": [
+          "Sixty feet of fall coming into it and the top six inches never move. Explain that.",
+          "There is an islet out in the middle with a cairn on it. Somebody built that.",
+          "Not from here they did not. Nobody has been out there in my lifetime."
+        ]
+      }
+    ]
+  }
+}
